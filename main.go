@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	fmt.Printf("hello Wechat!")
+	fmt.Printf("hello Wechat! \n")
 
 	config := object.HashMap{
 		"corp_id": "ww454dfb9d6f6d432a",

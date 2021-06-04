@@ -3,11 +3,15 @@ package work
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"github.com/ArtisanCloud/go-wechat/src/work/auth"
+	"github.com/ArtisanCloud/go-wechat/src/work/base"
 )
 
 type Work struct {
 	Container *kernel.ServiceContainer
 	Base interface{}
+
+	Components *object.HashMap
 }
 
 func NewWork(config object.HashMap) *Work {
@@ -20,23 +24,25 @@ func NewWork(config object.HashMap) *Work {
 				},
 			},
 		},
+		Components: &object.HashMap{},
 	}
 
 	// inject components
-	//auth.startInit()
-	//base.startInit()
-	//base.startInit()
-	//auth.startInit()
-	//base.startInit()
-	//base.startInit()
-	//auth3.intall()
-	//base3.startInit()
-	//base.startInit()
-	//auth.startInit()
-	//base.startInit()
-	//base.startInit()
+	auth.Inject(app)
+	base.Inject(app)
+
 
 	return app
 }
 
+func (app *Work)GetComponents() *object.HashMap{
+	return app.Components
+}
 
+func (app *Work) GetConfig() []object.HashMap {
+	return app.Container.GetConfig()
+}
+
+func (app *Work) GetContainer() *kernel.ServiceContainer{
+	return app.Container
+}

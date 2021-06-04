@@ -2,9 +2,6 @@ package kernel
 
 import "github.com/ArtisanCloud/go-libs/object"
 
-type ApplicationInterface interface {
-	GetConfig() object.HashMap
-}
 
 type ServiceContainer struct {
 	ID int
