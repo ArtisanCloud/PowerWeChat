@@ -39,10 +39,6 @@ func (app *Work)GetComponents() *object.HashMap{
 	return app.Components
 }
 
-func (app *Work) GetConfig() []object.HashMap {
-	return app.Container.GetConfig()
-}
-
 func (app *Work) GetContainer() *kernel.ServiceContainer{
 	return app.Container
 }

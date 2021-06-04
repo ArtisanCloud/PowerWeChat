@@ -7,8 +7,6 @@ import (
 
 type ApplicationInterface interface {
 
-	GetConfig() []object.HashMap
-
 	GetComponents() *object.HashMap
 
 	GetContainer() *kernel.ServiceContainer
