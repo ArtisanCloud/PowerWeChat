@@ -9,7 +9,6 @@ import (
 
 type Work struct {
 	Container *kernel.ServiceContainer
-	Base interface{}
 
 	Components *object.HashMap
 }

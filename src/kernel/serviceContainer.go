@@ -2,12 +2,12 @@ package kernel
 
 import "github.com/ArtisanCloud/go-libs/object"
 
-
 type ServiceContainer struct {
 	ID int
 
 	DefaultConfig object.HashMap
 	UserConfig    object.HashMap
+	Config        []object.HashMap
 }
 
 func (container *ServiceContainer) getBaseConfig() object.HashMap {
@@ -21,11 +21,17 @@ func (container *ServiceContainer) getBaseConfig() object.HashMap {
 }
 
 func (container *ServiceContainer) GetConfig() []object.HashMap {
-	baseConfig := container.getBaseConfig()
+	// if container config has been setup
+	if container.Config!=nil{
+		return container.Config
+	}
 
-	return []object.HashMap{
+	// setup the container config first time
+	baseConfig := container.getBaseConfig()
+	container.Config = []object.HashMap{
 		baseConfig,
 		container.DefaultConfig,
 		container.UserConfig,
 	}
+	return container.Config
 }

@@ -5,7 +5,6 @@ package auth
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
 )
 
 
@@ -14,17 +13,7 @@ type AccessToken struct {
 	BaseAccessToken *kernel.AccessToken
 }
 
-func Inject(app contract.ApplicationInterface){
 
-	component := &AccessToken{
-		App:             app.GetContainer(),
-		BaseAccessToken: &kernel.AccessToken{},
-	}
-	components := app.GetComponents()
-
-	(*components)["access_token"] = component
-
-}
 
 func (token *AccessToken) GetCredentials() object.StringMap {
 

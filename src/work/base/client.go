@@ -1,21 +1,13 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/http"
 )
 
 type Client struct {
-	BaseClient *kernel.BaseClient
+	BaseClient *http.BaseClient
 }
 
-func Inject(app contract.ApplicationInterface){
-
-	component := &Client{
-		BaseClient:             &kernel.BaseClient{},
-	}
-	components := app.GetComponents()
-
-	(*components)["base"] = component
-
+func (client *Client) GetCallbackIp() interface{} {
+	return client.BaseClient.HttpGet("cgi-bin/getcallbackip", nil)
 }
