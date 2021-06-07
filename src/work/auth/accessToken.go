@@ -8,31 +8,29 @@ import (
 )
 
 type AccessToken struct {
-	BaseAccessToken *kernel.AccessToken
-
+	*kernel.AccessToken
 }
 
 func NewAccessToken(container *kernel.ServiceContainer) *AccessToken {
 	token := &AccessToken{
-		BaseAccessToken: kernel.NewAccessToken(container),
+		kernel.NewAccessToken(container),
 	}
 
-	token.BaseAccessToken.EndpointToGetToken = "cgi-bin/gettoken"
-	token.SetupCredentials()
+	// Override fields and functions
+	token.EndpointToGetToken = "cgi-bin/gettoken"
+	token.OverrideGetCredentials()
 
 	return token
 }
 
 
-
-func (component *AccessToken) SetupCredentials(){
-	config := component.BaseAccessToken.App.GetConfig()
-	component.BaseAccessToken.GetCredentials = func() *object.StringMap {
-
+// Override GetCredentials
+func (component *AccessToken) OverrideGetCredentials() {
+	config := component.App.GetConfig()
+	component.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
 			"corpid":     config[kernel.CONFIG_USER_INDEX]["corp_id"].(string),
 			"corpsecret": config[kernel.CONFIG_USER_INDEX]["secret"].(string),
 		}
 	}
-
 }

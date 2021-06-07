@@ -10,7 +10,7 @@ func Inject(app contract.ApplicationInterface) {
 	container.GetConfig()
 
 	component := &Client{
-		BaseClient: &http.BaseClient{
+		 &http.BaseClient{
 			App: container,
 		},
 	}
