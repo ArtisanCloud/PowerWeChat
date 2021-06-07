@@ -7,19 +7,32 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
 )
 
-
 type AccessToken struct {
-	App             *kernel.ServiceContainer
 	BaseAccessToken *kernel.AccessToken
+
+}
+
+func NewAccessToken(container *kernel.ServiceContainer) *AccessToken {
+	token := &AccessToken{
+		BaseAccessToken: kernel.NewAccessToken(container),
+	}
+
+	token.BaseAccessToken.EndpointToGetToken = "cgi-bin/gettoken"
+	token.SetupCredentials()
+
+	return token
 }
 
 
 
-func (token *AccessToken) GetCredentials() object.StringMap {
+func (component *AccessToken) SetupCredentials(){
+	config := component.BaseAccessToken.App.GetConfig()
+	component.BaseAccessToken.GetCredentials = func() *object.StringMap {
 
-	config := token.App.GetConfig()
-	return object.StringMap{
-		"corpid":     config[2]["corp_id"].(string),
-		"corpsecret": config[2]["secret"].(string),
+		return &object.StringMap{
+			"corpid":     config[kernel.CONFIG_USER_INDEX]["corp_id"].(string),
+			"corpsecret": config[kernel.CONFIG_USER_INDEX]["secret"].(string),
+		}
 	}
+
 }

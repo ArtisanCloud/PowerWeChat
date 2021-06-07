@@ -8,6 +8,6 @@ type Client struct {
 	BaseClient *http.BaseClient
 }
 
-func (client *Client) GetCallbackIp() interface{} {
-	return client.BaseClient.HttpGet("cgi-bin/getcallbackip", nil)
+func (comp *Client) GetCallbackIp() interface{} {
+	return comp.BaseClient.HttpGet("cgi-bin/getcallbackip", nil)
 }

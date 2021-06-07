@@ -1,4 +1,4 @@
-package Contract
+package contract
 
 type RequestInterface interface {
 	

@@ -1,4 +1,4 @@
-package Contract
+package contract
 
 import "github.com/ArtisanCloud/go-libs/object"
 

@@ -3,13 +3,13 @@ package http
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/http/Contract"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/http/contract"
 )
 
 type BaseClient struct {
 	App *kernel.ServiceContainer
 
-	httpClient *Contract.ClientInterface
+	httpClient *contract.ClientInterface
 }
 
 func (client *BaseClient) HttpGet(url string, query object.StringMap) interface{} {
@@ -60,4 +60,3 @@ func (client *BaseClient) Request(url string, method string, options object.Hash
 	}
 	return nil
 }
-

@@ -2,6 +2,10 @@ package kernel
 
 import "github.com/ArtisanCloud/go-libs/object"
 
+const CONFIG_BASE_INDEX = 0
+const CONFIG_DEFAULT_INDEX = 1
+const CONFIG_USER_INDEX = 2
+
 type ServiceContainer struct {
 	ID int
 
@@ -26,7 +30,7 @@ func (container *ServiceContainer) GetConfig() []object.HashMap {
 		return container.Config
 	}
 
-	// setup the container config first time
+	// setup the container config firstly
 	baseConfig := container.getBaseConfig()
 	container.Config = []object.HashMap{
 		baseConfig,
