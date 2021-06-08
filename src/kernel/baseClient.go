@@ -72,7 +72,7 @@ func (client *BaseClient) Request(url string, method string, options object.Hash
 		return response
 	} else {
 		config := *(*client.App).GetContainer().GetConfig()
-		client.CastResponseToType(response, config["response_type"].(string))
+		client.CastResponseToType(response, config["response_type"])
 	}
 	return response
 }

@@ -11,6 +11,8 @@ type Work struct {
 	*kernel.ServiceContainer
 
 	Components *object.HashMap
+	Base *base.Client
+	AccessToken *auth.AccessToken
 }
 
 func NewWork(config *object.HashMap) *Work {

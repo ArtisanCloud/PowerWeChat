@@ -23,7 +23,7 @@ func main() {
 	//fmt.Printf("kind %s \n", cType.Kind())
 	//fmt.Printf("type %v \n", cType)
 
-	//ips :=(*app.Components)["base"].(*base.Client).GetCallbackIp()
+	//ips :=(*app.Base).GetCallbackIp()
 	//fmt2.Dump(ips)
 
 }
