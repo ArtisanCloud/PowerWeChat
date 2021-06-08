@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/work"
 	"github.com/ArtisanCloud/go-wechat/src/work/base"
 )
@@ -12,11 +11,7 @@ func main() {
 
 	fmt.Printf("hello Wechat! \n")
 
-	config := &object.HashMap{
-		"corp_id": "ww454dfb9d6f6d432a",
-		//'agent_id' : 100020,
-		"secret": "9iZxAhtyKC9OB0ofN8Qrvjy4Kk80nuoJ7nIbocE5j8M",
-	}
+	config := GetConfig()
 
 	app := work.NewWork(config)
 	//fmt2.Dump(app)
