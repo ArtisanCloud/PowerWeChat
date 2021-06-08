@@ -2,16 +2,23 @@ package kernel
 
 import "github.com/ArtisanCloud/go-libs/object"
 
-const CONFIG_BASE_INDEX = 0
-const CONFIG_DEFAULT_INDEX = 1
-const CONFIG_USER_INDEX = 2
+
+
+type ApplicationInterface interface {
+
+	GetComponents() *object.HashMap
+	GetContainer() *ServiceContainer
+	GetApp() ApplicationInterface
+}
+
+
 
 type ServiceContainer struct {
 	ID int
 
-	DefaultConfig object.HashMap
-	UserConfig    object.HashMap
-	Config        []object.HashMap
+	DefaultConfig *object.HashMap
+	UserConfig    *object.HashMap
+	Config        *object.HashMap
 }
 
 func (container *ServiceContainer) getBaseConfig() object.HashMap {
@@ -24,18 +31,17 @@ func (container *ServiceContainer) getBaseConfig() object.HashMap {
 	}
 }
 
-func (container *ServiceContainer) GetConfig() []object.HashMap {
+func (container *ServiceContainer) GetConfig() *object.HashMap {
 	// if container config has been setup
 	if container.Config!=nil{
 		return container.Config
 	}
 
-	// setup the container config firstly
-	baseConfig := container.getBaseConfig()
-	container.Config = []object.HashMap{
-		baseConfig,
-		container.DefaultConfig,
-		container.UserConfig,
-	}
+	container.Config = &object.HashMap{}
+
+	// merge config
+	container.Config = object.MergeHashMap(container.DefaultConfig,container.Config)
+	container.Config = object.MergeHashMap(container.UserConfig,container.Config)
+
 	return container.Config
 }

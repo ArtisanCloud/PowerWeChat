@@ -4,8 +4,8 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
-	httpContract "github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/exception"
+	httpContract "github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
 	"reflect"
@@ -88,8 +88,15 @@ func (component *AccessToken) requestToken(credentials *object.StringMap, toArra
 	return nil
 }
 
-func (component *AccessToken) ApplyToRequest(request httpContract.RequestInterface, requestOptions object.HashMap) *httpContract.RequestInterface {
-	return nil
+func (component *AccessToken) ApplyToRequest(request *httpContract.RequestInterface, requestOptions object.HashMap) *httpContract.RequestInterface {
+	// parse query
+	//strURL := request.GetUri().GetQuery()
+	//strURL = parsestring(strURL)
+
+	// merge query with query again
+	//query = http
+
+	return request
 }
 
 func (component *AccessToken) sendRequest(credential *object.HashMap) *httpContract.ResponseContract {
@@ -128,9 +135,6 @@ func (component *AccessToken) getEndpoint() string {
 	return component.EndpointToGetToken
 }
 
-func (component *AccessToken)getTokenKey() string{
+func (component *AccessToken) getTokenKey() string {
 	return component.TokenKey
 }
-
-
-

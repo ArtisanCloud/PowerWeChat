@@ -29,8 +29,8 @@ func (component *AccessToken) OverrideGetCredentials() {
 	config := component.App.GetConfig()
 	component.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
-			"corpid":     config[kernel.CONFIG_USER_INDEX]["corp_id"].(string),
-			"corpsecret": config[kernel.CONFIG_USER_INDEX]["secret"].(string),
+			"corpid":     (*config)["corp_id"].(string),
+			"corpsecret": (*config)["secret"].(string),
 		}
 	}
 }

@@ -8,16 +8,16 @@ import (
 )
 
 type Work struct {
-	Container *kernel.ServiceContainer
+	*kernel.ServiceContainer
 
 	Components *object.HashMap
 }
 
-func NewWork(config object.HashMap) *Work {
+func NewWork(config *object.HashMap) *Work {
 	app := &Work{
-		Container: &kernel.ServiceContainer{
+		ServiceContainer:&kernel.ServiceContainer{
 			UserConfig: config,
-			DefaultConfig: object.HashMap{
+			DefaultConfig: &object.HashMap{
 				"http": map[string]string{
 					"base_uri": "https://qyapi.weixin.qq.com/",
 				},
@@ -30,14 +30,17 @@ func NewWork(config object.HashMap) *Work {
 	auth.Inject(app)
 	base.Inject(app)
 
-
 	return app
 }
 
-func (app *Work)GetComponents() *object.HashMap{
+func (app *Work) GetComponents() *object.HashMap {
 	return app.Components
 }
 
-func (app *Work) GetContainer() *kernel.ServiceContainer{
-	return app.Container
+func (app *Work) GetContainer() *kernel.ServiceContainer {
+	return app.ServiceContainer
+}
+
+func (app *Work) GetApp() kernel.ApplicationInterface {
+	return app
 }

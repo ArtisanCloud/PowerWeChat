@@ -1,10 +1,10 @@
 package auth
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
+	"github.com/ArtisanCloud/go-wechat/src/kernel"
 )
 
-func Inject(app contract.ApplicationInterface) {
+func Inject(app kernel.ApplicationInterface) {
 	container := app.GetContainer()
 	container.GetConfig()
 

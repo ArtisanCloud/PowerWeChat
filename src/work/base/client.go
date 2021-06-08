@@ -1,11 +1,11 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/go-libs/http"
+	"github.com/ArtisanCloud/go-wechat/src/kernel"
 )
 
 type Client struct {
-	*http.BaseClient
+	*kernel.BaseClient
 }
 
 func (comp *Client) GetCallbackIp() interface{} {

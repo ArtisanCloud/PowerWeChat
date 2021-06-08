@@ -1,18 +1,15 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/http"
+	"github.com/ArtisanCloud/go-wechat/src/kernel"
 )
 
-func Inject(app contract.ApplicationInterface) {
+func Inject(app kernel.ApplicationInterface) {
 	container := app.GetContainer()
 	container.GetConfig()
 
 	component := &Client{
-		 &http.BaseClient{
-			App: container,
-		},
+		kernel.NewBaseClient(container, nil),
 	}
 	components := app.GetComponents()
 
