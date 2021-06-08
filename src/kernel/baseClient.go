@@ -9,14 +9,15 @@ type BaseClient struct {
 	*http.HttpRequest
 	*http.HttpResponse
 
-	App *ServiceContainer
+	App *ApplicationInterface
 
 	AccessToken *AccessToken
 }
 
-func NewBaseClient(app *ServiceContainer, token *AccessToken) *BaseClient {
+func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
+	config := (*app).GetContainer().GetConfig()
 	client := &BaseClient{
-		HttpRequest: http.NewHttpRequest(app.GetConfig()),
+		HttpRequest: http.NewHttpRequest(config),
 		App:         app,
 		AccessToken: token,
 	}
@@ -70,7 +71,8 @@ func (client *BaseClient) Request(url string, method string, options object.Hash
 	if returnRaw {
 		return response
 	} else {
-		client.CastResponseToType(response, (*client.App.Config)["response_type"].(string))
+		config := *(*client.App).GetContainer().GetConfig()
+		client.CastResponseToType(response, config["response_type"].(string))
 	}
 	return response
 }

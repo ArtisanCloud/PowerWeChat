@@ -13,7 +13,7 @@ import (
 )
 
 type AccessToken struct {
-	App *ServiceContainer
+	App *ApplicationInterface
 
 	RequestMethod      string
 	EndpointToGetToken string
@@ -25,9 +25,9 @@ type AccessToken struct {
 	GetCredentials func() *object.StringMap
 }
 
-func NewAccessToken(container *ServiceContainer) *AccessToken {
+func NewAccessToken(app *ApplicationInterface) *AccessToken {
 	token := &AccessToken{
-		App:                container,
+		App:                app,
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
 		QueryName:          "",

@@ -11,9 +11,9 @@ type AccessToken struct {
 	*kernel.AccessToken
 }
 
-func NewAccessToken(container *kernel.ServiceContainer) *AccessToken {
+func NewAccessToken(app *kernel.ApplicationInterface) *AccessToken {
 	token := &AccessToken{
-		kernel.NewAccessToken(container),
+		kernel.NewAccessToken(app),
 	}
 
 	// Override fields and functions
@@ -26,7 +26,7 @@ func NewAccessToken(container *kernel.ServiceContainer) *AccessToken {
 
 // Override GetCredentials
 func (component *AccessToken) OverrideGetCredentials() {
-	config := component.App.GetConfig()
+	config := (*component.App).GetContainer().GetConfig()
 	component.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
 			"corpid":     (*config)["corp_id"].(string),

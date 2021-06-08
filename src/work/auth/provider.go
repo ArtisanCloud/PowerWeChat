@@ -8,7 +8,7 @@ func Inject(app kernel.ApplicationInterface) {
 	container := app.GetContainer()
 	container.GetConfig()
 
-	component := NewAccessToken(container)
+	component := NewAccessToken(&app)
 	components := app.GetComponents()
 
 	(*components)["access_token"] = component

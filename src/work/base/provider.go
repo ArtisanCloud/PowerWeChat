@@ -9,7 +9,7 @@ func Inject(app kernel.ApplicationInterface) {
 	container.GetConfig()
 
 	component := &Client{
-		kernel.NewBaseClient(container, nil),
+		kernel.NewBaseClient(&app, nil),
 	}
 	components := app.GetComponents()
 

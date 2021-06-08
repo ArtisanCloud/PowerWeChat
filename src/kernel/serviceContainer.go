@@ -8,7 +8,6 @@ type ApplicationInterface interface {
 
 	GetComponents() *object.HashMap
 	GetContainer() *ServiceContainer
-	GetApp() ApplicationInterface
 }
 
 
