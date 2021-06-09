@@ -14,8 +14,8 @@ func main() {
 
 	app := work.NewWork(config)
 	//fmt2.Dump(app)
-	//components := app.GetComponents()
-	//token := (*app.Components)["access_token"].(*auth.AccessToken).GetToken()
+
+	//token := app.AccessToken.GetToken()
 	//fmt2.Dump(token)
 	//fmt2.Dump(app.GetConfig())
 

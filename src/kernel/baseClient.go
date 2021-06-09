@@ -11,17 +11,21 @@ type BaseClient struct {
 	*http.HttpRequest
 	*http.HttpResponse
 
-	App *ApplicationInterface
-
-	AccessToken *AccessToken
+	App   *ApplicationInterface
+	Token *AccessToken
 }
 
 func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 	config := (*app).GetContainer().GetConfig()
+
+	if token == nil {
+		token = (*app).GetAccessToken()
+	}
+
 	client := &BaseClient{
 		HttpRequest: http.NewHttpRequest(config),
 		App:         app,
-		AccessToken: token,
+		Token:       token,
 	}
 	return client
 
@@ -87,44 +91,56 @@ func (client *BaseClient) registerHttpMiddlewares() {
 	client.Middlewares = []interface{}{}
 
 	// retry
-	client.PushMiddleware(client.retryMiddleware(), "retry")
+	//client.PushMiddleware(client.retryMiddleware(), "retry")
 	// access token
 	client.PushMiddleware(client.accessTokenMiddleware(), "access_token")
 	// log
-	client.PushMiddleware(client.logMiddleware(), "log")
+	//client.PushMiddleware(client.logMiddleware(), "log")
 
 }
 
 // ----------------------------------------------------------------------
-type MiddlewareAccessToken struct{}
-type MiddlewareLogMiddleware struct{}
-type MiddlewareRetry struct{}
-
-func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) error {
-	fmt.Println("accessTokenMiddleware")
-	return nil
+type MiddlewareAccessToken struct {
+	*BaseClient
+}
+type MiddlewareLogMiddleware struct {
+	*BaseClient
+}
+type MiddlewareRetry struct {
+	*BaseClient
 }
 
+func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) error {
+	accessToken := (*d.App).GetAccessToken()
+
+	if accessToken != nil {
+		config := (*d.App).GetContainer().GetConfig()
+		accessToken.ApplyToRequest(req, config)
+	}
+
+	return nil
+}
 func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
 	fmt.Println("logMiddleware")
 	return nil
 }
-
-
 func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
 	fmt.Println("retryMiddleware")
 	return nil
 }
 
 func (client *BaseClient) accessTokenMiddleware() interface{} {
-
-	return &MiddlewareAccessToken{}
+	return &MiddlewareAccessToken{
+		client,
+	}
 }
-
 func (client *BaseClient) logMiddleware() interface{} {
-	return &MiddlewareLogMiddleware{}
+	return &MiddlewareLogMiddleware{
+		client,
+	}
 }
-
 func (client *BaseClient) retryMiddleware() interface{} {
-	return &MiddlewareRetry{}
+	return &MiddlewareRetry{
+		client,
+	}
 }

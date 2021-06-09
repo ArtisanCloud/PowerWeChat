@@ -1,9 +1,13 @@
 package kernel
 
-import "github.com/ArtisanCloud/go-libs/object"
+import (
+	"github.com/ArtisanCloud/go-libs/object"
+)
+
 
 type ApplicationInterface interface {
 	GetContainer() *ServiceContainer
+	GetAccessToken() *AccessToken
 }
 
 type ServiceContainer struct {

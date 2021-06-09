@@ -15,24 +15,35 @@ type Work struct {
 }
 
 func NewWork(config *object.HashMap) *Work {
-	app := &Work{
-		ServiceContainer: &kernel.ServiceContainer{
-			UserConfig: config,
-			DefaultConfig: &object.HashMap{
-				"http": map[string]string{
-					"base_uri": "https://qyapi.weixin.qq.com/",
-				},
+	// init an app container
+	container:=&kernel.ServiceContainer{
+		UserConfig: config,
+		DefaultConfig: &object.HashMap{
+			"http": map[string]string{
+				"base_uri": "https://qyapi.weixin.qq.com/",
 			},
 		},
 	}
 
-	// inject components
+	// init app
+	app := &Work{
+		ServiceContainer: container,
+	}
+
+	// register Auth
 	app.AccessToken = auth.RegisterProvider(app)
+	// register Base
 	app.Base = base.RegisterProvider(app)
+
+
 
 	return app
 }
 
 func (app *Work) GetContainer() *kernel.ServiceContainer {
 	return app.ServiceContainer
+}
+
+func (app *Work) GetAccessToken() *kernel.AccessToken{
+	return app.AccessToken.AccessToken
 }

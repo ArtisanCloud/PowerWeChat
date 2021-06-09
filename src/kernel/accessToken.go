@@ -3,17 +3,28 @@ package kernel
 import (
 	"crypto/md5"
 	"encoding/json"
-	"fmt"
 	"github.com/ArtisanCloud/go-libs/exception"
+	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
+	http2 "github.com/ArtisanCloud/go-libs/http"
 	httpContract "github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
-	"reflect"
+	"net/http"
+	"net/url"
 	"time"
 )
 
+type ResponseGetToken struct {
+	AccessToken string `json:"access_token"`
+	ExpiresIn   int    `json:"expires_in"`
+	*ResponseWX
+}
+
 type AccessToken struct {
 	App *ApplicationInterface
+
+	*http2.HttpRequest
+	*http2.HttpResponse
 
 	RequestMethod      string
 	EndpointToGetToken string
@@ -22,12 +33,18 @@ type AccessToken struct {
 	TokenKey           string
 	CachePrefix        string
 
+	*CacheToken
+
 	GetCredentials func() *object.StringMap
 }
 
 func NewAccessToken(app *ApplicationInterface) *AccessToken {
+	config := (*app).GetContainer().GetConfig()
+
 	token := &AccessToken{
-		App:                app,
+		App:         app,
+		HttpRequest: http2.NewHttpRequest(config),
+
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
 		QueryName:          "",
@@ -39,37 +56,57 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 	return token
 }
 
-func (component *AccessToken) GetRefreshedToken() *object.HashMap {
-	return component.GetToken()
+func (accessToken *AccessToken) GetRefreshedToken() *object.HashMap {
+	return accessToken.GetToken(true)
 }
 
-func (component *AccessToken) GetToken() (token *object.HashMap) {
-	//cacheKey := token.GetCacheKey()
-	//cache:= GetCache()
+func (accessToken *AccessToken) GetToken(refresh bool) (token *object.HashMap) {
+	//cacheKey := accessToken.getCacheKey()
+	//cache := *accessToken.getCache()
+	//
+	//// get token from cache
+	//if !refresh && cache.Has(cacheKey) {
+	//	token = &object.HashMap{}
+	//	err := cache.Get(cacheKey, token)
+	//	if err == nil {
+	//		return token
+	//	}
+	//}
 
-	response := component.requestToken(component.GetCredentials(), true)
-	return nil
-	typeResponse := reflect.TypeOf(response)
-	//fmt.Printf("response name:%s, type: %s \n",typeResponse.Name(), typeResponse.Kind() )
-	if typeResponse.Name() == "ResponseInterface" {
-		token = response.(*object.HashMap)
+	// request token from wx
+	response := accessToken.requestToken(accessToken.GetCredentials(), true)
+
+	//// save token into cache
+	token = response.(*object.HashMap)
+	strToken := (*token)[accessToken.TokenKey].(string)
+	var expireIn time.Duration = 7200 * time.Second
+	if (*token)[accessToken.TokenKey] == nil {
+		expireIn = (*token)[accessToken.TokenKey].(time.Duration) * time.Second
 	}
+	fmt2.Dump(token, strToken, expireIn)
+	//token, _ = accessToken.SetToken(strToken, expireIn)
+
+	//typeResponse := reflect.TypeOf(response)
+	////fmt.Printf("response name:%s, type: %s \n",typeResponse.Name(), typeResponse.Kind() )
+	//if typeResponse.Name() == "ResponseInterface" {
+	//	token = response.(*object.HashMap)
+	//}
 
 	return token
 }
 
-func (component *AccessToken) SetToken(token string, lifeTime time.Duration) (*object.HashMap, error) {
+func (accessToken *AccessToken) SetToken(token string, lifeTime time.Duration) (*object.HashMap, error) {
 	if lifeTime <= 0 {
 		lifeTime = 7200 * time.Second
 	}
 
-	//cache := component.GetCache()
-	//cache.Set(component.GetCacheKey(), map[string]interface{}{
-	//	component.TokenKey: token,
+	//cache := accessToken.GetCache()
+	//cache.Set(accessToken.GetCacheKey(), map[string]interface{}{
+	//	accessToken.TokenKey: token,
 	//	"expires_in":       lifeTime,
 	//})
 	//
-	//if !cache.Has(component.GetCacheKey()) {
+	//if !cache.Has(accessToken.GetCacheKey()) {
 	//	err = errors.New("Failed to cache access token.")
 	//}
 	//return token, err
@@ -77,64 +114,81 @@ func (component *AccessToken) SetToken(token string, lifeTime time.Duration) (*o
 
 }
 
-func (component *AccessToken) Refresh() *contract.AccessTokenInterface {
+func (accessToken *AccessToken) Refresh() *contract.AccessTokenInterface {
 
 	return nil
 }
 
-func (component *AccessToken) requestToken(credentials *object.StringMap, toArray bool) interface{} {
-	fmt.Printf("credentials:%v \n", credentials)
+func (accessToken *AccessToken) requestToken(credentials *object.StringMap, toArray bool) interface{} {
+
+	accessToken.sendRequest(credentials)
 
 	return nil
 }
 
-func (component *AccessToken) ApplyToRequest(request *httpContract.RequestInterface, requestOptions object.HashMap) httpContract.RequestInterface {
+func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOptions *object.HashMap) *http.Request {
 	// parse query
-	//strURL := request.GetUri().GetQuery()
-	//strURL = parsestring(strURL)
-
 	// merge query with query again
-	//query = http
+	hashToken := accessToken.getQuery()
 
+	strMapToString := object.ConvertStringMapToString(hashToken)
+	uriToken, _ := url.Parse(strMapToString)
+	request.URL.ResolveReference(uriToken)
 	return request
 }
 
-func (component *AccessToken) sendRequest(credential *object.HashMap) *httpContract.ResponseContract {
+func (accessToken *AccessToken) sendRequest(credential *object.StringMap) *httpContract.ResponseContract {
+
+	key := "json"
+	if accessToken.RequestMethod == "GET" {
+		key = "query"
+	}
+	options := &object.HashMap{
+		key: credential,
+	}
+
+	accessToken.SetHttpClient(accessToken.GetHttpClient()).PerformRequest(
+			accessToken.getEndpoint(),
+			accessToken.RequestMethod,
+			options,
+			&ResponseGetToken{},
+		)
 	return nil
 }
 
-func (component *AccessToken) getCacheKey() string {
-	data, _ := json.Marshal(component.GetCredentials())
+func (accessToken *AccessToken) getCacheKey() string {
+	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)
-	return component.CachePrefix + string(buffer[:])
+	return accessToken.CachePrefix + string(buffer[:])
 }
 
-func (component *AccessToken) getQuery() interface{} {
-	if component.QueryName != "" {
-		return []string{component.QueryName}
+func (accessToken *AccessToken) getQuery() *object.StringMap {
+	var key string
+	if accessToken.QueryName != "" {
+		key = accessToken.QueryName
 	} else {
-		arrayReturn := []object.HashMap{}
-		token := component.GetToken()
-		result := object.HashMap{
-			component.TokenKey: (*token)[component.TokenKey],
-		}
-		arrayReturn = append(arrayReturn, result)
-
-		return arrayReturn
-
+		key = accessToken.TokenKey
 	}
+
+	token := accessToken.GetToken(false)
+	arrayReturn := &object.StringMap{
+		key: (*token)[accessToken.TokenKey].(string),
+	}
+
+	return arrayReturn
+
 }
 
-func (component *AccessToken) getEndpoint() string {
-	defer (&exception.Exception{}).HandleException(nil, "accessToken.get.endpoint", component)
-	if component.EndpointToGetToken == "" {
+func (accessToken *AccessToken) getEndpoint() string {
+	defer (&exception.Exception{}).HandleException(nil, "accessToken.get.endpoint", accessToken)
+	if accessToken.EndpointToGetToken == "" {
 		panic("No endpoint for access token request.")
 		return ""
 	}
 
-	return component.EndpointToGetToken
+	return accessToken.EndpointToGetToken
 }
 
-func (component *AccessToken) getTokenKey() string {
-	return component.TokenKey
+func (accessToken *AccessToken) getTokenKey() string {
+	return accessToken.TokenKey
 }

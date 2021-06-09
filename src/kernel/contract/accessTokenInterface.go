@@ -1,14 +1,14 @@
 package contract
 
 import (
-	"github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
+	"net/http"
 )
 
 type (
 	AccessTokenInterface interface {
 		GetToken() string
 		Refresh() AccessTokenInterface
-		ApplyToRequest(request contract.RequestInterface, requestOptions object.HashMap) contract.RequestInterface
+		ApplyToRequest(request *http.Request, requestOptions *object.HashMap) *http.Request
 	}
 )
