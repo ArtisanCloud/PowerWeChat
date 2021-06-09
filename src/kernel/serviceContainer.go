@@ -2,15 +2,9 @@ package kernel
 
 import "github.com/ArtisanCloud/go-libs/object"
 
-
-
 type ApplicationInterface interface {
-
-	GetComponents() *object.HashMap
 	GetContainer() *ServiceContainer
 }
-
-
 
 type ServiceContainer struct {
 	ID int
@@ -32,15 +26,14 @@ func (container *ServiceContainer) getBaseConfig() object.HashMap {
 
 func (container *ServiceContainer) GetConfig() *object.HashMap {
 	// if container config has been setup
-	if container.Config!=nil{
+	if container.Config != nil {
 		return container.Config
 	}
 
 	container.Config = &object.HashMap{}
 
 	// merge config
-	container.Config = object.MergeHashMap(container.DefaultConfig,container.Config)
-	container.Config = object.MergeHashMap(container.UserConfig,container.Config)
+	container.Config = object.MergeHashMap(container.Config, container.DefaultConfig, container.UserConfig)
 
 	return container.Config
 }

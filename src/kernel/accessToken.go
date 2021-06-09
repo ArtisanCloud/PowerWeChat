@@ -88,7 +88,7 @@ func (component *AccessToken) requestToken(credentials *object.StringMap, toArra
 	return nil
 }
 
-func (component *AccessToken) ApplyToRequest(request *httpContract.RequestInterface, requestOptions object.HashMap) *httpContract.RequestInterface {
+func (component *AccessToken) ApplyToRequest(request *httpContract.RequestInterface, requestOptions object.HashMap) httpContract.RequestInterface {
 	// parse query
 	//strURL := request.GetUri().GetQuery()
 	//strURL = parsestring(strURL)

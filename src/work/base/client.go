@@ -8,6 +8,16 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func (comp *Client) GetCallbackIp() interface{} {
-	return comp.HttpGet("cgi-bin/getcallbackip", nil)
+type ResponseGetCallBackIp struct {
+	IPList []string `json:"ip_list"`
+	*kernel.ResponseWX
+}
+
+func (comp *Client) GetCallbackIp() *ResponseGetCallBackIp {
+
+	result := &ResponseGetCallBackIp{}
+
+	comp.HttpGet("cgi-bin/getcallbackip", nil, result)
+
+	return result
 }

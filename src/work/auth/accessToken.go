@@ -25,9 +25,9 @@ func NewAccessToken(app *kernel.ApplicationInterface) *AccessToken {
 
 
 // Override GetCredentials
-func (component *AccessToken) OverrideGetCredentials() {
-	config := (*component.App).GetContainer().GetConfig()
-	component.GetCredentials = func() *object.StringMap {
+func (accessToken *AccessToken) OverrideGetCredentials() {
+	config := (*accessToken.App).GetContainer().GetConfig()
+	accessToken.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
 			"corpid":     (*config)["corp_id"].(string),
 			"corpsecret": (*config)["secret"].(string),
