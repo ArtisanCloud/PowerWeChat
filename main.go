@@ -24,6 +24,7 @@ func main() {
 	//fmt.Printf("type %v \n", cType)
 
 	ips := app.Base.GetCallbackIp()
+	ips = app.Base.GetCallbackIp()
 	fmt2.Dump(ips)
 
 }

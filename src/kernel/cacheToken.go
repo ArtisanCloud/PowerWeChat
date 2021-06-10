@@ -22,15 +22,16 @@ func (cacheToken *CacheToken) getCache() cache.CacheInterface {
 	return cacheToken.Cache
 }
 
-func (cacheToken *CacheToken) setCache(cache cache.CacheInterface) {
-	// tbd
+func (cacheToken *CacheToken) setCache(cache cache.CacheInterface) *CacheToken {
 
 	cacheToken.Cache = cache
+
+	return cacheToken
 }
 
 func (cacheToken *CacheToken) createDefaultCache() cache.CacheInterface {
-	// tbd
-	cacheToken.Cache = cache.NewFileCache("ac.go.wx", time.Duration(1500), "")
+
+	cacheToken.Cache = cache.NewMemCache("ac.go.wx", time.Duration(1500), "")
 
 	return cacheToken.Cache
 }

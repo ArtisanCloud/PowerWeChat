@@ -45,6 +45,8 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		Token:              nil,
 		TokenKey:           "access_token",
 		CachePrefix:        "ac.go.wechat.kernel.access_token.",
+
+		CacheToken: &CacheToken{},
 	}
 
 	return token
@@ -55,26 +57,29 @@ func (accessToken *AccessToken) GetRefreshedToken() *response2.ResponseGetToken 
 }
 
 func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.ResponseGetToken) {
-	//cacheKey := accessToken.getCacheKey()
-	//cache := *accessToken.getCache()
-	//
-	//// get token from cache
-	//if !refresh && cache.Has(cacheKey) {
-	//	token = &object.HashMap{}
-	//	err := cache.Get(cacheKey, token)
-	//	if err == nil {
-	//		return token
-	//	}
-	//}
+	cacheKey := accessToken.getCacheKey()
+	cache := accessToken.getCache()
+
+	// get token from cache
+	if !refresh && cache.Has(cacheKey) {
+		value, err := cache.Get(cacheKey, nil)
+		if err == nil {
+			token := value.(*object.HashMap)
+			return &response2.ResponseGetToken{
+				AccessToken: (*token)[accessToken.TokenKey].(string),
+				ExpiresIn:   (*token)["expires_in"].(int),
+			}
+		}
+	}
 
 	// request token from wx
 	response := accessToken.requestToken(accessToken.GetCredentials())
 
 	//// save token into cache
 	resToken = response.(*response2.ResponseGetToken)
-	var expireIn time.Duration = 7200 * time.Second
+	var expireIn int = 7200
 	if resToken.ExpiresIn > 0 {
-		expireIn = time.Duration(resToken.ExpiresIn) * time.Second
+		expireIn = resToken.ExpiresIn
 	}
 	accessToken.SetToken(resToken.AccessToken, expireIn)
 
@@ -83,17 +88,17 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	return resToken
 }
 
-func (accessToken *AccessToken) SetToken(token string, lifeTime time.Duration) (tokenInterface contract.AccessTokenInterface, err error) {
+func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInterface contract.AccessTokenInterface, err error) {
 	if lifeTime <= 0 {
-		lifeTime = 7200 * time.Second
+		lifeTime = 7200
 	}
 
-	// tbd
+	// set token into cache
 	cache := accessToken.getCache()
-	err = cache.Set(accessToken.getCacheKey(), map[string]interface{}{
+	err = cache.Set(accessToken.getCacheKey(), &object.HashMap{
 		accessToken.TokenKey: token,
 		"expires_in":         lifeTime,
-	}, lifeTime)
+	}, time.Duration(lifeTime)*time.Second)
 
 	defer (&exception.Exception{}).HandleException(nil, "accessToken.set.token", nil)
 	if !cache.Has(accessToken.getCacheKey()) {
@@ -112,14 +117,14 @@ func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
 func (accessToken *AccessToken) requestToken(credentials *object.StringMap) httpContract.ResponseContract {
 
 	// tbf
-	return &response2.ResponseGetToken{
-		AccessToken: "Np9hU7IcFX8fajwPvhI4-_ZIJh0kDIBambDyI8nYuNMNsO74lUAgkA75iETLu2mAv05EkAwZf9caFupjQuVATBo17lk7xqNnqw_e5NpfdjEK9F5moG755THiHOd_XSGFb6a9QTggn_t6ejA7CcxlKetr6ntcxdRomQC9rnJ-razLKrWrJilWERDHVtwxg4TGh86qFvOjRZ7OMBznnmrbbQ",
-		ExpiresIn:   7200,
-		ResponseWX: &response2.ResponseWX{
-			ErrCode: 0,
-			ErrMSG:  "ok",
-		},
-	}
+	//return &response2.ResponseGetToken{
+	//	AccessToken: "NTZc03xEsnxqpavAgJlaVqjQmq9UG5_shDGmaEkoB0AcqncvkD7Y_fprh_-WRtp206tSqGRa3Rj7hZ7wRNwk5Y-AUqJ1Y0yAOTqilAhDWFm3EBbM5_Cr9cFueq1Y7O-TG0kgaYor1_h3Ap7OleAYG2Rqray3P2XWUHrU2DprwG4t7BK10UB1y4j1dJ6Z-BKFZCWhvFaZMCLbjjAmO0UUPw",
+	//	ExpiresIn:   7200,
+	//	ResponseWX: &response2.ResponseWX{
+	//		ErrCode: 0,
+	//		ErrMSG:  "ok",
+	//	},
+	//}
 
 	res := accessToken.sendRequest(credentials)
 	token := res.(*response2.ResponseGetToken)
@@ -169,6 +174,7 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) httpCo
 func (accessToken *AccessToken) getCacheKey() string {
 	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)
+
 	return accessToken.CachePrefix + string(buffer[:])
 }
 
