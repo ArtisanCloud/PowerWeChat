@@ -74,7 +74,7 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	if client.Middlewares == nil {
 		client.registerHttpMiddlewares()
 	}
-	//
+	// http client request
 	response := client.PerformRequest(url, method, options, outResponse)
 
 	if returnRaw {
