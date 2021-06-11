@@ -14,17 +14,20 @@ func main() {
 
 	app := work.NewWork(config)
 	//fmt2.Dump(app)
+	fmt2.Dump(app.GetConfig())
 
 	//token := app.AccessToken.GetToken()
 	//fmt2.Dump(token)
-	//fmt2.Dump(app.GetConfig())
 
 	//cType := reflect.TypeOf((*app.Components)["base"].(*base.Client))
 	//fmt.Printf("kind %s \n", cType.Kind())
 	//fmt.Printf("type %v \n", cType)
 
-	ips := app.Base.GetCallbackIp()
-	ips = app.Base.GetCallbackIp()
-	fmt2.Dump(ips)
+	//ips := app.Base.GetCallbackIp()
+	//fmt2.Dump(ips)
+	//domainIps := app.Base.GetAPIDomainIP()
+	//fmt2.Dump(domainIps)
+
+
 
 }

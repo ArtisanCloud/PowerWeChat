@@ -118,7 +118,7 @@ func (accessToken *AccessToken) requestToken(credentials *object.StringMap) http
 
 	// tbf
 	return &response2.ResponseGetToken{
-		AccessToken: "NTZc03xEsnxqpavAgJlaVqjQmq9UG5_shDGmaEkoB0AcqncvkD7Y_fprh_-WRtp206tSqGRa3Rj7hZ7wRNwk5Y-AUqJ1Y0yAOTqilAhDWFm3EBbM5_Cr9cFueq1Y7O-TG0kgaYor1_h3Ap7OleAYG2Rqray3P2XWUHrU2DprwG4t7BK10UB1y4j1dJ6Z-BKFZCWhvFaZMCLbjjAmO0UUPw",
+		AccessToken: "FwhFYGuWs47wxxUQHf5gbOIwMBe8ohu3EUnhF-x6uw4VX55-m46bnQUHLJ1nM5R0WAVfrLHvdn6XJtkMkzRkN_E75edrNzWK6IZxx3RwUJNowZEg3dcU3NEygFGfzUEGLS5fiB4GtNPOi-HKUhQumAMcP0lncEij2Hjg95FTqS4YBRNVG4OL92h8RAiP-yllfDvt2URk6tntGe4HaxAGdA",
 		ExpiresIn:   7200,
 		ResponseWX: &response2.ResponseWX{
 			ErrCode: 0,

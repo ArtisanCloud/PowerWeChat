@@ -30,6 +30,8 @@ func NewWork(config *object.HashMap) *Work {
 		ServiceContainer: container,
 	}
 
+
+
 	// register Auth
 	app.AccessToken = auth.RegisterProvider(app)
 	// register Base
