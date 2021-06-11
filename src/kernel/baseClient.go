@@ -80,7 +80,7 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	if returnRaw {
 		return response
 	} else {
-		config := *(*client.App).GetContainer().GetConfig()
+		config := *(*client.App).GetContainer().Config
 		client.CastResponseToType(response, config["response_type"])
 	}
 	return response
@@ -114,7 +114,7 @@ func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) error {
 	accessToken := (*d.App).GetAccessToken()
 
 	if accessToken != nil {
-		config := (*d.App).GetContainer().GetConfig()
+		config := (*d.App).GetContainer().Config
 		accessToken.ApplyToRequest(req, config)
 	}
 

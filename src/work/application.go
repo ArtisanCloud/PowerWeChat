@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
 	"github.com/ArtisanCloud/go-wechat/src/work/auth"
 	"github.com/ArtisanCloud/go-wechat/src/work/base"
+	"github.com/ArtisanCloud/go-wechat/src/work/oauth"
 )
 
 type Work struct {
@@ -12,11 +13,12 @@ type Work struct {
 
 	Base        *base.Client
 	AccessToken *auth.AccessToken
+	OAuth       *oauth.Manager
 }
 
 func NewWork(config *object.HashMap) *Work {
 	// init an app container
-	container:=&kernel.ServiceContainer{
+	container := &kernel.ServiceContainer{
 		UserConfig: config,
 		DefaultConfig: &object.HashMap{
 			"http": map[string]string{
@@ -30,14 +32,13 @@ func NewWork(config *object.HashMap) *Work {
 		ServiceContainer: container,
 	}
 
-
-
 	// register Auth
 	app.AccessToken = auth.RegisterProvider(app)
 	// register Base
 	app.Base = base.RegisterProvider(app)
 
-
+	// register oauth
+	app.OAuth = oauth.RegisterProvider(app)
 
 	return app
 }
@@ -46,6 +47,6 @@ func (app *Work) GetContainer() *kernel.ServiceContainer {
 	return app.ServiceContainer
 }
 
-func (app *Work) GetAccessToken() *kernel.AccessToken{
+func (app *Work) GetAccessToken() *kernel.AccessToken {
 	return app.AccessToken.AccessToken
 }
