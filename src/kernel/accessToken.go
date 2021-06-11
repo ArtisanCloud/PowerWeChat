@@ -117,14 +117,14 @@ func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
 func (accessToken *AccessToken) requestToken(credentials *object.StringMap) httpContract.ResponseContract {
 
 	// tbf
-	//return &response2.ResponseGetToken{
-	//	AccessToken: "NTZc03xEsnxqpavAgJlaVqjQmq9UG5_shDGmaEkoB0AcqncvkD7Y_fprh_-WRtp206tSqGRa3Rj7hZ7wRNwk5Y-AUqJ1Y0yAOTqilAhDWFm3EBbM5_Cr9cFueq1Y7O-TG0kgaYor1_h3Ap7OleAYG2Rqray3P2XWUHrU2DprwG4t7BK10UB1y4j1dJ6Z-BKFZCWhvFaZMCLbjjAmO0UUPw",
-	//	ExpiresIn:   7200,
-	//	ResponseWX: &response2.ResponseWX{
-	//		ErrCode: 0,
-	//		ErrMSG:  "ok",
-	//	},
-	//}
+	return &response2.ResponseGetToken{
+		AccessToken: "NTZc03xEsnxqpavAgJlaVqjQmq9UG5_shDGmaEkoB0AcqncvkD7Y_fprh_-WRtp206tSqGRa3Rj7hZ7wRNwk5Y-AUqJ1Y0yAOTqilAhDWFm3EBbM5_Cr9cFueq1Y7O-TG0kgaYor1_h3Ap7OleAYG2Rqray3P2XWUHrU2DprwG4t7BK10UB1y4j1dJ6Z-BKFZCWhvFaZMCLbjjAmO0UUPw",
+		ExpiresIn:   7200,
+		ResponseWX: &response2.ResponseWX{
+			ErrCode: 0,
+			ErrMSG:  "ok",
+		},
+	}
 
 	res := accessToken.sendRequest(credentials)
 	token := res.(*response2.ResponseGetToken)

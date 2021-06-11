@@ -16,3 +16,14 @@ func (comp *Client) GetCallbackIp() *ResponseGetCallBackIp {
 
 	return result
 }
+
+
+func (comp *Client) GetAPIDomainIP() *ResponseGetAPIDomainIP {
+
+	result := &ResponseGetAPIDomainIP{}
+
+	comp.HttpGet("cgi-bin/get_api_domain_ip", nil, result)
+
+	return result
+}
+
