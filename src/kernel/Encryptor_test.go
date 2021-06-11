@@ -66,7 +66,7 @@ func TestEncryptor_Encrypt(t *testing.T) {
 
 	// Because the parsed cipher text is in xml format, it is parsed back again.
 	// 因为解析出来的密文是xml格式，所以重新再解析回来。
-	var msgBiz WechatWorkReplyMsg
+	var msgBiz WeComReplyMsg
 	err = xml.Unmarshal(encryptMsg, &msgBiz)
 	if err != nil {
 		log.Fatal(err)
@@ -75,7 +75,7 @@ func TestEncryptor_Encrypt(t *testing.T) {
 
 	// Simulate a raw cipher message sent from WeChat
 	// 模拟一个微信发送过来的原始密文消息
-	msgRecv := &WechatWorkRecvMsg{
+	msgRecv := &WeComRecvMsg{
 		ToUserName: "232323",
 		Encrypt:    msgBiz.Encrypt.Value,
 		AgentId:    appId,

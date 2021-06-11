@@ -5,7 +5,6 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"fmt"
 )
 
 const (
@@ -110,16 +109,3 @@ func (a *AES) PKCS7UnPadding(text []byte) ([]byte, *CryptError) {
 	return text[:plaintextLen-paddingLen], nil
 }
 
-func (a *AES) validateKey(key []byte) *CryptError {
-	keyLen := len(key)
-	if !(keyLen == 16 || keyLen == 24 || keyLen == 32) {
-		return NewCryptError(ErrorInvalidAesKey, fmt.Sprintf("Key length must be 16, 24, or 32 bytes; got key len (%d).", len(key)))
-	}
-	return nil
-}
-func (a *AES) validateIv(iv []byte) *CryptError {
-	if iv != nil && len(iv) != 16 {
-		return NewCryptError(ErrorInvalidIv, "IV length must be 16 bytes.")
-	}
-	return nil
-}

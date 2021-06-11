@@ -35,7 +35,7 @@ type CDATA struct {
 	Value string `xml:",cdata"`
 }
 
-type WechatWorkReplyMsg struct {
+type WeComReplyMsg struct {
 	XMLName   xml.Name `xml:"xml"`
 	Encrypt   CDATA    `xml:"Encrypt"`
 	Signature CDATA    `xml:"MsgSignature"`
@@ -43,7 +43,7 @@ type WechatWorkReplyMsg struct {
 	Nonce     CDATA    `xml:"Nonce"`
 }
 
-type WechatWorkRecvMsg struct {
+type WeComRecvMsg struct {
 	ToUserName string `xml:"ToUserName"`
 	Encrypt    string `xml:"Encrypt"`
 	AgentId    string `xml:"AgentID"`
@@ -88,6 +88,7 @@ func (encryptor *Encryptor) randString(n int) string {
 
 // Encrypt encrypt xml msg and return xml
 func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *Support.CryptError) {
+
 	randStr := encryptor.randString(16)
 	var buffer bytes.Buffer
 	buffer.WriteString(randStr)
@@ -108,7 +109,7 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *Supp
 
 	signature := encryptor.Signature(encryptor.token, timestamp, nonce, ciphertext)
 
-	msg4Send := &WechatWorkReplyMsg{
+	msg4Send := &WeComReplyMsg{
 		Encrypt:   CDATA{Value: ciphertext},
 		Signature: CDATA{Value: signature},
 		Timestamp: timestamp,
@@ -125,7 +126,7 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *Supp
 
 // Decrypt decrypt xml msg and return xml
 func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timestamp string) ([]byte, *Support.CryptError) {
-	var msg4Recv WechatWorkRecvMsg
+	var msg4Recv WeComRecvMsg
 	err := xml.Unmarshal(content, &msg4Recv)
 
 	if err != nil {
@@ -172,7 +173,7 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 // 在微信管理后台添加URL的时候，微信会触发一条GET请求用于验证服务器能否正常处理加密信息，需要将消息解密出来返回。
 // eg: "/app-callback?msg_signature=1495c4dfd4958d4e5faf618978ae66943a042f87&timestamp=1623292419&nonce=1623324060&echostr=o1XtmVltGmUAqoWee54yd4Q5ZBgrw4%2F9lFo5qdZoVPd1DybzarjuYCfFlR2AFbAcWHwFgmbrVBD%2Bf9910QIF6g%3D%3D"
 func (encryptor *Encryptor) VerifyUrl(content string, msgSignature, nonce, timestamp string) ([]byte, *Support.CryptError) {
-	msg4Recv := &WechatWorkRecvMsg{
+	msg4Recv := &WeComRecvMsg{
 		Encrypt:    content,
 	}
 	msg4RecvByte, err := xml.Marshal(msg4Recv)
