@@ -18,21 +18,18 @@ func RegisterProvider(app kernel.ApplicationInterface) *Manager {
 			"client_secret": "",
 			"corp_id":       config["corp_id"].(string),
 			"corp_secret":   config["secret"].(string),
-			"redirect":      prepareCallbackUrl(app),
+			//"redirect":      prepareCallbackUrl(app),
 		},
 	}, &app)
 
-	scopes:= []string{
-		"snsapi_base",
-	}
 
-	if config["oauth.scopes"] !=nil{
-		scopes = config["oauth.scopes"].([]string)
-	}
 
-	if len(scopes)>0{
+	//scopes := manager.Config
 
-	}
+
+	//if len(scopes)>0{
+	//
+	//}
 
 	return manager
 
