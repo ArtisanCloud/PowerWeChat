@@ -12,26 +12,27 @@ func RegisterProvider(app kernel.ApplicationInterface) *Manager {
 
 	config := *app.GetContainer().Config
 
-	manager := NewManager(&object.HashMap{
+	socialite := NewManager(&object.HashMap{
 		"wecom": &object.HashMap{
 			"client_id":     config["corp_id"].(string),
 			"client_secret": "",
 			"corp_id":       config["corp_id"].(string),
 			"corp_secret":   config["secret"].(string),
-			//"redirect":      prepareCallbackUrl(app),
+			"redirect":      prepareCallbackUrl(app),
 		},
 	}, &app)
 
+	globalConfig := app.GetConfig()
+	scopes := globalConfig.Get("oauth.scopes", []string{"snsapi_base"}).([]string)
 
+	if len(scopes) > 0 {
+		socialite.Provider.Scopes(scopes)
+	} else {
+		agentID := globalConfig.Get("agent_id", 0).(int)
+		socialite.Provider.SetAgentID(agentID)
+	}
 
-	//scopes := manager.Config
-
-
-	//if len(scopes)>0{
-	//
-	//}
-
-	return manager
+	return socialite
 
 }
 

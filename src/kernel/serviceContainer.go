@@ -7,6 +7,7 @@ import (
 type ApplicationInterface interface {
 	GetContainer() *ServiceContainer
 	GetAccessToken() *AccessToken
+	GetConfig() *Config
 }
 
 type ServiceContainer struct {

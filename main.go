@@ -23,7 +23,7 @@ func main() {
 
 	app := work.NewWork(config)
 	//fmt2.Dump(app)
-	fmt2.Dump(app.GetConfig())
+	//fmt2.Dump(app.GetConfig())
 
 	//token := app.AccessToken.GetToken()
 	//fmt2.Dump(token)
@@ -36,6 +36,8 @@ func main() {
 	//fmt2.Dump(ips)
 	//domainIps := app.Base.GetAPIDomainIP()
 	//fmt2.Dump(domainIps)
+
+	fmt2.Dump(app.OAuth.Config)
 
 
 

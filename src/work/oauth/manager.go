@@ -22,3 +22,4 @@ func NewManager(config *object.HashMap,app *kernel.ApplicationInterface) *Manage
 	return manager
 
 }
+

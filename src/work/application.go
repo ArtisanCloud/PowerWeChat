@@ -34,6 +34,9 @@ func NewWork(config *object.HashMap) *Work {
 		ServiceContainer: container,
 	}
 
+	// global app config
+	app.Config = providers.RegisterConfigProvider(app)
+
 	// register Auth
 	app.AccessToken = auth.RegisterProvider(app)
 	// register Base
@@ -42,7 +45,7 @@ func NewWork(config *object.HashMap) *Work {
 	// register oauth
 	app.OAuth = oauth.RegisterProvider(app)
 
-	app.Config = providers.RegisterProvider(app)
+
 
 	return app
 }
@@ -53,4 +56,8 @@ func (app *Work) GetContainer() *kernel.ServiceContainer {
 
 func (app *Work) GetAccessToken() *kernel.AccessToken {
 	return app.AccessToken.AccessToken
+}
+
+func (app *Work) GetConfig() *kernel.Config {
+	return app.Config
 }
