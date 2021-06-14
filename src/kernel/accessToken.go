@@ -75,7 +75,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	// request token from wx
 	response := accessToken.requestToken(accessToken.GetCredentials())
 
-	//// save token into cache
+	// save token into cache
 	resToken = response.(*response2.ResponseGetToken)
 	var expireIn int = 7200
 	if resToken.ExpiresIn > 0 {

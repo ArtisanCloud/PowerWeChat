@@ -11,18 +11,20 @@ import (
 func RegisterProvider(app kernel.ApplicationInterface) *Manager {
 
 	config := *app.GetContainer().Config
-
-	socialite := NewManager(&object.HashMap{
-		"wecom": &object.HashMap{
-			"client_id":     config["corp_id"].(string),
-			"client_secret": "",
-			"corp_id":       config["corp_id"].(string),
-			"corp_secret":   config["secret"].(string),
-			"redirect":      prepareCallbackUrl(app),
-		},
-	}, &app)
-
 	globalConfig := app.GetConfig()
+	managerConfig := &object.HashMap{
+		"client_id":     config["corp_id"].(string),
+		"client_secret": "",
+		"corp_id":       config["corp_id"].(string),
+		"corp_secret":   config["secret"].(string),
+		"redirect":      prepareCallbackUrl(app),
+	}
+	providerConfig := object.MergeHashMap(globalConfig.All(),managerConfig )
+	socialite := NewManager(
+		&object.HashMap{
+			"wecom": managerConfig,
+		}, providerConfig, &app)
+
 	scopes := globalConfig.Get("oauth.scopes", []string{"snsapi_base"}).([]string)
 
 	if len(scopes) > 0 {
@@ -39,14 +41,15 @@ func RegisterProvider(app kernel.ApplicationInterface) *Manager {
 func prepareCallbackUrl(app kernel.ApplicationInterface) string {
 	config := *app.GetContainer().Config
 
-	callback := config["oauth.callback"].(string)
-	if strings.Index(callback, "http") == 0 {
-		return callback
-	} else {
-		// have to setup a complete url with host
-		defer (&exception.Exception{}).HandleException(nil, "oauth.prepare.callback.url", nil)
-		panic(fmt.Sprintf("OAuth callback format invalid, please make sure that schema 'http' added: %v", callback))
-
+	var callback string
+	if config["oauth.callback"] != nil {
+		callback = config["oauth.callback"].(string)
+		if strings.Index(callback, "http") == 0 {
+			return callback
+		}
 	}
+
+	defer (&exception.Exception{}).HandleException(nil, "oauth.prepare.callback.url", nil)
+	panic(fmt.Sprintf("OAuth callback format invalid, please make sure that schema 'http' added: %v", callback))
 
 }

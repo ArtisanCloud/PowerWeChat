@@ -28,6 +28,7 @@ func NewWork(config *object.HashMap) *Work {
 			},
 		},
 	}
+	container.GetConfig()
 
 	// init app
 	app := &Work{
