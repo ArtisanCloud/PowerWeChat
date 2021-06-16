@@ -9,7 +9,7 @@ replace github.com/ArtisanCloud/go-socialite => ../go-socialite
 require (
 	github.com/ArtisanCloud/go-libs v1.0.11
 	github.com/ArtisanCloud/go-socialite v1.0.0
-	github.com/gin-gonic/gin v1.7.1 // indirect
+	github.com/gin-gonic/gin v1.7.1
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-redis/redis/v8 v8.10.0 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect

@@ -50,6 +50,6 @@ func main() {
 	//domainIps := app.Base.GetAPIDomainIP()
 	//fmt2.Dump(domainIps)
 
-	fmt2.Dump(app.OAuth.Config)
+	fmt2.Dump(app.Department.List())
 
 }

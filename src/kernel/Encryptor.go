@@ -8,7 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/xml"
 	"fmt"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/Support"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/support"
 	"math/rand"
 	"sort"
 	"strings"
@@ -54,7 +54,7 @@ type Encryptor struct {
 	token     string
 	aesKey    []byte
 	blockSize int
-	aes       *Support.AES
+	aes       *support.AES
 }
 
 func NewEncryptor(appId, token, aesKey string) (*Encryptor, error) {
@@ -69,7 +69,7 @@ func NewEncryptor(appId, token, aesKey string) (*Encryptor, error) {
 		token:     token,
 		aesKey:    aesKeyByte,
 		blockSize: 32,
-		aes:       &Support.AES{},
+		aes:       &support.AES{},
 	}, nil
 }
 
@@ -87,7 +87,7 @@ func (encryptor *Encryptor) randString(n int) string {
 }
 
 // Encrypt encrypt xml msg and return xml
-func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *Support.CryptError) {
+func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *support.CryptError) {
 
 	randStr := encryptor.randString(16)
 	var buffer bytes.Buffer
@@ -103,7 +103,7 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *Supp
 
 	tmpCiphertext, err := encryptor.aes.Encrypt(buffer.Bytes(), encryptor.aesKey, encryptor.aesKey[:aes.BlockSize])
 	if err != nil {
-		return nil, (*Support.CryptError)(err)
+		return nil, (*support.CryptError)(err)
 	}
 	ciphertext := string(tmpCiphertext)
 
@@ -119,24 +119,24 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *Supp
 	//msg.Marshal()
 	xmlByte, err2 := xml.Marshal(msg4Send)
 	if err2 != nil {
-		return nil, Support.NewCryptError(ErrorXmlBuild, err2.Error())
+		return nil, support.NewCryptError(ErrorXmlBuild, err2.Error())
 	}
 	return xmlByte, nil
 }
 
 // Decrypt decrypt xml msg and return xml
-func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timestamp string) ([]byte, *Support.CryptError) {
+func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timestamp string) ([]byte, *support.CryptError) {
 	var msg4Recv WeComRecvMsg
 	err := xml.Unmarshal(content, &msg4Recv)
 
 	if err != nil {
-		return nil, Support.NewCryptError(ErrorDecryptAes, err.Error())
+		return nil, support.NewCryptError(ErrorDecryptAes, err.Error())
 	}
 
 	signature := encryptor.Signature(encryptor.token, timestamp, nonce, msg4Recv.Encrypt)
 
 	if strings.Compare(signature, msgSignature) != 0 {
-		return nil, Support.NewCryptError(ErrorCalcSignature, "signature not equal")
+		return nil, support.NewCryptError(ErrorCalcSignature, "signature not equal")
 	}
 
 	iv := encryptor.aesKey[:aes.BlockSize]
@@ -153,12 +153,12 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 
 	textLen := uint32(len(plaintext))
 	if textLen < 20 {
-		return nil, Support.NewCryptError(IllegalBuffer, "plain is to small 1")
+		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 1")
 	}
 	//random := plaintext[:16]
 	msgLen := binary.BigEndian.Uint32(plaintext[16:20])
 	if textLen < (20 + msgLen) {
-		return nil, Support.NewCryptError(IllegalBuffer, "plain is to small 2")
+		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 2")
 	}
 
 	msg := plaintext[20 : 20+msgLen]
@@ -172,13 +172,13 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 // When adding URLs to the WeChat admin backend, WeChat will trigger a GET request to verify whether the server can process the encrypted information properly, and the message needs to be decrypted and returned.
 // 在微信管理后台添加URL的时候，微信会触发一条GET请求用于验证服务器能否正常处理加密信息，需要将消息解密出来返回。
 // eg: "/app-callback?msg_signature=1495c4dfd4958d4e5faf618978ae66943a042f87&timestamp=1623292419&nonce=1623324060&echostr=o1XtmVltGmUAqoWee54yd4Q5ZBgrw4%2F9lFo5qdZoVPd1DybzarjuYCfFlR2AFbAcWHwFgmbrVBD%2Bf9910QIF6g%3D%3D"
-func (encryptor *Encryptor) VerifyUrl(content string, msgSignature, nonce, timestamp string) ([]byte, *Support.CryptError) {
+func (encryptor *Encryptor) VerifyUrl(content string, msgSignature, nonce, timestamp string) ([]byte, *support.CryptError) {
 	msg4Recv := &WeComRecvMsg{
 		Encrypt:    content,
 	}
 	msg4RecvByte, err := xml.Marshal(msg4Recv)
 	if err != nil {
-		return nil, Support.NewCryptError(ErrorXmlBuild, err.Error())
+		return nil, support.NewCryptError(ErrorXmlBuild, err.Error())
 	}
 	return encryptor.Decrypt(msg4RecvByte, msgSignature, nonce, timestamp)
 }

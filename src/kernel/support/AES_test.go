@@ -1,4 +1,4 @@
-package Support
+package support
 
 import (
 	"crypto/aes"

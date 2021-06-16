@@ -43,7 +43,7 @@ func (client *BaseClient) HttpGet(url string, query object.StringMap, outRespons
 	)
 }
 
-func (client *BaseClient) HttpPost(url string, data object.HashMap, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpPost(url string, data interface{}, outResponse interface{}) interface{} {
 	return client.Request(
 		url,
 		"POST",
