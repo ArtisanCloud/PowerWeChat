@@ -1,25 +1,29 @@
 package oauth
 
 import (
+	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/exception"
 	"strings"
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) *Manager {
+func RegisterProvider(app kernel.ApplicationInterface) (*Manager, error) {
 
 	config := *app.GetContainer().Config
 	globalConfig := app.GetConfig()
+	prepareCallbackURL, err := prepareCallbackUrl(app)
+	if err != nil {
+		return nil, err
+	}
 	managerConfig := &object.HashMap{
 		"client_id":     config["corp_id"].(string),
 		"client_secret": "",
 		"corp_id":       config["corp_id"].(string),
 		"corp_secret":   config["secret"].(string),
-		"redirect":      prepareCallbackUrl(app),
+		"redirect":      prepareCallbackURL,
 	}
-	providerConfig := object.MergeHashMap(globalConfig.All(),managerConfig )
+	providerConfig := object.MergeHashMap(globalConfig.All(), managerConfig)
 	socialite := NewManager(
 		&object.HashMap{
 			"wecom": managerConfig,
@@ -34,22 +38,21 @@ func RegisterProvider(app kernel.ApplicationInterface) *Manager {
 		socialite.Provider.SetAgentID(agentID)
 	}
 
-	return socialite
+	return socialite, nil
 
 }
 
-func prepareCallbackUrl(app kernel.ApplicationInterface) string {
+func prepareCallbackUrl(app kernel.ApplicationInterface) (string, error) {
 	config := *app.GetContainer().Config
 
 	var callback string
 	if config["oauth.callback"] != nil {
 		callback = config["oauth.callback"].(string)
 		if strings.Index(callback, "http") == 0 {
-			return callback
+			return callback, nil
 		}
 	}
 
-	defer (&exception.Exception{}).HandleException(nil, "oauth.prepare.callback.url", nil)
-	panic(fmt.Sprintf("OAuth callback format invalid, please make sure that schema 'http' added: %v", callback))
+	return callback, errors.New(fmt.Sprintf("OAuth callback format invalid, please make sure that schema 'http' added: %v", callback))
 
 }

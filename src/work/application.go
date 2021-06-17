@@ -16,11 +16,13 @@ type Work struct {
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	OAuth       *oauth.Manager
-	Config 		*kernel.Config
+	Config      *kernel.Config
 	Department  *department.Client
 }
 
-func NewWork(config *object.HashMap) *Work {
+func NewWork(config *object.HashMap) (*Work, error) {
+	var err error
+
 	// init an app container
 	container := &kernel.ServiceContainer{
 		UserConfig: config,
@@ -46,12 +48,12 @@ func NewWork(config *object.HashMap) *Work {
 	app.Base = base.RegisterProvider(app)
 
 	// register oauth
-	app.OAuth = oauth.RegisterProvider(app)
+	app.OAuth, err = oauth.RegisterProvider(app)
 
 	// register Department
 	app.Department = department.RegisterProvider(app)
 
-	return app
+	return app, err
 }
 
 func (app *Work) GetContainer() *kernel.ServiceContainer {

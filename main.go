@@ -34,7 +34,10 @@ func main() {
 
 	config := GetConfig()
 
-	app := work.NewWork(config)
+	app, err := work.NewWork(config)
+	if err!=nil{
+		fmt.Println(err.Error())
+	}
 	//fmt2.Dump(app)
 	//fmt2.Dump(app.GetConfig())
 

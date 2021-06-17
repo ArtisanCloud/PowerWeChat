@@ -11,6 +11,7 @@ type Client struct {
 	*kernel.BaseClient
 }
 
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90205
 func (comp *Client) Create(data *object.HashMap) *response.ResponseDepartmentCreate {
 
 	result := &response.ResponseDepartmentCreate{}
@@ -20,6 +21,7 @@ func (comp *Client) Create(data *object.HashMap) *response.ResponseDepartmentCre
 	return result
 }
 
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90206
 func (comp *Client) Update(id int, data *object.HashMap) *response.ResponseDepartmentUpdate {
 
 	result := &response.ResponseDepartmentUpdate{}
@@ -30,6 +32,7 @@ func (comp *Client) Update(id int, data *object.HashMap) *response.ResponseDepar
 	return result
 }
 
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90207
 func (comp *Client) Delete(id int) *response.ResponseDepartmentDelete {
 
 	result := &response.ResponseDepartmentDelete{}
@@ -39,6 +42,7 @@ func (comp *Client) Delete(id int) *response.ResponseDepartmentDelete {
 	return result
 }
 
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90208
 func (comp *Client) List() *response.ResponseDepartmentList {
 
 	result := &response.ResponseDepartmentList{}

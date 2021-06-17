@@ -110,15 +110,15 @@ type MiddlewareRetry struct {
 	*BaseClient
 }
 
-func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) error {
+func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
 	accessToken := (*d.App).GetAccessToken()
 
 	if accessToken != nil {
 		config := (*d.App).GetContainer().Config
-		accessToken.ApplyToRequest(req, config)
+		_, err = accessToken.ApplyToRequest(req, config)
 	}
 
-	return nil
+	return err
 }
 func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
 	fmt.Println("logMiddleware")
