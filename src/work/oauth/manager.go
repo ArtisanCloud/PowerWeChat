@@ -24,8 +24,12 @@ func NewManager(config *object.HashMap, providerConfig *object.HashMap, app *ker
 
 }
 
-func (manager *Manager) Redirect(redirect string) {
-	redirectURL := manager.Provider.Redirect(redirect)
+func (manager *Manager) Redirect(redirect string) error {
+	redirectURL, err := manager.Provider.Redirect(redirect)
+	if err != nil {
+		return err
+	}
 
 	http.Redirect(nil, nil, redirectURL, http.StatusFound)
+	return nil
 }
