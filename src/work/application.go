@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/work/auth"
 	"github.com/ArtisanCloud/go-wechat/src/work/base"
 	"github.com/ArtisanCloud/go-wechat/src/work/department"
+	"github.com/ArtisanCloud/go-wechat/src/work/message"
 	"github.com/ArtisanCloud/go-wechat/src/work/oauth"
 )
 
@@ -18,6 +19,8 @@ type Work struct {
 	OAuth       *oauth.Manager
 	Config      *kernel.Config
 	Department  *department.Client
+	Message     *message.Client
+	Messager    *message.Messager
 }
 
 func NewWork(config *object.HashMap) (*Work, error) {
@@ -52,6 +55,9 @@ func NewWork(config *object.HashMap) (*Work, error) {
 
 	// register Department
 	app.Department = department.RegisterProvider(app)
+
+	// register Message
+	app.Message, app.Messager = message.RegisterProvider(app)
 
 	return app, err
 }

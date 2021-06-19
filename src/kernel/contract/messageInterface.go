@@ -3,8 +3,7 @@ package contract
 import "github.com/ArtisanCloud/go-libs/object"
 
 type MessageInterface interface {
-
 	GetType() string
-	TransformForJsonRequest() *object.HashMap
-	TransformToXml() (interface{},error)
+	TransformForJsonRequest(appends *object.HashMap, withType bool) (*object.HashMap, error)
+	TransformToXml(appends *object.HashMap, returnAsArray bool) (interface{}, error)
 }

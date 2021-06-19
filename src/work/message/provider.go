@@ -1,11 +1,23 @@
 package message
 
-import "github.com/ArtisanCloud/go-wechat/src/kernel"
+import (
+	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"reflect"
+)
 
-func RegisterProvider(app kernel.ApplicationInterface) *Client {
+func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager) {
+	config := app.GetConfig()
 
-	return &Client{
+	client := &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
+	messager := NewMessager(client)
 
+	agentID := config.Get("agent_id", nil)
+	switch reflect.TypeOf(agentID).Kind() {
+	case reflect.Int:
+		messager.OfAgent(agentID.(int))
+	}
+
+	return client, messager
 }

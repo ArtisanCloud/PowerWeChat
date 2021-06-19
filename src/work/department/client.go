@@ -16,7 +16,7 @@ func (comp *Client) Create(data *object.HashMap) *response.ResponseDepartmentCre
 
 	result := &response.ResponseDepartmentCreate{}
 
-	comp.HttpPostJson("cgi-bin/department/create", *data, nil, result)
+	comp.HttpPostJson("cgi-bin/department/create", data, nil, result)
 
 	return result
 }
@@ -27,7 +27,7 @@ func (comp *Client) Update(id int, data *object.HashMap) *response.ResponseDepar
 	result := &response.ResponseDepartmentUpdate{}
 
 	(*data)["id"] = id
-	comp.HttpPostJson("cgi-bin/department/update", *data, nil, result)
+	comp.HttpPostJson("cgi-bin/department/update", data, nil, result)
 
 	return result
 }

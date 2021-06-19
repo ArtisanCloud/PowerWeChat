@@ -53,6 +53,8 @@ func main() {
 	//domainIps := app.Base.GetAPIDomainIP()
 	//fmt2.Dump(domainIps)
 
-	fmt2.Dump(app.Department.List())
+	//fmt2.Dump(app.Department.List())
+
+
 
 }

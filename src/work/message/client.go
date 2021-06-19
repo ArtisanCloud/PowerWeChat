@@ -3,19 +3,30 @@ package message
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/work/department/response"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
+	"github.com/ArtisanCloud/go-wechat/src/work/message/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90205
-func (comp *Client) Message(data *object.HashMap) *response.ResponseDepartmentCreate {
+func (comp *Client) Message(message *messages.Message) *Messager {
 
-	result := &response.ResponseDepartmentCreate{}
+	m := &Messager{
+		Client: comp,
+	}
+	m.Message(message)
 
-	comp.HttpPostJson("cgi-bin/department/create", *data, nil, result)
+	return m
+}
+
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90236
+func (comp *Client) Send(messages *object.HashMap) *response.ResponseMessageSend {
+
+	result := &response.ResponseMessageSend{}
+
+	comp.HttpPostJson("cgi-bin/message/send", messages, nil, result)
 
 	return result
 }
