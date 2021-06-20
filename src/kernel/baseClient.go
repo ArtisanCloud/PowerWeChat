@@ -55,7 +55,7 @@ func (client *BaseClient) HttpPost(url string, data interface{}, outResponse int
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data *object.HashMap, query object.StringMap, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outResponse interface{}) interface{} {
 	return client.Request(
 		url,
 		"POST",
