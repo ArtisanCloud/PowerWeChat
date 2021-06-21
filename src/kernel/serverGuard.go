@@ -1,7 +1,6 @@
 package kernel
 
 import (
-	"github.com/ArtisanCloud/go-libs/http"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
 )
 
@@ -30,13 +29,14 @@ type ServerGuard struct {
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
-	config := (*app).GetContainer().GetConfig()
-
-	client := &BaseClient{
-		HttpRequest: http.NewHttpRequest(config),
-		App:         app,
-		Token:       token,
-	}
-	return client
+	//config := (*app).GetContainer().GetConfig()
+	//
+	//client := &BaseClient{
+	//	HttpRequest: http.NewHttpRequest(config),
+	//	App:         app,
+	//	//Token:       token,
+	//}
+	//return client
+	return nil
 
 }

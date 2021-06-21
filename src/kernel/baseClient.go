@@ -31,7 +31,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 
 }
 
-func (client *BaseClient) HttpGet(url string, query object.StringMap, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpGet(url string, query interface{}, outResponse interface{}) interface{} {
 	return client.Request(
 		url,
 		"GET",

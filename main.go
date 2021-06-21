@@ -5,6 +5,7 @@ import (
 	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/work"
+	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/request"
 	"os"
 	"strconv"
 )
@@ -58,7 +59,29 @@ func main() {
 	//domainIps := app.Base.GetAPIDomainIP()
 	//fmt2.Dump(domainIps)
 
-	fmt2.Dump(app.Department.List())
+	//fmt2.Dump(app.Department.List())
 
+	para := &request.RequestAddContactWay{
+		Type:          1,
+		Scene:         1,
+		Style:         1,
+		Remark:        "渠道客户",
+		SkipVerify:    true,
+		State:         "teststate",
+		User:          []string{"michaelhu"},
+		Party:         []int{2, 3},
+		IsTemp:        true,
+		ExpiresIn:     86400,
+		ChatExpiresIn: 86400,
+		UnionID:       "",
+		Conclusions: &object.HashMap{
+			"text": object.StringMap{
+				"content": "bye bye",
+			},
+		},
+	}
+
+	response:=app.ContactWay.Create(para)
+	fmt2.Dump(response)
 
 }

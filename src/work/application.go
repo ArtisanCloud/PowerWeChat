@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/work/auth"
 	"github.com/ArtisanCloud/go-wechat/src/work/base"
 	"github.com/ArtisanCloud/go-wechat/src/work/department"
+	"github.com/ArtisanCloud/go-wechat/src/work/externalContact"
 	"github.com/ArtisanCloud/go-wechat/src/work/message"
 	"github.com/ArtisanCloud/go-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/go-wechat/src/work/server"
@@ -23,7 +24,9 @@ type Work struct {
 	Message     *message.Client
 	Messager    *message.Messager
 	Encryptor   *kernel.Encryptor
-	server      *server.Guard
+	Server      *server.Guard
+	ExternalContact *externalContact.Client
+	ContactWay *externalContact.ContactWayClient
 }
 
 func NewWork(config *object.HashMap) (*Work, error) {
@@ -63,7 +66,11 @@ func NewWork(config *object.HashMap) (*Work, error) {
 	app.Message, app.Messager = message.RegisterProvider(app)
 
 	// register Encryptor
-	app.Encryptor, app.server = server.RegisterProvider(app)
+	app.Encryptor, app.Server = server.RegisterProvider(app)
+
+	// register external contact
+	app.ExternalContact, app.ContactWay = externalContact.RegisterProvider(app)
+
 
 	return app, err
 }
