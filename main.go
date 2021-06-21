@@ -5,7 +5,6 @@ import (
 	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/work"
-	"github.com/ArtisanCloud/go-wechat/src/work/message/request"
 	"os"
 	"strconv"
 )
@@ -59,24 +58,7 @@ func main() {
 	//domainIps := app.Base.GetAPIDomainIP()
 	//fmt2.Dump(domainIps)
 
-	//fmt2.Dump(app.Department.List())
+	fmt2.Dump(app.Department.List())
 
-	para := &request.RequestMessageSendText{
-		&request.RequestMessageSend{
-			ToUser:                 "michaelhu",
-			MsgType:                "text",
-			AgentID:                1000004,
-			Safe:                   0,
-			EnableIDTrans:          0,
-			EnableDuplicateCheck:   0,
-			DuplicateCheckInterval: 1800,
-		},
-		&request.RequestText{
-			Content: "您已经成功测试收到系统推送消息",
-		},
-	}
-
-	response := app.Message.Send(para)
-	fmt2.Dump(123, response)
 
 }
