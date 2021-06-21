@@ -26,6 +26,7 @@ func GetConfig() *object.HashMap {
 
 		"oauth.callback": "https://wechat-work-sso-2.spacecycle.cn/callback/authorized/user",
 		"oauth.scopes":   []string{},
+		"debug":          true,
 	}
 }
 
@@ -56,7 +57,6 @@ func main() {
 
 	//fmt2.Dump(app.Department.List())
 
-
 	para := &request.RequestMessageSendText{
 		&request.RequestMessageSend{
 			ToUser:                 "michaelhu",
@@ -73,6 +73,6 @@ func main() {
 	}
 
 	response := app.Message.Send(para)
-	fmt2.Dump(123,response)
+	fmt2.Dump(123, response)
 
 }
