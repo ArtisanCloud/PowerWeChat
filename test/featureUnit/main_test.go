@@ -41,6 +41,11 @@ func GetConfig() *object.HashMap {
 
 		"oauth.callback": "https://wechat-work-sso-2.spacecycle.cn/callback/authorized/user",
 		"oauth.scopes":   []string{},
+		"debug":          true,
+
+		// server config
+		"token":   os.Getenv("token"),
+		"aes_key": os.Getenv("aes_key"),
 	}
 }
 
@@ -51,6 +56,5 @@ func TestInit(t *testing.T) {
 func TestInitWork(t *testing.T) {
 	config := GetConfig()
 	Work, _ = work.NewWork(config)
-
 
 }
