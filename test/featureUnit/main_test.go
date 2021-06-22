@@ -35,7 +35,7 @@ func GetConfig() *object.HashMap {
 		"secret":   os.Getenv("secret"),
 
 		"response_type": os.Getenv("array"),
-		"log": object.StringMap{
+		"log": &object.StringMap{
 
 			"level": "debug",
 			"file":  "./wechat.log",

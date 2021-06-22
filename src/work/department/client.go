@@ -37,7 +37,7 @@ func (comp *Client) Delete(id int) *response.ResponseDepartmentDelete {
 
 	result := &response.ResponseDepartmentDelete{}
 
-	comp.HttpGet("cgi-bin/department/delete", object.StringMap{"id":strconv.Itoa(id)}, result)
+	comp.HttpGet("cgi-bin/department/delete", &object.StringMap{"id":strconv.Itoa(id)}, result)
 
 	return result
 }
