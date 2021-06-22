@@ -1,6 +1,5 @@
 package contract
 
 type EventHandlerInterface interface {
-
-	handle(payload interface{})
+	Handle(payload ...interface{}) interface{}
 }

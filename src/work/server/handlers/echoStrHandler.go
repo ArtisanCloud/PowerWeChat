@@ -21,7 +21,7 @@ func NewEchoStrHandler(app *kernel.ApplicationInterface) *EchoStrHandler {
 	return handler
 }
 
-func (handler *EchoStrHandler) handle(payload interface{}) interface{} {
+func (handler *EchoStrHandler) Handle(payload ...interface{}) interface{} {
 
 	request := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
 	encryptor := (*handler.App).GetComponent("Encryptor").(*kernel.Encryptor)
@@ -30,7 +30,7 @@ func (handler *EchoStrHandler) handle(payload interface{}) interface{} {
 
 	strDecrypted := query.Get("echostr")
 	if strDecrypted != "" {
-		decrypted:= bytes.NewBufferString(strDecrypted).Bytes()
+		decrypted := bytes.NewBufferString(strDecrypted).Bytes()
 		str, _ := encryptor.Decrypt(
 			decrypted,
 			query.Get("msg_signature"),
