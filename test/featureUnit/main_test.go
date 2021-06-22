@@ -55,6 +55,6 @@ func TestInit(t *testing.T) {
 
 func TestInitWork(t *testing.T) {
 	config := GetConfig()
-	Work, _ = work.NewWork(config)
+	Work, _ = work.NewWork(config,nil)
 
 }

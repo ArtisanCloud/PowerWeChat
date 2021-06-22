@@ -11,25 +11,27 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/work/message"
 	"github.com/ArtisanCloud/go-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/go-wechat/src/work/server"
+	"net/http"
 )
 
 type Work struct {
 	*kernel.ServiceContainer
 
-	Base        *base.Client
-	AccessToken *auth.AccessToken
-	OAuth       *oauth.Manager
-	Config      *kernel.Config
-	Department  *department.Client
-	Message     *message.Client
-	Messager    *message.Messager
-	Encryptor   *kernel.Encryptor
-	Server      *server.Guard
+	ExternalRequest *http.Request
+	Base            *base.Client
+	AccessToken     *auth.AccessToken
+	OAuth           *oauth.Manager
+	Config          *kernel.Config
+	Department      *department.Client
+	Message         *message.Client
+	Messager        *message.Messager
+	Encryptor       *kernel.Encryptor
+	Server          *server.Guard
 	ExternalContact *externalContact.Client
-	ContactWay *externalContact.ContactWayClient
+	ContactWay      *externalContact.ContactWayClient
 }
 
-func NewWork(config *object.HashMap) (*Work, error) {
+func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 	var err error
 
 	// init an app container
@@ -46,6 +48,12 @@ func NewWork(config *object.HashMap) (*Work, error) {
 	// init app
 	app := &Work{
 		ServiceContainer: container,
+	}
+
+	// register external request
+	app.ExternalRequest = r
+	if r == nil {
+		app.ExternalRequest = &http.Request{}
 	}
 
 	// global app config
@@ -71,7 +79,6 @@ func NewWork(config *object.HashMap) (*Work, error) {
 	// register external contact
 	app.ExternalContact, app.ContactWay = externalContact.RegisterProvider(app)
 
-
 	return app, err
 }
 
@@ -85,4 +92,36 @@ func (app *Work) GetAccessToken() *kernel.AccessToken {
 
 func (app *Work) GetConfig() *kernel.Config {
 	return app.Config
+}
+
+func (app *Work) GetComponent(name string) interface{} {
+
+	if name == "ExternalRequest" {
+		return app.ExternalRequest
+	} else if name == "Base" {
+		return app.Base
+	} else if name == "AccessToken" {
+		return app.AccessToken
+	} else if name == "OAuth" {
+		return app.OAuth
+	} else if name == "Config" {
+		return app.Config
+	} else if name == "Department" {
+		return app.Department
+	} else if name == "Message" {
+		return app.Message
+	} else if name == "Messager" {
+		return app.Messager
+	} else if name == "Encryptor" {
+		return app.Encryptor
+	} else if name == "Server" {
+		return app.Server
+	} else if name == "ExternalContact" {
+		return app.ExternalContact
+	} else if name == "ContactWay" {
+		return app.ContactWay
+	}
+
+	return nil
+
 }

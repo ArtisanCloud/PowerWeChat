@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/support"
 )
 
 const SUCCESS_EMPTY_RESPONSE = "success"
@@ -24,19 +25,20 @@ var MESSAGE_TYPE_MAPPING = map[string]int{
 
 
 type ServerGuard struct {
+	*support.Observable
+
 	alwaysValidate bool
 	App   *ApplicationInterface
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
-	//config := (*app).GetContainer().GetConfig()
-	//
-	//client := &BaseClient{
-	//	HttpRequest: http.NewHttpRequest(config),
-	//	App:         app,
-	//	//Token:       token,
-	//}
-	//return client
-	return nil
+
+	serverGuard := &ServerGuard{
+		//NewObservable(),
+		App:         app,
+	}
+
+	return serverGuard
 
 }
+

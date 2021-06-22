@@ -40,7 +40,7 @@ func main() {
 
 	config := GetConfig()
 
-	app, err := work.NewWork(config)
+	app, err := work.NewWork(config, nil)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -81,7 +81,7 @@ func main() {
 		},
 	}
 
-	response:=app.ContactWay.Create(para)
+	response := app.ContactWay.Create(para)
 	fmt2.Dump(response)
 
 }

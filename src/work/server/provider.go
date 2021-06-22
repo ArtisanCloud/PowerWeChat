@@ -13,8 +13,8 @@ func RegisterProvider(app kernel.ApplicationInterface) (*kernel.Encryptor, *Guar
 		(*config).Get("aes_key", "").(string),
 	)
 
-	server := NewGuard(&app)
-	//server.Push(NewEchoStrHandler(&app))
+	guard := NewGuard(&app)
+	//guard.Push(NewEchoStrHandler(&app))
 
-	return client, server
+	return client, guard
 }
