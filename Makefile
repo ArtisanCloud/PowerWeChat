@@ -7,5 +7,9 @@ test-aes:
 test-message:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_message_test.go
 
+test-externalcontact:
+	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_test.go
+
+
 build:
 	go build

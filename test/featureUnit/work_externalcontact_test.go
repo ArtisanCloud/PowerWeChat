@@ -1,6 +1,7 @@
 package featureUnit
 
 import (
+	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/request"
 	"testing"
@@ -14,9 +15,9 @@ func Test_ExternalContact_Add_Contact_Way(t *testing.T) {
 		Style:         1,
 		Remark:        "渠道客户",
 		SkipVerify:    true,
-		State:         "teststate",
-		User:          []string{"michaelhu"},
-		Party:         []int{2, 3},
+		State:         "",
+		User:          []string{"WangChaoYi"},
+		Party:         []int{1},
 		IsTemp:        true,
 		ExpiresIn:     86400,
 		ChatExpiresIn: 86400,
@@ -35,5 +36,7 @@ func Test_ExternalContact_Add_Contact_Way(t *testing.T) {
 	} else if response.ErrCode != 0 {
 		t.Error("response error message as :", response.ErrMSG)
 	}
+
+	fmt.Dump(response)
 
 }

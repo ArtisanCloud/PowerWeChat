@@ -18,12 +18,11 @@ func NewContactClient(app kernel.ApplicationInterface) *ContactWayClient {
 
 // 配置客户联系「联系我」方式.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92572
-func (comp *ContactWayClient) Create( params *request.RequestAddContactWay) *response.ResponseAddContactWay {
+func (comp *ContactWayClient) Create(params *request.RequestAddContactWay) *response.ResponseAddContactWay {
 
 	result := &response.ResponseAddContactWay{}
 
-	comp.HttpGet("cgi-bin/externalcontact/add_contact_way", params, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/add_contact_way", params, nil, result)
 
 	return result
 }
-
