@@ -127,7 +127,7 @@ func (serverGuard *ServerGuard) resolve() (response *http.Response, err error) {
 		}
 
 	} else {
-		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"].(string))
+		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"].(contract.MessageInterface))
 		header := http.Header{}
 		header.Set("Content-Type", "application/xml")
 		response = &http.Response{
@@ -136,7 +136,7 @@ func (serverGuard *ServerGuard) resolve() (response *http.Response, err error) {
 			Header:     header,
 		}
 	}
-
+	return response,nil
 }
 
 func (serverGuard *ServerGuard) getToken() string {
@@ -155,7 +155,8 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 	}
 
 	// tbd
-	messageArray := serverGuard.detectAndCastResponseToType()
+	//messageArray := serverGuard.detectAndCastResponseToType()
+	messageArray:=object.HashMap{}
 
 	response := serverGuard.Dispatch("", castedMessage)
 

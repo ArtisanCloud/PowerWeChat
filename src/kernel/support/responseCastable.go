@@ -24,7 +24,7 @@ func (responseCastable *ResponseCastable) castResponseToType(response contract.R
 	default:
 	}
 
-	return nil
+	return body
 }
 
 func (responseCastable *ResponseCastable) detectAndCastResponseToType() {
