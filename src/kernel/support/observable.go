@@ -1,41 +1,105 @@
 package support
 
-import "github.com/ArtisanCloud/go-wechat/src/kernel/contract"
+import (
+	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/decorators"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
+	"go/types"
+	"reflect"
+)
 
 type Observable struct {
-	handlers []*contract.EventHandlerInterface
+	handlers [][]*contract.EventHandlerInterface
 }
 
 func NewObservable() *Observable {
-	return &Observable{}
+	return &Observable{
+		[][]*contract.EventHandlerInterface{},
+	}
 }
 
-func (observable *Observable) Push(closure contract.EventHandlerInterface) interface{} {
-	observable.handlers = append(observable.handlers, &closure)
+func (observable *Observable) Push(closure contract.EventHandlerInterface, condition int) *Observable {
+
+	if observable.handlers[condition] == nil {
+		observable.handlers[condition] = []*contract.EventHandlerInterface{}
+	}
+
+	observable.handlers[condition] = append(observable.handlers[condition], &closure)
+
+	// tbd
+	// clause
 
 	return observable
 }
 
-func (observable *Observable) SetHandle(handlers []*contract.EventHandlerInterface) *Observable {
+func (observable *Observable) SetHandlers(handlers [][]*contract.EventHandlerInterface) *Observable {
 	observable.handlers = handlers
 
 	return observable
 }
 
-func (observable *Observable) Dispatch(event string, payload interface{}) interface{} {
-	return observable.notify(event , payload)
+func (observable *Observable) Observe(condition int, handler contract.EventHandlerInterface) *Observable {
+	return observable.Push(handler, condition)
 }
 
-func (observable *Observable) notify(event string, payload interface{}) interface{} {
+func (observable *Observable) On(condition int, handler contract.EventHandlerInterface) *Observable {
+	return observable.Push(handler, condition)
+}
 
-	var finalResult interface{}
-	for _,handlers := range observable.handlers{
-		finalResult = (*handlers).Handle(payload)
+func (observable *Observable) Dispatch(event int, payload interface{}) interface{} {
+	return observable.notify(event, payload)
+}
+
+func (observable *Observable) notify(event int, payload interface{}) interface{} {
+
+	var (
+		finalResult interface{}
+		result      interface{}
+		response    interface{}
+		//err         error
+	)
+
+Loop1:
+	for condition, handlers := range observable.handlers {
+
+		if messages.VOID == condition || ((condition & event) == event) {
+		Loop2:
+			for _, handler := range handlers {
+				// tbd
+				// intercepted
+
+				response = observable.callHandler(handler, payload)
+
+				switch response.(type) {
+
+				case decorators.TerminateResult:
+					return response.(decorators.TerminateResult).Content
+				case bool:
+					typeValue := response.(bool)
+					if typeValue {
+						continue Loop2
+					} else {
+						break Loop1
+					}
+				case types.Object:
+					if reflect.TypeOf(response).String() != "decorators.FinallyResult" {
+						result = response
+					}
+				default:
+				}
+			}
+		}
+	}
+
+	if reflect.TypeOf(result).String() != "decorators.FinallyResult" {
+		finalResult = result.(decorators.FinallyResult).Content
+	} else {
+		finalResult = result
 	}
 
 	return finalResult
 }
 
-
-
-
+func (observable *Observable) callHandler(callable *contract.EventHandlerInterface, payload interface{}) interface{} {
+	return (*callable).Handle(payload)
+}

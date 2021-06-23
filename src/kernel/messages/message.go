@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
 )
 
+const VOID = 0
 const TEXT = 2
 const IMAGE = 4
 const VOICE = 8

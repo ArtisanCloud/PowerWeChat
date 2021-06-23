@@ -21,6 +21,7 @@ import (
 const SUCCESS_EMPTY_RESPONSE = "success"
 
 var MESSAGE_TYPE_MAPPING = map[string]int{
+	"*":               messages.VOID,
 	"text":            messages.TEXT,
 	"image":           messages.IMAGE,
 	"voice":           messages.VOICE,
@@ -37,9 +38,12 @@ var MESSAGE_TYPE_MAPPING = map[string]int{
 
 type ServerGuard struct {
 	*support.Observable
+	*support.ResponseCastable
 
 	alwaysValidate bool
 	App            *ApplicationInterface
+
+	Validate func(*ServerGuard, error)
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -55,12 +59,15 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 
 func (serverGuard *ServerGuard) Serve() (response *http.Response, err error) {
 
-	validateGuard, err := serverGuard.validate()
+	validatedGuard, err := serverGuard.validate()
 	if err != nil {
 		return nil, err
 	}
 
-	response, err = validateGuard.resolve()
+	response, err = validatedGuard.resolve()
+
+	// tbd
+	// log here
 
 	return response, err
 }
@@ -70,6 +77,7 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 	if !serverGuard.alwaysValidate && serverGuard.isSafeMode() {
 		return serverGuard, nil
 	}
+
 	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
 	query := request.URL.Query()
 
@@ -136,11 +144,14 @@ func (serverGuard *ServerGuard) resolve() (response *http.Response, err error) {
 			Header:     header,
 		}
 	}
-	return response,nil
+	return response, nil
 }
 
 func (serverGuard *ServerGuard) getToken() string {
-	return ""
+	config := (*serverGuard.App).GetConfig()
+	token := config.Get("token", "").(string)
+
+	return token
 }
 
 func (serverGuard *ServerGuard) buildResponse(to string, from string, message contract.MessageInterface) string {
@@ -155,10 +166,18 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 	}
 
 	// tbd
-	//messageArray := serverGuard.detectAndCastResponseToType()
-	messageArray:=object.HashMap{}
+	typeData, err := serverGuard.DetectAndCastResponseToType(castedMessage, "array")
+	if err != nil {
+		return nil, err
+	}
+	messageArray := typeData.(map[string]interface{})
 
-	response := serverGuard.Dispatch("", castedMessage)
+	var messageType = "text"
+	if messageArray["MsgType"] != nil {
+		messageType = messageArray["msg_type"].(string)
+	}
+
+	response := serverGuard.Dispatch(MESSAGE_TYPE_MAPPING[messageType], castedMessage)
 
 	var (
 		strFromUserName string = ""
@@ -175,7 +194,7 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 		"to":       strFromUserName,
 		"from":     strToUserName,
 		"response": response,
-	},nil
+	}, nil
 }
 
 func (serverGuard *ServerGuard) buildReply(to string, from string, message contract.MessageInterface) string {

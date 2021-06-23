@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/decorators"
 	"net/http"
 )
 
@@ -37,7 +38,7 @@ func (handler *EchoStrHandler) Handle(payload ...interface{}) interface{} {
 			query.Get("nonce"),
 			query.Get("timestamp"),
 		)
-		return str
+		return decorators.NewFinallyResult(str)
 	}
 
 	return nil
