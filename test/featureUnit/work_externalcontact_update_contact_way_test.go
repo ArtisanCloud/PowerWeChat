@@ -29,7 +29,7 @@ func Test_ExternalContact_Update_Contact_Way(t *testing.T) {
 		},
 	}
 
-	response := Work.ContactWay.Update(para)
+	response := Work.ContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &object.HashMap{"para": para})
 
 	if response == nil || response.ResponseWX == nil {
 		t.Error("response nil")
