@@ -4,7 +4,6 @@ import (
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/decorators"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
-	"go/types"
 	"reflect"
 )
 
@@ -14,7 +13,7 @@ type Observable struct {
 
 func NewObservable() *Observable {
 	return &Observable{
-		[][]*contract.EventHandlerInterface{},
+		make([][]*contract.EventHandlerInterface, 1),
 	}
 }
 
@@ -81,19 +80,37 @@ Loop1:
 					} else {
 						break Loop1
 					}
-				case types.Object:
-					if reflect.TypeOf(response).String() != "decorators.FinallyResult" {
-						result = response
-					}
+				case nil:
+					break
 				default:
+					// make sure response is not nil
+					if response != nil {
+						// result is not init with a single response
+						if result == nil {
+							result = response
+						} else {
+							// if current result is not final result
+							objType := reflect.TypeOf(result).String()
+							if objType != "decorators.FinallyResult" ||
+								objType != "*decorators.FinallyResult" {
+								result = response
+							}
+						}
+					}
+
 				}
 			}
 		}
 	}
 
-	if reflect.TypeOf(result).String() != "decorators.FinallyResult" {
+	switch result.(type) {
+	case *decorators.FinallyResult:
+		finalResult = result.(*decorators.FinallyResult).Content
+		break
+	case decorators.FinallyResult:
 		finalResult = result.(decorators.FinallyResult).Content
-	} else {
+		break
+	default:
 		finalResult = result
 	}
 

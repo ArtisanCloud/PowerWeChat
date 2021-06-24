@@ -15,22 +15,32 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 	guard := &Guard{
 		kernel.NewServerGuard(app),
 	}
+
+	guard.OverrideValidate()
+	guard.OverrideShouldReturnRawResponse()
+
 	return guard
 
-}
-
-func (guard *Guard) validate() *Guard {
-	return guard
 }
 
 func (guard *Guard) isSafeMode() bool {
 	return true
 }
 
-func (guard *Guard) shouldReturnRawResponse() bool {
-	request := (*guard.App).GetComponent("ExternalRequest").(*http.Request)
-	if request == nil || request.URL.Query().Get("echostr") == "" {
-		return false
+
+// Override Validate
+func (guard *Guard) OverrideValidate() {
+	guard.Validate = func() (*kernel.ServerGuard, error) {
+		return guard.ServerGuard, nil
 	}
-	return true
+}
+
+func (guard *Guard) OverrideShouldReturnRawResponse() {
+	guard.ShouldReturnRawResponse = func() bool {
+		request := (*guard.App).GetComponent("ExternalRequest").(*http.Request)
+		if request == nil || request.URL.Query().Get("echostr") == "" {
+			return false
+		}
+		return true
+	}
 }

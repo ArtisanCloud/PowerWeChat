@@ -44,7 +44,13 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	response := app.ExternalContact.List("Matt")
+	//response := app.ExternalContact.List("Matt")
+	//fmt2.Dump(response)
+
+	response, err := app.Server.Serve()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	fmt2.Dump(response)
 
 }

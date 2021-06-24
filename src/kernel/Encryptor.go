@@ -184,6 +184,7 @@ func (encryptor *Encryptor) VerifyUrl(content string, msgSignature, nonce, times
 }
 
 // Signature get sha1
+
 func (encryptor *Encryptor) Signature(token, timestamp, nonce, data string) string {
 	sortArr := []string{token, timestamp, nonce, data}
 	sort.Strings(sortArr)

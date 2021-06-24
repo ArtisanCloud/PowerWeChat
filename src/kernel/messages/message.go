@@ -1,7 +1,6 @@
 package messages
 
 import (
-	"encoding/xml"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
 )
@@ -37,8 +36,10 @@ type Message struct {
 	Id          int
 	To          string
 	From        string
-	Properties  *object.HashMap
+	Properties  []string
 	JsonAliases *object.HashMap
+
+	ToXmlArray func() *object.HashMap
 }
 
 func NewMessage(attributes *object.HashMap) *Message {
@@ -46,6 +47,10 @@ func NewMessage(attributes *object.HashMap) *Message {
 		Attribute: &object.Attribute{},
 	}
 	m.SetAttributes(attributes)
+	m.ToXmlArray = func() *object.HashMap {
+		return m.toXmlArray()
+	}
+
 
 	return m
 }
@@ -82,17 +87,20 @@ func (msg *Message) TransformForJsonRequest(appends *object.HashMap, withType bo
 	return data, nil
 }
 
+// return string or hashmap
 func (msg *Message) TransformToXml(appends *object.HashMap, returnAsArray bool) (interface{}, error) {
 	data := object.MergeHashMap(&object.HashMap{"MsgType": msg.GetType()}, msg.ToXmlArray(), appends)
 
 	if returnAsArray {
 		return data, nil
 	} else {
-		buffer, err := xml.Marshal(appends)
-		if err != nil {
-			return nil, err
-		}
-		return string(buffer), nil
+		strXML := object.Map2Xml(data)
+		return strXML, nil
+		//buffer, err := xml2.Marshal(data)
+		//if err != nil {
+		//	return "", err
+		//}
+		//return string(buffer), nil
 	}
 }
 
@@ -115,6 +123,6 @@ func (msg *Message) PropertiesToArray(data *object.HashMap, aliases *object.Hash
 	return data, nil
 }
 
-func (msg *Message) ToXmlArray() *object.HashMap {
+func (msg *Message) toXmlArray() *object.HashMap {
 	return &object.HashMap{}
 }

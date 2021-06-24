@@ -2,13 +2,14 @@ package server
 
 import (
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
 	"github.com/ArtisanCloud/go-wechat/src/work/server/handlers"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (*kernel.Encryptor, *Guard) {
 	config := app.GetConfig()
 
-	client, _ := kernel.NewEncryptor(
+	encryptor, _ := kernel.NewEncryptor(
 		(*config).Get("corp_id", "").(string),
 		(*config).Get("token", "").(string),
 		(*config).Get("aes_key", "").(string),
@@ -16,7 +17,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (*kernel.Encryptor, *Guar
 
 	guard := NewGuard(&app)
 	echoStrHandler := handlers.NewEchoStrHandler(&app)
-	guard.Push(echoStrHandler)
+	guard.Push(echoStrHandler,messages.VOID)
 
-	return client, guard
+	return encryptor, guard
 }

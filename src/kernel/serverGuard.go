@@ -15,7 +15,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"sort"
+	"strconv"
 	"strings"
+	"time"
 )
 
 const SUCCESS_EMPTY_RESPONSE = "success"
@@ -43,7 +45,8 @@ type ServerGuard struct {
 	alwaysValidate bool
 	App            *ApplicationInterface
 
-	Validate func(*ServerGuard, error)
+	Validate                func() (*ServerGuard, error)
+	ShouldReturnRawResponse func() bool
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -53,13 +56,20 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 		App:        app,
 	}
 
+	serverGuard.Validate = func() (*ServerGuard, error) {
+		return serverGuard.validate()
+	}
+	serverGuard.ShouldReturnRawResponse = func() bool {
+		return serverGuard.shouldReturnRawResponse()
+	}
+
 	return serverGuard
 
 }
 
 func (serverGuard *ServerGuard) Serve() (response *http.Response, err error) {
 
-	validatedGuard, err := serverGuard.validate()
+	validatedGuard, err := serverGuard.Validate()
 	if err != nil {
 		return nil, err
 	}
@@ -79,6 +89,9 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 	}
 
 	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	if request == nil {
+		return nil, errors.New("request is invalid")
+	}
 	query := request.URL.Query()
 
 	sign := serverGuard.signature([]string{
@@ -97,8 +110,11 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error) {
 	dataset = &object.HashMap{}
 	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	if request == nil {
+		return nil, errors.New("request is invalid")
+	}
 	b, err := io.ReadAll(request.Body)
-	if err != nil || b != nil {
+	if err != nil || b == nil {
 		return nil, err
 	}
 
@@ -107,8 +123,8 @@ func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error
 		return nil, err
 	}
 
-	if serverGuard.isSafeMode() && (*message)["Encrypt"] != nil {
-		decryptMessage := serverGuard.decryptMessage(message)
+	if serverGuard.isSafeMode() && message["Encrypt"] != nil {
+		decryptMessage := serverGuard.decryptMessage(&message)
 		err = json.Unmarshal([]byte(decryptMessage), dataset)
 		if err == nil && dataset != nil {
 			return dataset, err
@@ -119,7 +135,13 @@ func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error
 			return dataset, err
 		}
 	}
-	return nil, nil
+
+	config := (*serverGuard.App).GetConfig()
+	responseType := config.Get("response_type", "array").(string)
+	arrayResponse, err := serverGuard.DetectAndCastResponseToType(&message, responseType)
+	dataset = arrayResponse.(*object.HashMap)
+
+	return dataset, err
 
 }
 
@@ -129,13 +151,13 @@ func (serverGuard *ServerGuard) resolve() (response *http.Response, err error) {
 		return nil, err
 	}
 
-	if serverGuard.shouldReturnRawResponse() {
+	if serverGuard.ShouldReturnRawResponse() {
 		response = &http.Response{
 			Body: ioutil.NopCloser(bytes.NewBufferString((*result)["response"].(string))),
 		}
 
 	} else {
-		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"].(contract.MessageInterface))
+		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
 		header := http.Header{}
 		header.Set("Content-Type", "application/xml")
 		response = &http.Response{
@@ -154,8 +176,39 @@ func (serverGuard *ServerGuard) getToken() string {
 	return token
 }
 
-func (serverGuard *ServerGuard) buildResponse(to string, from string, message contract.MessageInterface) string {
-	return ""
+func (serverGuard *ServerGuard) buildResponse(to string, from string, message interface{}) string {
+
+	var toMessage contract.MessageInterface
+	switch message.(type) {
+	case nil:
+		return SUCCESS_EMPTY_RESPONSE
+
+	case string:
+		strMessage := message.(string)
+		if SUCCESS_EMPTY_RESPONSE == strMessage {
+			return SUCCESS_EMPTY_RESPONSE
+		} else {
+			toMessage = messages.NewText(message.(string))
+			break
+		}
+	case int:
+		toMessage = messages.NewText(strconv.Itoa(message.(int)))
+		break
+
+	case messages.Raw:
+		return message.(messages.Raw).Get("content", SUCCESS_EMPTY_RESPONSE).(string)
+
+	case object.HashMap:
+		toMessage = messages.NewNews(message.(*object.HashMap))
+		break
+	case *object.HashMap:
+		toMessage = messages.NewNews(message.(*object.HashMap))
+		break
+	default:
+
+	}
+
+	return serverGuard.buildReply(to, from, toMessage)
 }
 
 func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
@@ -165,12 +218,11 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 		return nil, err
 	}
 
-	// tbd
 	typeData, err := serverGuard.DetectAndCastResponseToType(castedMessage, "array")
 	if err != nil {
 		return nil, err
 	}
-	messageArray := typeData.(map[string]interface{})
+	messageArray := *(typeData.(*object.HashMap))
 
 	var messageType = "text"
 	if messageArray["MsgType"] != nil {
@@ -197,8 +249,31 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 	}, nil
 }
 
-func (serverGuard *ServerGuard) buildReply(to string, from string, message contract.MessageInterface) string {
-	return ""
+func (serverGuard *ServerGuard) buildReply(to string, from string, message contract.MessageInterface) (response string) {
+
+	prepends := &object.HashMap{
+		"ToUserName":   to,
+		"FromUserName": from,
+		"CreateTime":   time.Now(),
+		"MsgType":      message.GetType(),
+	}
+	transformedResponse, _ := message.TransformToXml(prepends, false)
+	response = transformedResponse.(string)
+	if serverGuard.isSafeMode() {
+		// tbd log here
+		encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
+		encryptedResponse, err := encryptor.Encrypt(response, "", "")
+		if err == nil {
+
+			response = string(encryptedResponse)
+		} else {
+			// tbd log here
+			println("encryptor error: ", err.ErrMsg)
+		}
+
+	}
+
+	return response
 }
 
 func (serverGuard *ServerGuard) signature(params []string) string {
@@ -214,26 +289,39 @@ func (serverGuard *ServerGuard) signature(params []string) string {
 
 func (serverGuard *ServerGuard) isSafeMode() bool {
 	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	if request == nil {
+		println("request is invalid")
+		return false
+	}
 	query := request.URL.Query()
 
 	return query.Get("signature") == "" && "aes" == query.Get("encrypt_type")
 
 }
 
-func (serverGuard *ServerGuard) parseMessage(content string) (dataContent *object.HashMap, err error) {
+func (serverGuard *ServerGuard) parseMessage(content string) (dataContent object.HashMap, err error) {
 
-	if content[0] == '<' {
-		err = xml.Unmarshal([]byte(content), &dataContent)
-		if err != nil {
-			return nil, err
-		} else {
-			// Handle JSON format.
-			err = json.Unmarshal([]byte(content), &dataContent)
+	dataContent = nil
+	if content != "" {
+		// check xml format
+		if content[0] == '<' {
+			dataContent = object.HashMap{}
+			err = xml.Unmarshal([]byte(content), &dataContent)
 			if err != nil {
 				return nil, err
 			}
 		}
 	}
+
+	if dataContent == nil {
+		// Handle JSON format.
+		dataContent = object.HashMap{}
+		err = json.Unmarshal([]byte(content), &dataContent)
+		if err != nil {
+			return dataContent, nil
+		}
+	}
+
 	return dataContent, err
 }
 func (serverGuard *ServerGuard) shouldReturnRawResponse() bool {
