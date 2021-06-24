@@ -17,18 +17,23 @@ import (
 type Work struct {
 	*kernel.ServiceContainer
 
-	ExternalRequest *http.Request
-	Base            *base.Client
-	AccessToken     *auth.AccessToken
-	OAuth           *oauth.Manager
-	Config          *kernel.Config
-	Department      *department.Client
-	Message         *message.Client
-	Messager        *message.Messager
-	Encryptor       *kernel.Encryptor
-	Server          *server.Guard
-	ExternalContact *externalContact.Client
-	ContactWay      *externalContact.ContactWayClient
+	ExternalRequest                *http.Request
+	Base                           *base.Client
+	AccessToken                    *auth.AccessToken
+	OAuth                          *oauth.Manager
+	Config                         *kernel.Config
+	Department                     *department.Client
+	Message                        *message.Client
+	Messager                       *message.Messager
+	Encryptor                      *kernel.Encryptor
+	Server                         *server.Guard
+	ExternalContact                *externalContact.Client
+	ContactWay                     *externalContact.ContactWayClient
+	ExternalContactStatistics      *externalContact.StatisticsClient
+	ExternalContactMessage         *externalContact.MessageClient
+	School                         *externalContact.SchoolClient
+	ExternalContactMoment          *externalContact.MomentClient
+	ExternalContactMessageTemplate *externalContact.MessageTemplateClient
 }
 
 func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
@@ -77,7 +82,13 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 	app.Encryptor, app.Server = server.RegisterProvider(app)
 
 	// register external contact
-	app.ExternalContact, app.ContactWay = externalContact.RegisterProvider(app)
+	app.ExternalContact,
+		app.ContactWay,
+		app.ExternalContactStatistics,
+		app.ExternalContactMessage,
+		app.School,
+		app.ExternalContactMoment,
+		app.ExternalContactMessageTemplate = externalContact.RegisterProvider(app)
 
 	return app, err
 }

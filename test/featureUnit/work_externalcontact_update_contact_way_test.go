@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_ExternalContact_Add_Contact_Way(t *testing.T) {
+func Test_ExternalContact_Update_Contact_Way(t *testing.T) {
 
 	para := &request.RequestAddContactWay{
 		Type:          1,
@@ -23,13 +23,13 @@ func Test_ExternalContact_Add_Contact_Way(t *testing.T) {
 		ChatExpiresIn: 86400,
 		UnionID:       "",
 		Conclusions: &object.HashMap{
-			"text": object.StringMap{
+			"text": &object.StringMap{
 				"content": "bye bye",
 			},
 		},
 	}
 
-	response := Work.ContactWay.Create(para)
+	response := Work.ContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &object.HashMap{"para": para})
 
 	if response == nil || response.ResponseWX == nil {
 		t.Error("response nil")

@@ -35,7 +35,7 @@ func (comp *Client) List(userID string) *response.ResponseGetList {
 
 	result := &response.ResponseGetList{}
 
-	comp.HttpGet("cgi-bin/externalcontact/list", object.StringMap{
+	comp.HttpGet("cgi-bin/externalcontact/list", &object.StringMap{
 		"userid": userID,
 	}, result)
 
@@ -48,7 +48,7 @@ func (comp *Client) BatchGet(userID string, cursor string, limit string) *respon
 
 	result := &response.ResponseBatchGetByUser{}
 
-	comp.HttpGet("cgi-bin/externalcontact/batch/get_by_user", object.StringMap{
+	comp.HttpGet("cgi-bin/externalcontact/batch/get_by_user", &object.StringMap{
 		"userid": userID,
 		"cursor": cursor,
 		"limit":  limit,
@@ -63,7 +63,7 @@ func (comp *Client) Get(externalUserId string) *response.ResponseGetExternalCont
 
 	result := &response.ResponseGetExternalContact{}
 
-	comp.HttpGet("cgi-bin/externalcontact/get", object.StringMap{
+	comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
 	}, result)
 

@@ -2,12 +2,12 @@ package externalContact
 
 import "github.com/ArtisanCloud/go-wechat/src/kernel"
 
-type SchoolClient struct {
+type MomentClient struct {
 	*kernel.BaseClient
 }
 
-func NewSchoolClient(app kernel.ApplicationInterface) *SchoolClient {
-	return &SchoolClient{
+func NewMomentClient(app kernel.ApplicationInterface) *MomentClient {
+	return &MomentClient{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
