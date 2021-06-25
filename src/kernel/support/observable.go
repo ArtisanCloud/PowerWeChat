@@ -91,7 +91,7 @@ Loop1:
 						} else {
 							// if current result is not final result
 							objType := reflect.TypeOf(result).String()
-							if objType != "decorators.FinallyResult" ||
+							if objType != "decorators.FinallyResult" &&
 								objType != "*decorators.FinallyResult" {
 								result = response
 							}

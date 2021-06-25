@@ -21,7 +21,7 @@ func NewEchoStrHandler(app *kernel.ApplicationInterface) *EchoStrHandler {
 	return handler
 }
 
-func (handler *EchoStrHandler) Handle(payload ...interface{}) interface{} {
+func (handler *EchoStrHandler) Handle(payload interface{}) interface{} {
 
 	request := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
 	if request == nil {

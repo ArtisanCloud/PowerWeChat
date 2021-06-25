@@ -226,7 +226,7 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 
 	var messageType = "text"
 	if messageArray["MsgType"] != nil {
-		messageType = messageArray["msg_type"].(string)
+		messageType = messageArray["MsgType"].(string)
 	}
 
 	response := serverGuard.Dispatch(MESSAGE_TYPE_MAPPING[messageType], castedMessage)
@@ -306,7 +306,8 @@ func (serverGuard *ServerGuard) parseMessage(content string) (dataContent object
 		// check xml format
 		if content[0] == '<' {
 			dataContent = object.HashMap{}
-			err = xml.Unmarshal([]byte(content), &dataContent)
+			//err = xml.Unmarshal([]byte(content), &dataContent)
+			dataContent = object.Xml2Map([]byte(content))
 			if err != nil {
 				return nil, err
 			}
