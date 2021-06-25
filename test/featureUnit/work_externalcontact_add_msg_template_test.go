@@ -13,18 +13,19 @@ func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 		"external_userid": []string{
 			"wm_ViZBwAApoZUCOn3JeqlfW1YUme5pg",
 		},
-		"sender": "Matt",
+		"sender": "WangChaoYi",
+		//"sender": "Matt",
 		"text": request.TextOfMessage{
 			Content: "新的活动现在开始啦！",
 		},
 		"attachments": []interface{}{
-			request.ImageOfMessage{
-				MsgType: "image",
-				Image: request.Image{
-					MediaID: "",
-					PicURL:  "",
-				},
-			},
+			//request.ImageOfMessage{
+			//	MsgType: "image",
+			//	Image: request.Image{
+			//		MediaID: "",
+			//		PicURL:  "",
+			//	},
+			//},
 			request.LinkOfMessage{
 				MsgType: "link",
 				Link: request.Link{
@@ -34,21 +35,21 @@ func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 					URL:    "https://baidu.com",
 				},
 			},
-			request.MiniProgramOfMessage{
-				MsgType: "miniprogram",
-				MiniProgram: request.MiniProgram{
-					Title:      "消息标题",
-					PicMediaID: "MEDIA_ID",
-					AppID:      "wx8bd80126147df384",
-					Page:       "/path/index",
-				},
-			},
-			request.VideoOfMessage{
-				MsgType: "video",
-				Video: request.Video{
-					MediaID: "MEDIA_ID",
-				},
-			},
+			//request.MiniProgramOfMessage{
+			//	MsgType: "miniprogram",
+			//	MiniProgram: request.MiniProgram{
+			//		Title:      "消息标题",
+			//		PicMediaID: "MEDIA_ID",
+			//		AppID:      "wx8bd80126147df384",
+			//		Page:       "/path/index",
+			//	},
+			//},
+			//request.VideoOfMessage{
+			//	MsgType: "video",
+			//	Video: request.Video{
+			//		MediaID: "MEDIA_ID",
+			//	},
+			//},
 		},
 	}
 

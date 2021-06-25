@@ -3,10 +3,8 @@ package externalContact
 import (
 	"errors"
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/go-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/request"
 	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/response"
 	"reflect"
@@ -34,15 +32,14 @@ func (comp *MessageClient) Submit(msg *object.HashMap) (*response.ResponseAddMes
 	if err != nil {
 		return nil, err
 	}
-	fmt2.Dump(params)
-	//comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil, result)
 
 	return result, nil
 }
 
-func (comp *MessageClient) Get(msgID string) *response2.ResponseWX {
+func (comp *MessageClient) Get(msgID string) *response.ResponseGetGroupMesResult {
 
-	result := &response2.ResponseWX{}
+	result := &response.ResponseGetGroupMesResult{}
 
 	comp.HttpPostJson("cgi-bin/externalcontact/get_group_msg_result", &object.StringMap{
 		"msgid": msgID,
@@ -74,7 +71,7 @@ func (comp *MessageClient) formatMessage(data *object.HashMap) (*object.HashMap,
 
 	if params["text"] != nil {
 
-		switch params["text"].(type){
+		switch params["text"].(type) {
 		case request.TextOfMessage:
 			_, err := comp.formatFields(params["text"].(request.TextOfMessage))
 			if err != nil {
@@ -91,28 +88,28 @@ func (comp *MessageClient) formatMessage(data *object.HashMap) (*object.HashMap,
 
 			switch obj.(type) {
 			case request.ImageOfMessage:
-				_, err := comp.formatFields(obj.(request.ImageOfMessage))
+				_, err := comp.formatFields(obj.(request.ImageOfMessage).Image)
 				if err != nil {
 					return nil, err
 				}
 
 				break
 			case request.LinkOfMessage:
-				_, err := comp.formatFields(params["link"].(request.LinkOfMessage))
+				_, err := comp.formatFields(obj.(request.LinkOfMessage).Link)
 				if err != nil {
 					return nil, err
 				}
 
 				break
 			case request.MiniProgramOfMessage:
-				_, err := comp.formatFields(params["miniprogram"].(request.MiniProgramOfMessage))
+				_, err := comp.formatFields(obj.(request.MiniProgramOfMessage).MiniProgram)
 				if err != nil {
 					return nil, err
 				}
 
 				break
 			case request.VideoOfMessage:
-				_, err := comp.formatFields(params["video"].(request.VideoOfMessage))
+				_, err := comp.formatFields(obj.(request.VideoOfMessage).Video)
 				if err != nil {
 					return nil, err
 				}
@@ -132,12 +129,12 @@ func (comp *MessageClient) formatFields(data interface{}) (interface{}, error) {
 	inputValues := reflect.ValueOf(data)
 
 	// get type of default Data
-	inputDataType := reflect.TypeOf(data)
+	inputDataType := inputValues.Type()
 
 	// new a return data of default type
 	dataReturn := reflect.New(inputDataType)
 
-	for i := 0; i < dataReturn.NumField(); i++ {
+	for i := 0; i < inputValues.NumField(); i++ {
 		key := inputDataType.Field(i).Name
 		value := inputValues.Field(i).Interface()
 
