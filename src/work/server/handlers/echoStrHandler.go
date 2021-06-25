@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
 	"github.com/ArtisanCloud/go-wechat/src/kernel/decorators"
@@ -35,14 +34,9 @@ func (handler *EchoStrHandler) Handle(payload ...interface{}) interface{} {
 	strDecrypted := query.Get("echostr")
 
 	//strDecrypted := "wAHjjtg5VmVwpLzy7YoJXGT1SAVvFACAZbThfdeq2bWrhDCfDv6o9JWMImq2N7SPKiG8Pci+2W7pP9GlpELVEA=="
-	//strDecrypted = "kG6vfRrnPyQLJKQchVNuNb++VtC8inDBhrGZzB9T7hwdgKGvMQl9H4xYN3UlhyZD2UMhTR2gkN4Nd1YhAcp36g=="
 	//strDecrypted = url.QueryEscape(strDecrypted)
-	//strDecrypted,_ = url.QueryUnescape(strDecrypted)
-	fmt.Dump(request.RequestURI, strDecrypted)
+	//fmt.Dump(request.RequestURI, strDecrypted)
 	if strDecrypted != "" {
-		//decrypted := []byte(strDecrypted)
-		//str, err := encryptor.Decrypt(
-		//	decrypted,
 		str, err := encryptor.VerifyUrl(
 			strDecrypted,
 			query.Get("msg_signature"),

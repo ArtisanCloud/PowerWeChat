@@ -182,9 +182,9 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (httpC
 }
 
 func (accessToken *AccessToken) getCacheKey() string {
+	return "easywechat.kernel.access_token.472d999b5c62acda16866968c020813c"
 	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)
-
 	return accessToken.CachePrefix + string(buffer[:])
 }
 
