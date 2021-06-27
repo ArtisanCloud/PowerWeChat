@@ -16,6 +16,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 		kernel.NewServerGuard(app),
 	}
 
+	guard.OverrideIsSafeMode()
 	guard.OverrideValidate()
 	guard.OverrideShouldReturnRawResponse()
 
@@ -23,12 +24,15 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-func (guard *Guard) isSafeMode() bool {
-	return true
-}
 
 
 // Override Validate
+func (guard *Guard) OverrideIsSafeMode() {
+	guard.IsSafeMode = func() bool {
+		return true
+	}
+}
+
 func (guard *Guard) OverrideValidate() {
 	guard.Validate = func() (*kernel.ServerGuard, error) {
 		return guard.ServerGuard, nil

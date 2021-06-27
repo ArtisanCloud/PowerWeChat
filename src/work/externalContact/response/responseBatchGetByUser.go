@@ -12,7 +12,7 @@ type ResponseBatchGetByUser struct {
 
 type ResponseExternalContact struct {
 	ExternalContact *ResponseExternalContactDetail `json:"external_contact"`
-	FollowInfo      *FollowInfo                    `json:"follow_info"`
+	FollowInfo      []*FollowUser                    `json:"follow_info"`
 }
 
 type ResponseExternalContactDetail struct {
@@ -32,7 +32,7 @@ type ResponseExternalProfile struct {
 	ExternalProfile []*object.HashMap `json:"external_attr"` // :
 }
 
-type FollowInfo struct {
+type FollowUser struct {
 	Remark      string              `json:"remark"`      // "王助理",
 	Description string              `json:"description"` // "采购问题咨询",
 	CreateTime  int `json:"createtime"`  // 1525881637,

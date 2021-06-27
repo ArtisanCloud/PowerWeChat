@@ -124,6 +124,7 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 	return xmlByte, nil
 }
 
+
 // Decrypt decrypt xml msg and return xml
 func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timestamp string) ([]byte, *support.CryptError) {
 	var msg4Recv WeComRecvMsg

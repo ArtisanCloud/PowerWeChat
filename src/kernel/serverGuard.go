@@ -45,6 +45,7 @@ type ServerGuard struct {
 	alwaysValidate bool
 	App            *ApplicationInterface
 
+	IsSafeMode              func() bool
 	Validate                func() (*ServerGuard, error)
 	ShouldReturnRawResponse func() bool
 }
@@ -56,6 +57,9 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 		App:        app,
 	}
 
+	serverGuard.IsSafeMode = func() bool {
+		return serverGuard.isSafeMode()
+	}
 	serverGuard.Validate = func() (*ServerGuard, error) {
 		return serverGuard.validate()
 	}
@@ -84,7 +88,7 @@ func (serverGuard *ServerGuard) Serve() (response *http.Response, err error) {
 
 func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 
-	if !serverGuard.alwaysValidate && serverGuard.isSafeMode() {
+	if !serverGuard.alwaysValidate && serverGuard.IsSafeMode() {
 		return serverGuard, nil
 	}
 
@@ -123,8 +127,8 @@ func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error
 		return nil, err
 	}
 
-	if serverGuard.isSafeMode() && message["Encrypt"] != nil {
-		decryptMessage := serverGuard.decryptMessage(&message)
+	if serverGuard.IsSafeMode() && message["Encrypt"] != nil {
+		decryptMessage := serverGuard.decryptMessage(string(b), &message)
 		err = json.Unmarshal([]byte(decryptMessage), dataset)
 		if err == nil && dataset != nil {
 			return dataset, err
@@ -259,7 +263,7 @@ func (serverGuard *ServerGuard) buildReply(to string, from string, message contr
 	}
 	transformedResponse, _ := message.TransformToXml(prepends, false)
 	response = transformedResponse.(string)
-	if serverGuard.isSafeMode() {
+	if serverGuard.IsSafeMode() {
 		// tbd log here
 		encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 		encryptedResponse, err := encryptor.Encrypt(response, "", "")
@@ -329,13 +333,14 @@ func (serverGuard *ServerGuard) shouldReturnRawResponse() bool {
 	return false
 }
 
-func (serverGuard *ServerGuard) decryptMessage(message *object.HashMap) (decryptMessage string) {
+func (serverGuard *ServerGuard) decryptMessage(content string, message *object.HashMap) (decryptMessage string) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
-	request := (*serverGuard.App).GetComponent("request").(*http.Request)
+	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	//ciphertext := (*message)["Encrypt"].(string)
 	query := request.URL.Query()
 	buf, err := encryptor.Decrypt(
-		[]byte((*message)["Encrypt"].(string)),
+		[]byte(content),
 		query.Get("msg_signature"),
 		query.Get("nonce"),
 		query.Get("timestamp"),
