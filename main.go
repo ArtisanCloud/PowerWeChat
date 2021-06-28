@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/work"
 	"os"
 	"strconv"
 )
@@ -37,20 +35,20 @@ func main() {
 
 	fmt.Printf("hello Wechat! \n")
 
-	config := GetConfig()
-
-	app, err := work.NewWork(config, nil)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	//config := GetConfig()
+	//
+	//app, err := work.NewWork(config, nil)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
 
 	//response := app.ExternalContact.List("Matt")
 	//fmt2.Dump(response)
 
-	response, err := app.Server.Serve()
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	fmt2.Dump(response)
+	//response, err := app.Server.Serve()
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+	//fmt2.Dump(response)
 
 }
