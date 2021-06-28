@@ -61,7 +61,7 @@ func (comp *MessageClient) SendWelcome(welcomeCode string, msg *object.HashMap) 
 		"welcome_code": welcomeCode,
 	})
 
-	comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", params, nil, result)
 
 	return result, nil
 }

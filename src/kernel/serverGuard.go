@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/sha1"
 	"encoding/json"
-	"encoding/xml"
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
@@ -134,7 +133,8 @@ func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error
 			return dataset, err
 		}
 
-		err = xml.Unmarshal([]byte(decryptMessage), &dataset)
+		//err = xml.Unmarshal([]byte(decryptMessage), &dataset)
+		*dataset, err = object.Xml2Map([]byte(decryptMessage))
 		if err == nil && dataset != nil {
 			return dataset, err
 		}
@@ -311,7 +311,7 @@ func (serverGuard *ServerGuard) parseMessage(content string) (dataContent object
 		if content[0] == '<' {
 			dataContent = object.HashMap{}
 			//err = xml.Unmarshal([]byte(content), &dataContent)
-			dataContent = object.Xml2Map([]byte(content))
+			dataContent, err = object.Xml2Map([]byte(content))
 			if err != nil {
 				return nil, err
 			}
@@ -337,7 +337,6 @@ func (serverGuard *ServerGuard) decryptMessage(content string, message *object.H
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
-	//ciphertext := (*message)["Encrypt"].(string)
 	query := request.URL.Query()
 	buf, err := encryptor.Decrypt(
 		[]byte(content),

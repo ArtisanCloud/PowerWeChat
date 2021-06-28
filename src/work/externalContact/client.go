@@ -3,7 +3,9 @@ package externalContact
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	response2 "github.com/ArtisanCloud/go-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/response"
+	"strconv"
 )
 
 type Client struct {
@@ -48,11 +50,11 @@ func (comp *Client) BatchGet(userID string, cursor string, limit string) *respon
 
 	result := &response.ResponseBatchGetByUser{}
 
-	comp.HttpGet("cgi-bin/externalcontact/batch/get_by_user", &object.StringMap{
+	comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", &object.StringMap{
 		"userid": userID,
 		"cursor": cursor,
 		"limit":  limit,
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -66,6 +68,75 @@ func (comp *Client) Get(externalUserId string) *response.ResponseGetExternalCont
 	comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
 	}, result)
+
+	return result
+}
+
+// 修改客户备注信息.
+// https://work.weixin.qq.com/api/doc/90000/90135/92115
+func (comp *Client) Remark(data *object.HashMap) *response2.ResponseWX {
+
+	result := &response2.ResponseWX{}
+
+	comp.HttpPostJson("cgi-bin/externalcontact/remark", data, nil, result)
+
+	return result
+}
+
+// 获取离职成员的客户列表.
+// https://work.weixin.qq.com/api/doc#90000/90135/91563
+func (comp *Client) GetUnassigned(pageID int, pageSize int) *response.ResponseGetUnassignedList {
+
+	result := &response.ResponseGetUnassignedList{}
+
+	comp.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", object.HashMap{
+		"page_id":   strconv.Itoa(pageID),
+		"page_size": strconv.Itoa(pageSize),
+	}, nil, result)
+
+	return result
+}
+
+// 离职成员的外部联系人再分配.
+// https://work.weixin.qq.com/api/doc#90000/90135/91564
+func (comp *Client) Transfer(externalUserID []string, handoverUserID string, takeoverUserID string) *response.ResponseGetTransferedCustomerList {
+
+	result := &response.ResponseGetTransferedCustomerList{}
+
+	comp.HttpPostJson("cgi-bin/externalcontact/transfer_customer", object.HashMap{
+		"handover_userid": handoverUserID,
+		"takeover_userid": takeoverUserID,
+		"external_userid": externalUserID,
+	}, nil, result)
+
+	return result
+}
+
+// 离职成员的群再分配.
+// https://work.weixin.qq.com/api/doc/90000/90135/92127
+func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) *response.ResponseGroupChatTransfer {
+
+	result := &response.ResponseGroupChatTransfer{}
+
+	comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", object.HashMap{
+		"chat_id_list": chatIDs,
+		"new_owner":    newOwner,
+	}, nil, result)
+
+	return result
+}
+
+// 查询客户接替结果.
+// https://work.weixin.qq.com/api/doc/90000/90135/94082
+func (comp *Client) GetResignedTransferResult(handoverUserID string, takeoverUserID string, cursor string) *response.ResponseGetTransferedCustomerList {
+
+	result := &response.ResponseGetTransferedCustomerList{}
+
+	comp.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_result?", &object.StringMap{
+		"handover_userid": handoverUserID,
+		"takeover_userid": takeoverUserID,
+		"cursor":          cursor,
+	}, nil, result)
 
 	return result
 }

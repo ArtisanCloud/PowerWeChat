@@ -13,6 +13,8 @@ test-externalcontact:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_update_contact_way_test.go
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_del_contact_way_test.go
 
+	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_get_test.go
+
 test-externalcontact-message:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_add_msg_template_test.go
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_get_group_msg_result_test.go

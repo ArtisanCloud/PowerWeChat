@@ -18,15 +18,19 @@ type Work struct {
 	*kernel.ServiceContainer
 
 	ExternalRequest                *http.Request
+
 	Base                           *base.Client
 	AccessToken                    *auth.AccessToken
 	OAuth                          *oauth.Manager
 	Config                         *kernel.Config
 	Department                     *department.Client
+
 	Message                        *message.Client
 	Messager                       *message.Messager
+
 	Encryptor                      *kernel.Encryptor
 	Server                         *server.Guard
+
 	ExternalContact                *externalContact.Client
 	ContactWay                     *externalContact.ContactWayClient
 	ExternalContactStatistics      *externalContact.StatisticsClient

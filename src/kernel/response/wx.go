@@ -9,6 +9,7 @@ type ResponseWX struct {
 	ErrMSG  string `json:"errmsg"`
 }
 
+
 func (res *ResponseWX) GetBody() *http.ResponseWriter {
 	return nil
 }
