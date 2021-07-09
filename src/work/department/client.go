@@ -2,8 +2,8 @@ package department
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/work/department/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/work/department/response"
 	"strconv"
 )
 

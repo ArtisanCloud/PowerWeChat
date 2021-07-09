@@ -1,4 +1,4 @@
-module github.com/ArtisanCloud/go-wechat
+module github.com/ArtisanCloud/power-wechat
 
 go 1.16
 
@@ -7,12 +7,11 @@ replace github.com/ArtisanCloud/go-libs => ../go-libs
 replace github.com/ArtisanCloud/go-socialite => ../go-socialite
 
 require (
-	github.com/ArtisanCloud/go-libs v1.0.13
+	github.com/ArtisanCloud/go-libs v1.0.14
 	github.com/ArtisanCloud/go-socialite v1.0.3
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
-	github.com/go-redis/redis/v8 v8.10.0 // indirect
 	github.com/golang-module/carbon v1.3.9 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/guonaihong/gout v0.2.0 // indirect

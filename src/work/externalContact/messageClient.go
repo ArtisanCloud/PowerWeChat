@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/request"
-	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"reflect"
 )
 

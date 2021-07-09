@@ -2,10 +2,10 @@ package externalContact
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/go-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/request"
-	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 )
 
 type ContactWayClient struct {

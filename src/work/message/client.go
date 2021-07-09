@@ -1,9 +1,9 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/messages"
-	"github.com/ArtisanCloud/go-wechat/src/work/message/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/response"
 )
 
 type Client struct {

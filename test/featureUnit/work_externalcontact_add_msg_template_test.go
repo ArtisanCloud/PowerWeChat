@@ -3,7 +3,7 @@ package featureUnit
 import (
 	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/work/externalContact/request"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 	"testing"
 )
 

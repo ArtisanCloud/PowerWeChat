@@ -2,7 +2,7 @@ package featureUnit
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/work"
+	"github.com/ArtisanCloud/power-wechat/src/work"
 	"log"
 	"os"
 	"strconv"

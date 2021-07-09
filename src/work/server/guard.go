@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"net/http"
 )
 

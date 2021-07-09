@@ -1,7 +1,7 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/work/message/request"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/request"
 	"testing"
 )
 

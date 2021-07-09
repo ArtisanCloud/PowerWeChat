@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/decorators"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/decorators"
 	"net/http"
 )
 

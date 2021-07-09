@@ -1,8 +1,8 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/work/base/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/work/base/response"
 )
 
 type Client struct {

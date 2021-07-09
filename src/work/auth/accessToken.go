@@ -4,7 +4,7 @@ package auth
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
 )
 
 type AccessToken struct {

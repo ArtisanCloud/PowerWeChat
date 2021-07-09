@@ -2,15 +2,15 @@ package work
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/providers"
-	"github.com/ArtisanCloud/go-wechat/src/work/auth"
-	"github.com/ArtisanCloud/go-wechat/src/work/base"
-	"github.com/ArtisanCloud/go-wechat/src/work/department"
-	"github.com/ArtisanCloud/go-wechat/src/work/externalContact"
-	"github.com/ArtisanCloud/go-wechat/src/work/message"
-	"github.com/ArtisanCloud/go-wechat/src/work/oauth"
-	"github.com/ArtisanCloud/go-wechat/src/work/server"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
+	"github.com/ArtisanCloud/power-wechat/src/work/auth"
+	"github.com/ArtisanCloud/power-wechat/src/work/base"
+	"github.com/ArtisanCloud/power-wechat/src/work/department"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
+	"github.com/ArtisanCloud/power-wechat/src/work/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
+	"github.com/ArtisanCloud/power-wechat/src/work/server"
 	"net/http"
 )
 
