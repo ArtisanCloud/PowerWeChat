@@ -1,9 +1,9 @@
 package models
 
 type Department struct {
-	id       int    `gorm:"column:id json:id"`
-	name     string `gorm:"column:name json:name"`
-	nameEN   string `gorm:"column:name_en json:name_en"`
-	parentID int    `gorm:"column:parentid json:parentid"`
-	order    int    `gorm:"column:order json:order"`
+	ID       int    `gorm:"column:id" json:"id"`
+	Name     string `gorm:"column:name" json:"name"`
+	NameEN   string `gorm:"column:name_en" json:"name_en"`
+	ParentID int    `gorm:"column:parentid" json:"parentid"`
+	Order    int    `gorm:"column:order" json:"order"`
 }
