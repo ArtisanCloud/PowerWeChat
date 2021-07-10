@@ -11,31 +11,37 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/message"
 	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/power-wechat/src/work/server"
+	"github.com/ArtisanCloud/power-wechat/src/work/user"
 	"net/http"
 )
 
 type Work struct {
 	*kernel.ServiceContainer
 
-	ExternalRequest                *http.Request
+	ExternalRequest *http.Request
 
-	Base                           *base.Client
-	AccessToken                    *auth.AccessToken
-	OAuth                          *oauth.Manager
-	Config                         *kernel.Config
-	Department                     *department.Client
+	Base        *base.Client
+	AccessToken *auth.AccessToken
+	OAuth       *oauth.Manager
+	Config      *kernel.Config
+	Department  *department.Client
 
-	Message                        *message.Client
-	Messager                       *message.Messager
+	Message  *message.Client
+	Messager *message.Messager
 
-	Encryptor                      *kernel.Encryptor
-	Server                         *server.Guard
+	Encryptor *kernel.Encryptor
+	Server    *server.Guard
+
+	UserClient           *user.Client
+	UserBatchJobsClient  *user.BatchJobsClient
+	UserLinkedCorpClient *user.LinkedCorpClient
+	UserTagClient        *user.TagClient
 
 	ExternalContact                *externalContact.Client
-	ContactWay                     *externalContact.ContactWayClient
+	ExternalContactContactWay      *externalContact.ContactWayClient
 	ExternalContactStatistics      *externalContact.StatisticsClient
 	ExternalContactMessage         *externalContact.MessageClient
-	School                         *externalContact.SchoolClient
+	ExternalContactSchool          *externalContact.SchoolClient
 	ExternalContactMoment          *externalContact.MomentClient
 	ExternalContactMessageTemplate *externalContact.MessageTemplateClient
 }
@@ -87,10 +93,10 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 
 	// register external contact
 	app.ExternalContact,
-		app.ContactWay,
+		app.ExternalContactContactWay,
 		app.ExternalContactStatistics,
 		app.ExternalContactMessage,
-		app.School,
+		app.ExternalContactSchool,
 		app.ExternalContactMoment,
 		app.ExternalContactMessageTemplate = externalContact.RegisterProvider(app)
 
@@ -111,32 +117,56 @@ func (app *Work) GetConfig() *kernel.Config {
 
 func (app *Work) GetComponent(name string) interface{} {
 
-	if name == "ExternalRequest" {
+	switch name {
+	case "ExternalRequest":
 		return app.ExternalRequest
-	} else if name == "Base" {
+	case "Base":
 		return app.Base
-	} else if name == "AccessToken" {
+	case "AccessToken":
 		return app.AccessToken
-	} else if name == "OAuth" {
+	case "OAuth":
 		return app.OAuth
-	} else if name == "Config" {
+	case "Config":
 		return app.Config
-	} else if name == "Department" {
+	case "Department":
 		return app.Department
-	} else if name == "Message" {
-		return app.Message
-	} else if name == "Messager" {
-		return app.Messager
-	} else if name == "Encryptor" {
-		return app.Encryptor
-	} else if name == "Server" {
-		return app.Server
-	} else if name == "ExternalContact" {
-		return app.ExternalContact
-	} else if name == "ContactWay" {
-		return app.ContactWay
-	}
 
-	return nil
+	case "Message":
+		return app.Message
+	case "Messager":
+		return app.Messager
+
+	case "Encryptor":
+		return app.Encryptor
+	case "Server":
+		return app.Server
+
+	case "UserClient":
+		return app.UserClient
+	case "UserBatchJobsClient":
+		return app.UserBatchJobsClient
+	case "UserLinkedCorpClient":
+		return app.UserLinkedCorpClient
+	case "UserTagClient":
+		return app.UserTagClient
+
+	case "ExternalContact":
+		return app.ExternalContact
+	case "ExternalContactContactWay":
+		return app.ExternalContactContactWay
+	case "ExternalContactStatistics":
+		return app.ExternalContactStatistics
+	case "ExternalContactMessage":
+		return app.ExternalContactMessage
+	case "ExternalContactSchool":
+		return app.ExternalContactSchool
+	case "ExternalContactMoment":
+		return app.ExternalContactMoment
+	case "ExternalContactMessageTemplate":
+		return app.ExternalContactMessageTemplate
+
+	default:
+		return nil
+	}
 
 }
