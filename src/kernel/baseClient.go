@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/http"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	http2 "net/http"
 )
 
 type BaseClient struct {
 	*http.HttpRequest
 	*http.HttpResponse
+
+	*support.ResponseCastable
 
 	App   *ApplicationInterface
 	Token *AccessToken
@@ -80,10 +83,15 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	if returnRaw {
 		return response
 	} else {
-		config := *(*client.App).GetContainer().Config
-		client.CastResponseToType(response, config["response_type"])
+		// tbf
+		return nil
+		//config := *(*client.App).GetContainer().Config
+		//return client.CastResponseToType(response, config["response_type"])
 	}
-	return response
+}
+
+func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outResponse interface{}) interface{} {
+	return client.Request(url, method, options, true, outResponse)
 }
 
 func (client *BaseClient) registerHttpMiddlewares() {
