@@ -86,13 +86,13 @@ func (comp *Client) Get(userID string) *response.ResponseGetUserDetail {
 
 // 获取部门的成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90200
-func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild bool) *response.ResponseGetSimpleUserList {
+func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild int) *response.ResponseGetSimpleUserList {
 
 	result := &response.ResponseGetSimpleUserList{}
 
 	comp.HttpGet("cgi-bin/user/simplelist", &object.StringMap{
 		"department_id": fmt.Sprintf("%d", departmentID),
-		"fetch_child":   fmt.Sprintf("%t", fetchChild),
+		"fetch_child":   fmt.Sprintf("%d", fetchChild),
 	}, result)
 
 	return result
@@ -100,13 +100,13 @@ func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild bool) *respo
 
 // 获取部门成员详情
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90201
-func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild bool) *response.ResponseGetUserList {
+func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int) *response.ResponseGetUserList {
 
 	result := &response.ResponseGetUserList{}
 
 	comp.HttpGet("cgi-bin/user/list", &object.StringMap{
 		"department_id": fmt.Sprintf("%d", departmentID),
-		"fetch_child":   fmt.Sprintf("%t", fetchChild),
+		"fetch_child":   fmt.Sprintf("%d", fetchChild),
 	}, result)
 
 	return result

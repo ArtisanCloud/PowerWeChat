@@ -23,8 +23,8 @@ type ResponseExternalContactDetail struct {
 	Avatar          string                   `json:"avatar"`           // :"http://p.qlogo.cn/bizmail/IcsdgagqefergqerhewSdage/0",
 	CorpName        string                   `json:"corp_name"`        // :"腾讯",
 	CorpFullName    string                   `json:"corp_full_name"`   // :"腾讯科技有限公司",
-	Type            int                      `json:"type"`             // :2,
-	Gender          int                      `json:"gender"`           // :1,
+	Type            int8                      `json:"type"`             // :2,
+	Gender          int8                      `json:"gender"`           // :1,
 	UnionID         string                   `json:"unionid"`          // :"ozynqsulJFCZ2z1aYeS8h-nuasdAAA",
 	ExternalProfile *ResponseExternalProfile `json:"external_profile"` // :
 }

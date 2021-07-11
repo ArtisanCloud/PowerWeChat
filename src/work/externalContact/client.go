@@ -1,6 +1,7 @@
 package externalContact
 
 import (
+	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
@@ -46,14 +47,14 @@ func (comp *Client) List(userID string) *response.ResponseGetList {
 
 // 批量获取客户详情.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92994
-func (comp *Client) BatchGet(userID string, cursor string, limit string) *response.ResponseBatchGetByUser {
+func (comp *Client) BatchGet(userID string, cursor string, limit int) *response.ResponseBatchGetByUser {
 
 	result := &response.ResponseBatchGetByUser{}
 
 	comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", &object.StringMap{
 		"userid": userID,
 		"cursor": cursor,
-		"limit":  limit,
+		"limit":  fmt.Sprintf("%d", limit),
 	}, nil, result)
 
 	return result

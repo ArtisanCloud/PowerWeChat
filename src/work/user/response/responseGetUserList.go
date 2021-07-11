@@ -1,13 +1,15 @@
 package response
 
 import (
+	"github.com/ArtisanCloud/go-socialite/src/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	response2 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
 )
 
 type ResponseGetUserList struct {
 	response.ResponseWX
-	UserList []*response2.RequestUserDetail `json:"userlist"`
+	//UserList []*response2.RequestUserDetail `json:"userlist"`
+	UserList []*models.Employee `json:"userlist"`
+
 
 }
 

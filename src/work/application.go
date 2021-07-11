@@ -65,33 +65,40 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 		ServiceContainer: container,
 	}
 
-	// register external request
+	//-------------- external request --------------
 	app.ExternalRequest = r
 	if r == nil {
 		app.ExternalRequest = &http.Request{}
 	}
 
+	//-------------- global app config --------------
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	// register Auth
+	//-------------- register Auth --------------
 	app.AccessToken = auth.RegisterProvider(app)
-	// register Base
+	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
 
-	// register oauth
+	//-------------- register oauth --------------
 	app.OAuth, err = oauth.RegisterProvider(app)
 
-	// register Department
+	//-------------- register Department --------------
 	app.Department = department.RegisterProvider(app)
 
-	// register Message
+	//-------------- register Message --------------
 	app.Message, app.Messager = message.RegisterProvider(app)
 
-	// register Encryptor
+	//-------------- register Encryptor --------------
 	app.Encryptor, app.Server = server.RegisterProvider(app)
 
-	// register external contact
+	//-------------- register user --------------
+	app.UserClient,
+	app.UserBatchJobsClient,
+	app.UserLinkedCorpClient,
+	app.UserTagClient = user.RegisterProvider(app)
+
+	//-------------- register external contact --------------
 	app.ExternalContact,
 		app.ExternalContactContactWay,
 		app.ExternalContactStatistics,
