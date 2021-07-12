@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	http2 "github.com/ArtisanCloud/go-libs/http"
-	httpContract "github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
@@ -79,7 +78,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	}
 
 	// save token into cache
-	resToken = response.(*response2.ResponseGetToken)
+	resToken = response
 	var expireIn int = 7200
 	if resToken.ExpiresIn > 0 {
 		expireIn = resToken.ExpiresIn
@@ -116,13 +115,13 @@ func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
 	return accessToken
 }
 
-func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (httpContract.ResponseContract, error) {
+func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*response2.ResponseGetToken, error) {
 
 	res, err := accessToken.sendRequest(credentials)
 	if err != nil {
 		return nil, err
 	}
-	token := res.(*response2.ResponseGetToken)
+	token := res
 
 	if token == nil || token.AccessToken == "" {
 		return nil, errors.New(fmt.Sprintf("Request access_token fail: %v", res))
@@ -147,7 +146,7 @@ func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOpt
 	return request, err
 }
 
-func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (httpContract.ResponseContract, error) {
+func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*response2.ResponseGetToken, error) {
 
 	key := "json"
 	if accessToken.RequestMethod == "GET" {
@@ -176,7 +175,7 @@ func (accessToken *AccessToken) getCacheKey() string {
 
 	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)
-	cacheKey:=accessToken.CachePrefix + string(buffer[:])
+	cacheKey := accessToken.CachePrefix + string(buffer[:])
 
 	// tbf
 	//fmt2.Dump(cacheKey)

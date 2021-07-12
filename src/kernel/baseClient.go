@@ -1,14 +1,11 @@
 package kernel
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/http"
-	"github.com/ArtisanCloud/go-libs/http/contract"
+	"github.com/ArtisanCloud/go-libs/http/drivers/gout"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
-	"io/ioutil"
 	http2 "net/http"
 )
 
@@ -30,7 +27,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 	}
 
 	client := &BaseClient{
-		HttpRequest: http.NewHttpRequest(config),
+		HttpRequest: http.NewHttpRequest(config, gout.NewClient(config)),
 		App:         app,
 		Token:       token,
 	}
@@ -85,7 +82,6 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 	}
 
 	for name, path := range *files {
-
 		multipart = append(multipart, &object.HashMap{
 			"name":     name,
 			"contents": path,
@@ -108,7 +104,7 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 		"connect_timeout": 30,
 		"timeout":         30,
 		"read_timeout":    30,
-	}, false, nil)
+	}, false, outResponse)
 }
 
 func (client *BaseClient) Request(url string, method string, options *object.HashMap, returnRaw bool, outResponse interface{}) interface{} {
@@ -120,22 +116,23 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	// http client request
 	response := client.PerformRequest(url, method, options, outResponse)
 
-	if returnRaw {
-		return response
-	} else {
-		// tbf
-		config := *(*client.App).GetContainer().Config
-		var rs http2.Response = http2.Response{
-			StatusCode: 200,
-			Header:     nil,
-		}
-		postBodyBuf, _ := json.Marshal(rs)
-		rs.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
-
-		returnResponse, _ := client.CastResponseToType(&rs, config["response_type"].(string))
-		return returnResponse.(contract.ResponseContract)
-
-	}
+	//if returnRaw {
+	//	return response
+	//} else {
+	//	// tbf
+	//	config := *(*client.App).GetContainer().Config
+	//	var rs http2.Response = http2.Response{
+	//		StatusCode: 200,
+	//		Header:     nil,
+	//	}
+	//	postBodyBuf, _ := json.Marshal(rs)
+	//	rs.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
+	//
+	//	returnResponse, _ := client.CastResponseToType(&rs, config["response_type"].(string))
+	//	return returnResponse
+	//
+	//}
+	return response
 }
 
 func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outResponse interface{}) interface{} {
