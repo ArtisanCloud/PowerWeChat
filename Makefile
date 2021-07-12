@@ -19,5 +19,7 @@ test-externalcontact-message:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_add_msg_template_test.go
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_get_group_msg_result_test.go
 
+test-media:
+	go test -v test/featureUnit/main_test.go test/featureUnit/work_media_test.go
 build:
 	go build

@@ -15,7 +15,7 @@ import (
 type ResponseCastable struct {
 }
 
-func (responseCastable *ResponseCastable) castResponseToType(response *http.Response, castType string) (interface{}, error) {
+func (responseCastable *ResponseCastable) CastResponseToType(response *http.Response, castType string) (interface{}, error) {
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -77,5 +77,5 @@ func (responseCastable *ResponseCastable) DetectAndCastResponseToType(response i
 		return nil, errors.New(fmt.Sprintf("unsupported response type '%s'", reflect.TypeOf(response).Kind().String()))
 	}
 
-	return responseCastable.castResponseToType(&returnResponse, toType)
+	return responseCastable.CastResponseToType(&returnResponse, toType)
 }

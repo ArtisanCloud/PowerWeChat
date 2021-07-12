@@ -1,10 +1,14 @@
 package kernel
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/http"
+	"github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"io/ioutil"
 	http2 "net/http"
 )
 
@@ -71,6 +75,42 @@ func (client *BaseClient) HttpPostJson(url string, data interface{}, query inter
 	)
 }
 
+func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outResponse interface{}) interface{} {
+
+	multipart := []*object.HashMap{}
+	headers := object.HashMap{}
+
+	if form != nil && (*form)["filename"] == nil {
+		headers["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", (*form)["filename"].(string))
+	}
+
+	for name, path := range *files {
+
+		multipart = append(multipart, &object.HashMap{
+			"name":     name,
+			"contents": path,
+			"headers":  headers,
+		})
+	}
+
+	if form != nil {
+		for name, contents := range *form {
+			multipart = append(multipart, &object.HashMap{
+				"name":     name,
+				"contents": contents,
+			})
+		}
+	}
+
+	return client.Request(url, "POST", &object.HashMap{
+		"query":           query,
+		"multipart":       multipart,
+		"connect_timeout": 30,
+		"timeout":         30,
+		"read_timeout":    30,
+	}, false, nil)
+}
+
 func (client *BaseClient) Request(url string, method string, options *object.HashMap, returnRaw bool, outResponse interface{}) interface{} {
 
 	// to be setup middleware here
@@ -84,9 +124,17 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		return response
 	} else {
 		// tbf
-		return nil
-		//config := *(*client.App).GetContainer().Config
-		//return client.CastResponseToType(response, config["response_type"])
+		config := *(*client.App).GetContainer().Config
+		var rs http2.Response = http2.Response{
+			StatusCode: 200,
+			Header:     nil,
+		}
+		postBodyBuf, _ := json.Marshal(rs)
+		rs.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
+
+		returnResponse, _ := client.CastResponseToType(&rs, config["response_type"].(string))
+		return returnResponse.(contract.ResponseContract)
+
 	}
 }
 

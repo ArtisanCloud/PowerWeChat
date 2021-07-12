@@ -24,7 +24,7 @@ func Test_Message_Send_Text(t *testing.T) {
 
 	response := Work.Message.Send(para)
 
-	if response == nil || response.ResponseWX == nil  {
+	if response == nil || response.ResponseWX == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
 		t.Error("response error message as :", response.ErrMSG)

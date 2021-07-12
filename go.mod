@@ -12,6 +12,7 @@ require (
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
+	github.com/go-redis/redis/v8 v8.11.0 // indirect
 	github.com/golang-module/carbon v1.3.9 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/guonaihong/gout v0.2.0 // indirect
