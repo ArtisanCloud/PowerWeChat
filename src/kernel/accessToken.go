@@ -111,21 +111,12 @@ func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInter
 }
 
 func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
+	accessToken.GetToken(true)
 
-	return nil
+	return accessToken
 }
 
 func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (httpContract.ResponseContract, error) {
-
-	// tbf
-	//return &response2.ResponseGetToken{
-	//	AccessToken: "5Vp9FFQufiOxNjf9XdsMIvpkjft3VaQadnqwiiTQHBA5AqpJMUuyxaC1GHMaZrN9LAVvcfex_IIz_NEqC2JFtPJumsXHA7IVgtlWnG2j5tD3Iqt70uR2njTXHFrbU4qu-JceHA9RCl1QP7B46kbtRjC_h-fPQjAeHo8QMzfFGf9dZ6AdgD72QbhZB8VOIGikSCOjsho0ayk5sgcGDM-IDg",
-	//	ExpiresIn:   7200,
-	//	ResponseWX: &response2.ResponseWX{
-	//		ErrCode: 0,
-	//		ErrMSG:  "ok",
-	//	},
-	//}, nil
 
 	res, err := accessToken.sendRequest(credentials)
 	if err != nil {
@@ -182,10 +173,15 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (httpC
 }
 
 func (accessToken *AccessToken) getCacheKey() string {
-	return "easywechat.kernel.access_token.472d999b5c62acda16866968c020813c"
+
 	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)
-	return accessToken.CachePrefix + string(buffer[:])
+	cacheKey:=accessToken.CachePrefix + string(buffer[:])
+
+	// tbf
+	//fmt2.Dump(cacheKey)
+
+	return cacheKey
 }
 
 func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
