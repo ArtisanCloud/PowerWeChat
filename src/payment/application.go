@@ -1,12 +1,15 @@
-package work
+package payment
 
 import (
+	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
+	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
 	"github.com/ArtisanCloud/power-wechat/src/work/base"
 	"net/http"
 	"time"
@@ -17,6 +20,8 @@ type Payment struct {
 
 	ExternalRequest *http.Request
 	Config          *kernel.Config
+
+	Sandbox *sandbox.Client
 
 	Base *base.Client
 }
@@ -88,9 +93,9 @@ func (app *Payment) GetComponent(name string) interface{} {
 }
 
 func (app *Payment) Scheme(productID string) string {
-	appID := app.Config.Get("app_id", "").(string)
-	mchID := app.Config.Get("mch_id", "").(string)
-	key := app.Config.Get("key", "").(string)
+	appID := app.Config.GetString("app_id", "")
+	mchID := app.Config.GetString("mch_id", "")
+	key := app.Config.GetString("key", "")
 	params := &object.StringMap{
 		"appid":      appID,
 		"mch_id":     mchID,
@@ -102,4 +107,53 @@ func (app *Payment) Scheme(productID string) string {
 	(*params)["sign"] = support.GenerateSign(params, key)
 
 	return "weixin://wxpay/bizpayurl?" + object.ConvertStringMapToString(params, "&")
+}
+
+func (app *Payment) CodeUrlScheme(codeUrl string) string {
+	return fmt.Sprintf("weixin://wxpay/bizpayurl?sr=%s", codeUrl)
+}
+
+func (app *Payment) SetSubMerchant(mchId string, appId string) *Payment {
+	app.Config.Set("sub_mch_id", mchId)
+	app.Config.Set("sub_appid", appId)
+
+	return app
+}
+
+func (app *Payment) HandlePaidNotify(closure func(payload ...interface{}) interface{}) {
+	notify.NewPaid(app).Handle(closure)
+}
+
+func (app *Payment) HandleRefundedNotify(closure func(payload ...interface{}) interface{}) {
+	notify.NewRefund(app).Handle(closure)
+}
+
+func (app *Payment) HandleScannedNotify(closure func(payload ...interface{}) interface{}) {
+	notify.NewScanned(app).Handle(closure)
+}
+
+func (app *Payment) InSandbox() bool {
+	return app.Config.GetBool("sandbox", false)
+
+}
+
+func (app *Payment) GetKey(endpoint string) (string, error) {
+	if "sandboxnew/pay/getsignkey" == endpoint {
+		return app.Config.GetString("key", ""), nil
+	}
+
+	key := app.Config.GetString("key", "")
+	if app.InSandbox() {
+		key, _ = app.Sandbox.GetKey()
+	}
+	if key == "" {
+		return key, errors.New("config key should not empty. ")
+	}
+
+	if len(key) != 32 {
+		return key, errors.New(fmt.Sprintf("'%s' should be 32 chars length.", key))
+	}
+
+	return key, nil
+
 }
