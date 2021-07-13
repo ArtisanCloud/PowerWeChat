@@ -8,7 +8,7 @@ import (
 func Test_ExternalContact_Get_Contact_Way(t *testing.T) {
 
 
-	response := Work.ContactWay.Get("008dc067bf677e5f03df89ce49bea25a")
+	response := Work.ExternalContactContactWay.Get("008dc067bf677e5f03df89ce49bea25a")
 
 	if response == nil || response.ResponseWX == nil {
 		t.Error("response nil")

@@ -1,11 +1,10 @@
 package media
 
 import (
-	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
 )
 
 type Client struct {
@@ -20,14 +19,18 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
 
-	result := &response.ResponseWX{}
+	//result := &response.ResponseWX{}
+	result := ""
+	header := &response2.ResponseHeaderMedia{}
 	response := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
-	}, result)
-	fmt.Dump(response, result)
+	}, header, &result)
+
+	//fmt.Dump("Get:", header, result)
 	return response.(contract.ResponseContract), nil
+
 	//rs := rawResponse.(contract.ResponseContract)
 	//header := (*rs.GetHeaders()).Header()
 	//if header.Get("Content-Type") != "text/plain" {
@@ -51,7 +54,7 @@ func (comp *Client) UploadImage(path string, form *object.HashMap, outResponse i
 	files := &object.HashMap{
 		"media": path,
 	}
-	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form, nil, outResponse)
+	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form, nil, nil, outResponse)
 }
 
 func (comp *Client) UploadTempImage(path string, form *object.HashMap, outResponse interface{}) interface{} {
@@ -78,5 +81,5 @@ func (comp *Client) Upload(mediaType string, path string, form *object.HashMap, 
 
 	return comp.HttpUpload("cgi-bin/media/upload", files, form, &object.StringMap{
 		"type": mediaType,
-	}, outResponse)
+	}, nil, outResponse)
 }

@@ -24,7 +24,7 @@ func (comp *ContactWayClient) Create(params *request.RequestAddContactWay) *resp
 
 	result := &response.ResponseAddContactWay{}
 
-	comp.HttpPostJson("cgi-bin/externalcontact/add_contact_way", params, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/add_contact_way", params, nil,nil, result)
 
 	return result
 }
@@ -35,7 +35,7 @@ func (comp *ContactWayClient) Get(configID string) *response.ResponseGetContactW
 
 	comp.HttpPostJson("cgi-bin/externalcontact/get_contact_way", &object.StringMap{
 		"config_id": configID,
-	},nil, result)
+	},nil,nil, result)
 
 	return result
 }
@@ -47,7 +47,7 @@ func (comp *ContactWayClient) Update(configID string, config *object.HashMap) *r
 		"config_id": configID,
 	}, config)
 
-	comp.HttpPostJson("cgi-bin/externalcontact/update_contact_way", params, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/update_contact_way", params, nil,nil, result)
 
 	return result
 }
@@ -58,7 +58,7 @@ func (comp *ContactWayClient) Delete(configID string) *response2.ResponseWX {
 
 	comp.HttpPostJson("cgi-bin/externalcontact/del_contact_way", &object.StringMap{
 		"config_id": configID,
-	}, nil, result)
+	}, nil,nil, result)
 
 	return result
 }

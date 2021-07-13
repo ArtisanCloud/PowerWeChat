@@ -29,7 +29,7 @@ func (comp *TagClient) Create(tagName string, tagID int) *response.ResponseTagCr
 	comp.HttpPostJson("cgi-bin/tag/create", &object.HashMap{
 		"tagname": tagName,
 		"tagid":   tagID,
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result
 }
@@ -40,7 +40,7 @@ func (comp *TagClient) Update(data *response3.RequestUserDetail) *response2.Resp
 
 	result := &response2.ResponseWX{}
 
-	comp.HttpPostJson("cgi-bin/tag/update", data, nil, result)
+	comp.HttpPostJson("cgi-bin/tag/update", data, nil, nil, result)
 
 	return result
 }
@@ -53,7 +53,7 @@ func (comp *TagClient) Delete(tagID string) *response2.ResponseWX {
 
 	comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
 		"tagid": tagID,
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -66,7 +66,7 @@ func (comp *TagClient) Get(tagID string) *response.ResponseTagDetail {
 
 	comp.HttpGet("cgi-bin/tag/get", &object.StringMap{
 		"tagid": tagID,
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -91,7 +91,7 @@ func (comp *TagClient) tagOrUntagUsers(endpoint string, tagID int, userList []st
 		"tagid":     tagID,
 		"userlist":  userList,
 		"partylist": partyList,
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result
 }
@@ -102,7 +102,7 @@ func (comp *TagClient) List() *response.ResponseTagList {
 
 	result := &response.ResponseTagList{}
 
-	comp.HttpGet("cgi-bin/tag/list", nil, result)
+	comp.HttpGet("cgi-bin/tag/list", nil, nil, result)
 
 	return result
 }

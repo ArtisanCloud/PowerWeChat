@@ -27,7 +27,7 @@ func (comp *Client) GetFollowUsers() *response.ResponseGetFollowUserList {
 
 	result := &response.ResponseGetFollowUserList{}
 
-	comp.HttpGet("cgi-bin/externalcontact/get_follow_user_list", nil, result)
+	comp.HttpGet("cgi-bin/externalcontact/get_follow_user_list", nil, nil,result)
 
 	return result
 }
@@ -40,7 +40,7 @@ func (comp *Client) List(userID string) *response.ResponseGetList {
 
 	comp.HttpGet("cgi-bin/externalcontact/list", &object.StringMap{
 		"userid": userID,
-	}, result)
+	}, nil,result)
 
 	return result
 }
@@ -55,7 +55,7 @@ func (comp *Client) BatchGet(userID string, cursor string, limit int) *response.
 		"userid": userID,
 		"cursor": cursor,
 		"limit":  fmt.Sprintf("%d", limit),
-	}, nil, result)
+	}, nil, nil,result)
 
 	return result
 }
@@ -68,7 +68,7 @@ func (comp *Client) Get(externalUserId string) *response.ResponseGetExternalCont
 
 	comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
-	}, result)
+	}, nil,result)
 
 	return result
 }
@@ -79,7 +79,7 @@ func (comp *Client) Remark(data *object.HashMap) *response2.ResponseWX {
 
 	result := &response2.ResponseWX{}
 
-	comp.HttpPostJson("cgi-bin/externalcontact/remark", data, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/remark", data, nil,nil, result)
 
 	return result
 }
@@ -93,7 +93,7 @@ func (comp *Client) GetUnassigned(pageID int, pageSize int) *response.ResponseGe
 	comp.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", object.HashMap{
 		"page_id":   strconv.Itoa(pageID),
 		"page_size": strconv.Itoa(pageSize),
-	}, nil, result)
+	}, nil, nil,result)
 
 	return result
 }
@@ -108,7 +108,7 @@ func (comp *Client) Transfer(externalUserID []string, handoverUserID string, tak
 		"handover_userid": handoverUserID,
 		"takeover_userid": takeoverUserID,
 		"external_userid": externalUserID,
-	}, nil, result)
+	}, nil,nil, result)
 
 	return result
 }
@@ -122,7 +122,7 @@ func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) *respon
 	comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", object.HashMap{
 		"chat_id_list": chatIDs,
 		"new_owner":    newOwner,
-	}, nil, result)
+	}, nil,nil, result)
 
 	return result
 }
@@ -137,7 +137,7 @@ func (comp *Client) GetResignedTransferResult(handoverUserID string, takeoverUse
 		"handover_userid": handoverUserID,
 		"takeover_userid": takeoverUserID,
 		"cursor":          cursor,
-	}, nil, result)
+	}, nil, nil,result)
 
 	return result
 }

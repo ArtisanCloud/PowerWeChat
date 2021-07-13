@@ -29,7 +29,7 @@ func (comp *Client) Create(data *response3.RequestUserDetail) *response2.Respons
 
 	result := &response2.ResponseWX{}
 
-	comp.HttpPostJson("cgi-bin/user/create", data, nil, result)
+	comp.HttpPostJson("cgi-bin/user/create", data, nil, nil, result)
 
 	return result
 }
@@ -40,7 +40,7 @@ func (comp *Client) Update(data *response3.RequestUserDetail) *response2.Respons
 
 	result := &response2.ResponseWX{}
 
-	comp.HttpPostJson("cgi-bin/user/update", data, nil, result)
+	comp.HttpPostJson("cgi-bin/user/update", data, nil, nil, result)
 
 	return result
 }
@@ -53,7 +53,7 @@ func (comp *Client) Delete(userID string) *response2.ResponseWX {
 
 	comp.HttpGet("cgi-bin/user/delete", &object.StringMap{
 		"userid": userID,
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -64,7 +64,7 @@ func (comp *Client) BatchDelete(userIDs []string) *response2.ResponseWX {
 
 	result := &response2.ResponseWX{}
 
-	comp.HttpPostJson("cgi-bin/user/batchdelete", &object.HashMap{
+	comp.HttpPostJson("cgi-bin/user/batchdelete", nil, &object.HashMap{
 		"useridlist": userIDs,
 	}, nil, result)
 
@@ -77,7 +77,7 @@ func (comp *Client) Get(userID string) *response.ResponseGetUserDetail {
 
 	result := &response.ResponseGetUserDetail{}
 
-	comp.HttpGet("cgi-bin/user/get", &object.StringMap{
+	comp.HttpGet("cgi-bin/user/get", nil, &object.StringMap{
 		"userid": userID,
 	}, result)
 
@@ -93,7 +93,7 @@ func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild int) *respon
 	comp.HttpGet("cgi-bin/user/simplelist", &object.StringMap{
 		"department_id": fmt.Sprintf("%d", departmentID),
 		"fetch_child":   fmt.Sprintf("%d", fetchChild),
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -107,7 +107,7 @@ func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int)
 	comp.HttpGet("cgi-bin/user/list", &object.StringMap{
 		"department_id": fmt.Sprintf("%d", departmentID),
 		"fetch_child":   fmt.Sprintf("%d", fetchChild),
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -120,7 +120,7 @@ func (comp *Client) UserIdToOpenid(userID string) *response.ResponseUserIDToOpen
 
 	comp.HttpPostJson("cgi-bin/user/convert_to_openid", &object.StringMap{
 		"userid": userID,
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result
 }
@@ -133,7 +133,7 @@ func (comp *Client) OpenIDToUserID(openID string) *response.ResponseOpenIDToUser
 
 	comp.HttpPostJson("cgi-bin/user/convert_to_userid", &object.StringMap{
 		"openid": openID,
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result
 }
@@ -146,7 +146,7 @@ func (comp *Client) MobileToUserID(mobile string) *response.ResponseMobileToUser
 
 	comp.HttpPostJson("cgi-bin/user/getuserid", &object.StringMap{
 		"mobile": mobile,
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result
 }
@@ -159,7 +159,7 @@ func (comp *Client) Accept(userID string) *response2.ResponseWX {
 
 	comp.HttpGet("cgi-bin/user/authsucc", &object.StringMap{
 		"userid": userID,
-	}, result)
+	}, nil, result)
 
 	return result
 }
@@ -170,7 +170,7 @@ func (comp *Client) Invite(params *object.HashMap) *response.ResponseMobileToUse
 
 	result := &response.ResponseMobileToUserID{}
 
-	comp.HttpPostJson("cgi-bin/batch/invite", params, nil, result)
+	comp.HttpPostJson("cgi-bin/batch/invite", params, nil, nil, result)
 
 	return result
 }
@@ -187,21 +187,20 @@ func (comp *Client) GetInvitationQrCode(sizeType int) (*response.ResponseJoinCod
 
 	comp.HttpGet("cgi-bin/corp/get_join_qrcode", &object.StringMap{
 		"size_type": fmt.Sprintf("%d", sizeType),
-	}, result)
+	}, nil, result)
 
 	return result, nil
 }
 
-
 // 获取企业活跃成员数
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92714
-func (comp *Client) GetActiveCount(date carbon.Carbon) (*response.ResponseUserActiveCount) {
+func (comp *Client) GetActiveCount(date carbon.Carbon) *response.ResponseUserActiveCount {
 
 	result := &response.ResponseUserActiveCount{}
 
 	comp.HttpPostJson("cgi-bin/user/get_active_stat", &object.HashMap{
 		"date": date,
-	},nil, result)
+	}, nil, nil, result)
 
 	return result
 }

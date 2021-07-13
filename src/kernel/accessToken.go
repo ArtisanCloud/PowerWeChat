@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	http2 "github.com/ArtisanCloud/go-libs/http"
+	"github.com/ArtisanCloud/go-libs/http/request"
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
@@ -16,8 +17,8 @@ import (
 type AccessToken struct {
 	App *ApplicationInterface
 
-	*http2.HttpRequest
-	*http2.HttpResponse
+	*request.HttpRequest
+	*response.HttpResponse
 
 	RequestMethod      string
 	EndpointToGetToken string
@@ -36,7 +37,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 
 	token := &AccessToken{
 		App:         app,
-		HttpRequest: http2.NewHttpRequest(config),
+		HttpRequest: request.NewHttpRequest(config),
 
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
@@ -166,6 +167,8 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 		strEndpoint,
 		accessToken.RequestMethod,
 		options,
+		false,
+		nil,
 		res,
 	)
 	return res, nil

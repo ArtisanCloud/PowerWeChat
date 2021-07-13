@@ -16,7 +16,7 @@ func (comp *Client) Create(data *object.HashMap) *response.ResponseDepartmentCre
 
 	result := &response.ResponseDepartmentCreate{}
 
-	comp.HttpPostJson("cgi-bin/department/create", data, nil, result)
+	comp.HttpPostJson("cgi-bin/department/create", data, nil,nil, result)
 
 	return result
 }
@@ -27,7 +27,7 @@ func (comp *Client) Update(id int, data *object.HashMap) *response.ResponseDepar
 	result := &response.ResponseDepartmentUpdate{}
 
 	(*data)["id"] = id
-	comp.HttpPostJson("cgi-bin/department/update", data, nil, result)
+	comp.HttpPostJson("cgi-bin/department/update", data, nil, nil,result)
 
 	return result
 }
@@ -37,7 +37,7 @@ func (comp *Client) Delete(id int) *response.ResponseDepartmentDelete {
 
 	result := &response.ResponseDepartmentDelete{}
 
-	comp.HttpGet("cgi-bin/department/delete", &object.StringMap{"id":strconv.Itoa(id)}, result)
+	comp.HttpGet("cgi-bin/department/delete", &object.StringMap{"id":strconv.Itoa(id)}, nil,result)
 
 	return result
 }
@@ -47,7 +47,7 @@ func (comp *Client) List() *response.ResponseDepartmentList {
 
 	result := &response.ResponseDepartmentList{}
 
-	comp.HttpGet("cgi-bin/department/list", nil, result)
+	comp.HttpGet("cgi-bin/department/list", nil,nil, result)
 
 	return result
 }

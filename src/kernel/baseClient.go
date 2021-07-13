@@ -2,16 +2,16 @@ package kernel
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/http"
-	"github.com/ArtisanCloud/go-libs/http/drivers/gout"
+	"github.com/ArtisanCloud/go-libs/http/request"
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	http2 "net/http"
 )
 
 type BaseClient struct {
-	*http.HttpRequest
-	*http.HttpResponse
+	*request.HttpRequest
+	*response.HttpResponse
 
 	*support.ResponseCastable
 
@@ -27,7 +27,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 	}
 
 	client := &BaseClient{
-		HttpRequest: http.NewHttpRequest(config, gout.NewClient(config)),
+		HttpRequest: request.NewHttpRequest(config),
 		App:         app,
 		Token:       token,
 	}
@@ -35,7 +35,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 
 }
 
-func (client *BaseClient) HttpGet(url string, query interface{}, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpGet(url string, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
 	return client.Request(
 		url,
 		"GET",
@@ -43,11 +43,12 @@ func (client *BaseClient) HttpGet(url string, query interface{}, outResponse int
 			"query": query,
 		},
 		false,
-		outResponse,
+		outHeader,
+		outBody,
 	)
 }
 
-func (client *BaseClient) HttpPost(url string, data interface{}, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpPost(url string, data interface{}, outHeader interface{}, outBody interface{}) interface{} {
 	return client.Request(
 		url,
 		"POST",
@@ -55,11 +56,12 @@ func (client *BaseClient) HttpPost(url string, data interface{}, outResponse int
 			"form_params": data,
 		},
 		false,
-		outResponse,
+		outHeader,
+		outBody,
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
 	return client.Request(
 		url,
 		"POST",
@@ -68,11 +70,12 @@ func (client *BaseClient) HttpPostJson(url string, data interface{}, query inter
 			"form_params": data,
 		},
 		false,
-		outResponse,
+		outHeader,
+		outBody,
 	)
 }
 
-func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
 
 	multipart := []*object.HashMap{}
 	headers := object.HashMap{}
@@ -104,17 +107,19 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 		"connect_timeout": 30,
 		"timeout":         30,
 		"read_timeout":    30,
-	}, false, outResponse)
+	}, false, nil, outBody)
 }
 
-func (client *BaseClient) Request(url string, method string, options *object.HashMap, returnRaw bool, outResponse interface{}) interface{} {
+func (client *BaseClient) Request(url string, method string, options *object.HashMap,
+	returnRaw bool, outHeader interface{}, outBody interface{},
+) interface{} {
 
 	// to be setup middleware here
 	if client.Middlewares == nil {
 		client.registerHttpMiddlewares()
 	}
 	// http client request
-	response := client.PerformRequest(url, method, options, outResponse)
+	response := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
 
 	//if returnRaw {
 	//	return response
@@ -135,8 +140,8 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	return response
 }
 
-func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outResponse interface{}) interface{} {
-	return client.Request(url, method, options, true, outResponse)
+func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) interface{} {
+	return client.Request(url, method, options, true, outHeader, outBody)
 }
 
 func (client *BaseClient) registerHttpMiddlewares() {

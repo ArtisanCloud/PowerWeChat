@@ -9,7 +9,7 @@ func Test_ExternalContact_Get_Batch_ByUser(t *testing.T) {
 
 	userID := "siyuan-notify"
 	cursor := ""
-	limit := "100"
+	limit := 100
 
 	response := Work.ExternalContact.BatchGet(userID, cursor, limit)
 

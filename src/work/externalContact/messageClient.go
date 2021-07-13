@@ -32,7 +32,7 @@ func (comp *MessageClient) Submit(msg *object.HashMap) (*response.ResponseAddMes
 	if err != nil {
 		return nil, err
 	}
-	comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil,nil, result)
 
 	return result, nil
 }
@@ -43,7 +43,7 @@ func (comp *MessageClient) Get(msgID string) *response.ResponseGetGroupMesResult
 
 	comp.HttpPostJson("cgi-bin/externalcontact/get_group_msg_result", &object.StringMap{
 		"msgid": msgID,
-	}, nil, result)
+	}, nil,nil, result)
 
 	return result
 }
@@ -61,7 +61,7 @@ func (comp *MessageClient) SendWelcome(welcomeCode string, msg *object.HashMap) 
 		"welcome_code": welcomeCode,
 	})
 
-	comp.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", params, nil, result)
+	comp.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", params, nil,nil, result)
 
 	return result, nil
 }

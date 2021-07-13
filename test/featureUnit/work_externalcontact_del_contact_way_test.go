@@ -7,7 +7,7 @@ import (
 
 func Test_ExternalContact_Del_Contact_Way(t *testing.T) {
 
-	response := Work.ContactWay.Delete("f3626f74a7f94784115b0b8a729c471f")
+	response := Work.ExternalContactContactWay.Delete("f3626f74a7f94784115b0b8a729c471f")
 
 	if response == nil {
 		t.Error("response nil")
