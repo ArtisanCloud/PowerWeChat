@@ -10,7 +10,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
-	"github.com/ArtisanCloud/power-wechat/src/work/base"
+	"github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"net/http"
 	"time"
 )
@@ -104,7 +104,7 @@ func (app *Payment) Scheme(productID string) string {
 		"product_id": productID,
 	}
 
-	(*params)["sign"] = support.GenerateSign(params, key)
+	(*params)["sign"] = support.GenerateSign(params, key, "md5")
 
 	return "weixin://wxpay/bizpayurl?" + object.ConvertStringMapToString(params, "&")
 }

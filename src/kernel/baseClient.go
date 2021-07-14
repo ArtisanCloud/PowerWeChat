@@ -121,23 +121,19 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	// http client request
 	response := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
 
-	//if returnRaw {
-	//	return response
-	//} else {
-	//	// tbf
-	//	config := *(*client.App).GetContainer().Config
-	//	var rs http2.Response = http2.Response{
-	//		StatusCode: 200,
-	//		Header:     nil,
-	//	}
-	//	postBodyBuf, _ := json.Marshal(rs)
-	//	rs.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
-	//
-	//	returnResponse, _ := client.CastResponseToType(&rs, config["response_type"].(string))
-	//	return returnResponse
-	//
-	//}
-	return response
+	if returnRaw {
+		return response
+	} else {
+		// tbf
+		config := *(*client.App).GetContainer().Config
+		var rs http2.Response = http2.Response{
+			StatusCode: response.GetStatusCode(),
+			Header:     response.GetHeader(),
+			Body: response.GetBody(),
+		}
+		returnResponse, _ := client.CastResponseToType(&rs, config["response_type"].(string))
+		return returnResponse
+	}
 }
 
 func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) interface{} {

@@ -21,7 +21,7 @@ func GetConfig() *object.HashMap {
 			"file":  "./wechat.log",
 		},
 
-		"oauth.callback": "https://wechat-work-sso-2.spacecycle.cn/callback/authorized/user",
+		"oauth.callback": os.Getenv("oauth_callback"),
 		"oauth.scopes":   []string{},
 		"debug":          true,
 
