@@ -1,14 +1,17 @@
 package sandbox
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment"
+	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) (*Client) {
+func RegisterProvider(app *payment.Payment) (*Client) {
 
 	client := &Client{
-		kernel.NewBaseClient(&app, nil),
+		kernel.NewBaseClient(app),
+		&kernel2.InteractsWithCache{},
 	}
 
 	return client

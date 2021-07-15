@@ -3,11 +3,11 @@ package base
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 )
 
 type Client struct {
-	*payment.BaseClient
+	*kernel.BaseClient
 }
 
 // 付款码支付

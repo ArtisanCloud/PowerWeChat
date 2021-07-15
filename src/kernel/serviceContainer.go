@@ -1,6 +1,7 @@
 package kernel
 
 import (
+	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 )
 
@@ -42,6 +43,6 @@ func (container *ServiceContainer) GetConfig() *object.HashMap {
 
 	// merge config
 	container.Config = object.MergeHashMap(config, container.DefaultConfig, container.UserConfig)
-
+	fmt.Dump(container.Config)
 	return container.Config
 }

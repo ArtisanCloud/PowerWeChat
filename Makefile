@@ -22,5 +22,8 @@ test-externalcontact-message:
 test-media:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_media_test.go
 
+test-payment:
+	go test -v test/featureUnit/main_test.go test/featureUnit/payment_redpack_test.go
+
 build:
 	go build

@@ -19,7 +19,8 @@ type BaseClient struct {
 	App *payment.Payment
 }
 
-func NewBaseClient(app *payment.Payment) *BaseClient {
+func NewBaseClient(appInterface interface{}) *BaseClient {
+	app := appInterface.(*payment.Payment)
 	config := (*app).GetContainer().GetConfig()
 
 	client := &BaseClient{
