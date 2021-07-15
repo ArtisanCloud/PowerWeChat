@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseDepartmentList struct {
-	*response.ResponseWX
+	*response.ResponseWork
 	Departments []*models.Department `json:"department"`
 }
 

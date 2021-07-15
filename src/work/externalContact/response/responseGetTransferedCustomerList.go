@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGetTransferedCustomerList struct {
-	response.ResponseWX
+	response.ResponseWork
 	ExternalContactList []*ResponseCustomer `json:"customer"`
 }
 

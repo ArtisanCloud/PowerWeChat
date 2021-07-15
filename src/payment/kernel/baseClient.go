@@ -35,7 +35,7 @@ func (client *BaseClient) prepends() *object.StringMap {
 }
 
 func (client *BaseClient) Request(endpoint string, params *object.StringMap, method string, options *object.HashMap,
-	returnRaw bool,outHeader interface{}, outBody interface{},
+	returnRaw bool, outHeader interface{}, outBody interface{},
 ) interface{} {
 
 	base := &object.StringMap{
@@ -48,18 +48,17 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	params = object.MergeStringMap(base, params, client.prepends())
 	params = object.FilterEmptyStringMap(params)
 
-	secretKey,_ := client.App.GetKey(endpoint)
+	secretKey, _ := client.App.GetKey(endpoint)
 	signType := "MD5"
 	if (*params)["sign_type"] != "" {
 		signType = (*params)["sign_type"]
 	}
-	encryptMethod:=support.GetEncryptMethod(signType, secretKey)
+	encryptMethod := support.GetEncryptMethod(signType, secretKey)
 	(*params)["sign"] = support.GenerateSign(params, secretKey, encryptMethod)
 
-	options  = object.MergeHashMap(&object.HashMap{
+	options = object.MergeHashMap(&object.HashMap{
 		"body": object.StringMap2Xml(params),
 	}, options)
-
 
 	// to be setup middleware here
 	client.PushMiddleware(client.logMiddleware(), "access_token")
@@ -70,26 +69,28 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	if returnRaw {
 		return returnResponse
 	} else {
+		responseType := client.App.Config.GetString("response_type", "array")
 		var rs http2.Response = http2.Response{
 			StatusCode: 200,
 			Header:     nil,
 		}
 		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, "array")
+		result, _ := client.CastResponseToType(&rs, responseType)
 		return result
 	}
 
 }
 
 func (client *BaseClient) RequestRaw(url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) interface{} {
-	return client.Request(url, params,method, options, true,outHeader, outBody)
+	return client.Request(url, params, method, options, true, outHeader, outBody)
 }
 
-func (client *BaseClient) RequestArray(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) interface{} {
-	returnResponse:= client.RequestRaw(url, nil,method, options, outHeader, outBody)
-	return returnResponse
-}
+func (client *BaseClient) RequestArray(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) *object.HashMap {
+	returnResponse := client.RequestRaw(url, nil, method, options, outHeader, outBody)
+	result, _ := client.CastResponseToType(returnResponse.(*http2.Response), "array")
 
+	return result.(*object.HashMap)
+}
 
 func (client *BaseClient) SafeRequest(url string, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
 	return client.Request(
@@ -103,6 +104,13 @@ func (client *BaseClient) SafeRequest(url string, query interface{}, outHeader i
 		outHeader,
 		outBody,
 	)
+}
+func (client *BaseClient) Wrap(endpoint string) string {
+	if client.App.InSandbox() {
+		return "sandboxnew/" + endpoint
+	} else {
+		return endpoint
+	}
 }
 
 // ----------------------------------------------------------------------

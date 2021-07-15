@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseTagCreate struct {
-	response.ResponseWX
+	response.ResponseWork
 	TagID string `json:"tagid"`
 }

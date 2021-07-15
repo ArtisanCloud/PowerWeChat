@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGetExternalContact struct {
-	response.ResponseWX
+	response.ResponseWork
 	ExternalContact *ResponseExternalContactDetail `json:"external_contact"`
 	FollowInfo      []*FollowUser                  `json:"follow_user"`
 }

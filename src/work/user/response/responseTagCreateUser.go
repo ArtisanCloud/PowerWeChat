@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseTagCreateUser struct {
-	response.ResponseWX
+	response.ResponseWork
 	InvalidUser  string `json:"invaliduser"`  // "userid1|userid2",
 	InvalidParty string `json:"invalidparty"` // "partyid1|partyid2",
 }

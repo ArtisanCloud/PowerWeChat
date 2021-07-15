@@ -27,7 +27,7 @@ type AccessToken struct {
 	TokenKey           string
 	CachePrefix        string
 
-	*CacheToken
+	*InteractsWithCache
 
 	GetCredentials func() *object.StringMap
 }
@@ -46,7 +46,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		TokenKey:           "access_token",
 		CachePrefix:        "ac.go.wechat.kernel.access_token.",
 
-		CacheToken: &CacheToken{},
+		InteractsWithCache: &InteractsWithCache{},
 	}
 
 	return token
@@ -57,8 +57,8 @@ func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken
 }
 
 func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.ResponseGetToken, err error) {
-	cacheKey := accessToken.getCacheKey()
-	cache := accessToken.getCache()
+	cacheKey := accessToken.GetCacheKey()
+	cache := accessToken.GetCache()
 
 	// get token from cache
 	if !refresh && cache.Has(cacheKey) {
@@ -97,13 +97,13 @@ func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInter
 	}
 
 	// set token into cache
-	cache := accessToken.getCache()
-	err = cache.Set(accessToken.getCacheKey(), &object.HashMap{
+	cache := accessToken.GetCache()
+	err = cache.Set(accessToken.GetCacheKey(), &object.HashMap{
 		accessToken.TokenKey: token,
 		"expires_in":         lifeTime,
 	}, time.Duration(lifeTime)*time.Second)
 
-	if !cache.Has(accessToken.getCacheKey()) {
+	if !cache.Has(accessToken.GetCacheKey()) {
 		return nil, errors.New("failed to cache access token")
 	}
 	return accessToken, err
@@ -174,7 +174,7 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 	return res, nil
 }
 
-func (accessToken *AccessToken) getCacheKey() string {
+func (accessToken *AccessToken) GetCacheKey() string {
 
 	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)

@@ -1,21 +1,40 @@
 package base
 
 import (
+	"github.com/ArtisanCloud/go-libs/object"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/base/response"
 )
 
 type Client struct {
 	*payment.BaseClient
 }
 
-//
-func (comp *Client) Pay() *response.ResponseGetCallBackIp {
+// 付款码支付
+// https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1
 
-	result := &response.ResponseGetCallBackIp{}
+func (comp *Client) Pay(params *object.StringMap) *response2.ResponseWork {
 
-	comp.HttpGet("cgi-bin/getcallbackip", nil,nil, result)
+	result := &response2.ResponseWork{}
+
+	endpoint := comp.Wrap("pay/micropay")
+	comp.Request(endpoint, params, "POST", nil, false, nil, result)
 
 	return result
 }
 
+// 付款码查询openid
+// https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9
+func (comp *Client) AuthCodeToOpenID(authCode string) *response2.ResponseWork {
+
+	appID := comp.App.Config.GetString("app_id", "")
+
+	result := &response2.ResponseWork{}
+
+	comp.Request("tools/authcodetoopenid", &object.StringMap{
+		"appid":     appID,
+		"auth_code": authCode,
+	}, "POST", nil, false, nil, result)
+
+	return result
+}

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_Message_Send_Text(t *testing.T) {
+func Test_Redpack_Send(t *testing.T) {
 
 	para := &request.RequestMessageSendText{
 		&request.RequestMessageSend{

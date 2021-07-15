@@ -52,9 +52,9 @@ func (comp *ContactWayClient) Update(configID string, config *object.HashMap) *r
 	return result
 }
 
-func (comp *ContactWayClient) Delete(configID string) *response2.ResponseWX {
+func (comp *ContactWayClient) Delete(configID string) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpPostJson("cgi-bin/externalcontact/del_contact_way", &object.StringMap{
 		"config_id": configID,

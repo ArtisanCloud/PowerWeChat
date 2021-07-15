@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseGetUserList struct {
-	response.ResponseWX
+	response.ResponseWork
 	//UserList []*response2.RequestUserDetail `json:"userlist"`
 	UserList []*models.Employee `json:"userlist"`
 

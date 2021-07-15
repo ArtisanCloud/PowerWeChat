@@ -31,7 +31,7 @@ func Test_ExternalContact_Add_Contact_Way(t *testing.T) {
 
 	response := Work.ExternalContactContactWay.Create(para)
 
-	if response == nil || response.ResponseWX == nil {
+	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
 		t.Error("response error message as :", response.ErrMSG)

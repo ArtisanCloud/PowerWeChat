@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseGetContactWay struct {
-	*response.ResponseWX
+	*response.ResponseWork
 
 	Type          int             `json:"type"`            // :1,
 	Scene         int             `json:"scene"`           // 1,

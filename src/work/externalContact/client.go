@@ -75,9 +75,9 @@ func (comp *Client) Get(externalUserId string) *response.ResponseGetExternalCont
 
 // 修改客户备注信息.
 // https://work.weixin.qq.com/api/doc/90000/90135/92115
-func (comp *Client) Remark(data *object.HashMap) *response2.ResponseWX {
+func (comp *Client) Remark(data *object.HashMap) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpPostJson("cgi-bin/externalcontact/remark", data, nil,nil, result)
 

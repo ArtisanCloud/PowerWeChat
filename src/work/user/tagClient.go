@@ -36,9 +36,9 @@ func (comp *TagClient) Create(tagName string, tagID int) *response.ResponseTagCr
 
 // 更新标签名字
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90211
-func (comp *TagClient) Update(data *response3.RequestUserDetail) *response2.ResponseWX {
+func (comp *TagClient) Update(data *response3.RequestUserDetail) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpPostJson("cgi-bin/tag/update", data, nil, nil, result)
 
@@ -47,9 +47,9 @@ func (comp *TagClient) Update(data *response3.RequestUserDetail) *response2.Resp
 
 // 删除标签
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *TagClient) Delete(tagID string) *response2.ResponseWX {
+func (comp *TagClient) Delete(tagID string) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
 		"tagid": tagID,

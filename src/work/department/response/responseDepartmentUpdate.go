@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseDepartmentUpdate struct {
-	*response.ResponseWX
+	*response.ResponseWork
 }
 

@@ -1,22 +1,28 @@
 package response
 
-import (
-	"net/http"
-)
-
-type ResponseWX struct {
+type ResponseWork struct {
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg"`
 }
 
+type ResponsePayment struct {
+	ReturnCode string `json:"return_code"`
+	ReturnMSG  string `json:"return_msg"`
 
-func (res *ResponseWX) GetBody() *http.ResponseWriter {
-	return nil
-}
-func (res *ResponseWX) GetHeaders() *http.ResponseWriter {
-	return nil
+	ResultCode string `json:"result_code"` // 是	String(16)	SUCCESS/FAIL
+	ErrCode    string `json:"err_code"`    // 否	String(32)	SYSTEMERROR--系统错误
+	ErrMSG     string `json:"errmsg"`
+	ErrCodeDes string `json:"err_code_des"`
 }
 
-func (res *ResponseWX) GetStatusCode() int {
-	return 200
-}
+//
+//func (res *ResponseWork) GetBody() *http.ResponseWriter {
+//	return nil
+//}
+//func (res *ResponseWork) GetHeaders() *http.ResponseWriter {
+//	return nil
+//}
+//
+//func (res *ResponseWork) GetStatusCode() int {
+//	return 200
+//}

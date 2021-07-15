@@ -25,9 +25,9 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 创建成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90195
-func (comp *Client) Create(data *response3.RequestUserDetail) *response2.ResponseWX {
+func (comp *Client) Create(data *response3.RequestUserDetail) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpPostJson("cgi-bin/user/create", data, nil, nil, result)
 
@@ -36,9 +36,9 @@ func (comp *Client) Create(data *response3.RequestUserDetail) *response2.Respons
 
 // 更新成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90197
-func (comp *Client) Update(data *response3.RequestUserDetail) *response2.ResponseWX {
+func (comp *Client) Update(data *response3.RequestUserDetail) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpPostJson("cgi-bin/user/update", data, nil, nil, result)
 
@@ -47,9 +47,9 @@ func (comp *Client) Update(data *response3.RequestUserDetail) *response2.Respons
 
 // 删除成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *Client) Delete(userID string) *response2.ResponseWX {
+func (comp *Client) Delete(userID string) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpGet("cgi-bin/user/delete", &object.StringMap{
 		"userid": userID,
@@ -60,9 +60,9 @@ func (comp *Client) Delete(userID string) *response2.ResponseWX {
 
 // 批量删除成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *Client) BatchDelete(userIDs []string) *response2.ResponseWX {
+func (comp *Client) BatchDelete(userIDs []string) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpPostJson("cgi-bin/user/batchdelete", nil, &object.HashMap{
 		"useridlist": userIDs,
@@ -153,9 +153,9 @@ func (comp *Client) MobileToUserID(mobile string) *response.ResponseMobileToUser
 
 // 二次验证
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90203
-func (comp *Client) Accept(userID string) *response2.ResponseWX {
+func (comp *Client) Accept(userID string) *response2.ResponseWork {
 
-	result := &response2.ResponseWX{}
+	result := &response2.ResponseWork{}
 
 	comp.HttpGet("cgi-bin/user/authsucc", &object.StringMap{
 		"userid": userID,

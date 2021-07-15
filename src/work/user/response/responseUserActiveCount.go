@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseJoinCode struct {
-	response.ResponseWX
+	response.ResponseWork
 	JoinCode string `json:"join_qrcode"`
 }

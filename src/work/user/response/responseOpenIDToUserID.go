@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseOpenIDToUserID struct {
-	response.ResponseWX
+	response.ResponseWork
 	UserID string `json:"userid"`
 }

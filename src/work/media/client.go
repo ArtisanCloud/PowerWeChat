@@ -19,7 +19,7 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
 
-	//result := &response.ResponseWX{}
+	//result := &response.ResponseWork{}
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
 	response := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{

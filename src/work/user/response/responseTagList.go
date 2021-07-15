@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseTagList struct {
-	response.ResponseWX
+	response.ResponseWork
 	TagName string                `json:"tagname"`
 	TagList []*request.RequestTag `json:"taglist"`
 }

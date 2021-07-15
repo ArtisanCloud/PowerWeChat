@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseTagDetail struct {
-	response.ResponseWX
+	response.ResponseWork
 	TagName   string              `json:"tagname"`
 	UserList  []*UserSimpleDetail `json:"userlist"`
 	PartyList []int               `json:"partylist"`

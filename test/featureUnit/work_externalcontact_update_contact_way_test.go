@@ -31,7 +31,7 @@ func Test_ExternalContact_Update_Contact_Way(t *testing.T) {
 
 	response := Work.ExternalContactContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &object.HashMap{"para": para})
 
-	if response == nil || response.ResponseWX == nil {
+	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
 		t.Error("response error message as :", response.ErrMSG)
