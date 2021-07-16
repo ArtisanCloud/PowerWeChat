@@ -27,7 +27,8 @@ func (comp *Client) Pay(params *object.StringMap) *response2.ResponseWork {
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9
 func (comp *Client) AuthCodeToOpenID(authCode string) *response2.ResponseWork {
 
-	appID := comp.App.Config.GetString("app_id", "")
+	config := (*comp.App).GetConfig()
+	appID := config.GetString("app_id", "")
 
 	result := &response2.ResponseWork{}
 

@@ -1,13 +1,12 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/go-libs/fmt"
 	"testing"
 )
 
-func Test_Redpack_Send(t *testing.T) {
+func Test_RedPack_Send(t *testing.T) {
 
-	fmt.Dump(Payment)
+
 	//para := &request.RequestMessageSendText{
 	//	&request.RequestMessageSend{
 	//		ToUser:                 "michaelhu",

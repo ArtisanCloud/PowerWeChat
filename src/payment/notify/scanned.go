@@ -3,7 +3,7 @@ package notify
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
-	"github.com/ArtisanCloud/power-wechat/src/payment"
+	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 	"reflect"
 )
@@ -13,9 +13,9 @@ type Scanned struct {
 	alert string
 }
 
-func NewScanned(app *payment.Payment) *Scanned {
+func NewScanned(app kernel.ApplicationPaymentInterface) *Scanned {
 	scanned := &Scanned{
-		NewHandler(app),
+		NewHandler(&app),
 		"",
 	}
 
@@ -41,8 +41,9 @@ func (comp *Scanned) Handle(closure func(payload ...interface{}) interface{}) *h
 	}
 
 	if comp.alert == "" && reflect.TypeOf(result).Name() == "string" {
-		(*attributes)["appid"] = comp.App.Config.GetString("app_id", "")
-		(*attributes)["mch_id"] = comp.App.Config.GetString("mch_id", "")
+		config := (*comp.App).GetConfig()
+		(*attributes)["appid"] = config.GetString("app_id", "")
+		(*attributes)["mch_id"] = config.GetString("mch_id", "")
 		(*attributes)["nonce_str"] = str.UniqueID("")
 		(*attributes)["prepay_id"] = result
 	}

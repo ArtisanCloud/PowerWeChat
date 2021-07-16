@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"time"
 )
@@ -16,7 +15,7 @@ type Client struct {
 	*kernel2.InteractsWithCache
 }
 
-func NewClient(app *payment.Payment) *Client {
+func NewClient(app *kernel.ApplicationPaymentInterface) *Client {
 	return &Client{
 		kernel.NewBaseClient(app),
 		&kernel2.InteractsWithCache{},

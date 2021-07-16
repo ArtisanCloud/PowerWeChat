@@ -54,11 +54,11 @@ func GetWorkConfig() *object.HashMap {
 func GetPaymentConfig() *object.HashMap {
 	mchID, _ := strconv.Atoi(os.Getenv("mch_id"))
 	return &object.HashMap{
-		"app_id": os.Getenv("app_id"),
-		"mch_id": mchID,
-		"key":    os.Getenv("key"),
-		"cert_pat":    os.Getenv("cert_pat"),
-		"key_path":    os.Getenv("key_path"),
+		"app_id":   os.Getenv("app_id"),
+		"mch_id":   mchID,
+		"key":      os.Getenv("key"),
+		"cert_pat": os.Getenv("cert_pat"),
+		"key_path": os.Getenv("key_path"),
 
 		"response_type": os.Getenv("array"),
 		"log": &object.StringMap{
@@ -94,5 +94,4 @@ func TestInitWork(t *testing.T) {
 func TestInitPayment(t *testing.T) {
 	config := GetPaymentConfig()
 	Payment, _ = payment.NewPayment(config, nil)
-
 }

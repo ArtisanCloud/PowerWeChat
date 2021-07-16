@@ -2,12 +2,12 @@ package notify
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/payment"
+	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 )
 
 type Handler struct {
-	App        *payment.Payment
+	App        *kernel.ApplicationPaymentInterface
 	Messages   []string
 	Fail       string
 	Attributes *object.HashMap
@@ -20,7 +20,7 @@ type Handler struct {
 const SUCCESS = "SUCCESS"
 const FAIL = "FAIL"
 
-func NewHandler(app *payment.Payment) *Handler {
+func NewHandler(app *kernel.ApplicationPaymentInterface) *Handler {
 	return &Handler{
 		App: app,
 	}

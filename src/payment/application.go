@@ -8,14 +8,16 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"github.com/ArtisanCloud/power-wechat/src/payment/base"
+	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
-	"github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"net/http"
 	"time"
 )
 
 type Payment struct {
+	kernel2.ApplicationPaymentInterface
 	*kernel.ServiceContainer
 
 	ExternalRequest *http.Request
@@ -54,7 +56,6 @@ func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
 	//-------------- global app config --------------
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
-
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
 
@@ -113,7 +114,7 @@ func (app *Payment) CodeUrlScheme(codeUrl string) string {
 	return fmt.Sprintf("weixin://wxpay/bizpayurl?sr=%s", codeUrl)
 }
 
-func (app *Payment) SetSubMerchant(mchId string, appId string) *Payment {
+func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.ApplicationPaymentInterface {
 	app.Config.Set("sub_mch_id", mchId)
 	app.Config.Set("sub_appid", appId)
 

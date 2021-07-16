@@ -6,7 +6,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
-	"github.com/ArtisanCloud/power-wechat/src/payment"
 	http2 "net/http"
 )
 
@@ -16,11 +15,10 @@ type BaseClient struct {
 
 	*support.ResponseCastable
 
-	App *payment.Payment
+	App *ApplicationPaymentInterface
 }
 
-func NewBaseClient(appInterface interface{}) *BaseClient {
-	app := appInterface.(*payment.Payment)
+func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 	config := (*app).GetContainer().GetConfig()
 
 	client := &BaseClient{
@@ -39,17 +37,18 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) interface{} {
 
+	config:= (*client.App).GetConfig()
 	base := &object.StringMap{
-		"mch_id":     client.App.Config.GetString("mch_id", ""),
+		"mch_id":     config.GetString("mch_id", ""),
 		"nonce_str":  str.UniqueID(""),
-		"sub_mch_id": client.App.Config.GetString("sub_mch_id", ""),
-		"sub_appid":  client.App.Config.GetString("sub_appid", ""),
+		"sub_mch_id": config.GetString("sub_mch_id", ""),
+		"sub_appid":  config.GetString("sub_appid", ""),
 	}
 
 	params = object.MergeStringMap(base, params, client.prepends())
 	params = object.FilterEmptyStringMap(params)
 
-	secretKey, _ := client.App.GetKey(endpoint)
+	secretKey, _ := (*client.App).GetKey(endpoint)
 	signType := "MD5"
 	if (*params)["sign_type"] != "" {
 		signType = (*params)["sign_type"]
@@ -70,7 +69,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	if returnRaw {
 		return returnResponse
 	} else {
-		responseType := client.App.Config.GetString("response_type", "array")
+		responseType := config.GetString("response_type", "array")
 		var rs http2.Response = http2.Response{
 			StatusCode: 200,
 			Header:     nil,
@@ -107,7 +106,7 @@ func (client *BaseClient) SafeRequest(url string, query interface{}, outHeader i
 	)
 }
 func (client *BaseClient) Wrap(endpoint string) string {
-	if client.App.InSandbox() {
+	if (*client.App).InSandbox() {
 		return "sandboxnew/" + endpoint
 	} else {
 		return endpoint
@@ -115,23 +114,10 @@ func (client *BaseClient) Wrap(endpoint string) string {
 }
 
 // ----------------------------------------------------------------------
-type MiddlewareAccessToken struct {
-	*BaseClient
-}
 type MiddlewareLogMiddleware struct {
 	*BaseClient
 }
 
-func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
-	accessToken := (*d.App).GetAccessToken()
-
-	if accessToken != nil {
-		config := (*d.App).GetContainer().Config
-		_, err = accessToken.ApplyToRequest(req, config)
-	}
-
-	return err
-}
 func (client *BaseClient) logMiddleware() interface{} {
 	return &MiddlewareLogMiddleware{
 		client,

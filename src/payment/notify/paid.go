@@ -2,7 +2,7 @@ package notify
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/payment"
+	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 )
 
@@ -10,9 +10,9 @@ type Paid struct {
 	*Handler
 }
 
-func NewPaid(app *payment.Payment) *Paid {
+func NewPaid(app kernel.ApplicationPaymentInterface) *Paid {
 	paid := &Paid{
-		NewHandler(app),
+		NewHandler(&app),
 	}
 
 	return paid

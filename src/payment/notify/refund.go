@@ -1,7 +1,7 @@
 package notify
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/payment"
+	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 )
 
@@ -9,9 +9,9 @@ type Refund struct {
 	*Handler
 }
 
-func NewRefund(app *payment.Payment) *Refund {
+func NewRefund(app kernel.ApplicationPaymentInterface) *Refund {
 	paid := &Refund{
-		NewHandler(app),
+		NewHandler(&app),
 	}
 
 	return paid

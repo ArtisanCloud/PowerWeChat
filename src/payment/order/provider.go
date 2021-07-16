@@ -1,14 +1,11 @@
 package order
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/payment"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 )
 
-func RegisterProvider(app *payment.Payment) *Client {
+func RegisterProvider(app *kernel.ApplicationPaymentInterface) *Client {
 
-	return &Client{
-		kernel.NewBaseClient(app),
-	}
+	return NewClient(app)
 
 }
