@@ -10,6 +10,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
+	"sort"
+	"strings"
 	"time"
 )
 
@@ -120,16 +122,22 @@ func (comp *Client) GetTicketSignature(ticket string, nonce string, timestamp ti
 
 	param := fmt.Sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", ticket, nonce, timestamp, url)
 
-	return string(sha1.New().Sum([]byte(param)))
+	hash := sha1.New()
+	hash.Write([]byte(param))
+	return string(hash.Sum(nil))
 }
 
-func (comp *Client) dictionaryOrderSignature() string {
-
+func (comp *Client) dictionaryOrderSignature(params []string) string {
+	sort.Strings(params)
+	strJoined := strings.Join(params, "")
+	hash := sha1.New()
+	hash.Write([]byte(strJoined))
+	return string(hash.Sum(nil))
 }
 
 func (comp *Client) SetUrl(url string) *Client {
 
-	comp.url= url
+	comp.url = url
 
 	return comp
 }

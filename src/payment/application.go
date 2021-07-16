@@ -9,7 +9,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
-	"github.com/ArtisanCloud/power-wechat/src/payment/base/jssdk"
+	"github.com/ArtisanCloud/power-wechat/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"

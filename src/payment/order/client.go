@@ -23,7 +23,7 @@ func (comp *Client) Unify(params *object.StringMap, isContract bool) *response2.
 
 	result := &response2.ResponseWork{}
 
-	endpoint := comp.Wrap("pay/micropay")
+	endpoint := comp.Wrap("pay/transactions/jsapi")
 	comp.Request(endpoint, params, "POST", nil, false, nil, result)
 
 	return result
