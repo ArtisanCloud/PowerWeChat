@@ -9,6 +9,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
+	"github.com/ArtisanCloud/power-wechat/src/payment/base/jssdk"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
@@ -23,6 +24,7 @@ type Payment struct {
 	ExternalRequest *http.Request
 	Config          *kernel.Config
 
+	JSSDK   *jssdk.Client
 	Sandbox *sandbox.Client
 
 	Base *base.Client
@@ -59,6 +61,13 @@ func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
 
+	//-------------- JSSDK --------------
+	app.JSSDK = jssdk.RegisterProvider(app)
+
+	//-------------- Sandbox --------------
+	app.Sandbox = sandbox.RegisterProvider(app)
+
+
 	return app, err
 }
 
@@ -82,8 +91,10 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.ExternalRequest
 	case "Base":
 		return app.Base
-	//case "AccessToken":
-	//	return app.AccessToken
+	case "JSSDK":
+		return app.JSSDK
+	case "Sandbox":
+		return app.Sandbox
 	case "Config":
 		return app.Config
 

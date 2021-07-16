@@ -1,4 +1,4 @@
-package sandbox
+package jssdk
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
