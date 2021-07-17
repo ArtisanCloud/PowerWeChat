@@ -12,6 +12,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
+	"github.com/ArtisanCloud/power-wechat/src/payment/order"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
 	"net/http"
 	"time"
@@ -24,6 +25,7 @@ type Payment struct {
 	ExternalRequest *http.Request
 	Config          *kernel.Config
 
+	Order   *order.Client
 	JSSDK   *jssdk.Client
 	Sandbox *sandbox.Client
 
@@ -37,7 +39,7 @@ func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: config,
 		DefaultConfig: &object.HashMap{
-			"http": map[string]string{
+			"http": object.HashMap{
 				"base_uri": "https://api.mch.weixin.qq.com/",
 			},
 		},
@@ -60,6 +62,9 @@ func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
+
+	//-------------- Order --------------
+	app.Order = order.RegisterProvider(app)
 
 	//-------------- JSSDK --------------
 	app.JSSDK = jssdk.RegisterProvider(app)

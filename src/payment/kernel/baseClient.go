@@ -57,11 +57,12 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	(*params)["sign"] = support.GenerateSign(params, secretKey, encryptMethod)
 
 	options = object.MergeHashMap(&object.HashMap{
-		"body": object.StringMap2Xml(params),
+		//"body": object.StringMap2Xml(params),
+		"body": params,
 	}, options)
 
 	// to be setup middleware here
-	client.PushMiddleware(client.logMiddleware(), "access_token")
+	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
 	returnResponse := client.PerformRequest(endpoint, method, options, false, outHeader, outBody)

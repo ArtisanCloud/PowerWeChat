@@ -4,8 +4,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 )
 
-func RegisterProvider(app *kernel.ApplicationPaymentInterface) *Client {
+func RegisterProvider(app kernel.ApplicationPaymentInterface) *Client {
 
-	return NewClient(app)
+	return NewClient(&app)
 
 }

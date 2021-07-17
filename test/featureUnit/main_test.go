@@ -52,10 +52,9 @@ func GetWorkConfig() *object.HashMap {
 }
 
 func GetPaymentConfig() *object.HashMap {
-	mchID, _ := strconv.Atoi(os.Getenv("mch_id"))
 	return &object.HashMap{
 		"app_id":   os.Getenv("app_id"),
-		"mch_id":   mchID,
+		"mch_id":   os.Getenv("mch_id"),
 		"key":      os.Getenv("key"),
 		"cert_pat": os.Getenv("cert_pat"),
 		"key_path": os.Getenv("key_path"),
@@ -74,6 +73,7 @@ func GetPaymentConfig() *object.HashMap {
 
 		"notify_url": os.Getenv("notify_url"),
 		"debug":      true,
+		"sandbox": true,
 
 		// server config
 		"token":   os.Getenv("token"),

@@ -56,7 +56,7 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: config,
 		DefaultConfig: &object.HashMap{
-			"http": map[string]string{
+			"http": object.HashMap{
 				"base_uri": "https://qyapi.weixin.qq.com/",
 			},
 		},
