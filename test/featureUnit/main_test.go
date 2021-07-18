@@ -53,6 +53,8 @@ func GetWorkConfig() *object.HashMap {
 
 func GetPaymentConfig() *object.HashMap {
 	return &object.HashMap{
+		"corp_id":  os.Getenv("corp_id"),
+		"secret":   os.Getenv("secret"),
 		"app_id":   os.Getenv("app_id"),
 		"mch_id":   os.Getenv("mch_id"),
 		"key":      os.Getenv("key"),
@@ -73,7 +75,7 @@ func GetPaymentConfig() *object.HashMap {
 
 		"notify_url": os.Getenv("notify_url"),
 		"debug":      true,
-		"sandbox": true,
+		//"sandbox": true,
 
 		// server config
 		"token":   os.Getenv("token"),

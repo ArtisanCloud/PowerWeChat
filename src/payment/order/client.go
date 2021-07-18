@@ -20,7 +20,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 // Unify order.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml
 
-func (comp *Client) Unify(params *object.StringMap, isContract bool) *response.ResponseUnitfy {
+func (comp *Client) Unify(params *object.HashMap, isContract bool) *response.ResponseUnitfy {
 
 	result := &response.ResponseUnitfy{}
 
@@ -31,7 +31,7 @@ func (comp *Client) Unify(params *object.StringMap, isContract bool) *response.R
 	}
 
 	endpoint := comp.Wrap("pay/transactions/jsapi")
-	comp.Request(endpoint, params, "POST", nil, false, nil, result)
+	comp.Request(endpoint, nil, "POST", params, false, nil, result)
 
 	return result
 }

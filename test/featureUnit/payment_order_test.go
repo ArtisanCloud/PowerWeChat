@@ -7,8 +7,17 @@ import (
 
 func Test_Unify_Order(t *testing.T) {
 
-	response := Payment.Order.Unify(&object.StringMap{
-		"out_trade_no": "order-no-for-dev",
+	response := Payment.Order.Unify(&object.HashMap{
+		"out_trade_no": "1217752501201407033233368318",
+		"description": "保险机构请款",
+		"amount": &object.HashMap{
+			"total": 1,
+			"currency": "CNY",
+		},
+		"payer": &object.HashMap{
+			"openid": "o4GgauInH_RCEdvrrNGrntXDuXXX",
+		},
+
 	}, false)
 
 	if response.PrepayID =="" {
