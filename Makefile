@@ -27,5 +27,8 @@ test-payment:
 	go test -v test/featureUnit/main_test.go test/featureUnit/payment_jssdk_test.go
 	go test -v test/featureUnit/main_test.go test/featureUnit/payment_redpack_test.go
 
+test-kernel-support:
+	go test -v src/kernel/support/str.go src/kernel/support/str_test.go
+
 build:
 	go build
