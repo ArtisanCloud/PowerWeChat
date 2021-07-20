@@ -1,13 +1,14 @@
 package featureUnit
 
 import (
+	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"testing"
 )
 
 func Test_Unify_Order(t *testing.T) {
 
-	response := Payment.Order.Unify(&object.HashMap{
+	response ,err:= Payment.Order.Unify(&object.HashMap{
 		"out_trade_no": "1217752501201407033233368318",
 		"description": "保险机构请款",
 		"amount": &object.HashMap{
@@ -23,6 +24,7 @@ func Test_Unify_Order(t *testing.T) {
 	if response.PrepayID =="" {
 		t.Error("response nil")
 	}
+	fmt.Dump(err.Error())
 
 	//if response == nil || response.ResponseWork == nil {
 	//	t.Error("response nil")
