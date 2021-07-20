@@ -26,7 +26,7 @@ func (comp *Client) Unify(params *object.HashMap, isContract bool) *response.Res
 
 	config := (*comp.App).GetConfig()
 	(*params)["appid"] = config.GetString("app_id", "")
-	if (*params)["notify_url"] == "" {
+	if (*params)["notify_url"] == nil || (*params)["notify_url"] == "" {
 		(*params)["notify_url"] = config.GetString("notify_url", "")
 	}
 

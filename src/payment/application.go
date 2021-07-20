@@ -7,7 +7,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
@@ -112,7 +111,7 @@ func (app *Payment) GetComponent(name string) interface{} {
 func (app *Payment) Scheme(productID string) string {
 	appID := app.Config.GetString("app_id", "")
 	mchID := app.Config.GetString("mch_id", "")
-	key := app.Config.GetString("key", "")
+	//key := app.Config.GetString("key", "")
 	params := &object.StringMap{
 		"appid":      appID,
 		"mch_id":     mchID,
@@ -121,7 +120,8 @@ func (app *Payment) Scheme(productID string) string {
 		"product_id": productID,
 	}
 
-	(*params)["sign"] = support.GenerateSign(params, key, "md5")
+	//var err error
+	//(*params)["sign"], err = support.GenerateSign(params, key, "md5")
 
 	return "weixin://wxpay/bizpayurl?" + object.ConvertStringMapToString(params, "&")
 }

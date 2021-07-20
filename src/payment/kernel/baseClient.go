@@ -1,6 +1,7 @@
 package kernel
 
 import (
+	"encoding/json"
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
@@ -29,36 +30,46 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 
 }
 
-func (client *BaseClient) prepends() *object.StringMap {
-	return &object.StringMap{}
+func (client *BaseClient) prepends() *object.HashMap {
+	return &object.HashMap{}
 }
 
 func (client *BaseClient) Request(endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) interface{} {
+) (interface{}, error) {
 
-	config:= (*client.App).GetConfig()
-	base := &object.StringMap{
+	config := (*client.App).GetConfig()
+	base := &object.HashMap{
 		"mch_id":     config.GetString("mch_id", ""),
 		"nonce_str":  str.UniqueID(""),
 		"sub_mch_id": config.GetString("sub_mch_id", ""),
 		"sub_appid":  config.GetString("sub_appid", ""),
 	}
 
-	params = object.MergeStringMap(base, params, client.prepends())
-	params = object.FilterEmptyStringMap(params)
+	options = object.MergeHashMap(base, client.prepends(), options)
+	options = object.FilterEmptyHashMap(options)
 
-	secretKey, _ := (*client.App).GetKey(endpoint)
-	signType := "MD5"
-	if (*params)["sign_type"] != "" {
-		signType = (*params)["sign_type"]
+	signer := &support.SHA256WithRSASigner{
+		MchID:               config.GetString("mch_id", ""),
+		CertificateSerialNo: "2355A2CD634B06C2A86B28780228A997D017B011",
+		PrivateKeyPath:      config.GetString("key_path", ""),
 	}
-	encryptMethod := support.GetEncryptMethod(signType, secretKey)
-	(*params)["sign"] = support.GenerateSign(params, secretKey, encryptMethod)
+
+	bufferBody, err := json.Marshal(options)
+	signBody := string(bufferBody)
+	if err != nil {
+		return nil, err
+	}
+	authorization, err := support.GenerateSign(signer, support.GenerateSigner{
+		Method:       "POST",
+		CanonicalURL: "/v3/pay/transactions/jsapi",
+		SignBody:     signBody,
+	})
 
 	options = object.MergeHashMap(&object.HashMap{
-		//"body": object.StringMap2Xml(params),
-		"body": params,
+		"headers": &object.HashMap{
+			"Authorization": authorization,
+		},
 	}, options)
 
 	// to be setup middleware here
@@ -68,7 +79,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	returnResponse := client.PerformRequest(endpoint, method, options, false, outHeader, outBody)
 
 	if returnRaw {
-		return returnResponse
+		return returnResponse, nil
 	} else {
 		responseType := config.GetString("response_type", "array")
 		var rs http2.Response = http2.Response{
@@ -77,23 +88,26 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		}
 		rs.Body = returnResponse.GetBody()
 		result, _ := client.CastResponseToType(&rs, responseType)
-		return result
+		return result, nil
 	}
 
 }
 
-func (client *BaseClient) RequestRaw(url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) RequestRaw(url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(url, params, method, options, true, outHeader, outBody)
 }
 
-func (client *BaseClient) RequestArray(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) *object.HashMap {
-	returnResponse := client.RequestRaw(url, nil, method, options, outHeader, outBody)
-	result, _ := client.CastResponseToType(returnResponse.(*http2.Response), "array")
+func (client *BaseClient) RequestArray(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*object.HashMap, error) {
+	returnResponse, err := client.RequestRaw(url, nil, method, options, outHeader, outBody)
+	if err != nil {
+		return nil, err
+	}
+	result, err := client.CastResponseToType(returnResponse.(*http2.Response), "array")
 
-	return result.(*object.HashMap)
+	return result.(*object.HashMap), err
 }
 
-func (client *BaseClient) SafeRequest(url string, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) SafeRequest(url string, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		nil,

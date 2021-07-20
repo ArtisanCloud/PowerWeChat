@@ -68,7 +68,7 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 		return ticket.(*object.HashMap), err
 	}
 
-	rs := comp.RequestRaw(comp.ticketEndpoint, nil, "GET", &object.HashMap{
+	rs, err := comp.RequestRaw(comp.ticketEndpoint, nil, "GET", &object.HashMap{
 		"query": &object.HashMap{
 			"type": ticketType,
 		}}, nil, nil)

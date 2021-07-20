@@ -7,7 +7,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/url"
 	"time"
@@ -42,7 +41,7 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 		"signType":  "MD5",
 	}
 
-	(*params)["paySign"] = support.GenerateSign(params, config.GetString("key", ""), "MD5")
+	//(*params)["paySign"] = support.GenerateSign(params, config.GetString("key", ""), "MD5")
 	if isJson {
 		return json.Marshal(params)
 	} else {
@@ -78,7 +77,7 @@ func (comp *Client) AppConfig(prepayId string) (*object.StringMap, error) {
 		"package":   "Sign=WXPay",
 	}
 
-	(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "MD5")
+	//(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "MD5")
 
 	return params, nil
 }
@@ -127,7 +126,7 @@ func (comp *Client) ContractConfig(params *object.StringMap) (*object.StringMap,
 	config := (*comp.App).GetConfig()
 	(*params)["appid"] = config.GetString("app_id", "")
 	(*params)["timestamp"] = fmt.Sprintf("%d", time.Now().Unix())
-	(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "md5")
+	//(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "md5")
 
 	return params, nil
 
