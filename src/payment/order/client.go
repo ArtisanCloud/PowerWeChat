@@ -31,9 +31,9 @@ func (comp *Client) Unify(params *object.HashMap, isContract bool) (*response.Re
 	}
 
 	endpoint := comp.Wrap("pay/transactions/jsapi")
-	_, err:=comp.Request(endpoint, nil, "POST", params, false, nil, result)
+	_, err := comp.Request(endpoint, nil, "POST", params, false, nil, result)
 
-	return result,err
+	return result, err
 }
 func (comp *Client) QueryByOutTradeNumber(number string) *response.ResponseOrder {
 	endpoint := fmt.Sprintf("pay/transactions/out-trade-no/transaction_id/%s", number)

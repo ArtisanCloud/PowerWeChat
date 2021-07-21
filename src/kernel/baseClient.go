@@ -35,7 +35,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 
 }
 
-func (client *BaseClient) HttpGet(url string, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) HttpGet(url string, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"GET",
@@ -48,7 +48,7 @@ func (client *BaseClient) HttpGet(url string, query interface{}, outHeader inter
 	)
 }
 
-func (client *BaseClient) HttpPost(url string, data interface{}, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) HttpPost(url string, data interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"POST",
@@ -61,7 +61,7 @@ func (client *BaseClient) HttpPost(url string, data interface{}, outHeader inter
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"POST",
@@ -75,7 +75,7 @@ func (client *BaseClient) HttpPostJson(url string, data interface{}, query inter
 	)
 }
 
-func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
 	multipart := []*object.HashMap{}
 	headers := object.HashMap{}
@@ -112,31 +112,34 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 
 func (client *BaseClient) Request(url string, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) interface{} {
+) (interface{}, error) {
 
 	// to be setup middleware here
 	if client.Middlewares == nil {
 		client.registerHttpMiddlewares()
 	}
 	// http client request
-	response := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
+	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
+	if err!=nil{
+		return nil, err
+	}
 
 	if returnRaw {
-		return response
+		return response , err
 	} else {
 		// tbf
 		config := *(*client.App).GetContainer().Config
 		var rs http2.Response = http2.Response{
 			StatusCode: response.GetStatusCode(),
 			Header:     response.GetHeader(),
-			Body: response.GetBody(),
+			Body:       response.GetBody(),
 		}
-		returnResponse, _ := client.CastResponseToType(&rs, config["response_type"].(string))
-		return returnResponse
+		returnResponse, err := client.CastResponseToType(&rs, config["response_type"].(string))
+		return returnResponse, err
 	}
 }
 
-func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) interface{} {
+func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(url, method, options, true, outHeader, outBody)
 }
 

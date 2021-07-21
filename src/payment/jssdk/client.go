@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/url"
 	"time"
@@ -28,24 +29,28 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 
 	config := (*comp.App).GetConfig()
 	appID := config.GetString("app_id", "")
-	subAPPID := config.GetString("sub_appid", "")
-	if subAPPID != "" {
-		appID = subAPPID
-	}
 
-	params := &object.StringMap{
+	options := &object.StringMap{
 		"appId":     appID,
 		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
 		"nonceStr":  str.UniqueID(""),
 		"package":   fmt.Sprintf("prepay_id=%s", prepayId),
-		"signType":  "MD5",
+		"signType":  "RSA",
 	}
 
-	//(*params)["paySign"] = support.GenerateSign(params, config.GetString("key", ""), "MD5")
+	signBody, err := object.JsonEncode(options)
+	if err != nil {
+		return nil, err
+	}
+	(*options)["paySign"], err = support.GenerateSign(comp.Signer, support.GenerateSigner{
+		Method:       "POST",
+		CanonicalURL: "/v3/pay/transactions/jsapi",
+		SignBody:     signBody,
+	})
 	if isJson {
-		return json.Marshal(params)
+		return json.Marshal(options)
 	} else {
-		return params, nil
+		return options, nil
 	}
 
 }
@@ -77,7 +82,7 @@ func (comp *Client) AppConfig(prepayId string) (*object.StringMap, error) {
 		"package":   "Sign=WXPay",
 	}
 
-	//(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "MD5")
+	//(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "RSA")
 
 	return params, nil
 }

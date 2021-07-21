@@ -163,7 +163,8 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 	if err != nil {
 		return nil, err
 	}
-	accessToken.SetHttpClient(accessToken.GetHttpClient()).PerformRequest(
+
+	_, err = accessToken.SetHttpClient(accessToken.GetHttpClient()).PerformRequest(
 		strEndpoint,
 		accessToken.RequestMethod,
 		options,
@@ -171,7 +172,7 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 		nil,
 		res,
 	)
-	return res, nil
+	return res, err
 }
 
 func (accessToken *AccessToken) GetCacheKey() string {

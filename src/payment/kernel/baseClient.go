@@ -1,11 +1,9 @@
 package kernel
 
 import (
-	"encoding/json"
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	http2 "net/http"
 )
@@ -16,6 +14,8 @@ type BaseClient struct {
 
 	*support.ResponseCastable
 
+	Signer *support.SHA256WithRSASigner
+
 	App *ApplicationPaymentInterface
 }
 
@@ -24,7 +24,12 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 
 	client := &BaseClient{
 		HttpRequest: request.NewHttpRequest(config),
-		App:         app,
+		Signer: &support.SHA256WithRSASigner{
+			MchID:               (*config)["mch_id"].(string),
+			CertificateSerialNo: "2655A2CD634B06C2A86B28780228A997D047B01C",
+			PrivateKeyPath:      (*config)["key_path"].(string),
+		},
+		App: app,
 	}
 	return client
 
@@ -40,27 +45,25 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 	config := (*client.App).GetConfig()
 	base := &object.HashMap{
-		"mch_id":     config.GetString("mch_id", ""),
-		"nonce_str":  str.UniqueID(""),
-		"sub_mch_id": config.GetString("sub_mch_id", ""),
-		"sub_appid":  config.GetString("sub_appid", ""),
+		"appid": config.GetString("app_id", ""),
+		"mchid": config.GetString("mch_id", ""),
 	}
 
 	options = object.MergeHashMap(base, client.prepends(), options)
 	options = object.FilterEmptyHashMap(options)
 
-	signer := &support.SHA256WithRSASigner{
-		MchID:               config.GetString("mch_id", ""),
-		CertificateSerialNo: "2655A2CD634B06C2A86B28780228A997D047B01C",
-		PrivateKeyPath:      config.GetString("key_path", ""),
-	}
-
-	bufferBody, err := json.Marshal(options)
-	signBody := string(bufferBody)
+	signBody, err := object.JsonEncode(options)
 	if err != nil {
 		return nil, err
 	}
-	authorization, err := support.GenerateSign(signer, support.GenerateSigner{
+
+	//authorization, err := support.GenerateSign(client.Signer,support.GenerateSigner{
+	//	Method:       "POST",
+	//	CanonicalURL: "/v3/pay/transactions/jsapi",
+	//	SignBody:     signBody,
+	//})
+
+	authorization, err := client.Signer.GenerateRequestSign(&support.RequestSignChain{
 		Method:       "POST",
 		CanonicalURL: "/v3/pay/transactions/jsapi",
 		SignBody:     signBody,
@@ -77,7 +80,10 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
-	returnResponse := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	returnResponse, err := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	if err != nil {
+		return nil, err
+	}
 
 	if returnRaw {
 		return returnResponse, nil

@@ -3,15 +3,10 @@ package support
 import (
 	"context"
 	"fmt"
+	"github.com/ArtisanCloud/go-libs/str"
 	"time"
 )
 
-// 请求报文签名相关常量
-const (
-	SignatureMessageFormat = "%s\n%s\n%d\n%s\n%s\n" // 数字签名原文格式
-	// HeaderAuthorizationFormat 请求头中的 Authorization 拼接格式
-	HeaderAuthorizationFormat = "%s mchid=\"%s\",nonce_str=\"%s\",timestamp=\"%d\",serial_no=\"%s\",signature=\"%s\""
-)
 
 type GenerateSigner struct {
 	Method       string // 接口提交方法。"GET", "POST"等
@@ -24,7 +19,7 @@ type GenerateSigner struct {
 func GenerateSign(signer *SHA256WithRSASigner, gs GenerateSigner) (authorization string, err error) {
 
 	timestamp := time.Now().Unix()
-	nonce := QuickRandom(32)
+	nonce := str.QuickRandom(32)
 
 	// Under ci mode, go fixed value
 	// 在ci模式下面，走固定值

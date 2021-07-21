@@ -9,8 +9,18 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
+	"github.com/ArtisanCloud/go-libs/str"
 	"io/ioutil"
 	"strings"
+	"time"
+)
+
+// 请求报文签名相关常量
+const (
+	SignatureMessageFormat = "%s\n%s\n%d\n%s\n%s\n" // 数字签名原文格式
+
+	// HeaderAuthorizationFormat 请求头中的 Authorization 拼接格式
+	HeaderAuthorizationFormat = "%s mchid=\"%s\",nonce_str=\"%s\",timestamp=\"%d\",serial_no=\"%s\",signature=\"%s\""
 )
 
 // SHA256WithRSASigner Sha256WithRSA 数字签名生成器
@@ -26,6 +36,53 @@ type SignatureResult struct {
 	MchID               string // 商户号
 	CertificateSerialNo string // 签名对应的证书序列号
 	Signature           string // 签名内容
+}
+
+type RequestSignChain struct {
+	Method       string // 接口提交方法。"GET", "POST"等
+	CanonicalURL string // 微信支付接口路径。 例如： /v3/pay/transactions/jsapi
+	SignBody     string // 提交的body字符串。 例如； {"amount":{"total":1},"appid":"ww16143ea0101327c7","attach":"自定义数据说明","description":"Image形象店-深圳腾大-QQ公仔","mchid":"1611854986","notify_url":"https://pay.wangchaoyi.com/wx/notify","out_trade_no":"5519778939773395659222199361","payer":{"openid":"oAuaP0TRUMwP169nQfg7XCEAw3HQ"}}
+	timestamp    int64  // 单元测试传入的固定时间戳
+	nonce        string // 单元测试传入的固定随机数
+}
+
+func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (authorization string, err error) {
+	timestamp := time.Now().Unix()
+	nonce := str.QuickRandom(32)
+
+	// Under ci mode, go fixed value
+	// 在ci模式下面，走固定值
+	if signChain.timestamp != 0 && signChain.nonce != "" {
+		timestamp = signChain.timestamp
+		nonce = signChain.nonce
+	}
+
+	// Splice the string to be signed
+	// 拼接出需要签名的字符串
+	message := fmt.Sprintf(SignatureMessageFormat, signChain.Method, signChain.CanonicalURL, timestamp, nonce, signChain.SignBody)
+
+	// sign the message
+	signatureResult, err := s.Sign(context.TODO(), message)
+	if err != nil {
+		return "", err
+	}
+
+	// get the header authorization
+	authorization = fmt.Sprintf(
+		HeaderAuthorizationFormat,
+		s.GetAuthorizationType(),
+		signatureResult.MchID,
+		nonce,
+		timestamp,
+		signatureResult.CertificateSerialNo,
+		signatureResult.Signature,
+	)
+
+	return authorization, err
+}
+
+func (s *SHA256WithRSASigner) GenerateSign() {
+	
 }
 
 // Sign 对信息使用 SHA256WithRSA 算法进行签名

@@ -44,6 +44,7 @@ func GetWorkConfig() *object.HashMap {
 		"oauth.callback": os.Getenv("oauth_callback"),
 		"oauth.scopes":   []string{},
 		"debug":          true,
+		"http_debug":      true,
 
 		// server config
 		"token":   os.Getenv("token"),
@@ -57,9 +58,9 @@ func GetPaymentConfig() *object.HashMap {
 		"secret":   os.Getenv("secret"),
 		"app_id":   os.Getenv("app_id"),
 		"mch_id":   os.Getenv("mch_id"),
-		"key":      os.Getenv("key"),
-		"cert_pat": os.Getenv("cert_pat"),
-		"key_path": os.Getenv("key_path"),
+		"key":      os.Getenv("wx_key"),
+		"cert_path": os.Getenv("wx_cert_path"),
+		"key_path": os.Getenv("wx_key_path"),
 
 		"response_type": os.Getenv("array"),
 		"log": &object.StringMap{
@@ -74,7 +75,8 @@ func GetPaymentConfig() *object.HashMap {
 		},
 
 		"notify_url": os.Getenv("notify_url"),
-		"debug":      true,
+		//"debug":      true,
+		"http_debug":      true,
 		//"sandbox": true,
 
 		// server config
