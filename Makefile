@@ -30,5 +30,5 @@ test-payment:
 test-kernel-support:
 	go test -v src/kernel/support/str.go src/kernel/support/str_test.go
 
-build:
+build:payment_order_test.go
 	go build

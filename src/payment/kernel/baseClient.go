@@ -51,7 +51,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 	signer := &support.SHA256WithRSASigner{
 		MchID:               config.GetString("mch_id", ""),
-		CertificateSerialNo: "2355A2CD634B06C2A86B28780228A997D017B011",
+		CertificateSerialNo: "2655A2CD634B06C2A86B28780228A997D047B01C",
 		PrivateKeyPath:      config.GetString("key_path", ""),
 	}
 
@@ -70,13 +70,14 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		"headers": &object.HashMap{
 			"Authorization": authorization,
 		},
+		"body": signBody,
 	}, options)
 
 	// to be setup middleware here
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
-	returnResponse := client.PerformRequest(endpoint, method, options, false, outHeader, outBody)
+	returnResponse := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
 
 	if returnRaw {
 		return returnResponse, nil
