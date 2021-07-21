@@ -42,7 +42,7 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 	if err != nil {
 		return nil, err
 	}
-	(*options)["paySign"], err = support.GenerateSign(comp.Signer, support.GenerateSigner{
+	(*options)["paySign"], err = comp.Signer.GenerateSign(comp.Signer, support.GenerateSigner{
 		Method:       "POST",
 		CanonicalURL: "/v3/pay/transactions/jsapi",
 		SignBody:     signBody,

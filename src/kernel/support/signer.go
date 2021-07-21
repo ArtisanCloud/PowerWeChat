@@ -9,6 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
+	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"io/ioutil"
 	"strings"
@@ -59,7 +60,8 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 
 	// Splice the string to be signed
 	// 拼接出需要签名的字符串
-	message := fmt.Sprintf(SignatureMessageFormat, signChain.Method, signChain.CanonicalURL, timestamp, nonce, signChain.SignBody)
+	arrayParams := []string{signChain.Method, signChain.CanonicalURL, fmt.Sprintf("%d", timestamp), nonce, signChain.SignBody}
+	message := strings.Join(arrayParams, "\n") + "\n"
 
 	// sign the message
 	signatureResult, err := s.Sign(context.TODO(), message)
@@ -81,8 +83,19 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 	return authorization, err
 }
 
-func (s *SHA256WithRSASigner) GenerateSign() {
-	
+func (s *SHA256WithRSASigner) GenerateSign(mapParams *object.StringMap) (sign string, err error) {
+
+	arrayParams :=
+
+	message := strings.Join(arrayParams, "\n") + "\n"
+
+	// sign the message
+	signatureResult, err := s.Sign(context.TODO(), message)
+	if err != nil {
+		return "", err
+	}
+
+	return signatureResult.Signature, err
 }
 
 // Sign 对信息使用 SHA256WithRSA 算法进行签名
