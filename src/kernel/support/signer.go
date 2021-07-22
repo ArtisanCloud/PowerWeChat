@@ -85,8 +85,7 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 
 func (s *SHA256WithRSASigner) GenerateSign(mapParams *object.StringMap) (sign string, err error) {
 
-	arrayParams :=
-
+	_, arrayParams := object.GetStringMapKV(*mapParams)
 	message := strings.Join(arrayParams, "\n") + "\n"
 
 	// sign the message

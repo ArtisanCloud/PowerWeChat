@@ -7,7 +7,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/url"
 	"time"
@@ -38,15 +37,11 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 		"signType":  "RSA",
 	}
 
-	signBody, err := object.JsonEncode(options)
+	var err error
+	(*options)["paySign"], err = comp.Signer.GenerateSign(options)
 	if err != nil {
 		return nil, err
 	}
-	(*options)["paySign"], err = comp.Signer.GenerateSign(comp.Signer, support.GenerateSigner{
-		Method:       "POST",
-		CanonicalURL: "/v3/pay/transactions/jsapi",
-		SignBody:     signBody,
-	})
 	if isJson {
 		return json.Marshal(options)
 	} else {

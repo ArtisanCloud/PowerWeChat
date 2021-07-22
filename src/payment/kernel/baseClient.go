@@ -57,12 +57,6 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		return nil, err
 	}
 
-	//authorization, err := support.GenerateSign(client.Signer,support.GenerateSigner{
-	//	Method:       "POST",
-	//	CanonicalURL: "/v3/pay/transactions/jsapi",
-	//	SignBody:     signBody,
-	//})
-
 	authorization, err := client.Signer.GenerateRequestSign(&support.RequestSignChain{
 		Method:       "POST",
 		CanonicalURL: "/v3/pay/transactions/jsapi",

@@ -35,40 +35,41 @@ func (comp *Client) Unify(params *object.HashMap, isContract bool) (*response.Re
 
 	return result, err
 }
-func (comp *Client) QueryByOutTradeNumber(number string) *response.ResponseOrder {
+
+func (comp *Client) QueryByOutTradeNumber(number string) (*response.ResponseOrder, error) {
 	endpoint := fmt.Sprintf("pay/transactions/out-trade-no/transaction_id/%s", number)
 	return comp.Query(endpoint)
 }
 
-func (comp *Client) QueryByTransactionId(transactionId string) *response.ResponseOrder {
+func (comp *Client) QueryByTransactionId(transactionId string) (*response.ResponseOrder, error) {
 	endpoint := fmt.Sprintf("pay/transactions/id/%s", transactionId)
 	return comp.Query(endpoint)
 }
 
-func (comp *Client) Query(endpoint string) *response.ResponseOrder {
+func (comp *Client) Query(endpoint string) (*response.ResponseOrder, error) {
 
 	result := &response.ResponseOrder{}
 
 	config := (*comp.App).GetConfig()
 	endpoint = comp.Wrap(endpoint)
-	comp.Request(endpoint, &object.StringMap{
+	_, err := comp.Request(endpoint, &object.StringMap{
 		"appid": config.GetString("app_id", ""),
 	}, "GET", nil, false, nil, result)
 
-	return result
+	return result, err
 }
 
-func (comp *Client) Close(tradeNo string) *response.ResponseHeaderCloseOrdr {
+func (comp *Client) Close(tradeNo string) (*response.ResponseHeaderCloseOrdr, error) {
 
 	result := &response.ResponseHeaderCloseOrdr{}
 
 	config := (*comp.App).GetConfig()
 
 	endpoint := comp.Wrap(fmt.Sprintf("pay/transactions/out-trade-no/%s/close", tradeNo))
-	comp.Request(endpoint, &object.StringMap{
+	_, err := comp.Request(endpoint, &object.StringMap{
 		"appid":        config.GetString("app_id", ""),
 		"out_trade_no": tradeNo,
 	}, "POST", nil, false, result, nil)
 
-	return result
+	return result, err
 }
