@@ -39,7 +39,7 @@ func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
 		UserConfig: config,
 		DefaultConfig: &object.HashMap{
 			"http": object.HashMap{
-				"base_uri": "https://api.mch.weixin.qq.com/",
+				"base_uri": "https://api.mch.weixin.qq.com/v3",
 			},
 		},
 	}
