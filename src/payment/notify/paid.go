@@ -18,12 +18,14 @@ func NewPaidNotify(app kernel.ApplicationPaymentInterface) *Paid {
 	return paid
 }
 
-func (comp *Paid) Handle(closure func(payload ...interface{}) interface{}) *http.Response {
+func (comp *Paid) Handle(closure func(payload ...interface{}) interface{}) (*http.Response, error) {
 
-	result := closure(comp.GetMessage(), comp.reqInfo, comp.Fail)
+	messages, err := comp.GetMessage()
+
+	result := closure(messages, comp.reqInfo, comp.Fail)
 	comp.Strict(result)
 
-	return comp.ToResponse()
+	return comp.ToResponse(), err
 
 }
 

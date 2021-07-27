@@ -27,9 +27,9 @@ func (comp *Scanned) Alert(message string) {
 	comp.alert = message
 }
 
-func (comp *Scanned) Handle(closure func(payload ...interface{}) interface{}) *http.Response {
-
-	result := closure(comp.GetMessage(), comp.Fail, comp.Alert)
+func (comp *Scanned) Handle(closure func(payload ...interface{}) interface{}) (*http.Response, error) {
+	messages, err := comp.GetMessage()
+	result := closure(messages, comp.Fail, comp.Alert)
 
 	resultCode := FAIL
 	if comp.alert == "" && comp.Fail == "" {
@@ -48,6 +48,6 @@ func (comp *Scanned) Handle(closure func(payload ...interface{}) interface{}) *h
 		(*attributes)["prepay_id"] = result
 	}
 
-	return comp.RespondWith(attributes, true).ToResponse()
+	return comp.RespondWith(attributes, true).ToResponse(), err
 
 }

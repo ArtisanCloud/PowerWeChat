@@ -17,11 +17,13 @@ func NewRefundNotify(app kernel.ApplicationPaymentInterface) *Refund {
 	return paid
 }
 
-func (comp *Refund) Handle(closure func(payload ...interface{}) interface{}) *http.Response {
+func (comp *Refund) Handle(closure func(payload ...interface{}) interface{}) (*http.Response, error) {
 
-	result := closure(comp.GetMessage(), comp.Fail)
+	messages, err := comp.GetMessage()
+
+	result := closure(messages, comp.Fail)
 	comp.Strict(result)
 
-	return comp.ToResponse()
+	return comp.ToResponse(), err
 
 }

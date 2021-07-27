@@ -8,7 +8,7 @@ import (
 
 type Handler struct {
 	App        *kernel.ApplicationPaymentInterface
-	Messages   []string
+	Messages   *object.HashMap
 	Fail       string
 	Attributes *object.HashMap
 	Check      bool
@@ -23,6 +23,8 @@ const FAIL = "FAIL"
 func NewHandler(app *kernel.ApplicationPaymentInterface) *Handler {
 	return &Handler{
 		App: app,
+		Check: true,
+		Sign: false,
 	}
 }
 
@@ -38,9 +40,15 @@ func (handler *Handler) ToResponse() (response *http.Response) {
 	return nil
 }
 
-func (handler *Handler) GetMessage() (message *object.HashMap) {
+func (handler *Handler) GetMessage() (message *object.HashMap, err error) {
 
-	return nil
+	if handler.Messages!=nil{
+		return handler.Messages, nil
+	}
+
+
+
+	return message,nil
 }
 
 func (handler *Handler) Strict(result interface{}) {
