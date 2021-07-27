@@ -13,7 +13,7 @@ type Scanned struct {
 	alert string
 }
 
-func NewScanned(app kernel.ApplicationPaymentInterface) *Scanned {
+func NewScannedNotify(app kernel.ApplicationPaymentInterface) *Scanned {
 	scanned := &Scanned{
 		NewHandler(&app),
 		"",

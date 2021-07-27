@@ -138,15 +138,15 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 }
 
 func (app *Payment) HandlePaidNotify(closure func(payload ...interface{}) interface{}) {
-	notify.NewPaid(app).Handle(closure)
+	notify.NewPaidNotify(app).Handle(closure)
 }
 
 func (app *Payment) HandleRefundedNotify(closure func(payload ...interface{}) interface{}) {
-	notify.NewRefund(app).Handle(closure)
+	notify.NewRefundNotify(app).Handle(closure)
 }
 
 func (app *Payment) HandleScannedNotify(closure func(payload ...interface{}) interface{}) {
-	notify.NewScanned(app).Handle(closure)
+	notify.NewScannedNotify(app).Handle(closure)
 }
 
 func (app *Payment) InSandbox() bool {

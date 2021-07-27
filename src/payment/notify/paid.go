@@ -10,7 +10,7 @@ type Paid struct {
 	*Handler
 }
 
-func NewPaid(app kernel.ApplicationPaymentInterface) *Paid {
+func NewPaidNotify(app kernel.ApplicationPaymentInterface) *Paid {
 	paid := &Paid{
 		NewHandler(&app),
 	}

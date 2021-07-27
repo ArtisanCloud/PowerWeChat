@@ -9,7 +9,7 @@ type Refund struct {
 	*Handler
 }
 
-func NewRefund(app kernel.ApplicationPaymentInterface) *Refund {
+func NewRefundNotify(app kernel.ApplicationPaymentInterface) *Refund {
 	paid := &Refund{
 		NewHandler(&app),
 	}
