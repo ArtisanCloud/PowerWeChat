@@ -61,6 +61,7 @@ func GetPaymentConfig() *object.HashMap {
 		"key":      os.Getenv("wx_key"),
 		"cert_path": os.Getenv("wx_cert_path"),
 		"key_path": os.Getenv("wx_key_path"),
+		"serial_no": os.Getenv("serial_no"),
 
 		"response_type": os.Getenv("array"),
 		"log": &object.StringMap{

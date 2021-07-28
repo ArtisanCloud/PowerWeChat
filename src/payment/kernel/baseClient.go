@@ -26,7 +26,7 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 		HttpRequest: request.NewHttpRequest(config),
 		Signer: &support.SHA256WithRSASigner{
 			MchID:               (*config)["mch_id"].(string),
-			CertificateSerialNo: "2655A2CD634B06C2A86B28780228A997D047B01C",
+			CertificateSerialNo: (*config)["serial_no"].(string),
 			PrivateKeyPath:      (*config)["key_path"].(string),
 		},
 		App: app,

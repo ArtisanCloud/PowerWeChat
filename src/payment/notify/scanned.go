@@ -27,15 +27,19 @@ func (comp *Scanned) Alert(message string) {
 	comp.alert = message
 }
 
-func (comp *Scanned) Handle(closure func(payload ...interface{}) interface{}) (*http.Response, error) {
+func (comp *Scanned) Handle(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
 	messages, err := comp.GetMessage()
-	result := closure(messages, comp.Fail, comp.Alert)
+	if err != nil {
+		return nil, err
+	}
+
+	result := closure(messages, nil, comp.fail, comp.alert)
 
 	resultCode := FAIL
-	if comp.alert == "" && comp.Fail == "" {
+	if comp.alert == "" && comp.fail == "" {
 		resultCode = SUCCESS
 	}
-	attributes := &object.HashMap{
+	attributes := &object.StringMap{
 		"result_code":  resultCode,
 		"err_code_des": comp.alert,
 	}
@@ -45,9 +49,9 @@ func (comp *Scanned) Handle(closure func(payload ...interface{}) interface{}) (*
 		(*attributes)["appid"] = config.GetString("app_id", "")
 		(*attributes)["mch_id"] = config.GetString("mch_id", "")
 		(*attributes)["nonce_str"] = str.UniqueID("")
-		(*attributes)["prepay_id"] = result
+		(*attributes)["prepay_id"] = result.(string)
 	}
 
-	return comp.RespondWith(attributes, true).ToResponse(), err
+	return comp.RespondWith(attributes, true).ToResponse()
 
 }

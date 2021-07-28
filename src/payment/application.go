@@ -137,16 +137,16 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(closure func(payload ...interface{}) interface{}) {
-	notify.NewPaidNotify(app).Handle(closure)
+func (app *Payment) HandlePaidNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{})  (*http.Response, error ){
+	return notify.NewPaidNotify(app).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(closure func(payload ...interface{}) interface{}) {
-	notify.NewRefundNotify(app).Handle(closure)
+func (app *Payment) HandleRefundedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error ){
+	return notify.NewRefundNotify(app).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(closure func(payload ...interface{}) interface{}) {
-	notify.NewScannedNotify(app).Handle(closure)
+func (app *Payment) HandleScannedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error ){
+	return notify.NewScannedNotify(app).Handle(closure)
 }
 
 func (app *Payment) InSandbox() bool {

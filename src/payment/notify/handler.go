@@ -7,8 +7,8 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	base2 "github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"io/ioutil"
 	"net/http"
@@ -17,12 +17,12 @@ import (
 type Handler struct {
 	App        *kernel.ApplicationPaymentInterface
 	Message    *object.HashMap
-	Fail       string
+	fail       string
 	Attributes *object.StringMap
 	Check      bool
 	Sign       bool
 
-	Handle func(closure func(payload ...interface{}) interface{}) *http.Response
+	Handle func(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"
@@ -36,8 +36,8 @@ func NewHandler(app *kernel.ApplicationPaymentInterface) *Handler {
 	}
 }
 
-func (handler *Handler) fail(message string) {
-	handler.Fail = message
+func (handler *Handler) Fail(message string) {
+	handler.fail = message
 }
 
 func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Handler {
@@ -50,16 +50,17 @@ func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Ha
 func (handler *Handler) ToResponse() (response *http.Response, err error) {
 
 	returnCode := SUCCESS
-	if handler.Fail != "" {
+	returnMsg:="成功"
+	if handler.fail != "" {
 		returnCode = FAIL
 	}
 	base := &object.StringMap{
-		"return_code": returnCode,
-		"return_msg":  handler.Fail,
+		"code": returnCode,
+		"message":  returnMsg,
 	}
 
 	attributes := object.MergeStringMap(base, handler.Attributes)
-	baseClient := (*handler.App).GetComponent("Base").(*kernel.BaseClient)
+	baseClient := (*handler.App).GetComponent("Base").(*base2.Client)
 	if handler.Sign {
 		(*attributes)["sign"], err = baseClient.Signer.GenerateSign(attributes)
 		if err != nil {
@@ -82,6 +83,7 @@ func (handler *Handler) GetMessage() (message *object.HashMap, err error) {
 
 	externalRequest := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
 	requestBody, _ := ioutil.ReadAll(externalRequest.Body)
+	handler.Message = &object.HashMap{}
 	err = object.JsonDecode(requestBody, handler.Message)
 	if err != nil {
 		return nil, err
@@ -98,23 +100,39 @@ func (handler *Handler) DecryptMessage(key string) (string, error) {
 	if (*message)[key] == nil {
 		return "", errors.New("message doesn't have the key value")
 	}
-	content := (*message)[key].(string)
-
+	content := (*message)[key].(map[string]interface{})
 	config := (*handler.App).GetConfig()
 	wxKey := config.GetString("key", "")
-	nonce := str.QuickRandom(12)
+	nonce := content["nonce"].(string)
+	associatedData := content["associated_data"].(string)
+	cipherText := content["ciphertext"].(string)
 	return support.DecryptAES256GCM(
 		wxKey,
-		"",
+		associatedData,
 		nonce,
-		content,
+		cipherText,
 	)
 
 }
 
-func (handler *Handler) Strict(result bool) {
+func (handler *Handler) Strict(result interface{}) {
 
-	if result != true && handler.Fail == "" {
-		handler.fail(fmt.Sprintf("%t", result))
+	bResult := false
+	strResult := ""
+	switch result.(type) {
+	case bool:
+		bResult = result.(bool)
+		strResult = fmt.Sprintf("%t", result)
+	case string:
+		strResult = result.(string)
+		if strResult != "" {
+			bResult = true
+		}
+	default:
+		return
+	}
+
+	if bResult != true && handler.fail == "" {
+		handler.Fail(strResult)
 	}
 }
