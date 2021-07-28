@@ -29,6 +29,17 @@ func (comp *Paid) Handle(closure func(payload ...interface{}) interface{}) (*htt
 
 }
 
-func (comp *Paid) reqInfo() *object.HashMap {
-	return nil
+func (comp *Paid) reqInfo() (info *object.HashMap) {
+
+	content, err := comp.DecryptMessage("req_info")
+	if err != nil {
+		info = &object.HashMap{}
+		err = object.JsonDecode([]byte(content), info)
+		if err != nil {
+			return nil
+		}
+		return info
+	} else {
+		return nil
+	}
 }
