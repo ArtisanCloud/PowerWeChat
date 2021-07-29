@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-
 type GenerateSigner struct {
 	Method       string // 接口提交方法。"GET", "POST"等
 	CanonicalURL string // 微信支付接口路径。 例如： /v3/pay/transactions/jsapi
@@ -30,7 +29,7 @@ func GenerateSign(signer *SHA256WithRSASigner, gs GenerateSigner) (authorization
 
 	// Splice the string to be signed
 	// 拼接出需要签名的字符串
-	message := fmt.Sprintf(SignatureMessageFormat, gs.Method, gs.CanonicalURL, timestamp, nonce, gs.SignBody)
+	message := fmt.Sprintf(SignatureMessageFormat, gs.Method, gs.CanonicalURL, fmt.Sprintf("%d", timestamp), nonce, gs.SignBody)
 
 	signatureResult, err := signer.Sign(context.TODO(), message)
 	if err != nil {

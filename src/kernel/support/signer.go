@@ -9,7 +9,6 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-libs/str"
 	"io/ioutil"
 	"strings"
@@ -18,7 +17,7 @@ import (
 
 // 请求报文签名相关常量
 const (
-	SignatureMessageFormat = "%s\n%s\n%d\n%s\n%s\n" // 数字签名原文格式
+	SignatureMessageFormat = "%s\n%s\n%s\n%s\n%s\n" // 数字签名原文格式
 
 	// HeaderAuthorizationFormat 请求头中的 Authorization 拼接格式
 	HeaderAuthorizationFormat = "%s mchid=\"%s\",nonce_str=\"%s\",timestamp=\"%d\",serial_no=\"%s\",signature=\"%s\""
@@ -83,10 +82,7 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 	return authorization, err
 }
 
-func (s *SHA256WithRSASigner) GenerateSign(mapParams *object.StringMap) (sign string, err error) {
-
-	_, arrayParams := object.GetStringMapKV(*mapParams)
-	message := strings.Join(arrayParams, "\n") + "\n"
+func (s *SHA256WithRSASigner) GenerateSign(message string) (sign string, err error) {
 
 	// sign the message
 	signatureResult, err := s.Sign(context.TODO(), message)

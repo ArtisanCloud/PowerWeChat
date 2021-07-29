@@ -32,13 +32,18 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 	options := &object.StringMap{
 		"appId":     appID,
 		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
-		"nonceStr":  str.UniqueID(""),
+		"nonceStr":  str.QuickRandom(32),
 		"package":   fmt.Sprintf("prepay_id=%s", prepayId),
 		"signType":  "RSA",
 	}
 
 	var err error
-	(*options)["paySign"], err = comp.Signer.GenerateSign(options)
+	(*options)["paySign"], err = comp.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
+		(*options)["appId"],
+		(*options)["timeStamp"],
+		(*options)["nonceStr"],
+		(*options)["package"],
+	))
 	if err != nil {
 		return nil, err
 	}

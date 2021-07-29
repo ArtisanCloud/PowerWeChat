@@ -7,15 +7,15 @@ replace github.com/ArtisanCloud/go-libs => ../go-libs
 replace github.com/ArtisanCloud/go-socialite => ../go-socialite
 
 require (
-	github.com/ArtisanCloud/go-libs v1.0.14
+	github.com/ArtisanCloud/go-libs v1.0.72
 	github.com/ArtisanCloud/go-socialite v1.0.3
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
 	github.com/go-redis/redis/v8 v8.11.0 // indirect
-	github.com/golang-module/carbon v1.4.3 // indirect
+	github.com/golang-module/carbon v1.4.5 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/guonaihong/gout v0.2.1 // indirect
+	github.com/guonaihong/gout v0.2.3 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

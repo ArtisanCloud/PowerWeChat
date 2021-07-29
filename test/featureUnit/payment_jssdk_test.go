@@ -7,7 +7,7 @@ import (
 
 func Test_BridgeConfig(t *testing.T) {
 
-	response, err := Payment.JSSDK.BridgeConfig("wx221017163973503c079bd96aea80e60000", false)
+	response, err := Payment.JSSDK.BridgeConfig("wx30003559330979ff187dcbf5c4704b0000", false)
 	if err != nil {
 		t.Error("err msg:", err.Error())
 	}

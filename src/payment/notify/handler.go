@@ -64,7 +64,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	attributes := object.MergeStringMap(base, handler.Attributes)
 	baseClient := (*handler.App).GetComponent("Base").(*base2.Client)
 	if handler.Sign {
-		(*attributes)["sign"], err = baseClient.Signer.GenerateSign(attributes)
+		(*attributes)["sign"], err = baseClient.Signer.GenerateSign("")
 		if err != nil {
 			return nil, err
 		}
