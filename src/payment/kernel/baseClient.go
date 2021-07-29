@@ -4,7 +4,9 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	str2 "github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+
 	http2 "net/http"
 )
 
@@ -41,7 +43,7 @@ func (client *BaseClient) prepends() *object.HashMap {
 
 func (client *BaseClient) Request(endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) (interface{}, error) {
+) (response interface{}, err error) {
 
 	config := (*client.App).GetConfig()
 	base := &object.HashMap{
@@ -49,17 +51,34 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		"mchid": config.GetString("mch_id", ""),
 	}
 
+	// init options
+	if options==nil{
+		options = &object.HashMap{}
+	}
+
+	// init query parameters into body
+	if params != nil {
+		endpoint += "?" + object.GetJoinedWithKSort(params)
+		(*options)["query"] = params
+	}else{
+		(*options)["query"] = nil
+	}
+
 	options = object.MergeHashMap(base, client.prepends(), options)
 	options = object.FilterEmptyHashMap(options)
 
-	signBody, err := object.JsonEncode(options)
-	if err != nil {
-		return nil, err
+	// check need sign body or not
+	signBody := ""
+	if "get" != str2.Lower(method){
+		signBody, err = object.JsonEncode(options)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	authorization, err := client.Signer.GenerateRequestSign(&support.RequestSignChain{
-		Method:       "POST",
-		CanonicalURL: "/v3/pay/transactions/jsapi",
+		Method:       method,
+		CanonicalURL: endpoint,
 		SignBody:     signBody,
 	})
 
@@ -69,6 +88,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		},
 		"body": signBody,
 	}, options)
+
 
 	// to be setup middleware here
 	//client.PushMiddleware(client.logMiddleware(), "access_token")

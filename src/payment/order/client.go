@@ -30,19 +30,19 @@ func (comp *Client) Unify(params *object.HashMap, isContract bool) (*response.Re
 		(*params)["notify_url"] = config.GetString("notify_url", "")
 	}
 
-	endpoint := comp.Wrap("pay/transactions/jsapi")
+	endpoint := comp.Wrap("/v3/pay/transactions/jsapi")
 	_, err := comp.Request(endpoint, nil, "POST", params, false, nil, result)
 
 	return result, err
 }
 
-func (comp *Client) QueryByOutTradeNumber(number string) (*response.ResponseOrder, error) {
-	endpoint := fmt.Sprintf("pay/transactions/out-trade-no/transaction_id/%s", number)
+func (comp *Client) QueryByTransactionId(number string) (*response.ResponseOrder, error) {
+	endpoint := fmt.Sprintf("/v3/pay/transactions/id/%s", number)
 	return comp.Query(endpoint)
 }
 
-func (comp *Client) QueryByTransactionId(transactionId string) (*response.ResponseOrder, error) {
-	endpoint := fmt.Sprintf("pay/transactions/id/%s", transactionId)
+func (comp *Client) QueryByOutTradeNumber(transactionId string) (*response.ResponseOrder, error) {
+	endpoint := fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s", transactionId)
 	return comp.Query(endpoint)
 }
 
@@ -53,7 +53,7 @@ func (comp *Client) Query(endpoint string) (*response.ResponseOrder, error) {
 	config := (*comp.App).GetConfig()
 	endpoint = comp.Wrap(endpoint)
 	_, err := comp.Request(endpoint, &object.StringMap{
-		"appid": config.GetString("app_id", ""),
+		"mchid": config.GetString("mch_id", ""),
 	}, "GET", nil, false, nil, result)
 
 	return result, err
@@ -65,7 +65,7 @@ func (comp *Client) Close(tradeNo string) (*response.ResponseHeaderCloseOrdr, er
 
 	config := (*comp.App).GetConfig()
 
-	endpoint := comp.Wrap(fmt.Sprintf("pay/transactions/out-trade-no/%s/close", tradeNo))
+	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s/close", tradeNo))
 	_, err := comp.Request(endpoint, &object.StringMap{
 		"appid":        config.GetString("app_id", ""),
 		"out_trade_no": tradeNo,

@@ -17,7 +17,7 @@ func (comp *Client) Pay(params *object.StringMap) *response2.ResponseWork {
 
 	result := &response2.ResponseWork{}
 
-	endpoint := comp.Wrap("pay/micropay")
+	endpoint := comp.Wrap("/v3/pay/micropay")
 	comp.Request(endpoint, params, "POST", nil, false, nil, result)
 
 	return result

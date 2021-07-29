@@ -16,7 +16,7 @@ type ResponseOrder struct {
 	BankType        string            `json:"bank_type"`
 	MchID           string            `json:"mchid"`
 	OutTradeNo      string            `json:"out_trade_no"`
-	Payer           string            `json:"payer"`
+	Payer           *object.HashMap   `json:"payer"`
 	PromotionDetail []*object.HashMap `json:"promotion_detail"`
 	SuccessTime     string            `json:"success_time"`
 	TradeState      string            `json:"trade_state"`

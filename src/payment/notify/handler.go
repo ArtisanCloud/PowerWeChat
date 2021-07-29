@@ -53,6 +53,8 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	returnMsg:="成功"
 	if handler.fail != "" {
 		returnCode = FAIL
+		returnMsg = handler.fail
+		err = errors.New(handler.fail)
 	}
 	base := &object.StringMap{
 		"code": returnCode,
@@ -72,7 +74,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	rs := response2.NewHttpResponse()
 	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
-	return rs.Response, nil
+	return rs.Response, err
 }
 
 func (handler *Handler) GetMessage() (message *object.HashMap, err error) {
@@ -102,7 +104,7 @@ func (handler *Handler) DecryptMessage(key string) (string, error) {
 	}
 	content := (*message)[key].(map[string]interface{})
 	config := (*handler.App).GetConfig()
-	wxKey := config.GetString("key", "")
+	wxKey := config.GetString("mch_api_v3_key", "")
 	nonce := content["nonce"].(string)
 	associatedData := content["associated_data"].(string)
 	cipherText := content["ciphertext"].(string)
@@ -117,7 +119,7 @@ func (handler *Handler) DecryptMessage(key string) (string, error) {
 
 func (handler *Handler) Strict(result interface{}) {
 
-	bResult := false
+	bResult := true
 	strResult := ""
 	switch result.(type) {
 	case bool:
@@ -126,7 +128,7 @@ func (handler *Handler) Strict(result interface{}) {
 	case string:
 		strResult = result.(string)
 		if strResult != "" {
-			bResult = true
+			bResult = false
 		}
 	default:
 		return

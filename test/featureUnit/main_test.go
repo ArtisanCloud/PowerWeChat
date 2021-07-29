@@ -72,7 +72,7 @@ func GetPaymentConfig() *object.HashMap {
 
 		"http": object.HashMap{
 			"timeout":  30.0,
-			"base_uri": "https://api.mch.weixin.qq.com/v3",
+			"base_uri": "https://api.mch.weixin.qq.com",
 		},
 
 		"notify_url": os.Getenv("notify_url"),
