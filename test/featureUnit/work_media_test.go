@@ -15,7 +15,7 @@ func Test_Media_Upload_Image(t *testing.T) {
 
 	wxResponse := response2.ResponseUploadImage{}
 	homePath, _ := os.UserHomeDir()
-	response := Work.Media.UploadImage(homePath+"/Desktop/123.jpg", nil, &wxResponse)
+	response, _ := Work.Media.UploadImage(homePath+"/Desktop/123.jpg", nil, &wxResponse)
 
 	if response == nil {
 		t.Error("response nil")
@@ -31,7 +31,7 @@ func Test_Media_Upload_Temp_Image(t *testing.T) {
 
 	wxResponse := response2.ResponseUploadMedia{}
 	homePath, _ := os.UserHomeDir()
-	response := Work.Media.UploadTempImage(homePath+"/Desktop/123.jpg", nil, &wxResponse)
+	response, _ := Work.Media.UploadTempImage(homePath+"/Desktop/123.jpg", nil, &wxResponse)
 
 	if response == nil {
 		t.Error("response nil")
