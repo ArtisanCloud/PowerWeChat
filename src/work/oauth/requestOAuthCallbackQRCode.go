@@ -5,12 +5,14 @@ import (
 	"net/http"
 )
 
-type ParaOAuthCallback struct {
+type ParaOAuthCallbackQRCode struct {
 	Code string `form:"code" json:"code" xml:"code" binding:"required"`
+	AppID string `form:"appid" json:"appid" xml:"appid" binding:"required"`
+	State string `form:"state" json:"state" xml:"state"`
 }
 
 
-func ValidateRequestOAuthCallback(context *gin.Context) {
+func ValidateRequestOAuthCallbackQRCode(context *gin.Context) {
 	var form ParaOAuthCallback
 
 	//logger.Info("validate make reservation", nil)
