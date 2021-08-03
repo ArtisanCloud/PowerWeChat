@@ -3,6 +3,7 @@ package externalContact
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/go-socialite/src/response/weCom"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
@@ -62,9 +63,9 @@ func (comp *Client) BatchGet(userID string, cursor string, limit int) *response.
 
 // 获取外部联系人详情.
 // https://work.weixin.qq.com/api/doc#90000/90135/91556
-func (comp *Client) Get(externalUserId string) *response.ResponseGetExternalContact {
+func (comp *Client) Get(externalUserId string) *weCom.ResponseGetExternalContact {
 
-	result := &response.ResponseGetExternalContact{}
+	result := &weCom.ResponseGetExternalContact{}
 
 	comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
