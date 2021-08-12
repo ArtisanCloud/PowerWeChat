@@ -25,154 +25,154 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 创建成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90195
-func (comp *Client) Create(data *response3.RequestUserDetail) *response2.ResponseWork {
+func (comp *Client) Create(data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpPostJson("cgi-bin/user/create", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/user/create", data, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 更新成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90197
-func (comp *Client) Update(data *response3.RequestUserDetail) *response2.ResponseWork {
+func (comp *Client) Update(data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpPostJson("cgi-bin/user/update", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/user/update", data, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 删除成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *Client) Delete(userID string) *response2.ResponseWork {
+func (comp *Client) Delete(userID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpGet("cgi-bin/user/delete", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/user/delete", &object.StringMap{
 		"userid": userID,
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // 批量删除成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *Client) BatchDelete(userIDs []string) *response2.ResponseWork {
+func (comp *Client) BatchDelete(userIDs []string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpPostJson("cgi-bin/user/batchdelete", nil, &object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/user/batchdelete", nil, &object.HashMap{
 		"useridlist": userIDs,
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // 获取成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *Client) Get(userID string) *response.ResponseGetUserDetail {
+func (comp *Client) Get(userID string) (*response.ResponseGetUserDetail, error) {
 
 	result := &response.ResponseGetUserDetail{}
 
-	comp.HttpGet("cgi-bin/user/get", nil, &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/user/get", nil, &object.StringMap{
 		"userid": userID,
 	}, result)
 
-	return result
+	return result, err
 }
 
 // 获取部门的成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90200
-func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild int) *response.ResponseGetSimpleUserList {
+func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild int) (*response.ResponseGetSimpleUserList, error) {
 
 	result := &response.ResponseGetSimpleUserList{}
 
-	comp.HttpGet("cgi-bin/user/simplelist", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/user/simplelist", &object.StringMap{
 		"department_id": fmt.Sprintf("%d", departmentID),
 		"fetch_child":   fmt.Sprintf("%d", fetchChild),
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // 获取部门成员详情
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90201
-func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int) *response.ResponseGetUserList {
+func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int) (*response.ResponseGetUserList, error) {
 
 	result := &response.ResponseGetUserList{}
 
-	comp.HttpGet("cgi-bin/user/list", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/user/list", &object.StringMap{
 		"department_id": fmt.Sprintf("%d", departmentID),
 		"fetch_child":   fmt.Sprintf("%d", fetchChild),
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // userid与openid互换
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90202
-func (comp *Client) UserIdToOpenid(userID string) *response.ResponseUserIDToOpenID {
+func (comp *Client) UserIdToOpenid(userID string) (*response.ResponseUserIDToOpenID, error) {
 
 	result := &response.ResponseUserIDToOpenID{}
 
-	comp.HttpPostJson("cgi-bin/user/convert_to_openid", &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/user/convert_to_openid", &object.StringMap{
 		"userid": userID,
 	}, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // userid与openid互换
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90202
-func (comp *Client) OpenIDToUserID(openID string) *response.ResponseOpenIDToUserID {
+func (comp *Client) OpenIDToUserID(openID string) (*response.ResponseOpenIDToUserID, error) {
 
 	result := &response.ResponseOpenIDToUserID{}
 
-	comp.HttpPostJson("cgi-bin/user/convert_to_userid", &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/user/convert_to_userid", &object.StringMap{
 		"openid": openID,
 	}, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // userid与openid互换
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90202
-func (comp *Client) MobileToUserID(mobile string) *response.ResponseMobileToUserID {
+func (comp *Client) MobileToUserID(mobile string) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
 
-	comp.HttpPostJson("cgi-bin/user/getuserid", &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/user/getuserid", &object.StringMap{
 		"mobile": mobile,
 	}, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 二次验证
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90203
-func (comp *Client) Accept(userID string) *response2.ResponseWork {
+func (comp *Client) Accept(userID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpGet("cgi-bin/user/authsucc", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/user/authsucc", &object.StringMap{
 		"userid": userID,
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // 邀请成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90975
-func (comp *Client) Invite(params *object.HashMap) *response.ResponseMobileToUserID {
+func (comp *Client) Invite(params *object.HashMap) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
 
-	comp.HttpPostJson("cgi-bin/batch/invite", params, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/batch/invite", params, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 获取加入企业二维码
@@ -185,22 +185,22 @@ func (comp *Client) GetInvitationQrCode(sizeType int) (*response.ResponseJoinCod
 
 	result := &response.ResponseJoinCode{}
 
-	comp.HttpGet("cgi-bin/corp/get_join_qrcode", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/corp/get_join_qrcode", &object.StringMap{
 		"size_type": fmt.Sprintf("%d", sizeType),
 	}, nil, result)
 
-	return result, nil
+	return result, err
 }
 
 // 获取企业活跃成员数
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92714
-func (comp *Client) GetActiveCount(date carbon.Carbon) *response.ResponseUserActiveCount {
+func (comp *Client) GetActiveCount(date carbon.Carbon) (*response.ResponseUserActiveCount, error) {
 
 	result := &response.ResponseUserActiveCount{}
 
-	comp.HttpPostJson("cgi-bin/user/get_active_stat", &object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/user/get_active_stat", &object.HashMap{
 		"date": date,
 	}, nil, nil, result)
 
-	return result
+	return result, err
 }
