@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
+	"github.com/ArtisanCloud/power-wechat/src/work/agent"
 	"github.com/ArtisanCloud/power-wechat/src/work/auth"
 	"github.com/ArtisanCloud/power-wechat/src/work/base"
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
@@ -24,8 +25,12 @@ type Work struct {
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	OAuth       *oauth.Manager
+
 	Config      *kernel.Config
 	Department  *department.Client
+
+	Agent *agent.Client
+	AgentWorkbench *agent.WorkbenchClient
 
 	Message  *message.Client
 	Messager *message.Messager
@@ -85,6 +90,10 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 
 	//-------------- register oauth --------------
 	app.OAuth, err = oauth.RegisterProvider(app)
+
+	//-------------- register agent --------------
+	app.Agent,
+	app.AgentWorkbench = agent.RegisterProvider(app)
 
 	//-------------- register Department --------------
 	app.Department = department.RegisterProvider(app)
