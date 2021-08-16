@@ -10,7 +10,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
+	"github.com/ArtisanCloud/power-wechat/src/work/menu"
 	"github.com/ArtisanCloud/power-wechat/src/work/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa"
 	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/power-wechat/src/work/server"
 	"github.com/ArtisanCloud/power-wechat/src/work/user"
@@ -52,6 +54,10 @@ type Work struct {
 	ExternalContactMessageTemplate *externalContact.MessageTemplateClient
 
 	Media *media.Client
+	Menu *menu.Client
+
+	OA *oa.Client
+
 }
 
 func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
@@ -121,6 +127,12 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)
+
+	//-------------- media --------------
+	app.Menu = menu.RegisterProvider(app)
+
+	//-------------- media --------------
+	app.OA = oa.RegisterProvider(app)
 
 	return app, err
 }
