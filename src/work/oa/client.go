@@ -182,3 +182,41 @@ func (comp *Client) ApprovalRecords(startTime int, endTime int, nextNumber int) 
 
 }
 
+// https://open.work.weixin.qq.com/api/doc/90000/90135/93375
+func (comp *Client) GetCorpConfig() (*response.ResponseCorpVacationGetConfig, error) {
+
+	result := &response.ResponseCorpVacationGetConfig{}
+
+	_, err := comp.HttpGet("cgi-bin/corp/vacation/getcorpconf", nil, nil, result)
+
+	return result, err
+
+}
+
+// https://open.work.weixin.qq.com/api/doc/90000/90135/93376
+func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpVacationGetQuota, error) {
+
+	result := &response.ResponseCorpVacationGetQuota{}
+
+	_, err := comp.HttpPostJson("cgi-bin/corp/vacation/getuservacationquota", &object.HashMap{
+		"userid":  userID,
+	}, nil, nil, result)
+
+	return result, err
+
+}
+
+// https://open.work.weixin.qq.com/api/doc/90000/90135/93376
+func (comp *Client) SeToneUserQuota(data *object.HashMap) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.HttpPostJson("cgi-bin/corp/vacation/setoneuserquota", data, nil, nil, result)
+
+	return result, err
+
+}
+
+
+
+

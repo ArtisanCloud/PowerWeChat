@@ -7,11 +7,13 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/agent"
 	"github.com/ArtisanCloud/power-wechat/src/work/auth"
 	"github.com/ArtisanCloud/power-wechat/src/work/base"
+	"github.com/ArtisanCloud/power-wechat/src/work/corpgroup"
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
 	"github.com/ArtisanCloud/power-wechat/src/work/menu"
 	"github.com/ArtisanCloud/power-wechat/src/work/message"
+	msgaudit "github.com/ArtisanCloud/power-wechat/src/work/msgAudit"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa"
 	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/power-wechat/src/work/server"
@@ -28,10 +30,10 @@ type Work struct {
 	AccessToken *auth.AccessToken
 	OAuth       *oauth.Manager
 
-	Config      *kernel.Config
-	Department  *department.Client
+	Config     *kernel.Config
+	Department *department.Client
 
-	Agent *agent.Client
+	Agent          *agent.Client
 	AgentWorkbench *agent.WorkbenchClient
 
 	Message  *message.Client
@@ -54,10 +56,13 @@ type Work struct {
 	ExternalContactMessageTemplate *externalContact.MessageTemplateClient
 
 	Media *media.Client
-	Menu *menu.Client
+	Menu  *menu.Client
 
 	OA *oa.Client
 
+	MsgAudit *msgaudit.Client
+
+	CorpGroup *corpgroup.Client
 }
 
 func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
@@ -99,7 +104,7 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 
 	//-------------- register agent --------------
 	app.Agent,
-	app.AgentWorkbench = agent.RegisterProvider(app)
+		app.AgentWorkbench = agent.RegisterProvider(app)
 
 	//-------------- register Department --------------
 	app.Department = department.RegisterProvider(app)
@@ -112,9 +117,9 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 
 	//-------------- register user --------------
 	app.UserClient,
-	app.UserBatchJobsClient,
-	app.UserLinkedCorpClient,
-	app.UserTagClient = user.RegisterProvider(app)
+		app.UserBatchJobsClient,
+		app.UserLinkedCorpClient,
+		app.UserTagClient = user.RegisterProvider(app)
 
 	//-------------- register external contact --------------
 	app.ExternalContact,
@@ -128,11 +133,17 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)
 
-	//-------------- media --------------
+	//-------------- menu --------------
 	app.Menu = menu.RegisterProvider(app)
 
-	//-------------- media --------------
+	//-------------- oa --------------
 	app.OA = oa.RegisterProvider(app)
+
+	//-------------- msg audit --------------
+	app.MsgAudit = msgaudit.RegisterProvider(app)
+
+	//-------------- corp group --------------
+	app.CorpGroup = corpgroup.RegisterProvider(app)
 
 	return app, err
 }
@@ -198,6 +209,15 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.ExternalContactMoment
 	case "ExternalContactMessageTemplate":
 		return app.ExternalContactMessageTemplate
+
+	case "Menu":
+		return app.Menu
+	case "OA":
+		return app.OA
+	case "MsgAudit":
+		return app.MsgAudit
+	case "CorpGroup":
+		return app.CorpGroup
 
 	default:
 		return nil
