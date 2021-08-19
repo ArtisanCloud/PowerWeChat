@@ -10,6 +10,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/corpgroup"
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
+	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot"
+	"github.com/ArtisanCloud/power-wechat/src/work/invoice"
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
 	"github.com/ArtisanCloud/power-wechat/src/work/menu"
 	"github.com/ArtisanCloud/power-wechat/src/work/message"
@@ -63,6 +65,11 @@ type Work struct {
 	MsgAudit *msgaudit.Client
 
 	CorpGroup *corpgroup.Client
+
+	Invoice *invoice.Client
+
+	GroupRobot          *groupRobot.Client
+	GroupRobotMessenger *groupRobot.Messager
 }
 
 func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
@@ -145,6 +152,11 @@ func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
 	//-------------- corp group --------------
 	app.CorpGroup = corpgroup.RegisterProvider(app)
 
+	//-------------- invoice --------------
+	app.Invoice = invoice.RegisterProvider(app)
+
+	app.GroupRobot, app.GroupRobotMessenger = groupRobot.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -218,6 +230,13 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.MsgAudit
 	case "CorpGroup":
 		return app.CorpGroup
+	case "Invoice":
+		return app.Invoice
+
+	case "GroupRobot":
+		return app.GroupRobot
+	case "GroupRobotMessenger":
+		return app.GroupRobotMessenger
 
 	default:
 		return nil
