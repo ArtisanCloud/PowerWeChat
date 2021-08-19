@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-libs/str"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
@@ -96,7 +95,7 @@ func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Tim
 		url = comp.GetUrl()
 	}
 	if nonce != "" {
-		nonce = str.QuickRandom(10)
+		nonce = object.QuickRandom(10)
 	}
 	if timestamp.IsZero() {
 		timestamp = time.Now()

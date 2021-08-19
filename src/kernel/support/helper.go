@@ -3,7 +3,7 @@ package support
 import (
 	"context"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/str"
+	"github.com/ArtisanCloud/go-libs/object"
 	"time"
 )
 
@@ -18,7 +18,7 @@ type GenerateSigner struct {
 func GenerateSign(signer *SHA256WithRSASigner, gs GenerateSigner) (authorization string, err error) {
 
 	timestamp := time.Now().Unix()
-	nonce := str.QuickRandom(32)
+	nonce := object.QuickRandom(32)
 
 	// Under ci mode, go fixed value
 	// 在ci模式下面，走固定值

@@ -9,7 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/pem"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/str"
+	"github.com/ArtisanCloud/go-libs/object"
 	"io/ioutil"
 	"strings"
 	"time"
@@ -48,7 +48,7 @@ type RequestSignChain struct {
 
 func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (authorization string, err error) {
 	timestamp := time.Now().Unix()
-	nonce := str.QuickRandom(32)
+	nonce := object.QuickRandom(32)
 
 	// Under ci mode, go fixed value
 	// 在ci模式下面，走固定值

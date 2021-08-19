@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/url"
@@ -32,7 +31,7 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 	options := &object.StringMap{
 		"appId":     appID,
 		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
-		"nonceStr":  str.QuickRandom(32),
+		"nonceStr":  object.QuickRandom(32),
 		"package":   fmt.Sprintf("prepay_id=%s", prepayId),
 		"signType":  "RSA",
 	}
@@ -77,7 +76,7 @@ func (comp *Client) AppConfig(prepayId string) (*object.StringMap, error) {
 		"appid":     appID,
 		"partnerid": mchID,
 		"prepayid":  prepayId,
-		"noncestr":  str.UniqueID(""),
+		"noncestr":  object.UniqueID(""),
 		"timestamp": fmt.Sprintf("%d", time.Now().Unix()),
 		"package":   "Sign=WXPay",
 	}
@@ -96,7 +95,7 @@ func (comp *Client) ShareAddressConfig(accessToken string, isJson bool) (interfa
 		"appId":     appID,
 		"scope":     "jsapi_address",
 		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
-		"nonceStr":  str.UniqueID(""),
+		"nonceStr":  object.UniqueID(""),
 		"signType":  "SHA1",
 	}
 

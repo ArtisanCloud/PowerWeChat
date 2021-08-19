@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
@@ -116,7 +115,7 @@ func (app *Payment) Scheme(productID string) string {
 		"appid":      appID,
 		"mch_id":     mchID,
 		"time_stamp": fmt.Sprintf("%d", time.Now().Nanosecond()),
-		"nonce_str":  str.UniqueID(""),
+		"nonce_str":  object.UniqueID(""),
 		"product_id": productID,
 	}
 

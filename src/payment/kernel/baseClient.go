@@ -4,7 +4,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	str2 "github.com/ArtisanCloud/go-libs/str"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 
 	http2 "net/http"
@@ -69,7 +68,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 	// check need sign body or not
 	signBody := ""
-	if "get" != str2.Lower(method){
+	if "get" != object.Lower(method){
 		signBody, err = object.JsonEncode(options)
 		if err != nil {
 			return nil, err
