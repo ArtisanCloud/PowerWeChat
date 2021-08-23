@@ -98,5 +98,5 @@ func (msg *Messager) Send(message *messages.Message) (*response.ResponseMessageS
 
 	msg.secretive = false
 
-	return msg.Client.Send(messageToSend), nil
+	return msg.Client.Send(messageToSend)
 }

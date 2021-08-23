@@ -32,20 +32,20 @@ func (comp *MessageClient) Submit(msg *object.HashMap) (*response.ResponseAddMes
 	if err != nil {
 		return nil, err
 	}
-	comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil,nil, result)
+	_, err = comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", params, nil, nil, result)
 
-	return result, nil
+	return result, err
 }
 
-func (comp *MessageClient) Get(msgID string) *response.ResponseGetGroupMesResult {
+func (comp *MessageClient) Get(msgID string) (*response.ResponseGetGroupMesResult, error) {
 
 	result := &response.ResponseGetGroupMesResult{}
 
-	comp.HttpPostJson("cgi-bin/externalcontact/get_group_msg_result", &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_group_msg_result", &object.StringMap{
 		"msgid": msgID,
-	}, nil,nil, result)
+	}, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 func (comp *MessageClient) SendWelcome(welcomeCode string, msg *object.HashMap) (*response.ResponseAddMessageTemplate, error) {
@@ -61,9 +61,9 @@ func (comp *MessageClient) SendWelcome(welcomeCode string, msg *object.HashMap) 
 		"welcome_code": welcomeCode,
 	})
 
-	comp.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", params, nil,nil, result)
+	_, err = comp.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", params, nil, nil, result)
 
-	return result, nil
+	return result, err
 }
 
 func (comp *MessageClient) formatMessage(data *object.HashMap) (*object.HashMap, error) {

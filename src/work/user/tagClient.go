@@ -22,87 +22,87 @@ func NewTagClient(app kernel.ApplicationInterface) *TagClient {
 
 // 创建标签
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90210
-func (comp *TagClient) Create(tagName string, tagID int) *response.ResponseTagCreate {
+func (comp *TagClient) Create(tagName string, tagID int) (*response.ResponseTagCreate, error) {
 
 	result := &response.ResponseTagCreate{}
 
-	comp.HttpPostJson("cgi-bin/tag/create", &object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/tag/create", &object.HashMap{
 		"tagname": tagName,
 		"tagid":   tagID,
 	}, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 更新标签名字
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90211
-func (comp *TagClient) Update(data *response3.RequestUserDetail) *response2.ResponseWork {
+func (comp *TagClient) Update(data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpPostJson("cgi-bin/tag/update", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/tag/update", data, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 删除标签
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *TagClient) Delete(tagID string) *response2.ResponseWork {
+func (comp *TagClient) Delete(tagID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
 		"tagid": tagID,
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *TagClient) Get(tagID string) *response.ResponseTagDetail {
+func (comp *TagClient) Get(tagID string) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
 
-	comp.HttpGet("cgi-bin/tag/get", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/tag/get", &object.StringMap{
 		"tagid": tagID,
 	}, nil, result)
 
-	return result
+	return result, err
 }
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *TagClient) TagUsers(tagID int, userList []string) *response.ResponseTagCreateUser {
+func (comp *TagClient) TagUsers(tagID int, userList []string) (*response.ResponseTagCreateUser, error) {
 	return comp.tagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
 }
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *TagClient) TagDepartments(tagID int, partyList []string) *response.ResponseTagCreateUser {
+func (comp *TagClient) TagDepartments(tagID int, partyList []string) (*response.ResponseTagCreateUser, error) {
 	return comp.tagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
 }
 
-func (comp *TagClient) tagOrUntagUsers(endpoint string, tagID int, userList []string, partyList []string) *response.ResponseTagCreateUser {
+func (comp *TagClient) tagOrUntagUsers(endpoint string, tagID int, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
 
 	result := &response.ResponseTagCreateUser{}
 
-	comp.HttpPostJson(endpoint, &object.HashMap{
+	_, err := comp.HttpPostJson(endpoint, &object.HashMap{
 		"tagid":     tagID,
 		"userlist":  userList,
 		"partylist": partyList,
 	}, nil, nil, result)
 
-	return result
+	return result, err
 }
 
 // 获取标签列表
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90216
-func (comp *TagClient) List() *response.ResponseTagList {
+func (comp *TagClient) List() (*response.ResponseTagList, error) {
 
 	result := &response.ResponseTagList{}
 
-	comp.HttpGet("cgi-bin/tag/list", nil, nil, result)
+	_, err := comp.HttpGet("cgi-bin/tag/list", nil, nil, result)
 
-	return result
+	return result, err
 }

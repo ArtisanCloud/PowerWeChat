@@ -21,11 +21,11 @@ func (comp *Client) Message(message *messages.Message) *Messager {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90236
-func (comp *Client) Send(messages interface{}) *response.ResponseMessageSend {
+func (comp *Client) Send(messages interface{}) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
 
-	comp.HttpPostJson("cgi-bin/message/send", messages, nil,nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/message/send", messages, nil, nil, result)
 
-	return result
+	return result, err
 }
