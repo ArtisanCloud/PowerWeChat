@@ -1,7 +1,6 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/payment"
 	"github.com/ArtisanCloud/power-wechat/src/work"
 	"log"
@@ -27,62 +26,63 @@ func TestMain(m *testing.M) {
 
 }
 
-func GetWorkConfig() *object.HashMap {
+func GetWorkConfig() *work.UserConfig {
 	agentID, _ := strconv.Atoi(os.Getenv("agent_id"))
-	return &object.HashMap{
-		"corp_id":  os.Getenv("corp_id"),
-		"agent_id": agentID,
-		"secret":   os.Getenv("secret"),
+	return &work.UserConfig{
+		CorpID:  os.Getenv("corp_id"),
+		AgentID: agentID,
+		Secret:  os.Getenv("secret"),
 
-		"response_type": os.Getenv("array"),
-		"log": &object.StringMap{
-
-			"level": "debug",
-			"file":  "./wechat.log",
+		ResponseType: os.Getenv("array"),
+		Log: work.Log{
+			"debug",
+			"./wechat.log",
 		},
 
-		"oauth.callback": os.Getenv("oauth_callback"),
-		"oauth.scopes":   []string{},
-		"debug":          true,
-		"http_debug":     true,
+		OAuth: work.OAuth{
+			Callback: os.Getenv("oauth_callback"),
+			Scopes:   []string{},
+		},
+		//HttpDebug: true,
+		Debug: true,
 
 		// server config
-		"token":   os.Getenv("token"),
-		"aes_key": os.Getenv("aes_key"),
+		Token:  os.Getenv("token"),
+		AESKey: os.Getenv("aes_key"),
 	}
 }
 
-func GetPaymentConfig() *object.HashMap {
-	return &object.HashMap{
-		"corp_id":        os.Getenv("corp_id"),
-		"secret":         os.Getenv("secret"),
-		"app_id":         os.Getenv("app_id"),
-		"mch_id":         os.Getenv("mch_id"),
-		"mch_api_v3_key": os.Getenv("mch_api_v3_key"),
-		"cert_path":      os.Getenv("wx_cert_path"),
-		"key_path":       os.Getenv("wx_key_path"),
-		"serial_no":      os.Getenv("serial_no"),
+func GetPaymentConfig() *payment.UserConfig {
+	return &payment.UserConfig{
+		//"corp_id":        os.Getenv("corp_id"),
+		//"secret":         os.Getenv("secret"),
+		AppID:       os.Getenv("app_id"),
+		MchID:       os.Getenv("mch_id"),
+		MchApiV3Key: os.Getenv("mch_api_v3_key"),
+		Key:         os.Getenv("key"),
+		CertPath:    os.Getenv("wx_cert_path"),
+		KeyPath:     os.Getenv("wx_key_path"),
+		SerialNo:    os.Getenv("serial_no"),
 
-		"response_type": os.Getenv("array"),
-		"log": &object.StringMap{
-
-			"level": "debug",
-			"file":  "./wechat.log",
+		ResponseType: os.Getenv("array"),
+		Log: payment.Log{
+			Level: "debug",
+			File:  "./wechat.log",
+		},
+		Http: payment.Http{
+			Timeout: 30.0,
+			BaseURI: "https://api.mch.weixin.qq.com",
 		},
 
-		"http": object.HashMap{
-			"timeout":  30.0,
-			"base_uri": "https://api.mch.weixin.qq.com",
-		},
-
-		"notify_url": os.Getenv("notify_url"),
-		//"debug":      true,
-		"http_debug": true,
+		NotifyURL: os.Getenv("notify_url"),
+		HttpDebug: true,
+		//Debug: true,
 		//"sandbox": true,
 
 		// server config
-		"token":   os.Getenv("token"),
-		"aes_key": os.Getenv("aes_key"),
+		//Token:            os.Getenv("token"),
+		//AESKey:           os.Getenv("aes_key"),
+
 	}
 }
 

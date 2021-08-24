@@ -7,10 +7,13 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
+	"github.com/ArtisanCloud/power-wechat/src/payment/bill"
 	"github.com/ArtisanCloud/power-wechat/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
 	"github.com/ArtisanCloud/power-wechat/src/payment/order"
+	"github.com/ArtisanCloud/power-wechat/src/payment/redpack"
+	"github.com/ArtisanCloud/power-wechat/src/payment/refund"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
 	"net/http"
 	"time"
@@ -27,6 +30,11 @@ type Payment struct {
 	JSSDK   *jssdk.Client
 	Sandbox *sandbox.Client
 
+	Refund *refund.Client
+	Bill   *bill.Client
+
+	RedPack *redpack.Client
+
 	Base *base.Client
 }
 
@@ -34,6 +42,7 @@ type UserConfig struct {
 	AppID       string
 	MchID       string
 	MchApiV3Key string
+	Key         string
 	CertPath    string
 	KeyPath     string
 	SerialNo    string
@@ -62,7 +71,6 @@ type Http struct {
 	Timeout float64
 	BaseURI string
 }
-
 
 func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	var err error
@@ -109,6 +117,15 @@ func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	//-------------- Sandbox --------------
 	app.Sandbox = sandbox.RegisterProvider(app)
 
+	//-------------- Refund --------------
+	app.Refund = refund.RegisterProvider(app)
+
+	//-------------- Bill --------------
+	app.Bill = bill.RegisterProvider(app)
+
+	//-------------- Red Pack --------------
+	app.RedPack = redpack.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -137,6 +154,14 @@ func (app *Payment) GetComponent(name string) interface{} {
 	case "Sandbox":
 		return app.Sandbox
 	case "Config":
+		return app.Config
+	case "Order":
+		return app.Config
+	case "Refund":
+		return app.Config
+	case "Bill":
+		return app.Config
+	case "RedPack":
 		return app.Config
 
 	default:
@@ -218,6 +243,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"app_id":         userConfig.AppID,
 		"mch_id":         userConfig.MchID,
 		"mch_api_v3_key": userConfig.MchApiV3Key,
+		"key":            userConfig.Key,
 		"cert_path":      userConfig.CertPath,
 		"key_path":       userConfig.KeyPath,
 		"serial_no":      userConfig.SerialNo,
@@ -233,10 +259,10 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		},
 		"oauth.callback": userConfig.OAuth.Callback,
 		"oauth.scopes":   userConfig.OAuth.Scopes,
-		"notify_url": userConfig.NotifyURL,
-		"http_debug": userConfig.HttpDebug,
-		"debug":      userConfig.Debug,
-		"sandbox":    userConfig.Sandbox,
+		"notify_url":     userConfig.NotifyURL,
+		"http_debug":     userConfig.HttpDebug,
+		"debug":          userConfig.Debug,
+		"sandbox":        userConfig.Sandbox,
 	}
 
 	return config, nil

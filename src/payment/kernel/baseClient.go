@@ -51,7 +51,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	}
 
 	// init options
-	if options==nil{
+	if options == nil {
 		options = &object.HashMap{}
 	}
 
@@ -59,7 +59,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	if params != nil {
 		endpoint += "?" + object.GetJoinedWithKSort(params)
 		(*options)["query"] = params
-	}else{
+	} else {
 		(*options)["query"] = nil
 	}
 
@@ -68,7 +68,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 	// check need sign body or not
 	signBody := ""
-	if "get" != object.Lower(method){
+	if "get" != object.Lower(method) {
 		signBody, err = object.JsonEncode(options)
 		if err != nil {
 			return nil, err
@@ -87,7 +87,6 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		},
 		"body": signBody,
 	}, options)
-
 
 	// to be setup middleware here
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
@@ -127,13 +126,16 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 	return result.(*object.HashMap), err
 }
 
-func (client *BaseClient) SafeRequest(url string, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+	config := (*client.App).GetConfig()
+
 	return client.Request(
 		url,
-		nil,
-		"GET",
+		params,
+		method,
 		&object.HashMap{
-			"query": query,
+			"cert":    config.GetString("cert_path", ""),
+			"ssl_key": config.GetString("key_path", ""),
 		},
 		false,
 		outHeader,
