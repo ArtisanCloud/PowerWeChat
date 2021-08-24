@@ -30,12 +30,51 @@ type Payment struct {
 	Base *base.Client
 }
 
-func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
+type UserConfig struct {
+	AppID       string
+	MchID       string
+	MchApiV3Key string
+	CertPath    string
+	KeyPath     string
+	SerialNo    string
+
+	ResponseType string
+	Log          Log
+	OAuth        OAuth
+	Http         Http
+	NotifyURL    string
+	HttpDebug    bool
+	Debug        bool
+	Sandbox      bool
+}
+
+type Log struct {
+	Level string
+	File  string
+}
+
+type OAuth struct {
+	Callback string
+	Scopes   []string
+}
+
+type Http struct {
+	Timeout float64
+	BaseURI string
+}
+
+
+func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	var err error
+
+	userConfig, err := MapUserConfig(config)
+	if err != nil {
+		return nil, err
+	}
 
 	// init an app container
 	container := &kernel.ServiceContainer{
-		UserConfig: config,
+		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
 			"http": object.HashMap{
 				"base_uri": "https://api.mch.weixin.qq.com",
@@ -69,7 +108,6 @@ func NewPayment(config *object.HashMap, r *http.Request) (*Payment, error) {
 
 	//-------------- Sandbox --------------
 	app.Sandbox = sandbox.RegisterProvider(app)
-
 
 	return app, err
 }
@@ -136,15 +174,15 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{})  (*http.Response, error ){
+func (app *Payment) HandlePaidNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
 	return notify.NewPaidNotify(app).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error ){
+func (app *Payment) HandleRefundedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
 	return notify.NewRefundNotify(app).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error ){
+func (app *Payment) HandleScannedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
 	return notify.NewScannedNotify(app).Handle(closure)
 }
 
@@ -171,5 +209,36 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 	}
 
 	return key, nil
+
+}
+
+func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
+
+	config := &object.HashMap{
+		"app_id":         userConfig.AppID,
+		"mch_id":         userConfig.MchID,
+		"mch_api_v3_key": userConfig.MchApiV3Key,
+		"cert_path":      userConfig.CertPath,
+		"key_path":       userConfig.KeyPath,
+		"serial_no":      userConfig.SerialNo,
+
+		"response_type": userConfig.ResponseType,
+		"log": object.StringMap{
+			"level": userConfig.Log.Level,
+			"file":  userConfig.Log.File,
+		},
+		"http": object.HashMap{
+			"timeout":  userConfig.Http.Timeout,
+			"base_uri": userConfig.Http.BaseURI,
+		},
+		"oauth.callback": userConfig.OAuth.Callback,
+		"oauth.scopes":   userConfig.OAuth.Scopes,
+		"notify_url": userConfig.NotifyURL,
+		"http_debug": userConfig.HttpDebug,
+		"debug":      userConfig.Debug,
+		"sandbox":    userConfig.Sandbox,
+	}
+
+	return config, nil
 
 }

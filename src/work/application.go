@@ -72,12 +72,43 @@ type Work struct {
 	GroupRobotMessenger *groupRobot.Messager
 }
 
-func NewWork(config *object.HashMap, r *http.Request) (*Work, error) {
+type UserConfig struct {
+
+	CorpID           string
+	AgentID          int
+	Secret           string
+	Token            string
+	AESKey           string
+	AuthCallbackHost string
+
+	ResponseType string
+	Log          Log
+	OAuth        OAuth
+	HttpDebug    bool
+	Debug        bool
+}
+
+type Log struct {
+	Level string
+	File  string
+}
+
+type OAuth struct {
+	Callback string
+	Scopes   []string
+}
+
+func NewWork(config *UserConfig, r *http.Request) (*Work, error) {
 	var err error
+
+	userConfig, err := MapUserConfig(config)
+	if err != nil {
+		return nil, err
+	}
 
 	// init an app container
 	container := &kernel.ServiceContainer{
-		UserConfig: config,
+		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
 			"http": object.HashMap{
 				"base_uri": "https://qyapi.weixin.qq.com/",
@@ -241,5 +272,31 @@ func (app *Work) GetComponent(name string) interface{} {
 	default:
 		return nil
 	}
+
+}
+
+func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
+
+	config := &object.HashMap{
+		"corp_id":            userConfig.CorpID,
+		"agent_id":           userConfig.AgentID,
+		"secret":             userConfig.Secret,
+		"token":              userConfig.Token,
+		"aes_key":            userConfig.AESKey,
+		"auth_callback_host": userConfig.AuthCallbackHost,
+
+		"response_type": userConfig.ResponseType,
+		"log": object.StringMap{
+			"level": userConfig.Log.Level,
+			"file":  userConfig.Log.File,
+		},
+		"oauth.callback": userConfig.OAuth.Callback,
+		"oauth.scopes":   userConfig.OAuth.Scopes,
+		"http_debug":     userConfig.HttpDebug,
+		"debug":          userConfig.Debug,
+	}
+
+
+	return config, nil
 
 }
