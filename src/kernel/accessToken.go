@@ -3,13 +3,13 @@ package kernel
 import (
 	"crypto/md5"
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/exception"
-	http2 "github.com/ArtisanCloud/go-libs/http"
-	httpContract "github.com/ArtisanCloud/go-libs/http/contract"
+	"github.com/ArtisanCloud/go-libs/http/request"
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel/contract"
-	response2 "github.com/ArtisanCloud/go-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"net/http"
 	"time"
 )
@@ -17,8 +17,8 @@ import (
 type AccessToken struct {
 	App *ApplicationInterface
 
-	*http2.HttpRequest
-	*http2.HttpResponse
+	*request.HttpRequest
+	*response.HttpResponse
 
 	RequestMethod      string
 	EndpointToGetToken string
@@ -27,7 +27,7 @@ type AccessToken struct {
 	TokenKey           string
 	CachePrefix        string
 
-	*CacheToken
+	*InteractsWithCache
 
 	GetCredentials func() *object.StringMap
 }
@@ -37,7 +37,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 
 	token := &AccessToken{
 		App:         app,
-		HttpRequest: http2.NewHttpRequest(config),
+		HttpRequest: request.NewHttpRequest(config),
 
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
@@ -46,19 +46,19 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		TokenKey:           "access_token",
 		CachePrefix:        "ac.go.wechat.kernel.access_token.",
 
-		CacheToken: &CacheToken{},
+		InteractsWithCache: &InteractsWithCache{},
 	}
 
 	return token
 }
 
-func (accessToken *AccessToken) GetRefreshedToken() *response2.ResponseGetToken {
+func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken, error) {
 	return accessToken.GetToken(true)
 }
 
-func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.ResponseGetToken) {
-	cacheKey := accessToken.getCacheKey()
-	cache := accessToken.getCache()
+func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.ResponseGetToken, err error) {
+	cacheKey := accessToken.GetCacheKey()
+	cache := accessToken.GetCache()
 
 	// get token from cache
 	if !refresh && cache.Has(cacheKey) {
@@ -68,15 +68,18 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 			return &response2.ResponseGetToken{
 				AccessToken: (*token)[accessToken.TokenKey].(string),
 				ExpiresIn:   (*token)["expires_in"].(int),
-			}
+			}, err
 		}
 	}
 
 	// request token from wx
-	response := accessToken.requestToken(accessToken.GetCredentials())
+	response, err := accessToken.requestToken(accessToken.GetCredentials())
+	if err != nil {
+		return nil, err
+	}
 
-	//// save token into cache
-	resToken = response.(*response2.ResponseGetToken)
+	// save token into cache
+	resToken = response
 	var expireIn int = 7200
 	if resToken.ExpiresIn > 0 {
 		expireIn = resToken.ExpiresIn
@@ -85,7 +88,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 
 	// tbd dispatch a event for AccessTokenRefresh
 
-	return resToken
+	return resToken, err
 }
 
 func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInterface contract.AccessTokenInterface, err error) {
@@ -94,63 +97,57 @@ func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInter
 	}
 
 	// set token into cache
-	cache := accessToken.getCache()
-	err = cache.Set(accessToken.getCacheKey(), &object.HashMap{
+	cache := accessToken.GetCache()
+	err = cache.Set(accessToken.GetCacheKey(), &object.HashMap{
 		accessToken.TokenKey: token,
 		"expires_in":         lifeTime,
 	}, time.Duration(lifeTime)*time.Second)
 
-	defer (&exception.Exception{}).HandleException(nil, "accessToken.set.token", nil)
-	if !cache.Has(accessToken.getCacheKey()) {
-		panic("Failed to cache access token.")
-		return nil, err
+	if !cache.Has(accessToken.GetCacheKey()) {
+		return nil, errors.New("failed to cache access token")
 	}
 	return accessToken, err
 
 }
 
 func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
+	accessToken.GetToken(true)
 
-	return nil
+	return accessToken
 }
 
-func (accessToken *AccessToken) requestToken(credentials *object.StringMap) httpContract.ResponseContract {
+func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*response2.ResponseGetToken, error) {
 
-	// tbf
-	return &response2.ResponseGetToken{
-		AccessToken: "FwhFYGuWs47wxxUQHf5gbOIwMBe8ohu3EUnhF-x6uw4VX55-m46bnQUHLJ1nM5R0WAVfrLHvdn6XJtkMkzRkN_E75edrNzWK6IZxx3RwUJNowZEg3dcU3NEygFGfzUEGLS5fiB4GtNPOi-HKUhQumAMcP0lncEij2Hjg95FTqS4YBRNVG4OL92h8RAiP-yllfDvt2URk6tntGe4HaxAGdA",
-		ExpiresIn:   7200,
-		ResponseWX: &response2.ResponseWX{
-			ErrCode: 0,
-			ErrMSG:  "ok",
-		},
+	res, err := accessToken.sendRequest(credentials)
+	if err != nil {
+		return nil, err
 	}
+	token := res
 
-	res := accessToken.sendRequest(credentials)
-	token := res.(*response2.ResponseGetToken)
-	defer (&exception.Exception{}).HandleException(nil, "accessToken.request.token", nil)
 	if token == nil || token.AccessToken == "" {
-		panic(fmt.Sprintf("Request access_token fail: %v", res))
-		return nil
+		return nil, errors.New(fmt.Sprintf("Request access_token fail: %v", res))
 	}
 
-	return token
+	return token, nil
 }
 
-func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOptions *object.HashMap) *http.Request {
+func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOptions *object.HashMap) (*http.Request, error) {
 
 	// query Access Token map
-	mapToken := accessToken.getQuery()
+	mapToken, err := accessToken.getQuery()
+	if err != nil {
+		return nil, err
+	}
 	q := request.URL.Query()
 	for key, value := range *mapToken {
 		q.Set(key, value)
 	}
 	request.URL.RawQuery = q.Encode()
 
-	return request
+	return request, err
 }
 
-func (accessToken *AccessToken) sendRequest(credential *object.StringMap) httpContract.ResponseContract {
+func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*response2.ResponseGetToken, error) {
 
 	key := "json"
 	if accessToken.RequestMethod == "GET" {
@@ -162,23 +159,35 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) httpCo
 
 	res := &response2.ResponseGetToken{}
 
-	accessToken.SetHttpClient(accessToken.GetHttpClient()).PerformRequest(
-		accessToken.getEndpoint(),
+	strEndpoint, err := accessToken.getEndpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = accessToken.SetHttpClient(accessToken.GetHttpClient()).PerformRequest(
+		strEndpoint,
 		accessToken.RequestMethod,
 		options,
+		false,
+		nil,
 		res,
 	)
-	return res
+	return res, err
 }
 
-func (accessToken *AccessToken) getCacheKey() string {
+func (accessToken *AccessToken) GetCacheKey() string {
+
 	data, _ := json.Marshal(accessToken.GetCredentials())
 	buffer := md5.Sum(data)
+	cacheKey := accessToken.CachePrefix + string(buffer[:])
 
-	return accessToken.CachePrefix + string(buffer[:])
+	// tbf
+	//fmt2.Dump(cacheKey)
+
+	return cacheKey
 }
 
-func (accessToken *AccessToken) getQuery() *object.StringMap {
+func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
 	// set the current token key
 	var key string
 	if accessToken.QueryName != "" {
@@ -188,23 +197,24 @@ func (accessToken *AccessToken) getQuery() *object.StringMap {
 	}
 
 	// get token string map
-	resToken := accessToken.GetToken(false)
+	resToken, err := accessToken.GetToken(false)
+	if err != nil {
+		return nil, err
+	}
 	arrayReturn := &object.StringMap{
 		key: resToken.AccessToken,
 	}
 
-	return arrayReturn
+	return arrayReturn, err
 
 }
 
-func (accessToken *AccessToken) getEndpoint() string {
-	defer (&exception.Exception{}).HandleException(nil, "accessToken.get.endpoint", accessToken)
+func (accessToken *AccessToken) getEndpoint() (string, error) {
 	if accessToken.EndpointToGetToken == "" {
-		panic("No endpoint for access token request.")
-		return ""
+		return "", errors.New("no endpoint for access token request")
 	}
 
-	return accessToken.EndpointToGetToken
+	return accessToken.EndpointToGetToken, nil
 }
 
 func (accessToken *AccessToken) getTokenKey() string {

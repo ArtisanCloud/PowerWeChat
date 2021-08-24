@@ -3,7 +3,8 @@ package oauth
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-socialite/src/providers"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"net/http"
 )
 
 type Manager struct {
@@ -12,13 +13,23 @@ type Manager struct {
 	Provider *providers.WeCom
 }
 
-func NewManager(config *object.HashMap,app *kernel.ApplicationInterface) *Manager {
+func NewManager(config *object.HashMap, providerConfig *object.HashMap, app *kernel.ApplicationInterface) *Manager {
 
-	manager:= &Manager{
-		config,
+	manager := &Manager{
+		(*config)["wecom"].(*object.HashMap),
 		app,
-		nil,
+		providers.NewWeCom(providerConfig),
 	}
 	return manager
 
+}
+
+func (manager *Manager) Redirect(redirect string) error {
+	redirectURL, err := manager.Provider.Redirect(redirect)
+	if err != nil {
+		return err
+	}
+
+	http.Redirect(nil, nil, redirectURL, http.StatusFound)
+	return nil
 }

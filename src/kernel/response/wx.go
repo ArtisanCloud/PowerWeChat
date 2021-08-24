@@ -1,19 +1,28 @@
 package response
 
-import "github.com/ArtisanCloud/go-libs/object"
-
-type ResponseWX struct {
+type ResponseWork struct {
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg"`
 }
 
-func (res *ResponseWX)GetBody() *object.HashMap{
-	return nil
-}
-func (res *ResponseWX)GetHeaders() *object.HashMap{
-	return nil
+type ResponsePayment struct {
+	ReturnCode string `json:"return_code"`
+	ReturnMSG  string `json:"return_msg"`
+
+	ResultCode string `json:"result_code"` // 是	String(16)	SUCCESS/FAIL
+	ErrCode    string `json:"err_code"`    // 否	String(32)	SYSTEMERROR--系统错误
+	ErrMSG     string `json:"errmsg"`
+	ErrCodeDes string `json:"err_code_des"`
 }
 
-func (res *ResponseWX)GetStatusCode() int{
-	return 200
-}
+//
+//func (res *ResponseWork) GetBody() *http.ResponseWriter {
+//	return nil
+//}
+//func (res *ResponseWork) GetHeaders() *http.ResponseWriter {
+//	return nil
+//}
+//
+//func (res *ResponseWork) GetStatusCode() int {
+//	return 200
+//}

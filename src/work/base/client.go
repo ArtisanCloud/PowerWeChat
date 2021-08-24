@@ -1,30 +1,32 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
-	"github.com/ArtisanCloud/go-wechat/src/work/base/response"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/work/base/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
-func (comp *Client) GetCallbackIp() *response.ResponseGetCallBackIp {
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90930
+func (comp *Client) GetCallbackIp() (*response.ResponseGetCallBackIp ,error){
 
 	result := &response.ResponseGetCallBackIp{}
 
-	comp.HttpGet("cgi-bin/getcallbackip", nil, result)
+	_,err:=comp.HttpGet("cgi-bin/getcallbackip", nil,nil, result)
 
-	return result
+	return result,err
 }
 
 
-func (comp *Client) GetAPIDomainIP() *response.ResponseGetAPIDomainIP {
+// https://open.work.weixin.qq.com/api/doc/90000/90135/92520
+func (comp *Client) GetAPIDomainIP() (*response.ResponseGetAPIDomainIP ,error){
 
 	result := &response.ResponseGetAPIDomainIP{}
 
-	comp.HttpGet("cgi-bin/get_api_domain_ip", nil, result)
+	_,err:=comp.HttpGet("cgi-bin/get_api_domain_ip", nil,nil, result)
 
-	return result
+	return result,err
 }
 

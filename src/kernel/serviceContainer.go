@@ -7,6 +7,9 @@ import (
 type ApplicationInterface interface {
 	GetContainer() *ServiceContainer
 	GetAccessToken() *AccessToken
+	GetConfig() *Config
+	GetComponent(name string) interface{}
+
 }
 
 type ServiceContainer struct {
@@ -39,6 +42,6 @@ func (container *ServiceContainer) GetConfig() *object.HashMap {
 
 	// merge config
 	container.Config = object.MergeHashMap(config, container.DefaultConfig, container.UserConfig)
-
+	//fmt.Dump(container.Config)
 	return container.Config
 }

@@ -4,13 +4,14 @@ package auth
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel"
 )
 
 type AccessToken struct {
 	*kernel.AccessToken
 }
 
+// https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 func NewAccessToken(app *kernel.ApplicationInterface) *AccessToken {
 	token := &AccessToken{
 		kernel.NewAccessToken(app),

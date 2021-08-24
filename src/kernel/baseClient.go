@@ -2,14 +2,18 @@ package kernel
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/http"
+	"github.com/ArtisanCloud/go-libs/http/request"
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	http2 "net/http"
 )
 
 type BaseClient struct {
-	*http.HttpRequest
-	*http.HttpResponse
+	*request.HttpRequest
+	*response.HttpResponse
+
+	*support.ResponseCastable
 
 	App   *ApplicationInterface
 	Token *AccessToken
@@ -23,7 +27,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 	}
 
 	client := &BaseClient{
-		HttpRequest: http.NewHttpRequest(config),
+		HttpRequest: request.NewHttpRequest(config),
 		App:         app,
 		Token:       token,
 	}
@@ -31,7 +35,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 
 }
 
-func (client *BaseClient) HttpGet(url string, query object.StringMap, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpGet(url string, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"GET",
@@ -39,11 +43,12 @@ func (client *BaseClient) HttpGet(url string, query object.StringMap, outRespons
 			"query": query,
 		},
 		false,
-		outResponse,
+		outHeader,
+		outBody,
 	)
 }
 
-func (client *BaseClient) HttpPost(url string, data object.HashMap, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpPost(url string, data interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"POST",
@@ -51,11 +56,12 @@ func (client *BaseClient) HttpPost(url string, data object.HashMap, outResponse 
 			"form_params": data,
 		},
 		false,
-		outResponse,
+		outHeader,
+		outBody,
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data object.HashMap, query object.StringMap, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"POST",
@@ -64,26 +70,77 @@ func (client *BaseClient) HttpPostJson(url string, data object.HashMap, query ob
 			"form_params": data,
 		},
 		false,
-		outResponse,
+		outHeader,
+		outBody,
 	)
 }
 
-func (client *BaseClient) Request(url string, method string, options *object.HashMap, returnRaw bool, outResponse interface{}) interface{} {
+func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+
+	multipart := []*object.HashMap{}
+	headers := object.HashMap{}
+
+	if form != nil && (*form)["filename"] == nil {
+		headers["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", (*form)["filename"].(string))
+	}
+
+	for name, path := range *files {
+		multipart = append(multipart, &object.HashMap{
+			"name":     name,
+			"contents": path,
+			"headers":  headers,
+		})
+	}
+
+	if form != nil {
+		for name, contents := range *form {
+			multipart = append(multipart, &object.HashMap{
+				"name":     name,
+				"contents": contents,
+			})
+		}
+	}
+
+	return client.Request(url, "POST", &object.HashMap{
+		"query":           query,
+		"multipart":       multipart,
+		"connect_timeout": 30,
+		"timeout":         30,
+		"read_timeout":    30,
+	}, false, nil, outBody)
+}
+
+func (client *BaseClient) Request(url string, method string, options *object.HashMap,
+	returnRaw bool, outHeader interface{}, outBody interface{},
+) (interface{}, error) {
 
 	// to be setup middleware here
 	if client.Middlewares == nil {
 		client.registerHttpMiddlewares()
 	}
 	// http client request
-	response := client.PerformRequest(url, method, options, outResponse)
+	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
+	if err!=nil{
+		return nil, err
+	}
 
 	if returnRaw {
-		return response
+		return response , err
 	} else {
+		// tbf
 		config := *(*client.App).GetContainer().Config
-		client.CastResponseToType(response, config["response_type"])
+		var rs http2.Response = http2.Response{
+			StatusCode: response.GetStatusCode(),
+			Header:     response.GetHeader(),
+			Body:       response.GetBody(),
+		}
+		returnResponse, err := client.CastResponseToType(&rs, config["response_type"].(string))
+		return returnResponse, err
 	}
-	return response
+}
+
+func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+	return client.Request(url, method, options, true, outHeader, outBody)
 }
 
 func (client *BaseClient) registerHttpMiddlewares() {
@@ -110,15 +167,15 @@ type MiddlewareRetry struct {
 	*BaseClient
 }
 
-func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) error {
+func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
 	accessToken := (*d.App).GetAccessToken()
 
 	if accessToken != nil {
 		config := (*d.App).GetContainer().Config
-		accessToken.ApplyToRequest(req, config)
+		_, err = accessToken.ApplyToRequest(req, config)
 	}
 
-	return nil
+	return err
 }
 func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
 	fmt.Println("logMiddleware")
