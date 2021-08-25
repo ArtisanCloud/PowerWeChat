@@ -14,7 +14,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/payment/order"
 	"github.com/ArtisanCloud/power-wechat/src/payment/redpack"
 	"github.com/ArtisanCloud/power-wechat/src/payment/refund"
+	"github.com/ArtisanCloud/power-wechat/src/payment/reverse"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
+	"github.com/ArtisanCloud/power-wechat/src/payment/transfer"
 	"net/http"
 	"time"
 )
@@ -34,6 +36,8 @@ type Payment struct {
 	Bill   *bill.Client
 
 	RedPack *redpack.Client
+	Transfer *transfer.Client
+	Reverse *reverse.Client
 
 	Base *base.Client
 }
@@ -126,6 +130,12 @@ func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	//-------------- Red Pack --------------
 	app.RedPack = redpack.RegisterProvider(app)
 
+	//-------------- Transfer --------------
+	app.Transfer =transfer.RegisterProvider(app)
+
+	//-------------- Reverse --------------
+	app.Reverse = reverse.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -156,14 +166,17 @@ func (app *Payment) GetComponent(name string) interface{} {
 	case "Config":
 		return app.Config
 	case "Order":
-		return app.Config
+		return app.Order
 	case "Refund":
-		return app.Config
+		return app.Refund
 	case "Bill":
-		return app.Config
+		return app.Bill
 	case "RedPack":
-		return app.Config
-
+		return app.RedPack
+	case "Transfer":
+		return app.Transfer
+	case "Reverse":
+		return app.Reverse
 	default:
 		return nil
 	}
