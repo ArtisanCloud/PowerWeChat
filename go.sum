@@ -1,5 +1,7 @@
 github.com/ArtisanCloud/go-libs v1.0.19 h1:FxLqXM4x1vVfnGsk9gk0Ubixbcck703TB6/lDdjC/tA=
 github.com/ArtisanCloud/go-libs v1.0.19/go.mod h1:4pGEskMX4BA2w2cJdjL4+jcGHRLdx6Bj+evOqXo23iU=
+github.com/ArtisanCloud/go-libs v1.1.2 h1:4dtk4Qvi10dOOPHYx5l/+oYPquPihNwVg2be0mymv+4=
+github.com/ArtisanCloud/go-libs v1.1.2/go.mod h1:4pGEskMX4BA2w2cJdjL4+jcGHRLdx6Bj+evOqXo23iU=
 github.com/ArtisanCloud/go-socialite v1.0.7 h1:T57aFna3WgsJeA7gndILaUZS0l1SyWKP39b2qIg9bZ4=
 github.com/ArtisanCloud/go-socialite v1.0.7/go.mod h1:Cc+LLihQPTeaOhn0pEPcncP5fJTbXsxjba8rfrel7cM=
 github.com/cespare/xxhash/v2 v2.1.1 h1:6MnRN8NT7+YBpUIWxHtefFZOKTAPgGjpQSxqLNn0+qY=
