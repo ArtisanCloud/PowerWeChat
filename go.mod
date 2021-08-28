@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/ArtisanCloud/go-socialite v1.0.7
-	github.com/ArtisanCloud/go-libs v1.0.19
+	github.com/ArtisanCloud/go-libs v1.1.2
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
