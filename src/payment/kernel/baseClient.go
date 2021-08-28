@@ -5,7 +5,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
-
 	http2 "net/http"
 )
 
@@ -80,6 +79,10 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		CanonicalURL: endpoint,
 		SignBody:     signBody,
 	})
+
+	if err != nil {
+		return nil, err
+	}
 
 	options = object.MergeHashMap(&object.HashMap{
 		"headers": &object.HashMap{
