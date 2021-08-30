@@ -3,9 +3,11 @@ package order
 import (
 	"errors"
 	"fmt"
+	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/order/response"
+	"net/http"
 )
 
 type Client struct {
@@ -57,10 +59,10 @@ func (comp *Client) Query(params *object.HashMap) (*response.ResponseOrder, erro
 
 	config := (*comp.App).GetConfig()
 
-	if (*params)["endpoint"]==nil || (*params)["endpoint"].(string)==""{
+	if (*params)["endpoint"] == nil || (*params)["endpoint"].(string) == "" {
 		return nil, errors.New("no query endpoint! ")
 	}
-	endpoint:=(*params)["endpoint"].(string)
+	endpoint := (*params)["endpoint"].(string)
 	endpoint = comp.Wrap(endpoint)
 	_, err := comp.Request(endpoint, &object.StringMap{
 		"mchid": config.GetString("mch_id", ""),
@@ -69,17 +71,20 @@ func (comp *Client) Query(params *object.HashMap) (*response.ResponseOrder, erro
 	return result, err
 }
 
-func (comp *Client) Close(tradeNo string) (*response.ResponseHeaderCloseOrdr, error) {
-
-	result := &response.ResponseHeaderCloseOrdr{}
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
+func (comp *Client) Close(tradeNo string) (*http.Response, error) {
 
 	config := (*comp.App).GetConfig()
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s/close", tradeNo))
-	_, err := comp.Request(endpoint, &object.StringMap{
-		"mchid":        config.GetString("mch_id", ""),
-		"out_trade_no": tradeNo,
-	}, "POST", nil, false, result, nil)
+	rs, err := comp.PlainRequest(endpoint, nil, "POST", &object.HashMap{
+		"mchid": config.GetString("mch_id", ""),
+	}, false, nil, nil)
 
-	return result, err
+	var httpResponse *http.Response = nil
+	if err != nil {
+		httpResponse = rs.(*response2.HttpResponse).Response
+	}
+
+	return httpResponse, err
 }

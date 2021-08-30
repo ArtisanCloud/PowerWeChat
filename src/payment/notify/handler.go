@@ -81,7 +81,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	}
 
 	bodyBuffer, _ := json.Marshal(attributes)
-	rs := response2.NewHttpResponse()
+	rs := response2.NewHttpResponse(http.StatusOK)
 	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
 	return rs.Response, err
