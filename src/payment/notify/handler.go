@@ -22,17 +22,27 @@ type Handler struct {
 	Check      bool
 	Sign       bool
 
+	ExternalRequest *http.Request
+
 	Handle func(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"
 const FAIL = "FAIL"
 
-func NewHandler(app *kernel.ApplicationPaymentInterface) *Handler {
+func NewHandler(app *kernel.ApplicationPaymentInterface, r *http.Request) *Handler {
+
+	//-------------- external request --------------
+	request := &http.Request{}
+	if r != nil {
+		request = r
+	}
+
 	return &Handler{
 		App:   app,
 		Check: true,
 		Sign:  false,
+		ExternalRequest: request,
 	}
 }
 
@@ -50,15 +60,15 @@ func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Ha
 func (handler *Handler) ToResponse() (response *http.Response, err error) {
 
 	returnCode := SUCCESS
-	returnMsg:="成功"
+	returnMsg := "成功"
 	if handler.fail != "" {
 		returnCode = FAIL
 		returnMsg = handler.fail
 		err = errors.New(handler.fail)
 	}
 	base := &object.StringMap{
-		"code": returnCode,
-		"message":  returnMsg,
+		"code":    returnCode,
+		"message": returnMsg,
 	}
 
 	attributes := object.MergeStringMap(base, handler.Attributes)

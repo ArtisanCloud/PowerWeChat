@@ -6,14 +6,10 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
-
-	"net/http"
 )
 
 type MiniProgram struct {
 	*kernel.ServiceContainer
-
-	ExternalRequest *http.Request
 
 	Base        *base.Client
 	AccessToken *auth.AccessToken
@@ -47,7 +43,7 @@ type OAuth struct {
 	Scopes   []string
 }
 
-func NewMiniProgram(config *UserConfig, r *http.Request) (*MiniProgram, error) {
+func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -71,11 +67,6 @@ func NewMiniProgram(config *UserConfig, r *http.Request) (*MiniProgram, error) {
 		ServiceContainer: container,
 	}
 
-	//-------------- external request --------------
-	app.ExternalRequest = r
-	if r == nil {
-		app.ExternalRequest = &http.Request{}
-	}
 
 	//-------------- global app config --------------
 	// global app config
@@ -105,8 +96,6 @@ func (app *MiniProgram) GetConfig() *kernel.Config {
 func (app *MiniProgram) GetComponent(name string) interface{} {
 
 	switch name {
-	case "ExternalRequest":
-		return app.ExternalRequest
 	case "Base":
 		return app.Base
 	case "AccessToken":

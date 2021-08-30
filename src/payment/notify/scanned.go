@@ -12,9 +12,10 @@ type Scanned struct {
 	alert string
 }
 
-func NewScannedNotify(app kernel.ApplicationPaymentInterface) *Scanned {
+func NewScannedNotify(app kernel.ApplicationPaymentInterface, request *http.Request) *Scanned {
+
 	scanned := &Scanned{
-		NewHandler(&app),
+		NewHandler(&app, request),
 		"",
 	}
 

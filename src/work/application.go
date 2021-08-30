@@ -98,7 +98,7 @@ type OAuth struct {
 	Scopes   []string
 }
 
-func NewWork(config *UserConfig, r *http.Request) (*Work, error) {
+func NewWork(config *UserConfig) (*Work, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -120,12 +120,6 @@ func NewWork(config *UserConfig, r *http.Request) (*Work, error) {
 	// init app
 	app := &Work{
 		ServiceContainer: container,
-	}
-
-	//-------------- external request --------------
-	app.ExternalRequest = r
-	if r == nil {
-		app.ExternalRequest = &http.Request{}
 	}
 
 	//-------------- global app config --------------
@@ -206,8 +200,6 @@ func (app *Work) GetConfig() *kernel.Config {
 func (app *Work) GetComponent(name string) interface{} {
 
 	switch name {
-	case "ExternalRequest":
-		return app.ExternalRequest
 	case "Base":
 		return app.Base
 	case "AccessToken":

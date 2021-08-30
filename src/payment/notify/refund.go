@@ -10,9 +10,10 @@ type Refund struct {
 	*Handler
 }
 
-func NewRefundNotify(app kernel.ApplicationPaymentInterface) *Refund {
+func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Request) *Refund {
+
 	paid := &Refund{
-		NewHandler(&app),
+		NewHandler(&app, request),
 	}
 
 	return paid

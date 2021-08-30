@@ -26,8 +26,7 @@ type Payment struct {
 	kernel2.ApplicationPaymentInterface
 	*kernel.ServiceContainer
 
-	ExternalRequest *http.Request
-	Config          *kernel.Config
+	Config *kernel.Config
 
 	Order   *order.Client
 	JSSDK   *jssdk.Client
@@ -78,7 +77,7 @@ type Http struct {
 	BaseURI string
 }
 
-func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
+func NewPayment(config *UserConfig) (*Payment, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -100,12 +99,6 @@ func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	// init app
 	app := &Payment{
 		ServiceContainer: container,
-	}
-
-	//-------------- external request --------------
-	app.ExternalRequest = r
-	if r == nil {
-		app.ExternalRequest = &http.Request{}
 	}
 
 	//-------------- global app config --------------
@@ -160,8 +153,6 @@ func (app *Payment) GetConfig() *kernel.Config {
 func (app *Payment) GetComponent(name string) interface{} {
 
 	switch name {
-	case "ExternalRequest":
-		return app.ExternalRequest
 	case "Base":
 		return app.Base
 	case "JSSDK":
@@ -219,16 +210,16 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
-	return notify.NewPaidNotify(app).Handle(closure)
+func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
+	return notify.NewPaidNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
-	return notify.NewRefundNotify(app).Handle(closure)
+func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
+	return notify.NewRefundNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
-	return notify.NewScannedNotify(app).Handle(closure)
+func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
+	return notify.NewScannedNotify(app, request).Handle(closure)
 }
 
 func (app *Payment) InSandbox() bool {
