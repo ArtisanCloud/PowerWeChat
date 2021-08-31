@@ -1,6 +1,7 @@
 package refund
 
 import (
+	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
@@ -25,14 +26,21 @@ func (comp *Client) Refund(transactionID string, refundOutNO string, amount *obj
 	result := &response.ResponseRefund{}
 
 	body := &object.HashMap{
-		"transaction_id": transactionID,
-		"out_refund_no":  refundOutNO,
 		"amount":         amount,
 	}
+
+	if transactionID!=""{
+		(*body)["transaction_id"]= transactionID
+	}else if refundOutNO!=""{
+		(*body)["out_refund_no"]= refundOutNO
+	}else{
+		return nil, errors.New("please given transaction_id or out_refund_no. ")
+	}
+
 	body = object.MergeHashMap(body, options)
 
 	endpoint := comp.Wrap("/v3/refund/domestic/refunds")
-	_, err := comp.Request(endpoint, nil, "POST", body, false, nil, result)
+	_, err := comp.PlainRequest(endpoint, nil, "POST", body, false, nil, result)
 
 	return result, err
 }

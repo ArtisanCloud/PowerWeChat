@@ -6,6 +6,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/message"
+
 )
 
 type MiniProgram struct {
@@ -14,6 +17,9 @@ type MiniProgram struct {
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
+
+	DataCube *dataCube.Client
+	Message  *message.Client
 
 	Config *kernel.Config
 }
@@ -67,7 +73,6 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 		ServiceContainer: container,
 	}
 
-
 	//-------------- global app config --------------
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
@@ -77,6 +82,12 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
+
+	//-------------- register Data cube --------------
+	app.DataCube = dataCube.RegisterProvider(app)
+
+	//-------------- register Message --------------
+	app.Message = message.RegisterProvider(app)
 
 	return app, err
 }
@@ -104,6 +115,12 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Auth
 	case "Config":
 		return app.Config
+
+	case "DataCube":
+		return app.DataCube
+
+	case "Message":
+		return app.Message
 
 	default:
 		return nil

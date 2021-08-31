@@ -39,3 +39,14 @@ func (comp *Client) CheckEncryptedMsg(encryptedMsgHash string) (*response.Respon
 
 	return result, err
 }
+
+
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getPerformanceData.html
+func (comp *Client) GetPerformanceData(options *object.HashMap) (*response.ResponseGetPerformanceData, error) {
+
+	result := &response.ResponseGetPerformanceData{}
+
+	_, err := comp.HttpPostJson("wxa/business/performance/boot", options, nil, nil, result)
+
+	return result, err
+}

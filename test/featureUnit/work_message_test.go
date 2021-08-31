@@ -22,7 +22,11 @@ func Test_Message_Send_Text(t *testing.T) {
 		},
 	}
 
-	response := Work.Message.Send(para)
+	response,err := Work.Message.Send(para)
+
+	if err!=nil{
+		t.Error("message send err is ", err)
+	}
 
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
