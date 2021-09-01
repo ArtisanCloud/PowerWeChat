@@ -4,7 +4,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseExpressGetOrder struct {
+type ResponseImmediateDeliveryGetOrder struct {
 	response.ResponseMiniProgram
 
 	OrderStatus int     `json:"order_status"` //	配送状态，枚举值

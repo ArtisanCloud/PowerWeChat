@@ -5,7 +5,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseExpressBindAccount struct {
+type ResponseImmediateDeliveryDelivery struct {
+
 	response.ResponseMiniProgram
-	ShopList []*object.HashMap `json:"shop_list"`
+	List    []*object.HashMap `json:"list"`
 }

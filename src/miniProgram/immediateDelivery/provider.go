@@ -1,4 +1,4 @@
-package express
+package immediateDelivery
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
