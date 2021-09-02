@@ -6,6 +6,6 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client, *AccessToken) {
 
-	return  NewClient(&app),NewAccessToken(&app)
+	return NewClient(&app), NewAccessToken(&app)
 
 }

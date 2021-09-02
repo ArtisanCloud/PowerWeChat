@@ -9,7 +9,6 @@ type ApplicationInterface interface {
 	GetAccessToken() *AccessToken
 	GetConfig() *Config
 	GetComponent(name string) interface{}
-
 }
 
 type ServiceContainer struct {

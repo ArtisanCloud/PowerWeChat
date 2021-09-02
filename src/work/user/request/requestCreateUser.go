@@ -31,6 +31,6 @@ type UserExtraAttribute struct {
 }
 
 type UserExternalProfile struct {
-	ExternalCorpName string            `json:"external_corp_name"`
+	ExternalCorpName string           `json:"external_corp_name"`
 	ExternalAttr     []*power.HashMap `json:"external_attr"`
 }

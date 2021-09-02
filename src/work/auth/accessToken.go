@@ -24,7 +24,6 @@ func NewAccessToken(app *kernel.ApplicationInterface) *AccessToken {
 	return token
 }
 
-
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
 	config := (*accessToken.App).GetContainer().GetConfig()

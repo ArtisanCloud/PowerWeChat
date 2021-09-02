@@ -22,9 +22,9 @@ func Test_Unify_Order(t *testing.T) {
 		},
 	}, false)
 
-	if err!=nil{
+	if err != nil {
 		t.Error(err.Error())
-	}else if response!=nil && response.PrepayID =="" {
+	} else if response != nil && response.PrepayID == "" {
 		t.Error("response nil")
 	}
 }

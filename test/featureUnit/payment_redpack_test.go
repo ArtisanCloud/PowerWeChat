@@ -6,7 +6,6 @@ import (
 
 func Test_RedPack_Send(t *testing.T) {
 
-
 	//para := &request.RequestMessageSendText{
 	//	&request.RequestMessageSend{
 	//		ToUser:                 "michaelhu",

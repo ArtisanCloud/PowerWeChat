@@ -58,7 +58,6 @@ func TestAES_Encrypt(t *testing.T) {
 	assert.Contains(t, string(plainText2), plainText)
 }
 
-
 func TestEncryptor_PKCS7Padding(t *testing.T) {
 	newAES := NewAES()
 
@@ -77,7 +76,6 @@ func TestEncryptor_PKCS7UnPadding(t *testing.T) {
 	assert.Equal(t, text, []byte{97, 97, 97, 97, 97})
 
 }
-
 
 const (
 	testAESUtilAPIV3Key       = "testAPIv3Key0000"
@@ -111,7 +109,6 @@ func TestDecryptAES256GCM(t *testing.T) {
 	assert.Equal(t, plaintext, `{"mchid":"1611854986","appid":"ww16143ea0101327c7","out_trade_no":"1826186758589177228934882556","transaction_id":"4200001136202107273023033988","trade_type":"JSAPI","trade_state":"SUCCESS","trade_state_desc":"支付成功","bank_type":"BOSH_CREDIT","attach":"自定义数据说明","success_time":"2021-07-27T10:29:42+08:00","payer":{"openid":"oAuaP0TRUMwP169nQfg7XCEAw3HQ"},"amount":{"total":1,"payer_total":1,"currency":"CNY","payer_currency":"CNY"}}`)
 	//log.Printf("Plaintext: %s\n", string(plaintext))
 }
-
 
 func TestDecryptAes256Gcm(t *testing.T) {
 	type args struct {

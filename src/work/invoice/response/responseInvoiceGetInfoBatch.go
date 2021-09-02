@@ -10,4 +10,3 @@ type ResponseInvoiceGetInfoBatch struct {
 
 	ItemList []*power.HashMap `json:"item_list"`
 }
-

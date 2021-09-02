@@ -58,7 +58,6 @@ func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, e
 	return result, err
 }
 
-
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
 func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
@@ -83,7 +82,6 @@ func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
 	return result, err
 }
 
-
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
 func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
@@ -91,7 +89,7 @@ func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
 
 	base := &object.HashMap{
 		"amt_type": "ALL_RAND",
-		"wxappid":   config.GetString("app_id", ""),
+		"wxappid":  config.GetString("app_id", ""),
 	}
 
 	options := object.MergeHashMap(base, params.ToHashMap())

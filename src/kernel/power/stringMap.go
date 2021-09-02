@@ -7,14 +7,12 @@ import (
 
 type StringMap object.StringMap
 
-func (obj *StringMap) ToStringMap() (*object.StringMap, error) {
+func (obj *StringMap) ToStringMap() *object.StringMap {
 
-	hObj, err := object.StructToStringMap(obj)
+	hObj, _ := object.StructToStringMap(obj)
 
-	return hObj, err
+	return hObj
 }
-
-
 
 func StringMapToPower(obj interface{}) (newMap *StringMap, err error) {
 	data, err := json.Marshal(obj) // Convert to a json string

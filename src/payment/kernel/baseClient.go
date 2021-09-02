@@ -39,7 +39,6 @@ func (client *BaseClient) prepends() *object.HashMap {
 	return &object.HashMap{}
 }
 
-
 func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response interface{}, err error) {

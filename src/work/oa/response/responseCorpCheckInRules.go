@@ -9,4 +9,3 @@ type ResponseCorpCheckInRules struct {
 	*response.ResponseWork
 	Group []*power.HashMap `json:"group"`
 }
-

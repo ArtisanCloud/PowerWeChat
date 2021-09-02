@@ -1,53 +1,111 @@
 package ocr
 
 import (
+	"errors"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base/response"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
-func (comp *Client) getPaidUnionID(openID string, option *object.StringMap) (*response.ResponseGetPaidUnionID, error) {
+// 本接口提供基于小程序的银行卡 OCR 识别
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/ocr/ocr.bankcard.html
+func (comp *Client) Bankcard(imgURL string, img *power.HashMap) (*response.ResponseOCRBankcard, error) {
 
-	result := &response.ResponseGetPaidUnionID{}
+	result := &response.ResponseOCRBankcard{}
 
-	params := &object.StringMap{
-		"openid": openID,
-	}
-
-	params = object.MergeStringMap(params, option)
-
-	_, err := comp.HttpGet("wxa/getpaidunionid", params, nil, result)
+	_, err := comp.UploadImage("cv/ocr/bankcard", imgURL, img, result)
 
 	return result, err
 }
 
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.checkEncryptedData.html
-func (comp *Client) CheckEncryptedMsg(encryptedMsgHash string) (*response.ResponseCheckEncryptedMsg, error) {
+// 本接口提供基于小程序的营业执照 OCR 识别
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/ocr/ocr.businessLicense.html
+func (comp *Client) BusinessLicense(imgURL string, img *power.HashMap) (*response.ResponseOCRBusinessLicense, error) {
 
-	result := &response.ResponseCheckEncryptedMsg{}
+	result := &response.ResponseOCRBusinessLicense{}
 
-	options := &object.HashMap{
-		"encrypted_msg_hash": encryptedMsgHash,
-	}
-
-	_, err := comp.HttpPostJson("wxa/business/checkencryptedmsg", options, nil, nil, result)
+	_, err := comp.UploadImage("cv/ocr/bizlicense", imgURL, img, result)
 
 	return result, err
 }
 
+// 本接口提供基于小程序的驾驶证 OCR 识别
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/ocr/ocr.driverLicense.html
+func (comp *Client) DriverLicense(imgURL string, img *power.HashMap) (*response.ResponseOCRDrivingLicense, error) {
 
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getPerformanceData.html
-func (comp *Client) GetPerformanceData(options *power.HashMap) (*response.ResponseGetPerformanceData, error) {
+	result := &response.ResponseOCRDrivingLicense{}
 
-	result := &response.ResponseGetPerformanceData{}
-
-	_, err := comp.HttpPostJson("wxa/business/performance/boot", options, nil, nil, result)
+	_, err := comp.UploadImage("cv/ocr/drivinglicense", imgURL, img, result)
 
 	return result, err
+
+}
+
+// 本接口提供基于小程序的身份证 OCR 识别
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/ocr/ocr.idcard.html
+func (comp *Client) IDCard(imgURL string, img *power.HashMap) (*response.ResponseOCRIDCard, error) {
+
+	result := &response.ResponseOCRIDCard{}
+
+	_, err := comp.UploadImage("cv/ocr/idcard", imgURL, img, result)
+
+	return result, err
+
+}
+
+// 本接口提供基于小程序的通用印刷体 OCR 识别
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/ocr/ocr.printedText.html
+func (comp *Client) PrintedText(imgURL string, img *power.HashMap) (*response.ResponseOCRPrintedText, error) {
+
+	result := &response.ResponseOCRPrintedText{}
+
+	_, err := comp.UploadImage("cv/ocr/comm", imgURL, img, result)
+
+	return result, err
+
+}
+
+// 本接口提供基于小程序的行驶证 OCR 识别
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/ocr/ocr.vehicleLicense.html
+func (comp *Client) VehicleLicense(mode string, imgURL string, img *power.HashMap) (*response.ResponseOCRVehicleLicense, error) {
+
+	result := &response.ResponseOCRVehicleLicense{}
+
+	data := &object.HashMap{
+		"type": mode,
+	}
+
+	if imgURL != "" {
+		(*data)["img_url"] = imgURL
+	} else if img != nil {
+		(*data)["img"] = img
+	} else {
+		return nil, errors.New("Please send image url or image form data ")
+	}
+
+	_, err := comp.UploadImage("cv/ocr/driving", imgURL, img, result)
+
+	return result, err
+
+}
+
+func (comp *Client) UploadImage(entryPoint string, imgURL string, img *power.HashMap, result interface{}) (interface{}, error) {
+	data := &object.HashMap{}
+
+	if imgURL != "" {
+		(*data)["img_url"] = imgURL
+	} else if img != nil {
+		(*data)["img"] = img
+	} else {
+		return nil, errors.New("Please send image url or image form data ")
+	}
+
+	rs, err := comp.HttpPostJson(entryPoint, data, nil, nil, result)
+
+	return rs, err
 }

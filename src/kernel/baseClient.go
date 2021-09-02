@@ -120,12 +120,12 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	}
 	// http client request
 	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
-	if err!=nil{
+	if err != nil {
 		return nil, err
 	}
 
 	if returnRaw {
-		return response , err
+		return response, err
 	} else {
 		// tbf
 		config := *(*client.App).GetContainer().Config

@@ -41,7 +41,6 @@ func (comp *Client) CheckEncryptedMsg(encryptedMsgHash string) (*response.Respon
 	return result, err
 }
 
-
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getPerformanceData.html
 func (comp *Client) GetPerformanceData(options *power.HashMap) (*response.ResponseGetPerformanceData, error) {
 

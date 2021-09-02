@@ -73,7 +73,6 @@ type Work struct {
 }
 
 type UserConfig struct {
-
 	CorpID           string
 	AgentID          int
 	Secret           string
@@ -287,7 +286,6 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"http_debug":     userConfig.HttpDebug,
 		"debug":          userConfig.Debug,
 	}
-
 
 	return config, nil
 

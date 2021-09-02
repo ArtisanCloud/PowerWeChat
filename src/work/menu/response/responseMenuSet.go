@@ -9,4 +9,3 @@ type ResponseMenuCreate struct {
 	*response.ResponseWork
 	Button []*power.HashMap `json:"button"`
 }
-

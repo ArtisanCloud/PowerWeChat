@@ -65,7 +65,6 @@ func (comp *Client) ToBalance(params *power.HashMap) (interface{}, error) {
 	return result, err
 }
 
-
 // Query MerchantPay order to BankCard.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
 func (comp *Client) QueryBankCardOrder(partnerTradeNo string) (interface{}, error) {

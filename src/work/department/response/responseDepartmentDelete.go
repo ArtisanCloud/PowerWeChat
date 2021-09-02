@@ -7,4 +7,3 @@ import (
 type ResponseDepartmentDelete struct {
 	*response.ResponseWork
 }
-

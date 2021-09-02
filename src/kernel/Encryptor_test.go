@@ -142,7 +142,6 @@ func TestEncryptor_Signature(t *testing.T) {
 	assert.NotEqual(t, encryptor.Signature(token, timestamp, nonce, ciphertext2), msgSignature)
 }
 
-
 func TestEncryptor_VerifyUrl(t *testing.T) {
 	msgSignature := "1495c4dfd4958d4e5faf618978ae66943a042f87"
 	timestamp := "1623292419"

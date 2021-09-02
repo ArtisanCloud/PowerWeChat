@@ -10,12 +10,11 @@ import (
 	"io/ioutil"
 )
 
-
 type RSAOaep struct {
-	PublicKeyPath string   // RSA公钥路径，会自动读取出*rsa.PrivateKey
-	PublicKey *rsa.PublicKey
+	PublicKeyPath  string // RSA公钥路径，会自动读取出*rsa.PrivateKey
+	PublicKey      *rsa.PublicKey
 	PrivateKeyPath string
-	PrivateKey *rsa.PrivateKey
+	PrivateKey     *rsa.PrivateKey
 }
 
 func (r *RSAOaep) EncryptOAEP(text []byte) ([]byte, error) {

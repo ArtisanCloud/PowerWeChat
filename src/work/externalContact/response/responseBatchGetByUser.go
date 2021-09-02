@@ -13,5 +13,5 @@ type ResponseBatchGetByUser struct {
 
 type ResponseExternalContact struct {
 	ExternalContact *models.ExternalContact `json:"external_contact"`
-	FollowInfo      *models.FollowUser             `json:"follow_info"`
+	FollowInfo      *models.FollowUser      `json:"follow_info"`
 }

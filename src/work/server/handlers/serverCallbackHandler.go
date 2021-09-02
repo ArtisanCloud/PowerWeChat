@@ -4,13 +4,13 @@ type ServerCallbackHandler struct {
 	Callback func(payload interface{}) interface{}
 }
 
-func NewServerCallbackHandler()*ServerCallbackHandler{
+func NewServerCallbackHandler() *ServerCallbackHandler {
 	return &ServerCallbackHandler{}
 }
 
 func (handler *ServerCallbackHandler) Handle(payload interface{}) interface{} {
 
-	if handler.Callback!=nil{
+	if handler.Callback != nil {
 		return handler.Callback(payload)
 	}
 

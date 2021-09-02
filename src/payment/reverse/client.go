@@ -26,7 +26,7 @@ func (comp *Client) Reverse(number string, reverseType string) (interface{}, err
 	config := (*comp.App).GetConfig()
 
 	params := &object.HashMap{
-		"appid": config.GetString("app_id", ""),
+		"appid":     config.GetString("app_id", ""),
 		reverseType: number,
 	}
 
@@ -39,16 +39,15 @@ func (comp *Client) Reverse(number string, reverseType string) (interface{}, err
 // Reverse order by out trade number.
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
 
-func (comp *Client) ByOutTradeNumber(outTradeNumber string)(interface{}, error) {
+func (comp *Client) ByOutTradeNumber(outTradeNumber string) (interface{}, error) {
 
-	return comp.Reverse(outTradeNumber,"out_trade_no")
+	return comp.Reverse(outTradeNumber, "out_trade_no")
 }
-
 
 // Reverse order by transaction_id.
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
 
-func (comp *Client) ByTransactionId(transactionID string)(interface{}, error) {
+func (comp *Client) ByTransactionId(transactionID string) (interface{}, error) {
 
-	return comp.Reverse(transactionID,"transaction_id")
+	return comp.Reverse(transactionID, "transaction_id")
 }

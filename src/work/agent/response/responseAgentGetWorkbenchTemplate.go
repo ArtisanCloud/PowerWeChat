@@ -8,7 +8,7 @@ import (
 type ResponseAgentGetWorkbenchTemplate struct {
 	*response.ResponseWork
 
-	TemplateType    string           `json:"type"`
+	TemplateType    string          `json:"type"`
 	Image           power.StringMap `json:"image"`
-	ReplaceUserData bool             `json:"replace_user_data"`
+	ReplaceUserData bool            `json:"replace_user_data"`
 }

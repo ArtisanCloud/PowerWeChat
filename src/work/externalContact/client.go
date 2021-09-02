@@ -25,26 +25,26 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取配置了客户联系功能的成员列表.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92571
-func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList ,error){
+func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList, error) {
 
 	result := &response.ResponseGetFollowUserList{}
 
-	_,err:=comp.HttpGet("cgi-bin/externalcontact/get_follow_user_list", nil, nil, result)
+	_, err := comp.HttpGet("cgi-bin/externalcontact/get_follow_user_list", nil, nil, result)
 
-	return result,err
+	return result, err
 }
 
 // 获取外部联系人列表.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92571
-func (comp *Client) List(userID string)( *response.ResponseGetList ,error){
+func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 	result := &response.ResponseGetList{}
 
-	_,err:=comp.HttpGet("cgi-bin/externalcontact/list", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/externalcontact/list", &object.StringMap{
 		"userid": userID,
 	}, nil, result)
 
-	return result,err
+	return result, err
 }
 
 // 批量获取客户详情.
@@ -64,15 +64,15 @@ func (comp *Client) BatchGet(userID string, cursor string, limit int) (*response
 
 // 获取外部联系人详情.
 // https://work.weixin.qq.com/api/doc#90000/90135/91556
-func (comp *Client) Get(externalUserId string) (*weCom.ResponseGetExternalContact ,error){
+func (comp *Client) Get(externalUserId string) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}
 
-	_,err:=comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
 	}, nil, result)
 
-	return result,err
+	return result, err
 }
 
 // 修改客户备注信息.

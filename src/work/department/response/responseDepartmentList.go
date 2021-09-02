@@ -9,4 +9,3 @@ type ResponseDepartmentList struct {
 	*response.ResponseWork
 	Departments []*models.Department `json:"department"`
 }
-

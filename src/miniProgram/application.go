@@ -10,7 +10,6 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/immediateDelivery"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
-
 )
 
 type MiniProgram struct {
@@ -20,10 +19,10 @@ type MiniProgram struct {
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
 
-	DataCube *dataCube.Client
-	UniformMessage  *uniformMessage.Client
+	DataCube       *dataCube.Client
+	UniformMessage *uniformMessage.Client
 
-	Express *express.Client
+	Express  *express.Client
 	Delivery *immediateDelivery.Client
 
 	Config *kernel.Config
@@ -99,9 +98,6 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 
 	//-------------- register Delivery --------------
 	app.Delivery = immediateDelivery.RegisterProvider(app)
-
-
-
 
 	return app, err
 }

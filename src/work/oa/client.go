@@ -200,7 +200,7 @@ func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpV
 	result := &response.ResponseCorpVacationGetQuota{}
 
 	_, err := comp.HttpPostJson("cgi-bin/corp/vacation/getuservacationquota", &object.HashMap{
-		"userid":  userID,
+		"userid": userID,
 	}, nil, nil, result)
 
 	return result, err
@@ -217,7 +217,3 @@ func (comp *Client) SeToneUserQuota(data *object.HashMap) (*response2.ResponseWo
 	return result, err
 
 }
-
-
-
-

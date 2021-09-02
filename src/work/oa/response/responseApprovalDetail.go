@@ -8,6 +8,4 @@ import (
 type ResponseApprovalDetail struct {
 	*response.ResponseWork
 	Info power.HashMap `json:"info"`
-
 }
-

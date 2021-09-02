@@ -6,7 +6,6 @@ import (
 )
 
 type ResponseImmediateDeliveryDelivery struct {
-
 	response.ResponseMiniProgram
-	List    []*object.HashMap `json:"list"`
+	List []*object.HashMap `json:"list"`
 }

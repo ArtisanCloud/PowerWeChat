@@ -40,9 +40,9 @@ func NewHandler(app *kernel.ApplicationPaymentInterface, r *http.Request) *Handl
 	}
 
 	return &Handler{
-		App:   app,
-		Check: true,
-		Sign:  false,
+		App:             app,
+		Check:           true,
+		Sign:            false,
 		ExternalRequest: request,
 	}
 }
@@ -68,7 +68,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 		err = errors.New(handler.fail)
 	}
 	base := &object.StringMap{
-		"code":    returnCode,
+		"code":           returnCode,
 		"uniformMessage": returnMsg,
 	}
 

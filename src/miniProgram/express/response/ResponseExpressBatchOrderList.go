@@ -5,7 +5,5 @@ import (
 )
 
 type ResponseExpressBatchOrderList struct {
-
-	OrderList  []*object.HashMap `json:"order_list"`
-
+	OrderList []*object.HashMap `json:"order_list"`
 }

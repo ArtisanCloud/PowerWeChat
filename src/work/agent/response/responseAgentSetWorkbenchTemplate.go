@@ -7,4 +7,3 @@ import (
 type ResponseAgentSetWorkbenchTemplate struct {
 	*response.ResponseWork
 }
-

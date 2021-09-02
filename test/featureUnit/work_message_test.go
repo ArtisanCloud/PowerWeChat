@@ -22,9 +22,9 @@ func Test_Message_Send_Text(t *testing.T) {
 		},
 	}
 
-	response,err := Work.Message.Send(para)
+	response, err := Work.Message.Send(para)
 
-	if err!=nil{
+	if err != nil {
 		t.Error("uniformMessage send err is ", err)
 	}
 

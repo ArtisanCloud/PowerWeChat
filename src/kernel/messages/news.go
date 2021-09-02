@@ -31,7 +31,6 @@ func (msg *News) PropertiesToArray(data power.HashMap, aliases power.HashMap) *p
 	}
 }
 
-
 // Override ToXmlArray
 func (msg *News) OverrideToXmlArray() {
 	msg.ToXmlArray = func() *object.HashMap {
@@ -51,4 +50,3 @@ func (msg *News) OverrideToXmlArray() {
 		}
 	}
 }
-

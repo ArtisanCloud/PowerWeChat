@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	testPlainMsg = []byte("Hello PowerWechat")
+	testPlainMsg           = []byte("Hello PowerWechat")
 	testEncryptedMSGBase64 = "YYQEzEq5lYJPbYF7r2-UfoOPp7LzeEjbEbRYK_H3EYkDZNe_LvBz3f1Q7n3FNQtoXQciFV59CWXA9vo9RvsXKojARs7wZHGjp9WvOGNkM90s6pHI1lSP5lvsLi3VoxNbLRwsLwhTELGD75SENgmSBmaSNyv0NkVJiBbmYbW7kKBTD3A9KQYS12e8P0YCWoKWzPk1jJoVlpuv-gsI8BHZcoxIvouZG3sx9G0l6OvJDrATJV4kPaTwnq7LAFIOBJhV0xfbdGC979h6piYZ8yXFd2Ruy1zgOU4tXERSWQxhDb5PmvCAgrsLbOOHcfSqB-UOM0E64HQGFgmoxS6-UwyFyg=="
-	testPublicKeyData = `-----BEGIN PUBLIC KEY-----
+	testPublicKeyData      = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAygGoUiTD+LjwZIgwFZyj
 iibWNQ2LM9xZ2pjKQGP8iUBtAuAW629/Ofw8qxToMyixPrG4A7j8+KOPwYrWPGV6
 Og//4zm3cG+1hQvnNUWtMjHHBY8OByUPQ6/T8XHER1DxFBfnWfFLZ1yFX6oNNuvt
@@ -24,7 +24,7 @@ Iksv0ihwl4T+k5F9ir0uv0WIS6kKKS1SRpAprRKunos4PlE8l2+jC6LaJUPhDZlj
 /wIDAQAB
 -----END PUBLIC KEY-----
 `
-  testPrivateKeyData = `
+	testPrivateKeyData = `
 -----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAygGoUiTD+LjwZIgwFZyjiibWNQ2LM9xZ2pjKQGP8iUBtAuAW
 629/Ofw8qxToMyixPrG4A7j8+KOPwYrWPGV6Og//4zm3cG+1hQvnNUWtMjHHBY8O
@@ -72,8 +72,8 @@ func TestRSA_EncryptOAEP(t *testing.T) {
 	}
 
 	rsaOaep := &RSAOaep{
-		PublicKey:     PublicKey,
-		PrivateKey:    privateKey,
+		PublicKey:  PublicKey,
+		PrivateKey: privateKey,
 	}
 
 	encryptedData, err := rsaOaep.EncryptOAEP(testPlainMsg)
@@ -101,7 +101,7 @@ func TestRSAOaep_DecryptOAEP(t *testing.T) {
 
 	rsaOaep := &RSAOaep{
 		//PublicKeyPath: "",
-		PrivateKey:     privateKey,
+		PrivateKey: privateKey,
 	}
 
 	testEncryptedMSG, _ := base64.URLEncoding.DecodeString(testEncryptedMSGBase64)
@@ -113,4 +113,3 @@ func TestRSAOaep_DecryptOAEP(t *testing.T) {
 	log.Println("decryptedData: ", string(decryptedData))
 	assert.Equal(t, decryptedData, testPlainMsg)
 }
-

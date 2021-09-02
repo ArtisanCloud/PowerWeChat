@@ -5,9 +5,9 @@ import (
 )
 
 type ResponseProfitSharingOrder struct {
-	TransactionID string            `json:"transaction_id"`
-	OutOrderNO    string            `json:"out_order_no"`
-	OrderID       string            `json:"order_id"`
-	State         string            `json:"state"`
+	TransactionID string           `json:"transaction_id"`
+	OutOrderNO    string           `json:"out_order_no"`
+	OrderID       string           `json:"order_id"`
+	State         string           `json:"state"`
 	Receivers     []*power.HashMap `json:"receivers"`
 }

@@ -10,7 +10,6 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-
 func NewClient(app *kernel.ApplicationInterface) *Client {
 
 	return &Client{
@@ -23,12 +22,12 @@ func (comp *Client) Session(code string) (*response.ResponseCode2Session, error)
 
 	result := &response.ResponseCode2Session{}
 
-	config:= (*comp.App).GetConfig()
+	config := (*comp.App).GetConfig()
 
 	params := &object.StringMap{
-		"appid": config.GetString("app_id",""),
-		"secret": config.GetString("secret",""),
-		"js_code": code,
+		"appid":      config.GetString("app_id", ""),
+		"secret":     config.GetString("secret", ""),
+		"js_code":    code,
 		"grant_type": "authorization_code",
 	}
 

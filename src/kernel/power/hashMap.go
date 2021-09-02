@@ -14,7 +14,6 @@ func (obj *HashMap) ToHashMap() *object.HashMap {
 	return hObj
 }
 
-
 // ------------------------------- Conversion ---------------------------------------
 func HashMapToPower(obj interface{}) (newMap *HashMap, err error) {
 	data, err := json.Marshal(obj) // Convert to a json string

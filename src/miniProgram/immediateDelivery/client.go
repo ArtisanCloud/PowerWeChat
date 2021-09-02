@@ -193,7 +193,6 @@ func (comp *Client) RealMockUpdateOrder(
 	return result, err
 }
 
-
 // 重新下单
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.reOrder.html
 func (comp *Client) ReOrder(data *power.HashMap) (*response2.ResponseImmediateDeliveryReOrder, error) {

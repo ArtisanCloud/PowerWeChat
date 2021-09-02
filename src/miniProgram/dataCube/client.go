@@ -50,7 +50,6 @@ func (comp *Client) MonthlyVisitTrend(from string, to string) (*response.Respons
 	return result, err
 }
 
-
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getVisitDistribution.html
 func (comp *Client) VisitDistribution(from string, to string) (*response.ResponseDataCubeVisit, error) {
 
@@ -110,7 +109,6 @@ func (comp *Client) UserPortrait(from string, to string) (*response.ResponseData
 
 	return result, err
 }
-
 
 func (comp *Client) Query(endpoint string, from string, to string, outHeader interface{}, outBody interface{}) (interface{}, error) {
 

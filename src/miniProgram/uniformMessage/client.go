@@ -29,8 +29,8 @@ func (comp *Client) Send(toUser string, weAppTemplateMsg *request.WeAppTemplateM
 		options = object.MergeHashMap(options, &object.HashMap{
 			"mp_template_msg": mpTemplateMsg,
 		})
-	}else{
-		return nil ,errors.New("please given a valid uniformMessage template. ")
+	} else {
+		return nil, errors.New("please given a valid uniformMessage template. ")
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/uniformMessage/wxopen/template/uniform_send", options, nil, nil, result)
