@@ -4,11 +4,13 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/activeMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/immediateDelivery"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
 )
 
@@ -19,11 +21,15 @@ type MiniProgram struct {
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
 
+	ActiveMessage *activeMessage.Client
+
 	DataCube       *dataCube.Client
 	UniformMessage *uniformMessage.Client
 
 	Express  *express.Client
 	Delivery *immediateDelivery.Client
+
+	OCR *ocr.Client
 
 	Config *kernel.Config
 }
@@ -90,6 +96,9 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register Data cube --------------
 	app.DataCube = dataCube.RegisterProvider(app)
 
+	//-------------- register ActiveMessage --------------
+	app.ActiveMessage = activeMessage.RegisterProvider(app)
+
 	//-------------- register Message --------------
 	app.UniformMessage = uniformMessage.RegisterProvider(app)
 
@@ -98,6 +107,9 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 
 	//-------------- register Delivery --------------
 	app.Delivery = immediateDelivery.RegisterProvider(app)
+
+	//-------------- register OCR --------------
+	app.OCR = ocr.RegisterProvider(app)
 
 	return app, err
 }
@@ -125,6 +137,8 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Auth
 	case "Config":
 		return app.Config
+	case "ActiveMessage":
+		return app.ActiveMessage
 
 	case "DataCube":
 		return app.DataCube
@@ -136,6 +150,8 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Express
 	case "Delivery":
 		return app.Delivery
+	case "OCR":
+		return app.OCR
 
 	default:
 		return nil
