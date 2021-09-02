@@ -3,6 +3,7 @@ package msgaudit
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/msgaudit/response"
 )
 
@@ -25,12 +26,12 @@ func (comp *Client) GetPermitUsers(msgType string) (*response.ResponseMsgAuditGe
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/91782
-func (comp *Client) GetSingleAgreeStatus(info *object.HashMap) (*response.ResponseMsgAuditGetAgreeInfo, error) {
+func (comp *Client) GetSingleAgreeStatus(info *power.HashMap) (*response.ResponseMsgAuditGetAgreeInfo, error) {
 
 	result := &response.ResponseMsgAuditGetAgreeInfo{}
 
 	params := &object.HashMap{
-		"info": info,
+		"info": info.ToHashMap(),
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/msgaudit/check_single_agree", params, nil, nil, result)

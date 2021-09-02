@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-socialite/src/response/weCom"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"strconv"
@@ -76,7 +77,7 @@ func (comp *Client) Get(externalUserId string) (*weCom.ResponseGetExternalContac
 
 // 修改客户备注信息.
 // https://work.weixin.qq.com/api/doc/90000/90135/92115
-func (comp *Client) Remark(data *object.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) Remark(data *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

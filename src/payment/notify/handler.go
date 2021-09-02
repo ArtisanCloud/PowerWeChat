@@ -7,6 +7,7 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	base2 "github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
@@ -24,7 +25,7 @@ type Handler struct {
 
 	ExternalRequest *http.Request
 
-	Handle func(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) *http.Response
+	Handle func(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"

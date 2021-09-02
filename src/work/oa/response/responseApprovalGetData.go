@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
@@ -10,5 +10,5 @@ type ResponseApprovalGetData struct {
 	Count     int             `json:"count"`
 	Total     int             `json:"total"`
 	NextSPNum int             `json:"next_spnum"`
-	Data      *object.HashMap `json:"data"`
+	Data      *power.HashMap `json:"data"`
 }

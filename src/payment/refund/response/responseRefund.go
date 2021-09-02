@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 )
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
@@ -17,6 +17,6 @@ type ResponseRefund struct {
 	CreateTime          string          `json:"create_time"`
 	Status              string          `json:"status"`
 	FundsAccount        string          `json:"funds_account"`
-	Amount              *object.HashMap `json:"amount"`
-	PromotionDetail     *object.HashMap `json:"promotion_detail"`
+	Amount              *power.HashMap `json:"amount"`
+	PromotionDetail     *power.HashMap `json:"promotion_detail"`
 }

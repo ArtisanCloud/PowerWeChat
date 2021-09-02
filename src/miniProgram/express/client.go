@@ -3,6 +3,7 @@ package express
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express/response"
 )
@@ -13,7 +14,7 @@ type Client struct {
 
 // 生成运单
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.addOrder.html
-func (comp *Client) AddOrder(data *object.HashMap) (*response.ResponseExpressAddOrder, error) {
+func (comp *Client) AddOrder(data *power.HashMap) (*response.ResponseExpressAddOrder, error) {
 
 	result := &response.ResponseExpressAddOrder{}
 
@@ -24,7 +25,7 @@ func (comp *Client) AddOrder(data *object.HashMap) (*response.ResponseExpressAdd
 
 // 批量获取运单数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.batchGetOrder.html
-func (comp *Client) BatchGetOrder(orderList []*object.HashMap) (*response.ResponseExpressBatchOrderList, error) {
+func (comp *Client) BatchGetOrder(orderList []*power.HashMap) (*response.ResponseExpressBatchOrderList, error) {
 
 	result := &response.ResponseExpressBatchOrderList{}
 

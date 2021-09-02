@@ -12,5 +12,5 @@ type ResponseMsgAuditGetRoom struct {
 	Creator        string            `json:"creator"`
 	RoomCreateTime int               `json:"room_create_time"`
 	Notice         string            `json:"notice"`
-	Members        []*object.HashMap `json:"members"`
+	Members        []*power.HashMap `json:"members"`
 }

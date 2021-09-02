@@ -3,6 +3,7 @@ package profitSharing
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/profitSharing/response"
 )
@@ -20,7 +21,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 // Share Orders.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
 
-func (comp *Client) Share(transactionID string, outOrderNO string, receviers []*object.HashMap, UnfreezeUnsplit bool) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) Share(transactionID string, outOrderNO string, receviers []*power.HashMap, UnfreezeUnsplit bool) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 

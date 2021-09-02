@@ -9,6 +9,6 @@ type ResponseAgentGetWorkbenchTemplate struct {
 	*response.ResponseWork
 
 	TemplateType    string           `json:"type"`
-	Image           object.StringMap `json:"image"`
+	Image           power.StringMap `json:"image"`
 	ReplaceUserData bool             `json:"replace_user_data"`
 }

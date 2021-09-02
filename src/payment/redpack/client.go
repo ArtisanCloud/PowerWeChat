@@ -2,6 +2,7 @@ package redpack
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 )
@@ -35,7 +36,7 @@ func (comp *Client) Info(mchBillNO string, tarType string) (interface{}, error) 
 
 // Send Miniprogram Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
-func (comp *Client) SendMiniProgramNormal(params *object.HashMap) (interface{}, error) {
+func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
 	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
@@ -49,7 +50,7 @@ func (comp *Client) SendMiniProgramNormal(params *object.HashMap) (interface{}, 
 		"wxappid":   config.GetString("app_id", ""),
 	}
 
-	options := object.MergeHashMap(base, params)
+	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
@@ -60,7 +61,7 @@ func (comp *Client) SendMiniProgramNormal(params *object.HashMap) (interface{}, 
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(params *object.HashMap) (interface{}, error) {
+func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
 	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
@@ -74,7 +75,7 @@ func (comp *Client) SendNormal(params *object.HashMap) (interface{}, error) {
 		"wxappid":   config.GetString("app_id", ""),
 	}
 
-	options := object.MergeHashMap(base, params)
+	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
@@ -85,7 +86,7 @@ func (comp *Client) SendNormal(params *object.HashMap) (interface{}, error) {
 
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
-func (comp *Client) SendGroup(params *object.HashMap) (interface{}, error) {
+func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
 	base := &object.HashMap{
@@ -93,7 +94,7 @@ func (comp *Client) SendGroup(params *object.HashMap) (interface{}, error) {
 		"wxappid":   config.GetString("app_id", ""),
 	}
 
-	options := object.MergeHashMap(base, params)
+	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)

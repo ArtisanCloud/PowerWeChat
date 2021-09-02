@@ -15,7 +15,7 @@ func Test_Unify_Order(t *testing.T) {
 		"attach":       "自定义数据说明",
 		"description":  "Image形象店-深圳腾大-QQ公仔",
 		"mchid":        "1611854986",
-		"notify_url":   "https://pay.wangchaoyi.com/wx/notify",
+		"notify_url":   "https://pay.wangchaoyi.com/power/notify",
 		"out_trade_no": "5519778939773395659222199361",
 		"payer": &object.HashMap{
 			"openid": "oAuaP0TRUMwP169nQfg7XCEAw3HQ",

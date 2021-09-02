@@ -5,6 +5,7 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/order/response"
 	"net/http"
@@ -23,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 // Unify order.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml
 
-func (comp *Client) Unify(params *object.HashMap, isContract bool) (*response.ResponseUnitfy, error) {
+func (comp *Client) Unify(params *power.HashMap, isContract bool) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -34,7 +35,7 @@ func (comp *Client) Unify(params *object.HashMap, isContract bool) (*response.Re
 	}
 
 	endpoint := comp.Wrap("/v3/pay/transactions/jsapi")
-	_, err := comp.Request(endpoint, nil, "POST", params, false, nil, result)
+	_, err := comp.Request(endpoint, nil, "POST", params.ToHashMap(), false, nil, result)
 
 	return result, err
 }

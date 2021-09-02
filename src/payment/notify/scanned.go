@@ -2,6 +2,7 @@ package notify
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 	"reflect"
@@ -27,8 +28,12 @@ func (comp *Scanned) Alert(message string) {
 	comp.alert = message
 }
 
-func (comp *Scanned) Handle(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
-	messages, err := comp.GetMessage()
+func (comp *Scanned) Handle(closure func(message *power.HashMap, content *power.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
+	hashMessages, err := comp.GetMessage()
+	if err != nil {
+		return nil, err
+	}
+	messages, err := power.HashMapToPower(hashMessages)
 	if err != nil {
 		return nil, err
 	}

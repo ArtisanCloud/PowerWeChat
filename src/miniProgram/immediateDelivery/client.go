@@ -3,6 +3,7 @@ package immediateDelivery
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	response2 "github.com/ArtisanCloud/power-wechat/src/miniProgram/immediateDelivery/response"
 )
@@ -13,7 +14,7 @@ type Client struct {
 
 // 异常件退回商家商家确认收货接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.abnormalConfirm.html
-func (comp *Client) AbnormalConfirm(options *object.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AbnormalConfirm(options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -24,7 +25,7 @@ func (comp *Client) AbnormalConfirm(options *object.HashMap) (*response.Response
 
 // 订单增加小费
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addOrder.html
-func (comp *Client) AddOrder(options *object.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AddOrder(options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -35,7 +36,7 @@ func (comp *Client) AddOrder(options *object.HashMap) (*response.ResponseMiniPro
 
 // 订单增加小费
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addTip.html
-func (comp *Client) AddTips(options *object.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AddTips(options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -61,7 +62,7 @@ func (comp *Client) AddShops(deliveryID string) (*response.ResponseMiniProgram, 
 
 // 取消配送单接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.cancelOrder.html
-func (comp *Client) CancelOrder(options *object.HashMap) (*response2.ResponseImmediateDeliveryCancelOrder, error) {
+func (comp *Client) CancelOrder(options *power.HashMap) (*response2.ResponseImmediateDeliveryCancelOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryCancelOrder{}
 
@@ -148,7 +149,7 @@ func (comp *Client) OpenDelivery() (*response.ResponseMiniProgram, error) {
 
 // 预下配送单接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preAddOrder.html
-func (comp *Client) PreAddOrder(data *object.HashMap) (*response2.ResponseImmediateDeliveryPreAddOrder, error) {
+func (comp *Client) PreAddOrder(data *power.HashMap) (*response2.ResponseImmediateDeliveryPreAddOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryPreAddOrder{}
 
@@ -159,7 +160,7 @@ func (comp *Client) PreAddOrder(data *object.HashMap) (*response2.ResponseImmedi
 
 // 预取消配送单接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preCancelOrder.html
-func (comp *Client) PreCancelOrder(data *object.HashMap) (*response2.ResponseImmediateDeliveryPreCancelOrder, error) {
+func (comp *Client) PreCancelOrder(data *power.HashMap) (*response2.ResponseImmediateDeliveryPreCancelOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryPreCancelOrder{}
 
@@ -195,7 +196,7 @@ func (comp *Client) RealMockUpdateOrder(
 
 // 重新下单
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.reOrder.html
-func (comp *Client) ReOrder(data *object.HashMap) (*response2.ResponseImmediateDeliveryReOrder, error) {
+func (comp *Client) ReOrder(data *power.HashMap) (*response2.ResponseImmediateDeliveryReOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryReOrder{}
 

@@ -29,7 +29,7 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 		err = json.Unmarshal(body, data)
 
 		return data, err
-	case "object":
+	case "power":
 		var data interface{}
 		err = json.Unmarshal(body, &data)
 		return data, err

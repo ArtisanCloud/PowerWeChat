@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"os"
 	"strconv"
 )
 
-func GetConfig() *object.HashMap {
+func GetConfig() *power.HashMap {
 	agentID, _ := strconv.Atoi(os.Getenv("agent_id"))
-	return &object.HashMap{
+	return &power.HashMap{
 		"corp_id":  os.Getenv("corp_id"),
 		"agent_id": agentID,
 		"secret":   os.Getenv("secret"),

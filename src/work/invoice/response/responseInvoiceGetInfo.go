@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
@@ -15,7 +15,7 @@ type ResponseInvoiceGetInfo struct {
 	Type string `json:"type"`
 	Payee string `json:"payee"`
 	Detail string `json:"detail"`
-	UserInfo *object.HashMap `json:"user_info"`
+	UserInfo *power.HashMap `json:"user_info"`
 
 }
 

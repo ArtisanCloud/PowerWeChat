@@ -1,6 +1,8 @@
 package request
 
-import "github.com/ArtisanCloud/go-libs/object"
+import (
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+)
 
 type RequestAddContactWay struct {
 	Type          int             `json:"type"`            // :1,
@@ -15,5 +17,5 @@ type RequestAddContactWay struct {
 	ExpiresIn     int             `json:"expires_in"`      // 86400,
 	ChatExpiresIn int             `json:"chat_expires_in"` // 86400,
 	UnionID       string          `json:"unionid"`         // "oxTWIuGaIt6gTKsQRLau2M0AAAA",
-	Conclusions   *object.HashMap `json:"conclusions"`
+	Conclusions   *power.HashMap `json:"conclusions"`
 }

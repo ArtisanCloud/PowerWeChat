@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/transfer/response"
 	"net/http"
@@ -39,7 +40,7 @@ func (comp *Client) QueryBalanceOrder(partnerTradeNo string) (interface{}, error
 // Send MerchantPay to balance.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
 
-func (comp *Client) ToBalance(params *object.HashMap) (interface{}, error) {
+func (comp *Client) ToBalance(params *power.HashMap) (interface{}, error) {
 
 	result := &response.ResponseTransfer{}
 
@@ -56,7 +57,7 @@ func (comp *Client) ToBalance(params *object.HashMap) (interface{}, error) {
 		"mch_appid": config.GetString("app_id", ""),
 	}
 
-	options := object.MergeHashMap(base, params)
+	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("mmpaymkttransfers/promotion/transfers")
 	_, err := comp.Request(endpoint, nil, "POST", options, false, nil, result)

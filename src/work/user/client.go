@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
@@ -166,7 +167,7 @@ func (comp *Client) Accept(userID string) (*response2.ResponseWork, error) {
 
 // 邀请成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90975
-func (comp *Client) Invite(params *object.HashMap) (*response.ResponseMobileToUserID, error) {
+func (comp *Client) Invite(params *power.HashMap) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
 

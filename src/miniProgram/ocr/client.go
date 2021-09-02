@@ -3,6 +3,7 @@ package ocr
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base/response"
 )
 
@@ -42,7 +43,7 @@ func (comp *Client) CheckEncryptedMsg(encryptedMsgHash string) (*response.Respon
 
 
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getPerformanceData.html
-func (comp *Client) GetPerformanceData(options *object.HashMap) (*response.ResponseGetPerformanceData, error) {
+func (comp *Client) GetPerformanceData(options *power.HashMap) (*response.ResponseGetPerformanceData, error) {
 
 	result := &response.ResponseGetPerformanceData{}
 
