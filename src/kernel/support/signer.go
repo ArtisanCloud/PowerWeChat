@@ -62,7 +62,7 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 	arrayParams := []string{signChain.Method, signChain.CanonicalURL, fmt.Sprintf("%d", timestamp), nonce, signChain.SignBody}
 	message := strings.Join(arrayParams, "\n") + "\n"
 
-	// sign the message
+	// sign the uniformMessage
 	signatureResult, err := s.Sign(context.TODO(), message)
 	if err != nil {
 		return "", err
@@ -84,7 +84,7 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 
 func (s *SHA256WithRSASigner) GenerateSign(message string) (sign string, err error) {
 
-	// sign the message
+	// sign the uniformMessage
 	signatureResult, err := s.Sign(context.TODO(), message)
 	if err != nil {
 		return "", err

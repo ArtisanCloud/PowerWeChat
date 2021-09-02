@@ -7,8 +7,6 @@ import (
 
 type ResponseApprovalTemplate struct {
 	*response.ResponseWork
-	TemplateNames []*object.StringMap `json:"template_names"`
-	TemplateContent []*object.HashMap `json:"template_content"`
-
+	TemplateNames   []*object.StringMap `json:"template_names"`
+	TemplateContent []*object.HashMap   `json:"template_content"`
 }
-

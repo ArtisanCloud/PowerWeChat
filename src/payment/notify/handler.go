@@ -68,7 +68,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	}
 	base := &object.StringMap{
 		"code":    returnCode,
-		"message": returnMsg,
+		"uniformMessage": returnMsg,
 	}
 
 	attributes := object.MergeStringMap(base, handler.Attributes)
@@ -110,7 +110,7 @@ func (handler *Handler) DecryptMessage(key string) (string, error) {
 		return "", err
 	}
 	if (*message)[key] == nil {
-		return "", errors.New("message doesn't have the key value")
+		return "", errors.New("uniformMessage doesn't have the key value")
 	}
 	content := (*message)[key].(map[string]interface{})
 	config := (*handler.App).GetConfig()

@@ -12,7 +12,7 @@ type ResponseExpressGetOrder struct {
 	WaybillData []*object.StringMap `json:"waybill_data"` //
 	DeliveryID  string              `json:"delivery_id"`  //  "",
 	WaybillID   string              `json:"waybill_id"`   //   "123456789",
-	OrderID     string                 `json:"order_id"`     //   "01234567890123456789",
+	OrderID     string              `json:"order_id"`     //   "01234567890123456789",
 	OrderStatus int                 `json:"order_status"` //  0
 
 }

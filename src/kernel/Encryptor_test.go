@@ -73,7 +73,7 @@ func TestEncryptor_Encrypt(t *testing.T) {
 	}
 	//log.Println("msgBiz: ", msgBiz.Signature, msgBiz.Nonce, msgBiz.Timestamp, msgBiz.Encrypt)
 
-	// Simulate a raw cipher message sent from WeChat
+	// Simulate a raw cipher uniformMessage sent from WeChat
 	// 模拟一个微信发送过来的原始密文消息
 	msgRecv := &WeComRecvMsg{
 		ToUserName: "232323",
@@ -94,7 +94,7 @@ func TestEncryptor_Encrypt(t *testing.T) {
 	assert.Equal(t, msgBiz.Timestamp, timestamp)
 	assert.Equal(t, msgBiz.Nonce.Value, nonce)
 
-	// Encryption => Decryption The returned message should be the same
+	// Encryption => Decryption The returned uniformMessage should be the same
 	// 加密 => 解密 回来的消息应该一致
 	assert.Equal(t, string(msg), plainText)
 }

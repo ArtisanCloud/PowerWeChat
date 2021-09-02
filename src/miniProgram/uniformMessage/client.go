@@ -1,10 +1,10 @@
-package message
+package uniformMessage
 
 import (
 	"errors"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/message/request"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/message/response"
 )
 
@@ -30,10 +30,10 @@ func (comp *Client) Send(toUser string, weAppTemplateMsg *request.WeAppTemplateM
 			"mp_template_msg": mpTemplateMsg,
 		})
 	}else{
-		return nil ,errors.New("please given a valid message template. ")
+		return nil ,errors.New("please given a valid uniformMessage template. ")
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/template/uniform_send", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/uniformMessage/wxopen/template/uniform_send", options, nil, nil, result)
 
 	return result, err
 }

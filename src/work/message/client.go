@@ -25,7 +25,7 @@ func (comp *Client) Send(messages interface{}) (*response.ResponseMessageSend, e
 
 	result := &response.ResponseMessageSend{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/send", messages, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/uniformMessage/send", messages, nil, nil, result)
 
 	return result, err
 }

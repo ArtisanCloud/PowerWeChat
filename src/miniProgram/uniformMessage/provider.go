@@ -1,4 +1,4 @@
-package message
+package uniformMessage
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"

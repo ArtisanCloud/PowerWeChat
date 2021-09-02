@@ -7,7 +7,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/message"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/immediateDelivery"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
 
 )
 
@@ -19,7 +21,10 @@ type MiniProgram struct {
 	Auth        *auth.Client
 
 	DataCube *dataCube.Client
-	Message  *message.Client
+	UniformMessage  *uniformMessage.Client
+
+	Express *express.Client
+	Delivery *immediateDelivery.Client
 
 	Config *kernel.Config
 }
@@ -87,7 +92,16 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	app.DataCube = dataCube.RegisterProvider(app)
 
 	//-------------- register Message --------------
-	app.Message = message.RegisterProvider(app)
+	app.UniformMessage = uniformMessage.RegisterProvider(app)
+
+	//-------------- register Express --------------
+	app.Express = express.RegisterProvider(app)
+
+	//-------------- register Delivery --------------
+	app.Delivery = immediateDelivery.RegisterProvider(app)
+
+
+
 
 	return app, err
 }
@@ -119,8 +133,13 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 	case "DataCube":
 		return app.DataCube
 
-	case "Message":
-		return app.Message
+	case "UniformMessage":
+		return app.UniformMessage
+
+	case "Express":
+		return app.Express
+	case "Delivery":
+		return app.Delivery
 
 	default:
 		return nil
