@@ -92,7 +92,7 @@ func (comp *Client) GetUnassigned(pageID int, pageSize int) (*response.ResponseG
 
 	result := &response.ResponseGetUnassignedList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", &object.HashMap{
 		"page_id":   strconv.Itoa(pageID),
 		"page_size": strconv.Itoa(pageSize),
 	}, nil, nil, result)
@@ -106,7 +106,7 @@ func (comp *Client) Transfer(externalUserID []string, handoverUserID string, tak
 
 	result := &response.ResponseGetTransferedCustomerList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/transfer_customer", object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/transfer_customer", &object.HashMap{
 		"handover_userid": handoverUserID,
 		"takeover_userid": takeoverUserID,
 		"external_userid": externalUserID,
@@ -121,7 +121,7 @@ func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*respo
 
 	result := &response.ResponseGroupChatTransfer{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", &object.HashMap{
 		"chat_id_list": chatIDs,
 		"new_owner":    newOwner,
 	}, nil, nil, result)

@@ -18,7 +18,7 @@ func (comp *Client) CreateActivityId(unionID string, openID string) (*response.R
 
 	result := &response.ResponseActiveMessageCreateActiveID{}
 
-	params := object.StringMap{
+	params := &object.StringMap{
 		"unionid": unionID,
 		"openid":  openID,
 	}
@@ -34,7 +34,7 @@ func (comp *Client) BusinessLicense(activityID string, targetState int8, templat
 
 	result := &response2.ResponseMiniProgram{}
 
-	data := object.HashMap{
+	data := &object.HashMap{
 		"activity_id":   activityID,
 		"target_state":  targetState,
 		"template_info": templateInfo,

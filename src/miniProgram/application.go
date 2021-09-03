@@ -9,9 +9,17 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/image"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/immediateDelivery"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/internet"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/nearbyPoi"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/plugin"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/security"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
+	urlScheme "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlLink"
+	urlLink "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlScheme"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/wxaCode"
 )
 
 type MiniProgram struct {
@@ -26,10 +34,24 @@ type MiniProgram struct {
 	DataCube       *dataCube.Client
 	UniformMessage *uniformMessage.Client
 
+	Image *image.Client
+
+	Internet *internet.Client
+
 	Express  *express.Client
 	Delivery *immediateDelivery.Client
 
-	OCR *ocr.Client
+	OCR    *ocr.Client
+	Plugin *plugin.Client
+
+	NearbyPoi *nearbyPoi.Client
+
+	WXACode *wxaCode.Client
+
+	URLScheme *urlScheme.Client
+	URLLink   *urlLink.Client
+
+	Security *security.Client
 
 	Config *kernel.Config
 }
@@ -71,7 +93,7 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
-			"http": object.HashMap{
+			"http": &object.HashMap{
 				"base_uri": "https://qyapi.weixin.qq.com/",
 			},
 		},
@@ -102,6 +124,12 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register Message --------------
 	app.UniformMessage = uniformMessage.RegisterProvider(app)
 
+	//-------------- register Image --------------
+	app.Image = image.RegisterProvider(app)
+
+	//-------------- register Internet --------------
+	app.Internet = internet.RegisterProvider(app)
+
 	//-------------- register Express --------------
 	app.Express = express.RegisterProvider(app)
 
@@ -110,6 +138,23 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 
 	//-------------- register OCR --------------
 	app.OCR = ocr.RegisterProvider(app)
+
+	//-------------- register Plugin --------------
+	app.Plugin = plugin.RegisterProvider(app)
+
+	//-------------- register NearbyPoi --------------
+	app.NearbyPoi = nearbyPoi.RegisterProvider(app)
+
+	//-------------- register WXACode --------------
+	app.WXACode = wxaCode.RegisterProvider(app)
+
+	//-------------- register URLScheme --------------
+	app.URLScheme = urlScheme.RegisterProvider(app)
+	//-------------- register URLLink --------------
+	app.URLLink = urlLink.RegisterProvider(app)
+
+	//-------------- register Security --------------
+	app.Security = security.RegisterProvider(app)
 
 	return app, err
 }
@@ -143,6 +188,11 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 	case "DataCube":
 		return app.DataCube
 
+	case "Image":
+		return app.Image
+	case "Internet":
+		return app.Internet
+
 	case "UniformMessage":
 		return app.UniformMessage
 
@@ -152,6 +202,22 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Delivery
 	case "OCR":
 		return app.OCR
+	case "Plugin":
+		return app.Plugin
+
+	case "NearbyPoi":
+		return app.NearbyPoi
+
+	case "WXACode":
+		return app.WXACode
+
+	case "URLScheme":
+		return app.URLScheme
+	case "URLLink":
+		return app.URLLink
+
+	case "Security":
+		return app.Security
 
 	default:
 		return nil

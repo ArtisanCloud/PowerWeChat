@@ -51,7 +51,7 @@ func (comp *Client) AddShops(deliveryID string) (*response.ResponseMiniProgram, 
 
 	result := &response.ResponseMiniProgram{}
 
-	query := object.StringMap{
+	query := &object.StringMap{
 		"delivery_id": deliveryID,
 	}
 
@@ -99,7 +99,7 @@ func (comp *Client) GetOrder(shopID string, shopOrderID string, shopNO string, d
 
 	result := &response2.ResponseImmediateDeliveryGetOrder{}
 
-	data := object.StringMap{
+	data := &object.StringMap{
 		"shopid":        shopID,
 		"shop_order_id": shopOrderID,
 		"shop_no":       shopNO,
