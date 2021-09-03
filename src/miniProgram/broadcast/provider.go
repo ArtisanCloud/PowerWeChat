@@ -1,4 +1,4 @@
-package internet
+package broadcast
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"

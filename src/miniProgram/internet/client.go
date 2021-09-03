@@ -1,4 +1,4 @@
-package broadcast
+package internet
 
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"

@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/activeMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/broadcast"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/image"
@@ -30,6 +31,8 @@ type MiniProgram struct {
 	Auth        *auth.Client
 
 	ActiveMessage *activeMessage.Client
+
+	Broadcast *broadcast.Client
 
 	DataCube       *dataCube.Client
 	UniformMessage *uniformMessage.Client
@@ -115,6 +118,9 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
 
+	//-------------- register Broadcast --------------
+	app.Broadcast = broadcast.RegisterProvider(app)
+
 	//-------------- register Data cube --------------
 	app.DataCube = dataCube.RegisterProvider(app)
 
@@ -184,6 +190,8 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Config
 	case "ActiveMessage":
 		return app.ActiveMessage
+	case "Broadcast":
+		return app.Broadcast
 
 	case "DataCube":
 		return app.DataCube
