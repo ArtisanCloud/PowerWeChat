@@ -15,8 +15,14 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/internet"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/nearbyPoi"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/operation"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/plugin"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/search"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/security"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/serviceMarket"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/shortLink"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/soter"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/subscribeMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
 	urlScheme "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlLink"
 	urlLink "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlScheme"
@@ -44,8 +50,9 @@ type MiniProgram struct {
 	Express  *express.Client
 	Delivery *immediateDelivery.Client
 
-	OCR    *ocr.Client
-	Plugin *plugin.Client
+	OCR       *ocr.Client
+	Operation *operation.Client
+	Plugin    *plugin.Client
 
 	NearbyPoi *nearbyPoi.Client
 
@@ -55,6 +62,14 @@ type MiniProgram struct {
 	URLLink   *urlLink.Client
 
 	Security *security.Client
+	Search   *search.Client
+
+	ServiceMarket *serviceMarket.Client
+
+	SubscribeMessage *subscribeMessage.Client
+
+	ShortLink *shortLink.Client
+	Soter     *soter.Client
 
 	Config *kernel.Config
 }
@@ -144,6 +159,8 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 
 	//-------------- register OCR --------------
 	app.OCR = ocr.RegisterProvider(app)
+	//-------------- register Operation --------------
+	app.Operation = operation.RegisterProvider(app)
 
 	//-------------- register Plugin --------------
 	app.Plugin = plugin.RegisterProvider(app)
@@ -161,6 +178,21 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 
 	//-------------- register Security --------------
 	app.Security = security.RegisterProvider(app)
+
+	//-------------- register Search --------------
+	app.Search = search.RegisterProvider(app)
+
+	//-------------- register ShortLink --------------
+	app.ShortLink = shortLink.RegisterProvider(app)
+
+	//-------------- register Soter --------------
+	app.Soter = soter.RegisterProvider(app)
+
+	//-------------- register Service Market --------------
+	app.ServiceMarket = serviceMarket.RegisterProvider(app)
+
+	//-------------- register SubscribeMessage --------------
+	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
 
 	return app, err
 }
@@ -210,6 +242,8 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Delivery
 	case "OCR":
 		return app.OCR
+	case "Operation":
+		return app.Operation
 	case "Plugin":
 		return app.Plugin
 
@@ -226,6 +260,21 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 
 	case "Security":
 		return app.Security
+
+	case "Search":
+		return app.Search
+
+	case "ServiceMarket":
+		return app.ServiceMarket
+
+	case "ShortLink":
+		return app.ShortLink
+
+	case "Soter":
+		return app.Soter
+
+	case "SubscribeMessage":
+		return app.SubscribeMessage
 
 	default:
 		return nil
