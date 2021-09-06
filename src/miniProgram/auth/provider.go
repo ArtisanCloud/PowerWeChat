@@ -4,8 +4,13 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) (*Client, *AccessToken) {
+func RegisterProvider(app kernel.ApplicationInterface) *AccessToken {
 
-	return NewClient(&app), NewAccessToken(&app)
+	return NewAccessToken(&app)
 
+}
+
+func RegisterAuthProvider(app kernel.ApplicationInterface) *Client {
+
+	return NewClient(&app)
 }

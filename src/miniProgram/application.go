@@ -75,28 +75,19 @@ type MiniProgram struct {
 }
 
 type UserConfig struct {
-	CorpID           string
-	AgentID          int
-	Secret           string
-	Token            string
-	AESKey           string
-	AuthCallbackHost string
+	AppID  string
+	Secret string
 
 	ResponseType string
 	Log          Log
-	OAuth        OAuth
-	HttpDebug    bool
-	Debug        bool
+
+	HttpDebug bool
+	Debug     bool
 }
 
 type Log struct {
 	Level string
 	File  string
-}
-
-type OAuth struct {
-	Callback string
-	Scopes   []string
 }
 
 func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
@@ -111,8 +102,8 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
-			"http": &object.HashMap{
-				"base_uri": "https://qyapi.weixin.qq.com/",
+			"http": object.HashMap{
+				"base_uri": "https://api.weixin.qq.com/",
 			},
 		},
 	}
@@ -128,7 +119,8 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 
 	//-------------- register Auth,AccessToken --------------
-	app.Auth, app.AccessToken = auth.RegisterProvider(app)
+	app.AccessToken = auth.RegisterProvider(app)
+	app.Auth = auth.RegisterAuthProvider(app)
 
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
@@ -285,22 +277,18 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
-		"corp_id":            userConfig.CorpID,
-		"agent_id":           userConfig.AgentID,
-		"secret":             userConfig.Secret,
-		"token":              userConfig.Token,
-		"aes_key":            userConfig.AESKey,
-		"auth_callback_host": userConfig.AuthCallbackHost,
+
+		"app_id": userConfig.AppID,
+		"secret": userConfig.Secret,
 
 		"response_type": userConfig.ResponseType,
 		"log": object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
-		"oauth.callback": userConfig.OAuth.Callback,
-		"oauth.scopes":   userConfig.OAuth.Scopes,
-		"http_debug":     userConfig.HttpDebug,
-		"debug":          userConfig.Debug,
+
+		"http_debug": userConfig.HttpDebug,
+		"debug":      userConfig.Debug,
 	}
 
 	return config, nil
