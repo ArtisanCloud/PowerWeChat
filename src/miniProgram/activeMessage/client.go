@@ -12,9 +12,9 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-// 创建被分享动态消息或私密消息的 activity_id
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.createActivityId.html
-func (comp *Client) CreateActivityID(unionID string, openID string) (*response.ResponseActiveMessageCreateActiveID, error) {
+// 获取用户访问小程序日留存
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getDailyRetain.html
+func (comp *Client) GetDailyRetain(unionID string, openID string) (*response.ResponseActiveMessageCreateActiveID, error) {
 
 	result := &response.ResponseActiveMessageCreateActiveID{}
 

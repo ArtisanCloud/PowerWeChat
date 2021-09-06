@@ -4,9 +4,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseCheckEncryptedMsg struct {
+type ResponseAuthCheckEncryptedData struct {
+	*response.ResponseMiniProgram
+
 	Valid      bool    `json:"vaild"`
 	CreateTime float64 `json:"create_time"`
-
-	*response.ResponseMiniProgram
 }

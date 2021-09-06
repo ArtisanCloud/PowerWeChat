@@ -4,7 +4,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseGetPaidUnionID struct {
+type ResponseAuthGetPaidUnionID struct {
 	UnionID string `json:"unionid"`
 
 	*response.ResponseMiniProgram

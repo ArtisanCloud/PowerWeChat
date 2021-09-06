@@ -5,7 +5,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseGetPerformanceData struct {
+type ResponseDataCubeGetPerformanceData struct {
 	Data *power.HashMap `json:"data"`
 
 	*response.ResponseMiniProgram
