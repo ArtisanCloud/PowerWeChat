@@ -81,7 +81,15 @@ func (comp *Client) UploadTempMedia(mediaType string, path string, form *power.H
 		}
 	}
 
-	_, err := comp.HttpUpload("cgi-bin/media/upload", files, form.ToHashMap(), &object.StringMap{
+	var formData *object.HashMap
+	if form != nil {
+		formData = &object.HashMap{
+			"name": (*form)["name"],
+			"value": (*form)["value"],
+		}
+	}
+
+	_, err := comp.HttpUpload("cgi-bin/media/upload", files, formData, &object.StringMap{
 		"type": mediaType,
 	}, nil, result)
 
