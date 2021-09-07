@@ -4,10 +4,10 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/activeMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/broadcast"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/customerServiceMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/image"
@@ -24,6 +24,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/soter"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/subscribeMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/updatableMessage"
 	urlScheme "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlLink"
 	urlLink "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlScheme"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/wxaCode"
@@ -36,9 +37,10 @@ type MiniProgram struct {
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
 
-	ActiveMessage *activeMessage.Client
+	ActiveMessage *updatableMessage.Client
 
-	Broadcast *broadcast.Client
+	Broadcast              *broadcast.Client
+	CustomerServiceMessage *customerServiceMessage.Client
 
 	DataCube       *dataCube.Client
 	UniformMessage *uniformMessage.Client
@@ -128,11 +130,14 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register Broadcast --------------
 	app.Broadcast = broadcast.RegisterProvider(app)
 
+	//-------------- register CustomerServiceMessage --------------
+	app.CustomerServiceMessage = customerServiceMessage.RegisterProvider(app)
+
 	//-------------- register Data cube --------------
 	app.DataCube = dataCube.RegisterProvider(app)
 
 	//-------------- register ActiveMessage --------------
-	app.ActiveMessage = activeMessage.RegisterProvider(app)
+	app.ActiveMessage = updatableMessage.RegisterProvider(app)
 
 	//-------------- register Message --------------
 	app.UniformMessage = uniformMessage.RegisterProvider(app)
@@ -216,6 +221,8 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.ActiveMessage
 	case "Broadcast":
 		return app.Broadcast
+	case "CustomerServiceMessage":
+		return app.CustomerServiceMessage
 
 	case "DataCube":
 		return app.DataCube

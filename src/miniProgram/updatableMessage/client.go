@@ -1,20 +1,20 @@
-package activeMessage
+package updatableMessage
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/activeMessage/response"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/updatableMessage/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
-// 获取用户访问小程序日留存
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getDailyRetain.html
-func (comp *Client) GetDailyRetain(unionID string, openID string) (*response.ResponseActiveMessageCreateActiveID, error) {
+// 创建被分享动态消息或私密消息的 activity_id
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.createActivityId.html
+func (comp *Client) CreateActivityId(unionID string, openID string) (*response.ResponseActiveMessageCreateActiveID, error) {
 
 	result := &response.ResponseActiveMessageCreateActiveID{}
 

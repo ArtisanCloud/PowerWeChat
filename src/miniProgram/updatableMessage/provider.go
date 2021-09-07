@@ -1,4 +1,4 @@
-package activeMessage
+package updatableMessage
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
