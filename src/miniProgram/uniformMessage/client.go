@@ -4,18 +4,19 @@ import (
 	"errors"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
+// 下发小程序和公众号统一的服务消息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/uniform-message/uniformMessage.send.html
-func (comp *Client) Send(toUser string, weAppTemplateMsg *request.WeAppTemplateMsg, mpTemplateMsg *request.MPTemplateMsg) (*response.ResponseMessageSend, error) {
+func (comp *Client) Send(toUser string, weAppTemplateMsg *request.WeAppTemplateMsg, mpTemplateMsg *request.MPTemplateMsg) (*response2.ResponseMiniProgram, error) {
 
-	result := &response.ResponseMessageSend{}
+	result := &response2.ResponseMiniProgram{}
 
 	options := &object.HashMap{
 		"touser": toUser,
@@ -33,7 +34,7 @@ func (comp *Client) Send(toUser string, weAppTemplateMsg *request.WeAppTemplateM
 		return nil, errors.New("please given a valid uniformMessage template. ")
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/uniformMessage/wxopen/template/uniform_send", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/template/uniform_send", options, nil, nil, result)
 
 	return result, err
 }

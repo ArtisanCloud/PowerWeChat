@@ -73,6 +73,8 @@ type MiniProgram struct {
 	ShortLink *shortLink.Client
 	Soter     *soter.Client
 
+	UpdatableMessage *updatableMessage.Client
+
 	Config *kernel.Config
 }
 
@@ -191,6 +193,9 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register SubscribeMessage --------------
 	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
 
+	//-------------- register UpdatableMessage --------------
+	app.UpdatableMessage = updatableMessage.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -274,6 +279,9 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 
 	case "SubscribeMessage":
 		return app.SubscribeMessage
+
+		case "UpdatableMessage":
+		return app.UpdatableMessage
 
 	default:
 		return nil
