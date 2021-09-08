@@ -18,7 +18,7 @@ func (comp *Client) AbnormalConfirm(options *power.HashMap) (*response.ResponseM
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/confirm_return", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/express/local/business/order/confirm_return", options, nil, nil, result)
 
 	return result, err
 }
@@ -41,6 +41,21 @@ func (comp *Client) AddTips(options *power.HashMap) (*response.ResponseMiniProgr
 	result := &response.ResponseMiniProgram{}
 
 	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", options, nil, nil, result)
+
+	return result, err
+}
+
+// 第三方代商户发起绑定配送公司帐号的请求
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.bindAccount.html
+func (comp *Client) BindAccount(deliveryID string) (*response.ResponseMiniProgram, error) {
+
+	result := &response.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"delivery_id": deliveryID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/express/local/business/shop/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -83,12 +98,12 @@ func (comp *Client) GetAllImmeDelivery() (*response2.ResponseImmediateDeliveryDe
 }
 
 // 拉取已绑定账号
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getAllImmeDelivery.html
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getBindAccount.html
 func (comp *Client) GetBindAccount() (*response2.ResponseImmediateDeliveryBindAccount, error) {
 
 	result := &response2.ResponseImmediateDeliveryBindAccount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/delivery/getall", nil, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/express/local/business/shop/get", nil, nil, nil, result)
 
 	return result, err
 }
@@ -113,25 +128,11 @@ func (comp *Client) GetOrder(shopID string, shopOrderID string, shopNO string, d
 
 // 模拟配送公司更新配送单状态
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.mockUpdateOrder.html
-func (comp *Client) MockUpdateOrder(
-	shopID string, shopOrderID string,
-	waybillID string, actionTime int64,
-	orderStatus int, actionMsg string,
-
-) (*response.ResponseMiniProgram, error) {
+func (comp *Client) MockUpdateOrder(options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
-	data := &object.HashMap{
-		"shopid":        shopID,
-		"shop_order_id": shopOrderID,
-		"waybill_id":    waybillID,
-		"action_time":   actionTime,
-		"order_status":  orderStatus,
-		"action_msg":    actionMsg,
-	}
-
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/test_update_order", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/test_update_order", options, nil, nil, result)
 
 	return result, err
 }
@@ -171,24 +172,12 @@ func (comp *Client) PreCancelOrder(data *power.HashMap) (*response2.ResponseImme
 
 // 模拟配送公司更新配送单状态
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.realMockUpdateOrder.html
-func (comp *Client) RealMockUpdateOrder(
-	shopID string, shopOrderID string,
-	actionTime int64, orderStatus int, actionMsg string, deliverySign string,
-
-) (*response.ResponseMiniProgram, error) {
+func (comp *Client) RealMockUpdateOrder(options *power.HashMap ) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
-	data := &object.HashMap{
-		"shopid":        shopID,
-		"shop_order_id": shopOrderID,
-		"action_time":   actionTime,
-		"order_status":  orderStatus,
-		"action_msg":    actionMsg,
-		"delivery_sign": deliverySign,
-	}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/realmock_update_order", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/realmock_update_order", options, nil, nil, result)
 
 	return result, err
 }

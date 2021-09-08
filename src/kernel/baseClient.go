@@ -92,16 +92,16 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 	if files != nil {
 		for name, path := range *files {
 			multipart = append(multipart, &object.HashMap{
-				"name":     name,
-				"value": path,
-				"headers":  headers,
+				"name":    name,
+				"value":   path,
+				"headers": headers,
 			})
 		}
 	}
 
 	if form != nil {
 		multipart = append(multipart, &object.HashMap{
-			"name":     (*form)["name"],
+			"name": (*form)["name"],
 			//"filename": (*form)["filename"],
 			"value": (*form)["value"],
 		})

@@ -14,15 +14,26 @@ type Client struct {
 
 // 向插件开发者发起使用插件的申请
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.imgSecCheck.html
-func (comp *Client) imgSecCheck(media *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) ImgSecCheck(path string, form *power.HashMap) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
-	data := &object.HashMap{
-		"media": media,
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
 	}
 
-	_, err := comp.HttpPostJson("wxa/img_sec_check", data, nil, nil, result)
+	var formData *object.HashMap
+	if form != nil {
+		formData = &object.HashMap{
+			"name": (*form)["name"],
+			"value": (*form)["value"],
+		}
+	}
+
+	_, err := comp.HttpUpload("wxa/img_sec_check", files, formData, nil, nil,result)
 
 	return result, err
 }
@@ -50,7 +61,7 @@ func (comp *Client) MediaCheckAsync(mediaURL string, mediaType int, version int,
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
 func (comp *Client) MsgSecCheck(
 	openID string, scene int, version int, content string,
-	nickname int, title int, signature string) (*response.ResponseSecurityMediaCheckASync, error) {
+	nickname string, title string, signature string) (*response.ResponseSecurityMediaCheckASync, error) {
 
 	result := &response.ResponseSecurityMediaCheckASync{}
 

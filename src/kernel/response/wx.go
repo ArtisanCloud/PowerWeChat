@@ -18,6 +18,9 @@ type ResponsePayment struct {
 type ResponseMiniProgram struct {
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg"`
+
+	ResultCode  string `json:"resultcode"`
+	ResultMSG  string `json:"resultmsg"`
 }
 
 //
