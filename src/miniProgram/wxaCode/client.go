@@ -4,6 +4,9 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	response4 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	"net/http"
 )
 
 type Client struct {
@@ -12,64 +15,86 @@ type Client struct {
 
 // 获取小程序二维码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html
-func (comp *Client) CreateQRCode(path string, width int) (*response.HttpResponse, error) {
+func (comp *Client) CreateQRCode(path string, width int) (*http.Response, error) {
+
+	var result string
+	var header = &response4.ResponseHeaderMedia{}
 
 	if width <= 0 {
 		width = 430
 	}
 
 	data := &object.HashMap{
-		"path":  path,
-		"width": width,
+		"form_params": &object.HashMap{
+			"path":  path,
+			"width": width,
+		},
 	}
 
-	rs, err := comp.HttpPostJson("cgi-bin/wxaapp/createwxaqrcode", data, nil, nil, nil)
+	rs, err := comp.RequestRaw("cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
 
-	return rs.(*response.HttpResponse), err
+	httpRS := rs.(*response.HttpResponse).Response
+
+	return httpRS, err
+
 }
 
 // 获取小程序码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
 func (comp *Client) Get(path string, width int,
-	autoColor bool, lineColor *object.HashMap, isHyaline bool) (*response.HttpResponse, error) {
+	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
+
+	var result string
+	var header = &response4.ResponseHeaderMedia{}
 
 	if width <= 0 {
 		width = 430
 	}
 
 	data := &object.HashMap{
-		"path":       path,
-		"width":      width,
-		"auto_color": autoColor,
-		"line_color": lineColor,
-		"is_hyaline": isHyaline,
+		"form_params": &object.HashMap{
+			"path":       path,
+			"width":      width,
+			"auto_color": autoColor,
+			"line_color": lineColor.ToHashMap(),
+			"is_hyaline": isHyaline,
+		},
 	}
 
-	rs, err := comp.HttpPostJson("cgi-bin/wxa/getwxacode", data, nil, nil, nil)
+	rs, err := comp.RequestRaw("wxa/getwxacode", "POST", data,  &header, &result)
 
-	return rs.(*response.HttpResponse), err
+	httpRS := rs.(*response.HttpResponse).Response
+
+	return httpRS, err
 }
 
 // 获取小程序码，适用于需要的码数量极多的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
 func (comp *Client) GetUnlimited(
 	scene string, page string, width int,
-	autoColor bool, lineColor *object.HashMap, isHyaline bool) (*response.HttpResponse, error) {
+	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
+
+	var result string
+	var header = &response4.ResponseHeaderMedia{}
 
 	if width <= 0 {
 		width = 430
 	}
 
 	data := &object.HashMap{
-		"scene":      scene,
-		"page":       page,
-		"width":      width,
-		"auto_color": autoColor,
-		"line_color": lineColor,
-		"is_hyaline": isHyaline,
+		"form_params": &object.HashMap{
+			"scene":      scene,
+			"page":       page,
+			"width":      width,
+			"auto_color": autoColor,
+			"line_color": lineColor.ToHashMap(),
+			"is_hyaline": isHyaline,
+		},
 	}
 
-	rs, err := comp.HttpPostJson("cgi-bin/wxa/getwxacodeunlimit", data, nil, nil, nil)
+	rs, err := comp.RequestRaw("wxa/getwxacodeunlimit", "POST",data, &header, &result)
 
-	return rs.(*response.HttpResponse), err
+	httpRS := rs.(*response.HttpResponse).Response
+
+	return httpRS, err
 }

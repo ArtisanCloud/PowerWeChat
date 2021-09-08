@@ -25,8 +25,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/subscribeMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/uniformMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/updatableMessage"
-	urlScheme "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlLink"
-	urlLink "github.com/ArtisanCloud/power-wechat/src/miniProgram/urlScheme"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/urlLink"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/urlScheme"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/wxaCode"
 )
 
@@ -280,7 +280,7 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 	case "SubscribeMessage":
 		return app.SubscribeMessage
 
-		case "UpdatableMessage":
+	case "UpdatableMessage":
 		return app.UpdatableMessage
 
 	default:

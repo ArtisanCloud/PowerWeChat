@@ -1,4 +1,4 @@
-package urlScheme
+package urlLink
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"

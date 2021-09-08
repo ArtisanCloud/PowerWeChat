@@ -1,9 +1,12 @@
-package urlLink
+package urlScheme
 
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	response4 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	"net/http"
 )
 
 type Client struct {
@@ -13,18 +16,25 @@ type Client struct {
 // 获取小程序 scheme 码，适用于短信、邮件、外部网页、微信内等拉起小程序的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/url-scheme/urlscheme.generate.html
 func (comp *Client) Generate(
-	jumpWxa *object.HashMap, isExpire bool, expireType int,
-	expireTime int, expireInterval int) (*response.HttpResponse, error) {
+	jumpWxa *power.HashMap, isExpire bool, expireType int,
+	expireTime int, expireInterval int) (*http.Response, error) {
+
+	var result string
+	var header = &response4.ResponseHeaderMedia{}
 
 	data := &object.HashMap{
-		"jump_wxa":        jumpWxa,
-		"is_expire":       isExpire,
-		"expire_type":     expireType,
-		"expire_time":     expireTime,
-		"expire_interval": expireInterval,
+		"form_params": &object.HashMap{
+			"jump_wxa":        jumpWxa.ToHashMap(),
+			"is_expire":       isExpire,
+			"expire_type":     expireType,
+			"expire_time":     expireTime,
+			"expire_interval": expireInterval,
+		},
 	}
 
-	rs, err := comp.HttpPostJson("cgi-bin/wxa/generatescheme", data, nil, nil, nil)
+	rs, err := comp.RequestRaw("wxa/generatescheme", "POST", data,  &header, &result)
 
-	return rs.(*response.HttpResponse), err
+	httpRS := rs.(*response.HttpResponse).Response
+
+	return httpRS, err
 }
