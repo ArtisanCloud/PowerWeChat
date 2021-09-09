@@ -13,14 +13,14 @@ type Client struct {
 
 // 调用服务平台提供的服务
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/service-market/serviceMarket.invokeService.html
-func (comp *Client) InvokeService(service string, api string, serviceDdata *power.HashMap, clientMsgID string) (*response.ResponseServiceMarketInvoceService, error) {
+func (comp *Client) InvokeService(service string, api string, serviceData *power.HashMap, clientMsgID string) (*response.ResponseServiceMarketInvoceService, error) {
 
 	result := &response.ResponseServiceMarketInvoceService{}
 
 	data := &object.HashMap{
 		"service":       service,
 		"api":           api,
-		"data":          serviceDdata,
+		"data":          serviceData,
 		"client_msg_id": clientMsgID,
 	}
 

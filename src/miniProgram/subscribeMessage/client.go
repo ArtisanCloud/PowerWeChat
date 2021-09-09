@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/subscribeMessage/response"
 )
@@ -99,7 +100,7 @@ func (comp *Client) GetTemplateList() (*response.ResponseSubscribeMessageGetTemp
 // 发送订阅消息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
 func (comp *Client) Send(toUser string, templateID string, page string,
-	miniprogramState string, lang string, msgData *object.HashMap) (*response2.ResponseMiniProgram, error) {
+	miniprogramState string, lang string, msgData *power.HashMap) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
