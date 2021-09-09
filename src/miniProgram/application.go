@@ -6,13 +6,13 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/base"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/broadcast"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/customerServiceMessage"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/express"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/image"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/immediateDelivery"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/internet"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/liveBroadcast"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/nearbyPoi"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/operation"
@@ -39,7 +39,7 @@ type MiniProgram struct {
 
 	ActiveMessage *updatableMessage.Client
 
-	Broadcast              *broadcast.Client
+	Broadcast              *liveBroadcast.Client
 	CustomerServiceMessage *customerServiceMessage.Client
 
 	DataCube       *dataCube.Client
@@ -130,7 +130,7 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	app.Base = base.RegisterProvider(app)
 
 	//-------------- register Broadcast --------------
-	app.Broadcast = broadcast.RegisterProvider(app)
+	app.Broadcast = liveBroadcast.RegisterProvider(app)
 
 	//-------------- register CustomerServiceMessage --------------
 	app.CustomerServiceMessage = customerServiceMessage.RegisterProvider(app)

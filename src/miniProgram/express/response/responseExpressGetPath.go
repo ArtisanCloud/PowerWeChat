@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 )
 
 type ResponseExpressGetPath struct {
@@ -9,5 +9,5 @@ type ResponseExpressGetPath struct {
 	DeliveryID   string              `json:"delivery_id"`   //  "",
 	WaybillID    string              `json:"waybill_id"`    //   "123456789",
 	PathItemNum  int                 `json:"path_item_num"` //  3,
-	PathItemList []*object.StringMap `json:"path_item_list"`
+	PathItemList []*power.StringMap `json:"path_item_list"`
 }

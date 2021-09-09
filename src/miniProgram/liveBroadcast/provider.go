@@ -1,4 +1,4 @@
-package broadcast
+package liveBroadcast
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"

@@ -9,5 +9,5 @@ type ResponseOperationGetJsErrDetail struct {
 	*response.ResponseMiniProgram
 	Success bool           `json:"success"`
 	OpenID  string         `json:"openid"`
-	Data    *power.HashMap `json:"data"`
+	Data   []*power.HashMap `json:"data"`
 }

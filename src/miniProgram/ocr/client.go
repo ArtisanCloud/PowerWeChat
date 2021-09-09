@@ -95,17 +95,24 @@ func (comp *Client) VehicleLicense(mode string, imgURL string, img *power.HashMa
 }
 
 func (comp *Client) UploadImage(entryPoint string, imgURL string, img *power.HashMap, result interface{}) (interface{}, error) {
-	data := &object.HashMap{}
+
+	params := &object.StringMap{}
+	var formData *object.HashMap
 
 	if imgURL != "" {
-		(*data)["img_url"] = imgURL
+		params = &object.StringMap{
+			"img_url": imgURL,
+		}
 	} else if img != nil {
-		(*data)["img"] = img
+		formData = &object.HashMap{
+			"name":  (*img)["name"],
+			"value": (*img)["value"],
+		}
 	} else {
 		return nil, errors.New("Please send image url or image form data ")
 	}
 
-	rs, err := comp.HttpPostJson(entryPoint, data, nil, nil, result)
+	rs, err := comp.HttpUpload(entryPoint, nil, formData, params, nil, result)
 
 	return rs, err
 }

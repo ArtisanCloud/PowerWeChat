@@ -5,9 +5,10 @@ import (
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseExpressAccountGetAll struct {
+type ResponseExpressGetContact struct {
 	*response2.ResponseMiniProgram
 
-	Count int               `json:"count"`
-	List  []*power.HashMap `json:"list"`
+	WayBillID int              `json:"waybill_id"`
+	Sender    []*power.HashMap `json:"sender"`
+	Receiver  []*power.HashMap `json:"receiver"`
 }

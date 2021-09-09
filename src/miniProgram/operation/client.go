@@ -1,11 +1,14 @@
 package operation
 
 import (
-	response2 "github.com/ArtisanCloud/go-libs/http/response"
+	"fmt"
+	response3 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/operation/response"
+	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	"net/http"
 )
 
 type Client struct {
@@ -29,14 +32,14 @@ func (comp *Client) GetDomainInfo(action string) (*response.ResponseOperationGet
 
 // 获取用户反馈列表
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getFeedback.html
-func (comp *Client) GetFeedback(feedbackType string, page int, num int) (*response.ResponseOperationGetFeedback, error) {
+func (comp *Client) GetFeedback(feedbackType int, page int, num int) (*response.ResponseOperationGetFeedback, error) {
 
 	result := &response.ResponseOperationGetFeedback{}
 
-	params := &object.HashMap{
-		"type": feedbackType,
-		"page": page,
-		"num":  num,
+	params := &object.StringMap{
+		"type": fmt.Sprintf("%d", feedbackType),
+		"page": fmt.Sprintf("%d", page),
+		"num":  fmt.Sprintf("%d", num),
 	}
 
 	_, err := comp.HttpGet("wxaapi/feedback/list", params, nil, result)
@@ -46,18 +49,22 @@ func (comp *Client) GetFeedback(feedbackType string, page int, num int) (*respon
 
 // 获取 mediaId 图片
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getFeedbackmedia.html
-func (comp *Client) GetFeedbackMedia(recordID string, mediaID string) (*response2.HttpResponse, error) {
+func (comp *Client) GetFeedbackMedia(recordID int, mediaID string) (*http.Response, error) {
 
-	params := &object.HashMap{
-		"record_id": recordID,
-		"media_id":  mediaID,
+	var result string
+	var header = &response2.ResponseHeaderMedia{}
+
+	data := &object.HashMap{
+		"form_params": &object.HashMap{
+			"record_id": fmt.Sprintf("%d", recordID),
+			"media_id":  mediaID,
+		},
 	}
 
-	rs, err := comp.HttpGet("cgi-bin/media/getfeedbackmedia", params, nil, nil)
+	rs, err := comp.RequestRaw("cgi-bin/media/getfeedbackmedia", "GET", data, header, &result)
 
-	return rs.(*response2.HttpResponse), err
+	return rs.(*response3.HttpResponse).Response, err
 }
-
 
 // 查询当前分阶段发布详情
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getGrayReleasePlan.html
@@ -65,12 +72,10 @@ func (comp *Client) GetGrayReleasePlan() (*response.ResponseOperationGetGrayRele
 
 	result := &response.ResponseOperationGetGrayReleasePlan{}
 
-
 	_, err := comp.HttpGet("wxa/getgrayreleaseplan", nil, nil, result)
 
 	return result, err
 }
-
 
 // 错误查询详情
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getJsErrDetail.html
@@ -78,7 +83,7 @@ func (comp *Client) GetJsErrDetail(data *power.HashMap) (*response.ResponseOpera
 
 	result := &response.ResponseOperationGetJsErrDetail{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/jserr_detail", data, nil,nil, result)
+	_, err := comp.HttpPostJson("wxaapi/log/jserr_detail", data, nil, nil, result)
 
 	return result, err
 }
@@ -89,11 +94,10 @@ func (comp *Client) GetJsErrList(data *power.HashMap) (*response.ResponseOperati
 
 	result := &response.ResponseOperationGetJsErrList{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/jserr_list", data, nil,nil, result)
+	_, err := comp.HttpPostJson("wxaapi/log/jserr_list", data, nil, nil, result)
 
 	return result, err
 }
-
 
 // 错误查询, 接口即将废弃
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getJsErrSearch.html
@@ -101,11 +105,10 @@ func (comp *Client) GetJsErrSearch(data *power.HashMap) (*response.ResponseOpera
 
 	result := &response.ResponseOperationGetJsErrSearch{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/jserr_search", data, nil,nil, result)
+	_, err := comp.HttpPostJson("wxaapi/log/jserr_search", data, nil, nil, result)
 
 	return result, err
 }
-
 
 // 性能监控
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getPerformance.html
@@ -113,18 +116,16 @@ func (comp *Client) GetPerformance(data *power.HashMap) (*response.ResponseOpera
 
 	result := &response.ResponseOperationGetPerformance{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/get_performance", data, nil,nil, result)
+	_, err := comp.HttpPostJson("wxaapi/log/get_performance", data, nil, nil, result)
 
 	return result, err
 }
-
 
 // 获取访问来源
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getSceneList.html
 func (comp *Client) GetSceneList() (*response.ResponseOperationGetSceneList, error) {
 
 	result := &response.ResponseOperationGetSceneList{}
-
 
 	_, err := comp.HttpGet("wxa/log/get_scene", nil, nil, result)
 
@@ -144,11 +145,11 @@ func (comp *Client) GetVersionList() (*response.ResponseOperationGetVersionList,
 
 // 实时日志查询
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.realtimelogSearch.html
-func (comp *Client) RealTimeLogSearch(params *object.StringMap) (*response.ResponseOperationRealTimeLogSearch, error) {
+func (comp *Client) RealTimeLogSearch(options *power.HashMap) (*response.ResponseOperationRealTimeLogSearch, error) {
 
 	result := &response.ResponseOperationRealTimeLogSearch{}
 
-	_, err := comp.HttpGet("wxaapi/userlog/userlog_search", params, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/userlog/userlog_search", options.ToHashMap(), nil, nil, result)
 
 	return result, err
 }

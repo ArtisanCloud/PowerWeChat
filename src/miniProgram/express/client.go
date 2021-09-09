@@ -187,7 +187,7 @@ func (comp *Client) TestUpdateOrder(
 
 // 配置面单打印员
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.updatePrinter.html
-func (comp *Client) UpdatePrinter(openID string, updateType string, tagidList int64) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) UpdatePrinter(openID string, updateType string, tagidList string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -198,6 +198,58 @@ func (comp *Client) UpdatePrinter(openID string, updateType string, tagidList in
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/express/business/printer/update", data, nil, nil, result)
+
+	return result, err
+}
+
+
+// 获取面单联系人信息
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.getContact.html
+func (comp *Client) GetContact(token string, waybillID string) (*response.ResponseExpressGetContact, error) {
+
+	result := &response.ResponseExpressGetContact{}
+
+	data := &object.HashMap{
+		"token": token,
+		"waybill_id": waybillID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/express/delivery/contact/get", data, nil, nil, result)
+
+	return result, err
+}
+
+// 预览面单模板
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.previewTemplate.html
+func (comp *Client) PreviewTemplate(options *power.HashMap) (*response.ResponseExpressPreviewTemplate, error) {
+
+	result := &response.ResponseExpressPreviewTemplate{}
+
+
+	_, err := comp.HttpPostJson("cgi-bin/express/delivery/template/preview", options, nil, nil, result)
+
+	return result, err
+}
+
+// 更新商户审核结果
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updateBusiness.html
+func (comp *Client) UpdateBusiness(options *power.HashMap) (*response2.ResponseMiniProgram, error) {
+
+	result := &response2.ResponseMiniProgram{}
+
+
+	_, err := comp.HttpPostJson("cgi-bin/express/delivery/service/business/update", options, nil, nil, result)
+
+	return result, err
+}
+
+// 更新运单轨迹
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updatePath.html
+func (comp *Client) UpdatePath(options *power.HashMap) (*response2.ResponseMiniProgram, error) {
+
+	result := &response2.ResponseMiniProgram{}
+
+	_, err := comp.HttpPostJson("cgi-bin/express/delivery/path/update?", options, nil, nil, result)
 
 	return result, err
 }

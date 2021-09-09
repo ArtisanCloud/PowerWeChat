@@ -1,9 +1,9 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 )
 
 type ResponseExpressBatchOrderList struct {
-	OrderList []*object.HashMap `json:"order_list"`
+	OrderList []*power.HashMap `json:"order_list"`
 }
