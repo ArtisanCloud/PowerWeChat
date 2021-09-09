@@ -17,6 +17,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/operation"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/plugin"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/riskControl"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/search"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/security"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/serviceMarket"
@@ -74,6 +75,8 @@ type MiniProgram struct {
 	Soter     *soter.Client
 
 	UpdatableMessage *updatableMessage.Client
+
+	RiskControl *riskControl.Client
 
 	Config *kernel.Config
 }
@@ -196,6 +199,9 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register UpdatableMessage --------------
 	app.UpdatableMessage = updatableMessage.RegisterProvider(app)
 
+	//-------------- register RiskControl --------------
+	app.RiskControl = riskControl.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -282,6 +288,8 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 
 	case "UpdatableMessage":
 		return app.UpdatableMessage
+	case "RiskControl":
+		return app.RiskControl
 
 	default:
 		return nil
