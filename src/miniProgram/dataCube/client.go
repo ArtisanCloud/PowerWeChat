@@ -13,7 +13,7 @@ type Client struct {
 
 // 获取用户访问小程序数据概况
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getDailySummary.html
-func (comp *Client) SummaryTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
+func (comp *Client) GetDailySummary(from string, to string) (*response.ResponseDataCubeSummary, error) {
 
 	result := &response.ResponseDataCubeSummary{}
 
@@ -35,7 +35,7 @@ func (comp *Client) GetPerformanceData(options *power.HashMap) (*response.Respon
 
 // 获取用户访问小程序数据日趋势
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-trend/analysis.getDailyVisitTrend.html
-func (comp *Client) DailyVisitTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
+func (comp *Client) GetDailyVisitTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
 
 	result := &response.ResponseDataCubeSummary{}
 
@@ -46,7 +46,7 @@ func (comp *Client) DailyVisitTrend(from string, to string) (*response.ResponseD
 
 // 获取用户访问小程序数据周趋势
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-trend/analysis.getWeeklyVisitTrend.html
-func (comp *Client) WeeklyVisitTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
+func (comp *Client) GetWeeklyVisitTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
 
 	result := &response.ResponseDataCubeSummary{}
 
@@ -57,7 +57,7 @@ func (comp *Client) WeeklyVisitTrend(from string, to string) (*response.Response
 
 // 获取用户访问小程序数据月趋势(能查询到的最新数据为上一个自然月的数据)
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-trend/analysis.getMonthlyVisitTrend.html
-func (comp *Client) MonthlyVisitTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
+func (comp *Client) GetMonthlyVisitTrend(from string, to string) (*response.ResponseDataCubeSummary, error) {
 
 	result := &response.ResponseDataCubeSummary{}
 
@@ -68,7 +68,7 @@ func (comp *Client) MonthlyVisitTrend(from string, to string) (*response.Respons
 
 // 获取用户小程序访问分布数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getVisitDistribution.html
-func (comp *Client) VisitDistribution(from string, to string) (*response.ResponseDataCubeVisit, error) {
+func (comp *Client) GetVisitDistribution(from string, to string) (*response.ResponseDataCubeVisit, error) {
 
 	result := &response.ResponseDataCubeVisit{}
 
@@ -79,7 +79,7 @@ func (comp *Client) VisitDistribution(from string, to string) (*response.Respons
 
 // 获取用户访问小程序日留存
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getDailyRetain.html
-func (comp *Client) DailyRetainInfo(from string, to string) (*response.ResponseDataCubeVisitInfo, error) {
+func (comp *Client) GetDailyRetainInfo(from string, to string) (*response.ResponseDataCubeVisitInfo, error) {
 
 	result := &response.ResponseDataCubeVisitInfo{}
 
@@ -90,7 +90,7 @@ func (comp *Client) DailyRetainInfo(from string, to string) (*response.ResponseD
 
 // 获取用户访问小程序周留存
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getWeeklyRetain.html
-func (comp *Client) WeeklyRetainInfo(from string, to string) (*response.ResponseDataCubeVisitInfo, error) {
+func (comp *Client) GetWeeklyRetainInfo(from string, to string) (*response.ResponseDataCubeVisitInfo, error) {
 
 	result := &response.ResponseDataCubeVisitInfo{}
 
@@ -101,7 +101,7 @@ func (comp *Client) WeeklyRetainInfo(from string, to string) (*response.Response
 
 // 获取用户访问小程序月留存
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getMonthlyRetain.html
-func (comp *Client) MonthlyRetainInfo(from string, to string) (*response.ResponseDataCubeVisitInfo, error) {
+func (comp *Client) GetMonthlyRetainInfo(from string, to string) (*response.ResponseDataCubeVisitInfo, error) {
 
 	result := &response.ResponseDataCubeVisitInfo{}
 
@@ -112,7 +112,7 @@ func (comp *Client) MonthlyRetainInfo(from string, to string) (*response.Respons
 
 // 访问页面
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getVisitPage.html
-func (comp *Client) VisitPage(from string, to string) (*response.ResponseDataCubeVisit, error) {
+func (comp *Client) GetVisitPage(from string, to string) (*response.ResponseDataCubeVisit, error) {
 
 	result := &response.ResponseDataCubeVisit{}
 
@@ -123,7 +123,7 @@ func (comp *Client) VisitPage(from string, to string) (*response.ResponseDataCub
 
 // 获取小程序新增或活跃用户的画像分布数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getUserPortrait.html
-func (comp *Client) UserPortrait(from string, to string) (*response.ResponseDataCubeUserPortrait, error) {
+func (comp *Client) GetUserPortrait(from string, to string) (*response.ResponseDataCubeUserPortrait, error) {
 
 	result := &response.ResponseDataCubeUserPortrait{}
 
