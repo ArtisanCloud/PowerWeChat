@@ -149,6 +149,12 @@ func (client *BaseClient) RequestRaw(url string, method string, options *object.
 	return client.Request(url, method, options, true, outHeader, outBody)
 }
 
+func (client *BaseClient) Download(requestDownload *response.RequestDownload, outHeader interface{}, outBody interface{}) (interface{}, error) {
+
+	response.HttpResponse, err:= client.GetHttpClient().download(requestDownload.DownloadURL, "GET", outHeader, outBody)
+
+}
+
 func (client *BaseClient) registerHttpMiddlewares() {
 
 	client.Middlewares = []interface{}{}
