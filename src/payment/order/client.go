@@ -21,23 +21,74 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 	}
 }
 
-// Unify order.
-// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml
-
-func (comp *Client) Unify(params *power.HashMap, isContract bool) (*response.ResponseUnitfy, error) {
+// JSAPI pay transaction. 小程序支付
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_1.shtml
+func (comp *Client) JSAPITransaction(params *power.HashMap) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
+	endpoint := "/v3/combine-transactions/jsapi"
+	_, err := comp.PayTransaction(endpoint, params, result)
+	return result, err
+}
+
+// App pay transaction.
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_2_1.shtml
+func (comp *Client) TransactionApp(params *power.HashMap) (*response.ResponseUnitfy, error) {
+
+	result := &response.ResponseUnitfy{}
+
+	endpoint := "/v3/combine-transactions/app"
+	_, err := comp.PayTransaction(endpoint, params, result)
+
+	return result, err
+}
+
+// H5 pay transaction.
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_3_1.shtml
+func (comp *Client) TransactionH5(params *power.HashMap) (*response.ResponseH5URL, error) {
+
+	result := &response.ResponseH5URL{}
+
+	endpoint := "/v3/combine-transactions/h5"
+	_, err := comp.PayTransaction(endpoint, params, result)
+	return result, err
+}
+
+// Native pay transaction.
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
+func (comp *Client) TransactionNative(params *power.HashMap) (*response.ResponseCodeURL, error) {
+
+	result := &response.ResponseCodeURL{}
+
+	endpoint := "/v3/combine-transactions/native"
+	_, err := comp.PayTransaction(endpoint, params, result)
+
+	return result, err
+}
+
+// 合单APP下单API
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_1.shtml
+func (comp *Client) TransactionAppCombine(params *power.HashMap) (*response.ResponseUnitfy, error) {
+
+	result := &response.ResponseUnitfy{}
+
+	endpoint := "/v3/combine-transactions/app"
+	_, err := comp.PayTransaction(endpoint, params, result)
+
+	return result, err
+}
+
+func (comp *Client) PayTransaction(entryPoint string, params *power.HashMap, result interface{}) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 	(*params)["appid"] = config.GetString("app_id", "")
 	if (*params)["notify_url"] == nil || (*params)["notify_url"] == "" {
 		(*params)["notify_url"] = config.GetString("notify_url", "")
 	}
 
-	endpoint := comp.Wrap("/v3/pay/transactions/jsapi")
-	_, err := comp.Request(endpoint, nil, "POST", params.ToHashMap(), false, nil, result)
-
-	return result, err
+	transactionEndpoint := comp.Wrap(entryPoint)
+	rs, err := comp.Request(transactionEndpoint, nil, "POST", params.ToHashMap(), false, nil, result)
+	return rs, err
 }
 
 func (comp *Client) QueryByTransactionId(number string) (*response.ResponseOrder, error) {
