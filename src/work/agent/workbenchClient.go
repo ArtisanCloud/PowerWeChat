@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/agent/response"
 )
 
@@ -18,7 +19,7 @@ func NewWorkbenchClient(app kernel.ApplicationInterface) *WorkbenchClient {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90205
-func (comp *Client) SetWorkbenchTemplate(data *object.HashMap) (*response.ResponseAgentSetWorkbenchTemplate, error) {
+func (comp *Client) SetWorkbenchTemplate(data *power.HashMap) (*response.ResponseAgentSetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentSetWorkbenchTemplate{}
 
@@ -40,7 +41,7 @@ func (comp *Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGe
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90207
-func (comp *Client) SetWorkbenchData(data *object.HashMap) (*response.ResponseAgentSetWorkbenchData, error) {
+func (comp *Client) SetWorkbenchData(data *power.HashMap) (*response.ResponseAgentSetWorkbenchData, error) {
 
 	result := &response.ResponseAgentSetWorkbenchData{}
 

@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
 )
 
@@ -50,36 +51,36 @@ func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
 	//return rs, nil
 }
 
-func (comp *Client) UploadImage(path string, form *object.HashMap, outResponse interface{}) (interface{}, error) {
+func (comp *Client) UploadImage(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	files := &object.HashMap{
 		"media": path,
 	}
-	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form, nil, nil, outResponse)
+	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, outResponse)
 }
 
-func (comp *Client) UploadTempImage(path string, form *object.HashMap, outResponse interface{}) (interface{}, error) {
+func (comp *Client) UploadTempImage(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	return comp.Upload("image", path, form, outResponse)
 }
 
-func (comp *Client) UploadTempVoice(path string, form *object.HashMap, outResponse interface{}) (interface{}, error) {
+func (comp *Client) UploadTempVoice(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	return comp.Upload("voice", path, form, outResponse)
 }
 
-func (comp *Client) UploadTempVideo(path string, form *object.HashMap, outResponse interface{}) (interface{}, error) {
+func (comp *Client) UploadTempVideo(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	return comp.Upload("video", path, form, outResponse)
 }
 
-func (comp *Client) UploadTempFile(path string, form *object.HashMap, outResponse interface{}) (interface{}, error) {
+func (comp *Client) UploadTempFile(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	return comp.Upload("file", path, form, outResponse)
 }
 
-func (comp *Client) Upload(mediaType string, path string, form *object.HashMap, outResponse interface{}) (interface{}, error) {
+func (comp *Client) Upload(mediaType string, path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 
 	files := &object.HashMap{
 		"media": path,
 	}
 
-	return comp.HttpUpload("cgi-bin/media/upload", files, form, &object.StringMap{
+	return comp.HttpUpload("cgi-bin/media/upload", files, form.ToHashMap(), &object.StringMap{
 		"type": mediaType,
 	}, nil, outResponse)
 }

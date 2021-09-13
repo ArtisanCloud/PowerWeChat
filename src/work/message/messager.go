@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/message/response"
 	"reflect"
 	"strings"
@@ -13,7 +14,7 @@ import (
 type Messager struct {
 	message *messages.Message
 
-	To        *object.HashMap
+	To        *power.HashMap
 	AgentID   int
 	secretive bool
 	Client    *Client
@@ -70,7 +71,7 @@ func (msg *Messager) SetRecipients(ids interface{}, key string) *Messager {
 	default:
 	}
 
-	msg.To = &object.HashMap{key: strIDs}
+	msg.To = &power.HashMap{key: strIDs}
 
 	return msg
 }
@@ -91,7 +92,7 @@ func (msg *Messager) Send(message *messages.Message) (*response.ResponseMessageS
 	messageToSend, err := msg.message.TransformForJsonRequest(object.MergeHashMap(&object.HashMap{
 		"agentid": msg.AgentID,
 		"safe":    secretive,
-	}, msg.To), true)
+	}, msg.To.ToHashMap()), true)
 	if err != nil {
 		return nil, err
 	}

@@ -1,6 +1,8 @@
 package contract
 
-import "github.com/ArtisanCloud/go-libs/object"
+import (
+	"github.com/ArtisanCloud/go-libs/object"
+)
 
 type MessageInterface interface {
 	GetType() string

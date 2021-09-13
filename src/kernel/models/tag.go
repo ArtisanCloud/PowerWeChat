@@ -1,6 +1,5 @@
 package models
 
-
 type Tag struct {
 	id       int    `gorm:"column:id json:id"`
 	name     string `gorm:"column:name json:name"`

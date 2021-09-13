@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/bill"
@@ -12,9 +13,12 @@ import (
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
 	"github.com/ArtisanCloud/power-wechat/src/payment/order"
+	"github.com/ArtisanCloud/power-wechat/src/payment/profitSharing"
 	"github.com/ArtisanCloud/power-wechat/src/payment/redpack"
 	"github.com/ArtisanCloud/power-wechat/src/payment/refund"
+	"github.com/ArtisanCloud/power-wechat/src/payment/reverse"
 	"github.com/ArtisanCloud/power-wechat/src/payment/sandbox"
+	"github.com/ArtisanCloud/power-wechat/src/payment/transfer"
 	"net/http"
 	"time"
 )
@@ -23,8 +27,7 @@ type Payment struct {
 	kernel2.ApplicationPaymentInterface
 	*kernel.ServiceContainer
 
-	ExternalRequest *http.Request
-	Config          *kernel.Config
+	Config *kernel.Config
 
 	Order   *order.Client
 	JSSDK   *jssdk.Client
@@ -33,7 +36,10 @@ type Payment struct {
 	Refund *refund.Client
 	Bill   *bill.Client
 
-	RedPack *redpack.Client
+	RedPack       *redpack.Client
+	Transfer      *transfer.Client
+	Reverse       *reverse.Client
+	ProfitSharing *profitSharing.Client
 
 	Base *base.Client
 }
@@ -72,7 +78,7 @@ type Http struct {
 	BaseURI string
 }
 
-func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
+func NewPayment(config *UserConfig) (*Payment, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -94,12 +100,6 @@ func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	// init app
 	app := &Payment{
 		ServiceContainer: container,
-	}
-
-	//-------------- external request --------------
-	app.ExternalRequest = r
-	if r == nil {
-		app.ExternalRequest = &http.Request{}
 	}
 
 	//-------------- global app config --------------
@@ -126,6 +126,15 @@ func NewPayment(config *UserConfig, r *http.Request) (*Payment, error) {
 	//-------------- Red Pack --------------
 	app.RedPack = redpack.RegisterProvider(app)
 
+	//-------------- Transfer --------------
+	app.Transfer = transfer.RegisterProvider(app)
+
+	//-------------- Reverse --------------
+	app.Reverse = reverse.RegisterProvider(app)
+
+	//-------------- Reverse --------------
+	app.ProfitSharing = profitSharing.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -145,8 +154,6 @@ func (app *Payment) GetConfig() *kernel.Config {
 func (app *Payment) GetComponent(name string) interface{} {
 
 	switch name {
-	case "ExternalRequest":
-		return app.ExternalRequest
 	case "Base":
 		return app.Base
 	case "JSSDK":
@@ -156,14 +163,19 @@ func (app *Payment) GetComponent(name string) interface{} {
 	case "Config":
 		return app.Config
 	case "Order":
-		return app.Config
+		return app.Order
 	case "Refund":
-		return app.Config
+		return app.Refund
 	case "Bill":
-		return app.Config
+		return app.Bill
 	case "RedPack":
-		return app.Config
-
+		return app.RedPack
+	case "Transfer":
+		return app.Transfer
+	case "Reverse":
+		return app.Reverse
+	case "ProfitSharing":
+		return app.ProfitSharing
 	default:
 		return nil
 	}
@@ -199,16 +211,16 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
-	return notify.NewPaidNotify(app).Handle(closure)
+func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+	return notify.NewPaidNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
-	return notify.NewRefundNotify(app).Handle(closure)
+func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+	return notify.NewRefundNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(closure func(message *object.HashMap, content *object.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
-	return notify.NewScannedNotify(app).Handle(closure)
+func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
+	return notify.NewScannedNotify(app, request).Handle(closure)
 }
 
 func (app *Payment) InSandbox() bool {

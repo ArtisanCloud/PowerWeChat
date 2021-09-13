@@ -7,6 +7,7 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	base2 "github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
@@ -22,17 +23,27 @@ type Handler struct {
 	Check      bool
 	Sign       bool
 
-	Handle func(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) *http.Response
+	ExternalRequest *http.Request
+
+	Handle func(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"
 const FAIL = "FAIL"
 
-func NewHandler(app *kernel.ApplicationPaymentInterface) *Handler {
+func NewHandler(app *kernel.ApplicationPaymentInterface, r *http.Request) *Handler {
+
+	//-------------- external request --------------
+	request := &http.Request{}
+	if r != nil {
+		request = r
+	}
+
 	return &Handler{
-		App:   app,
-		Check: true,
-		Sign:  false,
+		App:             app,
+		Check:           true,
+		Sign:            false,
+		ExternalRequest: request,
 	}
 }
 
@@ -50,15 +61,15 @@ func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Ha
 func (handler *Handler) ToResponse() (response *http.Response, err error) {
 
 	returnCode := SUCCESS
-	returnMsg:="成功"
+	returnMsg := "成功"
 	if handler.fail != "" {
 		returnCode = FAIL
 		returnMsg = handler.fail
 		err = errors.New(handler.fail)
 	}
 	base := &object.StringMap{
-		"code": returnCode,
-		"message":  returnMsg,
+		"code":           returnCode,
+		"uniformMessage": returnMsg,
 	}
 
 	attributes := object.MergeStringMap(base, handler.Attributes)
@@ -71,7 +82,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	}
 
 	bodyBuffer, _ := json.Marshal(attributes)
-	rs := response2.NewHttpResponse()
+	rs := response2.NewHttpResponse(http.StatusOK)
 	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
 	return rs.Response, err
@@ -100,7 +111,7 @@ func (handler *Handler) DecryptMessage(key string) (string, error) {
 		return "", err
 	}
 	if (*message)[key] == nil {
-		return "", errors.New("message doesn't have the key value")
+		return "", errors.New("uniformMessage doesn't have the key value")
 	}
 	content := (*message)[key].(map[string]interface{})
 	config := (*handler.App).GetConfig()

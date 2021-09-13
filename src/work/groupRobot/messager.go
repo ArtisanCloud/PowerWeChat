@@ -33,7 +33,7 @@ func (comp *Messager) Message(message interface{}) (*Messager, error) {
 	case *messages.Message:
 		comp.message = message.(*messages.Message)
 	default:
-		return nil, errors.New(" Invalid message. ")
+		return nil, errors.New(" Invalid uniformMessage. ")
 	}
 
 	return comp, nil

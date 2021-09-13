@@ -124,7 +124,6 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 	return xmlByte, nil
 }
 
-
 // Decrypt decrypt xml msg and return xml
 func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timestamp string) ([]byte, *support.CryptError) {
 	var msg4Recv WeComRecvMsg
@@ -170,12 +169,12 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 
 // VerifyUrl Parsing the official WeChat callback validation.
 // Wechat Docs: https://work.weixin.qq.com/api/doc/90000/90135/90235
-// When adding URLs to the WeChat admin backend, WeChat will trigger a GET request to verify whether the server can process the encrypted information properly, and the message needs to be decrypted and returned.
+// When adding URLs to the WeChat admin backend, WeChat will trigger a GET request to verify whether the server can process the encrypted information properly, and the uniformMessage needs to be decrypted and returned.
 // 在微信管理后台添加URL的时候，微信会触发一条GET请求用于验证服务器能否正常处理加密信息，需要将消息解密出来返回。
 // eg: "/app-callback?msg_signature=1495c4dfd4958d4e5faf618978ae66943a042f87&timestamp=1623292419&nonce=1623324060&echostr=o1XtmVltGmUAqoWee54yd4Q5ZBgrw4%2F9lFo5qdZoVPd1DybzarjuYCfFlR2AFbAcWHwFgmbrVBD%2Bf9910QIF6g%3D%3D"
 func (encryptor *Encryptor) VerifyUrl(content string, msgSignature, nonce, timestamp string) ([]byte, *support.CryptError) {
 	msg4Recv := &WeComRecvMsg{
-		Encrypt:    content,
+		Encrypt: content,
 	}
 	msg4RecvByte, err := xml.Marshal(msg4Recv)
 	if err != nil {

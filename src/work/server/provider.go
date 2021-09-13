@@ -17,7 +17,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (*kernel.Encryptor, *Guar
 
 	guard := NewGuard(&app)
 	echoStrHandler := handlers.NewEchoStrHandler(&app)
-	guard.Push(echoStrHandler,messages.VOID)
+	guard.Push(echoStrHandler, messages.VOID)
 
 	return encryptor, guard
 }

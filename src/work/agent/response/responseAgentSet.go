@@ -6,6 +6,4 @@ import (
 
 type ResponseAgentSet struct {
 	*response.ResponseWork
-
 }
-

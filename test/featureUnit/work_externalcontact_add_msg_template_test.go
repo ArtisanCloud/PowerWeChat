@@ -62,7 +62,7 @@ func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error message as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMSG)
 	}
 
 	fmt.Dump(response)

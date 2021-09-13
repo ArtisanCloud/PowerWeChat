@@ -12,7 +12,7 @@ const (
 	ErrorEncryptAes    = -40006 // AES 加密失败
 	ErrorDecryptAes    = -40007 // AES 解密失败
 	ErrorInvalidAesKey = -40004 // AESKey 非法
-	ErrorInvalidIv = -10001 // AESKey 非法
+	ErrorInvalidIv     = -10001 // AESKey 非法
 )
 
 type CryptError struct {
@@ -24,7 +24,7 @@ func NewCryptError(errCode int, errMsg string) *CryptError {
 	return &CryptError{ErrCode: errCode, ErrMsg: errMsg}
 }
 
-type AES struct {}
+type AES struct{}
 
 func NewAES() *AES {
 	return &AES{}
@@ -74,7 +74,6 @@ func (a AES) Decrypt(cipherText string, key, iv []byte) ([]byte, *CryptError) {
 		return nil, NewCryptError(ErrorDecryptAes, "encrypt_msg not a multiple of the block size")
 	}
 
-
 	mode := cipher.NewCBCDecrypter(block, iv)
 
 	mode.CryptBlocks(encryptMsg, encryptMsg)
@@ -108,7 +107,6 @@ func (a *AES) PKCS7UnPadding(text []byte) ([]byte, *CryptError) {
 	paddingLen := int(text[plaintextLen-1])
 	return text[:plaintextLen-paddingLen], nil
 }
-
 
 // DecryptAES256GCM 使用 AEAD_AES_256_GCM 算法进行解密
 //

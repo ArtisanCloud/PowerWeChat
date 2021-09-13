@@ -31,7 +31,7 @@ func (interactCache *InteractsWithCache) setCache(cache cache.CacheInterface) *I
 
 func (interactCache *InteractsWithCache) createDefaultCache() cache.CacheInterface {
 
-	interactCache.Cache = cache.NewMemCache("ac.go.wx", time.Duration(1500), "")
+	interactCache.Cache = cache.NewMemCache("ac.go.power", time.Duration(1500), "")
 
 	return interactCache.Cache
 }

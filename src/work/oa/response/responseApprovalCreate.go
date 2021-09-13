@@ -7,6 +7,4 @@ import (
 type ResponseApprovalCreate struct {
 	*response.ResponseWork
 	SpNo string `json:"sp_no"`
-
 }
-

@@ -39,14 +39,13 @@ func (comp *Client) GetToken(corpID string, agentID string) (*response.ResponseC
 	return result, err
 }
 
-
 // https://open.work.weixin.qq.com/api/doc/90000/90135/93355
 func (comp *Client) GetMiniProgramTransferSession(userID string, sessionKey string) (*response.ResponseCorpGroupTransferSession, error) {
 
 	result := &response.ResponseCorpGroupTransferSession{}
 
 	params := &object.HashMap{
-		"userid":  userID,
+		"userid":      userID,
 		"session_key": sessionKey,
 	}
 
@@ -54,5 +53,3 @@ func (comp *Client) GetMiniProgramTransferSession(userID string, sessionKey stri
 
 	return result, err
 }
-
-

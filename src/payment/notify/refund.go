@@ -1,7 +1,7 @@
 package notify
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
 )
@@ -10,22 +10,28 @@ type Refund struct {
 	*Handler
 }
 
-func NewRefundNotify(app kernel.ApplicationPaymentInterface) *Refund {
+func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Request) *Refund {
+
 	paid := &Refund{
-		NewHandler(&app),
+		NewHandler(&app, request),
 	}
 
 	return paid
 }
 
-func (comp *Refund) Handle(closure func(message *object.HashMap, content *object.HashMap, fail string) interface{}) (*http.Response, error) {
+func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
 
-	messages, err := comp.GetMessage()
+	hashMessages, err := comp.GetMessage()
 	if err != nil {
 		return nil, err
 	}
 
-	result := closure(messages, nil,comp.fail)
+	messages, err := power.HashMapToPower(hashMessages)
+	if err != nil {
+		return nil, err
+	}
+
+	result := closure(messages, nil, comp.fail)
 	comp.Strict(result)
 
 	return comp.ToResponse()

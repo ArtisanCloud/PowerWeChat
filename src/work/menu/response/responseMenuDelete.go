@@ -6,5 +6,4 @@ import (
 
 type ResponseMenuDelete struct {
 	*response.ResponseWork
-
 }

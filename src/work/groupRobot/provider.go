@@ -6,7 +6,6 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager) {
 
-
 	client := NewClient(app)
 
 	messager := NewMessager(client)

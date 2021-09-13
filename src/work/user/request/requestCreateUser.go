@@ -1,6 +1,8 @@
 package request
 
-import "github.com/ArtisanCloud/go-libs/object"
+import (
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+)
 
 type RequestUserDetail struct {
 	UserID           string               `json:"userid"`
@@ -25,10 +27,10 @@ type RequestUserDetail struct {
 }
 
 type UserExtraAttribute struct {
-	Attrs []*object.HashMap `json:"extattr"`
+	Attrs []*power.HashMap `json:"extattr"`
 }
 
 type UserExternalProfile struct {
-	ExternalCorpName string            `json:"external_corp_name"`
-	ExternalAttr     []*object.HashMap `json:"external_attr"`
+	ExternalCorpName string           `json:"external_corp_name"`
+	ExternalAttr     []*power.HashMap `json:"external_attr"`
 }

@@ -2,6 +2,7 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 )
 
 type News struct {
@@ -17,7 +18,7 @@ func NewNews(items *object.HashMap) *News {
 	return m
 }
 
-func (msg *News) PropertiesToArray(data object.HashMap, aliases object.HashMap) *object.HashMap {
+func (msg *News) PropertiesToArray(data power.HashMap, aliases power.HashMap) *power.HashMap {
 
 	arrayItems := msg.Get("items", nil).([]*NewsItem)
 	arrayMapItems := []*object.HashMap{}
@@ -25,11 +26,10 @@ func (msg *News) PropertiesToArray(data object.HashMap, aliases object.HashMap) 
 		arrayMapItems = append(arrayMapItems, item.ToJsonArray())
 	}
 
-	return &object.HashMap{
+	return &power.HashMap{
 		"articles": arrayMapItems,
 	}
 }
-
 
 // Override ToXmlArray
 func (msg *News) OverrideToXmlArray() {
@@ -50,4 +50,3 @@ func (msg *News) OverrideToXmlArray() {
 		}
 	}
 }
-

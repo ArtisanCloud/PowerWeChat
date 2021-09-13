@@ -6,7 +6,6 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client, *WorkbenchClient) {
 
-
 	client := NewClient(app)
 
 	workbenchClient := NewWorkbenchClient(app)

@@ -77,7 +77,7 @@ func TestSha256WithRsa(t *testing.T) {
 		wantErr       bool
 	}{
 		{
-			name: "sign message in sha256withrsa success",
+			name: "sign uniformMessage in sha256withrsa success",
 			args: args{
 				source:     "source",
 				privateKey: testAlgorithmPrivateKey,
@@ -86,7 +86,7 @@ func TestSha256WithRsa(t *testing.T) {
 			wantErr:       false,
 		},
 		{
-			name: "sign message in sha256withrsa err",
+			name: "sign uniformMessage in sha256withrsa err",
 			args: args{
 				source:     "source",
 				privateKey: nil,

@@ -40,4 +40,3 @@ func (msg *NewsItem) OverrideToXmlArray() {
 		}
 	}
 }
-

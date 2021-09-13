@@ -46,7 +46,7 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 	if err != nil {
 		return nil, err
 	}
-	if isJson {
+	if !isJson {
 		return json.Marshal(options)
 	} else {
 		return options, nil
