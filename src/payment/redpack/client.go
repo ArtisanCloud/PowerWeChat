@@ -19,7 +19,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // Query Red Pack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_6&index=5
-func (comp *Client) Info(mchBillNO string, tarType string) (interface{}, error) {
+func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
 	params := &object.StringMap{
