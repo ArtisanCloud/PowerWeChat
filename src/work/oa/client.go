@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa/response"
 )
@@ -95,7 +96,7 @@ func (comp *Client) CheckInSchedules(startTime int, endTime int, userIDs []strin
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/93385
-func (comp *Client) SetCheckInSchedules(params *object.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) SetCheckInSchedules(params *power.HashMap) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
 	_, err := comp.HttpPostJson("cgi-bin/checkin/setcheckinschedulist", params, nil, nil, result)
@@ -128,7 +129,7 @@ func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseAppro
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/91853
-func (comp *Client) CreateApproval(data *object.HashMap) (*response.ResponseApprovalCreate, error) {
+func (comp *Client) CreateApproval(data *power.HashMap) (*response.ResponseApprovalCreate, error) {
 	result := &response.ResponseApprovalCreate{}
 
 	_, err := comp.HttpPostJson("cgi-bin/oa/applyevent", data, nil, nil, result)
@@ -199,7 +200,7 @@ func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpV
 	result := &response.ResponseCorpVacationGetQuota{}
 
 	_, err := comp.HttpPostJson("cgi-bin/corp/vacation/getuservacationquota", &object.HashMap{
-		"userid":  userID,
+		"userid": userID,
 	}, nil, nil, result)
 
 	return result, err
@@ -216,7 +217,3 @@ func (comp *Client) SeToneUserQuota(data *object.HashMap) (*response2.ResponseWo
 	return result, err
 
 }
-
-
-
-

@@ -2,8 +2,8 @@ package agent
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/agent/response"
 )
 
@@ -22,7 +22,7 @@ func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 
 	result := &response.ResponseAgentGet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/agent/get", nil, &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/agent/get", nil, &power.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
@@ -30,7 +30,7 @@ func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90228
-func (comp *Client) Set(agentID int, data *object.HashMap) (*response.ResponseAgentSet, error) {
+func (comp *Client) Set(agentID int, data *power.HashMap) (*response.ResponseAgentSet, error) {
 
 	result := &response.ResponseAgentSet{}
 

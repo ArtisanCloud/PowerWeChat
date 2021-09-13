@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"github.com/google/uuid"
 	http2 "net/http"
 )
 
@@ -80,25 +81,30 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 	multipart := []*object.HashMap{}
 	headers := object.HashMap{}
 
-	if form != nil && (*form)["filename"] == nil {
-		headers["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", (*form)["filename"].(string))
+	if form != nil {
+		fileName := uuid.New().String()
+		if (*form)["filename"] != nil {
+			fileName = (*form)["filename"].(string)
+		}
+		headers["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", fileName)
 	}
 
-	for name, path := range *files {
-		multipart = append(multipart, &object.HashMap{
-			"name":     name,
-			"contents": path,
-			"headers":  headers,
-		})
+	if files != nil {
+		for name, path := range *files {
+			multipart = append(multipart, &object.HashMap{
+				"name":    name,
+				"value":   path,
+				"headers": headers,
+			})
+		}
 	}
 
 	if form != nil {
-		for name, contents := range *form {
-			multipart = append(multipart, &object.HashMap{
-				"name":     name,
-				"contents": contents,
-			})
-		}
+		multipart = append(multipart, &object.HashMap{
+			"name": (*form)["name"],
+			//"filename": (*form)["filename"],
+			"value": (*form)["value"],
+		})
 	}
 
 	return client.Request(url, "POST", &object.HashMap{
@@ -120,12 +126,12 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	}
 	// http client request
 	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
-	if err!=nil{
+	if err != nil {
 		return nil, err
 	}
 
 	if returnRaw {
-		return response , err
+		return response, err
 	} else {
 		// tbf
 		config := *(*client.App).GetContainer().Config

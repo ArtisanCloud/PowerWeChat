@@ -345,7 +345,7 @@ func (serverGuard *ServerGuard) decryptMessage(content string, message *object.H
 		query.Get("timestamp"),
 	)
 	if err != nil {
-		fmt.Println("decrypt message error:", err.ErrMsg)
+		fmt.Println("decrypt uniformMessage error:", err.ErrMsg)
 	}
 	decryptMessage = string(buf)
 

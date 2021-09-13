@@ -6,7 +6,6 @@ import (
 
 func Test_RedPack_Send(t *testing.T) {
 
-
 	//para := &request.RequestMessageSendText{
 	//	&request.RequestMessageSend{
 	//		ToUser:                 "michaelhu",
@@ -27,7 +26,7 @@ func Test_RedPack_Send(t *testing.T) {
 	//if response == nil || response.ResponseWork == nil {
 	//	t.Error("response nil")
 	//} else if response.ErrCode != 0 {
-	//	t.Error("response error message as :", response.ErrMSG)
+	//	t.Error("response error uniformMessage as :", response.ErrMSG)
 	//}
 
 }

@@ -5,7 +5,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
-
 	http2 "net/http"
 )
 
@@ -38,6 +37,71 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 
 func (client *BaseClient) prepends() *object.HashMap {
 	return &object.HashMap{}
+}
+
+func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap, method string, options *object.HashMap,
+	returnRaw bool, outHeader interface{}, outBody interface{},
+) (response interface{}, err error) {
+
+	config := (*client.App).GetConfig()
+	base := &object.HashMap{}
+
+	// init options
+	if options == nil {
+		options = &object.HashMap{}
+	}
+
+	options = object.MergeHashMap(base, client.prepends(), options)
+	options = object.FilterEmptyHashMap(options)
+
+	// check need sign body or not
+	signBody := ""
+	if "get" != object.Lower(method) {
+		signBody, err = object.JsonEncode(options)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	authorization, err := client.Signer.GenerateRequestSign(&support.RequestSignChain{
+		Method:       method,
+		CanonicalURL: endpoint,
+		SignBody:     signBody,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	options = object.MergeHashMap(&object.HashMap{
+		"headers": &object.HashMap{
+			"Authorization": authorization,
+		},
+		"body": signBody,
+	}, options)
+
+	// to be setup middleware here
+	//client.PushMiddleware(client.logMiddleware(), "access_token")
+
+	// http client request
+	returnResponse, err := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	if err != nil {
+		return nil, err
+	}
+
+	if returnRaw {
+		return returnResponse, nil
+	} else {
+		responseType := config.GetString("response_type", "array")
+		var rs http2.Response = http2.Response{
+			StatusCode: 200,
+			Header:     nil,
+		}
+		rs.Body = returnResponse.GetBody()
+		result, _ := client.CastResponseToType(&rs, responseType)
+		return result, nil
+	}
+
 }
 
 func (client *BaseClient) Request(endpoint string, params *object.StringMap, method string, options *object.HashMap,
@@ -80,6 +144,10 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 		CanonicalURL: endpoint,
 		SignBody:     signBody,
 	})
+
+	if err != nil {
+		return nil, err
+	}
 
 	options = object.MergeHashMap(&object.HashMap{
 		"headers": &object.HashMap{

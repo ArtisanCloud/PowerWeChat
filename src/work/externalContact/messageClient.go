@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"reflect"
@@ -48,11 +49,11 @@ func (comp *MessageClient) Get(msgID string) (*response.ResponseGetGroupMesResul
 	return result, err
 }
 
-func (comp *MessageClient) SendWelcome(welcomeCode string, msg *object.HashMap) (*response.ResponseAddMessageTemplate, error) {
+func (comp *MessageClient) SendWelcome(welcomeCode string, msg *power.HashMap) (*response.ResponseAddMessageTemplate, error) {
 
 	result := &response.ResponseAddMessageTemplate{}
 
-	formattedMsg, err := comp.formatMessage(msg)
+	formattedMsg, err := comp.formatMessage(msg.ToHashMap())
 	if err != nil {
 		return nil, err
 	}

@@ -15,6 +15,14 @@ type ResponsePayment struct {
 	ErrCodeDes string `json:"err_code_des"`
 }
 
+type ResponseMiniProgram struct {
+	ErrCode int    `json:"errcode"`
+	ErrMSG  string `json:"errmsg"`
+
+	ResultCode  string `json:"resultcode"`
+	ResultMSG  string `json:"resultmsg"`
+}
+
 //
 //func (res *ResponseWork) GetBody() *http.ResponseWriter {
 //	return nil

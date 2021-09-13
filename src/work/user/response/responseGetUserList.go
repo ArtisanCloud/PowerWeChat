@@ -9,7 +9,4 @@ type ResponseGetUserList struct {
 	response.ResponseWork
 	//UserList []*response2.RequestUserDetail `json:"userlist"`
 	UserList []*models.Employee `json:"userlist"`
-
-
 }
-

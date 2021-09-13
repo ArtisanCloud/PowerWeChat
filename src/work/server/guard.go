@@ -24,8 +24,6 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-
-
 // Override Validate
 func (guard *Guard) OverrideIsSafeMode() {
 	guard.IsSafeMode = func() bool {

@@ -51,7 +51,6 @@ func NewMessage(attributes *object.HashMap) *Message {
 		return m.toXmlArray()
 	}
 
-
 	return m
 }
 

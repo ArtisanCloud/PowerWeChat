@@ -3,6 +3,7 @@ package messages
 import (
 	"encoding/json"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 )
 
 type Raw struct {
@@ -17,12 +18,12 @@ func NewRaw(content string) *Raw {
 	return m
 }
 
-func (msg *Raw) TransformForJsonRequest(appends *object.HashMap, withType bool) (data *object.HashMap) {
-	data = &object.HashMap{}
+func (msg *Raw) TransformForJsonRequest(appends *power.HashMap, withType bool) (data *power.HashMap) {
+	data = &power.HashMap{}
 
 	err := json.Unmarshal([]byte(msg.content()), data)
 	if err != nil {
-		data = &object.HashMap{}
+		data = &power.HashMap{}
 	}
 	return data
 }

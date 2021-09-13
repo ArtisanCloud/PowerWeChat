@@ -72,7 +72,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 		}
 	}
 
-	// request token from wx
+	// request token from power
 	response, err := accessToken.requestToken(accessToken.GetCredentials())
 	if err != nil {
 		return nil, err
@@ -133,7 +133,7 @@ func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*re
 
 func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOptions *object.HashMap) (*http.Request, error) {
 
-	// query Access Token map
+	// query Access Token power
 	mapToken, err := accessToken.getQuery()
 	if err != nil {
 		return nil, err
@@ -196,7 +196,7 @@ func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
 		key = accessToken.TokenKey
 	}
 
-	// get token string map
+	// get token string power
 	resToken, err := accessToken.GetToken(false)
 	if err != nil {
 		return nil, err

@@ -3,6 +3,7 @@ package groupRobot
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot/response"
 )
 
@@ -21,13 +22,13 @@ func (comp *Client) Message(message interface{}) (*Messager, error) {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90136/91770#%E6%96%87%E6%9C%AC%E7%B1%BB%E5%9E%8B
-func (comp *Client) Send(key string, message *object.HashMap) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) Send(key string, message *power.HashMap) (*response.ResponseGroupRobotSend, error) {
 
 	result := &response.ResponseGroupRobotSend{}
 
 	comp.Token = nil
 
-	_, err := comp.HttpPostJson("cgi-bin/webhook/send", message, &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/webhook/send", message.ToHashMap(), &object.StringMap{
 		"key": key,
 	}, nil, result)
 

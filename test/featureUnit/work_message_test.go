@@ -22,12 +22,16 @@ func Test_Message_Send_Text(t *testing.T) {
 		},
 	}
 
-	response, _ := Work.Message.Send(para)
+	response, err := Work.Message.Send(para)
+
+	if err != nil {
+		t.Error("uniformMessage send err is ", err)
+	}
 
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error message as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMSG)
 	}
 
 }

@@ -16,8 +16,6 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 	}
 }
 
-
-
 // Get Trade Bill.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_6.shtml
 func (comp *Client) GetTradeBill(date string, billType string, tarType string) (*response.ResponseBillGet, error) {
@@ -36,7 +34,6 @@ func (comp *Client) GetTradeBill(date string, billType string, tarType string) (
 	return result, err
 }
 
-
 // Get Flow Bill.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_7.shtml
 func (comp *Client) GetFlowBill(date string, accountType string, tarType string) (*response.ResponseBillGet, error) {
@@ -44,9 +41,9 @@ func (comp *Client) GetFlowBill(date string, accountType string, tarType string)
 	result := &response.ResponseBillGet{}
 
 	params := &object.StringMap{
-		"bill_date": date,
+		"bill_date":    date,
 		"account_type": accountType,
-		"tar_type":  tarType,
+		"tar_type":     tarType,
 	}
 
 	endpoint := comp.Wrap("/v3/bill/fundflowbill")
@@ -56,4 +53,3 @@ func (comp *Client) GetFlowBill(date string, accountType string, tarType string)
 }
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_8.shtml
-

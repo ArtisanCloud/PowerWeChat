@@ -25,11 +25,11 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 	switch castType {
 
 	case "array":
-		data:= &object.HashMap{}
+		data := &object.HashMap{}
 		err = json.Unmarshal(body, data)
 
 		return data, err
-	case "object":
+	case "power":
 		var data interface{}
 		err = json.Unmarshal(body, &data)
 		return data, err
