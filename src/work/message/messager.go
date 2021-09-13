@@ -99,5 +99,9 @@ func (msg *Messager) Send(message *messages.Message) (*response.ResponseMessageS
 
 	msg.secretive = false
 
-	return msg.Client.Send(messageToSend)
+	powerMessages, err := power.HashMapToPower(messageToSend)
+	if err!=nil{
+		return nil, err
+	}
+	return msg.Client.Send(powerMessages)
 }

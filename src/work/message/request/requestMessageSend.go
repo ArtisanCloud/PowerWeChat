@@ -1,6 +1,10 @@
 package request
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90236#文件消息
+type RequestMessageSendInterface interface {
+	GetAgentID() int
+	SetAgentID(agentID int) RequestMessageSendInterface
+}
 
 type RequestMessageSend struct {
 	// touser、toparty、totag不能同时为空
@@ -14,4 +18,13 @@ type RequestMessageSend struct {
 	EnableIDTrans          int `json:"enable_id_trans"`          //  0,
 	EnableDuplicateCheck   int `json:"enable_duplicate_check"`   //  0,
 	DuplicateCheckInterval int `json:"duplicate_check_interval"` //  1800
+}
+
+func (request *RequestMessageSend) GetAgentID() int {
+	return request.AgentID
+}
+
+func (request *RequestMessageSend) SetAgentID(agentID int) RequestMessageSendInterface {
+	request.AgentID = agentID
+	return request
 }
