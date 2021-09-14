@@ -44,11 +44,11 @@ type Work struct {
 	Encryptor *kernel.Encryptor
 	Server    *server.Guard
 
-	UserClient     *user.Client
+	User     *user.Client
 	UserBatchJobs  *user.BatchJobs
 	UserExportJobs *user.ExportJobs
 	UserLinkedCorp *user.LinkedCorp
-	UserTagClient  *user.TagClient
+	UserTag  *user.TagClient
 
 	ExternalContact                *externalContact.Client
 	ExternalContactContactWay      *externalContact.ContactWay
@@ -148,11 +148,11 @@ func NewWork(config *UserConfig) (*Work, error) {
 	app.Encryptor, app.Server = server.RegisterProvider(app)
 
 	//-------------- register user --------------
-	app.UserClient,
+	app.User,
 		app.UserBatchJobs,
 		app.UserExportJobs,
 		app.UserLinkedCorp,
-		app.UserTagClient = user.RegisterProvider(app)
+		app.UserTag = user.RegisterProvider(app)
 
 	//-------------- register external contact --------------
 	app.ExternalContact,
@@ -223,7 +223,7 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.Server
 
 	case "UserClient":
-		return app.UserClient
+		return app.User
 	case "UserBatchJobsClient":
 		return app.UserBatchJobs
 	case "UserExportJobs":
@@ -231,7 +231,7 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "UserLinkedCorpClient":
 		return app.UserLinkedCorp
 	case "UserTagClient":
-		return app.UserTagClient
+		return app.UserTag
 
 	case "ExternalContact":
 		return app.ExternalContact
