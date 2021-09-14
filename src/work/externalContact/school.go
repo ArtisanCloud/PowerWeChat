@@ -2,12 +2,12 @@ package externalContact
 
 import "github.com/ArtisanCloud/power-wechat/src/kernel"
 
-type StatisticsClient struct {
+type School struct {
 	*kernel.BaseClient
 }
 
-func NewStatisticsClient(app kernel.ApplicationInterface) *StatisticsClient {
-	return &StatisticsClient{
+func NewSchoolClient(app kernel.ApplicationInterface) *School {
+	return &School{
 		kernel.NewBaseClient(&app, nil),
 	}
 }

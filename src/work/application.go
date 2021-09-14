@@ -44,18 +44,19 @@ type Work struct {
 	Encryptor *kernel.Encryptor
 	Server    *server.Guard
 
-	UserClient           *user.Client
-	UserBatchJobsClient  *user.BatchJobsClient
-	UserLinkedCorpClient *user.LinkedCorpClient
-	UserTagClient        *user.TagClient
+	UserClient     *user.Client
+	UserBatchJobs  *user.BatchJobs
+	UserExportJobs *user.ExportJobs
+	UserLinkedCorp *user.LinkedCorp
+	UserTagClient  *user.TagClient
 
 	ExternalContact                *externalContact.Client
-	ExternalContactContactWay      *externalContact.ContactWayClient
-	ExternalContactStatistics      *externalContact.StatisticsClient
-	ExternalContactMessage         *externalContact.MessageClient
-	ExternalContactSchool          *externalContact.SchoolClient
-	ExternalContactMoment          *externalContact.MomentClient
-	ExternalContactMessageTemplate *externalContact.MessageTemplateClient
+	ExternalContactContactWay      *externalContact.ContactWay
+	ExternalContactStatistics      *externalContact.Statistics
+	ExternalContactMessage         *externalContact.Message
+	ExternalContactSchool          *externalContact.School
+	ExternalContactMoment          *externalContact.Moment
+	ExternalContactMessageTemplate *externalContact.MessageTemplate
 
 	Media *media.Client
 	Menu  *menu.Client
@@ -148,8 +149,9 @@ func NewWork(config *UserConfig) (*Work, error) {
 
 	//-------------- register user --------------
 	app.UserClient,
-		app.UserBatchJobsClient,
-		app.UserLinkedCorpClient,
+		app.UserBatchJobs,
+		app.UserExportJobs,
+		app.UserLinkedCorp,
 		app.UserTagClient = user.RegisterProvider(app)
 
 	//-------------- register external contact --------------
@@ -223,9 +225,11 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "UserClient":
 		return app.UserClient
 	case "UserBatchJobsClient":
-		return app.UserBatchJobsClient
+		return app.UserBatchJobs
+	case "UserExportJobs":
+		return app.UserExportJobs
 	case "UserLinkedCorpClient":
-		return app.UserLinkedCorpClient
+		return app.UserLinkedCorp
 	case "UserTagClient":
 		return app.UserTagClient
 

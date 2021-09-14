@@ -6,20 +6,23 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (
 	*Client,
-	*BatchJobsClient,
-	*LinkedCorpClient,
+	*BatchJobs,
+	*ExportJobs,
+	*LinkedCorp,
 	*TagClient,
 ) {
 	//config := app.GetConfig()
 
 	client := NewClient(app)
 
-	UserBatchJobsClient := NewBatchJobsClient(app)
-	UserLinkedCorpClient := NewLinkedCorpClient(app)
-	UserTagClient := NewTagClient(app)
+	UserBatchJobs := NewBatchJobs(app)
+	UserExportJobs := NewExportJobs(app)
+	UserLinkedCorp := NewLinkedCorp(app)
+	UserTag := NewTagClient(app)
 
 	return client,
-		UserBatchJobsClient,
-		UserLinkedCorpClient,
-		UserTagClient
+		UserBatchJobs,
+		UserExportJobs,
+		UserLinkedCorp,
+		UserTag
 }
