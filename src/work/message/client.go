@@ -23,10 +23,14 @@ func (comp *Client) Message(message *messages.Message) *Messager {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90236
-func (comp *Client) Send(messages interface{}) (*response.ResponseMessageSend, error) {
+func (comp *Client) Send(messages *power.HashMap) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
 
+	if (*messages)["agentid"] == nil || (*messages)["agentid"].(int) <= 0 {
+		config := (*comp.App).GetConfig()
+		(*messages)["agentid"] = config.GetInt("agent_id", 0)
+	}
 	_, err := comp.HttpPostJson("cgi-bin/message/send", messages, nil, nil, result)
 
 	return result, err

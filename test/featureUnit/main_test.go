@@ -93,10 +93,10 @@ func TestInit(t *testing.T) {
 
 func TestInitWork(t *testing.T) {
 	config := GetWorkConfig()
-	Work, _ = work.NewWork(config, nil)
+	Work, _ = work.NewWork(config)
 
 }
 func TestInitPayment(t *testing.T) {
 	config := GetPaymentConfig()
-	Payment, _ = payment.NewPayment(config, nil)
+	Payment, _ = payment.NewPayment(config)
 }
