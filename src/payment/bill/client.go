@@ -1,6 +1,7 @@
 package bill
 
 import (
+	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/payment/bill/response"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
@@ -53,3 +54,6 @@ func (comp *Client) GetFlowBill(date string, accountType string, tarType string)
 }
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_8.shtml
+func (comp *Client) DownloadBill(requestDownload *response2.RequestDownload, filePath string) (int64, error) {
+	return comp.StreamDownload(requestDownload, filePath)
+}
