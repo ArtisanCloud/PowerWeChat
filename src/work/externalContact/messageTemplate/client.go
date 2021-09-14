@@ -2,12 +2,12 @@ package messageTemplate
 
 import "github.com/ArtisanCloud/power-wechat/src/kernel"
 
-type MessageTemplate struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewMessageTemplate(app kernel.ApplicationInterface) *MessageTemplate {
-	return &MessageTemplate{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }

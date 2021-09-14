@@ -62,13 +62,13 @@ type Work struct {
 	UserTag        *tag.Client
 
 	ExternalContact                *externalContact.Client
-	ExternalContactContactWay      *contactWay.ContactWay
-	ExternalContactStatistics      *statistics.Statistics
-	ExternalContactMessage         *message2.Message
-	ExternalContactSchool          *school.School
-	ExternalContactMoment          *moment.Moment
-	ExternalContactMessageTemplate *messageTemplate.MessageTemplate
-	ExternalContactGroupChat       *groupChat.GroupChat
+	ExternalContactContactWay      *contactWay.Client
+	ExternalContactStatistics      *statistics.Client
+	ExternalContactMessage         *message2.Client
+	ExternalContactSchool          *school.Client
+	ExternalContactMoment          *moment.Client
+	ExternalContactMessageTemplate *messageTemplate.Client
+	ExternalContactGroupChat       *groupChat.Client
 
 	Media *media.Client
 	Menu  *menu.Client

@@ -2,12 +2,12 @@ package statistics
 
 import "github.com/ArtisanCloud/power-wechat/src/kernel"
 
-type Statistics struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewStatisticsClient(app kernel.ApplicationInterface) *Statistics {
-	return &Statistics{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }

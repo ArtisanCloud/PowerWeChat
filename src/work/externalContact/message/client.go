@@ -11,12 +11,12 @@ import (
 	"reflect"
 )
 
-type Message struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewMessageClient(app kernel.ApplicationInterface) *Message {
-	return &Message{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
@@ -25,7 +25,7 @@ var required = []string{"content", "title", "url", "pic_media_id", "appid", "pag
 
 // 添加企业群发消息模板
 // https://work.weixin.qq.com/api/doc#90000/90135/91560
-func (comp *Message) Submit(msg *object.HashMap) (*response.ResponseAddMessageTemplate, error) {
+func (comp  *Client) Submit(msg *object.HashMap) (*response.ResponseAddMessageTemplate, error) {
 
 	result := &response.ResponseAddMessageTemplate{}
 
@@ -38,7 +38,7 @@ func (comp *Message) Submit(msg *object.HashMap) (*response.ResponseAddMessageTe
 	return result, err
 }
 
-func (comp *Message) Get(msgID string) (*response.ResponseGetGroupMesResult, error) {
+func (comp  *Client) Get(msgID string) (*response.ResponseGetGroupMesResult, error) {
 
 	result := &response.ResponseGetGroupMesResult{}
 
@@ -49,7 +49,7 @@ func (comp *Message) Get(msgID string) (*response.ResponseGetGroupMesResult, err
 	return result, err
 }
 
-func (comp *Message) SendWelcome(welcomeCode string, msg *power.HashMap) (*response.ResponseAddMessageTemplate, error) {
+func (comp  *Client) SendWelcome(welcomeCode string, msg *power.HashMap) (*response.ResponseAddMessageTemplate, error) {
 
 	result := &response.ResponseAddMessageTemplate{}
 
@@ -67,7 +67,7 @@ func (comp *Message) SendWelcome(welcomeCode string, msg *power.HashMap) (*respo
 	return result, err
 }
 
-func (comp *Message) formatMessage(data *object.HashMap) (*object.HashMap, error) {
+func (comp  *Client) formatMessage(data *object.HashMap) (*object.HashMap, error) {
 	params := *data
 
 	if params["text"] != nil {
@@ -124,7 +124,7 @@ func (comp *Message) formatMessage(data *object.HashMap) (*object.HashMap, error
 	return &params, nil
 }
 
-func (comp *Message) formatFields(data interface{}) (interface{}, error) {
+func (comp  *Client) formatFields(data interface{}) (interface{}, error) {
 
 	// input data
 	inputValues := reflect.ValueOf(data)

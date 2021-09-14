@@ -2,12 +2,12 @@ package school
 
 import "github.com/ArtisanCloud/power-wechat/src/kernel"
 
-type School struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewSchoolClient(app kernel.ApplicationInterface) *School {
-	return &School{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }

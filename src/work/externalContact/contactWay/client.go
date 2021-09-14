@@ -8,19 +8,19 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 )
 
-type ContactWay struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewClient(app kernel.ApplicationInterface) *ContactWay {
-	return &ContactWay{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
 
 // 配置客户联系「联系我」方式.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92572
-func (comp *ContactWay) Create(params *request.RequestAddContactWay) (*response.ResponseAddContactWay, error) {
+func (comp *Client) Create(params *request.RequestAddContactWay) (*response.ResponseAddContactWay, error) {
 
 	result := &response.ResponseAddContactWay{}
 
@@ -29,7 +29,7 @@ func (comp *ContactWay) Create(params *request.RequestAddContactWay) (*response.
 	return result, err
 }
 
-func (comp *ContactWay) Get(configID string) (*response.ResponseGetContactWay, error) {
+func (comp *Client) Get(configID string) (*response.ResponseGetContactWay, error) {
 
 	result := &response.ResponseGetContactWay{}
 
@@ -40,7 +40,7 @@ func (comp *ContactWay) Get(configID string) (*response.ResponseGetContactWay, e
 	return result, err
 }
 
-func (comp *ContactWay) Update(configID string, config *object.HashMap) (*response.ResponseAddContactWay, error) {
+func (comp *Client) Update(configID string, config *object.HashMap) (*response.ResponseAddContactWay, error) {
 
 	result := &response.ResponseAddContactWay{}
 	params := object.MergeHashMap(&object.HashMap{
@@ -52,7 +52,7 @@ func (comp *ContactWay) Update(configID string, config *object.HashMap) (*respon
 	return result, err
 }
 
-func (comp *ContactWay) Delete(configID string) (*response2.ResponseWork, error) {
+func (comp *Client) Delete(configID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

@@ -11,7 +11,7 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewMomentClient(app kernel.ApplicationInterface) *Client {
+func NewClient(app kernel.ApplicationInterface) *Client {
 	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}

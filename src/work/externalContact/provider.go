@@ -13,26 +13,26 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (
 	*Client,
-	*contactWay.ContactWay,
-	*statistics.Statistics,
-	*message.Message,
-	*school.School,
-	*moment.Moment,
-	*messageTemplate.MessageTemplate,
-	*groupChat.GroupChat,
+	*contactWay.Client,
+	*statistics.Client,
+	*message.Client,
+	*school.Client,
+	*moment.Client,
+	*messageTemplate.Client,
+	*groupChat.Client,
 ) {
 	//config := app.GetConfig()
 
 	client := NewClient(app)
 
-	contactWayClient := contactWay.NewContactClient(app)
+	contactWayClient := contactWay.NewClient(app)
 
-	statistics := statistics.NewStatisticsClient(app)
-	message := message.NewMessageClient(app)
-	school := school.NewSchoolClient(app)
-	moment := moment.NewMomentClient(app)
-	messageTemplate := messageTemplate.NewMessageTemplate(app)
-	groupChat := groupChat.NewGroupChat(app)
+	statistics := statistics.NewClient(app)
+	message := message.NewClient(app)
+	school := school.NewClient(app)
+	moment := moment.NewClient(app)
+	messageTemplate := messageTemplate.NewClient(app)
+	groupChat := groupChat.NewClient(app)
 
 	return client,
 		contactWayClient,

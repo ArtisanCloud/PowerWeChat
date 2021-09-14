@@ -7,19 +7,19 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 )
 
-type GroupChat struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewGroupChat(app kernel.ApplicationInterface) *GroupChat {
-	return &GroupChat{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
 
 // 获取客户群列表
 // https://work.weixin.qq.com/api/doc/90000/90135/92120
-func (comp *GroupChat) GroupChatList(params *request.RequestAddGroupChat) (*response.ResponseGroupChatList, error) {
+func (comp  *Client) GroupChatList(params *request.RequestAddGroupChat) (*response.ResponseGroupChatList, error) {
 
 	result := &response.ResponseGroupChatList{}
 
@@ -30,7 +30,7 @@ func (comp *GroupChat) GroupChatList(params *request.RequestAddGroupChat) (*resp
 
 // 获取客户群详情
 // https://work.weixin.qq.com/api/doc/90000/90135/92122
-func (comp *GroupChat) GetGroupChat(chatID string, needName bool) (*response.ResponseGroupChatGet, error) {
+func (comp  *Client) GetGroupChat(chatID string, needName bool) (*response.ResponseGroupChatGet, error) {
 
 	result := &response.ResponseGroupChatGet{}
 
@@ -46,7 +46,7 @@ func (comp *GroupChat) GetGroupChat(chatID string, needName bool) (*response.Res
 
 // 客户群opengid转换
 // https://work.weixin.qq.com/api/doc/90000/90135/94822
-func (comp *GroupChat) OpenGIDToChatID(openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
+func (comp  *Client) OpenGIDToChatID(openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
 
 	result := &response.ResponseGroupChatOpenGIDToChatID{}
 
