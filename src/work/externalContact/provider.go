@@ -7,11 +7,12 @@ import (
 func RegisterProvider(app kernel.ApplicationInterface) (
 	*Client,
 	*ContactWay,
-	*StatisticsClient,
+	*Statistics,
 	*Message,
-	*SchoolClient,
+	*School,
 	*Moment,
 	*MessageTemplate,
+	*GroupChat,
 ) {
 	//config := app.GetConfig()
 
@@ -19,17 +20,19 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 
 	contactWayClient := NewContactClient(app)
 
-	ExternalContactStatistics := NewStatisticsClient(app)
-	ExternalContactMessage := NewMessageClient(app)
-	School := NewSchoolClient(app)
-	ExternalContactMoment := NewMomentClient(app)
-	ExternalContactMessageTemplate := NewMessageTemplate(app)
+	statistics := NewStatisticsClient(app)
+	message := NewMessageClient(app)
+	school := NewSchoolClient(app)
+	moment := NewMomentClient(app)
+	messageTemplate := NewMessageTemplate(app)
+	groupChat := NewGroupChat(app)
 
 	return client,
 		contactWayClient,
-		ExternalContactStatistics,
-		ExternalContactMessage,
-		School,
-		ExternalContactMoment,
-		ExternalContactMessageTemplate
+		statistics,
+		message,
+		school,
+		moment,
+		messageTemplate,
+		groupChat
 }

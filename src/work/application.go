@@ -44,11 +44,11 @@ type Work struct {
 	Encryptor *kernel.Encryptor
 	Server    *server.Guard
 
-	User     *user.Client
+	User           *user.Client
 	UserBatchJobs  *user.BatchJobs
 	UserExportJobs *user.ExportJobs
 	UserLinkedCorp *user.LinkedCorp
-	UserTag  *user.TagClient
+	UserTag        *user.TagClient
 
 	ExternalContact                *externalContact.Client
 	ExternalContactContactWay      *externalContact.ContactWay
@@ -57,6 +57,7 @@ type Work struct {
 	ExternalContactSchool          *externalContact.School
 	ExternalContactMoment          *externalContact.Moment
 	ExternalContactMessageTemplate *externalContact.MessageTemplate
+	ExternalContactGroupChat       *externalContact.GroupChat
 
 	Media *media.Client
 	Menu  *menu.Client
@@ -161,7 +162,8 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.ExternalContactMessage,
 		app.ExternalContactSchool,
 		app.ExternalContactMoment,
-		app.ExternalContactMessageTemplate = externalContact.RegisterProvider(app)
+		app.ExternalContactMessageTemplate,
+		app.ExternalContactGroupChat = externalContact.RegisterProvider(app)
 
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)
