@@ -20,6 +20,10 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/power-wechat/src/work/server"
 	"github.com/ArtisanCloud/power-wechat/src/work/user"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/batchJobs"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/exportJobs"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/linkedCorp"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/tag"
 	"net/http"
 )
 
@@ -45,10 +49,10 @@ type Work struct {
 	Server    *server.Guard
 
 	User           *user.Client
-	UserBatchJobs  *user.BatchJobs
-	UserExportJobs *user.ExportJobs
-	UserLinkedCorp *user.LinkedCorp
-	UserTag        *user.TagClient
+	UserBatchJobs  *batchJobs.Client
+	UserExportJobs *exportJobs.Client
+	UserLinkedCorp *linkedCorp.Client
+	UserTag        *tag.Client
 
 	ExternalContact                *externalContact.Client
 	ExternalContactContactWay      *externalContact.ContactWay

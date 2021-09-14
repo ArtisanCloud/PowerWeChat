@@ -1,4 +1,4 @@
-package user
+package linkedCorp
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
@@ -6,12 +6,12 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
 )
 
-type LinkedCorp struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewLinkedCorp(app kernel.ApplicationInterface) *LinkedCorp {
-	return &LinkedCorp{
+func NewLinkedCorp(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }

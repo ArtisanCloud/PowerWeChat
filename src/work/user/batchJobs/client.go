@@ -1,4 +1,4 @@
-package user
+package batchJobs
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
@@ -7,12 +7,12 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
 )
 
-type BatchJobs struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewBatchJobs(app kernel.ApplicationInterface) *BatchJobs {
-	return &BatchJobs{
+func NewBatchJobs(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
@@ -33,8 +33,6 @@ func (comp *Client) SyncUser(mediaID string, toInvite bool, callback *power.Stri
 	return result, err
 }
 
-
-
 // 全量覆盖成员
 // https://work.weixin.qq.com/api/doc/90000/90135/90981
 func (comp *Client) ReplaceUser(mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
@@ -50,7 +48,6 @@ func (comp *Client) ReplaceUser(mediaID string, toInvite bool, callback *power.S
 
 	return result, err
 }
-
 
 // 全量覆盖部门
 // https://work.weixin.qq.com/api/doc/90000/90135/90982
@@ -75,7 +72,7 @@ func (comp *Client) GetJobResult(jobID string) (*response.ResponseUserBatchGetRe
 	result := &response.ResponseUserBatchGetResult{}
 
 	params := &object.StringMap{
-		"jobid":  jobID,
+		"jobid": jobID,
 	}
 	_, err := comp.HttpGet("cgi-bin/batch/getresult", params, nil, result)
 

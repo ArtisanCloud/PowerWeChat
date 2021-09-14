@@ -1,4 +1,4 @@
-package user
+package tag
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
@@ -7,12 +7,12 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
 )
 
-type TagClient struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewTagClient(app kernel.ApplicationInterface) *TagClient {
-	return &TagClient{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
@@ -21,7 +21,7 @@ func NewTagClient(app kernel.ApplicationInterface) *TagClient {
 
 // 创建标签
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90210
-func (comp *TagClient) Create(tagName string, tagID int) (*response.ResponseTagCreate, error) {
+func (comp *Client) Create(tagName string, tagID int) (*response.ResponseTagCreate, error) {
 
 	result := &response.ResponseTagCreate{}
 
@@ -35,7 +35,7 @@ func (comp *TagClient) Create(tagName string, tagID int) (*response.ResponseTagC
 
 // 更新标签名字
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90211
-func (comp *TagClient) Update(tagName string, tagID int) (*response2.ResponseWork, error) {
+func (comp *Client) Update(tagName string, tagID int) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -49,7 +49,7 @@ func (comp *TagClient) Update(tagName string, tagID int) (*response2.ResponseWor
 
 // 删除标签
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *TagClient) Delete(tagID string) (*response2.ResponseWork, error) {
+func (comp *Client) Delete(tagID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -62,7 +62,7 @@ func (comp *TagClient) Delete(tagID string) (*response2.ResponseWork, error) {
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *TagClient) Get(tagID string) (*response.ResponseTagDetail, error) {
+func (comp *Client) Get(tagID string) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
 
@@ -75,17 +75,17 @@ func (comp *TagClient) Get(tagID string) (*response.ResponseTagDetail, error) {
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *TagClient) TagUsers(tagID int, userList []string) (*response.ResponseTagCreateUser, error) {
-	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
+func (comp *Client) ClientUsers(tagID int, userList []string) (*response.ResponseTagCreateUser, error) {
+	return comp.ClientOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
 }
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *TagClient) TagDepartments(tagID int, partyList []string) (*response.ResponseTagCreateUser, error) {
-	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
+func (comp *Client) ClientDepartments(tagID int, partyList []string) (*response.ResponseTagCreateUser, error) {
+	return comp.ClientOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
 }
 
-func (comp *TagClient) TagOrUntagUsers(endpoint string, tagID int, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
+func (comp *Client) ClientOrUntagUsers(endpoint string, tagID int, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
 
 	result := &response.ResponseTagCreateUser{}
 
@@ -100,7 +100,7 @@ func (comp *TagClient) TagOrUntagUsers(endpoint string, tagID int, userList []st
 
 // 获取标签列表
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90216
-func (comp *TagClient) List() (*response.ResponseTagList, error) {
+func (comp *Client) List() (*response.ResponseTagList, error) {
 
 	result := &response.ResponseTagList{}
 

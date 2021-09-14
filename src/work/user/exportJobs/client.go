@@ -1,4 +1,4 @@
-package user
+package exportJobs
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
@@ -6,12 +6,12 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
 )
 
-type ExportJobs struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewExportJobs(app kernel.ApplicationInterface) *ExportJobs {
-	return &ExportJobs{
+func NewExportJobs(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
