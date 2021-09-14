@@ -9,7 +9,6 @@ import (
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
-	"github.com/golang-module/carbon"
 )
 
 type Client struct {
@@ -195,7 +194,7 @@ func (comp *Client) GetInvitationQrCode(sizeType int) (*response.ResponseJoinCod
 
 // 获取企业活跃成员数
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92714
-func (comp *Client) GetActiveCount(date carbon.Carbon) (*response.ResponseUserActiveCount, error) {
+func (comp *Client) GetActiveStat(date string) (*response.ResponseUserActiveCount, error) {
 
 	result := &response.ResponseUserActiveCount{}
 

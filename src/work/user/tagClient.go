@@ -4,7 +4,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	response3 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
 )
 
@@ -36,11 +35,14 @@ func (comp *TagClient) Create(tagName string, tagID int) (*response.ResponseTagC
 
 // 更新标签名字
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90211
-func (comp *TagClient) Update(data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
+func (comp *TagClient) Update(tagName string, tagID int) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/tag/update", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/tag/update", &object.HashMap{
+		"tagname": tagName,
+		"tagid":   tagID,
+	}, nil, nil, result)
 
 	return result, err
 }
