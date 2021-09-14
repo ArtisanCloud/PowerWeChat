@@ -166,6 +166,9 @@ func (client *BaseClient) StreamDownload(requestDownload *response.RequestDownlo
 	}
 
 	_, err = client.PerformRequest(requestDownload.DownloadURL, method, options, true, nil, fileHandler)
+	if err != nil {
+		return 0, err
+	}
 
 	// 校验下载文件
 	downloadedHandler,err := os.Open(filePath)
