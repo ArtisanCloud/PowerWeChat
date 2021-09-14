@@ -75,17 +75,17 @@ func (comp *Client) Get(tagID string) (*response.ResponseTagDetail, error) {
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *Client) ClientUsers(tagID int, userList []string) (*response.ResponseTagCreateUser, error) {
-	return comp.ClientOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
+func (comp *Client) TagUsers(tagID int, userList []string) (*response.ResponseTagCreateUser, error) {
+	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
 }
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *Client) ClientDepartments(tagID int, partyList []string) (*response.ResponseTagCreateUser, error) {
-	return comp.ClientOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
+func (comp *Client) TagDepartments(tagID int, partyList []string) (*response.ResponseTagCreateUser, error) {
+	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
 }
 
-func (comp *Client) ClientOrUntagUsers(endpoint string, tagID int, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
+func (comp *Client) TagOrUntagUsers(endpoint string, tagID int, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
 
 	result := &response.ResponseTagCreateUser{}
 

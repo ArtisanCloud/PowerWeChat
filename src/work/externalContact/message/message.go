@@ -1,4 +1,4 @@
-package externalContact
+package message
 
 import (
 	"errors"

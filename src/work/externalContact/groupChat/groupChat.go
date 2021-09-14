@@ -1,4 +1,4 @@
-package externalContact
+package groupChat
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"

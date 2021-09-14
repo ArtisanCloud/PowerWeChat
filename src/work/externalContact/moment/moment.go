@@ -1,4 +1,4 @@
-package externalContact
+package moment
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
@@ -7,19 +7,19 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 )
 
-type Moment struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewMomentClient(app kernel.ApplicationInterface) *Moment {
-	return &Moment{
+func NewMomentClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
 
 // 获取企业全部的发表列表
 // https://work.weixin.qq.com/api/doc/90000/90135/93333
-func (comp *GroupChat) GetMomentList(params *request.RequestGetMomentList) (*response.ResponseGetMomentList, error) {
+func (comp *Client) GetMomentList(params *request.RequestGetMomentList) (*response.ResponseGetMomentList, error) {
 
 	result := &response.ResponseGetMomentList{}
 
@@ -30,7 +30,7 @@ func (comp *GroupChat) GetMomentList(params *request.RequestGetMomentList) (*res
 
 // 客户朋友圈规则组管理
 // https://work.weixin.qq.com/api/doc/90000/90135/94890
-func (comp *GroupChat) MomentStrategyList(cursor string, limit int) (*response.ResponseMomentStrategyList, error) {
+func (comp *Client) MomentStrategyList(cursor string, limit int) (*response.ResponseMomentStrategyList, error) {
 
 	result := &response.ResponseMomentStrategyList{}
 

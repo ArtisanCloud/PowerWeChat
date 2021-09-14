@@ -1,4 +1,4 @@
-package externalContact
+package school
 
 import "github.com/ArtisanCloud/power-wechat/src/kernel"
 

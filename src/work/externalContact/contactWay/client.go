@@ -1,4 +1,4 @@
-package externalContact
+package contactWay
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
@@ -12,7 +12,7 @@ type ContactWay struct {
 	*kernel.BaseClient
 }
 
-func NewContactClient(app kernel.ApplicationInterface) *ContactWay {
+func NewClient(app kernel.ApplicationInterface) *ContactWay {
 	return &ContactWay{
 		kernel.NewBaseClient(&app, nil),
 	}

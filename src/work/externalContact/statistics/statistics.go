@@ -1,4 +1,4 @@
-package externalContact
+package statistics
 
 import "github.com/ArtisanCloud/power-wechat/src/kernel"
 

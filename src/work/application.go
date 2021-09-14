@@ -10,6 +10,13 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/corpgroup"
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat"
+	message2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/school"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics"
 	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot"
 	"github.com/ArtisanCloud/power-wechat/src/work/invoice"
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
@@ -55,13 +62,13 @@ type Work struct {
 	UserTag        *tag.Client
 
 	ExternalContact                *externalContact.Client
-	ExternalContactContactWay      *externalContact.ContactWay
-	ExternalContactStatistics      *externalContact.Statistics
-	ExternalContactMessage         *externalContact.Message
-	ExternalContactSchool          *externalContact.School
-	ExternalContactMoment          *externalContact.Moment
-	ExternalContactMessageTemplate *externalContact.MessageTemplate
-	ExternalContactGroupChat       *externalContact.GroupChat
+	ExternalContactContactWay      *contactWay.ContactWay
+	ExternalContactStatistics      *statistics.Statistics
+	ExternalContactMessage         *message2.Message
+	ExternalContactSchool          *school.School
+	ExternalContactMoment          *moment.Moment
+	ExternalContactMessageTemplate *messageTemplate.MessageTemplate
+	ExternalContactGroupChat       *groupChat.GroupChat
 
 	Media *media.Client
 	Menu  *menu.Client
