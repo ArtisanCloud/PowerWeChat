@@ -3,8 +3,8 @@ package groupChat
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/request"
 	response2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 )
 
 type Client struct {
@@ -19,7 +19,7 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取客户群列表
 // https://work.weixin.qq.com/api/doc/90000/90135/92120
-func (comp  *Client) GroupChatList(params *request.RequestAddGroupChat) (*response2.ResponseGroupChatList, error) {
+func (comp  *Client) GroupChatList(params *request2.RequestAddGroupChat) (*response2.ResponseGroupChatList, error) {
 
 	result := &response2.ResponseGroupChatList{}
 

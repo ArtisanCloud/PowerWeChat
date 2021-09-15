@@ -6,8 +6,8 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message/request"
 	response2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"reflect"
 )
@@ -74,8 +74,8 @@ func (comp  *Client) formatMessage(data *object.HashMap) (*object.HashMap, error
 	if params["text"] != nil {
 
 		switch params["text"].(type) {
-		case request.TextOfMessage:
-			_, err := comp.formatFields(params["text"].(request.TextOfMessage))
+		case request2.TextOfMessage:
+			_, err := comp.formatFields(params["text"].(request2.TextOfMessage))
 			if err != nil {
 				return nil, err
 			}
@@ -89,29 +89,29 @@ func (comp  *Client) formatMessage(data *object.HashMap) (*object.HashMap, error
 		for _, obj := range attachements {
 
 			switch obj.(type) {
-			case request.ImageOfMessage:
-				_, err := comp.formatFields(obj.(request.ImageOfMessage).Image)
+			case request2.ImageOfMessage:
+				_, err := comp.formatFields(obj.(request2.ImageOfMessage).Image)
 				if err != nil {
 					return nil, err
 				}
 
 				break
-			case request.LinkOfMessage:
-				_, err := comp.formatFields(obj.(request.LinkOfMessage).Link)
+			case request2.LinkOfMessage:
+				_, err := comp.formatFields(obj.(request2.LinkOfMessage).Link)
 				if err != nil {
 					return nil, err
 				}
 
 				break
-			case request.MiniProgramOfMessage:
-				_, err := comp.formatFields(obj.(request.MiniProgramOfMessage).MiniProgram)
+			case request2.MiniProgramOfMessage:
+				_, err := comp.formatFields(obj.(request2.MiniProgramOfMessage).MiniProgram)
 				if err != nil {
 					return nil, err
 				}
 
 				break
-			case request.VideoOfMessage:
-				_, err := comp.formatFields(obj.(request.VideoOfMessage).Video)
+			case request2.VideoOfMessage:
+				_, err := comp.formatFields(obj.(request2.VideoOfMessage).Video)
 				if err != nil {
 					return nil, err
 				}

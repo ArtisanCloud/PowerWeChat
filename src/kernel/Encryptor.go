@@ -53,7 +53,7 @@ type Encryptor struct {
 	appId     string // App token
 	token     string
 	aesKey    []byte
-	blockSize int
+	blockSize int64
 	aes       *support.AES
 }
 

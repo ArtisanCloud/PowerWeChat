@@ -3,7 +3,7 @@ package featureUnit
 import (
 	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
+	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message/request"
 	"testing"
 )
 
@@ -15,7 +15,7 @@ func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 		},
 		"sender": "WangChaoYi",
 		//"sender": "Matt",
-		"text": request.TextOfMessage{
+		"text": request2.TextOfMessage{
 			Content: "新的活动现在开始啦！",
 		},
 		"attachments": []interface{}{
@@ -26,9 +26,9 @@ func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 			//		PicURL:  "",
 			//	},
 			//},
-			request.LinkOfMessage{
+			request2.LinkOfMessage{
 				MsgType: "link",
-				Link: request.Link{
+				Link: request2.Link{
 					Title:  "活动地址",
 					PicURL: "https://baidu.com",
 					Desc:   "好奖品等你来拿",

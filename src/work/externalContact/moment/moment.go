@@ -3,8 +3,8 @@ package moment
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment/request"
 	response2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 )
 
 type Client struct {
@@ -19,7 +19,7 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取企业全部的发表列表
 // https://work.weixin.qq.com/api/doc/90000/90135/93333
-func (comp *Client) GetMomentList(params *request.RequestGetMomentList) (*response2.ResponseGetMomentList, error) {
+func (comp *Client) GetMomentList(params *request2.RequestGetMomentList) (*response2.ResponseGetMomentList, error) {
 
 	result := &response2.ResponseGetMomentList{}
 

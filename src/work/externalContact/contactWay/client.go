@@ -4,8 +4,8 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/request"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 )
 
 type Client struct {
@@ -20,7 +20,7 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 配置客户联系「联系我」方式.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92572
-func (comp *Client) Create(params *request.RequestAddContactWay) (*response3.ResponseAddContactWay, error) {
+func (comp *Client) Create(params *request2.RequestAddContactWay) (*response3.ResponseAddContactWay, error) {
 
 	result := &response3.ResponseAddContactWay{}
 
