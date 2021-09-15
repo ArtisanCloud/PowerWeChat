@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseGroupChatGet struct {
-	response.ResponseWork
+	*response.ResponseWork
 	GroupChat *power.HashMap `json:"group_chat"`
 }

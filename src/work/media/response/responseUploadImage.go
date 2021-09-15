@@ -5,6 +5,7 @@ import (
 )
 
 type ResponseUploadImage struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	URL string `json:"url"`
 }

@@ -5,7 +5,8 @@ import (
 )
 
 type ResponseGroupChatTransfer struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	ExternalContactList []*ResponseFailedChat `json:"failed_chat_list"`
 }
 

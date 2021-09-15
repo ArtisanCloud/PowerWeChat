@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseExpressCancelOrder struct {
-	response.ResponseMiniProgram
+	*response.ResponseMiniProgram
 
 	DeliveryResultCode int    `json:"delivery_resultcode"` //  0,
 	DeliveryResultMsg  string `json:"delivery_resultmsg"`  //  ""

@@ -5,6 +5,7 @@ import (
 )
 
 type ResponseUserActiveCount struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	ActiveCount string `json:"active_cnt"`
 }

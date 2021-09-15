@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseGetMomentList struct {
-	response.ResponseWork
+	*response.ResponseWork
 	NextCursor string         `json:"next_cursor"`
 	MomentList *power.HashMap `json:"moment_list"`
 }

@@ -5,6 +5,7 @@ import (
 )
 
 type ResponseMobileToUserID struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	UserID string `json:"userid"`
 }

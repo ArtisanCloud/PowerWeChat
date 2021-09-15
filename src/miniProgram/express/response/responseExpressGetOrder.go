@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExpressGetOrder struct {
-	response.ResponseMiniProgram
+	*response.ResponseMiniProgram
 
 	PrintHTML   string              `json:"print_html"`   //  "客户密码不正确"
 	WaybillData []*power.StringMap `json:"waybill_data"` //

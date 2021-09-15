@@ -4,8 +4,8 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	response3 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 )
 
 type Client struct {
@@ -20,18 +20,18 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 配置客户联系「联系我」方式.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92572
-func (comp *Client) Create(params *request.RequestAddContactWay) (*response.ResponseAddContactWay, error) {
+func (comp *Client) Create(params *request.RequestAddContactWay) (*response3.ResponseAddContactWay, error) {
 
-	result := &response.ResponseAddContactWay{}
+	result := &response3.ResponseAddContactWay{}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/add_contact_way", params, nil, nil, result)
 
 	return result, err
 }
 
-func (comp *Client) Get(configID string) (*response.ResponseGetContactWay, error) {
+func (comp *Client) Get(configID string) (*response3.ResponseGetContactWay, error) {
 
-	result := &response.ResponseGetContactWay{}
+	result := &response3.ResponseGetContactWay{}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_contact_way", &object.StringMap{
 		"config_id": configID,
@@ -40,9 +40,9 @@ func (comp *Client) Get(configID string) (*response.ResponseGetContactWay, error
 	return result, err
 }
 
-func (comp *Client) Update(configID string, config *object.HashMap) (*response.ResponseAddContactWay, error) {
+func (comp *Client) Update(configID string, config *object.HashMap) (*response3.ResponseAddContactWay, error) {
 
-	result := &response.ResponseAddContactWay{}
+	result := &response3.ResponseAddContactWay{}
 	params := object.MergeHashMap(&object.HashMap{
 		"config_id": configID,
 	}, config)

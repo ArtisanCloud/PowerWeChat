@@ -5,9 +5,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseLinkCorpGetUser struct {
+type ResponseGroupChatOpenGIDToChatID struct {
 	*response.ResponseWork
-
-	UserInfo *power.HashMap `json:"user_info"`
-
+	ChatID *power.HashMap `json:"chat_id"`
 }

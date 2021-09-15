@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGroupChatList struct {
-	response.ResponseWork
+	*response.ResponseWork
 	GroupChatList []*ResponseFailedChat `json:"group_chat_list"`
 	NextCursor    string                `json:"next_cursor"`
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"reflect"
@@ -25,9 +26,9 @@ var required = []string{"content", "title", "url", "pic_media_id", "appid", "pag
 
 // 添加企业群发消息模板
 // https://work.weixin.qq.com/api/doc#90000/90135/91560
-func (comp  *Client) Submit(msg *object.HashMap) (*response.ResponseAddMessageTemplate, error) {
+func (comp  *Client) Submit(msg *object.HashMap) (*response2.ResponseAddMessageTemplate, error) {
 
-	result := &response.ResponseAddMessageTemplate{}
+	result := &response2.ResponseAddMessageTemplate{}
 
 	params, err := comp.formatMessage(msg)
 	if err != nil {
@@ -49,9 +50,9 @@ func (comp  *Client) Get(msgID string) (*response.ResponseGetGroupMesResult, err
 	return result, err
 }
 
-func (comp  *Client) SendWelcome(welcomeCode string, msg *power.HashMap) (*response.ResponseAddMessageTemplate, error) {
+func (comp  *Client) SendWelcome(welcomeCode string, msg *power.HashMap) (*response2.ResponseAddMessageTemplate, error) {
 
-	result := &response.ResponseAddMessageTemplate{}
+	result := &response2.ResponseAddMessageTemplate{}
 
 	formattedMsg, err := comp.formatMessage(msg.ToHashMap())
 	if err != nil {

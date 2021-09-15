@@ -5,6 +5,7 @@ import (
 )
 
 type ResponseTagCreate struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	TagID string `json:"tagid"`
 }
