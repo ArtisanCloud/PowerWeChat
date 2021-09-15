@@ -19,9 +19,9 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 
 	client := NewClient(app)
 
-	UserBatchJobs := batchJobs.NewBatchJobs(app)
-	UserExportJobs := exportJobs.NewExportJobs(app)
-	UserLinkedCorp := linkedCorp.NewLinkedCorp(app)
+	UserBatchJobs := batchJobs.NewClient(app)
+	UserExportJobs := exportJobs.NewClient(app)
+	UserLinkedCorp := linkedCorp.NewClient(app)
 	UserTag := tag.NewClient(app)
 
 	return client,

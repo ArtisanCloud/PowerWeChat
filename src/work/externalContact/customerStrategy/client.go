@@ -69,7 +69,7 @@ func (comp *Client) GetRange(strategyID int64, cursor string, limit int64) (*res
 
 // 创建新的规则组
 // https://work.weixin.qq.com/api/doc/90000/90135/94883
-func (comp *Client) Create(options request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
+func (comp *Client) Create(options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
 
 	result := &response.ResponseCustomerStrategyCreate{}
 
@@ -81,7 +81,7 @@ func (comp *Client) Create(options request.RequestCustomerStrategyCreate) (*resp
 
 // 编辑规则组及其管理范围
 // https://work.weixin.qq.com/api/doc/90000/90135/94883
-func (comp *Client) Edit(options request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
+func (comp *Client) Edit(options *request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

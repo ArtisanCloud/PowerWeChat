@@ -177,7 +177,7 @@ func (comp *Client) Invite(params *power.HashMap) (*response.ResponseMobileToUse
 
 // 获取加入企业二维码
 // https://open.work.weixin.qq.com/api/doc/90000/90135/91714
-func (comp *Client) GetInvitationQrCode(sizeType int) (*response.ResponseJoinCode, error) {
+func (comp *Client) GetJoinQrCode(sizeType int) (*response.ResponseJoinCode, error) {
 
 	if sizeType < 1 || sizeType > 4 {
 		return nil, errors.New("The sizeType must be 1, 2, 3, 4.")
@@ -204,3 +204,8 @@ func (comp *Client) GetActiveStat(date string) (*response.ResponseUserActiveCoun
 
 	return result, err
 }
+
+
+
+
+

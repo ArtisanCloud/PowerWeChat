@@ -11,7 +11,7 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewBatchJobs(app kernel.ApplicationInterface) *Client {
+func NewClient(app kernel.ApplicationInterface) *Client {
 	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
@@ -67,7 +67,7 @@ func (comp *Client) ReplaceParty(mediaID string, toInvite bool, callback *power.
 
 // 获取异步任务结果
 // https://work.weixin.qq.com/api/doc/90000/90135/90983
-func (comp *Client) GetJobResult(jobID string) (*response.ResponseUserBatchGetResult, error) {
+func (comp *Client) GetBatchResult(jobID string) (*response.ResponseUserBatchGetResult, error) {
 
 	result := &response.ResponseUserBatchGetResult{}
 

@@ -5,7 +5,7 @@ import (
 )
 
 type RequestCustomerStrategyEdit struct {
-	ParentID     int64            `json:"parent_id" `
+	StrategyID     int64            `json:"strategy_id" `
 	StrategyName string           `json:"strategy_name"`
 	AdminList    []string         `json:"admin_list"`
 	Privilege    *power.HashMap   `json:"privilege"`

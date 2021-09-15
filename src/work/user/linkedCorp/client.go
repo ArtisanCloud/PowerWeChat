@@ -10,7 +10,7 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewLinkedCorp(app kernel.ApplicationInterface) *Client {
+func NewClient(app kernel.ApplicationInterface) *Client {
 	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
@@ -46,12 +46,13 @@ func (comp *Client) GetUser(userID string) (*response.ResponseLinkCorpGetUser, e
 
 // 获取互联企业部门成员
 // https://work.weixin.qq.com/api/doc/90000/90135/93168
-func (comp *Client) GetUserSimpleList(userID string) (*response.ResponseLinkCorpGetUserSimpleList, error) {
+func (comp *Client) GetUserSimpleList(departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserSimpleList, error) {
 
 	result := &response.ResponseLinkCorpGetUserSimpleList{}
 
 	options := &object.HashMap{
-		"userid":  userID,
+		"department_id":  departmentID,
+		"fetch_child":  fetchChild,
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/user/simplelist", options, nil, nil, result)

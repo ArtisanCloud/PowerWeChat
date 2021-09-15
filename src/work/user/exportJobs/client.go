@@ -10,7 +10,7 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewExportJobs(app kernel.ApplicationInterface) *Client {
+func NewClient(app kernel.ApplicationInterface) *Client {
 	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
@@ -66,11 +66,12 @@ func (comp *Client) Department(encodingAESKey string, blockSize int64) (*respons
 
 // 导出标签成员
 // https://work.weixin.qq.com/api/doc/90000/90135/94853
-func (comp *Client) TagUser(encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
+func (comp *Client) TagUser(tagID int,encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
 
 	result := &response.ResponseUserExportJobs{}
 
 	options := &object.HashMap{
+		"tagid": tagID,
 		"encoding_aeskey": encodingAESKey,
 		"block_size":      blockSize,
 	}

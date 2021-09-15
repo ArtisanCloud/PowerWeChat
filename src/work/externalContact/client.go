@@ -48,12 +48,13 @@ func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 // 获取外部联系人详情.
 // https://work.weixin.qq.com/api/doc/90000/90135/92114
-func (comp *Client) Get(externalUserId string) (*weCom.ResponseGetExternalContact, error) {
+func (comp *Client) Get(externalUserId string, cursor int) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}
 
 	_, err := comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
+		"cursor":          fmt.Sprintf("%d", cursor),
 	}, nil, result)
 
 	return result, err
@@ -61,21 +62,20 @@ func (comp *Client) Get(externalUserId string) (*weCom.ResponseGetExternalContac
 
 // 批量获取客户详情.
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92994
-func (comp *Client) BatchGet(userID string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
+func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
 
 	result := &response.ResponseBatchGetByUser{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", &object.StringMap{
+	options := &object.HashMap{
 		"userid": userID,
 		"cursor": cursor,
-		"limit":  fmt.Sprintf("%d", limit),
-	}, nil, nil, result)
+		"limit":  limit,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", options, nil, nil, result)
 
 	return result, err
 }
-
-
-
 
 // 修改客户备注信息.
 // https://work.weixin.qq.com/api/doc/90000/90135/92115
