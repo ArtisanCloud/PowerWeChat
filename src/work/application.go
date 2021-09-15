@@ -4,6 +4,12 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/customer"
+	message3 "github.com/ArtisanCloud/power-wechat/src/work/accountService/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/serviceState"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/servicer"
+	tag3 "github.com/ArtisanCloud/power-wechat/src/work/accountService/tag"
 	"github.com/ArtisanCloud/power-wechat/src/work/agent"
 	"github.com/ArtisanCloud/power-wechat/src/work/auth"
 	"github.com/ArtisanCloud/power-wechat/src/work/base"
@@ -11,12 +17,15 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat"
 	message2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/school"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics"
+	tag2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/tag"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/transfer"
 	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot"
 	"github.com/ArtisanCloud/power-wechat/src/work/invoice"
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
@@ -61,14 +70,24 @@ type Work struct {
 	UserLinkedCorp *linkedCorp.Client
 	UserTag        *tag.Client
 
-	ExternalContact                *externalContact.Client
-	ExternalContactContactWay      *contactWay.Client
-	ExternalContactStatistics      *statistics.Client
-	ExternalContactMessage         *message2.Client
-	ExternalContactSchool          *school.Client
-	ExternalContactMoment          *moment.Client
-	ExternalContactMessageTemplate *messageTemplate.Client
-	ExternalContactGroupChat       *groupChat.Client
+	ExternalContact                 *externalContact.Client
+	ExternalContactContactWay       *contactWay.Client
+	ExternalContactCustomerStrategy *customerStrategy.Client
+	ExternalContactStatistics       *statistics.Client
+	ExternalContactMessage          *message2.Client
+	ExternalContactSchool           *school.Client
+	ExternalContactMoment           *moment.Client
+	ExternalContactMessageTemplate  *messageTemplate.Client
+	ExternalContactGroupChat        *groupChat.Client
+	ExternalContactTag              *tag2.Client
+	ExternalContactTransfer         *transfer.Client
+
+	AccountService             *accountService.Client
+	AccountServiceCustomer     *customer.Client
+	AccountServiceMessage      *message3.Client
+	AccountServiceServicer     *servicer.Client
+	AccountServiceServiceState *serviceState.Client
+	AccountServiceTag          *tag3.Client
 
 	Media *media.Client
 	Menu  *menu.Client
@@ -169,12 +188,23 @@ func NewWork(config *UserConfig) (*Work, error) {
 	//-------------- register external contact --------------
 	app.ExternalContact,
 		app.ExternalContactContactWay,
-		app.ExternalContactStatistics,
+		app.ExternalContactCustomerStrategy,
+		app.ExternalContactGroupChat,
 		app.ExternalContactMessage,
-		app.ExternalContactSchool,
-		app.ExternalContactMoment,
 		app.ExternalContactMessageTemplate,
-		app.ExternalContactGroupChat = externalContact.RegisterProvider(app)
+		app.ExternalContactMoment,
+		app.ExternalContactSchool,
+		app.ExternalContactStatistics,
+		app.ExternalContactTag,
+		app.ExternalContactTransfer = externalContact.RegisterProvider(app)
+
+	//-------------- register account service --------------
+	app.AccountService,
+		app.AccountServiceCustomer,
+		app.AccountServiceMessage,
+		app.AccountServiceServicer,
+		app.AccountServiceServiceState,
+		app.AccountServiceTag = accountService.RegisterProvider(app)
 
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)

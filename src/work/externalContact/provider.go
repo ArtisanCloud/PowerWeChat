@@ -11,7 +11,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/school"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics"
-	"github.com/ArtisanCloud/power-wechat/src/work/user/tag"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/tag"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (
