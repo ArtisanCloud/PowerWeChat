@@ -11,6 +11,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/accountService/servicer"
 	tag3 "github.com/ArtisanCloud/power-wechat/src/work/accountService/tag"
 	"github.com/ArtisanCloud/power-wechat/src/work/agent"
+	"github.com/ArtisanCloud/power-wechat/src/work/agent/workbench"
 	"github.com/ArtisanCloud/power-wechat/src/work/auth"
 	"github.com/ArtisanCloud/power-wechat/src/work/base"
 	"github.com/ArtisanCloud/power-wechat/src/work/corpgroup"
@@ -56,7 +57,7 @@ type Work struct {
 	Department *department.Client
 
 	Agent          *agent.Client
-	AgentWorkbench *agent.WorkbenchClient
+	AgentWorkbench *workbench.Client
 
 	Message  *message.Client
 	Messager *message.Messager

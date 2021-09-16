@@ -1,4 +1,4 @@
-package agent
+package workbench
 
 import (
 	"fmt"
@@ -8,12 +8,12 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/agent/response"
 )
 
-type WorkbenchClient struct {
+type Client struct {
 	*kernel.BaseClient
 }
 
-func NewWorkbenchClient(app kernel.ApplicationInterface) *WorkbenchClient {
-	return &WorkbenchClient{
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
@@ -29,7 +29,7 @@ func (comp *Client) SetWorkbenchTemplate(data *power.HashMap) (*response.Respons
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90206
-func (comp *Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
+func (comp Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentGetWorkbenchTemplate{}
 
@@ -41,7 +41,7 @@ func (comp *Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGe
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90207
-func (comp *Client) SetWorkbenchData(data *power.HashMap) (*response.ResponseAgentSetWorkbenchData, error) {
+func (comp Client) SetWorkbenchData(data *power.HashMap) (*response.ResponseAgentSetWorkbenchData, error) {
 
 	result := &response.ResponseAgentSetWorkbenchData{}
 

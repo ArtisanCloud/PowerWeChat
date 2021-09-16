@@ -19,8 +19,32 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 	}
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90262
+// 获取企业所有打卡规则
+// https://work.weixin.qq.com/api/doc/90000/90135/93384
+func (comp *Client) GetCorpCheckInOption() (*response.ResponseCorpCheckInRules, error) {
+	result := &response.ResponseCorpCheckInRules{}
 
+	_, err := comp.HttpPostJson("cgi-bin/checkin/getcorpcheckinoption", nil, nil, nil, result)
+
+	return result, err
+
+}
+
+// 获取员工打卡规则
+// https://work.weixin.qq.com/api/doc/90000/90135/90263
+func (comp *Client) GetCheckInOption(datetime int, userList []string) (*response.ResponseCheckInRules, error) {
+	result := &response.ResponseCheckInRules{}
+
+	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckinoption", &object.HashMap{
+		"datetime":   fmt.Sprintf("%d", datetime),
+		"userIDlist": userList,
+	}, nil, nil, result)
+
+	return result, err
+}
+
+// 获取打卡记录数据
+// https://work.weixin.qq.com/api/doc/90000/90135/90262
 func (comp *Client) CheckInRecords(startTime int, endTime int, userList []string, recordType int) (*response.ResponseCheckInRecords, error) {
 	result := &response.ResponseCheckInRecords{}
 
@@ -34,30 +58,9 @@ func (comp *Client) CheckInRecords(startTime int, endTime int, userList []string
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90263
-func (comp *Client) CheckInRules(datetime int, userList []string) (*response.ResponseCheckInRules, error) {
-	result := &response.ResponseCheckInRules{}
-
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckinoption", &object.HashMap{
-		"datetime":   fmt.Sprintf("%d", datetime),
-		"userIDlist": userList,
-	}, nil, nil, result)
-
-	return result, err
-}
-
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93384
-func (comp *Client) CorpCheckInRules() (*response.ResponseCorpCheckInRules, error) {
-	result := &response.ResponseCorpCheckInRules{}
-
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcorpcheckinoption", nil, nil, nil, result)
-
-	return result, err
-
-}
-
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93374
-func (comp *Client) CheckInDayData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
+// 获取打卡日报数据
+// https://work.weixin.qq.com/api/doc/90000/90135/93374
+func (comp *Client) GetCheckinDayData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 
 	result := &response.ResponseCheckInDatas{}
 
@@ -70,6 +73,9 @@ func (comp *Client) CheckInDayData(startTime int, endTime int, userIDs []string)
 	return result, err
 
 }
+
+// 获取打卡月报数据
+// https://work.weixin.qq.com/api/doc/90000/90135/93387
 func (comp *Client) CheckInMonthData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 	result := &response.ResponseCheckInDatas{}
 
@@ -82,11 +88,12 @@ func (comp *Client) CheckInMonthData(startTime int, endTime int, userIDs []strin
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93380
+// 获取打卡人员排班信息
+// https://work.weixin.qq.com/api/doc/90000/90135/93380
 func (comp *Client) CheckInSchedules(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
 	result := &response.ResponseCheckInSchedulist{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckin_monthdata", &object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckinschedulist", &object.HashMap{
 		"starttime":  fmt.Sprintf("%d", startTime),
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"userIDlist": userIDs,
@@ -95,7 +102,8 @@ func (comp *Client) CheckInSchedules(startTime int, endTime int, userIDs []strin
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93385
+// 为打卡人员排班
+// https://work.weixin.qq.com/api/doc/90000/90135/93385
 func (comp *Client) SetCheckInSchedules(params *power.HashMap) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
@@ -104,7 +112,8 @@ func (comp *Client) SetCheckInSchedules(params *power.HashMap) (*response2.Respo
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93378
+// 录入打卡人员人脸信息
+// https://work.weixin.qq.com/api/doc/90000/90135/93378
 func (comp *Client) AddCheckInUserFace(userID string, userFace string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -117,7 +126,8 @@ func (comp *Client) AddCheckInUserFace(userID string, userFace string) (*respons
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91982
+// 获取审批模板详情
+// https://work.weixin.qq.com/api/doc/90000/90135/91982
 func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseApprovalTemplate, error) {
 	result := &response.ResponseApprovalTemplate{}
 
@@ -128,7 +138,8 @@ func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseAppro
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91853
+// 提交审批申请
+// https://work.weixin.qq.com/api/doc/90000/90135/91853
 func (comp *Client) CreateApproval(data *power.HashMap) (*response.ResponseApprovalCreate, error) {
 	result := &response.ResponseApprovalCreate{}
 
@@ -137,7 +148,8 @@ func (comp *Client) CreateApproval(data *power.HashMap) (*response.ResponseAppro
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91816
+// 批量获取审批单号
+// https://work.weixin.qq.com/api/doc/90000/90135/91816
 func (comp *Client) GetApprovalInfo(startTime int, endTime int, nextCursor int, size int, filters *object.HashMap) (*response.ResponseApprovalNoList, error) {
 
 	result := &response.ResponseApprovalNoList{}
@@ -146,19 +158,22 @@ func (comp *Client) GetApprovalInfo(startTime int, endTime int, nextCursor int, 
 		size = 100
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/getapprovalinfo", &object.HashMap{
+	options := &object.HashMap{
 		"starttime": fmt.Sprintf("%d", startTime),
 		"endtime":   fmt.Sprintf("%d", endTime),
 		"cursor":    fmt.Sprintf("%d", nextCursor),
 		"size":      size,
 		"filters":   filters,
-	}, nil, nil, result)
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/oa/getapprovalinfo", options, nil, nil, result)
 
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91983
-func (comp *Client) ApprovalDetail(number int) (*response.ResponseApprovalDetail, error) {
+// 获取审批申请详情
+// https://work.weixin.qq.com/api/doc/90000/90135/91983
+func (comp *Client) GetApprovalDetail(number int) (*response.ResponseApprovalDetail, error) {
 	result := &response.ResponseApprovalDetail{}
 
 	_, err := comp.HttpPostJson("cgi-bin/oa/getapprovaldetail", &object.HashMap{
@@ -168,22 +183,25 @@ func (comp *Client) ApprovalDetail(number int) (*response.ResponseApprovalDetail
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91530
-func (comp *Client) ApprovalRecords(startTime int, endTime int, nextNumber int) (*response.ResponseApprovalGetData, error) {
+// 获取审批数据（旧）
+// https://work.weixin.qq.com/api/doc/90000/90135/91530
+func (comp *Client) GetApprovalData(startTime int, endTime int, nextNumber int) (*response.ResponseApprovalGetData, error) {
 
 	result := &response.ResponseApprovalGetData{}
 
-	_, err := comp.HttpPostJson("cgi-bin/corp/getapprovaldata", &object.HashMap{
+	options:=&object.HashMap{
 		"starttime":  fmt.Sprintf("%d", startTime),
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"next_spnum": fmt.Sprintf("%d", nextNumber),
-	}, nil, nil, result)
+	}
+	_, err := comp.HttpPostJson("cgi-bin/corp/getapprovaldata", options, nil, nil, result)
 
 	return result, err
 
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93375
+// 获取企业假期管理配置
+// https://work.weixin.qq.com/api/doc/90000/90135/93375
 func (comp *Client) GetCorpConfig() (*response.ResponseCorpVacationGetConfig, error) {
 
 	result := &response.ResponseCorpVacationGetConfig{}
@@ -194,7 +212,8 @@ func (comp *Client) GetCorpConfig() (*response.ResponseCorpVacationGetConfig, er
 
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93376
+// 获取成员假期余额
+// https://work.weixin.qq.com/api/doc/90000/90135/93376
 func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpVacationGetQuota, error) {
 
 	result := &response.ResponseCorpVacationGetQuota{}
@@ -207,8 +226,9 @@ func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpV
 
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93376
-func (comp *Client) SeToneUserQuota(data *object.HashMap) (*response2.ResponseWork, error) {
+// 修改成员假期余额
+// https://work.weixin.qq.com/api/doc/90000/90135/93376
+func (comp *Client) SetOneUserQuota(data *object.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
