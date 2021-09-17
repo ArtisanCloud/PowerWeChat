@@ -154,7 +154,7 @@ func (client *BaseClient) registerHttpMiddlewares() {
 	client.Middlewares = []interface{}{}
 
 	// retry
-	//client.PushMiddleware(client.retryMiddleware(), "retry")
+	client.PushMiddleware(client.retryMiddleware(), "retry")
 	// access token
 	client.PushMiddleware(client.accessTokenMiddleware(), "access_token")
 	// log
@@ -183,12 +183,16 @@ func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
 
 	return err
 }
+
 func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
 	fmt.Println("logMiddleware")
 	return nil
 }
+
 func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
-	fmt.Println("retryMiddleware")
+
+
+
 	return nil
 }
 
