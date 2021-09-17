@@ -93,6 +93,7 @@ func (comp *Client) GetMaterialCount() (*response.ResponseMaterialGetMaterialCou
 	_, err := comp.HttpPostJson("cgi-bin/material/get_materialcount", nil, nil, nil, result)
 
 	return result, err
+
 }
 
 // 获取素材列表
