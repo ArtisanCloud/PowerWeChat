@@ -186,11 +186,56 @@ func (comp *Client) FileMove(options *request.RequestWebDriveFileMove) (*respons
 
 // 删除文件
 // https://work.weixin.qq.com/api/doc/90000/90135/93657
-func (comp *Client) FileDelete(options *request.RequestWebDriveFileDelete) (*response.ResponseWebDriveFileDelete, error) {
+func (comp *Client) FileDelete(options *request.RequestWebDriveFileDelete) (*response2.ResponseWork, error) {
 
-	result := &response.ResponseWebDriveFileDelete{}
+	result := &response2.ResponseWork{}
 
 	_, err := comp.HttpPostJson("cgi-bin/wedrive/file_delete", options, nil, nil, result)
+
+	return result, err
+}
+
+
+// 新增指定人
+// https://work.weixin.qq.com/api/doc/90000/90135/93658
+func (comp *Client) FileACLAdd(options *request.RequestWebDriveFileACLAdd) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.HttpPostJson("cgi-bin/wedrive/file_acl_add", options, nil, nil, result)
+
+	return result, err
+}
+
+// 删除指定人
+// https://work.weixin.qq.com/api/doc/90000/90135/93658
+func (comp *Client) FileACLDel(options *request.RequestWebDriveFileACLDel) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.HttpPostJson("cgi-bin/wedrive/file_acl_del", options, nil, nil, result)
+
+	return result, err
+}
+
+// 分享设置
+// https://work.weixin.qq.com/api/doc/90000/90135/93658
+func (comp *Client) FileSetting(options *request.RequestWebDriveFileSetting) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.HttpPostJson("cgi-bin/wedrive/file_setting", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取分享链接
+// https://work.weixin.qq.com/api/doc/90000/90135/93658
+func (comp *Client) FileShare(options *request.RequestWebDriveFileShare) (*response.ResponseWebDriveFileShare, error) {
+
+	result := &response.ResponseWebDriveFileShare{}
+
+	_, err := comp.HttpPostJson("cgi-bin/wedrive/file_share", options, nil, nil, result)
 
 	return result, err
 }
