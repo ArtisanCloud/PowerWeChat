@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseUploadMedia struct {
-	*response.ResponseWork
+	*response.ResponseOfficialAccount
 
 	Type      string `json:"type"`
 	MediaID   string `json:"media_id"`

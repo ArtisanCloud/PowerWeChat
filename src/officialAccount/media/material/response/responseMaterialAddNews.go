@@ -4,8 +4,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseUploadImage struct {
+type ResponseMaterialAddNews struct {
 	*response.ResponseOfficialAccount
 
-	URL string `json:"url"`
+	MediaID string `json:"media_id"`
 }

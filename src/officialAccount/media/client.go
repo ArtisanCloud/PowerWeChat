@@ -87,3 +87,6 @@ func (comp *Client) Upload(mediaType string, path string, form *power.HashMap, o
 		"type": mediaType,
 	}, nil, outResponse)
 }
+
+
+
