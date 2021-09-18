@@ -2,7 +2,7 @@ package featureUnit
 
 import (
 	"github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/request"
 	"testing"
 )
@@ -22,14 +22,14 @@ func Test_ExternalContact_Update_Contact_Way(t *testing.T) {
 		ExpiresIn:     86400,
 		ChatExpiresIn: 86400,
 		UnionID:       "",
-		Conclusions: &object.HashMap{
-			"text": &object.StringMap{
+		Conclusions: &power.HashMap{
+			"text": &power.StringMap{
 				"content": "bye bye",
 			},
 		},
 	}
 
-	response := Work.ExternalContactContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &object.HashMap{"para": para})
+	response,_ := Work.ExternalContactContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &power.HashMap{"para": para})
 
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")

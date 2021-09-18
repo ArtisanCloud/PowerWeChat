@@ -7,6 +7,7 @@ import (
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/liveBroadcast/request"
 	"github.com/ArtisanCloud/power-wechat/src/miniProgram/liveBroadcast/response"
+	"strconv"
 )
 
 type Client struct {
@@ -59,7 +60,7 @@ func (comp *Client) DeleteRoom(id int) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
 	options := &object.HashMap{
-		"options": id,
+		"id": id,
 	}
 
 	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deleteroom", options, nil, nil, result)
@@ -82,21 +83,26 @@ func (comp *Client) EditRoom(options *request.RequestBroadcastEditRoom) (*respon
 func (comp *Client) GetPushUrl(roomId int) (*response.ResponseBroadcastGetPushUrl, error) {
 	result := &response.ResponseBroadcastGetPushUrl{}
 
-	options := &object.HashMap{
-		"roomId": roomId,
+	options := &object.StringMap{
+		"roomId": strconv.Itoa(roomId),
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getpushurl", options, nil, nil, result)
+	_, err := comp.HttpGet("wxaapi/broadcast/room/getpushurl", options, nil, result)
 
 	return result, err
 }
 
 // 获取直播间分享二维码
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getSharedCode.html
-func (comp *Client) GetSharedCode(options *request.RequestBroadcastGetSharedCode) (*response.ResponseBroadcastGetSharedCode, error) {
+func (comp *Client) GetSharedCode(roomID int, params string) (*response.ResponseBroadcastGetSharedCode, error) {
 	result := &response.ResponseBroadcastGetSharedCode{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getsharedcode", options, nil, nil, result)
+	options := &object.StringMap{
+		"roomId" : strconv.Itoa(roomID),
+		"params" : params,
+	}
+
+	_, err := comp.HttpGet("wxaapi/broadcast/room/getsharedcode", options, nil, result)
 
 	return result, err
 }
@@ -137,11 +143,11 @@ func (comp *Client) RemoveAssistant(options *request.RequestBroadcastRemoveAssis
 func (comp *Client) GetAssistantList(roomID int) (*response.ResponseBroadcastGetAssistantList, error) {
 	result := &response.ResponseBroadcastGetAssistantList{}
 
-	options := &object.HashMap{
-		"roomId": roomID,
+	options := &object.StringMap{
+		"roomId": strconv.Itoa(roomID),
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getassistantlist", options, nil, nil, result)
+	_, err := comp.HttpGet("wxaapi/broadcast/room/getassistantlist", options, nil, result)
 
 	return result, err
 }
@@ -163,11 +169,12 @@ func (comp *Client) AddSubAnchor(roomID int, userName string) (*response2.Respon
 
 // 修改主播副号
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.modifySubAnchor.html
-func (comp *Client) ModifySubAnchor(roomID int) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) ModifySubAnchor(roomID int, username string) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
 	options := &object.HashMap{
 		"roomId": roomID,
+		"username": username,
 	}
 
 	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifysubanchor", options, nil, nil, result)
@@ -194,11 +201,11 @@ func (comp *Client) DeleteSubAnchor(roomID int) (*response2.ResponseMiniProgram,
 func (comp *Client) GetSubAnchor(roomID int) (*response.ResponseBroadcastGetSubAnchor, error) {
 	result := &response.ResponseBroadcastGetSubAnchor{}
 
-	options := &object.HashMap{
-		"roomId": roomID,
+	options := &object.StringMap{
+		"roomId": strconv.Itoa(roomID),
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getsubanchor", options, nil, nil, result)
+	_, err := comp.HttpGet("wxaapi/broadcast/room/getsubanchor", options, nil, result)
 
 	return result, err
 }
@@ -374,8 +381,8 @@ func (comp *Client) GoodsAudit(goodsID int) (*response.ResponseBroadcastGoodsAud
 
 // 删除商品
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
-func (comp *Client) GoodsDelete(goodsID int) (*response2.ResponseWork, error) {
-	result := &response2.ResponseWork{}
+func (comp *Client) GoodsDelete(goodsID int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
 
 	options := &power.HashMap{
 		"goodsId": goodsID,
@@ -411,11 +418,17 @@ func (comp *Client) GoodsInfo(goodsIDs []int) (*response.ResponseBroadcastGoodsI
 }
 
 // 获取商品列表
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsList.html
-func (comp *Client) GoodsList(options *power.HashMap) (*response.ResponseBroadcastGoodsList, error) {
+// https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/liveplayer/commodity-api.html#7
+func (comp *Client) GoodsList(offset, count, status string) (*response.ResponseBroadcastGoodsList, error) {
 	result := &response.ResponseBroadcastGoodsList{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/getapproved", options, nil, nil, result)
+	options := &object.StringMap{
+		"offset": offset,
+		"count": count,
+		"status": status,
+	}
+
+	_, err := comp.HttpGet("wxaapi/broadcast/goods/getapproved", options, nil, result)
 
 	return result, err
 }
@@ -451,6 +464,7 @@ func (comp *Client) DeleteRole(userName string, role int) (*response2.ResponseMi
 
 // 获取直播间推流地址
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getPushUrl.html
+// 获取角色列表
 func (comp *Client) GetRoleList(options *request.RequestBroadcastGetRoleList) (*response.ResponseBroadcastGetRoleList, error) {
 	result := &response.ResponseBroadcastGetRoleList{}
 

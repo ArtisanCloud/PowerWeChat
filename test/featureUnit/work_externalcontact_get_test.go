@@ -7,11 +7,11 @@ import (
 
 func Test_ExternalContact_Get_Batch_ByUser(t *testing.T) {
 
-	userID := "siyuan-notify"
+	userID := []string{"siyuan-notify"}
 	cursor := ""
 	limit := 100
 
-	response := Work.ExternalContact.BatchGet(userID, cursor, limit)
+	response ,_:= Work.ExternalContact.BatchGet(userID, cursor, limit)
 
 	if response == nil {
 		t.Error("response nil")
@@ -28,7 +28,7 @@ func Test_ExternalContact_Get_Unassigned(t *testing.T) {
 	pageId := 1
 	pageSize := 50
 
-	response := Work.ExternalContact.GetUnassigned(pageId, pageSize)
+	response ,_:= Work.ExternalContact.GetUnassigned(pageId, pageSize)
 
 	if response == nil {
 		t.Error("response nil")
@@ -46,7 +46,7 @@ func Test_ExternalContact_Transfer(t *testing.T) {
 	takeoverUserId := ""
 	externalUserId := []string{""}
 
-	response := Work.ExternalContact.Transfer(externalUserId, handoverUserId, takeoverUserId)
+	response,_ := Work.ExternalContact.Transfer(externalUserId, handoverUserId, takeoverUserId)
 
 	if response == nil {
 		t.Error("response nil")
