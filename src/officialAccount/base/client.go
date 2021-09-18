@@ -4,7 +4,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/base/response"
+	"github.com/ArtisanCloud/power-wechat/src/officialAccount/base/response"
 )
 
 type Client struct {
@@ -12,9 +12,9 @@ type Client struct {
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/API_Call_Limits.html
-func (comp *Client) ClearQuota() (*response2.ResponseWork, error) {
+func (comp *Client) ClearQuota() (*response2.ResponseOfficialAccount, error) {
 
-	result := &response2.ResponseWork{}
+	result := &response2.ResponseOfficialAccount{}
 
 	config := (*comp.App).GetConfig()
 
@@ -25,8 +25,8 @@ func (comp *Client) ClearQuota() (*response2.ResponseWork, error) {
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90930
-func (comp *Client) getValidIPs() (*response.ResponseGetCallBackIp, error) {
+// https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_the_WeChat_server_IP_address.html#2.%20%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1callback%20IP%E5%9C%B0%E5%9D%80
+func (comp *Client) GetCallbackIP() (*response.ResponseGetCallBackIp, error) {
 
 	result := &response.ResponseGetCallBackIp{}
 
@@ -35,12 +35,17 @@ func (comp *Client) getValidIPs() (*response.ResponseGetCallBackIp, error) {
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92520
-func (comp *Client) CheckCallbackURL() (*response.ResponseGetAPIDomainIP, error) {
+// https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Network_Detection.html
+func (comp *Client) CheckCallbackURL(action string, checkOperator string) (*response.ResponseGetAPIDomainIP, error) {
 
 	result := &response.ResponseGetAPIDomainIP{}
 
-	_, err := comp.HttpGet("cgi-bin/callback/check", nil, nil, result)
+	options := &object.HashMap{
+		"action":         action,
+		"check_operator": checkOperator,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/callback/check", options, nil, nil, result)
 
 	return result, err
 }

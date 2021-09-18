@@ -5,8 +5,8 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseGetAPIDomainIP struct {
+type ResponseMaterialGetMaterial struct {
 	*response.ResponseOfficialAccount
-	DNS []power.StringMap `json:"dns"`
-	Ping []power.StringMap `json:"ping"`
+
+	NewsItem []*power.HashMap `json:"news_item"`
 }

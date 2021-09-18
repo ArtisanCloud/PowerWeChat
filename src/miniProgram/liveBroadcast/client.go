@@ -462,6 +462,8 @@ func (comp *Client) DeleteRole(userName string, role int) (*response2.ResponseMi
 	return result, err
 }
 
+// 获取直播间推流地址
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getPushUrl.html
 // 获取角色列表
 func (comp *Client) GetRoleList(options *request.RequestBroadcastGetRoleList) (*response.ResponseBroadcastGetRoleList, error) {
 	result := &response.ResponseBroadcastGetRoleList{}

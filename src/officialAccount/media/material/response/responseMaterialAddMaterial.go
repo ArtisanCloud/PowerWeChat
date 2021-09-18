@@ -4,7 +4,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseGetCallBackIp struct {
+type ResponseMaterialAddMaterial struct {
 	*response.ResponseOfficialAccount
-	IPList []string `json:"ip_list"`
+
+	MediaID string `json:"media_id"`
+	URL string `json:"url"`
 }

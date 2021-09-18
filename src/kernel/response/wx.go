@@ -32,6 +32,14 @@ type ResponseOfficialAccount struct {
 	ResultMSG  string `json:"resultmsg"`
 }
 
+type ResponseOfficialAccount struct {
+	ErrCode int    `json:"errcode"`
+	ErrMSG  string `json:"errmsg"`
+
+	ResultCode  string `json:"resultcode"`
+	ResultMSG  string `json:"resultmsg"`
+}
+
 //
 //func (res *ResponseWork) GetBody() *http.ResponseWriter {
 //	return nil
