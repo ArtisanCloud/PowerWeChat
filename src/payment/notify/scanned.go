@@ -28,7 +28,7 @@ func (comp *Scanned) Alert(message string) {
 	comp.alert = message
 }
 
-func (comp *Scanned) Handle(closure func(message *power.HashMap, content *power.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
+func (comp *Scanned) Handle(closure func(message *power.HashMap, content *power.HashMap, fail func(message string), alert func(message string)) interface{}) (*http.Response, error) {
 	hashMessages, err := comp.GetMessage()
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func (comp *Scanned) Handle(closure func(message *power.HashMap, content *power.
 		return nil, err
 	}
 
-	result := closure(messages, nil, comp.fail, comp.alert)
+	result := closure(messages, nil, comp.Fail, comp.Alert)
 
 	resultCode := FAIL
 	if comp.alert == "" && comp.fail == "" {

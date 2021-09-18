@@ -25,7 +25,7 @@ type Handler struct {
 
 	ExternalRequest *http.Request
 
-	Handle func(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) *http.Response
+	Handle func(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"

@@ -19,7 +19,7 @@ func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Reque
 	return paid
 }
 
-func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*http.Response, error) {
 
 	hashMessages, err := comp.GetMessage()
 	if err != nil {
@@ -31,7 +31,7 @@ func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.H
 		return nil, err
 	}
 
-	result := closure(messages, nil, comp.fail)
+	result := closure(messages, nil, comp.Fail)
 	comp.Strict(result)
 
 	return comp.ToResponse()

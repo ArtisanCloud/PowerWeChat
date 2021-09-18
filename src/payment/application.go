@@ -211,15 +211,15 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*http.Response, error) {
 	return notify.NewPaidNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*http.Response, error) {
 	return notify.NewRefundNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
+func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail func(message string), alert func(message string)) interface{}) (*http.Response, error) {
 	return notify.NewScannedNotify(app, request).Handle(closure)
 }
 

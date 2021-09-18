@@ -20,7 +20,7 @@ func NewPaidNotify(app kernel.ApplicationPaymentInterface, request *http.Request
 	return paid
 }
 
-func (comp *Paid) Handle(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (comp *Paid) Handle(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*http.Response, error) {
 
 	hashMessages, err := comp.GetMessage()
 	if err != nil {
@@ -37,7 +37,7 @@ func (comp *Paid) Handle(closure func(message *power.HashMap, content *power.Has
 		return nil, err
 	}
 
-	result := closure(messages, content, comp.fail)
+	result := closure(messages, content, comp.Fail)
 	comp.Strict(result)
 
 	return comp.ToResponse()
