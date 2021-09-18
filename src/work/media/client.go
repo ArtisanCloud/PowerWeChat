@@ -20,7 +20,7 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取临时素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90254
-func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
+func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
@@ -30,13 +30,13 @@ func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseContract), err
+	return response.(contract.ResponseInterface), err
 
 }
 
 // 获取高清语音素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90255
-func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseContract, error) {
+func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
@@ -46,7 +46,7 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseContract, error) 
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseContract), err
+	return response.(contract.ResponseInterface), err
 
 }
 

@@ -21,6 +21,15 @@ type ResponseMiniProgram struct {
 
 	ResultCode  string `json:"resultcode"`
 	ResultMSG  string `json:"resultmsg"`
+
+}
+
+type ResponseOfficialAccount struct {
+	ErrCode int    `json:"errcode"`
+	ErrMSG  string `json:"errmsg"`
+
+	ResultCode  string `json:"resultcode"`
+	ResultMSG  string `json:"resultmsg"`
 }
 
 type ResponseOfficialAccount struct {

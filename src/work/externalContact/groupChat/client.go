@@ -3,8 +3,8 @@ package groupChat
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/request"
-	response2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/request"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"
 )
 
 type Client struct {
@@ -19,9 +19,9 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取客户群列表
 // https://work.weixin.qq.com/api/doc/90000/90135/92120
-func (comp  *Client) GroupChatList(params *request2.RequestAddGroupChat) (*response2.ResponseGroupChatList, error) {
+func (comp  *Client) List(params *request.RequestGroupChatList) (*response.ResponseGroupChatList, error) {
 
-	result := &response2.ResponseGroupChatList{}
+	result := &response.ResponseGroupChatList{}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/list", params, nil, nil, result)
 
@@ -30,9 +30,9 @@ func (comp  *Client) GroupChatList(params *request2.RequestAddGroupChat) (*respo
 
 // 获取客户群详情
 // https://work.weixin.qq.com/api/doc/90000/90135/92122
-func (comp  *Client) GetGroupChat(chatID string, needName bool) (*response2.ResponseGroupChatGet, error) {
+func (comp  *Client) Get(chatID string, needName bool) (*response.ResponseGroupChatGet, error) {
 
-	result := &response2.ResponseGroupChatGet{}
+	result := &response.ResponseGroupChatGet{}
 
 	options := &object.HashMap{
 		"chat_id":   chatID,
@@ -46,9 +46,9 @@ func (comp  *Client) GetGroupChat(chatID string, needName bool) (*response2.Resp
 
 // 客户群opengid转换
 // https://work.weixin.qq.com/api/doc/90000/90135/94822
-func (comp  *Client) OpenGIDToChatID(openGID string) (*response2.ResponseGroupChatOpenGIDToChatID, error) {
+func (comp  *Client) OpenGIDToChatID(openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
 
-	result := &response2.ResponseGroupChatOpenGIDToChatID{}
+	result := &response.ResponseGroupChatOpenGIDToChatID{}
 
 	options := &object.HashMap{
 		"opengid": openGID,

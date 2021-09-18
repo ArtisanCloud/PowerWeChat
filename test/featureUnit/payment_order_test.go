@@ -1,14 +1,14 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"testing"
 )
 
 func Test_Unify_Order(t *testing.T) {
 
-	response, err := Payment.Order.Unify(&object.HashMap{
-		"amount": &object.HashMap{
+	response, err := Payment.Order.JSAPITransaction(&power.HashMap{
+		"amount": &power.HashMap{
 			"total":    1,
 			"currency": "CNY",
 		},
@@ -17,10 +17,10 @@ func Test_Unify_Order(t *testing.T) {
 		"mchid":        "1611854986",
 		"notify_url":   "https://pay.wangchaoyi.com/power/notify",
 		"out_trade_no": "5519778939773395659222199361",
-		"payer": &object.HashMap{
+		"payer": &power.HashMap{
 			"openid": "oAuaP0TRUMwP169nQfg7XCEAw3HQ",
 		},
-	}, false)
+	})
 
 	if err != nil {
 		t.Error(err.Error())
