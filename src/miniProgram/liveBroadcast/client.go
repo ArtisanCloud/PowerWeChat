@@ -382,7 +382,7 @@ func (comp *Client) GoodsAudit(goodsID int) (*response.ResponseBroadcastGoodsAud
 // 删除商品
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
 func (comp *Client) GoodsDelete(goodsID int) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseWork{}
+	result := &response2.ResponseMiniProgram{}
 
 	options := &power.HashMap{
 		"goodsId": goodsID,

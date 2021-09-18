@@ -5,7 +5,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseBroadcastGoodsList struct {
+type ResponseBroadcastGoodsDelete struct {
 	*response.ResponseMiniProgram
 
 	Total int              `json:"total"`

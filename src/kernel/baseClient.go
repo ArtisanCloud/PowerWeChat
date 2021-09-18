@@ -2,12 +2,14 @@ package kernel
 
 import (
 	"fmt"
+	"github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/google/uuid"
 	http2 "net/http"
+	"time"
 )
 
 type BaseClient struct {
@@ -154,25 +156,58 @@ func (client *BaseClient) registerHttpMiddlewares() {
 	client.Middlewares = []interface{}{}
 
 	// retry
-	client.PushMiddleware(client.retryMiddleware(), "retry")
+	retryMiddleware := client.retryMiddleware()
+	client.PushMiddleware(retryMiddleware, retryMiddleware.Name)
 	// access token
-	client.PushMiddleware(client.accessTokenMiddleware(), "access_token")
+	accessTokenMiddleware := client.accessTokenMiddleware()
+	client.PushMiddleware(accessTokenMiddleware, "access_token")
 	// log
-	//client.PushMiddleware(client.logMiddleware(), "log")
+	//logMiddleware:=client.logMiddleware()
+	//client.PushMiddleware(logMiddleware, logMiddleware.Name)
 
 }
 
 // ----------------------------------------------------------------------
-type MiddlewareAccessToken struct {
+type Middleware struct {
+	contract.MiddlewareInterface
 	*BaseClient
-}
-type MiddlewareLogMiddleware struct {
-	*BaseClient
-}
-type MiddlewareRetry struct {
-	*BaseClient
+	Name string
 }
 
+func (d *Middleware) GetName() string {
+	return d.Name
+}
+
+func (d *Middleware) SetName(name string) {
+	d.Name = name
+}
+
+func (d *Middleware) Retries() int {
+	config := (*d.BaseClient.App).GetConfig()
+	return config.GetInt("http.max_retries", 1)
+}
+
+func (d *Middleware) Delay() time.Duration {
+	config := (*d.BaseClient.App).GetConfig()
+	second := time.Duration(config.GetInt("http.retry_delay", 500))
+	return second * time.Second
+}
+
+func (d *Middleware) RetryDecider(conditions *object.HashMap) bool {
+	return false
+}
+
+type MiddlewareAccessToken struct {
+	*Middleware
+}
+type MiddlewareLogMiddleware struct {
+	*Middleware
+}
+type MiddlewareRetry struct {
+	*Middleware
+}
+
+// --- MiddlewareAccessToken ---
 func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
 	accessToken := (*d.App).GetAccessToken()
 
@@ -184,30 +219,48 @@ func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
 	return err
 }
 
+// --- MiddlewareLogMiddleware ---
 func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
 	fmt.Println("logMiddleware")
 	return nil
 }
 
+// --- MiddlewareRetry ---
 func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
-
-
-
 	return nil
 }
+func (d *MiddlewareRetry) RetryDecider(conditions *object.HashMap) bool {
+	code := (*conditions)["code"].(int)
+	if code == 40001 || code == 40014 || code == 42001 {
+		d.BaseClient.Token.Refresh()
 
-func (client *BaseClient) accessTokenMiddleware() interface{} {
+		return true
+	}
+	return false
+}
+
+// ---
+func (client *BaseClient) accessTokenMiddleware() *MiddlewareAccessToken {
 	return &MiddlewareAccessToken{
-		client,
+		&Middleware{
+			BaseClient: client,
+			Name:       "access_token",
+		},
 	}
 }
-func (client *BaseClient) logMiddleware() interface{} {
+func (client *BaseClient) logMiddleware() *MiddlewareLogMiddleware {
 	return &MiddlewareLogMiddleware{
-		client,
+		&Middleware{
+			BaseClient: client,
+			Name:       "log",
+		},
 	}
 }
-func (client *BaseClient) retryMiddleware() interface{} {
+func (client *BaseClient) retryMiddleware() *MiddlewareRetry {
 	return &MiddlewareRetry{
-		client,
+		&Middleware{
+			BaseClient: client,
+			Name:       "retry",
+		},
 	}
 }
