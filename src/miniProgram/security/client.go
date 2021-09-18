@@ -61,9 +61,9 @@ func (comp *Client) MediaCheckAsync(mediaURL string, mediaType int, version int,
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
 func (comp *Client) MsgSecCheck(
 	openID string, scene int, version int, content string,
-	nickname string, title string, signature string) (*response.ResponseSecurityMediaCheckASync, error) {
+	nickname string, title string, signature string) (*response.ResponseSecurityMsgCheckASync, error) {
 
-	result := &response.ResponseSecurityMediaCheckASync{}
+	result := &response.ResponseSecurityMsgCheckASync{}
 
 	data := &object.HashMap{
 		"openid":    openID,
