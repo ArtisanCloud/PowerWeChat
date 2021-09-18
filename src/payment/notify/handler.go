@@ -58,7 +58,7 @@ func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Ha
 
 	return handler
 }
-func (handler *Handler) ToResponse() (response *http.Response, err error) {
+func (handler *Handler) ToResponse() (response *response2.HttpResponse, err error) {
 
 	returnCode := SUCCESS
 	returnMsg := "成功"
@@ -85,7 +85,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	rs := response2.NewHttpResponse(http.StatusOK)
 	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
-	return rs.Response, err
+	return rs, err
 }
 
 func (handler *Handler) GetMessage() (message *object.HashMap, err error) {

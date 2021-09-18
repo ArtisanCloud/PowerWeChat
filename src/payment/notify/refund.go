@@ -1,6 +1,7 @@
 package notify
 
 import (
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"net/http"
@@ -19,7 +20,7 @@ func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Reque
 	return paid
 }
 
-func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*http.Response, error) {
+func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*response.HttpResponse, error) {
 
 	hashMessages, err := comp.GetMessage()
 	if err != nil {
