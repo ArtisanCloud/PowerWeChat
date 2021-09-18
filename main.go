@@ -2,54 +2,120 @@ package main
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram"
+	"github.com/ArtisanCloud/power-wechat/src/payment"
+	"github.com/ArtisanCloud/power-wechat/src/work"
 	"os"
 	"strconv"
 )
 
-func GetConfig() *power.HashMap {
+func GetWorkConfig() *work.UserConfig {
 	agentID, _ := strconv.Atoi(os.Getenv("agent_id"))
-	return &power.HashMap{
-		"corp_id":  os.Getenv("corp_id"),
-		"agent_id": agentID,
-		"secret":   os.Getenv("secret"),
+	return &work.UserConfig{
+		CorpID:  os.Getenv("corp_id"),
+		AgentID: agentID,
+		Secret:  os.Getenv("secret"),
 
-		"response_type": os.Getenv("array"),
-		"log": &object.StringMap{
-
-			"level": "debug",
-			"file":  "./wechat.log",
+		ResponseType: os.Getenv("array"),
+		Log: work.Log{
+			"debug",
+			"./wechat.log",
 		},
 
-		"oauth.callback": os.Getenv("oauth_callback"),
-		"oauth.scopes":   []string{},
-		"debug":          true,
+		OAuth: work.OAuth{
+			Callback: os.Getenv("oauth_callback"),
+			Scopes:   []string{},
+		},
+		//HttpDebug: true,
+		Debug: true,
 
 		// server config
-		"token":   os.Getenv("token"),
-		"aes_key": os.Getenv("aes_key"),
+		Token:  os.Getenv("token"),
+		AESKey: os.Getenv("aes_key"),
 	}
+}
+
+func GetPaymentConfig() *payment.UserConfig {
+	return &payment.UserConfig{
+		//"corp_id":        os.Getenv("corp_id"),
+		//"secret":         os.Getenv("secret"),
+		AppID:       os.Getenv("app_id"),
+		MchID:       os.Getenv("mch_id"),
+		MchApiV3Key: os.Getenv("mch_api_v3_key"),
+		Key:         os.Getenv("key"),
+		CertPath:    os.Getenv("wx_cert_path"),
+		KeyPath:     os.Getenv("wx_key_path"),
+		SerialNo:    os.Getenv("serial_no"),
+
+		ResponseType: os.Getenv("array"),
+		Log: payment.Log{
+			Level: "debug",
+			File:  "./wechat.log",
+		},
+		Http: payment.Http{
+			Timeout: 30.0,
+			BaseURI: "https://api.mch.weixin.qq.com",
+		},
+
+		NotifyURL: os.Getenv("notify_url"),
+		HttpDebug: true,
+		//Debug: true,
+		//"sandbox": true,
+
+		// server config
+		//Token:            os.Getenv("token"),
+		//AESKey:           os.Getenv("aes_key"),
+
+	}
+}
+
+func GetMiniProgramConfig() *miniProgram.UserConfig {
+	return &miniProgram.UserConfig{
+
+		AppID:  os.Getenv("miniprogram_app_id"), // 小程序、公众号或者企业微信的appid
+		Secret: os.Getenv("miniprogram_secret"), // 商户号 appID
+
+		ResponseType: os.Getenv("array"),
+		Log: miniProgram.Log{
+			Level: "debug",
+			File:  "./wechat.log",
+		},
+
+		HttpDebug: true,
+		//Debug: true,
+		//"sandbox": true,
+
+	}
+
 }
 
 func main() {
 
 	fmt.Printf("hello Wechat! \n")
 
-	//config := GetConfig()
-	//
-	//app, err := work.NewWork(config, nil)
-	//if err != nil {
-	//	fmt.Println(err.Error())
-	//}
+	// init wecom app
+	configWecom := GetWorkConfig()
+	wecomApp, err := work.NewWork(configWecom)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt2.Dump("wecom config:", wecomApp.GetConfig())
 
-	//response := app.ExternalContact.List("Matt")
-	//fmt2.Dump(response)
+	// init payment app
+	configPayment := GetPaymentConfig()
+	paymentApp, err := payment.NewPayment(configPayment)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt2.Dump("payment config:", paymentApp.GetConfig())
 
-	//response, err := app.Server.Serve()
-	//if err != nil {
-	//	fmt.Println(err.Error())
-	//}
-	//fmt2.Dump(response)
+	// init miniProgram app
+	configMiniProgram := GetMiniProgramConfig()
+	miniProgramApp, err := miniProgram.NewMiniProgram(configMiniProgram)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt2.Dump("miniprogram config:", miniProgramApp.GetConfig())
 
 }

@@ -5,7 +5,8 @@ import (
 )
 
 type ResponseGetUnassignedList struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	ExternalContactList []*ResponseUnassignedInfo `json:"info"`
 	IsLast              bool                      `json:"is_last"`
 	NextCursor          string                    `json:"next_cursor"`

@@ -3,13 +3,13 @@ package featureUnit
 import (
 	"github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
+	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/request"
 	"testing"
 )
 
 func Test_ExternalContact_Update_Contact_Way(t *testing.T) {
 
-	para := &request.RequestAddContactWay{
+	para := &request2.RequestAddContactWay{
 		Type:          1,
 		Scene:         1,
 		Style:         1,

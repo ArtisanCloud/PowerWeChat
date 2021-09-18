@@ -12,6 +12,7 @@ type Client struct {
 	*kernel.BaseClient
 }
 
+// 创建部门
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90205
 func (comp *Client) Create(data *power.HashMap) (*response.ResponseDepartmentCreate, error) {
 
@@ -22,6 +23,7 @@ func (comp *Client) Create(data *power.HashMap) (*response.ResponseDepartmentCre
 	return result, err
 }
 
+// 更新部门
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90206
 func (comp *Client) Update(id int, data *power.HashMap) (*response.ResponseDepartmentUpdate, error) {
 
@@ -33,6 +35,7 @@ func (comp *Client) Update(id int, data *power.HashMap) (*response.ResponseDepar
 	return result, err
 }
 
+// 删除部门
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90207
 func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 
@@ -43,6 +46,7 @@ func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 	return result, err
 }
 
+// 获取部门列表
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90208
 func (comp *Client) List() (*response.ResponseDepartmentList, error) {
 

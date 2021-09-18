@@ -118,7 +118,7 @@ func (comp *Client) AddReceiver(
 
 	options := &object.HashMap{
 		"type":            receiverType,
-		"account":         account,
+		"accountService":         account,
 		"name":            name,
 		"relation_type":   relationType,
 		"custom_relation": customRelation,
@@ -141,7 +141,7 @@ func (comp *Client) DeleteReceiver(receiverType string, account string) (*respon
 	options := &object.HashMap{
 		"appid":   config.GetString("app_id", ""),
 		"type":    receiverType,
-		"account": account,
+		"accountService": account,
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/receivers/delete")

@@ -9,7 +9,6 @@ import (
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
-	"github.com/golang-module/carbon"
 )
 
 type Client struct {
@@ -178,7 +177,7 @@ func (comp *Client) Invite(params *power.HashMap) (*response.ResponseMobileToUse
 
 // 获取加入企业二维码
 // https://open.work.weixin.qq.com/api/doc/90000/90135/91714
-func (comp *Client) GetInvitationQrCode(sizeType int) (*response.ResponseJoinCode, error) {
+func (comp *Client) GetJoinQrCode(sizeType int) (*response.ResponseJoinCode, error) {
 
 	if sizeType < 1 || sizeType > 4 {
 		return nil, errors.New("The sizeType must be 1, 2, 3, 4.")
@@ -195,7 +194,7 @@ func (comp *Client) GetInvitationQrCode(sizeType int) (*response.ResponseJoinCod
 
 // 获取企业活跃成员数
 // https://open.work.weixin.qq.com/api/doc/90000/90135/92714
-func (comp *Client) GetActiveCount(date carbon.Carbon) (*response.ResponseUserActiveCount, error) {
+func (comp *Client) GetActiveStat(date string) (*response.ResponseUserActiveCount, error) {
 
 	result := &response.ResponseUserActiveCount{}
 
@@ -205,3 +204,8 @@ func (comp *Client) GetActiveCount(date carbon.Carbon) (*response.ResponseUserAc
 
 	return result, err
 }
+
+
+
+
+

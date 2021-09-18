@@ -18,9 +18,10 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 	}
 }
 
+// 获取临时素材
+// https://work.weixin.qq.com/api/doc/90000/90135/90254
 func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
 
-	//result := &response.ResponseWork{}
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
 	response, err := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{
@@ -29,28 +30,28 @@ func (comp *Client) Get(mediaID string) (contract.ResponseContract, error) {
 		},
 	}, header, &result)
 
-	//fmt.Dump("Get:", header, result)
 	return response.(contract.ResponseContract), err
 
-	//rs := rawResponse.(contract.ResponseContract)
-	//header := (*rs.GetHeaders()).Header()
-	//if header.Get("Content-Type") != "text/plain" {
-	//
-	//	config := *(*comp.App).GetContainer().Config
-	//	var rs http.Response = http.Response{
-	//		StatusCode: 200,
-	//		Header:     nil,
-	//	}
-	//	postBodyBuf, _ := json.Marshal(rs)
-	//	rs.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
-	//
-	//	returnResponse, err := comp.CastResponseToType(&rs, config["response_type"].(string))
-	//	return returnResponse.(contract.ResponseContract), err
-	//}
-
-	//return rs, nil
 }
 
+// 获取高清语音素材
+// https://work.weixin.qq.com/api/doc/90000/90135/90255
+func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseContract, error) {
+
+	result := ""
+	header := &response2.ResponseHeaderMedia{}
+	response, err := comp.RequestRaw("cgi-bin/media/get/jssdk", "GET", &object.HashMap{
+		"query": &object.StringMap{
+			"media_id": mediaID,
+		},
+	}, header, &result)
+
+	return response.(contract.ResponseContract), err
+
+}
+
+// 上传图片
+// https://work.weixin.qq.com/api/doc/90000/90135/90256
 func (comp *Client) UploadImage(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	files := &object.HashMap{
 		"media": path,
@@ -74,6 +75,8 @@ func (comp *Client) UploadTempFile(path string, form *power.HashMap, outResponse
 	return comp.Upload("file", path, form, outResponse)
 }
 
+// 上传临时素材
+// https://work.weixin.qq.com/api/doc/90000/90135/90253
 func (comp *Client) Upload(mediaType string, path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 
 	files := &object.HashMap{

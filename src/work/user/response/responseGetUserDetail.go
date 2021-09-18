@@ -6,6 +6,7 @@ import (
 )
 
 type ResponseGetUserDetail struct {
-	response.ResponseWork
+	*response.ResponseWork
+
 	*response2.RequestUserDetail
 }

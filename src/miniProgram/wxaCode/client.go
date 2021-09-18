@@ -15,7 +15,7 @@ type Client struct {
 
 // 获取小程序二维码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html
-func (comp *Client) CreateQRCode(path string, width int) (*http.Response, error) {
+func (comp *Client) CreateQRCode(path string, width int64) (*http.Response, error) {
 
 	var result string
 	var header = &response4.ResponseHeaderMedia{}
@@ -41,7 +41,7 @@ func (comp *Client) CreateQRCode(path string, width int) (*http.Response, error)
 
 // 获取小程序码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
-func (comp *Client) Get(path string, width int,
+func (comp *Client) Get(path string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
 
 	var result string
@@ -71,7 +71,7 @@ func (comp *Client) Get(path string, width int,
 // 获取小程序码，适用于需要的码数量极多的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
 func (comp *Client) GetUnlimited(
-	scene string, page string, width int,
+	scene string, page string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
 
 	var result string

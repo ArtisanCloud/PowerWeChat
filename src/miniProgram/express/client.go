@@ -51,7 +51,7 @@ func (comp *Client) BindAccount(actionType string, bizID string, deliveryID stri
 		"password":    password,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/account/bind", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/express/business/accountService/bind", data, nil, nil, result)
 
 	return result, err
 }
@@ -80,7 +80,7 @@ func (comp *Client) GetAllAccount() (*response.ResponseExpressAccountGetAll, err
 
 	result := &response.ResponseExpressAccountGetAll{}
 
-	_, err := comp.HttpGet("cgi-bin/express/business/account/getall", nil, nil, result)
+	_, err := comp.HttpGet("cgi-bin/express/business/accountService/getall", nil, nil, result)
 
 	return result, err
 }

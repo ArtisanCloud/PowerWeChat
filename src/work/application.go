@@ -4,12 +4,29 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/customer"
+	message3 "github.com/ArtisanCloud/power-wechat/src/work/accountService/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/serviceState"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/servicer"
+	tag3 "github.com/ArtisanCloud/power-wechat/src/work/accountService/tag"
 	"github.com/ArtisanCloud/power-wechat/src/work/agent"
+	"github.com/ArtisanCloud/power-wechat/src/work/agent/workbench"
 	"github.com/ArtisanCloud/power-wechat/src/work/auth"
 	"github.com/ArtisanCloud/power-wechat/src/work/base"
 	"github.com/ArtisanCloud/power-wechat/src/work/corpgroup"
 	"github.com/ArtisanCloud/power-wechat/src/work/department"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat"
+	message2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/school"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics"
+	tag2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/tag"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/transfer"
 	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot"
 	"github.com/ArtisanCloud/power-wechat/src/work/invoice"
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
@@ -20,6 +37,10 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/power-wechat/src/work/server"
 	"github.com/ArtisanCloud/power-wechat/src/work/user"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/batchJobs"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/exportJobs"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/linkedCorp"
+	"github.com/ArtisanCloud/power-wechat/src/work/user/tag"
 	"net/http"
 )
 
@@ -36,7 +57,7 @@ type Work struct {
 	Department *department.Client
 
 	Agent          *agent.Client
-	AgentWorkbench *agent.WorkbenchClient
+	AgentWorkbench *workbench.Client
 
 	Message  *message.Client
 	Messager *message.Messager
@@ -44,18 +65,30 @@ type Work struct {
 	Encryptor *kernel.Encryptor
 	Server    *server.Guard
 
-	UserClient           *user.Client
-	UserBatchJobsClient  *user.BatchJobsClient
-	UserLinkedCorpClient *user.LinkedCorpClient
-	UserTagClient        *user.TagClient
+	User           *user.Client
+	UserBatchJobs  *batchJobs.Client
+	UserExportJobs *exportJobs.Client
+	UserLinkedCorp *linkedCorp.Client
+	UserTag        *tag.Client
 
-	ExternalContact                *externalContact.Client
-	ExternalContactContactWay      *externalContact.ContactWayClient
-	ExternalContactStatistics      *externalContact.StatisticsClient
-	ExternalContactMessage         *externalContact.MessageClient
-	ExternalContactSchool          *externalContact.SchoolClient
-	ExternalContactMoment          *externalContact.MomentClient
-	ExternalContactMessageTemplate *externalContact.MessageTemplateClient
+	ExternalContact                 *externalContact.Client
+	ExternalContactContactWay       *contactWay.Client
+	ExternalContactCustomerStrategy *customerStrategy.Client
+	ExternalContactStatistics       *statistics.Client
+	ExternalContactMessage          *message2.Client
+	ExternalContactSchool           *school.Client
+	ExternalContactMoment           *moment.Client
+	ExternalContactMessageTemplate  *messageTemplate.Client
+	ExternalContactGroupChat        *groupChat.Client
+	ExternalContactTag              *tag2.Client
+	ExternalContactTransfer         *transfer.Client
+
+	AccountService             *accountService.Client
+	AccountServiceCustomer     *customer.Client
+	AccountServiceMessage      *message3.Client
+	AccountServiceServicer     *servicer.Client
+	AccountServiceServiceState *serviceState.Client
+	AccountServiceTag          *tag3.Client
 
 	Media *media.Client
 	Menu  *menu.Client
@@ -147,19 +180,32 @@ func NewWork(config *UserConfig) (*Work, error) {
 	app.Encryptor, app.Server = server.RegisterProvider(app)
 
 	//-------------- register user --------------
-	app.UserClient,
-		app.UserBatchJobsClient,
-		app.UserLinkedCorpClient,
-		app.UserTagClient = user.RegisterProvider(app)
+	app.User,
+		app.UserBatchJobs,
+		app.UserExportJobs,
+		app.UserLinkedCorp,
+		app.UserTag = user.RegisterProvider(app)
 
 	//-------------- register external contact --------------
 	app.ExternalContact,
 		app.ExternalContactContactWay,
-		app.ExternalContactStatistics,
+		app.ExternalContactCustomerStrategy,
+		app.ExternalContactGroupChat,
 		app.ExternalContactMessage,
-		app.ExternalContactSchool,
+		app.ExternalContactMessageTemplate,
 		app.ExternalContactMoment,
-		app.ExternalContactMessageTemplate = externalContact.RegisterProvider(app)
+		app.ExternalContactSchool,
+		app.ExternalContactStatistics,
+		app.ExternalContactTag,
+		app.ExternalContactTransfer = externalContact.RegisterProvider(app)
+
+	//-------------- register account service --------------
+	app.AccountService,
+		app.AccountServiceCustomer,
+		app.AccountServiceMessage,
+		app.AccountServiceServicer,
+		app.AccountServiceServiceState,
+		app.AccountServiceTag = accountService.RegisterProvider(app)
 
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)
@@ -221,13 +267,15 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.Server
 
 	case "UserClient":
-		return app.UserClient
+		return app.User
 	case "UserBatchJobsClient":
-		return app.UserBatchJobsClient
+		return app.UserBatchJobs
+	case "UserExportJobs":
+		return app.UserExportJobs
 	case "UserLinkedCorpClient":
-		return app.UserLinkedCorpClient
+		return app.UserLinkedCorp
 	case "UserTagClient":
-		return app.UserTagClient
+		return app.UserTag
 
 	case "ExternalContact":
 		return app.ExternalContact

@@ -4,7 +4,7 @@ package response
 
 type ResponseProfitSharingAddReceiver struct {
 	Type         string `json:"type"`
-	Account      string `json:"account"`
+	Account      string `json:"accountService"`
 	Name         string `json:"name"`
 	RelationType string `json:"relation_type"`
 }

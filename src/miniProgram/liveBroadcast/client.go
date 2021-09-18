@@ -5,367 +5,485 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/liveBroadcast/request"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/liveBroadcast/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
-// 添加管理直播间小助手
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addAssistant.html
-func (comp *Client) AddAssistant(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-
-	result := &response2.ResponseMiniProgram{}
-
-	var formData *object.HashMap
-	if data != nil {
-		formData = &object.HashMap{
-			"name":  (*data)["name"],
-			"value": (*data)["value"],
-		}
-	}
-
-	_, err := comp.HttpUpload("wxaapi/broadcast/room/addassistant", nil, formData, nil, nil, result)
-
-	return result, err
-}
-
-// 直播间导入商品
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addGoods.html
-func (comp *Client) AddGoods(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addgoods", data, nil, nil, result)
-
-	return result, err
-}
-
-// 设置成员角色
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addRole.html
-func (comp *Client) AddRole(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/role/addrole", data, nil, nil, result)
-
-	return result, err
-}
-
-// 添加主播副号
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addSubAnchor.html
-func (comp *Client) AddSubAnchor(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addsubanchor", data, nil, nil, result)
-
-	return result, err
-}
-
 // 创建直播间
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.createRoom.html
-func (comp *Client) CreateRoom(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
+func (comp *Client) CreateRoom(options *request.RequestBroadcastCreateRoom) (*response.ResponseBroadcastCreateRoom, error) {
+	result := &response.ResponseBroadcastCreateRoom{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/create", data, nil, nil, result)
-
-	return result, err
-}
-
-// 解除成员角色
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.deleteRole.html
-func (comp *Client) DeleteRole(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/role/deleterole", data, nil, nil, result)
-
-	return result, err
-}
-
-// 删除直播间
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.deleteRoom.html
-func (comp *Client) DeleteRoom(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deleteroom", data, nil, nil, result)
-
-	return result, err
-}
-
-// 删除主播副号
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.deleteSubAnchor.html
-func (comp *Client) DeleteSubAnchor(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deletesubanchor", data, nil, nil, result)
-
-	return result, err
-}
-
-// 编辑直播间
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.editRoom.html
-func (comp *Client) EditRoom(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/editroom", data, nil, nil, result)
-
-	return result, err
-}
-
-// 查询管理直播间小助手
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getAssistantList.html
-func (comp *Client) GetAssistantList(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getassistantlist", data, nil, nil, result)
-
-	return result, err
-}
-
-// 获取长期订阅用户
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getFollowers.html
-func (comp *Client) GetFollowers(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxa/business/get_wxa_followers", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/create", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取直播间列表及直播间信息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getLiveInfo.html
-func (comp *Client) GetLiveInfo(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) GetLiveInfo(options *request.RequestBroadcastGetLiveInfo) (*response.ResponseBroadcastGetLiveInfo, error) {
+	result := &response.ResponseBroadcastGetLiveInfo{}
+
+	_, err := comp.HttpPostJson("wxa/business/getliveinfo", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取直播间回放
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getLiveInfo.html
+func (comp *Client) GetLiveReplay(options *request.RequestBroadcastGetLiveReplay) (*response.ResponseBroadcastGetLiveReplay, error) {
+	result := &response.ResponseBroadcastGetLiveReplay{}
+
+	_, err := comp.HttpPostJson("wxa/business/getliveinfo", options, nil, nil, result)
+
+	return result, err
+}
+
+// 直播间导入商品
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addGoods.html
+func (comp *Client) AddGoods(options *request.RequestBroadcastAddGoods) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxa/business/getliveinfo", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addgoods", options, nil, nil, result)
+
+	return result, err
+}
+
+// 删除直播间
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.deleteRoom.html
+func (comp *Client) DeleteRoom(id int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"options": id,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deleteroom", options, nil, nil, result)
+
+	return result, err
+}
+
+// 编辑直播间
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.editRoom.html
+func (comp *Client) EditRoom(options *request.RequestBroadcastEditRoom) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/editroom", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取直播间推流地址
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getPushUrl.html
-func (comp *Client) GetPushUrl(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
+func (comp *Client) GetPushUrl(roomId int) (*response.ResponseBroadcastGetPushUrl, error) {
+	result := &response.ResponseBroadcastGetPushUrl{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getpushurl", data, nil, nil, result)
+	options := &object.HashMap{
+		"roomId": roomId,
+	}
 
-	return result, err
-}
-
-// 获取直播间推流地址
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getPushUrl.html
-func (comp *Client) GetRoleList(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/role/getrolelist", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getpushurl", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取直播间分享二维码
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getSharedCode.html
-func (comp *Client) GetSharedCode(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
+func (comp *Client) GetSharedCode(options *request.RequestBroadcastGetSharedCode) (*response.ResponseBroadcastGetSharedCode, error) {
+	result := &response.ResponseBroadcastGetSharedCode{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getsharedcode", data, nil, nil, result)
-
-	return result, err
-}
-
-// 获取主播副号
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getSubAnchor.html
-func (comp *Client) GetSubAnchor(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getsubanchor", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getsharedcode", options, nil, nil, result)
 
 	return result, err
 }
 
-// 商品添加并提审
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAdd.html
-func (comp *Client) GoodsAdd(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+// 添加管理直播间小助手
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addAssistant.html
+func (comp *Client) AddAssistant(options *request.RequestBroadcastAddAssistant) (*response2.ResponseMiniProgram, error) {
+
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/add", data, nil, nil, result)
-
-	return result, err
-}
-
-// 重新提交审核
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
-func (comp *Client) GoodsAudit(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/audit", data, nil, nil, result)
-
-	return result, err
-}
-
-// 重新提交审核
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
-func (comp *Client) GoodsDelete(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/deleteInRoom", data, nil, nil, result)
-
-	return result, err
-}
-
-// 获取商品状态
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsInfo.html
-func (comp *Client) GoodsInfo(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxa/business/getgoodswarehouse", data, nil, nil, result)
-
-	return result, err
-}
-
-// 获取商品列表
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsList.html
-func (comp *Client) GoodsList(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/getapproved", data, nil, nil, result)
-
-	return result, err
-}
-
-// 推送商品
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsPush.html
-func (comp *Client) GoodsPush(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/push", data, nil, nil, result)
-
-	return result, err
-}
-
-// 撤回商品审核
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsResetAudit.html
-func (comp *Client) GoodsResetAudit(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/resetaudit", data, nil, nil, result)
-
-	return result, err
-}
-
-// 上下架商品
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsSale.html
-func (comp *Client) GoodsSale(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/onsale", data, nil, nil, result)
-
-	return result, err
-}
-
-// 直播间商品排序
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsSort.html
-func (comp *Client) GoodsSort(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/sort", data, nil, nil, result)
-
-	return result, err
-}
-
-// 更新商品
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsUpdate.html
-func (comp *Client) GoodsUpdate(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/update", data, nil, nil, result)
-
-	return result, err
-}
-
-// 下载商品讲解视频
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsVideo.html
-func (comp *Client) GoodsVideo(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/getVideo", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addassistant", options, nil, nil, result)
 
 	return result, err
 }
 
 // 修改管理直播间小助手
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.modifyAssistant.html
-func (comp *Client) ModifyAssistant(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) ModifyAssistant(options *request.RequestBroadcastModifyAssistant) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifyassistant", data, nil, nil, result)
-
-	return result, err
-}
-
-// 修改主播副号
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.modifySubAnchor.html
-func (comp *Client) ModifySubAnchor(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifysubanchor", data, nil, nil, result)
-
-	return result, err
-}
-
-// 向长期订阅用户群发直播间开始事件
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.pushMessage.html
-func (comp *Client) PushMessage(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxa/business/push_message", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifyassistant", options, nil, nil, result)
 
 	return result, err
 }
 
 // 删除管理直播间小助手
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.removeAssistant.html
-func (comp *Client) RemoveAssistant(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) RemoveAssistant(options *request.RequestBroadcastRemoveAssistant) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/removeassistant", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/removeassistant", options, nil, nil, result)
 
 	return result, err
 }
 
-// 开启/关闭直播间全局禁言
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.updateComment.html
-func (comp *Client) UpdateComment(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+// 查询管理直播间小助手
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getAssistantList.html
+func (comp *Client) GetAssistantList(roomID int) (*response.ResponseBroadcastGetAssistantList, error) {
+	result := &response.ResponseBroadcastGetAssistantList{}
+
+	options := &object.HashMap{
+		"roomId": roomID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getassistantlist", options, nil, nil, result)
+
+	return result, err
+}
+
+// 添加主播副号
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addSubAnchor.html
+func (comp *Client) AddSubAnchor(roomID int, userName string) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatecomment", data, nil, nil, result)
+	options := &object.HashMap{
+		"roomId":   roomID,
+		"username": userName,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addsubanchor", options, nil, nil, result)
+
+	return result, err
+}
+
+// 修改主播副号
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.modifySubAnchor.html
+func (comp *Client) ModifySubAnchor(roomID int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId": roomID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifysubanchor", options, nil, nil, result)
+
+	return result, err
+}
+
+// 删除主播副号
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.deleteSubAnchor.html
+func (comp *Client) DeleteSubAnchor(roomID int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId": roomID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deletesubanchor", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取主播副号
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getSubAnchor.html
+func (comp *Client) GetSubAnchor(roomID int) (*response.ResponseBroadcastGetSubAnchor, error) {
+	result := &response.ResponseBroadcastGetSubAnchor{}
+
+	options := &object.HashMap{
+		"roomId": roomID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/getsubanchor", options, nil, nil, result)
 
 	return result, err
 }
 
 // 开启/关闭直播间官方收录
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.updateFeedPublic.html
-func (comp *Client) UpdateFeedPublic(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) UpdateFeedPublic(roomID int, isFeedsPublic int) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatefeedpublic", data, nil, nil, result)
+	options := &object.HashMap{
+		"roomId":        roomID,
+		"isFeedsPublic": isFeedsPublic,
+	}
 
-	return result, err
-}
-
-// 开启/关闭客服功能
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.updateKF.html
-func (comp *Client) UpdateKF(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
-	result := &response2.ResponseMiniProgram{}
-
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatekf", data, nil, nil, result)
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatefeedpublic", options, nil, nil, result)
 
 	return result, err
 }
 
 // 开启/关闭回放功能
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.updateReplay.html
-func (comp *Client) UpdateReplay(data *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) UpdateReplay(roomID int, closeReplay int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+	options := &object.HashMap{
+		"roomId":      roomID,
+		"closeReplay": closeReplay,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatereplay", options, nil, nil, result)
+
+	return result, err
+}
+
+// 开启/关闭客服功能
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.updateKF.html
+func (comp *Client) UpdateKF(roomID int, closeKF int) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatereplay", data, nil, nil, result)
+	options := &object.HashMap{
+		"roomId":  roomID,
+		"closeKf": closeKF,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatekf", options, nil, nil, result)
+
+	return result, err
+}
+
+// 开启/关闭直播间全局禁言
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.updateComment.html
+func (comp *Client) UpdateComment(roomID int, banComment int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId":     roomID,
+		"banComment": banComment,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatecomment", options, nil, nil, result)
+
+	return result, err
+}
+
+// 上下架商品
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsSale.html
+func (comp *Client) GoodsSale(roomID int, goodsID int, onSale int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId":  roomID,
+		"goodsId": goodsID,
+		"onSale":  onSale,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/onsale", options, nil, nil, result)
+
+	return result, err
+}
+
+// 重新提交审核
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
+func (comp *Client) GoodsDeleteInRoom(roomID int, goodsID int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId":  roomID,
+		"goodsId": goodsID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/deleteInRoom", options, nil, nil, result)
+
+	return result, err
+}
+
+// 推送商品
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsPush.html
+func (comp *Client) GoodsPush(roomID int, goodsID int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId":  roomID,
+		"goodsId": goodsID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/push", options, nil, nil, result)
+
+	return result, err
+}
+
+// 直播间商品排序
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsSort.html
+func (comp *Client) GoodsSort(roomID int, goods *power.HashMap) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"roomId": roomID,
+		"goods":  goods,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/sort", options, nil, nil, result)
+
+	return result, err
+}
+
+// 下载商品讲解视频
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsVideo.html
+func (comp *Client) GoodsVideo(roomID int, goodsID int) (*response.ResponseBroadcastGoodsVideo, error) {
+	result := &response.ResponseBroadcastGoodsVideo{}
+
+	options := &object.HashMap{
+		"roomId":  roomID,
+		"goodsId": goodsID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/getVideo", options, nil, nil, result)
+
+	return result, err
+}
+
+// 商品添加并提审
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAdd.html
+func (comp *Client) GoodsAdd(options *request.RequestBroadcastGoodsAdd) (*response.ResponseBroadcastGoodsAdd, error) {
+	result := &response.ResponseBroadcastGoodsAdd{}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/add", options, nil, nil, result)
+
+	return result, err
+}
+
+// 撤回商品审核
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsResetAudit.html
+func (comp *Client) GoodsResetAudit(options *request.RequestBroadcastGoodsResetAudit) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/resetaudit", options, nil, nil, result)
+
+	return result, err
+}
+
+// 重新提交审核
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
+func (comp *Client) GoodsAudit(goodsID int) (*response.ResponseBroadcastGoodsAudit, error) {
+	result := &response.ResponseBroadcastGoodsAudit{}
+
+	options := &power.HashMap{
+		"goodsId": goodsID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/audit", options, nil, nil, result)
+
+	return result, err
+}
+
+// 删除商品
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
+func (comp *Client) GoodsDelete(goodsID int) (*response2.ResponseWork, error) {
+	result := &response2.ResponseWork{}
+
+	options := &power.HashMap{
+		"goodsId": goodsID,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/delete", options, nil, nil, result)
+
+	return result, err
+}
+
+// 更新商品
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsUpdate.html
+func (comp *Client) GoodsUpdate(options *request.RequestBroadcastGoodsUpdate) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/update", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取商品状态
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsInfo.html
+func (comp *Client) GoodsInfo(goodsIDs []int) (*response.ResponseBroadcastGoodsInfo, error) {
+	result := &response.ResponseBroadcastGoodsInfo{}
+
+	options := &power.HashMap{
+		"goods_ids": goodsIDs,
+	}
+
+	_, err := comp.HttpPostJson("wxa/business/getgoodswarehouse", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取商品列表
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsList.html
+func (comp *Client) GoodsList(options *power.HashMap) (*response.ResponseBroadcastGoodsList, error) {
+	result := &response.ResponseBroadcastGoodsList{}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/getapproved", options, nil, nil, result)
+
+	return result, err
+}
+
+// 设置成员角色
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.addRole.html
+func (comp *Client) AddRole(userName string, role int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"username": userName,
+		"role":     role,
+	}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/role/addrole", options, nil, nil, result)
+
+	return result, err
+}
+
+// 解除成员角色
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.deleteRole.html
+func (comp *Client) DeleteRole(userName string, role int) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &object.HashMap{
+		"username": userName,
+		"role":     role,
+	}
+	_, err := comp.HttpPostJson("wxaapi/broadcast/role/deleterole", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取直播间推流地址
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getPushUrl.html
+func (comp *Client) GetRoleList(options *request.RequestBroadcastGetRoleList) (*response.ResponseBroadcastGetRoleList, error) {
+	result := &response.ResponseBroadcastGetRoleList{}
+
+	_, err := comp.HttpPostJson("wxaapi/broadcast/role/getrolelist", options, nil, nil, result)
+
+	return result, err
+}
+
+// 获取长期订阅用户
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getFollowers.html
+func (comp *Client) GetFollowers(limit int, pageBreak int) (*response.ResponseBroadcastGetFollowers, error) {
+	result := &response.ResponseBroadcastGetFollowers{}
+
+	options := &power.HashMap{
+		"limit":      limit,
+		"page_break": pageBreak,
+	}
+	_, err := comp.HttpPostJson("wxa/business/get_wxa_followers", options, nil, nil, result)
+
+	return result, err
+}
+
+// 向长期订阅用户群发直播间开始事件
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.pushMessage.html
+func (comp *Client) PushMessage(roomID int, userOpenID []string) (*response2.ResponseMiniProgram, error) {
+	result := &response2.ResponseMiniProgram{}
+
+	options := &power.HashMap{
+		"room_id":     roomID,
+		"user_openid": userOpenID,
+	}
+
+	_, err := comp.HttpPostJson("wxa/business/push_message", options, nil, nil, result)
 
 	return result, err
 }

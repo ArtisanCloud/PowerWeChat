@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	response3 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"strconv"
 )
@@ -21,10 +22,8 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 	}
 }
 
-// https://work.weixin.qq.com/api/doc#90000/90135/91554
-
 // 获取配置了客户联系功能的成员列表.
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92571
+// https://work.weixin.qq.com/api/doc/90000/90135/92571
 func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList, error) {
 
 	result := &response.ResponseGetFollowUserList{}
@@ -35,7 +34,7 @@ func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList, error
 }
 
 // 获取外部联系人列表.
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92571
+// https://work.weixin.qq.com/api/doc/90000/90135/92113
 func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 	result := &response.ResponseGetList{}
@@ -47,30 +46,33 @@ func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 	return result, err
 }
 
-// 批量获取客户详情.
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92994
-func (comp *Client) BatchGet(userID string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
-
-	result := &response.ResponseBatchGetByUser{}
-
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", &object.StringMap{
-		"userid": userID,
-		"cursor": cursor,
-		"limit":  fmt.Sprintf("%d", limit),
-	}, nil, nil, result)
-
-	return result, err
-}
-
 // 获取外部联系人详情.
-// https://work.weixin.qq.com/api/doc#90000/90135/91556
-func (comp *Client) Get(externalUserId string) (*weCom.ResponseGetExternalContact, error) {
+// https://work.weixin.qq.com/api/doc/90000/90135/92114
+func (comp *Client) Get(externalUserId string, cursor int) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}
 
 	_, err := comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
+		"cursor":          fmt.Sprintf("%d", cursor),
 	}, nil, result)
+
+	return result, err
+}
+
+// 批量获取客户详情.
+// https://open.work.weixin.qq.com/api/doc/90000/90135/92994
+func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
+
+	result := &response.ResponseBatchGetByUser{}
+
+	options := &object.HashMap{
+		"userid": userID,
+		"cursor": cursor,
+		"limit":  limit,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", options, nil, nil, result)
 
 	return result, err
 }
@@ -117,9 +119,9 @@ func (comp *Client) Transfer(externalUserID []string, handoverUserID string, tak
 
 // 离职成员的群再分配.
 // https://work.weixin.qq.com/api/doc/90000/90135/92127
-func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*response.ResponseGroupChatTransfer, error) {
+func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*response3.ResponseGroupChatTransfer, error) {
 
-	result := &response.ResponseGroupChatTransfer{}
+	result := &response3.ResponseGroupChatTransfer{}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", &object.HashMap{
 		"chat_id_list": chatIDs,

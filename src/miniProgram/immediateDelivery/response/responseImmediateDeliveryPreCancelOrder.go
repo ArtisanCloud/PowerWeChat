@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseImmediateDeliveryPreCancelOrder struct {
-	response.ResponseMiniProgram
+	*response.ResponseMiniProgram
 
 	DeductFee int    `json:"deduct_fee"` // 5,
 	Desc      string `json:"desc"`       // "blablabla",

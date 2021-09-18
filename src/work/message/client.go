@@ -22,7 +22,8 @@ func (comp *Client) Message(message *messages.Message) *Messager {
 	return m
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90236
+// 发送应用消息
+// https://work.weixin.qq.com/api/doc/90000/90135/90236
 func (comp *Client) Send(messages *power.HashMap) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
@@ -32,6 +33,21 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseMessageSend
 		(*messages)["agentid"] = config.GetInt("agent_id", 0)
 	}
 	_, err := comp.HttpPostJson("cgi-bin/message/send", messages, nil, nil, result)
+
+	return result, err
+}
+
+// 更新模版卡片消息
+// https://work.weixin.qq.com/api/doc/90000/90135/94888
+func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseMessageSend, error) {
+
+	result := &response.ResponseMessageSend{}
+
+	if (*card)["agentid"] == nil || (*card)["agentid"].(int) <= 0 {
+		config := (*comp.App).GetConfig()
+		(*card)["agentid"] = config.GetInt("agent_id", 0)
+	}
+	_, err := comp.HttpPostJson("cgi-bin/message/update_template_card", card, nil, nil, result)
 
 	return result, err
 }

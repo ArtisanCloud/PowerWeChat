@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExpressAddOrder struct {
-	response.ResponseMiniProgram
+	*response.ResponseMiniProgram
 
 	DeliveryResultCode int                 `json:"delivery_resultcode"` //  10002,
 	DeliveryResultMsg  string              `json:"delivery_resultmsg"`  //  "客户密码不正确"

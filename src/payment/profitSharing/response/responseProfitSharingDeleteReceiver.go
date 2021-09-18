@@ -4,5 +4,5 @@ package response
 
 type ResponseProfitSharingDeleteReceiver struct {
 	Type    string `json:"type"`
-	Account string `json:"account"`
+	Account string `json:"accountService"`
 }
