@@ -73,7 +73,7 @@ func (comp *Client) ResignedTransferCustomer(options *request.RequestResignedTra
 
 // 查询客户接替状态
 // https://work.weixin.qq.com/api/doc/90000/90135/94082
-func (comp *Client) ResignedTransferResult(options *request.RequestResignedTransferCustomer) (*response.ResponseResignedTransferResult, error) {
+func (comp *Client) ResignedTransferResult(options *request.RequestResignedTransferResult) (*response.ResponseResignedTransferResult, error) {
 
 	result := &response.ResponseResignedTransferResult{}
 
