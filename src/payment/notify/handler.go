@@ -11,13 +11,14 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	base2 "github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"io/ioutil"
 	"net/http"
 )
 
 type Handler struct {
 	App        *kernel.ApplicationPaymentInterface
-	Message    *object.HashMap
+	Message    *request.RequestNotify
 	fail       string
 	Attributes *object.StringMap
 	Check      bool
@@ -88,37 +89,42 @@ func (handler *Handler) ToResponse() (response *response2.HttpResponse, err erro
 	return rs, err
 }
 
-func (handler *Handler) GetMessage() (message *object.HashMap, err error) {
+func (handler *Handler) GetMessage() (notify *request.RequestNotify, err error) {
 
 	if handler.Message != nil {
 		return handler.Message, nil
 	}
 
 	externalRequest := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
-	requestBody, _ := ioutil.ReadAll(externalRequest.Body)
-	handler.Message = &object.HashMap{}
+
+	requestBody, err := ioutil.ReadAll(externalRequest.Body)
+	if err!=nil{
+		return nil, err
+	}
+	handler.Message = &request.RequestNotify{}
 	err = object.JsonDecode(requestBody, handler.Message)
 	if err != nil {
 		return nil, err
 	}
+	handler.Message.RawRequest = externalRequest
 
 	return handler.Message, nil
 }
 
-func (handler *Handler) DecryptMessage(key string) (string, error) {
+func (handler *Handler) DecryptMessage() (string, error) {
 	message, err := handler.GetMessage()
 	if err != nil {
 		return "", err
 	}
-	if (*message)[key] == nil {
+	if message.Resource == nil {
 		return "", errors.New("uniformMessage doesn't have the key value")
 	}
-	content := (*message)[key].(map[string]interface{})
+
 	config := (*handler.App).GetConfig()
 	wxKey := config.GetString("mch_api_v3_key", "")
-	nonce := content["nonce"].(string)
-	associatedData := content["associated_data"].(string)
-	cipherText := content["ciphertext"].(string)
+	nonce := message.Resource.Nonce
+	associatedData := message.Resource.AssociatedData
+	cipherText := message.Resource.Ciphertext
 	return support.DecryptAES256GCM(
 		wxKey,
 		associatedData,
