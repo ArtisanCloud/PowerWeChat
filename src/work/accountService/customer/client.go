@@ -46,7 +46,7 @@ func (comp *Client) GetUpgradeServiceConfig() (*response.ResponseCustomerGetUpgr
 
 // 为客户升级为专员或客户群服务
 // https://work.weixin.qq.com/api/doc/90000/90135/94674
-func (comp *Client) UpgradeService(options request.RequestUpgradeService) (*response2.ResponseWork, error) {
+func (comp *Client) UpgradeService(options *request.RequestUpgradeService) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
