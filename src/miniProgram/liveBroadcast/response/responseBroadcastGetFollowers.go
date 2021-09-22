@@ -9,5 +9,5 @@ type ResponseBroadcastGetFollowers struct {
 	*response.ResponseMiniProgram
 
 	Followers []*power.HashMap `json:"followers"`
-	PageBreak string           `json:"page_break"`
+	PageBreak string           `json:"page_break,omitempty"`
 }
