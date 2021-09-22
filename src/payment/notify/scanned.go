@@ -3,7 +3,6 @@ package notify
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"net/http"
@@ -30,17 +29,13 @@ func (comp *Scanned) Alert(message string) {
 	comp.alert = message
 }
 
-func (comp *Scanned) Handle(closure func(notify *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*response.HttpResponse, error) {
-	hashMessages, err := comp.GetMessage()
-	if err != nil {
-		return nil, err
-	}
-	messages, err := power.HashMapToPower(hashMessages)
+func (comp *Scanned) Handle(closure func(message *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*response.HttpResponse, error) {
+	message, err := comp.GetMessage()
 	if err != nil {
 		return nil, err
 	}
 
-	result := closure(messages, nil, comp.Fail, comp.Alert)
+	result := closure(message, comp.Fail, comp.Alert)
 
 	resultCode := FAIL
 	if comp.alert == "" && comp.fail == "" {

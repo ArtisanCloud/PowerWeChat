@@ -2,8 +2,10 @@ package notify
 
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"net/http"
 )
 
@@ -20,19 +22,26 @@ func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Reque
 	return paid
 }
 
-func (comp *Refund) Handle(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) (*response.HttpResponse, error) {
+func (comp *Refund) Handle(closure func(message *request.RequestNotify, refund *models.Refund, fail func(message string)) interface{}) (*response.HttpResponse, error) {
 
-	hashMessages, err := comp.GetMessage()
+	message, err := comp.GetMessage()
 	if err != nil {
 		return nil, err
 	}
 
-	messages, err := power.HashMapToPower(hashMessages)
+	reqInfo, err := comp.reqInfo()
 	if err != nil {
 		return nil, err
 	}
 
-	result := closure(messages, nil, comp.Fail)
+	// struct the content
+	refund := &models.Refund{}
+	err = object.JsonDecode([]byte( reqInfo), refund)
+	if err != nil {
+		return nil, err
+	}
+
+	result := closure(message, refund, comp.Fail)
 	comp.Strict(result)
 
 	return comp.ToResponse()

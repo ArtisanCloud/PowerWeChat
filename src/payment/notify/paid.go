@@ -3,6 +3,7 @@ package notify
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"net/http"
@@ -21,33 +22,29 @@ func NewPaidNotify(app kernel.ApplicationPaymentInterface, request *http.Request
 	return paid
 }
 
-func (comp *Paid) Handle(closure func(request *request.RequestNotify, fail func(message string)) interface{}) (*response.HttpResponse, error) {
+func (comp *Paid) Handle(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) (*response.HttpResponse, error) {
 
 	message, err := comp.GetMessage()
 	if err != nil {
 		return nil, err
 	}
 
-	hashContent, err := comp.reqInfo()
+	reqInfo, err := comp.reqInfo()
 	if err != nil {
 		return nil, err
 	}
 
-	message.Resource = hashContent
+	// struct the content
+	transaction := &models.Transaction{}
+	err = object.JsonDecode([]byte( reqInfo), transaction)
+	if err != nil {
+		return nil, err
+	}
 
-	result := closure(message, comp.Fail)
+	result := closure(message, transaction, comp.Fail)
 	comp.Strict(result)
 
 	return comp.ToResponse()
 
 }
 
-func (comp *Paid) reqInfo() (info *request.EncryptedResource, err error) {
-
-	content, err := comp.DecryptMessage()
-	if err != nil {
-		return nil, err
-	}
-
-	return info, nil
-}

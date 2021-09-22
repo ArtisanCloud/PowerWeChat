@@ -7,7 +7,6 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	base2 "github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
@@ -26,7 +25,7 @@ type Handler struct {
 
 	ExternalRequest *http.Request
 
-	Handle func(closure func(message *power.HashMap, content *power.HashMap, fail func(message string)) interface{}) *http.Response
+	//Handle func(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"
@@ -95,7 +94,7 @@ func (handler *Handler) GetMessage() (notify *request.RequestNotify, err error) 
 		return handler.Message, nil
 	}
 
-	externalRequest := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := handler.ExternalRequest
 
 	requestBody, err := ioutil.ReadAll(externalRequest.Body)
 	if err!=nil{
@@ -154,4 +153,18 @@ func (handler *Handler) Strict(result interface{}) {
 	if bResult != true && handler.fail == "" {
 		handler.Fail(strResult)
 	}
+}
+
+
+func (handler *Handler) reqInfo() (content string, err error) {
+
+	content, err = handler.DecryptMessage()
+	if err != nil {
+		return "", err
+	}
+
+	// save the decoded content to message resource
+	handler.Message.Resource.Plaintext = content
+
+	return content, nil
 }
