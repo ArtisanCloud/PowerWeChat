@@ -83,12 +83,12 @@ type Work struct {
 	ExternalContactTag              *tag2.Client
 	ExternalContactTransfer         *transfer.Client
 
-	AccountService             *accountService.Client
-	AccountServiceCustomer     *customer.Client
-	AccountServiceMessage      *message3.Client
-	AccountServiceServicer     *servicer.Client
-	AccountServiceServiceState *serviceState.Client
-	AccountServiceTag          *tag3.Client
+	AccountService         *accountService.Client
+	AccountServiceCustomer *customer.Client
+	AccountServiceMessage  *message3.Client
+	AccountServiceServicer *servicer.Client
+	AccountServiceState    *serviceState.Client
+	AccountServiceTag      *tag3.Client
 
 	Media *media.Client
 	Menu  *menu.Client
@@ -204,7 +204,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.AccountServiceCustomer,
 		app.AccountServiceMessage,
 		app.AccountServiceServicer,
-		app.AccountServiceServiceState,
+		app.AccountServiceState,
 		app.AccountServiceTag = accountService.RegisterProvider(app)
 
 	//-------------- media --------------
@@ -291,6 +291,19 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.ExternalContactMoment
 	case "ExternalContactMessageTemplate":
 		return app.ExternalContactMessageTemplate
+
+	case "AccountService":
+		return app.AccountService
+	case "AccountServiceCustomer":
+		return app.AccountServiceCustomer
+	case "AccountServiceMessage":
+		return app.AccountServiceMessage
+	case "AccountServiceServicer":
+		return app.AccountServiceServicer
+	case "AccountServiceState":
+		return app.AccountServiceState
+	case "AccountServiceTag":
+		return app.AccountServiceTag
 
 	case "Menu":
 		return app.Menu
