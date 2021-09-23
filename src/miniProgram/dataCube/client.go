@@ -4,7 +4,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/miniprogram/dataCube/response"
+	"github.com/ArtisanCloud/power-wechat/src/miniProgram/dataCube/response"
 )
 
 type Client struct {
