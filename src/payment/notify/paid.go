@@ -1,9 +1,11 @@
 package notify
 
 import (
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"net/http"
 )
 
@@ -20,41 +22,29 @@ func NewPaidNotify(app kernel.ApplicationPaymentInterface, request *http.Request
 	return paid
 }
 
-func (comp *Paid) Handle(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (comp *Paid) Handle(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) (*response.HttpResponse, error) {
 
-	hashMessages, err := comp.GetMessage()
-	if err != nil {
-		return nil, err
-	}
-	messages, err := power.HashMapToPower(hashMessages)
+	message, err := comp.GetMessage()
 	if err != nil {
 		return nil, err
 	}
 
-	hashContent, err := comp.reqInfo()
-	content, err := power.HashMapToPower(hashContent)
+	reqInfo, err := comp.reqInfo()
 	if err != nil {
 		return nil, err
 	}
 
-	result := closure(messages, content, comp.fail)
+	// struct the content
+	transaction := &models.Transaction{}
+	err = object.JsonDecode([]byte( reqInfo), transaction)
+	if err != nil {
+		return nil, err
+	}
+
+	result := closure(message, transaction, comp.Fail)
 	comp.Strict(result)
 
 	return comp.ToResponse()
 
 }
 
-func (comp *Paid) reqInfo() (info *object.HashMap, err error) {
-
-	content, err := comp.DecryptMessage("resource")
-	if err != nil {
-		return nil, err
-	}
-
-	info = &object.HashMap{}
-	err = object.JsonDecode([]byte(content), info)
-	if err != nil {
-		return nil, err
-	}
-	return info, nil
-}

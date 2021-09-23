@@ -3,15 +3,17 @@ package payment
 import (
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
 	"github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/bill"
 	"github.com/ArtisanCloud/power-wechat/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/payment/notify"
+	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"github.com/ArtisanCloud/power-wechat/src/payment/order"
 	"github.com/ArtisanCloud/power-wechat/src/payment/profitSharing"
 	"github.com/ArtisanCloud/power-wechat/src/payment/redpack"
@@ -211,15 +213,15 @@ func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) (*response.HttpResponse, error) {
 	return notify.NewPaidNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) (*http.Response, error) {
+func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *request.RequestNotify, transaction *models.Refund, fail func(message string)) interface{}) (*response.HttpResponse, error) {
 	return notify.NewRefundNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *power.HashMap, content *power.HashMap, fail string, alert string) interface{}) (*http.Response, error) {
+func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*response.HttpResponse, error) {
 	return notify.NewScannedNotify(app, request).Handle(closure)
 }
 

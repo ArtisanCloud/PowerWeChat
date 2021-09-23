@@ -285,7 +285,7 @@ func (comp *Client) GoodsSale(roomID int, goodsID int, onSale int) (*response2.R
 	return result, err
 }
 
-// 重新提交审核
+// 删除直播间商品
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsAudit.html
 func (comp *Client) GoodsDeleteInRoom(roomID int, goodsID int) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
@@ -317,7 +317,7 @@ func (comp *Client) GoodsPush(roomID int, goodsID int) (*response2.ResponseMiniP
 
 // 直播间商品排序
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.goodsSort.html
-func (comp *Client) GoodsSort(roomID int, goods *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) GoodsSort(roomID int, goods []request.RequestBroadcastGoodsSort) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
 	options := &object.HashMap{

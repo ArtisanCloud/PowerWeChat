@@ -1,8 +1,11 @@
 package request
 
-import "github.com/ArtisanCloud/power-wechat/src/kernel/power"
+type RequestBroadcastAddAssistantUser struct {
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+}
 
 type RequestBroadcastAddAssistant struct {
-	RoomID int `json:"roomId"`
-	Users []power.StringMap `json:"users"`
+	RoomID int                                `json:"roomId"`
+	Users  []RequestBroadcastAddAssistantUser `json:"users"`
 }

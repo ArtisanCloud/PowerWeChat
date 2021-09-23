@@ -7,17 +7,17 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	base2 "github.com/ArtisanCloud/power-wechat/src/payment/base"
 	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
 	"io/ioutil"
 	"net/http"
 )
 
 type Handler struct {
 	App        *kernel.ApplicationPaymentInterface
-	Message    *object.HashMap
+	Message    *request.RequestNotify
 	fail       string
 	Attributes *object.StringMap
 	Check      bool
@@ -25,7 +25,7 @@ type Handler struct {
 
 	ExternalRequest *http.Request
 
-	Handle func(closure func(message *power.HashMap, content *power.HashMap, fail string) interface{}) *http.Response
+	//Handle func(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"
@@ -58,7 +58,7 @@ func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Ha
 
 	return handler
 }
-func (handler *Handler) ToResponse() (response *http.Response, err error) {
+func (handler *Handler) ToResponse() (response *response2.HttpResponse, err error) {
 
 	returnCode := SUCCESS
 	returnMsg := "成功"
@@ -85,40 +85,45 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	rs := response2.NewHttpResponse(http.StatusOK)
 	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
-	return rs.Response, err
+	return rs, err
 }
 
-func (handler *Handler) GetMessage() (message *object.HashMap, err error) {
+func (handler *Handler) GetMessage() (notify *request.RequestNotify, err error) {
 
 	if handler.Message != nil {
 		return handler.Message, nil
 	}
 
-	externalRequest := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
-	requestBody, _ := ioutil.ReadAll(externalRequest.Body)
-	handler.Message = &object.HashMap{}
+	externalRequest := handler.ExternalRequest
+
+	requestBody, err := ioutil.ReadAll(externalRequest.Body)
+	if err!=nil{
+		return nil, err
+	}
+	handler.Message = &request.RequestNotify{}
 	err = object.JsonDecode(requestBody, handler.Message)
 	if err != nil {
 		return nil, err
 	}
+	handler.Message.RawRequest = externalRequest
 
 	return handler.Message, nil
 }
 
-func (handler *Handler) DecryptMessage(key string) (string, error) {
+func (handler *Handler) DecryptMessage() (string, error) {
 	message, err := handler.GetMessage()
 	if err != nil {
 		return "", err
 	}
-	if (*message)[key] == nil {
+	if message.Resource == nil {
 		return "", errors.New("uniformMessage doesn't have the key value")
 	}
-	content := (*message)[key].(map[string]interface{})
+
 	config := (*handler.App).GetConfig()
 	wxKey := config.GetString("mch_api_v3_key", "")
-	nonce := content["nonce"].(string)
-	associatedData := content["associated_data"].(string)
-	cipherText := content["ciphertext"].(string)
+	nonce := message.Resource.Nonce
+	associatedData := message.Resource.AssociatedData
+	cipherText := message.Resource.Ciphertext
 	return support.DecryptAES256GCM(
 		wxKey,
 		associatedData,
@@ -148,4 +153,18 @@ func (handler *Handler) Strict(result interface{}) {
 	if bResult != true && handler.fail == "" {
 		handler.Fail(strResult)
 	}
+}
+
+
+func (handler *Handler) reqInfo() (content string, err error) {
+
+	content, err = handler.DecryptMessage()
+	if err != nil {
+		return "", err
+	}
+
+	// save the decoded content to message resource
+	handler.Message.Resource.Plaintext = content
+
+	return content, nil
 }

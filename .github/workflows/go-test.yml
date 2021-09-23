@@ -4,6 +4,8 @@ on: [ push ]
 jobs:
   test-go:
     runs-on: ubuntu-latest
+    env:
+        API_V3_KEY: ${{ secrets.API_V3_KEY }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Go
