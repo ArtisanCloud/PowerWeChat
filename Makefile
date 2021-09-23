@@ -1,4 +1,4 @@
-test: test-aes test-message
+test: test-aes test-rsa test-signer
 
 test-aes:
 #	go test -v src/kernel/Encryptor.go src/kernel/Encryptor_test.go
@@ -6,6 +6,9 @@ test-aes:
 
 test-rsa:
 	go test -v src/kernel/support/rsa_oaep.go src/kernel/support/rsa_oaep_test.go
+
+test-signer:
+	go test -v src/kernel/support/signer.go src/kernel/support/signer_test.go
 
 test-message:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_message_test.go
@@ -33,5 +36,5 @@ test-payment:
 test-kernel-support:
 	go test -v src/kernel/support/str.go src/kernel/support/str_test.go
 
-build:payment_order_test.go
+build:
 	go build
