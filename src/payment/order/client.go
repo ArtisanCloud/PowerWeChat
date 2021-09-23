@@ -27,7 +27,7 @@ func (comp *Client) JSAPITransaction(params *power.HashMap) (*response.ResponseU
 
 	result := &response.ResponseUnitfy{}
 
-	endpoint := "/v3/combine-transactions/jsapi"
+	endpoint := "/v3/pay/transactions/jsapi"
 	_, err := comp.PayTransaction(endpoint, params, result)
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) TransactionApp(params *power.HashMap) (*response.ResponseUni
 
 	result := &response.ResponseUnitfy{}
 
-	endpoint := "/v3/combine-transactions/app"
+	endpoint := "/v3/pay/transactions/app"
 	_, err := comp.PayTransaction(endpoint, params, result)
 
 	return result, err
@@ -50,7 +50,7 @@ func (comp *Client) TransactionH5(params *power.HashMap) (*response.ResponseH5UR
 
 	result := &response.ResponseH5URL{}
 
-	endpoint := "/v3/combine-transactions/h5"
+	endpoint := "/v3/pay/transactions/h5"
 	_, err := comp.PayTransaction(endpoint, params, result)
 	return result, err
 }
@@ -61,7 +61,7 @@ func (comp *Client) TransactionNative(params *power.HashMap) (*response.Response
 
 	result := &response.ResponseCodeURL{}
 
-	endpoint := "/v3/combine-transactions/native"
+	endpoint := "/v3/pay/transactions/native"
 	_, err := comp.PayTransaction(endpoint, params, result)
 
 	return result, err

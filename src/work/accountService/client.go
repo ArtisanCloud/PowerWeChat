@@ -29,7 +29,7 @@ func (comp *Client) Add(name string, mediaID string) (*response.ResponseAccountA
 		"media_id": mediaID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/accountService/add", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/kf/account/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -44,18 +44,18 @@ func (comp *Client) Del(openKFID string) (*response2.ResponseWork, error) {
 		"open_kfid": openKFID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/accountService/del", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/kf/account/del", options, nil, nil, result)
 
 	return result, err
 }
 
 // 修改客服帐号
 // https://work.weixin.qq.com/api/doc/90000/90135/94664
-func (comp *Client) Update(options request.RequestAccountUpdate) (*response2.ResponseWork, error) {
+func (comp *Client) Update(options *request.RequestAccountUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/accountService/update", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/kf/account/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) List() (*response.ResponseAccountList, error) {
 
 	result := &response.ResponseAccountList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/accountService/list", nil, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/kf/account/list", nil, nil, nil, result)
 
 	return result, err
 }
