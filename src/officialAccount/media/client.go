@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/officialAccount/media/response"
 	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
 )
 
@@ -59,26 +60,26 @@ func (comp *Client) UploadImage(path string, form *power.HashMap) (interface{}, 
 	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, nil)
 }
 
-func (comp *Client) UploadTempImage(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
-	return comp.Upload("image", path, form, outResponse)
+func (comp *Client) UploadTempImage(path string, form *power.HashMap) (interface{}, error) {
+	return comp.Upload("image", path, form)
 }
 
-func (comp *Client) UploadTempVoice(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
-	return comp.Upload("voice", path, form, outResponse)
+func (comp *Client) UploadTempVoice(path string, form *power.HashMap) (interface{}, error) {
+	return comp.Upload("voice", path, form)
 }
 
-func (comp *Client) UploadTempVideo(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
-	return comp.Upload("video", path, form, outResponse)
+func (comp *Client) UploadTempVideo(path string, form *power.HashMap) (interface{}, error) {
+	return comp.Upload("video", path, form)
 }
 
-func (comp *Client) UploadTempFile(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
-	return comp.Upload("file", path, form, outResponse)
+func (comp *Client) UploadTempFile(path string, form *power.HashMap) (interface{}, error) {
+	return comp.Upload("file", path, form)
 }
 
 // 上传临时素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90253
-func (comp *Client) Upload(mediaType string, path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
-
+func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (interface{}, error) {
+	outResponse := response.ResponseHeaderMedia{}
 	files := &object.HashMap{
 		"media": path,
 	}
