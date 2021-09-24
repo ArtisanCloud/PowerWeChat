@@ -9,6 +9,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"io"
 	"log"
@@ -150,7 +151,7 @@ func (client *BaseClient) RequestRaw(url string, params *object.StringMap, metho
 	return client.Request(url, params, method, options, true, outHeader, outBody)
 }
 
-func (client *BaseClient) StreamDownload(requestDownload *response.RequestDownload, filePath string) (int64, error) {
+func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload, filePath string) (int64, error) {
 	fileHandler, err := os.Create(filePath)
 	if err != nil {
 		return 0, err
