@@ -71,6 +71,8 @@ func (comp *Client) UploadTempVideo(path string, form *power.HashMap, outRespons
 	return comp.Upload("video", path, form, outResponse)
 }
 
+// 新增临时文件
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
 func (comp *Client) UploadTempFile(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
 	return comp.Upload("file", path, form, outResponse)
 }

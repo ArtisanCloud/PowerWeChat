@@ -57,7 +57,7 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
 			"http": object.HashMap{
-				"base_uri": "https://qyapi.weixin.qq.com/",
+				"base_uri": "https://api.weixin.qq.com/",
 			},
 		},
 	}
