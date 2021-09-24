@@ -17,6 +17,8 @@ type ResponseCastable struct {
 
 func (responseCastable *ResponseCastable) CastResponseToType(response *http.Response, castType string) (interface{}, error) {
 
+	return response, nil
+
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
