@@ -51,12 +51,12 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 }
 
 // 上传图片
-// https://work.weixin.qq.com/api/doc/90000/90135/90256
-func (comp *Client) UploadImage(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
+func (comp *Client) UploadImage(path string, form *power.HashMap) (interface{}, error) {
 	files := &object.HashMap{
 		"media": path,
 	}
-	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, outResponse)
+	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, nil)
 }
 
 func (comp *Client) UploadTempImage(path string, form *power.HashMap, outResponse interface{}) (interface{}, error) {
