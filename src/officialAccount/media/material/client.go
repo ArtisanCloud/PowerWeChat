@@ -35,7 +35,20 @@ func (comp *Client) AddMaterial(options *request.RequestMaterialAddMaterial) (*r
 
 	result := &response.ResponseMaterialAddMaterial{}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/add_material", options, nil, nil, result)
+	jsonDescription, err := object.JsonEncode(&object.HashMap{
+		"title":        options.Title,
+		"introduction": options.Introduction,
+	})
+	if err != nil {
+		return nil, err
+	}
+	body := &object.HashMap{
+		"type":        options.Type,
+		"media":       options.Media,
+		"Description": jsonDescription,
+	}
+
+	_, err = comp.HttpPostJson("cgi-bin/material/add_material", body, nil, nil, result)
 
 	return result, err
 }
@@ -54,8 +67,6 @@ func (comp *Client) GetMaterial(mediaID int) (*response.ResponseMaterialGetMater
 
 	return result, err
 }
-
-
 
 // 删除永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Deleting_Permanent_Assets.html
@@ -83,7 +94,6 @@ func (comp *Client) UpdateNews(options *request.RequestMaterialUpdateNews) (*res
 	return result, err
 }
 
-
 // 获取素材总数
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_the_total_of_all_materials.html
 func (comp *Client) GetMaterialCount() (*response.ResponseMaterialGetMaterialCount, error) {
@@ -106,4 +116,3 @@ func (comp *Client) BatchGetMaterial(options *request.RequestMaterialBatchGetMat
 
 	return result, err
 }
-
