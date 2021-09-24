@@ -47,17 +47,54 @@ func (comp *Client) GetMomentTask(momentID string, cursor string, limit int) (*r
 
 // 获取客户朋友圈发表时选择的可见范围
 // https://work.weixin.qq.com/api/doc/90000/90135/93333
-func (comp *Client) GetMomentCustomerList(momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentTask, error) {
+func (comp *Client) GetMomentCustomerList(momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentCustomerList, error) {
 
-	result := &response.ResponseMomentGetMomentTask{}
+	result := &response.ResponseMomentGetMomentCustomerList{}
 
 	options := &object.HashMap{
 		"moment_id": momentID,
+		"userid":    userID,
 		"cursor":    cursor,
 		"limit":     limit,
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_customer_list", options, nil, nil, result)
+
+	return result, err
+}
+
+
+// 获取客户朋友圈发表后的可见客户列表
+// https://work.weixin.qq.com/api/doc/90000/90135/93333
+func (comp *Client) GetMomentSendResult(momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentSendResult, error) {
+
+	result := &response.ResponseMomentGetMomentSendResult{}
+
+	options := &object.HashMap{
+		"moment_id": momentID,
+		"userid":    userID,
+		"cursor":    cursor,
+		"limit":     limit,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_send_result", options, nil, nil, result)
+
+	return result, err
+}
+
+
+// 获取客户朋友圈的互动数据
+// https://work.weixin.qq.com/api/doc/90000/90135/93333
+func (comp *Client)GetMomentComments(momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
+
+	result := &response.ResponseMomentGetMomentComments{}
+
+	options := &object.HashMap{
+		"moment_id": momentID,
+		"userid":    userID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_comments", options, nil, nil, result)
 
 	return result, err
 }
