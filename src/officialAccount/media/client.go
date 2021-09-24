@@ -81,7 +81,7 @@ func (comp *Client) UploadTempFile(path string, form *power.HashMap) (interface{
 // 上传临时素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90253
 func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (interface{}, error) {
-	outResponse := response.ResponseHeaderMedia{}
+	outResponse := &response.ResponseUploadMedia{}
 	files := &object.HashMap{
 		"media": path,
 	}
