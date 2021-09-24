@@ -20,7 +20,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat"
-	message2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupWelcomeTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/momentStrategy"
@@ -72,18 +72,18 @@ type Work struct {
 	UserLinkedCorp *linkedCorp.Client
 	UserTag        *tag.Client
 
-	ExternalContact                 *externalContact.Client
-	ExternalContactContactWay       *contactWay.Client
-	ExternalContactCustomerStrategy *customerStrategy.Client
-	ExternalContactStatistics       *statistics.Client
-	ExternalContactMessage          *message2.Client
-	ExternalContactSchool           *school.Client
-	ExternalContactMoment           *moment.Client
-	ExternalContactMomentStrategy   *momentStrategy.Client
-	ExternalContactMessageTemplate  *messageTemplate.Client
-	ExternalContactGroupChat        *groupChat.Client
-	ExternalContactTag              *tag2.Client
-	ExternalContactTransfer         *transfer.Client
+	ExternalContact                     *externalContact.Client
+	ExternalContactContactWay           *contactWay.Client
+	ExternalContactCustomerStrategy     *customerStrategy.Client
+	ExternalContactStatistics           *statistics.Client
+	ExternalContactGroupWelcomeTemplate *groupWelcomeTemplate.Client
+	ExternalContactSchool               *school.Client
+	ExternalContactMoment               *moment.Client
+	ExternalContactMomentStrategy       *momentStrategy.Client
+	ExternalContactMessageTemplate      *messageTemplate.Client
+	ExternalContactGroupChat            *groupChat.Client
+	ExternalContactTag                  *tag2.Client
+	ExternalContactTransfer             *transfer.Client
 
 	AccountService         *accountService.Client
 	AccountServiceCustomer *customer.Client
@@ -193,7 +193,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.ExternalContactContactWay,
 		app.ExternalContactCustomerStrategy,
 		app.ExternalContactGroupChat,
-		app.ExternalContactMessage,
+		app.ExternalContactGroupWelcomeTemplate,
 		app.ExternalContactMessageTemplate,
 		app.ExternalContactMoment,
 		app.ExternalContactMomentStrategy,
@@ -286,8 +286,8 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.ExternalContactContactWay
 	case "ExternalContactStatistics":
 		return app.ExternalContactStatistics
-	case "ExternalContactMessage":
-		return app.ExternalContactMessage
+	case "ExternalContactGroupWelcomeTemplate":
+		return app.ExternalContactGroupWelcomeTemplate
 	case "ExternalContactSchool":
 		return app.ExternalContactSchool
 	case "ExternalContactMoment":

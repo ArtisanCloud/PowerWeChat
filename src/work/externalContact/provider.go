@@ -5,7 +5,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupWelcomeTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/momentStrategy"
@@ -20,7 +20,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 	*contactWay.Client,
 	*customerStrategy.Client,
 	*groupChat.Client,
-	*message.Client,
+	*groupWelcomeTemplate.Client,
 	*messageTemplate.Client,
 	*moment.Client,
 	*momentStrategy.Client,
@@ -35,7 +35,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 	ContactWayClient := contactWay.NewClient(app)
 	CustomerStrategy := customerStrategy.NewClient(app)
 	GroupChat := groupChat.NewClient(app)
-	Message := message.NewClient(app)
+	GroupWelcomeTemplate := groupWelcomeTemplate.NewClient(app)
 	MessageTemplate := messageTemplate.NewClient(app)
 	Moment := moment.NewClient(app)
 	MomentStrategy := momentStrategy.NewClient(app)
@@ -48,7 +48,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 		ContactWayClient,
 		CustomerStrategy,
 		GroupChat,
-		Message,
+		GroupWelcomeTemplate,
 		MessageTemplate,
 		Moment,
 		MomentStrategy,

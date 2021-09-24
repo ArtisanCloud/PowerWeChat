@@ -32,7 +32,7 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseMessageSend
 		config := (*comp.App).GetConfig()
 		(*messages)["agentid"] = config.GetInt("agent_id", 0)
 	}
-	_, err := comp.HttpPostJson("cgi-bin/message/send", messages, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/send", messages, nil, nil, result)
 
 	return result, err
 }
@@ -47,7 +47,7 @@ func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseM
 		config := (*comp.App).GetConfig()
 		(*card)["agentid"] = config.GetInt("agent_id", 0)
 	}
-	_, err := comp.HttpPostJson("cgi-bin/message/update_template_card", card, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/update_template_card", card, nil, nil, result)
 
 	return result, err
 }
@@ -57,7 +57,7 @@ func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseM
 func (comp *Client) Recall(msgID string) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/recall", power.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/recall", power.StringMap{
 		"msgid": msgID,
 	}, nil, nil, result)
 
