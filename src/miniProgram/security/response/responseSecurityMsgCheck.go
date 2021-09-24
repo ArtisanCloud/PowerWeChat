@@ -8,7 +8,7 @@ type ResponseSecurityMsgCheckASync struct {
 	*response.ResponseMiniProgram
 	TraceID string `json:"trace_id"`
 	Detail []struct {
-		Strategy string `json:"strategy"`
+		Strategy string `json:"momentStrategy"`
 		ErrCode  int    `json:"errcode"`
 		Suggest  string `json:"suggest"`
 		Label    int    `json:"label"`

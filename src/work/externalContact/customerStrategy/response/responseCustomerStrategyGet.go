@@ -8,5 +8,5 @@ import (
 type ResponseCustomerStrategyGet struct {
 	*response.ResponseWork
 
-	Strategy *power.HashMap `json:"strategy"`
+	Strategy *power.HashMap `json:"momentStrategy"`
 }

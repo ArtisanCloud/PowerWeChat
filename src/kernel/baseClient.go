@@ -101,7 +101,7 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 		}
 	}
 
-	if form != nil {
+	if *form != nil {
 		multipart = append(multipart, &object.HashMap{
 			"name": (*form)["name"],
 			//"filename": (*form)["filename"],
@@ -128,6 +128,7 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	}
 	// http client request
 	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
+
 	if err != nil {
 		return nil, err
 	}
@@ -136,13 +137,13 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		return response, err
 	} else {
 		// tbf
-		config := *(*client.App).GetContainer().Config
+		config := *(*client.App).GetConfig()
 		var rs http2.Response = http2.Response{
 			StatusCode: response.GetStatusCode(),
 			Header:     response.GetHeader(),
 			Body:       response.GetBody(),
 		}
-		returnResponse, err := client.CastResponseToType(&rs, config["response_type"].(string))
+		returnResponse, err := client.CastResponseToType(&rs, config.GetString("response_type", "array"))
 		return returnResponse, err
 	}
 }

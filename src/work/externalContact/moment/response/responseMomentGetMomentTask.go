@@ -5,8 +5,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 
-type ResponseCustomerStrategyList struct {
+type ResponseMomentGetMomentTask struct {
 	*response.ResponseWork
 
-	Strategy []*power.HashMap `json:"momentStrategy"`
+	TaskList   []*power.HashMap `json:"task_list"`
+	NextCursor string           `json:"next_cursor"`
 }

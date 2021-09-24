@@ -45,11 +45,10 @@ func (comp *Client) Create(data *power.HashMap) (*response.ResponseMenuCreate, e
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90233
-func (comp *Client) Delete() (*response.ResponseMenuDelete, error) {
+func (comp *Client) Delete(agentID int) (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
-	agentID := (*comp.App).GetConfig().GetInt("agent_id", 0)
 	_, err := comp.HttpGet("cgi-bin/menu/delete", &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
