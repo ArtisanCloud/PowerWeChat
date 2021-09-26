@@ -3,7 +3,6 @@ package contactWay
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/request"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/response"
