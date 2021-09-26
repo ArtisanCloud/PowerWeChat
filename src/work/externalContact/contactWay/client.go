@@ -54,14 +54,11 @@ func (comp *Client) List(options *request2.RequestListContactWay) (*response3.Re
 	return result, err
 }
 
-func (comp *Client) Update(configID string, config *power.HashMap) (*response3.ResponseAddContactWay, error) {
+func (comp *Client) Update(config *request2.RequestUpdateContactWay) (*response3.ResponseAddContactWay, error) {
 
 	result := &response3.ResponseAddContactWay{}
-	params := object.MergeHashMap(&object.HashMap{
-		"config_id": configID,
-	}, config.ToHashMap())
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/update_contact_way", params, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/update_contact_way", config, nil, nil, result)
 
 	return result, err
 }

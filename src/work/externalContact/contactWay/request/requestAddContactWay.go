@@ -19,3 +19,8 @@ type RequestAddContactWay struct {
 	UnionID       string         `json:"unionid"`         // "oxTWIuGaIt6gTKsQRLau2M0AAAA",
 	Conclusions   *power.HashMap `json:"conclusions"`
 }
+
+type RequestUpdateContactWay struct {
+	RequestAddContactWay
+	ConfigID string `json:"config_id"`
+}
