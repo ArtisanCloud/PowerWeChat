@@ -113,7 +113,7 @@ func (comp *Client) Send(toUser string, templateID string, page string,
 		"data":              msgData,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/subscribe/send", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/subscribe/send", data, nil, nil, result)
 
 	return result, err
 }

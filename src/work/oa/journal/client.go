@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa/journal/response"
 )
 
@@ -19,7 +20,7 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 批量获取汇报记录单号
 // https://work.weixin.qq.com/api/doc/90000/90135/93393
-func (comp *Client) GetRecordList(startTime int, endTime int, nextCursor int, size int, filters *object.HashMap) (*response.ResponseJournalGetRecordList, error) {
+func (comp *Client) GetRecordList(startTime int, endTime int, nextCursor int, size int, filters []*power.StringMap) (*response.ResponseJournalGetRecordList, error) {
 
 	result := &response.ResponseJournalGetRecordList{}
 
@@ -56,7 +57,7 @@ func (comp *Client) GetRecordDetail(JournalUUID string) (*response.ResponseJourn
 }
 
 // 获取汇报记录详情
-// https://work.weixin.qq.com/api/doc/90000/90135/93394
+// https://work.weixin.qq.com/api/doc/90000/90135/93395
 func (comp *Client) GetStatList(templateID string, startTime int, endTime int) (*response.ResponseJournalGetStatList, error) {
 
 	result := &response.ResponseJournalGetStatList{}
@@ -71,3 +72,4 @@ func (comp *Client) GetStatList(templateID string, startTime int, endTime int) (
 
 	return result, err
 }
+

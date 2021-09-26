@@ -1,12 +1,11 @@
 package request
 
-import (
-	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message/request"
-)
+import "github.com/ArtisanCloud/power-wechat/src/kernel/power"
 
 type RequestAddMsgTemplate struct {
-	ExternalUserID []string               `json:"external_userid" binding:"required"`
-	Sender         string                 `json:"sender" binding:"required"`
-	Text           request2.TextOfMessage `json:"text" binding:"required"`
-	Attachments    []interface{}          `json:"attachments"`
+	ChatType       string        `json:"chat_type"`
+	ExternalUserID []string      `json:"external_userid"`
+	Sender         string        `json:"sender"`
+	Text           TextOfMessage `json:"text"`
+	Attachments    []*power.HashMap `json:"attachments"`
 }

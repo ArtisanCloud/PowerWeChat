@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa/response"
 )
 
@@ -45,7 +46,7 @@ func (comp *Client) GetCheckInOption(datetime int, userList []string) (*response
 
 // 获取打卡记录数据
 // https://work.weixin.qq.com/api/doc/90000/90135/90262
-func (comp *Client) CheckInRecords(startTime int, endTime int, userList []string, recordType int) (*response.ResponseCheckInRecords, error) {
+func (comp *Client) GetCheckinData(recordType int, startTime int, endTime int, userList []string) (*response.ResponseCheckInRecords, error) {
 	result := &response.ResponseCheckInRecords{}
 
 	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckindata", &object.HashMap{
@@ -76,7 +77,7 @@ func (comp *Client) GetCheckinDayData(startTime int, endTime int, userIDs []stri
 
 // 获取打卡月报数据
 // https://work.weixin.qq.com/api/doc/90000/90135/93387
-func (comp *Client) CheckInMonthData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
+func (comp *Client) GetCheckInMonthData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 	result := &response.ResponseCheckInDatas{}
 
 	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckin_monthdata", &object.HashMap{
@@ -90,7 +91,7 @@ func (comp *Client) CheckInMonthData(startTime int, endTime int, userIDs []strin
 
 // 获取打卡人员排班信息
 // https://work.weixin.qq.com/api/doc/90000/90135/93380
-func (comp *Client) CheckInSchedules(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
+func (comp *Client) GetCheckInScheduleList(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
 	result := &response.ResponseCheckInSchedulist{}
 
 	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckinschedulist", &object.HashMap{
@@ -104,10 +105,10 @@ func (comp *Client) CheckInSchedules(startTime int, endTime int, userIDs []strin
 
 // 为打卡人员排班
 // https://work.weixin.qq.com/api/doc/90000/90135/93385
-func (comp *Client) SetCheckInSchedules(params *power.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) SetCheckInScheduleList(options *request.RequestCheckInSetScheduleList) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/setcheckinschedulist", params, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/checkin/setcheckinschedulist", options, nil, nil, result)
 
 	return result, err
 }
@@ -189,7 +190,7 @@ func (comp *Client) GetApprovalData(startTime int, endTime int, nextNumber int) 
 
 	result := &response.ResponseApprovalGetData{}
 
-	options:=&object.HashMap{
+	options := &object.HashMap{
 		"starttime":  fmt.Sprintf("%d", startTime),
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"next_spnum": fmt.Sprintf("%d", nextNumber),

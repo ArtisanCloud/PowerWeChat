@@ -16,7 +16,7 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseLinkCorpMes
 
 	result := &response.ResponseLinkCorpMessageSend{}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/message/send", messages, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/groupWelcomeTemplate/send", messages, nil, nil, result)
 
 	return result, err
 }
