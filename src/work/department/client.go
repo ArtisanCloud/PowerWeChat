@@ -5,7 +5,6 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	"github.com/ArtisanCloud/power-wechat/src/work/department/response"
-	"strconv"
 )
 
 type Client struct {
@@ -41,7 +40,7 @@ func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 
 	result := &response.ResponseDepartmentDelete{}
 
-	_, err := comp.HttpGet("cgi-bin/department/delete", &object.StringMap{"id": strconv.Itoa(id)}, nil, result)
+	_, err := comp.HttpGet("cgi-bin/department/delete", &object.HashMap{"id": id}, nil, result)
 
 	return result, err
 }
