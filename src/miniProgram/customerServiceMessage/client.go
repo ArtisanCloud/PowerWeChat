@@ -47,7 +47,7 @@ func (comp *Client) Send(toUser string, msgType string, text *power.HashMap) (*r
 		"text":    text,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/send", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/custom/send", data, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *Client) SetTyping(toUser string, command string) (*response2.Respons
 		"command": command,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/typing", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/custom/typing", data, nil, nil, result)
 
 	return result, err
 }

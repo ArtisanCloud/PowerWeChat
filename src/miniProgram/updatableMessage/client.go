@@ -23,7 +23,7 @@ func (comp *Client) CreateActivityID(unionID string, openID string) (*response.R
 		"openid":  openID,
 	}
 
-	_, err := comp.HttpGet("cgi-bin/message/wxopen/activityid/create", params, nil, result)
+	_, err := comp.HttpGet("cgi-bin/groupWelcomeTemplate/wxopen/activityid/create", params, nil, result)
 
 	return result, err
 }
@@ -40,7 +40,7 @@ func (comp *Client) SetUpdatableMsg(activityID string, targetState int8, templat
 		"template_info": templateInfo,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/updatablemsg/send", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/wxopen/updatablemsg/send", data, nil, nil, result)
 
 	return result, err
 }

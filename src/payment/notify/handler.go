@@ -25,7 +25,7 @@ type Handler struct {
 
 	ExternalRequest *http.Request
 
-	//Handle func(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) *http.Response
+	//Handle func(closure func(groupWelcomeTemplate *request.RequestNotify, transaction *models.Transaction, fail func(groupWelcomeTemplate string)) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"
@@ -163,7 +163,7 @@ func (handler *Handler) reqInfo() (content string, err error) {
 		return "", err
 	}
 
-	// save the decoded content to message resource
+	// save the decoded content to groupWelcomeTemplate resource
 	handler.Message.Resource.Plaintext = content
 
 	return content, nil

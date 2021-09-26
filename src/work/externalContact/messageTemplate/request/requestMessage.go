@@ -39,6 +39,10 @@ type MiniProgram struct {
 	Page       string `json:"page"`         //  "/path/index.html"
 }
 
+type File struct {
+	MediaID    string `json:"media_id"`
+}
+
 type VideoOfMessage struct {
 	MsgType string `json:"msgtype"` // "video"
 	Video   Video  `json:"video"`

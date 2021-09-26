@@ -20,7 +20,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat"
-	message2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupWelcomeTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/momentStrategy"
@@ -35,6 +35,15 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/message"
 	msgaudit "github.com/ArtisanCloud/power-wechat/src/work/msgAudit"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/calendar"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/dial"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/journal"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/living"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/meeting"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/meetingroom"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/pstncc"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/schedule"
+	"github.com/ArtisanCloud/power-wechat/src/work/oa/webdrive"
 	"github.com/ArtisanCloud/power-wechat/src/work/oauth"
 	"github.com/ArtisanCloud/power-wechat/src/work/server"
 	"github.com/ArtisanCloud/power-wechat/src/work/user"
@@ -72,18 +81,18 @@ type Work struct {
 	UserLinkedCorp *linkedCorp.Client
 	UserTag        *tag.Client
 
-	ExternalContact                 *externalContact.Client
-	ExternalContactContactWay       *contactWay.Client
-	ExternalContactCustomerStrategy *customerStrategy.Client
-	ExternalContactStatistics       *statistics.Client
-	ExternalContactMessage          *message2.Client
-	ExternalContactSchool           *school.Client
-	ExternalContactMoment           *moment.Client
-	ExternalContactMomentStrategy   *momentStrategy.Client
-	ExternalContactMessageTemplate  *messageTemplate.Client
-	ExternalContactGroupChat        *groupChat.Client
-	ExternalContactTag              *tag2.Client
-	ExternalContactTransfer         *transfer.Client
+	ExternalContact                     *externalContact.Client
+	ExternalContactContactWay           *contactWay.Client
+	ExternalContactCustomerStrategy     *customerStrategy.Client
+	ExternalContactStatistics           *statistics.Client
+	ExternalContactGroupWelcomeTemplate *groupWelcomeTemplate.Client
+	ExternalContactSchool               *school.Client
+	ExternalContactMoment               *moment.Client
+	ExternalContactMomentStrategy       *momentStrategy.Client
+	ExternalContactMessageTemplate      *messageTemplate.Client
+	ExternalContactGroupChat            *groupChat.Client
+	ExternalContactTag                  *tag2.Client
+	ExternalContactTransfer             *transfer.Client
 
 	AccountService         *accountService.Client
 	AccountServiceCustomer *customer.Client
@@ -95,7 +104,16 @@ type Work struct {
 	Media *media.Client
 	Menu  *menu.Client
 
-	OA *oa.Client
+	OA            *oa.Client
+	OACalendar    *calendar.Client
+	OADial        *dial.Client
+	OAJournal     *journal.Client
+	OALiving      *living.Client
+	OAMeeting     *meeting.Client
+	OAMeetingRoom *meetingroom.Client
+	OAPSTNCC      *pstncc.Client
+	OASchedule    *schedule.Client
+	OAWebDrive    *webdrive.Client
 
 	MsgAudit *msgaudit.Client
 
@@ -193,7 +211,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.ExternalContactContactWay,
 		app.ExternalContactCustomerStrategy,
 		app.ExternalContactGroupChat,
-		app.ExternalContactMessage,
+		app.ExternalContactGroupWelcomeTemplate,
 		app.ExternalContactMessageTemplate,
 		app.ExternalContactMoment,
 		app.ExternalContactMomentStrategy,
@@ -217,7 +235,16 @@ func NewWork(config *UserConfig) (*Work, error) {
 	app.Menu = menu.RegisterProvider(app)
 
 	//-------------- oa --------------
-	app.OA = oa.RegisterProvider(app)
+	app.OA,
+		app.OACalendar,
+		app.OADial,
+		app.OAJournal,
+		app.OALiving,
+		app.OAMeeting,
+		app.OAMeetingRoom,
+		app.OAPSTNCC,
+		app.OASchedule,
+		app.OAWebDrive = oa.RegisterProvider(app)
 
 	//-------------- msg audit --------------
 	app.MsgAudit = msgaudit.RegisterProvider(app)
@@ -286,8 +313,8 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.ExternalContactContactWay
 	case "ExternalContactStatistics":
 		return app.ExternalContactStatistics
-	case "ExternalContactMessage":
-		return app.ExternalContactMessage
+	case "ExternalContactGroupWelcomeTemplate":
+		return app.ExternalContactGroupWelcomeTemplate
 	case "ExternalContactSchool":
 		return app.ExternalContactSchool
 	case "ExternalContactMoment":
@@ -314,6 +341,25 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.Menu
 	case "OA":
 		return app.OA
+	case "OACalendar":
+		return app.OACalendar
+	case "OADial":
+		return app.OADial
+	case "OAJournal":
+		return app.OAJournal
+	case "OALiving":
+		return app.OALiving
+	case "OAMeeting":
+		return app.OAMeeting
+	case "OAMeetingRoom":
+		return app.OAMeetingRoom
+	case "OAPSTNCC":
+		return app.OAPSTNCC
+	case "OASchedule":
+		return app.OASchedule
+	case "OAWebDrive":
+		return app.OAWebDrive
+
 	case "MsgAudit":
 		return app.MsgAudit
 	case "CorpGroup":
