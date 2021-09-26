@@ -23,6 +23,7 @@ import (
 	message2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/message"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/moment"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/momentStrategy"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/school"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics"
 	tag2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/tag"
@@ -78,6 +79,7 @@ type Work struct {
 	ExternalContactMessage          *message2.Client
 	ExternalContactSchool           *school.Client
 	ExternalContactMoment           *moment.Client
+	ExternalContactMomentStrategy   *momentStrategy.Client
 	ExternalContactMessageTemplate  *messageTemplate.Client
 	ExternalContactGroupChat        *groupChat.Client
 	ExternalContactTag              *tag2.Client
@@ -194,6 +196,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.ExternalContactMessage,
 		app.ExternalContactMessageTemplate,
 		app.ExternalContactMoment,
+		app.ExternalContactMomentStrategy,
 		app.ExternalContactSchool,
 		app.ExternalContactStatistics,
 		app.ExternalContactTag,
@@ -289,6 +292,8 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.ExternalContactSchool
 	case "ExternalContactMoment":
 		return app.ExternalContactMoment
+	case "ExternalContactMomentStrategy":
+		return app.ExternalContactMomentStrategy
 	case "ExternalContactMessageTemplate":
 		return app.ExternalContactMessageTemplate
 
