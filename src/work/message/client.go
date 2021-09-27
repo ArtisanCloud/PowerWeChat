@@ -12,6 +12,12 @@ type Client struct {
 	*kernel.BaseClient
 }
 
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
+		kernel.NewBaseClient(&app, nil),
+	}
+}
+
 func (comp *Client) Message(message *messages.Message) *Messager {
 
 	m := &Messager{
