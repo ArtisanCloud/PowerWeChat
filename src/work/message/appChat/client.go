@@ -4,13 +4,21 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/appChat/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/appChat/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat/request"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
+
+
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
+		kernel.NewBaseClient(&app, nil),
+	}
+}
+
 
 // 创建群聊会话
 // https://work.weixin.qq.com/api/doc/90000/90135/90245
@@ -56,3 +64,5 @@ func (comp *Client) Send(messages *power.HashMap) (*response2.ResponseWork, erro
 
 	return result, err
 }
+
+
