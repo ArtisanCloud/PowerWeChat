@@ -3,6 +3,7 @@ package customer
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/work/accountService/customer/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/accountService/customer/response"
@@ -51,6 +52,21 @@ func (comp *Client) UpgradeService(options *request.RequestUpgradeService) (*res
 	result := &response2.ResponseWork{}
 
 	_, err := comp.HttpPostJson("cgi-bin/kf/customer/upgrade_service", options, nil, nil, result)
+
+	return result, err
+}
+
+// 为客户取消推荐
+// https://work.weixin.qq.com/api/doc/90000/90135/94674
+func (comp *Client) CancelUpgradeService(openKFID, externalUserID string) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+	options := &power.StringMap{
+		"open_kfid": openKFID,
+		"external_userid": externalUserID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/kf/customer/cancel_upgrade_service", options, nil, nil, result)
 
 	return result, err
 }
