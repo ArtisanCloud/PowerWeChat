@@ -12,8 +12,9 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90284
-func (comp *Client) Get(cardID string, encryptCode string) (*response.ResponseInvoiceGetInfo, error) {
+// 查询电子发票
+// https://ope	n.work.weixin.qq.com/api/doc/90000/90135/90284
+func (comp *Client) GetInvoiceInfo(cardID string, encryptCode string) (*response.ResponseInvoiceGetInfo, error) {
 
 	result := &response.ResponseInvoiceGetInfo{}
 
@@ -26,26 +27,28 @@ func (comp *Client) Get(cardID string, encryptCode string) (*response.ResponseIn
 	return result, err
 }
 
+// 批量查询电子发票
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90287
-func (comp *Client) Select(invoices *power.HashMap) (*response.ResponseInvoiceGetInfoBatch, error) {
+func (comp *Client) GetInvoiceInfoBatch(invoiceList []*power.HashMap) (*response.ResponseInvoiceGetInfoBatch, error) {
 
 	result := &response.ResponseInvoiceGetInfoBatch{}
 
 	data := &object.HashMap{
-		"item_list": invoices.ToHashMap(),
+		"item_list": invoiceList,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/getinvoiceinfobatch", data, nil, nil, result)
 
 	return result, err
 }
 
+// 更新发票状态
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90285
-func (comp *Client) Update(cardId string, encryptCode string, status string) (*response2.ResponseWork, error) {
+func (comp *Client) UpdateInvoiceStatus(cardID string, encryptCode string, status string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
 	data := &object.HashMap{
-		"card_id":          cardId,
+		"card_id":          cardID,
 		"encrypt_code":     encryptCode,
 		"reimburse_status": status,
 	}
@@ -54,15 +57,16 @@ func (comp *Client) Update(cardId string, encryptCode string, status string) (*r
 	return result, err
 }
 
+// 批量更新发票状态
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90286
-func (comp *Client) BatchUpdate(invoices *power.HashMap, openid string, status string) (*response2.ResponseWork, error) {
+func (comp *Client) UpdateStatusBatch(openid string, status string, invoicelist []*power.StringMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
 	data := &object.HashMap{
-		"openid":           invoices.ToHashMap(),
-		"reimburse_status": openid,
-		"invoice_list":     status,
+		"openid":           openid,
+		"reimburse_status": status,
+		"invoice_list":     invoicelist,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/updatestatusbatch", data, nil, nil, result)
 
