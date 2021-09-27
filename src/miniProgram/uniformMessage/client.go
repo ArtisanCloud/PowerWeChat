@@ -34,7 +34,7 @@ func (comp *Client) Send(toUser string, weAppTemplateMsg *request.WeAppTemplateM
 		return nil, errors.New("please given a valid uniformMessage template. ")
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/groupWelcomeTemplate/wxopen/template/uniform_send", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/template/uniform_send", options, nil, nil, result)
 
 	return result, err
 }

@@ -16,7 +16,7 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseExternalCon
 
 	result := &response.ResponseExternalContactMessageSend{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupWelcomeTemplate/send", messages, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/externalcontact/message/send", messages, nil, nil, result)
 
 	return result, err
 }
