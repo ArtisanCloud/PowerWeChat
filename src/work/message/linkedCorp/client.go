@@ -3,11 +3,17 @@ package linkedCorp
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/work/appChat/linkedCorp/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/linkedCorp/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
+}
+
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
+		kernel.NewBaseClient(&app, nil),
+	}
 }
 
 // 应用推送消息
@@ -16,7 +22,7 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseLinkCorpMes
 
 	result := &response.ResponseLinkCorpMessageSend{}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/groupWelcomeTemplate/send", messages, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/message/send", messages, nil, nil, result)
 
 	return result, err
 }

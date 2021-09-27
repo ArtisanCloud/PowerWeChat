@@ -2,15 +2,25 @@ package message
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/externalContact"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/linkedCorp"
 	"reflect"
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager) {
+func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager,
+	*appChat.Client,
+	*externalContact.Client,
+	*linkedCorp.Client,
+) {
 	config := app.GetConfig()
 
-	client := &Client{
-		kernel.NewBaseClient(&app, nil),
-	}
+	client := NewClient(app)
+
+	AppChat := appChat.NewClient(app)
+	ExternalContact := externalContact.NewClient(app)
+	LinkedCorp := linkedCorp.NewClient(app)
+
 	messager := NewMessager(client)
 
 	agentID := config.Get("agent_id", nil)
@@ -19,5 +29,8 @@ func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager) {
 		messager.OfAgent(agentID.(int))
 	}
 
-	return client, messager
+	return client, messager,
+		AppChat,
+		ExternalContact,
+		LinkedCorp
 }
