@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/work/menu/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/menu/response"
 )
 
@@ -32,12 +32,12 @@ func (comp *Client) Get() (*response.ResponseMenuGet, error) {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90231
-func (comp *Client) Create(data *power.HashMap) (*response.ResponseMenuCreate, error) {
+func (comp *Client) Create(data *request.RequestMenuSet) (*response.ResponseMenuCreate, error) {
 
 	result := &response.ResponseMenuCreate{}
 
 	agentID := (*comp.App).GetConfig().GetInt("agent_id", 0)
-	_, err := comp.HttpPostJson("cgi-bin/menu/create", data.ToHashMap(), &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/menu/create", data, &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
