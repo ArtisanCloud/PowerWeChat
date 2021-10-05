@@ -36,7 +36,7 @@ func (comp *Client) Get(openKFID string, externalUserID string) (*response.Respo
 
 // 变更会话状态
 // https://work.weixin.qq.com/api/doc/90000/90135/94669
-func (comp *Client) Trans(openKFID string, externalUserID string, serviceState string, servicerUserID string ) (*response2.ResponseWork, error) {
+func (comp *Client) Trans(openKFID string, externalUserID string, serviceState int, servicerUserID string ) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
