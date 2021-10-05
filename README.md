@@ -14,8 +14,7 @@ PowerWechat是一款全覆盖微信开发接口，基于Golang的开源项目。
 ---
 
 ## 产品概述
-![Image of Main Page]
-(blob:null/ff591363-1799-4516-9f8b-8bb81303fe4f)
+![Image of Main Page](./resource/assets/home.png)
 
 
 ### 核心产品
@@ -69,8 +68,7 @@ printf(rs.UnionID)
 
 [PowerWeChat Document](https://powerwechat.artisan-cloud.com/zh/start/) ：全面的接口文档，方便用户查找，使用我们开发的sdk功能
 
-![Image of Document Page]
-(blob:null/ff591363-1799-4516-9f8b-8bb81303fe4f)
+![Image of Document Page](./resource/assets/document.png)
 
 
 
@@ -79,8 +77,7 @@ printf(rs.UnionID)
 
 PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境，或者多个应用，可以使用这个配置中心来方便切换账号（此应用暂时内部使用，如需体验，可以联系我们）
 
-![Image of Products]
-(blob:null/ff591363-1799-4516-9f8b-8bb81303fe4f)
+![Image of Products](./resource/assets/architecture.png)
 
 
 ---
@@ -94,11 +91,11 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 
 # 产品特性
 
-## 简易上手，安装一次，全覆盖微信功能接口
-## 开源项目，丰富的文档内容，长期维护
-## 新增群机器接口和文档
-## Golang特性，强类型覆盖
-## 完整的测试项目，支持web API测试
+* 简易上手，安装一次，全覆盖微信功能接口
+* 开源项目，丰富的文档内容，长期维护
+* 新增群机器接口和文档
+* Golang特性，强类型覆盖
+* 完整的测试项目，支持web API测试
 
 ---
 
