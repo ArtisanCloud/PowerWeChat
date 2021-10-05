@@ -1,32 +1,20 @@
 # PowerWeChat SDK 介绍
 
-[![Go Build](https://github.com/ArtisanCloud/power-wechat/actions/workflows/go-build.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/power-wechat/actions/workflows/go-build.yml)
-
+[![Go Build](https://github.com/ArtisanCloud/power-wechat/actions/workflows/go-build.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/power-wechat/actions/workflows/go-build.yml) 
 [![Go Test](https://github.com/ArtisanCloud/power-wechat/actions/workflows/go-test.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/power-wechat/actions/workflows/go-test.yml)
 
 
 ## 产品介绍
-
-
 PowerWechat是一款全覆盖微信开发接口，基于Golang的开源项目。您只需安装一次Power WeChat SDK，就可以对接企业微信，小程序，公众号，支付等，微信的开发功能接口。同时我们提供了丰富的文档教程和辅助工具，帮助您轻松使用微信的接口功能。
 
+<br>
 
+## 快速上手
 
-
-![Image of Main Page](./resource/assets/home.png)
-
-## 产品概述
-### 核心产品
-[PowerWeChat SDK](https://github.com/ArtisanCloud/power-wechat) ：是核心的SDK产品，安装后即可开箱即用。
-在github上，长期维护的开源项目，可以提Issue在讨论版块。也可以在ArtisanCloud官网上，扫企业微信讨论群，方便用户提问，给宝贵的意见。
-
-
-#### 简易安装，开箱即用
-下载安装
-```go
+```bash
 go get github.com/ArtisanCloud/power-wechat
 ```
-
+<br>
 
 示范：初始化实例对象，调用小程序的授权登陆接口
 ```go
@@ -39,17 +27,13 @@ import (
 app, err := miniProgram.NewMiniProgram(&miniProgram.UserConfig{
     AppID:  os.Getenv("miniprogram_app_id"), // 小程序、公众号或者企业微信的appid
     Secret: os.Getenv("miniprogram_secret"), // 商户号 appID
-
-    ResponseType: os.Getenv("array"),
     HttpDebug: true,
     Debug:     false,
   })
 
-
 // 2. 调用小程序的授权登陆接口
 var code string = "CODE" // 前端小程序登录时，从微信获取的code
 rs, err := services.MiniProgramApp.Auth.Session(code)
-
 
 // 查看获取强类型对象的属性
 // 请参考官方文档的返回值
@@ -60,6 +44,16 @@ printf(rs.UnionID)
 ```
 
 更多实例接口，请打[开官方文档](https://powerwechat.artisan-cloud.com/zh/start/)
+
+<br>
+
+
+## 产品概述
+### 核心产品
+[PowerWeChat SDK](https://github.com/ArtisanCloud/power-wechat) ：是核心的SDK产品，安装后即可开箱即用。
+在github上，长期维护的开源项目，可以提Issue在讨论版块。也可以在ArtisanCloud官网上，扫企业微信讨论群，方便用户提问，给宝贵的意见。
+
+
 
 
 
@@ -113,3 +107,7 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 
 ## 视频教程
 ### (策划制作中...)
+
+
+
+![Image of Main Page](./resource/assets/home.png)
