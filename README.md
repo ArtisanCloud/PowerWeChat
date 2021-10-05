@@ -11,12 +11,11 @@
 PowerWechat是一款全覆盖微信开发接口，基于Golang的开源项目。您只需安装一次Power WeChat SDK，就可以对接企业微信，小程序，公众号，支付等，微信的开发功能接口。同时我们提供了丰富的文档教程和辅助工具，帮助您轻松使用微信的接口功能。
 
 
----
 
-## 产品概述
+
 ![Image of Main Page](./resource/assets/home.png)
 
-
+## 产品概述
 ### 核心产品
 [PowerWeChat SDK](https://github.com/ArtisanCloud/power-wechat) ：是核心的SDK产品，安装后即可开箱即用。
 在github上，长期维护的开源项目，可以提Issue在讨论版块。也可以在ArtisanCloud官网上，扫企业微信讨论群，方便用户提问，给宝贵的意见。
@@ -62,7 +61,7 @@ printf(rs.UnionID)
 
 更多实例接口，请打[开官方文档](https://powerwechat.artisan-cloud.com/zh/start/)
 
----
+
 
 ### 辅助产品
 
@@ -80,14 +79,14 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 ![Image of Products](./resource/assets/architecture.png)
 
 
----
+
 
 
 # 产品诞生背景
 [ArtisanCloud](https://github.com/ArtisanCloud) 团队也是很多同学一样，从PHP转向Golang，具体为什么，有什么好处，就不用我这里多介绍了吧。 但是现在因为微信的生态做私域化管理是得天独厚，所以我们公司也开发了蛮多企业微信的功能。只是在转型golang的过程中，没有找到像 [Easy Wechat](https://www.easywechat.com)（PHP语言）这样好用的sdk。所以我们就自己想为golang的同学们做一点贡献。产品会长期维护，迭代，希望同学们有兴趣在使用的过程中，多给意见。
 
 
----
+
 
 # 产品特性
 
@@ -97,7 +96,7 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 * Golang特性，强类型覆盖
 * 完整的测试项目，支持web API测试
 
----
+
 
 # 相关资源
 
