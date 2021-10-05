@@ -6,6 +6,7 @@ go 1.16
 // replace github.com/ArtisanCloud/go-libs => ../go-libs
 // replace github.com/ArtisanCloud/go-socialite => ../go-socialite
 
+
 require (
 	github.com/ArtisanCloud/go-libs v1.1.4
 	github.com/ArtisanCloud/go-socialite v1.0.8
