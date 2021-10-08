@@ -12,7 +12,7 @@ PowerWechat是一款全覆盖微信开发接口，基于Golang的开源项目。
 ## 快速上手
 
 ```bash
-go get github.com/ArtisanCloud/power-wechat
+go get -u github.com/ArtisanCloud/power-wechat
 ```
 <br>
 
