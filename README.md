@@ -33,7 +33,7 @@ app, err := miniProgram.NewMiniProgram(&miniProgram.UserConfig{
 
 // 2. 调用小程序的授权登陆接口
 var code string = "CODE" // 前端小程序登录时，从微信获取的code
-rs, err := services.MiniProgramApp.Auth.Session(code)
+rs, err := app.Auth.Session(code)
 
 // 查看获取强类型对象的属性
 // 请参考官方文档的返回值
@@ -74,7 +74,7 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 
 
 
-
+<br>
 
 # 产品诞生背景
 [ArtisanCloud](https://github.com/ArtisanCloud) 团队也是很多同学一样，从PHP转向Golang，具体为什么，有什么好处，就不用我这里多介绍了吧。 但是现在因为微信的生态做私域化管理是得天独厚，所以我们公司也开发了蛮多企业微信的功能。只是在转型golang的过程中，没有找到像 [Easy Wechat](https://www.easywechat.com)（PHP语言）这样好用的sdk。所以我们就自己想为golang的同学们做一点贡献。产品会长期维护，迭代，希望同学们有兴趣在使用的过程中，多给意见。
@@ -91,6 +91,7 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 * 完整的测试项目，支持web API测试
 
 
+<br>
 
 # 相关资源
 
@@ -108,6 +109,7 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 ## 视频教程
 ### (策划制作中...)
 
+<br>
 
 ![Image of Main Page](./resource/assets/homepage.png)
 
