@@ -16,3 +16,13 @@ func (handler *ServerCallbackHandler) Handle(payload interface{}) interface{} {
 
 	return nil
 }
+
+
+func (handler *ServerCallbackHandler) HandleMessageEventText(payload interface{}) interface{} {
+
+	if handler.Callback != nil {
+		return handler.Callback(payload)
+	}
+
+	return nil
+}
