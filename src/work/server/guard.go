@@ -38,7 +38,7 @@ func (guard *Guard) OverrideValidate() {
 
 func (guard *Guard) OverrideShouldReturnRawResponse() {
 	guard.ShouldReturnRawResponse = func() bool {
-		request := guard.ExternalRequest
+		request := (*guard.App).GetExternalRequest()
 		if request == nil || request.URL.Query().Get("echostr") == "" {
 			return false
 		}

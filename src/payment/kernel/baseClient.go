@@ -10,6 +10,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"io"
 	"log"
@@ -20,6 +21,8 @@ import (
 type BaseClient struct {
 	*request.HttpRequest
 	*response.HttpResponse
+
+	ExternalRequest *http2.Request
 
 	*support.ResponseCastable
 
@@ -52,7 +55,7 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response interface{}, err error) {
 
-	config := (*client.App).GetConfig()
+	//config := (*client.App).GetConfig()
 	base := &object.HashMap{}
 
 	// init options
@@ -101,13 +104,12 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 	if returnRaw {
 		return returnResponse, nil
 	} else {
-		responseType := config.GetString("response_type", "array")
 		var rs http2.Response = http2.Response{
 			StatusCode: 200,
 			Header:     nil,
 		}
 		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, responseType)
+		result, _ := client.CastResponseToType(&rs, response2.RESPONSE_TYPE_RAW)
 		return result, nil
 	}
 
@@ -135,13 +137,12 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	if returnRaw {
 		return returnResponse, nil
 	} else {
-		responseType := config.GetString("response_type", "array")
 		var rs http2.Response = http2.Response{
 			StatusCode: 200,
 			Header:     nil,
 		}
 		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, responseType)
+		result, _ := client.CastResponseToType(&rs, response2.RESPONSE_TYPE_MAP)
 		return result, nil
 	}
 
@@ -172,7 +173,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 	}
 
 	// 校验下载文件
-	downloadedHandler,err := os.Open(filePath)
+	downloadedHandler, err := os.Open(filePath)
 	if err != nil {
 		return 0, err
 	}

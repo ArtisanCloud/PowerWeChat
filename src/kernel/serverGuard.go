@@ -9,6 +9,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"io"
 	"io/ioutil"
@@ -47,8 +48,6 @@ type ServerGuard struct {
 	IsSafeMode              func() bool
 	Validate                func() (*ServerGuard, error)
 	ShouldReturnRawResponse func() bool
-
-	ExternalRequest *http.Request
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -80,7 +79,7 @@ func (serverGuard *ServerGuard) Serve(r *http.Request) (response *http.Response,
 		request = r
 	}
 
-	serverGuard.ExternalRequest = request
+	(*serverGuard.App).SetExternalRequest(request)
 
 	validatedGuard, err := serverGuard.Validate()
 	if err != nil {
@@ -101,7 +100,7 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 		return serverGuard, nil
 	}
 
-	request := serverGuard.ExternalRequest
+	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
 		return nil, errors.New("request is invalid")
 	}
@@ -120,9 +119,9 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 	return serverGuard, nil
 }
 
-func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error) {
-	dataset = &object.HashMap{}
-	request := serverGuard.ExternalRequest
+func (serverGuard *ServerGuard) getMessage() (arrayResponse interface{}, err error) {
+
+	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
 		return nil, errors.New("request is invalid")
 	}
@@ -137,6 +136,7 @@ func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error
 	}
 
 	if serverGuard.IsSafeMode() && message["Encrypt"] != nil {
+		dataset := &object.HashMap{}
 		decryptMessage := serverGuard.decryptMessage(string(b), &message)
 		err = json.Unmarshal([]byte(decryptMessage), dataset)
 		if err == nil && dataset != nil {
@@ -149,13 +149,9 @@ func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error
 			return dataset, err
 		}
 	}
+	arrayResponse, err = serverGuard.DetectAndCastResponseToType(&message, response2.RESPONSE_TYPE_MAP)
 
-	config := (*serverGuard.App).GetConfig()
-	responseType := config.Get("response_type", "array").(string)
-	arrayResponse, err := serverGuard.DetectAndCastResponseToType(&message, responseType)
-	dataset = arrayResponse.(*object.HashMap)
-
-	return dataset, err
+	return arrayResponse, err
 
 }
 
@@ -232,7 +228,7 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 		return nil, err
 	}
 
-	typeData, err := serverGuard.DetectAndCastResponseToType(castedMessage, "array")
+	typeData, err := serverGuard.DetectAndCastResponseToType(castedMessage, response2.RESPONSE_TYPE_MAP)
 	if err != nil {
 		return nil, err
 	}
@@ -302,7 +298,7 @@ func (serverGuard *ServerGuard) signature(params []string) string {
 }
 
 func (serverGuard *ServerGuard) isSafeMode() bool {
-	request := serverGuard.ExternalRequest
+	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
 		println("request is invalid")
 		return false
@@ -346,7 +342,7 @@ func (serverGuard *ServerGuard) shouldReturnRawResponse() bool {
 func (serverGuard *ServerGuard) decryptMessage(content string, message *object.HashMap) (decryptMessage string) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
-	request := serverGuard.ExternalRequest
+	request := (*serverGuard.App).GetExternalRequest()
 	query := request.URL.Query()
 	buf, err := encryptor.Decrypt(
 		[]byte(content),

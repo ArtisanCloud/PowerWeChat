@@ -5,7 +5,7 @@ import (
 )
 
 type ServerCallbackHandler struct {
-	Callback func(payload interface{}) interface{}
+	Callback func(header CallbackInterface, content interface{}) interface{}
 }
 
 func NewServerCallbackHandler() *ServerCallbackHandler {
@@ -18,14 +18,13 @@ func (handler *ServerCallbackHandler) Handle(header CallbackInterface, content i
 		event := header.GetEvent()
 		switch event {
 		case "change_contact":
-			eventUserCreate:=content.(*EventUserCreate)
-			for item:= range eventUserCreate.ExtAttr.Item {
+			eventUserCreate := content.(*EventUserCreate)
+			for item := range eventUserCreate.ExtAttr.Item {
 				fmt.Dump(item)
 			}
 		}
-		return handler.Callback(header)
+		return handler.Callback(header, content)
 	}
 
 	return nil
 }
-
