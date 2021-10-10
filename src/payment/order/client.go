@@ -82,14 +82,17 @@ func (comp *Client) TransactionAppCombine(params *request.RequestCombinePrepay) 
 func (comp *Client) PayTransaction(entryPoint string, params request.Prepay, result interface{}) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	if params.GetAppID() != "" {
+	if params.GetAppID() == "" {
 		appID := config.GetString("app_id", "")
 		params.SetAppID(appID)
 	}
-	if params.GetNotifyUrl() != "" {
+	if params.GetNotifyUrl() == "" {
 		url := config.GetString("notify_url", "")
 		params.SetNotifyUrl(url)
 	}
+
+	mchID := config.GetString("mch_id", "")
+	params.SetMchID(mchID)
 
 	options, err := object.StructToHashMap(params)
 	if err != nil {

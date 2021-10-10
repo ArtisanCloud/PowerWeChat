@@ -9,9 +9,9 @@ type Prepay interface {
 }
 
 type PrepayBase struct {
-	AppID     string
-	MchID     string
-	NotifyUrl string
+	AppID     string `json:"appid"`
+	MchID     string `json:"mchid"`
+	NotifyUrl string `json:"notify_url"`
 }
 
 func (prepay *PrepayBase) SetNotifyUrl(url string) {

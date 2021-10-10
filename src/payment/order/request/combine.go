@@ -16,13 +16,13 @@ type CombineSettleInfo struct {
 }
 
 type CombineSubOrders struct {
-	MchID       string            `json:"mchid"`        // 子单商户号
-	Attach      string            `json:"attach"`       // 附加数据
-	Amount      CombineAmount     `json:"amount"`       // +订单金额
-	OutTradeNo  string            `json:"out_trade_no"` // 子单商户订单号
-	GoodsTag    string            `json:"goods_tag"`    // 订单优惠标记
-	Description string            `json:"description"`  // 商品描述
-	SettleInfo  CombineSettleInfo `json:"settle_info"`  // +结算信息
+	MchID       string             `json:"mchid"`                 // 子单商户号
+	Attach      string             `json:"attach"`                // 附加数据
+	Amount      *CombineAmount     `json:"amount,omitempty"`      // +订单金额
+	OutTradeNo  string             `json:"out_trade_no"`          // 子单商户订单号
+	GoodsTag    string             `json:"goods_tag"`             // 订单优惠标记
+	Description string             `json:"description"`           // 商品描述
+	SettleInfo  *CombineSettleInfo `json:"settle_info,omitempty"` // +结算信息
 }
 
 type CombineCombinePayerInfo struct {
@@ -31,13 +31,13 @@ type CombineCombinePayerInfo struct {
 
 type RequestCombinePrepay struct {
 	PrepayBase
-	CombineAppID      string                  `json:"combine_appid"`        // 合单商户Appid
-	CombineMchID      string                  `json:"combine_mchid"`        // 合单商户号
-	CombineOutTradeNo string                  `json:"combine_out_trade_no"` // 合单商户订单号
-	SceneInfo         CombineSceneInfo        `json:"scene_info"`           // 场景信息
-	SubOrders         []CombineSubOrders      `json:"sub_orders"`           // 子单信息
-	CombinePayerInfo  CombineCombinePayerInfo `json:"combine_payer_info"`   // 支付者
-	TimeStart         string                  `json:"time_start"`           // 交易起始时间
-	TimeExpire        string                  `json:"time_expire"`          // 交易结束时间
-	NotifyUrl         string                  `json:"notify_url"`           // 通知地址
+	CombineAppID      string                   `json:"combine_appid"`                // 合单商户Appid
+	CombineMchID      string                   `json:"combine_mchid"`                // 合单商户号
+	CombineOutTradeNo string                   `json:"combine_out_trade_no"`         // 合单商户订单号
+	SceneInfo         *CombineSceneInfo        `json:"scene_info,omitempty"`         // 场景信息
+	SubOrders         []*CombineSubOrders      `json:"sub_orders,omitempty"`         // 子单信息
+	CombinePayerInfo  *CombineCombinePayerInfo `json:"combine_payer_info,omitempty"` // 支付者
+	TimeStart         string                   `json:"time_start"`                   // 交易起始时间
+	TimeExpire        string                   `json:"time_expire"`                  // 交易结束时间
+	NotifyUrl         string                   `json:"notify_url"`                   // 通知地址
 }

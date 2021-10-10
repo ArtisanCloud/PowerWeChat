@@ -38,15 +38,13 @@ type AppSettleInfo struct {
 
 type RequestAppPrepay struct {
 	PrepayBase
-	AppID       string        `json:"appid"`        // 应用ID
 	Description string        `json:"description"`  // 商品描述
 	OutTradeNo  string        `json:"out_trade_no"` // 商户订单号
 	TimeExpire  string        `json:"time_expire"`  // 交易结束时间
 	Attach      string        `json:"attach"`       // 附加数据
-	NotifyUrl   string        `json:"notify_url"`   // 通知地址
 	GoodsTag    string        `json:"goods_tag"`    // 订单优惠标记
-	Amount      AppAmount     `json:"amount"`       // 订单金额
-	Detail      AppDetail     `json:"detail"`       // 优惠功能
-	SceneInfo   AppSceneInfo  `json:"scene_info"`   // 场景信息
-	SettleInfo  AppSettleInfo `json:"settle_info"`  // 结算信息
+	Amount      *AppAmount     `json:"amount"`       // 订单金额
+	Detail      *AppDetail     `json:"detail,omitempty"`       // 优惠功能
+	SceneInfo   *AppSceneInfo  `json:"scene_info,omitempty"`   // 场景信息
+	SettleInfo  *AppSettleInfo `json:"settle_info,omitempty"`  // 结算信息
 }

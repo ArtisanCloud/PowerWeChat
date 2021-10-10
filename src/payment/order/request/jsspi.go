@@ -20,7 +20,7 @@ type JSAPIGoodsDetail struct {
 type JSAPIDetail struct {
 	CostPrice   int                `json:"cost_price"`   // 订单原价
 	InvoiceId   string             `json:"invoice_id"`   // 商品小票ID
-	GoodsDetail []JSAPIGoodsDetail `json:"goods_detail"` // + 单品列表
+	GoodsDetail []*JSAPIGoodsDetail `json:"goods_detail"` // + 单品列表
 }
 
 type JSAPIStoreInfo struct {
@@ -33,7 +33,7 @@ type JSAPIStoreInfo struct {
 type JSAPISceneInfo struct {
 	PayerClientIp string         `json:"payer_client_ip"` // 用户终端IP
 	DeviceID      string         `json:"device_id"`       // 商户端设备号
-	StoreInfo     JSAPIStoreInfo `json:"store_info"`      // + 商户门店信息
+	StoreInfo     *JSAPIStoreInfo `json:"store_info"`      // + 商户门店信息
 }
 
 type JSAPISettleInfo struct {
@@ -42,16 +42,14 @@ type JSAPISettleInfo struct {
 
 type RequestJSAPIPrepay struct {
 	PrepayBase
-	AppID       string          `json:"appid"`        // 应用ID
 	Description string          `json:"description"`  // 商品描述
 	OutTradeNo  string          `json:"out_trade_no"` // 商户订单号
-	TimeExpire  string          `json:"time_expire"`  // 交易结束时间
-	Attach      string          `json:"attach"`       // 附加数据
-	NotifyUrl   string          `json:"notify_url"`   // 通知地址
-	GoodsTag    string          `json:"goods_tag"`    // 订单优惠标记
-	Amount      JSAPIAmount     `json:"amount"`       // 订单金额
-	Payer       JSAPIPayer      `json:"payer"`        // 支付者
-	Detail      JSAPIDetail     `json:"detail"`       // 优惠功能
-	SceneInfo   JSAPISceneInfo  `json:"scene_info"`   // 场景信息
-	SettleInfo  JSAPISettleInfo `json:"settle_info"`  // 结算信息
+	TimeExpire  string          `json:"time_expire,omitempty"`  // 交易结束时间
+	Attach      string          `json:"attach,omitempty"`       // 附加数据
+	GoodsTag    string          `json:"goods_tag,omitempty"`    // 订单优惠标记
+	Amount      *JSAPIAmount     `json:"amount"`       // 订单金额
+	Payer       *JSAPIPayer      `json:"payer,omitempty"`        // 支付者
+	Detail      *JSAPIDetail     `json:"detail,omitempty"`       // 优惠功能
+	SceneInfo   *JSAPISceneInfo  `json:"scene_info,omitempty"`   // 场景信息
+	SettleInfo  *JSAPISettleInfo `json:"settle_info,omitempty"`  // 结算信息
 }
