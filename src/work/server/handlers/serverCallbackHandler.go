@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/power-wechat/src/work/server"
 )
 
 type ServerCallbackHandler struct {
@@ -13,19 +12,18 @@ func NewServerCallbackHandler() *ServerCallbackHandler {
 	return &ServerCallbackHandler{}
 }
 
-func (handler *ServerCallbackHandler) Handle(payload server.CallbackInterface, content interface) interface{} {
+func (handler *ServerCallbackHandler) Handle(header CallbackInterface, content interface{}) interface{} {
 
 	if handler.Callback != nil {
-		event := payload.GetEvent()
+		event := header.GetEvent()
 		switch event {
 		case "change_contact":
-			eventUserCreate:=content.(*server.EventUserCreate)
-			for item:= range eventUserCreate.ExtAttr.Item{
+			eventUserCreate:=content.(*EventUserCreate)
+			for item:= range eventUserCreate.ExtAttr.Item {
 				fmt.Dump(item)
 			}
-			
 		}
-		return handler.Callback(payload)
+		return handler.Callback(header)
 	}
 
 	return nil

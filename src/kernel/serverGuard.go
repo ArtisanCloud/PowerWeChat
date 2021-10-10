@@ -47,6 +47,8 @@ type ServerGuard struct {
 	IsSafeMode              func() bool
 	Validate                func() (*ServerGuard, error)
 	ShouldReturnRawResponse func() bool
+
+	ExternalRequest *http.Request
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -70,7 +72,15 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 
 }
 
-func (serverGuard *ServerGuard) Serve() (response *http.Response, err error) {
+func (serverGuard *ServerGuard) Serve(r *http.Request) (response *http.Response, err error) {
+
+	//-------------- external request --------------
+	request := &http.Request{}
+	if r != nil {
+		request = r
+	}
+
+	serverGuard.ExternalRequest = request
 
 	validatedGuard, err := serverGuard.Validate()
 	if err != nil {
@@ -91,7 +101,7 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 		return serverGuard, nil
 	}
 
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := serverGuard.ExternalRequest
 	if request == nil {
 		return nil, errors.New("request is invalid")
 	}
@@ -112,7 +122,7 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 
 func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error) {
 	dataset = &object.HashMap{}
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := serverGuard.ExternalRequest
 	if request == nil {
 		return nil, errors.New("request is invalid")
 	}
@@ -292,7 +302,7 @@ func (serverGuard *ServerGuard) signature(params []string) string {
 }
 
 func (serverGuard *ServerGuard) isSafeMode() bool {
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := serverGuard.ExternalRequest
 	if request == nil {
 		println("request is invalid")
 		return false
@@ -336,7 +346,7 @@ func (serverGuard *ServerGuard) shouldReturnRawResponse() bool {
 func (serverGuard *ServerGuard) decryptMessage(content string, message *object.HashMap) (decryptMessage string) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := serverGuard.ExternalRequest
 	query := request.URL.Query()
 	buf, err := encryptor.Decrypt(
 		[]byte(content),

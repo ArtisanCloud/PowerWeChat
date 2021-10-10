@@ -1,4 +1,4 @@
-package server
+package handlers
 
 import "encoding/xml"
 
@@ -25,6 +25,7 @@ func (ch CallbackHeader) GetEvent() string {
 }
 
 type EventUserCreate struct {
+	CallbackInterface
 	XMLName xml.Name `xml:"xml"`
 	Text    string   `xml:",chardata"`
 	CallbackHeader
@@ -63,14 +64,10 @@ type EventUserCreate struct {
 }
 
 type EventUserUpdate struct {
-	*CallbackInterface
+	CallbackInterface
 	XMLName        xml.Name `xml:"xml"`
 	Text           string   `xml:",chardata"`
-	ToUserName     string   `xml:"ToUserName"`
-	FromUserName   string   `xml:"FromUserName"`
-	CreateTime     string   `xml:"CreateTime"`
-	MsgType        string   `xml:"MsgType"`
-	Event          string   `xml:"Event"`
+	CallbackHeader
 	ChangeType     string   `xml:"ChangeType"`
 	UserID         string   `xml:"UserID"`
 	NewUserID      string   `xml:"NewUserID"`
