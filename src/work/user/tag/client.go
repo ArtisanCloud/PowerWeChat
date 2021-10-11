@@ -49,11 +49,11 @@ func (comp *Client) Update(tagName string, tagID int64) (*response2.ResponseWork
 
 // 删除标签
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90198
-func (comp *Client) Delete(tagID string) (*response2.ResponseWork, error) {
+func (comp *Client) Delete(tagID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/tag/delete", &object.HashMap{
 		"tagid": tagID,
 	}, nil, result)
 
@@ -62,11 +62,11 @@ func (comp *Client) Delete(tagID string) (*response2.ResponseWork, error) {
 
 // 获取标签成员
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90196
-func (comp *Client) Get(tagID string) (*response.ResponseTagDetail, error) {
+func (comp *Client) Get(tagID int64) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/get", &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/tag/get", &object.HashMap{
 		"tagid": tagID,
 	}, nil, result)
 

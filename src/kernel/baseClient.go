@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
 	"github.com/google/uuid"
 	http2 "net/http"
@@ -17,6 +18,8 @@ type BaseClient struct {
 	*response.HttpResponse
 
 	*support.ResponseCastable
+
+	ExternalRequest *http2.Request
 
 	App   *ApplicationInterface
 	Token *AccessToken
@@ -137,13 +140,14 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		return response, err
 	} else {
 		// tbf
-		config := *(*client.App).GetConfig()
 		var rs http2.Response = http2.Response{
 			StatusCode: response.GetStatusCode(),
 			Header:     response.GetHeader(),
 			Body:       response.GetBody(),
 		}
-		returnResponse, err := client.CastResponseToType(&rs, config.GetString("response_type", "array"))
+		//config := *(*client.App).GetConfig()
+		//returnResponse, err := client.CastResponseToType(&rs, config.GetString("response_type", "array"))
+		returnResponse, err := client.CastResponseToType(&rs, response2.RESPONSE_TYPE_RAW)
 		return returnResponse, err
 	}
 }

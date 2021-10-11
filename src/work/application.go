@@ -33,6 +33,9 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/work/media"
 	"github.com/ArtisanCloud/power-wechat/src/work/menu"
 	"github.com/ArtisanCloud/power-wechat/src/work/message"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat"
+	externalContact2 "github.com/ArtisanCloud/power-wechat/src/work/message/externalContact"
+	linkedCorp2 "github.com/ArtisanCloud/power-wechat/src/work/message/linkedCorp"
 	msgaudit "github.com/ArtisanCloud/power-wechat/src/work/msgAudit"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa"
 	"github.com/ArtisanCloud/power-wechat/src/work/oa/calendar"
@@ -57,8 +60,6 @@ import (
 type Work struct {
 	*kernel.ServiceContainer
 
-	ExternalRequest *http.Request
-
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	OAuth       *oauth.Manager
@@ -69,8 +70,11 @@ type Work struct {
 	Agent          *agent.Client
 	AgentWorkbench *workbench.Client
 
-	Message  *message.Client
-	Messager *message.Messager
+	Message                *message.Client
+	Messager               *message.Messager
+	MessageAppChat         *appChat.Client
+	MessageExternalContact *externalContact2.Client
+	MessageLinkedCorp      *linkedCorp2.Client
 
 	Encryptor *kernel.Encryptor
 	Server    *server.Guard
@@ -126,12 +130,12 @@ type Work struct {
 }
 
 type UserConfig struct {
-	CorpID           string
-	AgentID          int
-	Secret           string
-	Token            string
-	AESKey           string
-	AuthCallbackHost string
+	CorpID      string
+	AgentID     int
+	Secret      string
+	Token       string
+	AESKey      string
+	CallbackURL string
 
 	ResponseType string
 	Log          Log
@@ -194,7 +198,10 @@ func NewWork(config *UserConfig) (*Work, error) {
 	app.Department = department.RegisterProvider(app)
 
 	//-------------- register Message --------------
-	app.Message, app.Messager = message.RegisterProvider(app)
+	app.Message, app.Messager,
+		app.MessageAppChat,
+		app.MessageExternalContact,
+		app.MessageLinkedCorp = message.RegisterProvider(app)
 
 	//-------------- register Encryptor --------------
 	app.Encryptor, app.Server = server.RegisterProvider(app)
@@ -290,6 +297,12 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.Message
 	case "Messager":
 		return app.Messager
+	case "MessageAppChat":
+		return app.MessageAppChat
+	case "MessageExternalContact":
+		return app.MessageExternalContact
+	case "MessageLinkedCorp":
+		return app.MessageLinkedCorp
 
 	case "Encryptor":
 		return app.Encryptor
@@ -378,15 +391,23 @@ func (app *Work) GetComponent(name string) interface{} {
 
 }
 
+func (app *Work) SetExternalRequest(r *http.Request) {
+	app.Base.ExternalRequest = r
+}
+
+func (app *Work) GetExternalRequest() (r *http.Request) {
+	return app.Base.ExternalRequest
+}
+
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
-		"corp_id":            userConfig.CorpID,
-		"agent_id":           userConfig.AgentID,
-		"secret":             userConfig.Secret,
-		"token":              userConfig.Token,
-		"aes_key":            userConfig.AESKey,
-		"auth_callback_host": userConfig.AuthCallbackHost,
+		"corp_id":      userConfig.CorpID,
+		"agent_id":     userConfig.AgentID,
+		"secret":       userConfig.Secret,
+		"token":        userConfig.Token,
+		"aes_key":      userConfig.AESKey,
+		"callback_url": userConfig.CallbackURL,
 
 		"response_type": userConfig.ResponseType,
 		"log": object.StringMap{

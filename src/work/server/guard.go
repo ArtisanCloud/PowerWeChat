@@ -2,7 +2,6 @@ package server
 
 import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"net/http"
 )
 
 type Guard struct {
@@ -39,7 +38,7 @@ func (guard *Guard) OverrideValidate() {
 
 func (guard *Guard) OverrideShouldReturnRawResponse() {
 	guard.ShouldReturnRawResponse = func() bool {
-		request := (*guard.App).GetComponent("ExternalRequest").(*http.Request)
+		request := (*guard.App).GetExternalRequest()
 		if request == nil || request.URL.Query().Get("echostr") == "" {
 			return false
 		}

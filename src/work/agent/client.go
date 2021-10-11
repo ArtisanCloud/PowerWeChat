@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/work/agent/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/agent/response"
 )
 
@@ -30,11 +31,10 @@ func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90228
-func (comp *Client) Set(agentID int, data *power.HashMap) (*response.ResponseAgentSet, error) {
+func (comp *Client) Set(data *request.RequestAgentSet) (*response.ResponseAgentSet, error) {
 
 	result := &response.ResponseAgentSet{}
 
-	(*data)["agentid"] = agentID
 	_, err := comp.HttpPostJson("cgi-bin/agent/set", data, nil, nil, result)
 
 	return result, err

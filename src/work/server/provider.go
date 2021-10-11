@@ -10,9 +10,9 @@ func RegisterProvider(app kernel.ApplicationInterface) (*kernel.Encryptor, *Guar
 	config := app.GetConfig()
 
 	encryptor, _ := kernel.NewEncryptor(
-		(*config).Get("corp_id", "").(string),
-		(*config).Get("token", "").(string),
-		(*config).Get("aes_key", "").(string),
+		(*config).GetString("corp_id", ""),
+		(*config).GetString("token", ""),
+		(*config).GetString("aes_key", ""),
 	)
 
 	guard := NewGuard(&app)

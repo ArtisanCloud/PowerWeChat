@@ -44,7 +44,7 @@ func (comp *Client) TransferResult(options *request.RequestTransferResult) (*res
 
 // 获取待分配的离职成员列表
 // https://work.weixin.qq.com/api/doc/90000/90135/92125
-func (comp *Client) GetUnassignedList(pageID int64, cursor string, pageSize int64) (*response.ResponseResignedGetUnassignedList, error) {
+func (comp *Client) GetUnassignedList(pageID int, cursor string, pageSize int) (*response.ResponseResignedGetUnassignedList, error) {
 
 	result := &response.ResponseResignedGetUnassignedList{}
 

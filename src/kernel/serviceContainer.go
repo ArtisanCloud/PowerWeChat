@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
+	"net/http"
 )
 
 type ApplicationInterface interface {
@@ -9,6 +10,9 @@ type ApplicationInterface interface {
 	GetAccessToken() *AccessToken
 	GetConfig() *Config
 	GetComponent(name string) interface{}
+
+	SetExternalRequest(r *http.Request)
+	GetExternalRequest() (r *http.Request)
 }
 
 type ServiceContainer struct {

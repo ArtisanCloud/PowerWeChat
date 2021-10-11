@@ -1,13 +1,12 @@
 package externalContact
 
 import (
-	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/go-socialite/src/response/weCom"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/response"
 	"strconv"
 )
@@ -48,13 +47,13 @@ func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 // 获取外部联系人详情.
 // https://work.weixin.qq.com/api/doc/90000/90135/92114
-func (comp *Client) Get(externalUserId string, cursor int) (*weCom.ResponseGetExternalContact, error) {
+func (comp *Client) Get(externalUserId string, cursor string) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}
 
 	_, err := comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserId,
-		"cursor":          fmt.Sprintf("%d", cursor),
+		"cursor":          cursor,
 	}, nil, result)
 
 	return result, err
@@ -79,7 +78,7 @@ func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*respon
 
 // 修改客户备注信息.
 // https://work.weixin.qq.com/api/doc/90000/90135/92115
-func (comp *Client) Remark(data *power.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) Remark(data *request.RequestExternalContactRemark) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

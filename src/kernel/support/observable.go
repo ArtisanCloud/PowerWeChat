@@ -17,6 +17,20 @@ func NewObservable() *Observable {
 	}
 }
 
+func (observable *Observable) PushMessage(closure contract.EventHandlerInterface, condition int) *Observable {
+
+	if observable.handlers[condition] == nil {
+		observable.handlers[condition] = []*contract.EventHandlerInterface{}
+	}
+
+	observable.handlers[condition] = append(observable.handlers[condition], &closure)
+
+	// tbd
+	// clause
+
+	return observable
+}
+
 func (observable *Observable) Push(closure contract.EventHandlerInterface, condition int) *Observable {
 
 	if observable.handlers[condition] == nil {

@@ -3,7 +3,7 @@ package message
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/work/accountService/message/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/accountService/message/response"
 )
 
@@ -36,7 +36,7 @@ func (comp *Client) SyncMsg(cursor string, token string, limit int) (*response.R
 
 // 发送消息
 // https://work.weixin.qq.com/api/doc/90000/90135/90236
-func (comp *Client) SendMsg(messages *power.HashMap) (*response.ResponseAccountServiceSendMsg, error) {
+func (comp *Client) SendMsg(messages *request.RequestAccountServiceSendMsg) (*response.ResponseAccountServiceSendMsg, error) {
 
 	result := &response.ResponseAccountServiceSendMsg{}
 
@@ -47,7 +47,7 @@ func (comp *Client) SendMsg(messages *power.HashMap) (*response.ResponseAccountS
 
 // 发送消息
 // https://work.weixin.qq.com/api/doc/90000/90135/95122
-func (comp *Client) SendMsgOnEvent(messages *power.HashMap) (*response.ResponseAccountServiceSendMsgOnEvent, error) {
+func (comp *Client) SendMsgOnEvent(messages *request.RequestAccountServiceSendMsgOnEvent) (*response.ResponseAccountServiceSendMsgOnEvent, error) {
 
 	result := &response.ResponseAccountServiceSendMsgOnEvent{}
 

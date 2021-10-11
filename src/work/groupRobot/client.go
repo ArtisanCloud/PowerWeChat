@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/groupRobot/response"
 )
 
@@ -34,3 +35,52 @@ func (comp *Client) Send(key string, message *power.HashMap) (*response.Response
 
 	return result, err
 }
+
+func (comp *Client) SendText(key string, message *request.GroupRobotMsgText) (*response.ResponseGroupRobotSend, error) {
+	options := &power.HashMap{
+		"msgtype": "text",
+		"text": message,
+	}
+	return comp.Send(key, options)
+}
+func (comp *Client) SendMarkdown(key string, message *request.GroupRobotMsgMarkdown) (*response.ResponseGroupRobotSend, error) {
+	options := &power.HashMap{
+		"msgtype": "markdown",
+		"markdown": message,
+	}
+	return comp.Send(key, options)
+}
+func (comp *Client) SendImage(key string, message *request.GroupRobotMsgImage) (*response.ResponseGroupRobotSend, error) {
+	options := &power.HashMap{
+		"msgtype": "image",
+		"image": message,
+	}
+	return comp.Send(key, options)
+}
+
+// SendNewsArticles 图文类型
+func (comp *Client) SendNewsArticles(key string, message []*request.GroupRobotMsgNewsArticles) (*response.ResponseGroupRobotSend, error) {
+	options := &power.HashMap{
+		"msgtype": "news",
+		"news": power.HashMap{
+			"articles": message,
+		},
+	}
+	return comp.Send(key, options)
+}
+func (comp *Client) SendFile(key string, message *request.GroupRobotMsgFile) (*response.ResponseGroupRobotSend, error) {
+	options := &power.HashMap{
+		"msgtype": "file",
+		"file": message,
+	}
+	return comp.Send(key, options)
+}
+
+func (comp *Client) SendTemplateCard(key string, message *request.GroupRobotMsgTemplateCard) (*response.ResponseGroupRobotSend, error) {
+	options := &power.HashMap{
+		"msgtype": "template_card",
+		"template_card": message,
+	}
+	return comp.Send(key, options)
+}
+

@@ -25,7 +25,7 @@ type Handler struct {
 
 	ExternalRequest *http.Request
 
-	//Handle func(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) *http.Response
+	//Handle func(closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(groupWelcomeTemplate string)) interface{}) *http.Response
 }
 
 const SUCCESS = "SUCCESS"

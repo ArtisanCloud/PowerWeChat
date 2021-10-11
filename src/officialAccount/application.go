@@ -13,8 +13,6 @@ import (
 type OfficialAccount struct {
 	*kernel.ServiceContainer
 
-	ExternalRequest *http.Request
-
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 
@@ -111,6 +109,15 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 
 }
 
+func (app *OfficialAccount) SetExternalRequest(r *http.Request) {
+	app.Base.ExternalRequest = r
+}
+
+func (app *OfficialAccount) GetExternalRequest() (r *http.Request) {
+	return app.Base.ExternalRequest
+}
+
+
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
@@ -130,3 +137,4 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	return config, nil
 
 }
+
