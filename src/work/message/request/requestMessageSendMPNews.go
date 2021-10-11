@@ -2,9 +2,11 @@ package request
 
 type RequestMessageSendMPNews struct {
 	RequestMessageSend
-	MPNews struct {
-		Article []*RequestMPNewsArticle `json:"articles"`
-	} `json:"mpnews"`
+	MPNews *RequestMPNews `json:"mpnews"`
+}
+
+type RequestMPNews struct {
+	Article []*RequestMPNewsArticle `json:"articles"`
 }
 
 type RequestMPNewsArticle struct {

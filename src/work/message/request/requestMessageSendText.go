@@ -1,7 +1,7 @@
 package request
 
 type RequestMessageSendText struct {
-	*RequestMessageSend
+	RequestMessageSend
 	Text *RequestText `json:"text"`
 }
 

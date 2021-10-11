@@ -12,6 +12,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	models2 "github.com/ArtisanCloud/power-wechat/src/work/server/handlers/models"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -350,5 +351,6 @@ func (serverGuard *ServerGuard) decryptMessage(content string) (callbackHeader *
 	decryptMessage, err = serverGuard.ToCallbackType(callbackHeader, buf)
 
 	return callbackHeader, decryptMessage, err
+
 }
 
