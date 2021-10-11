@@ -7,15 +7,12 @@ import (
 
 const (
 	CALLBACK_EVENT_CHANGE_CONTACT   = "change_contact"
-	CALLBACK_EVENT_BATCH_JOB_RESULT = "batch_job_result"
 
-	CALLBACK_CHANGE_TYPE_CREATE_USER  = "create_user"
-	CALLBACK_CHANGE_TYPE_UPDATE_USER  = "update_user"
-	CALLBACK_CHANGE_TYPE_DELETE_USER  = "delete_user"
-	CALLBACK_CHANGE_TYPE_CREATE_PARTY = "create_party"
-	CALLBACK_CHANGE_TYPE_UPDATE_PARTY = "update_party"
-	CALLBACK_CHANGE_TYPE_DELETE_PARTY = "delete_party"
-	CALLBACK_CHANGE_TYPE_UPDATE_TAG   = "update_tag"
+	CALLBACK_EVENT_CHANGE_TYPE_CREATE_USER  = "create_user"
+	CALLBACK_EVENT_CHANGE_TYPE_UPDATE_USER  = "update_user"
+	CALLBACK_EVENT_CHANGE_TYPE_DELETE_USER  = "delete_user"
+
+
 )
 
 type EventUserCreate struct {
@@ -92,3 +89,12 @@ type EventUserUpdate struct {
 		} `xml:"Item"`
 	} `xml:"ExtAttr"`
 }
+
+
+type EventUserDelete struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	UserID       string   `xml:"UserID"`
+}
+
+

@@ -21,8 +21,6 @@ const (
 )
 
 
-
-
 type CallbackMessageHeader struct {
 	contract.EventInterface
 	XMLName      xml.Name `xml:"xml"`

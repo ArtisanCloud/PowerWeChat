@@ -12,7 +12,6 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
-	models2 "github.com/ArtisanCloud/power-wechat/src/work/server/handlers/models"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -50,6 +49,9 @@ type ServerGuard struct {
 	IsSafeMode              func() bool
 	Validate                func() (*ServerGuard, error)
 	ShouldReturnRawResponse func() bool
+
+	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
+
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -345,42 +347,8 @@ func (serverGuard *ServerGuard) decryptMessage(content string) (callbackHeader *
 		return nil, nil, err
 	}
 
-	decryptMessage, err = serverGuard.toCallbackType(callbackHeader, buf)
+	decryptMessage, err = serverGuard.ToCallbackType(callbackHeader, buf)
 
 	return callbackHeader, decryptMessage, err
 }
 
-func (serverGuard *ServerGuard) toCallbackType(callbackHeader *models.CallbackMessageHeader, buf []byte) (decryptMessage interface{}, err error) {
-
-	switch callbackHeader.MsgType {
-
-	case models.CALLBACK_MSG_TYPE_EVENT:
-		decryptMessage, err = serverGuard.toCallbackEventType(callbackHeader, buf)
-		return decryptMessage, err
-
-	case models.CALLBACK_MSG_TYPE_TEXT:
-		decryptMessage = models2.MessageText{}
-		break
-
-	default:
-		return nil, errors.New("not found wechat msg type")
-	}
-
-	err = xml.Unmarshal(buf, decryptMessage)
-
-	return decryptMessage, err
-
-}
-
-func (serverGuard *ServerGuard) toCallbackEventType(callbackHeader *models.CallbackMessageHeader, buf []byte) (message interface{}, err error) {
-
-	switch callbackHeader.Event {
-
-	case models2.CALLBACK_EVENT_CHANGE_CONTACT:
-
-	default:
-		return nil, errors.New("not found wechat event")
-	}
-
-	return message, err
-}
