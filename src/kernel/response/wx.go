@@ -1,15 +1,15 @@
 package response
 
 type ResponseWork struct {
-	ErrCode int    `json:"errcode,omitempty"`
+	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 }
 
 type ResponsePayment struct {
-	ReturnCode string `json:"return_code,omitempty"`
+	ReturnCode string `json:"return_code"`
 	ReturnMSG  string `json:"return_msg,omitempty"`
 
-	ResultCode string `json:"result_code,omitempty"` // 是	String(16)	SUCCESS/FAIL
+	ResultCode string `json:"result_code"` // 是	String(16)	SUCCESS/FAIL
 	ErrCode    string `json:"err_code,omitempty"`    // 否	String(32)	SYSTEMERROR--系统错误
 	ErrMSG     string `json:"errmsg,omitempty"`
 	ErrCodeDes string `json:"err_code_des,omitempty"`
@@ -20,7 +20,7 @@ type ResponseMiniProgram struct {
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 
-	ResultCode string `json:"resultcode,omitempty"`
+	ResultCode string `json:"resultcode"`
 	ResultMSG  string `json:"resultmsg,omitempty"`
 }
 
@@ -28,7 +28,7 @@ type ResponseOfficialAccount struct {
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 
-	ResultCode string `json:"resultcode,omitempty"`
+	ResultCode string `json:"resultcode"`
 	ResultMSG  string `json:"resultmsg,omitempty"`
 }
 

@@ -139,7 +139,7 @@ func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbac
 	}
 
 	if serverGuard.IsSafeMode() && callback.Encrypt != "" {
-		callbackHeader, Decrypted, err = serverGuard.decryptMessage(callback.Encrypt)
+		callbackHeader, Decrypted, err = serverGuard.decryptMessage(string(b))
 	}
 
 	return callback, callbackHeader, Decrypted, err
