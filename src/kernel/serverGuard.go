@@ -4,12 +4,15 @@ import (
 	"bytes"
 	"crypto/sha1"
 	"encoding/json"
+	"encoding/xml"
 	"errors"
-	"fmt"
+	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
+	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	models2 "github.com/ArtisanCloud/power-wechat/src/work/server/handlers/models"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -70,7 +73,15 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 
 }
 
-func (serverGuard *ServerGuard) Serve() (response *http.Response, err error) {
+func (serverGuard *ServerGuard) Serve(r *http.Request) (response *response.HttpResponse, err error) {
+
+	//-------------- external request --------------
+	request := &http.Request{}
+	if r != nil {
+		request = r
+	}
+
+	(*serverGuard.App).SetExternalRequest(request)
 
 	validatedGuard, err := serverGuard.Validate()
 	if err != nil {
@@ -91,7 +102,7 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 		return serverGuard, nil
 	}
 
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
 		return nil, errors.New("request is invalid")
 	}
@@ -110,53 +121,39 @@ func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
 	return serverGuard, nil
 }
 
-func (serverGuard *ServerGuard) getMessage() (dataset *object.HashMap, err error) {
-	dataset = &object.HashMap{}
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, Decrypted interface{}, err error) {
+
+	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
-		return nil, errors.New("request is invalid")
+		return nil, nil, nil, errors.New("request is invalid")
 	}
 	b, err := io.ReadAll(request.Body)
 	if err != nil || b == nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
 
-	message, err := serverGuard.parseMessage(string(b))
+	callback, err = serverGuard.parseMessage(string(b))
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
 
-	if serverGuard.IsSafeMode() && message["Encrypt"] != nil {
-		decryptMessage := serverGuard.decryptMessage(string(b), &message)
-		err = json.Unmarshal([]byte(decryptMessage), dataset)
-		if err == nil && dataset != nil {
-			return dataset, err
-		}
-
-		//err = xml.Unmarshal([]byte(decryptMessage), &dataset)
-		*dataset, err = object.Xml2Map([]byte(decryptMessage))
-		if err == nil && dataset != nil {
-			return dataset, err
-		}
+	if serverGuard.IsSafeMode() && callback.Encrypt != "" {
+		callbackHeader, Decrypted, err = serverGuard.decryptMessage(callback.Encrypt)
 	}
 
-	config := (*serverGuard.App).GetConfig()
-	responseType := config.Get("response_type", "array").(string)
-	arrayResponse, err := serverGuard.DetectAndCastResponseToType(&message, responseType)
-	dataset = arrayResponse.(*object.HashMap)
-
-	return dataset, err
+	return callback, callbackHeader, Decrypted, err
 
 }
 
-func (serverGuard *ServerGuard) resolve() (response *http.Response, err error) {
+func (serverGuard *ServerGuard) resolve() (httpRS *response.HttpResponse, err error) {
 	result, err := serverGuard.handleRequest()
 	if err != nil {
 		return nil, err
 	}
 
+	var rs *http.Response
 	if serverGuard.ShouldReturnRawResponse() {
-		response = &http.Response{
+		rs = &http.Response{
 			Body: ioutil.NopCloser(bytes.NewBufferString((*result)["response"].(string))),
 		}
 
@@ -164,13 +161,16 @@ func (serverGuard *ServerGuard) resolve() (response *http.Response, err error) {
 		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
 		header := http.Header{}
 		header.Set("Content-Type", "application/xml")
-		response = &http.Response{
+		rs = &http.Response{
 			Body:       ioutil.NopCloser(bytes.NewBufferString(strBuiltResponse)),
-			StatusCode: 200,
+			StatusCode: http.StatusOK,
 			Header:     header,
 		}
 	}
-	return response, nil
+	httpRS = response.NewHttpResponse(http.StatusOK)
+	httpRS.Response = rs
+
+	return httpRS, nil
 }
 
 func (serverGuard *ServerGuard) getToken() string {
@@ -217,38 +217,21 @@ func (serverGuard *ServerGuard) buildResponse(to string, from string, message in
 
 func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 
-	castedMessage, err := serverGuard.getMessage()
+	_, msgHeader, decryptedMessage, err := serverGuard.getMessage()
 	if err != nil {
 		return nil, err
 	}
-
-	typeData, err := serverGuard.DetectAndCastResponseToType(castedMessage, "array")
-	if err != nil {
-		return nil, err
-	}
-	messageArray := *(typeData.(*object.HashMap))
 
 	var messageType = "text"
-	if messageArray["MsgType"] != nil {
-		messageType = messageArray["MsgType"].(string)
+	if msgHeader.MsgType != "" {
+		messageType = msgHeader.MsgType
 	}
 
-	response := serverGuard.Dispatch(MESSAGE_TYPE_MAPPING[messageType], castedMessage)
-
-	var (
-		strFromUserName string = ""
-		strToUserName   string = ""
-	)
-	if messageArray["FromUserName"] != nil {
-		strFromUserName = messageArray["FromUserName"].(string)
-	}
-	if messageArray["ToUserName"] != nil {
-		strToUserName = messageArray["ToUserName"].(string)
-	}
+	response := serverGuard.Dispatch(MESSAGE_TYPE_MAPPING[messageType], msgHeader, decryptedMessage)
 
 	return &object.HashMap{
-		"to":       strFromUserName,
-		"from":     strToUserName,
+		"to":       msgHeader.FromUserName,
+		"from":     msgHeader.ToUserName,
 		"response": response,
 	}, nil
 }
@@ -292,7 +275,7 @@ func (serverGuard *ServerGuard) signature(params []string) string {
 }
 
 func (serverGuard *ServerGuard) isSafeMode() bool {
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
 		println("request is invalid")
 		return false
@@ -303,7 +286,15 @@ func (serverGuard *ServerGuard) isSafeMode() bool {
 
 }
 
-func (serverGuard *ServerGuard) parseMessage(content string) (dataContent object.HashMap, err error) {
+func (serverGuard *ServerGuard) parseMessage(content string) (callback *models.Callback, err error) {
+
+	callback = &models.Callback{}
+	err = xml.Unmarshal([]byte(content), callback)
+
+	return callback, err
+}
+
+func (serverGuard *ServerGuard) parseMessage2(content string) (dataContent object.HashMap, err error) {
 
 	dataContent = nil
 	if content != "" {
@@ -333,21 +324,63 @@ func (serverGuard *ServerGuard) shouldReturnRawResponse() bool {
 	return false
 }
 
-func (serverGuard *ServerGuard) decryptMessage(content string, message *object.HashMap) (decryptMessage string) {
+func (serverGuard *ServerGuard) decryptMessage(content string) (callbackHeader *models.CallbackMessageHeader, decryptMessage interface{}, err error) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
-	request := (*serverGuard.App).GetComponent("ExternalRequest").(*http.Request)
+	request := (*serverGuard.App).GetExternalRequest()
 	query := request.URL.Query()
-	buf, err := encryptor.Decrypt(
+	buf, cryptErr := encryptor.Decrypt(
 		[]byte(content),
 		query.Get("msg_signature"),
 		query.Get("nonce"),
 		query.Get("timestamp"),
 	)
-	if err != nil {
-		fmt.Println("decrypt uniformMessage error:", err.ErrMsg)
+	if cryptErr != nil {
+		return nil, nil, errors.New(cryptErr.ErrMsg)
 	}
-	decryptMessage = string(buf)
 
-	return decryptMessage
+	callbackHeader = &models.CallbackMessageHeader{}
+	err = xml.Unmarshal(buf, callbackHeader)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	decryptMessage, err = serverGuard.toCallbackType(callbackHeader, buf)
+
+	return callbackHeader, decryptMessage, err
+}
+
+func (serverGuard *ServerGuard) toCallbackType(callbackHeader *models.CallbackMessageHeader, buf []byte) (decryptMessage interface{}, err error) {
+
+	switch callbackHeader.MsgType {
+
+	case models.CALLBACK_MSG_TYPE_EVENT:
+		decryptMessage, err = serverGuard.toCallbackEventType(callbackHeader, buf)
+		return decryptMessage, err
+
+	case models.CALLBACK_MSG_TYPE_TEXT:
+		decryptMessage = models2.MessageText{}
+		break
+
+	default:
+		return nil, errors.New("not found wechat msg type")
+	}
+
+	err = xml.Unmarshal(buf, decryptMessage)
+
+	return decryptMessage, err
+
+}
+
+func (serverGuard *ServerGuard) toCallbackEventType(callbackHeader *models.CallbackMessageHeader, buf []byte) (message interface{}, err error) {
+
+	switch callbackHeader.Event {
+
+	case models2.CALLBACK_EVENT_CHANGE_CONTACT:
+
+	default:
+		return nil, errors.New("not found wechat event")
+	}
+
+	return message, err
 }

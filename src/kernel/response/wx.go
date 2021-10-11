@@ -32,6 +32,11 @@ type ResponseOfficialAccount struct {
 	ResultMSG  string `json:"resultmsg,omitempty"`
 }
 
+const (
+	TYPE_RAW = "raw"
+	TYPE_MAP = "map"
+)
+
 //
 //func (res *ResponseWork) GetBody() *http.ResponseWriter {
 //	return nil

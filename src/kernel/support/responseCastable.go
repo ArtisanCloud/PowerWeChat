@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
+	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	"go/types"
 	"io/ioutil"
 	"net/http"
@@ -17,7 +18,9 @@ type ResponseCastable struct {
 
 func (responseCastable *ResponseCastable) CastResponseToType(response *http.Response, castType string) (interface{}, error) {
 
-	return response, nil
+	if castType==response2.TYPE_RAW{
+		return response, nil
+	}
 
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -26,7 +29,7 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 
 	switch castType {
 
-	case "array":
+	case response2.TYPE_MAP:
 		data := &object.HashMap{}
 		err = json.Unmarshal(body, data)
 
@@ -35,8 +38,6 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 		var data interface{}
 		err = json.Unmarshal(body, &data)
 		return data, err
-	case "raw":
-		return response, nil
 	default:
 
 	}
@@ -53,6 +54,9 @@ func (responseCastable *ResponseCastable) DetectAndCastResponseToType(response i
 	switch response.(type) {
 	case http.Response:
 		returnResponse = response.(http.Response)
+		break
+	case *http.Response:
+		returnResponse = *response.(*http.Response)
 		break
 	case types.Array:
 
