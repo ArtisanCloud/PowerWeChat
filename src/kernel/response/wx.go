@@ -33,8 +33,8 @@ type ResponseOfficialAccount struct {
 }
 
 const (
-	RESPONSE_TYPE_RAW = "raw"
-	RESPONSE_TYPE_MAP = "map"
+	TYPE_RAW = "raw"
+	TYPE_MAP = "map"
 )
 
 //

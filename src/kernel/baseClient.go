@@ -147,7 +147,7 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		}
 		//config := *(*client.App).GetConfig()
 		//returnResponse, err := client.CastResponseToType(&rs, config.GetString("response_type", "array"))
-		returnResponse, err := client.CastResponseToType(&rs, response2.RESPONSE_TYPE_RAW)
+		returnResponse, err := client.CastResponseToType(&rs, response2.TYPE_RAW)
 		return returnResponse, err
 	}
 }

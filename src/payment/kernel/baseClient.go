@@ -109,7 +109,7 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 			Header:     nil,
 		}
 		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, response2.RESPONSE_TYPE_RAW)
+		result, _ := client.CastResponseToType(&rs, response2.TYPE_RAW)
 		return result, nil
 	}
 
@@ -142,7 +142,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 			Header:     nil,
 		}
 		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, response2.RESPONSE_TYPE_MAP)
+		result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
 		return result, nil
 	}
 

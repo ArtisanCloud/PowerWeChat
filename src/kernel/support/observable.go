@@ -59,11 +59,11 @@ func (observable *Observable) On(condition int, handler contract.EventHandlerInt
 	return observable.Push(handler, condition)
 }
 
-func (observable *Observable) Dispatch(event int, payload interface{}) interface{} {
-	return observable.notify(event, payload)
+func (observable *Observable) Dispatch(event int, header contract.EventInterface, content interface{}) interface{} {
+	return observable.notify(event, header, content)
 }
 
-func (observable *Observable) notify(event int, payload interface{}) interface{} {
+func (observable *Observable) notify(event int, header contract.EventInterface, content interface{}) interface{} {
 
 	var (
 		finalResult interface{}
@@ -81,7 +81,7 @@ Loop1:
 				// tbd
 				// intercepted
 
-				response = observable.callHandler(handler, payload)
+				response = observable.callHandler(handler, header, content)
 
 				switch response.(type) {
 
@@ -131,6 +131,6 @@ Loop1:
 	return finalResult
 }
 
-func (observable *Observable) callHandler(callable *contract.EventHandlerInterface, payload interface{}) interface{} {
-	return (*callable).Handle(payload)
+func (observable *Observable) callHandler(callable *contract.EventHandlerInterface, header contract.EventInterface, content interface{}) interface{} {
+	return (*callable).Handle(header, content)
 }

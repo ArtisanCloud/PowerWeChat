@@ -18,7 +18,7 @@ type ResponseCastable struct {
 
 func (responseCastable *ResponseCastable) CastResponseToType(response *http.Response, castType string) (interface{}, error) {
 
-	if castType==response2.RESPONSE_TYPE_RAW{
+	if castType==response2.TYPE_RAW{
 		return response, nil
 	}
 
@@ -29,7 +29,7 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 
 	switch castType {
 
-	case response2.RESPONSE_TYPE_MAP:
+	case response2.TYPE_MAP:
 		data := &object.HashMap{}
 		err = json.Unmarshal(body, data)
 

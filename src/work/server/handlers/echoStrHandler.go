@@ -20,7 +20,7 @@ func NewEchoStrHandler(app *kernel.ApplicationInterface) *EchoStrHandler {
 	return handler
 }
 
-func (handler *EchoStrHandler) Handle(payload interface{}) interface{} {
+func (handler *EchoStrHandler) Handle(header contract.EventInterface, content interface{}) interface{} {
 
 	request := (*handler.App).GetExternalRequest()
 	if request == nil {
