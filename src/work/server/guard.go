@@ -58,9 +58,29 @@ func (guard *Guard) OverrideToCallbackType() {
 	guard.ToCallbackType = func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
 		switch callbackHeader.GetMsgType() {
 
-		// msg type is message text
+		// msg type is message
 		case models.CALLBACK_MSG_TYPE_TEXT:
 			decryptMessage = models2.MessageText{}
+			break
+
+		case models.CALLBACK_MSG_TYPE_IMAGE:
+			decryptMessage = models2.MessageImage{}
+			break
+
+		case models.CALLBACK_MSG_TYPE_VOICE:
+			decryptMessage = models2.MessageVoice{}
+			break
+
+		case models.CALLBACK_MSG_TYPE_VIDEO:
+			decryptMessage = models2.MessageVideo{}
+			break
+
+		case models.CALLBACK_MSG_TYPE_LOCATION:
+			decryptMessage = models2.MessageLocation{}
+			break
+
+		case models.CALLBACK_MSG_TYPE_LINK:
+			decryptMessage = models2.MessageLink{}
 			break
 
 		// msg type is event
