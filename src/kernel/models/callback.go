@@ -24,9 +24,6 @@ const (
 	CALLBACK_MSG_TYPE_LINK = "link"
 
 
-)
-
-
 type CallbackMessageHeader struct {
 	contract.EventInterface
 	XMLName      xml.Name `xml:"xml"`
