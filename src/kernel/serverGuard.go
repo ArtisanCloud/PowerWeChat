@@ -12,7 +12,6 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
-	models2 "github.com/ArtisanCloud/power-wechat/src/work/server/handlers/models"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -52,7 +51,6 @@ type ServerGuard struct {
 	ShouldReturnRawResponse func() bool
 
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
-
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -141,7 +139,7 @@ func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbac
 	}
 
 	if serverGuard.IsSafeMode() && callback.Encrypt != "" {
-		callbackHeader, Decrypted, err = serverGuard.decryptMessage(callback.Encrypt)
+		callbackHeader, Decrypted, err = serverGuard.decryptMessage(string(b))
 	}
 
 	return callback, callbackHeader, Decrypted, err
@@ -353,4 +351,3 @@ func (serverGuard *ServerGuard) decryptMessage(content string) (callbackHeader *
 	return callbackHeader, decryptMessage, err
 
 }
-

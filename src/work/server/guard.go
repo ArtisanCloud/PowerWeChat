@@ -92,7 +92,7 @@ func (guard *Guard) OverrideToCallbackType() {
 			return nil, errors.New("not found wechat msg type")
 		}
 
-		err = xml.Unmarshal(buf, decryptMessage)
+		err = xml.Unmarshal(buf, &decryptMessage)
 
 		return decryptMessage, err
 	}
@@ -111,71 +111,71 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 
 	// events
 	case models2.CALLBACK_EVENT_SUBSCRIBE:
-		decryptMessage = models2.EventSubscribe{}
+		decryptMessage = &models2.EventSubscribe{}
 		break
 
 	case models2.CALLBACK_EVENT_ENTER_AGENT:
-		decryptMessage = models2.EventEnterAgent{}
+		decryptMessage = &models2.EventEnterAgent{}
 		break
 
 	case models2.CALLBACK_EVENT_LOCATION:
-		decryptMessage = models2.EventLocation{}
+		decryptMessage = &models2.EventLocation{}
 		break
 
 	case models2.CALLBACK_EVENT_BATCH_JOB_RESULT:
-		decryptMessage = models2.EventBatchJobResult{}
+		decryptMessage = &models2.EventBatchJobResult{}
 		break
 
 	case models2.CALLBACK_EVENT_CLICK:
-		decryptMessage = models2.EventClick{}
+		decryptMessage = &models2.EventClick{}
 		break
 
 	case models2.CALLBACK_EVENT_VIEW:
-		decryptMessage = models2.EventView{}
+		decryptMessage = &models2.EventView{}
 		break
 
 	case models2.CALLBACK_EVENT_SCANCODE_PUSH:
-		decryptMessage = models2.EventScanCodePush{}
+		decryptMessage = &models2.EventScanCodePush{}
 		break
 
 	case models2.CALLBACK_EVENT_SCANCODE_WAITMSG:
-		decryptMessage = models2.EventScancodeWaitMsg{}
+		decryptMessage = &models2.EventScancodeWaitMsg{}
 		break
 
 	case models2.CALLBACK_EVENT_PIC_SYSPHOTO:
-		decryptMessage = models2.EventPicSysPhoto{}
+		decryptMessage = &models2.EventPicSysPhoto{}
 		break
 
 	case models2.CALLBACK_EVENT_PIC_PHOTO_OR_ALBUM:
-		decryptMessage = models2.EventPicPhotoOrAlbum{}
+		decryptMessage = &models2.EventPicPhotoOrAlbum{}
 		break
 
 	case models2.CALLBACK_EVENT_PIC_WEIXIN:
-		decryptMessage = models2.EventPicWeixin{}
+		decryptMessage = &models2.EventPicWeixin{}
 		break
 
 	case models2.CALLBACK_EVENT_LOCATION_SELECT:
-		decryptMessage = models2.EventLocationSelect{}
+		decryptMessage = &models2.EventLocationSelect{}
 		break
 
 	case models2.CALLBACK_EVENT_OPEN_APPROVAL_CHANGE:
-		decryptMessage = models2.EventOpenApprovalChange{}
+		decryptMessage = &models2.EventOpenApprovalChange{}
 		break
 
 	case models2.CALLBACK_EVENT_SHARE_AGENT_CHANGE:
-		decryptMessage = models2.EventShareAgentChange{}
+		decryptMessage = &models2.EventShareAgentChange{}
 		break
 
 	case models2.CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT:
-		decryptMessage = models2.EventTemplateCardMenuEvent{}
+		decryptMessage = &models2.EventTemplateCardMenuEvent{}
 		break
 
 	case models2.CALLBACK_EVENT_LIVING_STATUS_CHANGE:
-		decryptMessage = models2.EventLivingStatusChange{}
+		decryptMessage = &models2.EventLivingStatusChange{}
 		break
 
 	case models2.CALLBACK_EVENT_MSGAUDIT_NOTIFY:
-		decryptMessage = models2.EventMsgAuditNotify{}
+		decryptMessage = &models2.EventMsgAuditNotify{}
 		break
 
 	default:
@@ -188,37 +188,37 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 // switch event change type
 func (guard *Guard) toCallbackEventChangeType(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
 
-	switch callbackHeader.GetEvent() {
+	switch callbackHeader.GetChangeType() {
 
 	// change type is for user event
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_CREATE_USER:
-		decryptMessage = models2.EventUserCreate{}
+		decryptMessage = &models2.EventUserCreate{}
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_USER:
-		decryptMessage = models2.EventUserUpdate{}
+		decryptMessage = &models2.EventUserUpdate{}
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_DELETE_USER:
-		decryptMessage = models2.EventUserDelete{}
+		decryptMessage = &models2.EventUserDelete{}
 		break
 
 	// change type is for party event
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_CREATE_PARTY:
-		decryptMessage = models2.EventPartyCreate{}
+		decryptMessage = &models2.EventPartyCreate{}
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_PARTY:
-		decryptMessage = models2.EventPartyUpdate{}
+		decryptMessage = &models2.EventPartyUpdate{}
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_DELETE_PARTY:
-		decryptMessage = models2.EventPartyDelete{}
+		decryptMessage = &models2.EventPartyDelete{}
 		break
 
 	// change type is for tag event
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_TAG:
-		decryptMessage = models2.EventTagUpdate{}
+		decryptMessage = &models2.EventTagUpdate{}
 		break
 
 	default:
