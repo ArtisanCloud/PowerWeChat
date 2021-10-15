@@ -1,17 +1,21 @@
 package handlers
 
+import (
+	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
+)
+
 type ServerCallbackHandler struct {
-	Callback func(payload interface{}) interface{}
+	Callback func(header contract.EventInterface, content interface{}) interface{}
 }
 
 func NewServerCallbackHandler() *ServerCallbackHandler {
 	return &ServerCallbackHandler{}
 }
 
-func (handler *ServerCallbackHandler) Handle(payload interface{}) interface{} {
+func (handler *ServerCallbackHandler) Handle(header contract.EventInterface, content interface{}) interface{} {
 
 	if handler.Callback != nil {
-		return handler.Callback(payload)
+		return handler.Callback(header, content)
 	}
 
 	return nil

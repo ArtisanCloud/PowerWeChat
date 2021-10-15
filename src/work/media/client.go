@@ -61,26 +61,26 @@ func (comp *Client) UploadImage(path string, form *power.HashMap) (*response.Htt
 	return rs.(*response.HttpResponse), err
 }
 
-func (comp *Client) UploadTempImage(path string, form *power.HashMap) (response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempImage(path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload("image", path, form)
 }
 
-func (comp *Client) UploadTempVoice(path string, form *power.HashMap) (response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempVoice(path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload("voice", path, form)
 }
 
-func (comp *Client) UploadTempVideo(path string, form *power.HashMap) (response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempVideo(path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload("video", path, form)
 }
 
-func (comp *Client) UploadTempFile(path string, form *power.HashMap) (response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempFile(path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload("file", path, form)
 }
 
 // 上传临时素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90253
-func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (response2.ResponseUploadMedia, error) {
-	outResponse := response2.ResponseUploadMedia{}
+func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	outResponse := &response2.ResponseUploadMedia{}
 	files := &object.HashMap{
 		"media": path,
 	}

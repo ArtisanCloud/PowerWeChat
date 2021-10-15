@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // 查询电子发票
-// https://ope	n.work.weixin.qq.com/api/doc/90000/90135/90284
+// https://open.work.weixin.qq.com/api/doc/90000/90135/90284
 func (comp *Client) GetInvoiceInfo(cardID string, encryptCode string) (*response.ResponseInvoiceGetInfo, error) {
 
 	result := &response.ResponseInvoiceGetInfo{}

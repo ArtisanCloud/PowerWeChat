@@ -28,3 +28,4 @@ func (comp *Client) GetAPIDomainIP() (*response.ResponseGetAPIDomainIP, error) {
 
 	return result, err
 }
+
