@@ -3,8 +3,8 @@ package invoice
 import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/invoice/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/invoice/response"
 )
 
@@ -29,7 +29,7 @@ func (comp *Client) GetInvoiceInfo(cardID string, encryptCode string) (*response
 
 // 批量查询电子发票
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90287
-func (comp *Client) GetInvoiceInfoBatch(invoiceList []*power.HashMap) (*response.ResponseInvoiceGetInfoBatch, error) {
+func (comp *Client) GetInvoiceInfoBatch(invoiceList []*request.RequestCardInvoice) (*response.ResponseInvoiceGetInfoBatch, error) {
 
 	result := &response.ResponseInvoiceGetInfoBatch{}
 
@@ -59,14 +59,14 @@ func (comp *Client) UpdateInvoiceStatus(cardID string, encryptCode string, statu
 
 // 批量更新发票状态
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90286
-func (comp *Client) UpdateStatusBatch(openid string, status string, invoicelist []*power.StringMap) (*response2.ResponseWork, error) {
+func (comp *Client) UpdateStatusBatch(openid string, status string, invoiceList []*request.RequestCardInvoice) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
 	data := &object.HashMap{
 		"openid":           openid,
 		"reimburse_status": status,
-		"invoice_list":     invoicelist,
+		"invoice_list":     invoiceList,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/updatestatusbatch", data, nil, nil, result)
 
