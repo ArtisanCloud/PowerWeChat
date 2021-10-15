@@ -1,11 +1,10 @@
 package refund
 
 import (
-	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/refund/request"
 	"github.com/ArtisanCloud/power-wechat/src/payment/refund/response"
 )
 
@@ -22,26 +21,17 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 // Refund.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
 
-func (comp *Client) Refund(transactionID string, refundOutNO string, amount *power.HashMap, options *power.HashMap) (*response.ResponseRefund, error) {
+func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRefund, error) {
 
 	result := &response.ResponseRefund{}
 
-	body := &object.HashMap{
-		"amount": amount,
+	body, err := object.StructToHashMap(options)
+	if err != nil {
+		return nil, err
 	}
-
-	if transactionID != "" {
-		(*body)["transaction_id"] = transactionID
-	} else if refundOutNO != "" {
-		(*body)["out_refund_no"] = refundOutNO
-	} else {
-		return nil, errors.New("please given transaction_id or out_refund_no. ")
-	}
-
-	body = object.MergeHashMap(body, options.ToHashMap())
 
 	endpoint := comp.Wrap("/v3/refund/domestic/refunds")
-	_, err := comp.PlainRequest(endpoint, nil, "POST", body, false, nil, result)
+	_, err = comp.PlainRequest(endpoint, nil, "POST", body, false, nil, result)
 
 	return result, err
 }
