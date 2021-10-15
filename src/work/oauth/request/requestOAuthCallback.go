@@ -1,4 +1,4 @@
-package oauth
+package request
 
 import (
 	"github.com/gin-gonic/gin"
