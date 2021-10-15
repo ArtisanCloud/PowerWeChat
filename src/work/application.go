@@ -60,8 +60,6 @@ import (
 type Work struct {
 	*kernel.ServiceContainer
 
-	ExternalRequest *http.Request
-
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	OAuth       *oauth.Manager
@@ -132,12 +130,12 @@ type Work struct {
 }
 
 type UserConfig struct {
-	CorpID           string
-	AgentID          int
-	Secret           string
-	Token            string
-	AESKey           string
-	AuthCallbackHost string
+	CorpID      string
+	AgentID     int
+	Secret      string
+	Token       string
+	AESKey      string
+	CallbackURL string
 
 	ResponseType string
 	Log          Log
@@ -393,15 +391,23 @@ func (app *Work) GetComponent(name string) interface{} {
 
 }
 
+func (app *Work) SetExternalRequest(r *http.Request) {
+	app.Base.ExternalRequest = r
+}
+
+func (app *Work) GetExternalRequest() (r *http.Request) {
+	return app.Base.ExternalRequest
+}
+
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
-		"corp_id":            userConfig.CorpID,
-		"agent_id":           userConfig.AgentID,
-		"secret":             userConfig.Secret,
-		"token":              userConfig.Token,
-		"aes_key":            userConfig.AESKey,
-		"auth_callback_host": userConfig.AuthCallbackHost,
+		"corp_id":      userConfig.CorpID,
+		"agent_id":     userConfig.AgentID,
+		"secret":       userConfig.Secret,
+		"token":        userConfig.Token,
+		"aes_key":      userConfig.AESKey,
+		"callback_url": userConfig.CallbackURL,
 
 		"response_type": userConfig.ResponseType,
 		"log": object.StringMap{

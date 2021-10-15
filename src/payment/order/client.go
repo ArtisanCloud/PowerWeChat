@@ -5,8 +5,8 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/order/request"
 	"github.com/ArtisanCloud/power-wechat/src/payment/order/response"
 	"net/http"
 )
@@ -23,7 +23,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // JSAPI pay transaction. 小程序支付
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_1.shtml
-func (comp *Client) JSAPITransaction(params *power.HashMap) (*response.ResponseUnitfy, error) {
+func (comp *Client) JSAPITransaction(params *request.RequestJSAPIPrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -34,7 +34,7 @@ func (comp *Client) JSAPITransaction(params *power.HashMap) (*response.ResponseU
 
 // App pay transaction.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_2_1.shtml
-func (comp *Client) TransactionApp(params *power.HashMap) (*response.ResponseUnitfy, error) {
+func (comp *Client) TransactionApp(params *request.RequestAppPrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -46,7 +46,7 @@ func (comp *Client) TransactionApp(params *power.HashMap) (*response.ResponseUni
 
 // H5 pay transaction.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_3_1.shtml
-func (comp *Client) TransactionH5(params *power.HashMap) (*response.ResponseH5URL, error) {
+func (comp *Client) TransactionH5(params *request.RequestH5Prepay) (*response.ResponseH5URL, error) {
 
 	result := &response.ResponseH5URL{}
 
@@ -57,7 +57,7 @@ func (comp *Client) TransactionH5(params *power.HashMap) (*response.ResponseH5UR
 
 // Native pay transaction.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
-func (comp *Client) TransactionNative(params *power.HashMap) (*response.ResponseCodeURL, error) {
+func (comp *Client) TransactionNative(params *request.RequestNativePrepay) (*response.ResponseCodeURL, error) {
 
 	result := &response.ResponseCodeURL{}
 
@@ -69,7 +69,7 @@ func (comp *Client) TransactionNative(params *power.HashMap) (*response.Response
 
 // 合单APP下单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_1.shtml
-func (comp *Client) TransactionAppCombine(params *power.HashMap) (*response.ResponseUnitfy, error) {
+func (comp *Client) TransactionAppCombine(params *request.RequestCombinePrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -79,15 +79,28 @@ func (comp *Client) TransactionAppCombine(params *power.HashMap) (*response.Resp
 	return result, err
 }
 
-func (comp *Client) PayTransaction(entryPoint string, params *power.HashMap, result interface{}) (interface{}, error) {
+func (comp *Client) PayTransaction(entryPoint string, params request.Prepay, result interface{}) (interface{}, error) {
 	config := (*comp.App).GetConfig()
-	(*params)["appid"] = config.GetString("app_id", "")
-	if (*params)["notify_url"] == nil || (*params)["notify_url"] == "" {
-		(*params)["notify_url"] = config.GetString("notify_url", "")
+
+	if params.GetAppID() == "" {
+		appID := config.GetString("app_id", "")
+		params.SetAppID(appID)
+	}
+	if params.GetNotifyUrl() == "" {
+		url := config.GetString("notify_url", "")
+		params.SetNotifyUrl(url)
+	}
+
+	mchID := config.GetString("mch_id", "")
+	params.SetMchID(mchID)
+
+	options, err := object.StructToHashMap(params)
+	if err != nil {
+		return nil, err
 	}
 
 	transactionEndpoint := comp.Wrap(entryPoint)
-	rs, err := comp.Request(transactionEndpoint, nil, "POST", params.ToHashMap(), false, nil, result)
+	rs, err := comp.Request(transactionEndpoint, nil, "POST", options, false, nil, result)
 	return rs, err
 }
 

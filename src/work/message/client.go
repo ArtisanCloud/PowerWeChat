@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/power-wechat/src/work/message/request"
 	"github.com/ArtisanCloud/power-wechat/src/work/message/response"
 )
 
@@ -42,6 +43,65 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseMessageSend
 
 	return result, err
 }
+
+func (comp *Client) send(messages interface{}) (*response.ResponseMessageSend, error) {
+	return comp.Send(messages.(*power.HashMap))
+}
+
+// SendText 文本消息
+func (comp *Client) SendText(messages *request.RequestMessageSendText) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+// SendImage 图片消息
+func (comp *Client) SendImage(messages *request.RequestMessageSendImage) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendVoice 语音消息
+func (comp *Client) SendVoice(messages *request.RequestMessageSendVoice) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendVideo 视频消息
+func (comp *Client) SendVideo(messages *request.RequestMessageSendVideo) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendFile 文件消息
+func (comp *Client) SendFile(messages *request.RequestMessageSendFile) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendTextCard 文本卡片消息
+func (comp *Client) SendTextCard(messages *request.RequestMessageSendTextCard) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendNews 图文消息
+func (comp *Client) SendNews(messages *request.RequestMessageSendNews) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendMpNews 图文消息（mpnews）
+func (comp *Client) SendMpNews(messages *request.RequestMessageSendMPNews) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendMarkdown markdown消息
+func (comp *Client) SendMarkdown(messages *request.RequestMessageSendMarkdown) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendMiniProgramNotice 小程序通知消息
+func (comp *Client) SendMiniProgramNotice(messages *request.RequestMessageSendMiniProgramNotice) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
+// SendTemplateCard 发送卡片模版
+func (comp *Client) SendTemplateCard(messages *request.RequestMessageSendTemplateCard) (*response.ResponseMessageSend, error) {
+	return comp.send(messages)
+}
+
 
 // 更新模版卡片消息
 // https://work.weixin.qq.com/api/doc/90000/90135/94888

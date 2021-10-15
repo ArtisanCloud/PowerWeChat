@@ -1,8 +1,8 @@
 github.com/ArtisanCloud/go-libs v1.0.19/go.mod h1:4pGEskMX4BA2w2cJdjL4+jcGHRLdx6Bj+evOqXo23iU=
-github.com/ArtisanCloud/go-libs v1.1.4 h1:bnYGifU+xVqyqrAZIEjjPYcsOsMEs4S5wBaZuWRcRHs=
-github.com/ArtisanCloud/go-libs v1.1.4/go.mod h1:4pGEskMX4BA2w2cJdjL4+jcGHRLdx6Bj+evOqXo23iU=
-github.com/ArtisanCloud/go-socialite v1.0.8 h1:eugkAA9SvXxltUw5wBZP1RWBva80jAHO4MykWRevCPg=
-github.com/ArtisanCloud/go-socialite v1.0.8/go.mod h1:dtDCF49NdzsKEd+nKm6ytv5cVaAfM3O8Hl7fml4K+E4=
+github.com/ArtisanCloud/go-libs v1.1.5 h1:yESm+lNPD97JRwUKSeY0ZwNUe0mVtHgZhaHyy7lYKzY=
+github.com/ArtisanCloud/go-libs v1.1.5/go.mod h1:4pGEskMX4BA2w2cJdjL4+jcGHRLdx6Bj+evOqXo23iU=
+github.com/ArtisanCloud/go-socialite v1.0.9 h1:GEE0zjxMhmnXYG8j8ljvWzgX/jNtvvTQLflGnbLNDAc=
+github.com/ArtisanCloud/go-socialite v1.0.9/go.mod h1:dtDCF49NdzsKEd+nKm6ytv5cVaAfM3O8Hl7fml4K+E4=
 github.com/cespare/xxhash/v2 v2.1.1 h1:6MnRN8NT7+YBpUIWxHtefFZOKTAPgGjpQSxqLNn0+qY=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

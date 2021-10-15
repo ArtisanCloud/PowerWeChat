@@ -4,7 +4,6 @@ import (
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/decorators"
-	"net/http"
 )
 
 type EchoStrHandler struct {
@@ -21,9 +20,9 @@ func NewEchoStrHandler(app *kernel.ApplicationInterface) *EchoStrHandler {
 	return handler
 }
 
-func (handler *EchoStrHandler) Handle(payload interface{}) interface{} {
+func (handler *EchoStrHandler) Handle(header contract.EventInterface, content interface{}) interface{} {
 
-	request := (*handler.App).GetComponent("ExternalRequest").(*http.Request)
+	request := (*handler.App).GetExternalRequest()
 	if request == nil {
 		println("request is invalid")
 		return nil
