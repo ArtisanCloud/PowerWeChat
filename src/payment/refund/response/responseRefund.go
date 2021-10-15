@@ -1,9 +1,5 @@
 package response
 
-import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-)
-
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
 
 type ResponseRefund struct {
@@ -17,6 +13,33 @@ type ResponseRefund struct {
 	CreateTime          string         `json:"create_time"`
 	Status              string         `json:"status"`
 	FundsAccount        string         `json:"funds_account"`
-	Amount              *power.HashMap `json:"amount"`
-	PromotionDetail     *power.HashMap `json:"promotion_detail"`
+	Amount              *RefundAmount  `json:"amount"`
+	PromotionDetail     []*RefundPromotionDetail `json:"promotion_detail,omitempty"`
+}
+
+
+type RefundAmount struct {
+	Refund int `json:"refund"`
+	From   []struct {
+		Account string `json:"account"`
+		Amount  int    `json:"amount"`
+	} `json:"from"`
+	Total    int    `json:"total"`
+	Currency string `json:"currency"`
+}
+
+type RefundPromotionDetail struct {
+	PromotionId  string `json:"promotion_id"`
+	Scope        string `json:"scope"`
+	Type         string `json:"type"`
+	Amount       int    `json:"amount"`
+	RefundAmount int    `json:"refund_amount"`
+	GoodsDetail  struct {
+		MerchantGoodsId  string `json:"merchant_goods_id"`
+		WechatPayGoodsId string `json:"wechatpay_goods_id"`
+		GoodsName        string `json:"goods_name"`
+		UnitPrice        int    `json:"unit_price"`
+		RefundAmount     int    `json:"refund_amount"`
+		RefundQuantity   int    `json:"refund_quantity"`
+	} `json:"goods_detail"`
 }
