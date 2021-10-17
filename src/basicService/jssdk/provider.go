@@ -6,6 +6,7 @@ import (
 
 func RegisterProvider(app *kernel.ApplicationPaymentInterface) *Client {
 
-	return NewClient(app)
+	//return NewClient(app)
+	return nil
 
 }

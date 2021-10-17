@@ -6,7 +6,6 @@ import (
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/http/request"
-	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
@@ -19,14 +18,7 @@ import (
 )
 
 type BaseClient struct {
-	*request.HttpRequest
-	*response.HttpResponse
-
-	ExternalRequest *http2.Request
-
-	*support.ResponseCastable
-
-	Signer *support.SHA256WithRSASigner
+	kernel.BaseClient
 
 	App *ApplicationPaymentInterface
 }
@@ -35,11 +27,13 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 	config := (*app).GetContainer().GetConfig()
 
 	client := &BaseClient{
-		HttpRequest: request.NewHttpRequest(config),
-		Signer: &support.SHA256WithRSASigner{
-			MchID:               (*config)["mch_id"].(string),
-			CertificateSerialNo: (*config)["serial_no"].(string),
-			PrivateKeyPath:      (*config)["key_path"].(string),
+		BaseClient: kernel.BaseClient{
+			HttpRequest: request.NewHttpRequest(config),
+			Signer: &support.SHA256WithRSASigner{
+				MchID:               (*config)["mch_id"].(string),
+				CertificateSerialNo: (*config)["serial_no"].(string),
+				PrivateKeyPath:      (*config)["key_path"].(string),
+			},
 		},
 		App: app,
 	}
