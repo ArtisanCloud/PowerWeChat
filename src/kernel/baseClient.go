@@ -21,6 +21,8 @@ type BaseClient struct {
 
 	ExternalRequest *http2.Request
 
+	Signer *support.SHA256WithRSASigner
+
 	App   *ApplicationInterface
 	Token *AccessToken
 }

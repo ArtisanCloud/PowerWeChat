@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
 	"net/url"
 	"time"
 )
@@ -15,7 +15,7 @@ type Client struct {
 	*jssdk.Client
 }
 
-func NewClient(app *kernel.ApplicationPaymentInterface) *Client {
+func NewClient(app *kernel2.ApplicationInterface) *Client {
 	return &Client{
 		jssdk.NewClient(app),
 	}
