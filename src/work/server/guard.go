@@ -60,27 +60,39 @@ func (guard *Guard) OverrideToCallbackType() {
 
 		// msg type is message
 		case models.CALLBACK_MSG_TYPE_TEXT:
-			decryptMessage = models2.MessageText{}
+			decryptMsg := models2.MessageText{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
 			break
 
 		case models.CALLBACK_MSG_TYPE_IMAGE:
-			decryptMessage = models2.MessageImage{}
+			decryptMsg := models2.MessageImage{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
 			break
 
 		case models.CALLBACK_MSG_TYPE_VOICE:
-			decryptMessage = models2.MessageVoice{}
+			decryptMsg := models2.MessageVoice{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
 			break
 
 		case models.CALLBACK_MSG_TYPE_VIDEO:
-			decryptMessage = models2.MessageVideo{}
+			decryptMsg := models2.MessageVideo{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
 			break
 
 		case models.CALLBACK_MSG_TYPE_LOCATION:
-			decryptMessage = models2.MessageLocation{}
+			decryptMsg := models2.MessageLocation{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
 			break
 
 		case models.CALLBACK_MSG_TYPE_LINK:
-			decryptMessage = models2.MessageLink{}
+			decryptMsg := models2.MessageLink{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
 			break
 
 		// msg type is event
@@ -92,7 +104,6 @@ func (guard *Guard) OverrideToCallbackType() {
 			return nil, errors.New("not found wechat msg type")
 		}
 
-		err = xml.Unmarshal(buf, &decryptMessage)
 
 		return decryptMessage, err
 	}
@@ -111,71 +122,105 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 
 	// events
 	case models2.CALLBACK_EVENT_SUBSCRIBE:
-		decryptMessage = &models2.EventSubscribe{}
+		decryptMsg := &models2.EventSubscribe{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_ENTER_AGENT:
-		decryptMessage = &models2.EventEnterAgent{}
+		decryptMsg := &models2.EventEnterAgent{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_LOCATION:
-		decryptMessage = &models2.EventLocation{}
+		decryptMsg := &models2.EventLocation{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_BATCH_JOB_RESULT:
-		decryptMessage = &models2.EventBatchJobResult{}
+		decryptMsg := &models2.EventBatchJobResult{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_CLICK:
-		decryptMessage = &models2.EventClick{}
+		decryptMsg := &models2.EventClick{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_VIEW:
-		decryptMessage = &models2.EventView{}
+		decryptMsg := &models2.EventView{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_SCANCODE_PUSH:
-		decryptMessage = &models2.EventScanCodePush{}
+		decryptMsg := &models2.EventScanCodePush{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_SCANCODE_WAITMSG:
-		decryptMessage = &models2.EventScancodeWaitMsg{}
+		decryptMsg := &models2.EventScancodeWaitMsg{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_PIC_SYSPHOTO:
-		decryptMessage = &models2.EventPicSysPhoto{}
+		decryptMsg := &models2.EventPicSysPhoto{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_PIC_PHOTO_OR_ALBUM:
-		decryptMessage = &models2.EventPicPhotoOrAlbum{}
+		decryptMsg := &models2.EventPicPhotoOrAlbum{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_PIC_WEIXIN:
-		decryptMessage = &models2.EventPicWeixin{}
+		decryptMsg := &models2.EventPicWeixin{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_LOCATION_SELECT:
-		decryptMessage = &models2.EventLocationSelect{}
+		decryptMsg := &models2.EventLocationSelect{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_OPEN_APPROVAL_CHANGE:
-		decryptMessage = &models2.EventOpenApprovalChange{}
+		decryptMsg := &models2.EventOpenApprovalChange{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_SHARE_AGENT_CHANGE:
-		decryptMessage = &models2.EventShareAgentChange{}
+		decryptMsg := &models2.EventShareAgentChange{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT:
-		decryptMessage = &models2.EventTemplateCardMenuEvent{}
+		decryptMsg := &models2.EventTemplateCardMenuEvent{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_LIVING_STATUS_CHANGE:
-		decryptMessage = &models2.EventLivingStatusChange{}
+		decryptMsg := &models2.EventLivingStatusChange{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_MSGAUDIT_NOTIFY:
-		decryptMessage = &models2.EventMsgAuditNotify{}
+		decryptMsg := &models2.EventMsgAuditNotify{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	default:
@@ -192,40 +237,52 @@ func (guard *Guard) toCallbackEventChangeType(callbackHeader contract.EventInter
 
 	// change type is for user event
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_CREATE_USER:
-		decryptMessage = &models2.EventUserCreate{}
+		decryptMsg := &models2.EventUserCreate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_USER:
-		decryptMessage = &models2.EventUserUpdate{}
+		decryptMsg := &models2.EventUserUpdate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_DELETE_USER:
-		decryptMessage = &models2.EventUserDelete{}
+		decryptMsg := &models2.EventUserDelete{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	// change type is for party event
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_CREATE_PARTY:
-		decryptMessage = &models2.EventPartyCreate{}
+		decryptMsg := &models2.EventPartyCreate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_PARTY:
-		decryptMessage = &models2.EventPartyUpdate{}
+		decryptMsg := &models2.EventPartyUpdate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_DELETE_PARTY:
-		decryptMessage = &models2.EventPartyDelete{}
+		decryptMsg := &models2.EventPartyDelete{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	// change type is for tag event
 	case models2.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_TAG:
-		decryptMessage = &models2.EventTagUpdate{}
+		decryptMsg := &models2.EventTagUpdate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
 		break
 
 	default:
 		return nil, errors.New("not found wechat event")
 	}
-
-	err = xml.Unmarshal(buf, decryptMessage)
 
 	return decryptMessage, err
 }
