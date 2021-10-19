@@ -1,7 +1,7 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/go-libs/fmt"
+	"github.com/ArtisanCloud/PowerLibs/fmt"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	request2 "github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/contactWay/request"
 	"testing"

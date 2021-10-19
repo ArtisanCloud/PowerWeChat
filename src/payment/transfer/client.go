@@ -6,7 +6,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/transfer/response"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 )
 
 type Client struct {

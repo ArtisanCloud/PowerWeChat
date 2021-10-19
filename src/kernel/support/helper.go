@@ -3,7 +3,7 @@ package support
 import (
 	"context"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"time"
 )
 

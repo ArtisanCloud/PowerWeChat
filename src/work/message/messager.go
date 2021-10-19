@@ -2,7 +2,7 @@ package message
 
 import (
 	"errors"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"

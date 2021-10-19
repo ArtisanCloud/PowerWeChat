@@ -1,8 +1,8 @@
 package customerServiceMessage
 
 import (
-	response3 "github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
+	response3 "github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"

@@ -1,9 +1,9 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/media"
+	"github.com/ArtisanCloud/PowerLibs/fmt"
+	"github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/media"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 	"image/jpeg"
 	"io/ioutil"

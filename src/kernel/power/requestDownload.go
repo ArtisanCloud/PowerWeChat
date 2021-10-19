@@ -1,5 +1,5 @@
 package power
 
-import "github.com/ArtisanCloud/go-libs/http/response"
+import "github.com/ArtisanCloud/PowerLibs/http/response"
 
 type RequestDownload response.RequestDownload

@@ -2,7 +2,7 @@ package messages
 
 import (
 	"encoding/json"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 

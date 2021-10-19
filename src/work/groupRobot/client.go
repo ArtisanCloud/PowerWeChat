@@ -1,7 +1,7 @@
 package groupRobot
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/groupRobot/request"

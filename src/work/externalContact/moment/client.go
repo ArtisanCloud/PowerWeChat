@@ -1,7 +1,7 @@
 package moment
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment/response"

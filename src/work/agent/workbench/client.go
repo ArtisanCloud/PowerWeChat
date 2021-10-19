@@ -2,7 +2,7 @@ package workbench
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/agent/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/agent/response"
