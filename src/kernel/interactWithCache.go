@@ -1,7 +1,7 @@
 package kernel
 
 import (
-	"github.com/ArtisanCloud/go-libs/cache"
+	"github.com/ArtisanCloud/PowerLibs/cache"
 	"time"
 )
 

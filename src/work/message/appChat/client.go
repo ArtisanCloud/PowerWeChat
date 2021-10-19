@@ -1,12 +1,12 @@
 package appChat
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/message/appChat/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/message/appChat/response"
 )
 
 type Client struct {

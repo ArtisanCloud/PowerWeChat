@@ -1,12 +1,12 @@
 package accountService
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/customer"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/message"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/serviceState"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/servicer"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/tag"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/customer"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/message"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/serviceState"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/servicer"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/tag"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (

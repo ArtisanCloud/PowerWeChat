@@ -2,12 +2,12 @@ package kernel
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/http/contract"
-	"github.com/ArtisanCloud/go-libs/http/request"
-	"github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"github.com/ArtisanCloud/PowerLibs/http/contract"
+	"github.com/ArtisanCloud/PowerLibs/http/request"
+	"github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
 	"github.com/google/uuid"
 	http2 "net/http"
 	"time"
@@ -20,6 +20,8 @@ type BaseClient struct {
 	*support.ResponseCastable
 
 	ExternalRequest *http2.Request
+
+	Signer *support.SHA256WithRSASigner
 
 	App   *ApplicationInterface
 	Token *AccessToken

@@ -3,8 +3,8 @@ package oauth
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"strings"
 )
 

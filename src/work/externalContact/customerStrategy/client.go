@@ -1,11 +1,11 @@
 package customerStrategy
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/customerStrategy/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/customerStrategy/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/customerStrategy/response"
 )
 
 type Client struct {

@@ -2,7 +2,7 @@ package power
 
 import (
 	"encoding/json"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 )
 
 type StringMap object.StringMap

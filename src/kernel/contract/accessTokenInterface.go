@@ -1,8 +1,8 @@
 package contract
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"net/http"
 )
 

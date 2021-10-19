@@ -6,12 +6,12 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -128,9 +128,12 @@ func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbac
 	if request == nil {
 		return nil, nil, nil, errors.New("request is invalid")
 	}
-	b, err := io.ReadAll(request.Body)
-	if err != nil || b == nil {
-		return nil, nil, nil, err
+	var b []byte = []byte("<xml></xml>")
+	if request.Body != http.NoBody {
+		b, err = io.ReadAll(request.Body)
+		if err != nil || b == nil {
+			return nil, nil, nil, err
+		}
 	}
 
 	callback, err = serverGuard.parseMessage(string(b))
@@ -154,8 +157,12 @@ func (serverGuard *ServerGuard) resolve() (httpRS *response.HttpResponse, err er
 
 	var rs *http.Response
 	if serverGuard.ShouldReturnRawResponse() {
+		resultRS := ""
+		if (*result)["response"] != nil {
+			resultRS = (*result)["response"].(string)
+		}
 		rs = &http.Response{
-			Body: ioutil.NopCloser(bytes.NewBufferString((*result)["response"].(string))),
+			Body: ioutil.NopCloser(bytes.NewBufferString(resultRS)),
 		}
 
 	} else {
@@ -223,16 +230,22 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 		return nil, err
 	}
 
-	var messageType = "text"
-	if msgHeader.MsgType != "" {
-		messageType = msgHeader.MsgType
-	}
+	fromUserName := ""
+	toUserName := ""
 
+	var messageType = "text"
+	if msgHeader != nil {
+		if msgHeader.MsgType != "" {
+			messageType = msgHeader.MsgType
+			fromUserName = msgHeader.FromUserName
+			toUserName = msgHeader.ToUserName
+		}
+	}
 	response := serverGuard.Dispatch(MESSAGE_TYPE_MAPPING[messageType], msgHeader, decryptedMessage)
 
 	return &object.HashMap{
-		"to":       msgHeader.FromUserName,
-		"from":     msgHeader.ToUserName,
+		"to":       fromUserName,
+		"from":     toUserName,
 		"response": response,
 	}, nil
 }

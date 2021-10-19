@@ -1,10 +1,10 @@
 package bill
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/payment/bill/response"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/bill/response"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 )
 
 type Client struct {

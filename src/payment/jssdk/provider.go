@@ -1,10 +1,8 @@
 package jssdk
 
-import (
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-)
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel"
 
-func RegisterProvider(app kernel.ApplicationPaymentInterface) *Client {
+func RegisterProvider(app kernel.ApplicationInterface) *Client {
 
 	return NewClient(&app)
 

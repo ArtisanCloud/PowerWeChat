@@ -2,12 +2,12 @@ package operation
 
 import (
 	"fmt"
-	response3 "github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/operation/response"
-	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	response3 "github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/operation/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 	"net/http"
 )
 

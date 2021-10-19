@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/user/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/user/request"
 )
 
 type ResponseTagList struct {

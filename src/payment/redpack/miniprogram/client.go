@@ -1,10 +1,9 @@
 package redpack
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"net/http"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerLibs/object"
 )
 
 type Client struct {
@@ -22,7 +21,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
 	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
 		clientIP = (*params)["client_ip"].(string)

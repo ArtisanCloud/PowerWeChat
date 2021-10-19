@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 )
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml

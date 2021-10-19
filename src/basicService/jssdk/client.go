@@ -5,9 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
-	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"net/http"
 	"sort"
 	"strings"
@@ -17,19 +16,19 @@ import (
 type Client struct {
 	*kernel.BaseClient
 
-	*kernel2.InteractsWithCache
+	*kernel.InteractsWithCache
 
-	ticketEndpoint string
+	TicketEndpoint string
 	url            string
 }
 
-func NewClient(app *kernel.ApplicationPaymentInterface) *Client {
+func NewClient(app *kernel.ApplicationInterface) *Client {
 	client := &Client{
-		BaseClient:         kernel.NewBaseClient(app),
-		InteractsWithCache: &kernel2.InteractsWithCache{},
+		BaseClient:         kernel.NewBaseClient(app,nil),
+		InteractsWithCache: &kernel.InteractsWithCache{},
 	}
 
-	client.ticketEndpoint = "https://api.weixin.qq.com/cgi-bin/ticket/getticket"
+	client.TicketEndpoint = "https://api.weixin.qq.com/cgi-bin/ticket/getticket"
 
 	return client
 }
@@ -67,7 +66,7 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 		return ticket.(*object.HashMap), err
 	}
 
-	rs, err := comp.RequestRaw(comp.ticketEndpoint, nil, "GET", &object.HashMap{
+	rs, err := comp.RequestRaw(comp.TicketEndpoint, "GET", &object.HashMap{
 		"query": &object.HashMap{
 			"type": ticketType,
 		}}, nil, nil)
@@ -147,7 +146,7 @@ func (comp *Client) GetUrl() string {
 		return comp.url
 	}
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	return externalRequest.URL.String()
 }
 

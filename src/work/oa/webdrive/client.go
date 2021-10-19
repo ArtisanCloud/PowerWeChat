@@ -1,10 +1,10 @@
 package webdrive
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/oa/webdrive/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/oa/webdrive/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/webdrive/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/webdrive/response"
 )
 
 type Client struct {

@@ -1,10 +1,10 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/message/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/accountService/message/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/message/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/message/response"
 )
 
 type Client struct {

@@ -4,14 +4,13 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/go-libs/http/request"
-	"github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/support"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/fmt"
+	"github.com/ArtisanCloud/PowerLibs/http/request"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"io"
 	"log"
 	http2 "net/http"
@@ -19,14 +18,7 @@ import (
 )
 
 type BaseClient struct {
-	*request.HttpRequest
-	*response.HttpResponse
-
-	ExternalRequest *http2.Request
-
-	*support.ResponseCastable
-
-	Signer *support.SHA256WithRSASigner
+	kernel.BaseClient
 
 	App *ApplicationPaymentInterface
 }
@@ -35,11 +27,13 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 	config := (*app).GetContainer().GetConfig()
 
 	client := &BaseClient{
-		HttpRequest: request.NewHttpRequest(config),
-		Signer: &support.SHA256WithRSASigner{
-			MchID:               (*config)["mch_id"].(string),
-			CertificateSerialNo: (*config)["serial_no"].(string),
-			PrivateKeyPath:      (*config)["key_path"].(string),
+		BaseClient: kernel.BaseClient{
+			HttpRequest: request.NewHttpRequest(config),
+			Signer: &support.SHA256WithRSASigner{
+				MchID:               (*config)["mch_id"].(string),
+				CertificateSerialNo: (*config)["serial_no"].(string),
+				PrivateKeyPath:      (*config)["key_path"].(string),
+			},
 		},
 		App: app,
 	}
@@ -212,14 +206,16 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	config := (*client.App).GetConfig()
 
+	options:= object.MergeHashMap(&object.HashMap{
+		"cert":    config.GetString("cert_path", ""),
+		"ssl_key": config.GetString("key_path", ""),
+	},option)
+
 	return client.Request(
 		url,
 		params,
 		method,
-		&object.HashMap{
-			"cert":    config.GetString("cert_path", ""),
-			"ssl_key": config.GetString("key_path", ""),
-		},
+		options,
 		false,
 		outHeader,
 		outBody,

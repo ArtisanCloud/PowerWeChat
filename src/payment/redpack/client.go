@@ -1,10 +1,9 @@
 package redpack
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"net/http"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/request"
+	"github.com/ArtisanCloud/PowerLibs/object"
 )
 
 type Client struct {
@@ -29,73 +28,71 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	result, err := comp.SafeRequest(endpoint, params, "POST", nil, false, nil)
+	result, err := comp.SafeRequest(endpoint, params, "POST", nil, nil, nil)
 
 	return result, err
 }
 
 // Send Miniprogram Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
-func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendMiniProgramNormal(params *request.SendMiniProgramHB) (interface{}, error) {
 	config := (*comp.App).GetConfig()
-
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
-	clientIP := externalRequest.Host
-	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
-		clientIP = (*params)["client_ip"].(string)
+	if params.TotalNum <= 0 {
+		params.TotalNum = 1
 	}
-	base := &object.HashMap{
-		"total_num": 1,
-		"client_ip": clientIP,
-		"wxappid":   config.GetString("app_id", ""),
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendNormal(params *request.SendRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
-	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
-		clientIP = (*params)["client_ip"].(string)
+	if params.ClientIp != "" {
+		params.ClientIp = clientIP
 	}
-	base := &object.HashMap{
-		"total_num": 1,
-		"client_ip": clientIP,
-		"wxappid":   config.GetString("app_id", ""),
+	if params.TotalNum <= 0 {
+		params.TotalNum = 1
+	}
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
 
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
-func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendGroup(params *request.SendGroupRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	base := &object.HashMap{
-		"amt_type": "ALL_RAND",
-		"wxappid":  config.GetString("app_id", ""),
-	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	if params.AmtType =="" {
+		params.AmtType = "ALL_RAND"
+	}
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
+	}
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -103,17 +100,17 @@ func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
 
 // Send Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90275
-func (comp *Client) SendWorkWX(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendWorkWX(params *request.SendWorkWXRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	base := &object.HashMap{
-		"wxappid":  config.GetString("app_id", ""),
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -121,17 +118,17 @@ func (comp *Client) SendWorkWX(params *power.HashMap) (interface{}, error) {
 
 // Query Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90276
-func (comp *Client) QueryWorkWX(params *power.HashMap) (interface{}, error) {
+func (comp *Client) QueryWorkWX(params *request.QueryWorkRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	base := &object.HashMap{
-		"wxappid":  config.GetString("app_id", ""),
+	if params.Appid != "" {
+		params.Appid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }

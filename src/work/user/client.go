@@ -3,12 +3,12 @@ package user
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	response3 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/user/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	response3 "github.com/ArtisanCloud/PowerWeChat/src/work/user/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/user/response"
 )
 
 type Client struct {
