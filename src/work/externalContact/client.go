@@ -1,8 +1,8 @@
 package externalContact
 
 import (
+	"github.com/ArtisanCloud/PowerSocialite/src/response/weCom"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-socialite/src/response/weCom"
 	"github.com/ArtisanCloud/power-wechat/src/kernel"
 	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
 	response3 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"

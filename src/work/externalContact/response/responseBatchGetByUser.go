@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-socialite/src/models"
+	"github.com/ArtisanCloud/PowerSocialite/src/models"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
 )
 

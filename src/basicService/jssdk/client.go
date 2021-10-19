@@ -146,7 +146,7 @@ func (comp *Client) GetUrl() string {
 		return comp.url
 	}
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	return externalRequest.URL.String()
 }
 

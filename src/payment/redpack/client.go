@@ -4,7 +4,6 @@ import (
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"net/http"
 )
 
 type Client struct {
@@ -39,7 +38,7 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
 	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
 		clientIP = (*params)["client_ip"].(string)
@@ -63,7 +62,7 @@ func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, e
 func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
 	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
 		clientIP = (*params)["client_ip"].(string)
