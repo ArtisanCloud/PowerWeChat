@@ -1,7 +1,6 @@
 package redpack
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/request"
 	"github.com/ArtisanCloud/go-libs/object"
@@ -36,21 +35,16 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 
 // Send Miniprogram Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
-func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendMiniProgramNormal(params *request.SendMiniProgramHB) (interface{}, error) {
 	config := (*comp.App).GetConfig()
-
-	externalRequest := (*comp.App).GetExternalRequest()
-	clientIP := externalRequest.Host
-	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
-		clientIP = (*params)["client_ip"].(string)
+	if params.TotalNum <= 0 {
+		params.TotalNum = 1
 	}
-	base := &object.HashMap{
-		"total_num": 1,
-		"client_ip": clientIP,
-		"wxappid":   config.GetString("app_id", ""),
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
@@ -85,15 +79,17 @@ func (comp *Client) SendNormal(params *request.SendRedPack) (interface{}, error)
 
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
-func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendGroup(params *request.SendGroupRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	base := &object.HashMap{
-		"amt_type": "ALL_RAND",
-		"wxappid":  config.GetString("app_id", ""),
-	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	if params.AmtType =="" {
+		params.AmtType = "ALL_RAND"
+	}
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
+	}
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
@@ -104,14 +100,14 @@ func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
 
 // Send Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90275
-func (comp *Client) SendWorkWX(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendWorkWX(params *request.SendWorkWXRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	base := &object.HashMap{
-		"wxappid":  config.GetString("app_id", ""),
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
@@ -122,14 +118,14 @@ func (comp *Client) SendWorkWX(params *power.HashMap) (interface{}, error) {
 
 // Query Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90276
-func (comp *Client) QueryWorkWX(params *power.HashMap) (interface{}, error) {
+func (comp *Client) QueryWorkWX(params *request.QueryWorkRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	base := &object.HashMap{
-		"wxappid":  config.GetString("app_id", ""),
+	if params.Appid != "" {
+		params.Appid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
