@@ -3,8 +3,8 @@ package payment
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"

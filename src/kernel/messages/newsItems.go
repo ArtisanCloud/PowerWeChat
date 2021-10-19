@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 )
 
 type NewsItem struct {

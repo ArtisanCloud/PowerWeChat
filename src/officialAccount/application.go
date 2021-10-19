@@ -1,7 +1,7 @@
 package officialAccount
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"

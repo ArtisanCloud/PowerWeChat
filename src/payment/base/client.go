@@ -1,7 +1,7 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 )

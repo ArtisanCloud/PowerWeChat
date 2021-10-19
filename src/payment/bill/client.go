@@ -1,7 +1,7 @@
 package bill
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/bill/response"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"

@@ -2,7 +2,7 @@ package uniformMessage
 
 import (
 	"errors"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/uniformMessage/request"

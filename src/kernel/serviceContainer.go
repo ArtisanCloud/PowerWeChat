@@ -1,7 +1,7 @@
 package kernel
 
 import (
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"net/http"
 )
 

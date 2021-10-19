@@ -3,7 +3,7 @@ package messageTemplate
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/messageTemplate/request"

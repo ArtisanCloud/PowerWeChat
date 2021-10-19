@@ -3,8 +3,8 @@ package order
 import (
 	"errors"
 	"fmt"
-	response2 "github.com/ArtisanCloud/go-libs/http/response"
-	"github.com/ArtisanCloud/go-libs/object"
+	response2 "github.com/ArtisanCloud/PowerLibs/http/response"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/order/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/order/response"

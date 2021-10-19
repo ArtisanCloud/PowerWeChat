@@ -2,7 +2,7 @@ package refund
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/refund/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/refund/response"

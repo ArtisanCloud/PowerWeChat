@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/json"
 	"fmt"
-	"github.com/ArtisanCloud/go-libs/object"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/jssdk"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"net/url"
