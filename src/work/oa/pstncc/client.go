@@ -2,8 +2,8 @@ package pstncc
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/work/oa/pstncc/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/pstncc/response"
 )
 
 type Client struct {

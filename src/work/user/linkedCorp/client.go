@@ -2,8 +2,8 @@ package linkedCorp
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/work/user/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/user/response"
 )
 
 type Client struct {

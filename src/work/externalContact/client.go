@@ -3,11 +3,11 @@ package externalContact
 import (
 	"github.com/ArtisanCloud/PowerSocialite/src/response/weCom"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
-	response3 "github.com/ArtisanCloud/powerwechat/src/work/externalContact/groupChat/response"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/request"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	response3 "github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupChat/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/response"
 	"strconv"
 )
 

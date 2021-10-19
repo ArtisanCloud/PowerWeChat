@@ -3,10 +3,10 @@ package transfer
 import (
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/transfer/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/payment/transfer/response"
 )
 
 type Client struct {

@@ -2,10 +2,10 @@ package schedule
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
-	"github.com/ArtisanCloud/powerwechat/src/work/oa/schedule/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/schedule/response"
 )
 
 type Client struct {

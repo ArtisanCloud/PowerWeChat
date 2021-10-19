@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"net/http"
 	"sort"
 	"strings"

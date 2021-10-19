@@ -2,8 +2,8 @@ package auth
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/miniProgram/auth/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/auth/response"
 )
 
 type Client struct {

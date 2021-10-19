@@ -2,8 +2,8 @@ package shortLink
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/miniProgram/shortLink/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/shortLink/response"
 )
 
 type Client struct {

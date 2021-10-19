@@ -2,8 +2,8 @@ package reverse
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/payment/reverse/response"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/reverse/response"
 )
 
 type Client struct {

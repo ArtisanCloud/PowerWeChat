@@ -1,7 +1,7 @@
 package corpgroup
 
 import (
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {

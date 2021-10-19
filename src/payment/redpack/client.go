@@ -1,12 +1,10 @@
 package redpack
 
 import (
-	"encoding/xml"
-	"fmt"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/request"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/payment/redpack/request"
 )
 
 type Client struct {
@@ -31,7 +29,7 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	result, err := comp.SafeRequest(endpoint, params, "POST", nil, false, nil)
+	result, err := comp.SafeRequest(endpoint, params, "POST", nil, nil, nil)
 
 	return result, err
 }
@@ -77,21 +75,12 @@ func (comp *Client) SendNormal(params *request.SendRedPack) (interface{}, error)
 		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	fmt.Println(params)
+	options, err:= object.StructToHashMap(params)
 
-	//
-	xmlOptionsBytes, err := xml.Marshal(params)
-	if err != nil {
-		return nil, err
-	}
+	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
-	//options := string(xmlOptionsBytes)
-	fmt.Println(string(xmlOptionsBytes))
-
-	//endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	//result, err := comp.SafeRequest(endpoint, nil, "POST", params, nil, nil)
-
-	return nil, nil
+	return result, err
 }
 
 // Send Group redpack.
@@ -107,7 +96,7 @@ func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -125,7 +114,7 @@ func (comp *Client) SendWorkWX(params *power.HashMap) (interface{}, error) {
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -143,7 +132,7 @@ func (comp *Client) QueryWorkWX(params *power.HashMap) (interface{}, error) {
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }

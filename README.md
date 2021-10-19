@@ -1,7 +1,7 @@
 # PowerWeChat SDK 介绍
 
-[![Go Build](https://github.com/ArtisanCloud/powerwechat/actions/workflows/go-build.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/powerwechat/actions/workflows/go-build.yml) 
-[![Go Test](https://github.com/ArtisanCloud/powerwechat/actions/workflows/go-test.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/powerwechat/actions/workflows/go-test.yml)
+[![Go Build](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml) 
+[![Go Test](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml/badge.svg?branch=release%2F1.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml)
 
 
 ## 产品介绍
@@ -12,14 +12,14 @@ PowerWechat是一款全覆盖微信开发接口，基于Golang的开源项目。
 ## 快速上手
 
 ```bash
-go get -u github.com/ArtisanCloud/powerwechat
+go get -u github.com/ArtisanCloud/PowerWeChat
 ```
 <br>
 
 示范：初始化实例对象，调用小程序的授权登陆接口
 ```go
 import (
-  "github.com/ArtisanCloud/powerwechat/src/miniProgram"
+  "github.com/ArtisanCloud/PowerWeChat/src/miniProgram"
   "os"
 )
 
@@ -50,7 +50,7 @@ printf(rs.UnionID)
 
 ## 产品概述
 ### 核心产品
-[PowerWeChat SDK](https://github.com/ArtisanCloud/powerwechat) ：是核心的SDK产品，安装后即可开箱即用。
+[PowerWeChat SDK](https://github.com/ArtisanCloud/PowerWeChat) ：是核心的SDK产品，安装后即可开箱即用。
 在github上，长期维护的开源项目，可以提Issue在讨论版块。也可以在ArtisanCloud官网上，扫企业微信讨论群，方便用户提问，给宝贵的意见。
 
 
@@ -65,7 +65,7 @@ printf(rs.UnionID)
 
 
 
-[PowerWeChat Tutorial](https://github.com/ArtisanCloud/powerwechat-tutorial) ：独立的golang项目，提供完整的web接口，让开发者方便调试PowerWeChat 接口实例
+[PowerWeChat Tutorial](https://github.com/ArtisanCloud/PowerWeChat-tutorial) ：独立的golang项目，提供完整的web接口，让开发者方便调试PowerWeChat 接口实例
 
 
 PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境，或者多个应用，可以使用这个配置中心来方便切换账号（此应用暂时内部使用，如需体验，可以联系我们）
@@ -102,8 +102,8 @@ PowerWeChat 配置中心客户端/SAAS：如果您有多个微信的开发环境
 
 
 ## Github开源代码
-### [SDK源代码](https://github.com/ArtisanCloud/powerwechat)
-### [SDK调试项目](https://github.com/ArtisanCloud/powerwechat-tutorial)
+### [SDK源代码](https://github.com/ArtisanCloud/PowerWeChat)
+### [SDK调试项目](https://github.com/ArtisanCloud/PowerWeChat-tutorial)
 
 
 ## 视频教程

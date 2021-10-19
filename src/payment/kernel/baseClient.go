@@ -4,13 +4,13 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
 	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/support"
 	"io"
 	"log"
 	http2 "net/http"
@@ -206,14 +206,16 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	config := (*client.App).GetConfig()
 
+	options:= object.MergeHashMap(&object.HashMap{
+		"cert":    config.GetString("cert_path", ""),
+		"ssl_key": config.GetString("key_path", ""),
+	},option)
+
 	return client.Request(
 		url,
 		params,
 		method,
-		&object.HashMap{
-			"cert":    config.GetString("cert_path", ""),
-			"ssl_key": config.GetString("key_path", ""),
-		},
+		options,
 		false,
 		outHeader,
 		outBody,

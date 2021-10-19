@@ -3,10 +3,10 @@ package message
 import (
 	"errors"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/contract"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/messages"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	"github.com/ArtisanCloud/powerwechat/src/work/message/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/message/response"
 	"reflect"
 	"strings"
 )

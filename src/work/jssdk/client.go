@@ -1,8 +1,8 @@
 package jssdk
 
 import (
-	"github.com/ArtisanCloud/powerwechat/src/basicService/jssdk"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/jssdk"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 )
 
 type Client struct {

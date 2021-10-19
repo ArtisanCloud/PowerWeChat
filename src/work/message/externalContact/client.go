@@ -1,9 +1,9 @@
 package externalContact
 
 import (
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	"github.com/ArtisanCloud/powerwechat/src/work/message/externalContact/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/message/externalContact/response"
 )
 
 type Client struct {

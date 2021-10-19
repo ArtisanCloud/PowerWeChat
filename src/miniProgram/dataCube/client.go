@@ -2,9 +2,9 @@ package dataCube
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	"github.com/ArtisanCloud/powerwechat/src/miniProgram/dataCube/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/dataCube/response"
 )
 
 type Client struct {

@@ -3,9 +3,9 @@ package menu
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/work/menu/request"
-	"github.com/ArtisanCloud/powerwechat/src/work/menu/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/menu/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/menu/response"
 )
 
 type Client struct {

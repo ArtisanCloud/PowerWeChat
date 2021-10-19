@@ -2,7 +2,7 @@ package contract
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"net/http"
 )
 

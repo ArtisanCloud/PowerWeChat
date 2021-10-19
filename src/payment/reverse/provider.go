@@ -1,7 +1,7 @@
 package reverse
 
 import (
-	"github.com/ArtisanCloud/powerwechat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationPaymentInterface) *Client {

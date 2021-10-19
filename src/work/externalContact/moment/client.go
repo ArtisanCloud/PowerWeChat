@@ -2,9 +2,9 @@ package moment
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/moment/request"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/moment/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment/response"
 )
 
 type Client struct {

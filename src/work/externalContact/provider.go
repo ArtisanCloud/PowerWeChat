@@ -1,18 +1,18 @@
 package externalContact
 
 import (
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/contactWay"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/customerStrategy"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/groupChat"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/groupWelcomeTemplate"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/messageTemplate"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/moment"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/momentStrategy"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/school"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/statistics"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/tag"
-	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/transfer"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/contactWay"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/customerStrategy"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupChat"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupWelcomeTemplate"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/messageTemplate"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/momentStrategy"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/school"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/statistics"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/tag"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/transfer"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (

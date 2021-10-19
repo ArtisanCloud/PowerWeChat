@@ -2,10 +2,10 @@ package accountService
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
-	"github.com/ArtisanCloud/powerwechat/src/work/accountService/request"
-	"github.com/ArtisanCloud/powerwechat/src/work/accountService/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/response"
 )
 
 type Client struct {

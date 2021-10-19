@@ -3,7 +3,7 @@ package messages
 import (
 	"encoding/json"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Raw struct {

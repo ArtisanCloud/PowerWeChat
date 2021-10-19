@@ -2,10 +2,10 @@ package immediateDelivery
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/response"
-	response2 "github.com/ArtisanCloud/powerwechat/src/miniProgram/immediateDelivery/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/miniProgram/immediateDelivery/response"
 )
 
 type Client struct {

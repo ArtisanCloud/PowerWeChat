@@ -8,8 +8,8 @@ import (
 	"github.com/ArtisanCloud/go-libs/http/request"
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/contract"
-	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"net/http"
 	"time"
 )

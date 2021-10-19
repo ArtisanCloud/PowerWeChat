@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/ArtisanCloud/powerwechat/src/kernel/contract"
-	"github.com/ArtisanCloud/powerwechat/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
 )
 
 const CALLBACK_EVENT_CHANGE_TYPE_UPDATE_TAG   = "update_tag"

@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/powerwechat/src/kernel/power"
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 
 type RequestMomentStrategyEdit struct {
 	StrategyID   int64            `json:"strategy_id"`
