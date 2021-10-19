@@ -1,7 +1,7 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationPaymentInterface) *Client {

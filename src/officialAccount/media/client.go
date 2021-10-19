@@ -3,10 +3,10 @@ package media
 import (
 	"github.com/ArtisanCloud/go-libs/http/contract"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/officialAccount/media/response"
-	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 )
 
 type Client struct {

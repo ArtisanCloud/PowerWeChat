@@ -3,10 +3,10 @@ package server
 import (
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
-	models2 "github.com/ArtisanCloud/power-wechat/src/work/server/handlers/models"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
+	models2 "github.com/ArtisanCloud/PowerWeChat/src/work/server/handlers/models"
 )
 
 type Guard struct {

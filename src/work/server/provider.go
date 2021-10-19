@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
-	"github.com/ArtisanCloud/power-wechat/src/work/server/handlers"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/server/handlers"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (*kernel.Encryptor, *Guard) {

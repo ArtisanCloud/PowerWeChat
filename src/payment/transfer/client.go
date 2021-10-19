@@ -3,11 +3,10 @@ package transfer
 import (
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/transfer/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/transfer/response"
-	"net/http"
 )
 
 type Client struct {
@@ -46,7 +45,7 @@ func (comp *Client) ToBalance(params *power.HashMap) (interface{}, error) {
 
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	if (*params)["spbill_create_ip"] == nil || (*params)["spbill_create_ip"].(string) != "" {
 		(*params)["spbill_create_ip"] = externalRequest.Host
 	}

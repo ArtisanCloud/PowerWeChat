@@ -1,9 +1,9 @@
 package promotion
 
 import (
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
 )
 
 type Client struct {

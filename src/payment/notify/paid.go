@@ -3,9 +3,9 @@ package notify
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/models"
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/notify/request"
 	"net/http"
 )
 

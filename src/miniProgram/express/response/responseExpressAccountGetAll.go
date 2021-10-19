@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 )
 
 type ResponseExpressAccountGetAll struct {

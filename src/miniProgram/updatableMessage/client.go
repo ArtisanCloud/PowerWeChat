@@ -2,10 +2,10 @@ package updatableMessage
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/updatableMessage/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/updatableMessage/response"
 )
 
 type Client struct {

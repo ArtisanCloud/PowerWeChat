@@ -2,10 +2,10 @@ package material
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/officialAccount/media/material/request"
-	"github.com/ArtisanCloud/power-wechat/src/officialAccount/media/material/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media/material/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media/material/response"
 )
 
 type Client struct {

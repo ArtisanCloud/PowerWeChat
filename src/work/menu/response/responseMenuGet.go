@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/menu/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/menu/request"
 )
 
 type ResponseMenuGet struct {

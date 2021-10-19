@@ -1,10 +1,10 @@
 package redpack
 
 import (
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/request"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"net/http"
 )
 
 type Client struct {
@@ -29,7 +29,7 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	result, err := comp.SafeRequest(endpoint, params, "POST", nil, false, nil)
+	result, err := comp.SafeRequest(endpoint, params, "POST", nil, nil, nil)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
 	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
 		clientIP = (*params)["client_ip"].(string)
@@ -53,31 +53,32 @@ func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, e
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendNormal(params *request.SendRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
-	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
-		clientIP = (*params)["client_ip"].(string)
+	if params.ClientIp != "" {
+		params.ClientIp = clientIP
 	}
-	base := &object.HashMap{
-		"total_num": 1,
-		"client_ip": clientIP,
-		"wxappid":   config.GetString("app_id", ""),
+	if params.TotalNum <= 0 {
+		params.TotalNum = 1
+	}
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -95,7 +96,7 @@ func (comp *Client) SendGroup(params *power.HashMap) (interface{}, error) {
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -113,7 +114,7 @@ func (comp *Client) SendWorkWX(params *power.HashMap) (interface{}, error) {
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
@@ -131,7 +132,7 @@ func (comp *Client) QueryWorkWX(params *power.HashMap) (interface{}, error) {
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }

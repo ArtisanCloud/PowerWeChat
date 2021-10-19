@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/go-socialite/src/models"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerSocialite/src/models"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 )
 
 type ResponseBatchGetByUser struct {

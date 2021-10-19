@@ -3,9 +3,9 @@ package ocr
 import (
 	"errors"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/ocr/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/ocr/response"
 )
 
 type Client struct {

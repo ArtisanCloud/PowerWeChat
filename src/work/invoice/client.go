@@ -2,10 +2,10 @@ package invoice
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/invoice/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/invoice/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/invoice/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/invoice/response"
 )
 
 type Client struct {

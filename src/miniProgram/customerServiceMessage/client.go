@@ -3,11 +3,11 @@ package customerServiceMessage
 import (
 	response3 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/customerServiceMessage/response"
-	response4 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage/response"
+	response4 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 	"net/http"
 )
 

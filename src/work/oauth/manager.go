@@ -2,8 +2,8 @@ package oauth
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/go-socialite/src/providers"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/PowerSocialite/src/providers"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"net/http"
 )
 

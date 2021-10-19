@@ -2,9 +2,9 @@ package groupChat
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/groupChat/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupChat/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupChat/response"
 )
 
 type Client struct {

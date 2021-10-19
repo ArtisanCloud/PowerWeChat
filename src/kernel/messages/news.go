@@ -2,7 +2,7 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type News struct {

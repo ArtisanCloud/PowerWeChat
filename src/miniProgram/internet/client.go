@@ -2,8 +2,8 @@ package internet
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 )
 
 type Client struct {

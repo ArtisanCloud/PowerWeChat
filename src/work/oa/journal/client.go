@@ -3,9 +3,9 @@ package journal
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/work/oa/journal/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/journal/response"
 )
 
 type Client struct {

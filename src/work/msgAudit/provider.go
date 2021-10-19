@@ -1,7 +1,7 @@
 package msgaudit
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {

@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"net/http"
 	"sort"
 	"strings"
@@ -146,7 +146,7 @@ func (comp *Client) GetUrl() string {
 		return comp.url
 	}
 
-	externalRequest := (*comp.App).GetComponent("ExternalRequest").(*http.Request)
+	externalRequest := (*comp.App).GetExternalRequest()
 	return externalRequest.URL.String()
 }
 

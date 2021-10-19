@@ -1,8 +1,8 @@
 package jssdk
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/jssdk"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {
