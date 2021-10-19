@@ -1,9 +1,12 @@
 package redpack
 
 import (
+	"encoding/xml"
+	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
 	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
 	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/power-wechat/src/payment/redpack/request"
 )
 
 type Client struct {
@@ -52,33 +55,43 @@ func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, e
 	options := object.MergeHashMap(base, params.ToHashMap())
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
 
 	return result, err
 }
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendNormal(params *request.SendRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
 	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
-	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
-		clientIP = (*params)["client_ip"].(string)
+	if params.ClientIp != "" {
+		params.ClientIp = clientIP
 	}
-	base := &object.HashMap{
-		"total_num": 1,
-		"client_ip": clientIP,
-		"wxappid":   config.GetString("app_id", ""),
+	if params.TotalNum <= 0 {
+		params.TotalNum = 1
+	}
+	if params.Wxappid != "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	fmt.Println(params)
 
-	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
+	//
+	xmlOptionsBytes, err := xml.Marshal(params)
+	if err != nil {
+		return nil, err
+	}
 
-	return result, err
+	//options := string(xmlOptionsBytes)
+	fmt.Println(string(xmlOptionsBytes))
+
+	//endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
+	//result, err := comp.SafeRequest(endpoint, nil, "POST", params, nil, nil)
+
+	return nil, nil
 }
 
 // Send Group redpack.
