@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/transfer/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/payment/transfer/response"
 )
 
 type Client struct {

@@ -3,9 +3,9 @@ package refund
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/refund/request"
-	"github.com/ArtisanCloud/power-wechat/src/payment/refund/response"
+	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/payment/refund/request"
+	"github.com/ArtisanCloud/powerwechat/src/payment/refund/response"
 )
 
 type Client struct {

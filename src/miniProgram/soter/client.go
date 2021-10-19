@@ -2,8 +2,8 @@ package soter
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/soter/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/miniProgram/soter/response"
 )
 
 type Client struct {

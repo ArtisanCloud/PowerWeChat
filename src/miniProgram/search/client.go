@@ -2,10 +2,10 @@ package search
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/search/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/powerwechat/src/miniProgram/search/response"
 )
 
 type Client struct {

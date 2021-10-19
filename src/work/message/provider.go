@@ -1,10 +1,10 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/appChat"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/externalContact"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/linkedCorp"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/work/message/appChat"
+	"github.com/ArtisanCloud/powerwechat/src/work/message/externalContact"
+	"github.com/ArtisanCloud/powerwechat/src/work/message/linkedCorp"
 	"reflect"
 )
 

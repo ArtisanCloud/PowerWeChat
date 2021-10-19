@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/power-wechat/src/kernel/power"
+import "github.com/ArtisanCloud/powerwechat/src/kernel/power"
 
 type WeAppTemplateMsg struct {
 	TemplateID      string         `json:"template_id"`

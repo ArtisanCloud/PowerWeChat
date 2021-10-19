@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/power-wechat/src/kernel/response"
+import "github.com/ArtisanCloud/powerwechat/src/kernel/response"
 
 type ResponseGetList struct {
 	*response.ResponseWork

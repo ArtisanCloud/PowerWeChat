@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/decorators"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/contract"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/decorators"
 )
 
 type EchoStrHandler struct {

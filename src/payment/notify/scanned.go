@@ -3,8 +3,8 @@ package notify
 import (
 	"github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/notify/request"
+	"github.com/ArtisanCloud/powerwechat/src/payment/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/payment/notify/request"
 	"net/http"
 	"reflect"
 )

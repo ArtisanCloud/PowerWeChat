@@ -2,11 +2,11 @@ package officialAccount
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/providers"
-	"github.com/ArtisanCloud/power-wechat/src/officialAccount/auth"
-	"github.com/ArtisanCloud/power-wechat/src/officialAccount/base"
-	"github.com/ArtisanCloud/power-wechat/src/officialAccount/media"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/providers"
+	"github.com/ArtisanCloud/powerwechat/src/officialAccount/auth"
+	"github.com/ArtisanCloud/powerwechat/src/officialAccount/base"
+	"github.com/ArtisanCloud/powerwechat/src/officialAccount/media"
 	"net/http"
 )
 

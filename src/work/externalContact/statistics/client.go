@@ -1,9 +1,9 @@
 package statistics
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/statistics/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/statistics/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/statistics/response"
 )
 
 type Client struct {

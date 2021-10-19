@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram"
-	"github.com/ArtisanCloud/power-wechat/src/payment"
-	"github.com/ArtisanCloud/power-wechat/src/work"
+	"github.com/ArtisanCloud/powerwechat/src/miniProgram"
+	"github.com/ArtisanCloud/powerwechat/src/payment"
+	"github.com/ArtisanCloud/powerwechat/src/work"
 	"os"
 	"strconv"
 )

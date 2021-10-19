@@ -1,8 +1,8 @@
 package agent
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/agent/workbench"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/work/agent/workbench"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client, *workbench.Client) {

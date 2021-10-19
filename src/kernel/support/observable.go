@@ -1,9 +1,9 @@
 package support
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/decorators"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/contract"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/decorators"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/messages"
 	"reflect"
 )
 

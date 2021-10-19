@@ -2,9 +2,9 @@ package transfer
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/transfer/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/transfer/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/transfer/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/transfer/response"
 )
 
 type Client struct {

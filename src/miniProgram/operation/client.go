@@ -4,10 +4,10 @@ import (
 	"fmt"
 	response3 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/operation/response"
-	response2 "github.com/ArtisanCloud/power-wechat/src/work/media/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	"github.com/ArtisanCloud/powerwechat/src/miniProgram/operation/response"
+	response2 "github.com/ArtisanCloud/powerwechat/src/work/media/response"
 	"net/http"
 )
 

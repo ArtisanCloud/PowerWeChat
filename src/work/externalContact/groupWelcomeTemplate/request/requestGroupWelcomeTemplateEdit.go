@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/power-wechat/src/work/externalContact/messageTemplate/request"
+import "github.com/ArtisanCloud/powerwechat/src/work/externalContact/messageTemplate/request"
 
 type RequestGroupWelcomeTemplateEdit struct {
 	TemplateID  string                 `json:"template_id"`

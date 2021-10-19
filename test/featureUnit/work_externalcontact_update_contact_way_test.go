@@ -2,8 +2,8 @@ package featureUnit
 
 import (
 	"github.com/ArtisanCloud/go-libs/fmt"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	request2 "github.com/ArtisanCloud/power-wechat/src/work/externalContact/contactWay/request"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	request2 "github.com/ArtisanCloud/powerwechat/src/work/externalContact/contactWay/request"
 	"testing"
 )
 

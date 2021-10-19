@@ -2,10 +2,10 @@ package agent
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	"github.com/ArtisanCloud/power-wechat/src/work/agent/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/agent/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	"github.com/ArtisanCloud/powerwechat/src/work/agent/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/agent/response"
 )
 
 type Client struct {

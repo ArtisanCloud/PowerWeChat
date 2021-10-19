@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/agent/request"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/powerwechat/src/work/agent/request"
 )
 
 type ResponseAgentGetWorkbenchTemplate struct {

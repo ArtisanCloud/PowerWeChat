@@ -2,9 +2,9 @@ package plugin
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/miniProgram/plugin/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/powerwechat/src/miniProgram/plugin/response"
 )
 
 type Client struct {

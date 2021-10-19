@@ -1,4 +1,4 @@
-module github.com/ArtisanCloud/power-wechat
+module github.com/ArtisanCloud/powerwechat
 
 go 1.16
 

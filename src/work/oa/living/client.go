@@ -2,10 +2,10 @@ package living
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/oa/living/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/oa/living/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/powerwechat/src/work/oa/living/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/oa/living/response"
 )
 
 type Client struct {

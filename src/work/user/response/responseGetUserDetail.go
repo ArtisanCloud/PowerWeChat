@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	response2 "github.com/ArtisanCloud/power-wechat/src/work/user/request"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	response2 "github.com/ArtisanCloud/powerwechat/src/work/user/request"
 )
 
 type ResponseGetUserDetail struct {

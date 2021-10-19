@@ -3,9 +3,9 @@ package profitSharing
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/profitSharing/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/payment/profitSharing/response"
 )
 
 type Client struct {

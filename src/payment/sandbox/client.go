@@ -4,8 +4,8 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"errors"
-	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	kernel2 "github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/payment/kernel"
 	"time"
 )
 

@@ -1,12 +1,12 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/messages"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/message/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/messages"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/powerwechat/src/work/message/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/message/response"
 )
 
 type Client struct {

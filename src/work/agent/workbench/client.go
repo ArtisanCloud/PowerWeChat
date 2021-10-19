@@ -3,9 +3,9 @@ package workbench
 import (
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/work/agent/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/agent/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/work/agent/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/agent/response"
 )
 
 type Client struct {

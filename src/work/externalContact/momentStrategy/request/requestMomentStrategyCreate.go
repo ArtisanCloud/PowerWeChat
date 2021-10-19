@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/power-wechat/src/kernel/power"
+import "github.com/ArtisanCloud/powerwechat/src/kernel/power"
 
 type RequestMomentStrategyCreate struct {
 	ParentID     int              `json:"parent_id"`

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/basicService/jssdk"
-	kernel2 "github.com/ArtisanCloud/power-wechat/src/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/basicService/jssdk"
+	kernel2 "github.com/ArtisanCloud/powerwechat/src/kernel"
 	"net/url"
 	"time"
 )

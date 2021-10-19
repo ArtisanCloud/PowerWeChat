@@ -2,8 +2,8 @@ package work
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
+	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
 )
 
 type Client struct {

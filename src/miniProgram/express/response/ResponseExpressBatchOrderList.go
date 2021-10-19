@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/power-wechat/src/kernel/power"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/power"
 )
 
 type ResponseExpressBatchOrderList struct {

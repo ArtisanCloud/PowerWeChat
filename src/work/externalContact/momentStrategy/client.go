@@ -2,10 +2,10 @@ package momentStrategy
 
 import (
 	"github.com/ArtisanCloud/go-libs/object"
-	"github.com/ArtisanCloud/power-wechat/src/kernel"
-	response2 "github.com/ArtisanCloud/power-wechat/src/kernel/response"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/momentStrategy/request"
-	"github.com/ArtisanCloud/power-wechat/src/work/externalContact/momentStrategy/response"
+	"github.com/ArtisanCloud/powerwechat/src/kernel"
+	response2 "github.com/ArtisanCloud/powerwechat/src/kernel/response"
+	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/momentStrategy/request"
+	"github.com/ArtisanCloud/powerwechat/src/work/externalContact/momentStrategy/response"
 )
 
 type Client struct {

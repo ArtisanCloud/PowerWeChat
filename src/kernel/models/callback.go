@@ -2,7 +2,7 @@ package models
 
 import (
 	"encoding/xml"
-	"github.com/ArtisanCloud/power-wechat/src/kernel/contract"
+	"github.com/ArtisanCloud/powerwechat/src/kernel/contract"
 )
 
 type Callback struct {

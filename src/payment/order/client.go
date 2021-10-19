@@ -5,9 +5,9 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/go-libs/http/response"
 	"github.com/ArtisanCloud/go-libs/object"
-	payment "github.com/ArtisanCloud/power-wechat/src/payment/kernel"
-	"github.com/ArtisanCloud/power-wechat/src/payment/order/request"
-	"github.com/ArtisanCloud/power-wechat/src/payment/order/response"
+	payment "github.com/ArtisanCloud/powerwechat/src/payment/kernel"
+	"github.com/ArtisanCloud/powerwechat/src/payment/order/request"
+	"github.com/ArtisanCloud/powerwechat/src/payment/order/response"
 	"net/http"
 )
 
