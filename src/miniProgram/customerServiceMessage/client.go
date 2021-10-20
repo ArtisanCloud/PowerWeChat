@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage/response"
 	response4 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 	"net/http"
@@ -37,20 +38,33 @@ func (comp *Client) GetTempMedia(mediaID string) (*http.Response, error) {
 
 // 发送客服消息给用户
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
-func (comp *Client) Send(toUser string, msgType string, text *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) Send(toUser string, msgType string, msg interface{}) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
 	data := &object.HashMap{
 		"touser":  toUser,
 		"msgtype": msgType,
-		"text":    text,
+		msgType:   msg,
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/message/custom/send", data, nil, nil, result)
 
 	return result, err
 }
+func (comp *Client) SendText(toUser string, msg *request.CustomerServiceMsgText) (*response2.ResponseMiniProgram, error) {
+	return comp.Send(toUser, "text", msg)
+}
+func (comp *Client) SendImage(toUser string, msg *request.CustomerServiceMsgImage) (*response2.ResponseMiniProgram, error) {
+	return comp.Send(toUser, "image", msg)
+}
+func (comp *Client) SendLink(toUser string, msg *request.CustomerServiceMsgLink) (*response2.ResponseMiniProgram, error) {
+	return comp.Send(toUser, "link", msg)
+}
+func (comp *Client) SendMiniProgramPage(toUser string, msg *request.CustomerServiceMsgMpPage) (*response2.ResponseMiniProgram, error) {
+	return comp.Send(toUser, "miniprogrampage", msg)
+}
+
 
 // 下发客服当前输入状态给用户
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.setTyping.html
@@ -84,7 +98,7 @@ func (comp *Client) UploadTempMedia(mediaType string, path string, form *power.H
 	var formData *object.HashMap
 	if form != nil {
 		formData = &object.HashMap{
-			"name": (*form)["name"],
+			"name":  (*form)["name"],
 			"value": (*form)["value"],
 		}
 	}
