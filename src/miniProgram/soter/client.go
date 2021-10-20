@@ -1,8 +1,8 @@
 package soter
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/soter/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/soter/response"
 )
 
@@ -12,17 +12,11 @@ type Client struct {
 
 // SOTER 生物认证秘钥签名验证
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/soter/soter.verifySignature.html
-func (comp *Client) VerifySignature(openID string, jsonString string, jsonSignature string) (*response.ResponseSoterVerifySignature, error) {
+func (comp *Client) VerifySignature(options *request.RequestSoter) (*response.ResponseSoterVerifySignature, error) {
 
 	result := &response.ResponseSoterVerifySignature{}
 
-	data := &object.HashMap{
-		"openid":         openID,
-		"json_string":    jsonString,
-		"json_signature": jsonSignature,
-	}
-
-	_, err := comp.HttpPostJson("cgi-bin/soter/verify_signature", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/soter/verify_signature", options, nil, nil, result)
 
 	return result, err
 }

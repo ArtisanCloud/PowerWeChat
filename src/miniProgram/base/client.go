@@ -3,6 +3,7 @@ package base
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base/response"
 )
 
@@ -11,17 +12,11 @@ type Client struct {
 }
 
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
-func (comp *Client) GetPaidUnionID(openID string, option *object.StringMap) (*response.ResponseAuthGetPaidUnionID, error) {
+func (comp *Client) GetPaidUnionID(options *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
 
 	result := &response.ResponseAuthGetPaidUnionID{}
 
-	params := &object.StringMap{
-		"openid": openID,
-	}
-
-	params = object.MergeStringMap(params, option)
-
-	_, err := comp.HttpGet("wxa/getpaidunionid", params, nil, result)
+	_, err := comp.HttpGet("wxa/getpaidunionid", options, nil, result)
 
 	return result, err
 }
