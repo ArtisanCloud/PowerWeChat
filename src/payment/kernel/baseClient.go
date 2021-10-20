@@ -4,13 +4,13 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/fmt"
+	"github.com/ArtisanCloud/PowerLibs/http/request"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
-	fmt2 "github.com/ArtisanCloud/PowerLibs/fmt"
-	"github.com/ArtisanCloud/PowerLibs/http/request"
-	"github.com/ArtisanCloud/PowerLibs/object"
 	"io"
 	"log"
 	http2 "net/http"
@@ -104,6 +104,42 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 		}
 		rs.Body = returnResponse.GetBody()
 		result, _ := client.CastResponseToType(&rs, response2.TYPE_RAW)
+		return result, nil
+	}
+
+}
+
+func (client *BaseClient) RequestV2(endpoint string, params *object.StringMap, method string, option *object.StringMap,
+	returnRaw bool, outHeader interface{}, outBody interface{},
+) (response interface{}, err error) {
+
+	config := (*client.App).GetConfig()
+
+	options, err := client.AuthSignRequestV2(config, endpoint, method, params, option)
+	if err != nil {
+		return nil, err
+	}
+	fmt2.Dump(options)
+	return nil,nil
+
+	// to be setup middleware here
+	//client.PushMiddleware(client.logMiddleware(), "access_token")
+
+	// http client request
+	returnResponse, err := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	if err != nil {
+		return nil, err
+	}
+
+	if returnRaw {
+		return returnResponse, nil
+	} else {
+		var rs http2.Response = http2.Response{
+			StatusCode: 200,
+			Header:     nil,
+		}
+		rs.Body = returnResponse.GetBody()
+		result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
 		return result, nil
 	}
 
@@ -203,15 +239,19 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 	return result.(*object.HashMap), err
 }
 
-func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	config := (*client.App).GetConfig()
 
-	options:= object.MergeHashMap(&object.HashMap{
+	strMapOptions, err := object.StructToStringMap(option)
+	if err != nil {
+		return nil, err
+	}
+	options := object.MergeStringMap(&object.StringMap{
 		"cert":    config.GetString("cert_path", ""),
 		"ssl_key": config.GetString("key_path", ""),
-	},option)
+	}, strMapOptions)
 
-	return client.Request(
+	return client.RequestV2(
 		url,
 		params,
 		method,
@@ -221,6 +261,7 @@ func (client *BaseClient) SafeRequest(url string, params *object.StringMap, meth
 		outBody,
 	)
 }
+
 func (client *BaseClient) Wrap(endpoint string) string {
 	if (*client.App).InSandbox() {
 		return "sandboxnew/" + endpoint
@@ -280,6 +321,29 @@ func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string
 		"body": signBody,
 	}, options)
 
+	return options, err
+}
+
+func (client *BaseClient) AuthSignRequestV2(config *kernel.Config, endpoint string, method string, params *object.StringMap, strMapOptions *object.StringMap) (*object.HashMap, error) {
+
+	var err error
+
+	powerOptions, _ := power.StringMapToPower(strMapOptions)
+	(*strMapOptions)["sign"] = support.GenerateSignHmacSHA256(powerOptions, config.GetString("key", ""))
+
+
+	// check need sign body or not
+	var signBody = ""
+	if "get" != object.Lower(method) {
+		signBody = object.StringMap2Xml(strMapOptions)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	options := &object.HashMap{
+		"body": signBody,
+	}
 	return options, err
 }
 

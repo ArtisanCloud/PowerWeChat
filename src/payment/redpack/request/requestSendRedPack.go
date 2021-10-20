@@ -2,7 +2,7 @@ package request
 
 import "encoding/xml"
 
-type SendRedPack struct {
+type RequestSendRedPack struct {
 	XMLName     xml.Name `xml:"xml"`
 	Text        string   `xml:",chardata"`
 	Sign        string   `xml:"sign"`

@@ -1,9 +1,9 @@
 package redpack
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerLibs/object"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/request"
 )
 
 type Client struct {
@@ -18,21 +18,17 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // Send Miniprogram Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
-func (comp *Client) SendMiniProgramNormal(params *power.HashMap) (interface{}, error) {
+func (comp *Client) SendMiniProgramNormal(params *request.RequestSendMiniProgramNormal) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
-	externalRequest := (*comp.App).GetExternalRequest()
-	clientIP := externalRequest.Host
-	if (*params)["client_ip"] != nil && (*params)["client_ip"].(string) != "" {
-		clientIP = (*params)["client_ip"].(string)
+	if params.TotalNum <= 0 {
+		params.TotalNum = 1
 	}
-	base := &object.HashMap{
-		"total_num": 1,
-		"client_ip": clientIP,
-		"wxappid":   config.GetString("app_id", ""),
+	if params.Wxappid == "" {
+		params.Wxappid = config.GetString("app_id", "")
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
+	options, err:= object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
 	result, err := comp.SafeRequest(endpoint, nil, "POST", options, false, nil)
