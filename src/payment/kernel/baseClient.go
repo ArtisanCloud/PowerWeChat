@@ -245,11 +245,6 @@ func (client *BaseClient) SafeRequest(url string, params *object.StringMap, meth
 		return nil, err
 	}
 
-	//options := object.MergeStringMap(&object.StringMap{
-	//	"cert":    config.GetString("cert_path", ""),
-	//	"ssl_key": config.GetString("key_path", ""),
-	//}, strMapOptions)
-
 	return client.RequestV2(
 		url,
 		params,

@@ -37,7 +37,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 
 	token := &AccessToken{
 		App:         app,
-		HttpRequest: request.NewHttpRequest(config),
+		HttpRequest: request.NewHttpRequest(config, "",""),
 
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
