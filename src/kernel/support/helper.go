@@ -12,7 +12,10 @@ import (
 
 func PaymentV2ParamsJoin(params *power.StringMap, key string) string {
 	var arr []string
-	for k, _ := range *params {
+	for k, v := range *params {
+		if v == "" {
+			continue
+		}
 		arr = append(arr, k)
 	}
 	sort.Strings(arr)

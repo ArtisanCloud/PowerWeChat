@@ -119,8 +119,6 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.StringMap, m
 	if err != nil {
 		return nil, err
 	}
-	fmt2.Dump(options)
-	return nil,nil
 
 	// to be setup middleware here
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
@@ -240,22 +238,23 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 }
 
 func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
-	config := (*client.App).GetConfig()
+	//config := (*client.App).GetConfig()
 
 	strMapOptions, err := object.StructToStringMap(option)
 	if err != nil {
 		return nil, err
 	}
-	options := object.MergeStringMap(&object.StringMap{
-		"cert":    config.GetString("cert_path", ""),
-		"ssl_key": config.GetString("key_path", ""),
-	}, strMapOptions)
+
+	//options := object.MergeStringMap(&object.StringMap{
+	//	"cert":    config.GetString("cert_path", ""),
+	//	"ssl_key": config.GetString("key_path", ""),
+	//}, strMapOptions)
 
 	return client.RequestV2(
 		url,
 		params,
 		method,
-		options,
+		strMapOptions,
 		false,
 		outHeader,
 		outBody,
@@ -329,16 +328,13 @@ func (client *BaseClient) AuthSignRequestV2(config *kernel.Config, endpoint stri
 	var err error
 
 	powerOptions, _ := power.StringMapToPower(strMapOptions)
+	fmt2.Dump(config.GetString("key", ""))
 	(*strMapOptions)["sign"] = support.GenerateSignHmacSHA256(powerOptions, config.GetString("key", ""))
-
 
 	// check need sign body or not
 	var signBody = ""
 	if "get" != object.Lower(method) {
 		signBody = object.StringMap2Xml(strMapOptions)
-		if err != nil {
-			return nil, err
-		}
 	}
 
 	options := &object.HashMap{

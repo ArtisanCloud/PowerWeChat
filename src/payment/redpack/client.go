@@ -44,11 +44,15 @@ func (comp *Client) SendNormal(params *request.RequestSendRedPack) (interface{},
 	if params.ClientIp == "" {
 		params.ClientIp = clientIP
 	}
-	if params.TotalNum <= 0 {
-		params.TotalNum = 1
+	if params.TotalNum == "" {
+		params.TotalNum = "1"
 	}
 	if params.Wxappid == "" {
 		params.Wxappid = config.GetString("app_id", "")
+	}
+
+	if params.NonceStr == "" {
+		params.NonceStr = object.QuickRandom(10)
 	}
 
 	options, err:= object.StructToStringMap(params)
