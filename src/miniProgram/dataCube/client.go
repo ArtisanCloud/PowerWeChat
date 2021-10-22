@@ -3,7 +3,7 @@ package dataCube
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/dataCube/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/dataCube/response"
 )
 
@@ -24,7 +24,7 @@ func (comp *Client) GetDailySummary(from string, to string) (*response.ResponseD
 
 // 获取小程序启动性能，运行性能等数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/analysis.getPerformanceData.html
-func (comp *Client) GetPerformanceData(options *power.HashMap) (*response.ResponseDataCubeGetPerformanceData, error) {
+func (comp *Client) GetPerformanceData(options *request.RequestGetPerformanceData) (*response.ResponseDataCubeGetPerformanceData, error) {
 
 	result := &response.ResponseDataCubeGetPerformanceData{}
 
