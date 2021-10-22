@@ -324,7 +324,7 @@ func (client *BaseClient) AuthSignRequestV2(config *kernel.Config, endpoint stri
 
 	powerOptions, _ := power.StringMapToPower(strMapOptions)
 	fmt2.Dump(config.GetString("key", ""))
-	(*strMapOptions)["sign"] = support.GenerateSignHmacSHA256(powerOptions, config.GetString("key", ""))
+	(*strMapOptions)["sign"] = support.GenerateSignMD5(powerOptions, config.GetString("key", ""))
 
 	// check need sign body or not
 	var signBody = ""
