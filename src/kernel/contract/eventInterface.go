@@ -9,6 +9,7 @@ type EventInterface interface {
 	GetMsgType() string
 	GetEvent() string
 	GetChangeType() string
+	ReadMessage(msg interface{}) error
 }
 
 
