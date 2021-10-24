@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/subscribeMessage/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/subscribeMessage/response"
 )
 
@@ -99,19 +99,9 @@ func (comp *Client) GetTemplateList() (*response.ResponseSubscribeMessageGetTemp
 
 // 发送订阅消息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
-func (comp *Client) Send(toUser string, templateID string, page string,
-	miniprogramState string, lang string, msgData *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) Send(data *request.RequestSubscribeMessageSend) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
-
-	data := &object.HashMap{
-		"touser":            toUser,
-		"template_id":       templateID,
-		"page":              page,
-		"miniprogram_state": miniprogramState,
-		"lang":              lang,
-		"data":              msgData,
-	}
 
 	_, err := comp.HttpPostJson("cgi-bin/message/subscribe/send", data, nil, nil, result)
 

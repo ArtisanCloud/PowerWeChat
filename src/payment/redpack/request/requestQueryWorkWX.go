@@ -2,7 +2,7 @@ package request
 
 import "encoding/xml"
 
-type QueryWorkRedPack struct {
+type RequestQueryWorkWX struct {
 	XMLName   xml.Name `xml:"xml"`
 	Text      string   `xml:",chardata"`
 	NonceStr  string   `xml:"nonce_str"`
@@ -11,4 +11,3 @@ type QueryWorkRedPack struct {
 	MchID     string   `xml:"mch_id"`
 	Appid     string   `xml:"appid"`
 }
-

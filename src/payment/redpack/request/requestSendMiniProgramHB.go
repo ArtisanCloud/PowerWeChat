@@ -2,7 +2,7 @@ package request
 
 import "encoding/xml"
 
-type SendMiniProgramHB struct {
+type RequestSendMiniProgramHB struct {
 	XMLName     xml.Name `xml:"xml"`
 	Text        string   `xml:",chardata"`
 	ActName     string   `xml:"act_name"`

@@ -2,12 +2,9 @@ module github.com/ArtisanCloud/PowerWeChat
 
 go 1.16
 
-//replace github.com/ArtisanCloud/PowerLibs => ../PowerLibs
-//replace github.com/ArtisanCloud/PowerSocialite => ../PowerSocialite
-
 require (
-	github.com/ArtisanCloud/PowerLibs v1.1.6
-	github.com/ArtisanCloud/PowerSocialite v1.0.10
+	github.com/ArtisanCloud/PowerLibs v1.2.0
+	github.com/ArtisanCloud/PowerSocialite v1.2.0
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/validator/v10 v10.6.1 // indirect

@@ -3,8 +3,8 @@ package updatableMessage
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/updatableMessage/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/updatableMessage/response"
 )
 
@@ -30,17 +30,11 @@ func (comp *Client) CreateActivityID(unionID string, openID string) (*response.R
 
 // 修改被分享的动态消息。
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.setUpdatableMsg.html
-func (comp *Client) SetUpdatableMsg(activityID string, targetState int8, templateInfo *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SetUpdatableMsg(options *request.RequestSetUpdatableMsg) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
-	data := &object.HashMap{
-		"activity_id":   activityID,
-		"target_state":  targetState,
-		"template_info": templateInfo,
-	}
-
-	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/updatablemsg/send", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/updatablemsg/send", options, nil, nil, result)
 
 	return result, err
 }
