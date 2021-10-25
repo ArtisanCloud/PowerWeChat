@@ -33,6 +33,7 @@ type CallbackMessageHeader struct {
 	MsgType      string   `xml:"MsgType"`
 	Event        string   `xml:"Event"`
 	ChangeType   string   `xml:"ChangeType"`
+	Content []byte
 }
 
 func (header CallbackMessageHeader) GetToUserName() string {
@@ -57,4 +58,8 @@ func (header CallbackMessageHeader) GetEvent() string {
 
 func (header CallbackMessageHeader) GetChangeType() string {
 	return header.ChangeType
+}
+
+func (header CallbackMessageHeader) ReadMessage(msg interface{}) error{
+	return  xml.Unmarshal(header.Content, msg)
 }
