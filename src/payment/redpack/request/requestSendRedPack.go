@@ -4,9 +4,9 @@ type RequestSendRedPack struct {
 	Sign        string   `xml:"sign" json:"sign"`
 	MchBillno   string   `xml:"mch_billno" json:"mch_billno"`
 	MchID       string   `xml:"mch_id" json:"mch_id"`
-	Wxappid     string   `xml:"wxappid" json:"wxappid"`
+	WxappID     string   `xml:"wxappid" json:"wxappid"`
 	SendName    string   `xml:"send_name" json:"send_name"`
-	ReOpenid    string   `xml:"re_openid" json:"re_openid"`
+	ReOpenID    string   `xml:"re_openid" json:"re_openid"`
 	TotalAmount string   `xml:"total_amount" json:"total_amount"`
 	TotalNum    string   `xml:"total_num" json:"total_num"`
 	Wishing     string   `xml:"wishing" json:"wishing"`

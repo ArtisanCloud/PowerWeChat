@@ -48,8 +48,8 @@ func (comp *Client) SendNormal(params *request.RequestSendRedPack) (interface{},
 	if params.TotalNum == "" {
 		params.TotalNum = "1"
 	}
-	if params.Wxappid == "" {
-		params.Wxappid = config.GetString("app_id", "")
+	if params.WxappID == "" {
+		params.WxappID = config.GetString("app_id", "")
 	}
 
 	if params.NonceStr == "" {
