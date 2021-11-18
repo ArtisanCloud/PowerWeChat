@@ -40,7 +40,7 @@ func GetWorkConfig() *work.UserConfig {
 		},
 
 		OAuth: work.OAuth{
-			Callback: os.Getenv("oauth_callback"),
+			Callback: os.Getenv("app_oauth_callback_url"),
 			Scopes:   []string{},
 		},
 		//HttpDebug: true,

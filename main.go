@@ -11,11 +11,11 @@ import (
 )
 
 func GetWorkConfig() *work.UserConfig {
-	agentID, _ := strconv.Atoi(os.Getenv("agent_id"))
+	agentID, _ := strconv.Atoi(os.Getenv("wecom_agent_id"))
 	return &work.UserConfig{
 		CorpID:  os.Getenv("corp_id"),
 		AgentID: agentID,
-		Secret:  os.Getenv("secret"),
+		Secret:  os.Getenv("wecom_secret"),
 
 		ResponseType: os.Getenv("array"),
 		Log: work.Log{
@@ -24,15 +24,15 @@ func GetWorkConfig() *work.UserConfig {
 		},
 
 		OAuth: work.OAuth{
-			Callback: os.Getenv("oauth_callback"),
+			Callback: os.Getenv("app_oauth_callback_url"),
 			Scopes:   []string{},
 		},
 		//HttpDebug: true,
 		Debug: true,
 
 		// server config
-		Token:  os.Getenv("token"),
-		AESKey: os.Getenv("aes_key"),
+		Token:  os.Getenv("app_message_token"),
+		AESKey: os.Getenv("app_message_aes_key"),
 	}
 }
 
@@ -100,7 +100,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt2.Dump("wecom config:", wecomApp.GetConfig())
+	fmt2.Dump("wecom config:", wecomApp.GetConfig().All())
 
 	// init payment app
 	configPayment := GetPaymentConfig()
@@ -108,7 +108,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt2.Dump("payment config:", paymentApp.GetConfig())
+	fmt2.Dump("payment config:", paymentApp.GetConfig().All())
 
 	// init miniProgram app
 	configMiniProgram := GetMiniProgramConfig()
@@ -116,6 +116,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt2.Dump("miniprogram config:", miniProgramApp.GetConfig())
+	fmt2.Dump("miniprogram config:", miniProgramApp.GetConfig().All())
 
 }
