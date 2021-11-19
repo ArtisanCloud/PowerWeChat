@@ -3,10 +3,10 @@ package transfer
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/transfer/response"
 	"github.com/ArtisanCloud/PowerLibs/object"
+	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/transfer/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/transfer/response"
 )
 
 type Client struct {
@@ -38,28 +38,27 @@ func (comp *Client) QueryBalanceOrder(partnerTradeNo string) (interface{}, error
 
 // Send MerchantPay to balance.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
+func (comp *Client) ToBalance(params *request.RequestTransferToBalance) (interface{}, error) {
 
-func (comp *Client) ToBalance(params *power.HashMap) (interface{}, error) {
-
-	result := &response.ResponseTransfer{}
+	result := response.ResponseTransferToBalance{}
 
 	config := (*comp.App).GetConfig()
 
 	externalRequest := (*comp.App).GetExternalRequest()
-	if (*params)["spbill_create_ip"] == nil || (*params)["spbill_create_ip"].(string) != "" {
-		(*params)["spbill_create_ip"] = externalRequest.Host
+	if params.SpbillCreateIp == "" {
+		params.SpbillCreateIp = externalRequest.Host
 	}
 
-	base := &object.HashMap{
-		"mch_id":    nil,
+	options, err := object.StructToStringMap(params)
+	base := &object.StringMap{
+		//"mch_id":    "",
 		"mchid":     config.GetString("mch_id", ""),
 		"mch_appid": config.GetString("app_id", ""),
 	}
 
-	options := object.MergeHashMap(base, params.ToHashMap())
-
+	options = object.MergeStringMap(base, options)
 	endpoint := comp.Wrap("mmpaymkttransfers/promotion/transfers")
-	_, err := comp.Request(endpoint, nil, "POST", options, false, nil, result)
+	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, &result)
 
 	return result, err
 }

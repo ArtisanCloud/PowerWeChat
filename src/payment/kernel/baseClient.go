@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"crypto/sha1"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/fmt"
@@ -245,15 +246,26 @@ func (client *BaseClient) SafeRequest(url string, params *object.StringMap, meth
 		return nil, err
 	}
 
-	return client.RequestV2(
+	strOutBody := ""
+	// get xml string result from return raw as true
+	_, err = client.RequestV2(
 		url,
 		params,
 		method,
 		strMapOptions,
-		false,
+		true,
 		outHeader,
-		outBody,
+		&strOutBody,
 	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// get out result
+	err = xml.Unmarshal([]byte(strOutBody), outBody)
+
+	return outBody, err
 }
 
 func (client *BaseClient) Wrap(endpoint string) string {
