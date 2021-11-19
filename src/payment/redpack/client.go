@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/redpack/response"
 )
 
 type Client struct {
@@ -40,6 +41,8 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 func (comp *Client) SendNormal(params *request.RequestSendRedPack) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
+	result:=response.ResponseSendNormal{}
+
 	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
 	if params.ClientIp == "" {
@@ -59,7 +62,7 @@ func (comp *Client) SendNormal(params *request.RequestSendRedPack) (interface{},
 	options, err := object.StructToStringMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
+	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, &result)
 
 	return result, err
 }
