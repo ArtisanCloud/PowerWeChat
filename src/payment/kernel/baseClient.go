@@ -150,6 +150,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 	config := (*client.App).GetConfig()
 
+	// 签名访问的URL，请确保url后面不要跟参数，因为签名的参数，不包含?参数
 	options, err = client.AuthSignRequest(config, endpoint, method, params, options)
 	if err != nil {
 		return nil, err

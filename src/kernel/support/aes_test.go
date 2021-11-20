@@ -93,8 +93,8 @@ func TestDecryptAES256GCM(t *testing.T) {
 	ciphertext := "TdSY7TauzzJoVzvL3hven8NN/ENrjkhzBZXpCV/hEmRltFltHokAi/G52wGWHDvq63qjutx1BN9VKWPKICMpJQVuAQZ7ktx9YPIyOLL1UzfDkbcZBdMnBoEbR0m0/nbUrWjPLBYlDYzkAnLo1e3+4DXG86ewMCJZwbHmOp+ihlBWFgyh/1dvFatIM0BPI7dMjF4xg2Rtn2ibgeaZ/GE8Yjo5NHDws000uymScvOqHNcJPcNsv5IrJz2HmztxV2Hp+wjaWFAFvv1EHHJ+r4+YsFw45yR2jaehzERf1HB6MxUkouJMY5ZSnxTKNFMOnSAioBtGV1Wg2ZQomNo4i60vdR5ePoGQUNrgmTDelhBE58ihZu3uBtUMHkufyXo2NpIhd8pSw3lpLj5P5zkQn1UBYvB/92WBBAhl4/72BU+JdfVHpk+NOwHC3UFi6I3l1fxrT66dVHSVIFdbS32YFt5VvXrdwt0N186dtLg2/sw2SwAn+vsXSjyzIHgbxPpdSwISyUFLE1NrE3kkJUwH1extkclsWPhYNmz8fyBPD9vNegktszcH+Mgohl13MSGy3tcU0OjkcRDEX8Rhw+EaD2gc8lFdkrjqptrhDPXB/SzWzUVr9ycEVg=="
 	nonce := "LUgxtPpJynB6"
 	associatedData := "transaction"
-	apiV3Key := os.Getenv("API_V3_KEY")
-	//log.Println("apiV3Key: ", apiV3Key)
+	apiV3Key := os.Getenv("mch_api_v3_key")
+	log.Println("apiV3Key: ", apiV3Key)
 
 	if apiV3Key == "" {
 		panic(errors.New("API_V3_KEY not found from env"))
