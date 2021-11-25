@@ -134,7 +134,7 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	//-------------- Reverse --------------
 	app.Reverse = reverse.RegisterProvider(app)
 
-	//-------------- Reverse --------------
+	//-------------- ProfitSharing --------------
 	app.ProfitSharing = profitSharing.RegisterProvider(app)
 
 	return app, err

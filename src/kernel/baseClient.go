@@ -39,6 +39,15 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 		App:         app,
 		Token:       token,
 	}
+
+	if (*config)["mch_id"] != nil && (*config)["serial_no"] != nil && (*config)["key_path"] != nil {
+		client.Signer = &support.SHA256WithRSASigner{
+			MchID:               (*config)["mch_id"].(string),
+			CertificateSerialNo: (*config)["serial_no"].(string),
+			PrivateKeyPath:      (*config)["key_path"].(string),
+		}
+	}
+
 	return client
 
 }
