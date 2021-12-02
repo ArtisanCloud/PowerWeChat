@@ -1,6 +1,7 @@
 package officialAccount
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
@@ -28,8 +29,10 @@ type UserConfig struct {
 	ResponseType string
 	Log          Log
 	OAuth        OAuth
-	HttpDebug    bool
-	Debug        bool
+	Cache        cache.CacheInterface
+
+	HttpDebug bool
+	Debug     bool
 }
 
 type Log struct {
@@ -117,7 +120,6 @@ func (app *OfficialAccount) GetExternalRequest() (r *http.Request) {
 	return app.Base.ExternalRequest
 }
 
-
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
@@ -130,6 +132,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
+		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,
 		"debug":      userConfig.Debug,
 	}
@@ -137,4 +140,3 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	return config, nil
 
 }
-

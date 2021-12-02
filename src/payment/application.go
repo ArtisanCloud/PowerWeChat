@@ -3,6 +3,7 @@ package payment
 import (
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/http/response"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
@@ -60,6 +61,7 @@ type UserConfig struct {
 	OAuth        OAuth
 	Http         Http
 	NotifyURL    string
+	Cache        cache.CacheInterface
 	HttpDebug    bool
 	Debug        bool
 	Sandbox      bool
@@ -251,7 +253,6 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 
 }
 
-
 func (app *Payment) SetExternalRequest(r *http.Request) {
 	app.Base.ExternalRequest = r
 }
@@ -283,6 +284,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"oauth.callback": userConfig.OAuth.Callback,
 		"oauth.scopes":   userConfig.OAuth.Scopes,
 		"notify_url":     userConfig.NotifyURL,
+		"cache":          userConfig.Cache,
 		"http_debug":     userConfig.HttpDebug,
 		"debug":          userConfig.Debug,
 		"sandbox":        userConfig.Sandbox,
@@ -291,6 +293,3 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	return config, nil
 
 }
-
-
-

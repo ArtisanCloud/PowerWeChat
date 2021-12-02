@@ -2,8 +2,8 @@ module github.com/ArtisanCloud/PowerWeChat
 
 go 1.17
 
-//replace github.com/ArtisanCloud/PowerLibs => ../PowerLibs
-//replace github.com/ArtisanCloud/PowerSocialite => ../PowerSocialite
+replace github.com/ArtisanCloud/PowerLibs => ../PowerLibs
+replace github.com/ArtisanCloud/PowerSocialite => ../PowerSocialite
 
 require (
 	github.com/ArtisanCloud/PowerLibs v1.2.0

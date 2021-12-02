@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/http/request"
 	"github.com/ArtisanCloud/PowerLibs/http/response"
 	"github.com/ArtisanCloud/PowerLibs/object"
@@ -35,6 +36,11 @@ type AccessToken struct {
 func NewAccessToken(app *ApplicationInterface) *AccessToken {
 	config := (*app).GetContainer().GetConfig()
 
+	var cacheClient cache.CacheInterface = nil
+	if (*config)["cache"]!=nil{
+		cacheClient = (*config)["cache"].(cache.CacheInterface)
+	}
+
 	token := &AccessToken{
 		App:         app,
 		HttpRequest: request.NewHttpRequest(config),
@@ -45,8 +51,8 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		Token:              nil,
 		TokenKey:           "access_token",
 		CachePrefix:        "ac.go.wechat.kernel.access_token.",
+		InteractsWithCache: NewInteractsWithCache(cacheClient),
 
-		InteractsWithCache: &InteractsWithCache{},
 	}
 
 	return token
@@ -86,7 +92,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	}
 	accessToken.SetToken(resToken.AccessToken, expireIn)
 
-	// tbd dispatch a event for AccessTokenRefresh
+	// tbd dispatch an event for AccessTokenRefresh
 
 	return resToken, err
 }
