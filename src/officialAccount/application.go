@@ -28,8 +28,10 @@ type UserConfig struct {
 	ResponseType string
 	Log          Log
 	OAuth        OAuth
-	HttpDebug    bool
-	Debug        bool
+	Cache        kernel.CacheInterface
+
+	HttpDebug bool
+	Debug     bool
 }
 
 type Log struct {
@@ -117,7 +119,6 @@ func (app *OfficialAccount) GetExternalRequest() (r *http.Request) {
 	return app.Base.ExternalRequest
 }
 
-
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
@@ -130,6 +131,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
+		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,
 		"debug":      userConfig.Debug,
 	}
@@ -137,4 +139,3 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	return config, nil
 
 }
-

@@ -1,6 +1,7 @@
 package miniProgram
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
@@ -88,6 +89,7 @@ type UserConfig struct {
 
 	ResponseType string
 	Log          Log
+	Cache        cache.CacheInterface
 
 	HttpDebug bool
 	Debug     bool
@@ -298,7 +300,6 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 
 }
 
-
 func (app *MiniProgram) SetExternalRequest(r *http.Request) {
 	app.Base.ExternalRequest = r
 }
@@ -306,7 +307,6 @@ func (app *MiniProgram) SetExternalRequest(r *http.Request) {
 func (app *MiniProgram) GetExternalRequest() (r *http.Request) {
 	return app.Base.ExternalRequest
 }
-
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
@@ -320,6 +320,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
+		"cache": userConfig.Cache,
 
 		"http_debug": userConfig.HttpDebug,
 		"debug":      userConfig.Debug,

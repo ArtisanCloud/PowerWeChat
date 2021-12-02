@@ -60,6 +60,7 @@ type UserConfig struct {
 	OAuth        OAuth
 	Http         Http
 	NotifyURL    string
+	Cache        kernel.CacheInterface
 	HttpDebug    bool
 	Debug        bool
 	Sandbox      bool
@@ -251,7 +252,6 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 
 }
 
-
 func (app *Payment) SetExternalRequest(r *http.Request) {
 	app.Base.ExternalRequest = r
 }
@@ -283,6 +283,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"oauth.callback": userConfig.OAuth.Callback,
 		"oauth.scopes":   userConfig.OAuth.Scopes,
 		"notify_url":     userConfig.NotifyURL,
+		"cache":          userConfig.Cache,
 		"http_debug":     userConfig.HttpDebug,
 		"debug":          userConfig.Debug,
 		"sandbox":        userConfig.Sandbox,
@@ -291,6 +292,3 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	return config, nil
 
 }
-
-
-

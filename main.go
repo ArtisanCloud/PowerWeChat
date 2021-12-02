@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/fmt"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment"
 	"github.com/ArtisanCloud/PowerWeChat/src/work"
@@ -27,6 +28,12 @@ func GetWorkConfig() *work.UserConfig {
 			Callback: os.Getenv("app_oauth_callback_url"),
 			Scopes:   []string{},
 		},
+		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
+			Host: "127.0.0.1:6397",
+			Password: "",
+			DB: 1,
+		}),
+
 		//HttpDebug: true,
 		Debug: true,
 
@@ -58,6 +65,11 @@ func GetPaymentConfig() *payment.UserConfig {
 			BaseURI: "https://api.mch.weixin.qq.com",
 		},
 
+		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
+			Host: "127.0.0.1:6397",
+			Password: "",
+			DB: 1,
+		}),
 		NotifyURL: os.Getenv("notify_url"),
 		HttpDebug: true,
 		//Debug: true,
@@ -81,7 +93,11 @@ func GetMiniProgramConfig() *miniProgram.UserConfig {
 			Level: "debug",
 			File:  "./wechat.log",
 		},
-
+		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
+			Host: "127.0.0.1:6397",
+			Password: "",
+			DB: 1,
+		}),
 		HttpDebug: true,
 		//Debug: true,
 		//"sandbox": true,

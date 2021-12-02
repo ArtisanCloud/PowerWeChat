@@ -140,6 +140,7 @@ type UserConfig struct {
 	ResponseType string
 	Log          Log
 	OAuth        OAuth
+	Cache        kernel.CacheInterface
 	HttpDebug    bool
 	Debug        bool
 }
@@ -416,6 +417,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		},
 		"oauth.callback": userConfig.OAuth.Callback,
 		"oauth.scopes":   userConfig.OAuth.Scopes,
+		"cache":          userConfig.Cache,
 		"http_debug":     userConfig.HttpDebug,
 		"debug":          userConfig.Debug,
 	}
