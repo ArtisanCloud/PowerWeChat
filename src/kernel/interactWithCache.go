@@ -6,10 +6,13 @@ import (
 )
 
 type InteractsWithCache struct {
-	Cache cache.CacheInterface
+	Cache CacheInterface
 }
 
-func NewRedisClient(options *cache.RedisOptions) cache.CacheInterface {
+type CacheInterface cache.CacheInterface
+type RedisOptions cache.RedisOptions
+
+func NewRedisClient(options *RedisOptions) CacheInterface {
 	if options == nil {
 		return nil
 	}
@@ -21,7 +24,7 @@ func NewRedisClient(options *cache.RedisOptions) cache.CacheInterface {
 	return cache.NewGRedis(options)
 }
 
-func NewInteractsWithCache(client cache.CacheInterface) *InteractsWithCache {
+func NewInteractsWithCache(client CacheInterface) *InteractsWithCache {
 
 	interact := &InteractsWithCache{
 		Cache: client,
@@ -33,7 +36,7 @@ func NewInteractsWithCache(client cache.CacheInterface) *InteractsWithCache {
 	return interact
 }
 
-func (interactCache *InteractsWithCache) GetCache() cache.CacheInterface {
+func (interactCache *InteractsWithCache) GetCache() CacheInterface {
 	if interactCache.Cache != nil {
 		return interactCache.Cache
 	}
@@ -44,14 +47,14 @@ func (interactCache *InteractsWithCache) GetCache() cache.CacheInterface {
 	return interactCache.Cache
 }
 
-func (interactCache *InteractsWithCache) setCache(cache cache.CacheInterface) *InteractsWithCache {
+func (interactCache *InteractsWithCache) setCache(cache CacheInterface) *InteractsWithCache {
 
 	interactCache.Cache = cache
 
 	return interactCache
 }
 
-func (interactCache *InteractsWithCache) createDefaultCache() cache.CacheInterface {
+func (interactCache *InteractsWithCache) createDefaultCache() CacheInterface {
 
 	interactCache.Cache = cache.NewMemCache("ac.go.power", time.Duration(1500), "")
 

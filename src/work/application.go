@@ -1,7 +1,6 @@
 package work
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
@@ -141,7 +140,7 @@ type UserConfig struct {
 	ResponseType string
 	Log          Log
 	OAuth        OAuth
-	Cache        cache.CacheInterface
+	Cache        kernel.CacheInterface
 	HttpDebug    bool
 	Debug        bool
 }

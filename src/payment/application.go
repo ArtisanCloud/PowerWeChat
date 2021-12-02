@@ -3,7 +3,6 @@ package payment
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/http/response"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
@@ -61,7 +60,7 @@ type UserConfig struct {
 	OAuth        OAuth
 	Http         Http
 	NotifyURL    string
-	Cache        cache.CacheInterface
+	Cache        kernel.CacheInterface
 	HttpDebug    bool
 	Debug        bool
 	Sandbox      bool
