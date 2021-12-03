@@ -37,7 +37,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 	config := (*app).GetContainer().GetConfig()
 
 	var cacheClient cache.CacheInterface = nil
-	if (*config)["cache"]!=nil{
+	if (*config)["cache"] != nil {
 		cacheClient = (*config)["cache"].(cache.CacheInterface)
 	}
 
@@ -52,7 +52,6 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		TokenKey:           "access_token",
 		CachePrefix:        "ac.go.wechat.kernel.access_token.",
 		InteractsWithCache: NewInteractsWithCache(cacheClient),
-
 	}
 
 	return token
@@ -69,11 +68,11 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	// get token from cache
 	if !refresh && cache.Has(cacheKey) {
 		value, err := cache.Get(cacheKey, nil)
-		if err == nil {
-			token := value.(*object.HashMap)
+		if err == nil && value!=nil{
+			token := (object.HashMap)(value.(map[string]interface{}))
 			return &response2.ResponseGetToken{
-				AccessToken: (*token)[accessToken.TokenKey].(string),
-				ExpiresIn:   (*token)["expires_in"].(int),
+				AccessToken: token[accessToken.TokenKey].(string),
+				ExpiresIn:   token["expires_in"].(float64),
 			}, err
 		}
 	}
@@ -86,18 +85,18 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 
 	// save token into cache
 	resToken = response
-	var expireIn int = 7200
+	var expireIn float64 = 7200
 	if resToken.ExpiresIn > 0 {
 		expireIn = resToken.ExpiresIn
 	}
-	accessToken.SetToken(resToken.AccessToken, expireIn)
+	_, err = accessToken.SetToken(resToken.AccessToken, expireIn)
 
 	// tbd dispatch an event for AccessTokenRefresh
 
 	return resToken, err
 }
 
-func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInterface contract.AccessTokenInterface, err error) {
+func (accessToken *AccessToken) SetToken(token string, lifeTime float64) (tokenInterface contract.AccessTokenInterface, err error) {
 	if lifeTime <= 0 {
 		lifeTime = 7200
 	}
@@ -108,6 +107,10 @@ func (accessToken *AccessToken) SetToken(token string, lifeTime int) (tokenInter
 		accessToken.TokenKey: token,
 		"expires_in":         lifeTime,
 	}, time.Duration(lifeTime)*time.Second)
+
+	if err!=nil{
+		return nil, err
+	}
 
 	if !cache.Has(accessToken.GetCacheKey()) {
 		return nil, errors.New("failed to cache access token")

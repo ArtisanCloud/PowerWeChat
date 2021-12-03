@@ -1,7 +1,7 @@
 package response
 
 type ResponseGetToken struct {
-	AccessToken string `json:"access_token"`
-	ExpiresIn   int    `json:"expires_in"`
+	AccessToken string  `json:"access_token"`
+	ExpiresIn   float64 `json:"expires_in"`
 	*ResponseWork
 }
