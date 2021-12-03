@@ -21,7 +21,7 @@ func NewRedisClient(options *RedisOptions) CacheInterface {
 		return nil
 	}
 
-	return cache.NewGRedis(options)
+	return cache.NewGRedis((*cache.RedisOptions)(options))
 }
 
 func NewInteractsWithCache(client CacheInterface) *InteractsWithCache {

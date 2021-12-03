@@ -29,7 +29,7 @@ func GetWorkConfig() *work.UserConfig {
 			Scopes:   []string{},
 		},
 		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Host: "127.0.0.1:6397",
+			Host: "127.0.0.1:6379",
 			Password: "",
 			DB: 1,
 		}),
@@ -66,7 +66,7 @@ func GetPaymentConfig() *payment.UserConfig {
 		},
 
 		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Host: "127.0.0.1:6397",
+			Host: "127.0.0.1:6379",
 			Password: "",
 			DB: 1,
 		}),
@@ -94,7 +94,7 @@ func GetMiniProgramConfig() *miniProgram.UserConfig {
 			File:  "./wechat.log",
 		},
 		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Host: "127.0.0.1:6397",
+			Host: "127.0.0.1:6379",
 			Password: "",
 			DB: 1,
 		}),
