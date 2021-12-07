@@ -17,7 +17,7 @@ func NewRedisClient(options *RedisOptions) CacheInterface {
 		return nil
 	}
 
-	if options.Host == "" {
+	if options.Addr == "" {
 		return nil
 	}
 

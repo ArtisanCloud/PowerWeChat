@@ -97,7 +97,8 @@ func TestDecryptAES256GCM(t *testing.T) {
 	log.Println("apiV3Key: ", apiV3Key)
 
 	if apiV3Key == "" {
-		panic(errors.New("API_V3_KEY not found from env"))
+		log.Printf("error: %s", errors.New("API_V3_KEY not found from env"))
+		return
 	}
 
 	plaintext, err := DecryptAES256GCM(apiV3Key, associatedData, nonce, ciphertext)
