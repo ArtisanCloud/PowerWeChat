@@ -2,7 +2,7 @@ package kernel
 
 import (
 	"crypto/md5"
-	"encoding/json"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/cache"
@@ -50,7 +50,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		QueryName:          "",
 		Token:              nil,
 		TokenKey:           "access_token",
-		CachePrefix:        "ac.go.wechat.kernel.access_token.",
+		CachePrefix:        "powerwechat.access_token.",
 		InteractsWithCache: NewInteractsWithCache(cacheClient),
 	}
 
@@ -68,7 +68,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	// get token from cache
 	if !refresh && cache.Has(cacheKey) {
 		value, err := cache.Get(cacheKey, nil)
-		if err == nil && value!=nil{
+		if err == nil && value != nil {
 			token := (object.HashMap)(value.(map[string]interface{}))
 			return &response2.ResponseGetToken{
 				AccessToken: token[accessToken.TokenKey].(string),
@@ -108,7 +108,7 @@ func (accessToken *AccessToken) SetToken(token string, lifeTime float64) (tokenI
 		"expires_in":         lifeTime,
 	}, time.Duration(lifeTime)*time.Second)
 
-	if err!=nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -184,11 +184,15 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 	return res, err
 }
 
+// GetCacheKey 缓存唯一key算法说明：
+// 1. 使用appid和secret进行字符串拼接。例如: appid=testappid secret=testsecret, 那么结果为: testappidtestsecret
+// 2. 计算字符串的md5。"testappidtestsecret"的md5值为"edc5f6181730baffc0b88cf96658aeff"
+// 3. 加上PowerWeChat前缀命名空间："powerwechat.access_token."，最终结果为："powerwechat.access_token.edc5f6181730baffc0b88cf96658aeff"
 func (accessToken *AccessToken) GetCacheKey() string {
-
-	data, _ := json.Marshal(accessToken.GetCredentials())
-	buffer := md5.Sum(data)
-	cacheKey := accessToken.CachePrefix + string(buffer[:])
+	credentials := *accessToken.GetCredentials()
+	data := fmt.Sprintf("%s%s", credentials["appid"], credentials["secret"])
+	buffer := md5.Sum([]byte(data))
+	cacheKey := accessToken.CachePrefix + hex.EncodeToString(buffer[:])
 
 	// tbf
 	//fmt2.Dump(cacheKey)
