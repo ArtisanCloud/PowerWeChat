@@ -17,6 +17,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/nearbyPoi"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/ocr"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/operation"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/phoneNumber"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/plugin"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/riskControl"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/search"
@@ -58,6 +59,8 @@ type MiniProgram struct {
 	OCR       *ocr.Client
 	Operation *operation.Client
 	Plugin    *plugin.Client
+
+	PhoneNumber *phoneNumber.Client
 
 	NearbyPoi *nearbyPoi.Client
 
