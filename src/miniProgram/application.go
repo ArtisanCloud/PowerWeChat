@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage"
@@ -42,6 +43,8 @@ type MiniProgram struct {
 	Auth        *auth.Client
 
 	ActiveMessage *updatableMessage.Client
+
+	Encryptor *Encryptor
 
 	Broadcast              *liveBroadcast.Client
 	CustomerServiceMessage *customerServiceMessage.Client
@@ -134,6 +137,9 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register Auth,AccessToken --------------
 	app.AccessToken = auth.RegisterProvider(app)
 	app.Auth = auth.RegisterAuthProvider(app)
+
+	// -------------- register Encryptor --------------
+	app.Encryptor = &Encryptor{aes: &support.AES{}}
 
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)

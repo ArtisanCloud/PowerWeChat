@@ -50,6 +50,10 @@ func (a AES) Encrypt(text []byte, key, iv []byte) ([]byte, *CryptError) {
 	return base64Msg, nil
 }
 
+// Decrypt AES解密
+// cipherText 是密文的base64字符串
+// key和iv是经过反base64之后的byte内容
+// 例如：原始值是"tiihtNczf5v6AKRyjwEUhQ=="，那么应该用base64.StdEncoding.DecodeString("tiihtNczf5v6AKRyjwEUhQ==")解码之后传过来
 func (a AES) Decrypt(cipherText string, key, iv []byte) ([]byte, *CryptError) {
 
 	encryptMsg, err := base64.StdEncoding.DecodeString(cipherText)
