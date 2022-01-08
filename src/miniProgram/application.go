@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/auth"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage"
@@ -17,6 +18,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/nearbyPoi"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/ocr"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/operation"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/phoneNumber"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/plugin"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/riskControl"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/search"
@@ -42,6 +44,8 @@ type MiniProgram struct {
 
 	ActiveMessage *updatableMessage.Client
 
+	Encryptor *Encryptor
+
 	Broadcast              *liveBroadcast.Client
 	CustomerServiceMessage *customerServiceMessage.Client
 
@@ -58,6 +62,8 @@ type MiniProgram struct {
 	OCR       *ocr.Client
 	Operation *operation.Client
 	Plugin    *plugin.Client
+
+	PhoneNumber *phoneNumber.Client
 
 	NearbyPoi *nearbyPoi.Client
 
@@ -131,6 +137,11 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	//-------------- register Auth,AccessToken --------------
 	app.AccessToken = auth.RegisterProvider(app)
 	app.Auth = auth.RegisterAuthProvider(app)
+
+	app.PhoneNumber = phoneNumber.RegisterProvider(app)
+
+	// -------------- register Encryptor --------------
+	app.Encryptor = &Encryptor{aes: &support.AES{}}
 
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)

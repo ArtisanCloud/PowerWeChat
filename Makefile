@@ -2,6 +2,8 @@ test: test-kernel-support
 
 test-message:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_message_test.go
+	# 小程序AES解密场景
+	go test -v src/miniProgram/encryptor.go src/miniProgram/encryptor_test.go
 
 test-external-contact:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_externalcontact_add_contact_way_test.go
