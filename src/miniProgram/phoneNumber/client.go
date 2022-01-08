@@ -1,8 +1,8 @@
 package phoneNumber
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/phoneNumber/response"
 )
 
@@ -15,8 +15,7 @@ type Client struct {
 func (comp *Client) GetUserPhoneNumber(code string) (*response.ResponseGetUserPhoneNumber, error) {
 
 	result := &response.ResponseGetUserPhoneNumber{}
-
-	_, err := comp.HttpPostJson("wxa/business/getuserphonenumber", &power.HashMap{
+	_, err := comp.HttpPostJson("wxa/business/getuserphonenumber", &object.HashMap{
 		"code": code,
 	}, nil, nil, result)
 

@@ -138,6 +138,8 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	app.AccessToken = auth.RegisterProvider(app)
 	app.Auth = auth.RegisterAuthProvider(app)
 
+	app.PhoneNumber = phoneNumber.RegisterProvider(app)
+
 	// -------------- register Encryptor --------------
 	app.Encryptor = &Encryptor{aes: &support.AES{}}
 
