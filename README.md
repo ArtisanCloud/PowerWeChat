@@ -44,7 +44,7 @@ printf(rs.OpenID)
 ## 文档以及使用示例
 
 * [官网文档](https://powerwechat.artisan-cloud.com/zh/start/) ：全面的接口文档，方便用户查找，使用我们开发的sdk功能
-* [使用示例](https://github.com/ArtisanCloud/PowerWeChat-tutorial) ：您可以通过Tutorial来了解到PowerWeChat的配置和使用
+* [使用示例](https://github.com/ArtisanCloud/power-wechat-tutorial) ：您可以通过Tutorial来了解到PowerWeChat的配置和使用
 
 ### API快速导航
 * 小程序
