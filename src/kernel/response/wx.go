@@ -1,11 +1,20 @@
 package response
 
+type ResponseBase struct {
+	Code string `json:"code,omitempty"`
+	Message string `json:"message,omitempty"`
+}
+
 type ResponseWork struct {
+	*ResponseBase
+
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 }
 
 type ResponsePayment struct {
+	*ResponseBase
+
 	ReturnCode string `json:"return_code"`
 	ReturnMSG  string `json:"return_msg,omitempty"`
 
@@ -16,6 +25,8 @@ type ResponsePayment struct {
 }
 
 type ResponseMiniProgram struct {
+	*ResponseBase
+
 	Msg     string `json:"msg,omitempty"` // 小程序直播的部分接口会把错误提示抛在msg字段
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg,omitempty"`
@@ -25,6 +36,8 @@ type ResponseMiniProgram struct {
 }
 
 type ResponseOfficialAccount struct {
+	*ResponseBase
+
 	ErrCode int    `json:"errcode"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 
