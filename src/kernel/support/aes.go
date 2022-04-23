@@ -83,8 +83,12 @@ func (a AES) Decrypt(cipherText string, key, iv []byte) ([]byte, *CryptError) {
 	mode.CryptBlocks(encryptMsg, encryptMsg)
 
 	//log.Println("encryptMsg: ", string(encryptMsg))
+	originalMsg, err2 := a.PKCS7UnPadding(encryptMsg)
+	if err2 != nil {
+		return nil, err2
+	}
 
-	return encryptMsg, nil
+	return originalMsg, nil
 }
 
 // PKCS7Padding PKCS#7 padding.
