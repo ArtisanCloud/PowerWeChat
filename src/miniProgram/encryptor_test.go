@@ -2,7 +2,6 @@ package miniProgram
 
 import (
 	"github.com/stretchr/testify/assert"
-	"strings"
 	"testing"
 )
 
@@ -13,9 +12,9 @@ func TestEncryptor_DecryptData(t *testing.T) {
 	iv := "r7BXXKkLb8qrSNn05n0qiA=="
 	sessionKey := "tiihtNczf5v6AKRyjwEUhQ=="
 
-	expectResult := `{"openId":"oGZUI0egBJY1zhBYw2KhdUfwVJJE","nickName":"Band","gender":1,"language":"zh_CN","city":"Guangzhou","province":"Guangdong","country":"CN","avatarUrl":"http://wx.qlogo.cn/mmopen/vi_32/aSKcBBPpibyKNicHNTMM0qJVh8Kjgiak2AHWr8MHM4WgMEm7GFhsf8OYrySdbvAMvTsw3mo8ibKicsnfN5pRjl1p8HQ/0","unionId":"ocMvos6NjeKLIBqg5Mr9QjxrP1FA","watermark":{"timestamp":1477314187,"appid":"wx4f4bc4dec97d474b"}} `
+	expectResult := `{"openId":"oGZUI0egBJY1zhBYw2KhdUfwVJJE","nickName":"Band","gender":1,"language":"zh_CN","city":"Guangzhou","province":"Guangdong","country":"CN","avatarUrl":"http://wx.qlogo.cn/mmopen/vi_32/aSKcBBPpibyKNicHNTMM0qJVh8Kjgiak2AHWr8MHM4WgMEm7GFhsf8OYrySdbvAMvTsw3mo8ibKicsnfN5pRjl1p8HQ/0","unionId":"ocMvos6NjeKLIBqg5Mr9QjxrP1FA","watermark":{"timestamp":1477314187,"appid":"wx4f4bc4dec97d474b"}}`
 
 	encryptor := Encryptor{}
 	msg, _ := encryptor.DecryptData(encryptedData, sessionKey, iv)
-	assert.Equal(t, strings.TrimSpace(expectResult), strings.Trim(string(msg), "\a"))
+	assert.Equal(t, expectResult, string(msg))
 }
