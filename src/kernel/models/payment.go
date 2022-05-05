@@ -4,23 +4,37 @@ import "time"
 
 // --- Transaction models ----
 
+const WX_TRADE_STATE_ = "JSAPI"            //公众号支付
+const WX_TRADE_STATE_NATIVE = "NATIVE"     //扫码支付
+const WX_TRADE_STATE_APP = "APP"           //APP支付
+const WX_TRADE_STATE_MICROPAY = "MICROPAY" //付款码支付
+const WX_TRADE_STATE_MWEB = "MWEB"         //H5支付
+const WX_TRADE_STATE_FACEPAY = "FACEPAY"   //刷脸支付
+
+const WX_TRADE_STATE_SUCCESS = "SUCCESS"       // 支付成功
+const WX_TRADE_STATE_REFUND = "REFUND"         // 转入退款
+const WX_TRADE_STATE_NOTPAY = "NOTPAY"         // 未支付
+const WX_TRADE_STATE_CLOSED = "CLOSED"         // 已关闭
+const WX_TRADE_STATE_REVOKED = "REVOKED"       // 已撤销（付款码支付）
+const WX_TRADE_STATE_USERPAYING = "USERPAYING" // 用户支付中（付款码支付）
+const WX_TRADE_STATE_PAYERROR = "PAYERROR"     // 支付失败(其他原因，如银行返回失败)
+
 // Transaction
 type Transaction struct {
 	Amount          *TransactionAmount `json:"amount,omitempty"`
-	AppID           string            `json:"appid,omitempty"`
-	Attach          string            `json:"attach,omitempty"`
-	BankType        string            `json:"bank_type,omitempty"`
-	MchID           string            `json:"mchid,omitempty"`
-	OutTradeNo      string            `json:"out_trade_no,omitempty"`
+	AppID           string             `json:"appid,omitempty"`
+	Attach          string             `json:"attach,omitempty"`
+	BankType        string             `json:"bank_type,omitempty"`
+	MchID           string             `json:"mchid,omitempty"`
+	OutTradeNo      string             `json:"out_trade_no,omitempty"`
 	Payer           *TransactionPayer  `json:"payer,omitempty"`
 	PromotionDetail []PromotionDetail  `json:"promotion_detail,omitempty"`
-	SuccessTime     string            `json:"success_time,omitempty"`
-	TradeState      string            `json:"trade_state,omitempty"`
-	TradeStateDesc  string            `json:"trade_state_desc,omitempty"`
-	TradeType       string            `json:"trade_type,omitempty"`
-	TransactionId   string            `json:"transaction_id,omitempty"`
+	SuccessTime     string             `json:"success_time,omitempty"`
+	TradeState      string             `json:"trade_state,omitempty"`
+	TradeStateDesc  string             `json:"trade_state_desc,omitempty"`
+	TradeType       string             `json:"trade_type,omitempty"`
+	TransactionId   string             `json:"transaction_id,omitempty"`
 }
-
 
 // TransactionAmount
 type TransactionAmount struct {
@@ -30,12 +44,10 @@ type TransactionAmount struct {
 	Total         int64  `json:"total,omitempty"`
 }
 
-
 // TransactionPayer
 type TransactionPayer struct {
 	Openid string `json:"openid,omitempty"`
 }
-
 
 // PromotionDetail
 type PromotionDetail struct {
@@ -58,10 +70,9 @@ type PromotionDetail struct {
 	// 单位为分
 	OtherContribute int64 `json:"other_contribute,omitempty"`
 	// CNY：人民币，境内商户号仅支持人民币。
-	Currency    string                `json:"currency,omitempty"`
+	Currency    string                 `json:"currency,omitempty"`
 	GoodsDetail []PromotionGoodsDetail `json:"goods_detail,omitempty"`
 }
-
 
 // PromotionGoodsDetail
 type PromotionGoodsDetail struct {
@@ -76,8 +87,6 @@ type PromotionGoodsDetail struct {
 	// 商品备注
 	GoodsRemark string `json:"goods_remark,omitempty"`
 }
-
-
 
 // --- Refund models ----
 // Refund
@@ -100,9 +109,7 @@ type Refund struct {
 	UserReceivedAccount string `json:"user_received_account"`
 	// 金额详细信息
 	Amount *Amount `json:"amount"`
-
 }
-
 
 // Amount
 type Amount struct {
