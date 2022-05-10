@@ -1,7 +1,7 @@
 package response
 
 type ResponseBase struct {
-	Code string `json:"code,omitempty"`
+	Code    string `json:"code,omitempty"`
 	Message string `json:"message,omitempty"`
 }
 
@@ -15,13 +15,13 @@ type ResponseWork struct {
 type ResponsePayment struct {
 	*ResponseBase
 
-	ReturnCode string `json:"return_code"`
-	ReturnMSG  string `json:"return_msg,omitempty"`
+	ReturnCode string `xml:"return_code" json:"return_code"`
+	ReturnMSG  string `xml:"return_msg,omitempty" json:"return_msg,omitempty"`
 
-	ResultCode string `json:"result_code"` // 是	String(16)	SUCCESS/FAIL
-	ErrCode    string `json:"err_code,omitempty"`    // 否	String(32)	SYSTEMERROR--系统错误
-	ErrMSG     string `json:"errmsg,omitempty"`
-	ErrCodeDes string `json:"err_code_des,omitempty"`
+	ResultCode string `xml:"result_code" json:"result_code"`               // 是	String(16)	SUCCESS/FAIL
+	ErrCode    string `xml:"err_code,omitempty" json:"err_code,omitempty"` // 否	String(32)	SYSTEMERROR--系统错误
+	ErrMSG     string `xml:"errmsg,omitempty" json:"errmsg,omitempty"`
+	ErrCodeDes string `xml:"err_code_des,omitempty" json:"err_code_des,omitempty"`
 }
 
 type ResponseMiniProgram struct {

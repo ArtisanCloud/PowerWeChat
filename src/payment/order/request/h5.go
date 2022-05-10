@@ -35,7 +35,7 @@ type H5H5Info struct {
 }
 
 type H5SceneInfo struct {
-	PayerClientIp string      `json:"payer_client_ip"` // 用户终端IP
+	PayerClientIP string      `json:"payer_client_ip"` // 用户终端IP
 	DeviceId      string      `json:"device_id"`       // 商户端设备号
 	StoreInfo     *H5StoreInfo `json:"store_info,omitempty"`      // + 商户门店信息
 	H5Info        *H5H5Info    `json:"h5_info,omitempty"`         // + H5场景信息

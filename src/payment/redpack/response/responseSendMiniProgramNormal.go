@@ -10,12 +10,12 @@ type ResponseSendMiniProgramNormal struct {
 	ResultCode  string   `xml:"result_code"`
 	ErrCode     string   `xml:"err_code"`
 	ErrCodeDes  string   `xml:"err_code_des"`
-	MchBillno   string   `xml:"mch_billno"`
+	MchBillNO   string   `xml:"mch_billno"`
 	MchID       string   `xml:"mch_id"`
-	Wxappid     string   `xml:"wxappid"`
-	ReOpenid    string   `xml:"re_openid"`
+	WXAppID     string   `xml:"wxappid"`
+	ReOpenID    string   `xml:"re_openid"`
 	TotalAmount string   `xml:"total_amount"`
-	SendListid  string   `xml:"send_listid"`
+	SendListID  string   `xml:"send_listid"`
 	Package     string   `xml:"package"`
 }
 

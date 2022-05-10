@@ -2,6 +2,7 @@ package support
 
 import (
 	"crypto/rsa"
+	"crypto/sha1"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
@@ -85,7 +86,7 @@ func TestRSA_EncryptOAEP(t *testing.T) {
 
 	// 因为每次加密的随机数和hash都是不一样的，所以每次同一个明文加密出来的密文都会不一样
 	// 验证方法就是从加密出来的密文再解密，看下明文是否一致
-	plainMsg, _ := rsaOaep.DecryptOAEP(encryptedData)
+	plainMsg, _ := rsaOaep.DecryptOAEP(sha1.New(),encryptedData)
 
 	assert.Equal(t, testPlainMsg, plainMsg)
 }
@@ -105,7 +106,7 @@ func TestRSAOaep_DecryptOAEP(t *testing.T) {
 	}
 
 	testEncryptedMSG, _ := base64.URLEncoding.DecodeString(testEncryptedMSGBase64)
-	decryptedData, err := rsaOaep.DecryptOAEP([]byte(testEncryptedMSG))
+	decryptedData, err := rsaOaep.DecryptOAEP(sha1.New(),[]byte(testEncryptedMSG))
 	if err != nil {
 		panic(err)
 	}

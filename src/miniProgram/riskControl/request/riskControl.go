@@ -7,7 +7,7 @@ type RequestRiskControl struct {
 	MobileNo     string `json:"mobile_no,omitempty"`
 	BankCardNo   string `json:"bank_card_no"`
 	CertNo       string `json:"cert_no"`
-	ClientIp     string `json:"client_ip"`
+	ClientIP     string `json:"client_ip"`
 	EmailAddress string `json:"email_address,omitempty"`
 	ExtendedInfo string `json:"extended_info,omitempty"`
 }

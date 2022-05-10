@@ -2,7 +2,7 @@ package request
 
 type CombineSceneInfo struct {
 	DeviceID      string `json:"device_id"`       // 商户端设备号
-	PayerClientIp string `json:"payer_client_ip"` // 用户终端IP
+	PayerClientIP string `json:"payer_client_ip"` // 用户终端IP
 }
 
 type CombineAmount struct {

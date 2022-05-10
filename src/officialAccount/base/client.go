@@ -26,9 +26,9 @@ func (comp *Client) ClearQuota() (*response2.ResponseOfficialAccount, error) {
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_the_WeChat_server_IP_address.html#2.%20%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1callback%20IP%E5%9C%B0%E5%9D%80
-func (comp *Client) GetCallbackIP() (*response.ResponseGetCallBackIp, error) {
+func (comp *Client) GetCallbackIP() (*response.ResponseGetCallBackIP, error) {
 
-	result := &response.ResponseGetCallBackIp{}
+	result := &response.ResponseGetCallBackIP{}
 
 	_, err := comp.HttpGet("cgi-bin/getcallbackip", nil, nil, result)
 

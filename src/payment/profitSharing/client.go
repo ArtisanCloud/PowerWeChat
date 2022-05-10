@@ -3,8 +3,8 @@ package profitSharing
 import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/payment/profitSharing/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/payment/profitSharing/response"
 )
 
@@ -20,30 +20,24 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // Share Orders.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
-
-func (comp *Client) Share(transactionID string, outOrderNO string, receviers []*power.HashMap, UnfreezeUnsplit bool) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) Share(param *request.RequestShare) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
-	config := (*comp.App).GetConfig()
-
-	options := &object.HashMap{
-		"appid":            config.GetString("app_id", ""),
-		"transaction_id":   transactionID,
-		"out_order_no":     outOrderNO,
-		"receivers":        receviers,
-		"unfreeze_unsplit": UnfreezeUnsplit,
+	if param.AppID==""{
+		config := (*comp.App).GetConfig()
+		param.AppID = config.GetString("app_id", "")
 	}
+	options, err := object.StructToHashMap(param)
 
 	endpoint := comp.Wrap("/v3/profitsharing/orders")
-	_, err := comp.Request(endpoint, nil, "POST", options, false, nil, result)
+	_, err = comp.Request(endpoint, nil, "POST", options, false, nil, result)
 
 	return result, err
 }
 
 // Query Profit Sharing Result.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
-
 func (comp *Client) Query(transactionID string, outOrderNO string) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
@@ -118,7 +112,7 @@ func (comp *Client) AddReceiver(
 
 	options := &object.HashMap{
 		"type":            receiverType,
-		"accountService":         account,
+		"accountService":  account,
 		"name":            name,
 		"relation_type":   relationType,
 		"custom_relation": customRelation,
@@ -139,8 +133,8 @@ func (comp *Client) DeleteReceiver(receiverType string, account string) (*respon
 
 	config := (*comp.App).GetConfig()
 	options := &object.HashMap{
-		"appid":   config.GetString("app_id", ""),
-		"type":    receiverType,
+		"appid":          config.GetString("app_id", ""),
+		"type":           receiverType,
 		"accountService": account,
 	}
 

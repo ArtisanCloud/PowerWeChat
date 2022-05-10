@@ -1,9 +1,16 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-
-// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
+import (
+	"encoding/xml"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+)
 
 type ResponseReserve struct {
+	XMLName xml.Name `xml:"xml"`
+	Text    string   `xml:",chardata"`
 	*response.ResponsePayment
+	AppID    string `xml:"appid"`
+	MchID    string `xml:"mch_id"`
+	NonceStr string `xml:"nonce_str"`
+	Sign     string `xml:"sign"`
 }

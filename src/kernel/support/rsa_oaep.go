@@ -7,6 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"hash"
 	"io/ioutil"
 )
 
@@ -41,7 +42,7 @@ func (r *RSAOaep) EncryptOAEP(text []byte) ([]byte, error) {
 	return cipherData, nil
 }
 
-func (r *RSAOaep) DecryptOAEP(cipherMsg []byte) ([]byte, error) {
+func (r *RSAOaep) DecryptOAEP(hash hash.Hash,cipherMsg []byte) ([]byte, error) {
 	if r.PrivateKey == nil && r.PrivateKeyPath == "" {
 		return nil, fmt.Errorf("you must set privatekey to use EncryptOAEP")
 	}
@@ -56,7 +57,7 @@ func (r *RSAOaep) DecryptOAEP(cipherMsg []byte) ([]byte, error) {
 		r.PrivateKey = privateKey
 	}
 
-	decryptedData, decryptErr := rsa.DecryptOAEP(sha1.New(), rand.Reader, r.PrivateKey, cipherMsg, nil)
+	decryptedData, decryptErr := rsa.DecryptOAEP(hash, rand.Reader, r.PrivateKey, cipherMsg, nil)
 	if decryptErr != nil {
 		fmt.Println("Decrypt data error")
 		return nil, decryptErr

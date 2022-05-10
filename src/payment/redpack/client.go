@@ -19,8 +19,10 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // Query Red Pack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_6&index=5
-func (comp *Client) Info(mchBillNO string) (interface{}, error) {
+func (comp *Client) Info(mchBillNO string) (*response.ResponseSendNormal, error) {
 	config := (*comp.App).GetConfig()
+
+	result := &response.ResponseSendNormal{}
 
 	params := &object.StringMap{
 		"mch_billno": mchBillNO,
@@ -31,28 +33,28 @@ func (comp *Client) Info(mchBillNO string) (interface{}, error) {
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", params, nil, nil)
+	_, err := comp.SafeRequest(endpoint, nil, "POST", params, nil, result)
 
 	return result, err
 }
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(params *request.RequestSendRedPack) (interface{}, error) {
+func (comp *Client) SendNormal(params *request.RequestSendRedPack) (*response.ResponseSendNormal, error) {
 	config := (*comp.App).GetConfig()
 
-	result:=response.ResponseSendNormal{}
+	result := &response.ResponseSendNormal{}
 
 	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
-	if params.ClientIp == "" {
-		params.ClientIp = clientIP
+	if params.ClientIP == "" {
+		params.ClientIP = clientIP
 	}
-	if params.TotalNum == "" {
-		params.TotalNum = "1"
+	if params.TotalNum == 0 {
+		params.TotalNum = 1
 	}
-	if params.WxappID == "" {
-		params.WxappID = config.GetString("app_id", "")
+	if params.WXAppID == "" {
+		params.WXAppID = config.GetString("app_id", "")
 	}
 
 	if params.NonceStr == "" {
@@ -62,26 +64,27 @@ func (comp *Client) SendNormal(params *request.RequestSendRedPack) (interface{},
 	options, err := object.StructToStringMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, &result)
+	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, result)
 
 	return result, err
 }
 
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
-func (comp *Client) SendGroup(params *request.RequestSendGroupRedPack) (interface{}, error) {
+func (comp *Client) SendGroup(params *request.RequestSendGroupRedPack) (*response.ResponseSendGroupRedPack, error) {
 	config := (*comp.App).GetConfig()
 
+	result := &response.ResponseSendGroupRedPack{}
 	if params.AmtType == "" {
 		params.AmtType = "ALL_RAND"
 	}
-	if params.Wxappid == "" {
-		params.Wxappid = config.GetString("app_id", "")
+	if params.WXAppID == "" {
+		params.WXAppID = config.GetString("app_id", "")
 	}
 	options, err := object.StructToHashMap(params)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	result, err := comp.SafeRequest(endpoint, nil, "POST", options, nil, nil)
+	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, result)
 
 	return result, err
 }

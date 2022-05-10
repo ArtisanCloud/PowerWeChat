@@ -6,14 +6,14 @@ type RequestSendGroupRedPack struct {
 	XMLName     xml.Name `xml:"xml"`
 	Text        string   `xml:",chardata"`
 	Sign        string   `xml:"sign"`
-	MchBillno   string   `xml:"mch_billno"`
+	MchBillNO   string   `xml:"mch_billno"`
 	MchID       string   `xml:"mch_id"`
-	Wxappid     string   `xml:"wxappid"`
+	WXAppID     string   `xml:"wxappid"`
 	SendName    string   `xml:"send_name"`
-	ReOpenid    string   `xml:"re_openid"`
-	TotalAmount string   `xml:"total_amount"`
+	ReOpenID    string   `xml:"re_openid"`
+	TotalAmount int64    `xml:"total_amount"`
+	TotalNum    int32    `xml:"total_num"`
 	AmtType     string   `xml:"amt_type"`
-	TotalNum    string   `xml:"total_num"`
 	Wishing     string   `xml:"wishing"`
 	ActName     string   `xml:"act_name"`
 	Remark      string   `xml:"remark"`
@@ -21,4 +21,3 @@ type RequestSendGroupRedPack struct {
 	NonceStr    string   `xml:"nonce_str"`
 	RiskInfo    string   `xml:"risk_info"`
 }
-

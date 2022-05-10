@@ -27,7 +27,7 @@ type AppStoreInfo struct {
 }
 
 type AppSceneInfo struct {
-	PayerClientIp string       `json:"payer_client_ip"` // 用户终端IP
+	PayerClientIP string       `json:"payer_client_ip"` // 用户终端IP
 	DeviceID      string       `json:"device_id"`       // 商户端设备号
 	StoreInfo     AppStoreInfo `json:"store_info"`      // + 商户门店信息
 }

@@ -10,9 +10,9 @@ type Client struct {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90930
-func (comp *Client) GetCallbackIp() (*response.ResponseGetCallBackIp, error) {
+func (comp *Client) GetCallbackIP() (*response.ResponseGetCallBackIP, error) {
 
-	result := &response.ResponseGetCallBackIp{}
+	result := &response.ResponseGetCallBackIP{}
 
 	_, err := comp.HttpGet("cgi-bin/getcallbackip", nil, nil, result)
 
