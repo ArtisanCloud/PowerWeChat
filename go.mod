@@ -6,7 +6,7 @@ go 1.17
 //replace github.com/ArtisanCloud/PowerSocialite => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs v1.2.7
+	github.com/ArtisanCloud/PowerLibs v1.2.8
 	github.com/ArtisanCloud/PowerSocialite v1.2.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/google/uuid v1.1.1
@@ -38,5 +38,5 @@ require (
 	golang.org/x/text v0.3.6 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
