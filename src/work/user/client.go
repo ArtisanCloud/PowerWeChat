@@ -77,9 +77,9 @@ func (comp *Client) Get(userID string) (*response.ResponseGetUserDetail, error) 
 
 	result := &response.ResponseGetUserDetail{}
 
-	_, err := comp.HttpGet("cgi-bin/user/get", nil, &object.StringMap{
+	_, err := comp.HttpGet("cgi-bin/user/get", &object.StringMap{
 		"userid": userID,
-	}, result)
+	}, nil, result)
 
 	return result, err
 }
@@ -204,8 +204,3 @@ func (comp *Client) GetActiveStat(date string) (*response.ResponseUserActiveCoun
 
 	return result, err
 }
-
-
-
-
-
