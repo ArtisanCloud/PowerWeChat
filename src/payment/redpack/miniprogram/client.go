@@ -19,23 +19,23 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // Send Miniprogram Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
-func (comp *Client) SendMiniProgramNormal(params *request.RequestSendMiniProgramNormal) (*response.ResponseSendMiniProgramNormal, error) {
+func (comp *Client) SendMiniProgramNormal(data *request.RequestSendMiniProgramNormal) (*response.ResponseSendMiniProgramNormal, error) {
 
 	result:=&response.ResponseSendMiniProgramNormal{}
 
 	config := (*comp.App).GetConfig()
 
-	if params.TotalNum <= 0 {
-		params.TotalNum = 1
+	if data.TotalNum <= 0 {
+		data.TotalNum = 1
 	}
-	if params.WXAppID == "" {
-		params.WXAppID = config.GetString("app_id", "")
+	if data.WXAppID == "" {
+		data.WXAppID = config.GetString("app_id", "")
 	}
 
-	options, err:= object.StructToHashMap(params)
+	params, err:= object.StructToStringMap(data, "xml")
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	_, err = comp.SafeRequest(endpoint, nil, "POST", options, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
 
 	return result, err
 }

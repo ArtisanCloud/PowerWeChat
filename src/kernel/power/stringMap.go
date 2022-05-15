@@ -9,7 +9,7 @@ type StringMap object.StringMap
 
 func (obj *StringMap) ToStringMap() *object.StringMap {
 
-	hObj, _ := object.StructToStringMap(obj)
+	hObj, _ := object.StructToStringMap(obj, "")
 
 	return hObj
 }

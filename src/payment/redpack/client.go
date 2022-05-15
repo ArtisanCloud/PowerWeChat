@@ -33,58 +33,58 @@ func (comp *Client) Info(mchBillNO string) (*response.ResponseSendNormal, error)
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	_, err := comp.SafeRequest(endpoint, nil, "POST", params, nil, result)
+	_, err := comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
 
 	return result, err
 }
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(params *request.RequestSendRedPack) (*response.ResponseSendNormal, error) {
+func (comp *Client) SendNormal(data *request.RequestSendRedPack) (*response.ResponseSendNormal, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseSendNormal{}
 
 	externalRequest := (*comp.App).GetExternalRequest()
 	clientIP := externalRequest.Host
-	if params.ClientIP == "" {
-		params.ClientIP = clientIP
+	if data.ClientIP == "" {
+		data.ClientIP = clientIP
 	}
-	if params.TotalNum == 0 {
-		params.TotalNum = 1
+	if data.TotalNum == 0 {
+		data.TotalNum = 1
 	}
-	if params.WXAppID == "" {
-		params.WXAppID = config.GetString("app_id", "")
-	}
-
-	if params.NonceStr == "" {
-		params.NonceStr = object.QuickRandom(10)
+	if data.WXAppID == "" {
+		data.WXAppID = config.GetString("app_id", "")
 	}
 
-	options, err := object.StructToStringMap(params)
+	if data.NonceStr == "" {
+		data.NonceStr = object.QuickRandom(10)
+	}
+
+	params, err := object.StructToStringMap(data, "xml")
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
 
 	return result, err
 }
 
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
-func (comp *Client) SendGroup(params *request.RequestSendGroupRedPack) (*response.ResponseSendGroupRedPack, error) {
+func (comp *Client) SendGroup(data *request.RequestSendGroupRedPack) (*response.ResponseSendGroupRedPack, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseSendGroupRedPack{}
-	if params.AmtType == "" {
-		params.AmtType = "ALL_RAND"
+	if data.AmtType == "" {
+		data.AmtType = "ALL_RAND"
 	}
-	if params.WXAppID == "" {
-		params.WXAppID = config.GetString("app_id", "")
+	if data.WXAppID == "" {
+		data.WXAppID = config.GetString("app_id", "")
 	}
-	options, err := object.StructToHashMap(params)
+	params, err := object.StructToStringMap(data, "xml")
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	_, err = comp.SafeRequest(endpoint, nil, "POST", options, nil, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
 
 	return result, err
 }

@@ -1,10 +1,7 @@
 package request
 
-import "encoding/xml"
-
 type RequestSendMiniProgramNormal struct {
-	XMLName     xml.Name `xml:"xml"`
-	Text        string   `xml:",chardata"`
+
 	ActName     string   `xml:"act_name"`
 	MchBillNO   string   `xml:"mch_billno"`
 	MchID       string   `xml:"mch_id"`

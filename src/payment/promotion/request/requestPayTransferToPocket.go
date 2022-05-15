@@ -1,10 +1,7 @@
 package request
 
-import "encoding/xml"
-
 type RequestPayTransferToPocket struct {
-	XMLName        xml.Name `xml:"xml"`
-	Text           string   `xml:",chardata"`
+
 	AppID          string   `xml:",appid"`
 	MchID          string   `xml:"mch_id"`
 	DeviceInfo     string   `xml:"device_info"`
