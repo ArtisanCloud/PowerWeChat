@@ -10,7 +10,7 @@ type RequestSendMiniProgramHB struct {
 	MchID       string   `xml:"mch_id"`
 	NonceStr    string   `xml:"nonce_str"`
 	NotifyWay   string   `xml:"notify_way"`
-	ReOpenid    string   `xml:"re_openid"`
+	ReOpenID    string   `xml:"re_openid"`
 	Remark      string   `xml:"remark"`
 	SendName    string   `xml:"send_name"`
 	TotalAmount int   `xml:"total_amount"`

@@ -9,7 +9,7 @@ type ResponseGetTransferInfo struct {
 	PartnerTradeNO string `xml:"partner_trade_no"`
 	Status         string `xml:"status"`
 	PaymentAmount  string `xml:"payment_amount"`
-	Openid         string `xml:"openid"`
+	OpenID         string `xml:"openid"`
 	TransferTime   string `xml:"transfer_time"`
 	TransferName   string `xml:"transfer_name"`
 	Desc           string `xml:"desc"`

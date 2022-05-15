@@ -20,7 +20,7 @@ type ResponseQueryWorkWX struct {
 	Wishing             string   `xml:"wishing"`
 	Remark              string   `xml:"remark"`
 	ActName             string   `xml:"act_name"`
-	Openid              string   `xml:"openid"`
+	OpenID              string   `xml:"openid"`
 	Amount              string   `xml:"amount"`
 	RcvTime             string   `xml:"rcv_time"`
 	SenderName          string   `xml:"sender_name"`

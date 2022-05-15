@@ -23,7 +23,7 @@ type ResponseGetHBInfo struct {
 		Text   string `xml:",chardata"`
 		Hbinfo struct {
 			Text    string `xml:",chardata"`
-			Openid  string `xml:"openid"`
+			OpenID  string `xml:"openid"`
 			Amount  string `xml:"amount"`
 			RcvTime string `xml:"rcv_time"`
 		} `xml:"hbinfo"`

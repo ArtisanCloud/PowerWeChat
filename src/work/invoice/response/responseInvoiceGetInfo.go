@@ -11,7 +11,7 @@ type ResponseInvoiceGetInfo struct {
 	CardID    string         `json:"card_id"`
 	BeginTime string         `json:"begin_time"`
 	EndTime   string         `json:"end_time"`
-	Openid    string         `json:"openid"`
+	OpenID    string         `json:"openid"`
 	Type      string         `json:"type"`
 	Payee     string         `json:"payee"`
 	Detail    string         `json:"detail"`

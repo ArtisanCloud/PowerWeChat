@@ -114,7 +114,7 @@ func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int)
 
 // userid与openid互换
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90202
-func (comp *Client) UserIdToOpenid(userID string) (*response.ResponseUserIDToOpenID, error) {
+func (comp *Client) UserIdToOpenID(userID string) (*response.ResponseUserIDToOpenID, error) {
 
 	result := &response.ResponseUserIDToOpenID{}
 
