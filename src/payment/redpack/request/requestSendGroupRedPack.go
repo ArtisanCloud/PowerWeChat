@@ -1,10 +1,7 @@
 package request
 
-import "encoding/xml"
-
 type RequestSendGroupRedPack struct {
-	XMLName     xml.Name `xml:"xml"`
-	Text        string   `xml:",chardata"`
+
 	Sign        string   `xml:"sign"`
 	MchBillNO   string   `xml:"mch_billno"`
 	MchID       string   `xml:"mch_id"`

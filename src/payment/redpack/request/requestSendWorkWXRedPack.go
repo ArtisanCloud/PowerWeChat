@@ -1,10 +1,6 @@
 package request
 
-import "encoding/xml"
-
 type RequestSendWorkWXRedPack struct {
-	XMLName             xml.Name `xml:"xml"`
-	Text                string   `xml:",chardata"`
 	NonceStr            string   `xml:"nonce_str"`
 	Sign                string   `xml:"sign"`
 	MchBillNO           string   `xml:"mch_billno"`

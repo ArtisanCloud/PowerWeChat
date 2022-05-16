@@ -25,3 +25,20 @@ func StringMapToPower(obj interface{}) (newMap *StringMap, err error) {
 	err = json.Unmarshal(data, newMap) // Convert to a string map
 	return
 }
+
+
+func PowerStringMapToObjectStringMap(obj *StringMap) (newMap *object.StringMap, err error) {
+
+	newMap = &object.StringMap{}
+
+	if obj == nil {
+		return newMap, err
+	}
+
+	for k, v := range *obj {
+		(*newMap)[k] = v
+	}
+
+	return newMap, err
+
+}

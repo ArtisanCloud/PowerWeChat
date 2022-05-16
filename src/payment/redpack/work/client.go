@@ -19,35 +19,35 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 
 // Send Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90275
-func (comp *Client) SendWorkWX(params *request.RequestSendWorkWX) (*response.ResponseSendWorkWX, error) {
+func (comp *Client) SendWorkWX(data *request.RequestSendWorkWX) (*response.ResponseSendWorkWX, error) {
 	result := &response.ResponseSendWorkWX{}
-	if params.WXAppID == "" {
+	if data.WXAppID == "" {
 		config := (*comp.App).GetConfig()
-		params.WXAppID = config.GetString("app_id", "")
+		data.WXAppID = config.GetString("app_id", "")
 	}
 
-	options, err := object.StructToHashMap(params)
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	_, err = comp.SafeRequest(endpoint, nil, "POST", options, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }
 
 // Query Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90276
-func (comp *Client) QueryWorkWX(params *request.RequestQueryWorkWX) (*response.ResponseQueryWorkWX, error) {
+func (comp *Client) QueryWorkWX(data *request.RequestQueryWorkWX) (*response.ResponseQueryWorkWX, error) {
 	result := &response.ResponseQueryWorkWX{}
 
-	if params.Appid == "" {
+	if data.Appid == "" {
 		config := (*comp.App).GetConfig()
-		params.Appid = config.GetString("app_id", "")
+		data.Appid = config.GetString("app_id", "")
 	}
 
-	options, err := object.StructToHashMap(params)
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	_, err = comp.SafeRequest(endpoint, nil, "POST", options, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }

@@ -46,7 +46,7 @@ type TransactionAmount struct {
 
 // TransactionPayer
 type TransactionPayer struct {
-	Openid string `json:"openid,omitempty"`
+	OpenID string `json:"openid,omitempty"`
 }
 
 // PromotionDetail

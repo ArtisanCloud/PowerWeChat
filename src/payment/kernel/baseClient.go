@@ -110,13 +110,22 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 
 }
 
-func (client *BaseClient) RequestV2(endpoint string, params *object.StringMap, method string, option *object.StringMap,
+func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, method string, option *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response interface{}, err error) {
 
 	config := (*client.App).GetConfig()
 
-	options, err := client.AuthSignRequestV2(config, endpoint, method, params, option)
+	base := &object.HashMap{
+		//"mch_id":     config.GetString("mch_id", ""),
+		"nonce_str":  object.RandStringBytesMask(32),
+		"sub_mch_id": config.GetString("sub_mch_id", ""),
+		"sub_appid":  config.GetString("sub_appid", ""),
+	}
+	params = object.MergeHashMap(params, base)
+	params = object.FilterEmptyHashMap(params)
+
+	options, err := client.AuthSignRequestV2(endpoint, method, params, option)
 	if err != nil {
 		return nil, err
 	}
@@ -240,21 +249,20 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 	return result.(*object.HashMap), err
 }
 
-func (client *BaseClient) SafeRequest(url string, params *object.StringMap, method string, option interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
-	//config := (*client.App).GetConfig()
-
-	strMapOptions, err := object.StructToStringMap(option)
-	if err != nil {
-		return nil, err
-	}
+func (client *BaseClient) SafeRequest(url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+	config := (*client.App).GetConfig()
+	option = object.MergeHashMap(option, &object.HashMap{
+		"cert":    config.GetString("cert_path", ""),
+		"ssl_key": config.GetString("key_path", ""),
+	})
 
 	strOutBody := ""
 	// get xml string result from return raw as true
-	_, err = client.RequestV2(
+	_, err := client.RequestV2(
 		url,
 		params,
 		method,
-		strMapOptions,
+		option,
 		true,
 		outHeader,
 		&strOutBody,
@@ -332,23 +340,47 @@ func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string
 	return options, err
 }
 
-func (client *BaseClient) AuthSignRequestV2(config *kernel.Config, endpoint string, method string, params *object.StringMap, strMapOptions *object.StringMap) (*object.HashMap, error) {
+func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, params *object.HashMap, options *object.HashMap) (*object.HashMap, error) {
 
 	var err error
 
-	powerOptions, _ := power.StringMapToPower(strMapOptions)
-	fmt2.Dump(config.GetString("key", ""))
-	(*strMapOptions)["sign"] = support.GenerateSignMD5(powerOptions, config.GetString("key", ""))
+	secretKey, err := (*client.App).GetKey(endpoint)
+	if err != nil {
+		return nil, err
+	}
 
-	// check need sign body or not
+	strMapParams,err := object.HashMapToStringMap(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert StringMap to Power StringMap
+	powerStrMapParams, err := power.StringMapToPower(strMapParams)
+	if err != nil {
+		return nil, err
+	}
+
+	// generate md5 signature with power StringMap
+	(*powerStrMapParams)["sign"] = support.GenerateSignMD5(powerStrMapParams, secretKey)
+
+	// convert signature to xml content
 	var signBody = ""
 	if "get" != object.Lower(method) {
-		signBody = object.StringMap2Xml(strMapOptions)
+		// check need sign body or not
+		objPara, err := power.PowerStringMapToObjectStringMap(powerStrMapParams)
+		if err!= nil{
+			return nil, err
+		}
+		signBody = object.StringMap2Xml(objPara)
 	}
 
-	options := &object.HashMap{
+	// set body content
+	options = object.MergeHashMap(&object.HashMap{
 		"body": signBody,
-	}
+	}, options)
+
+	//mapOptions, err := object.StructToHashMap(options)
+
 	return options, err
 }
 

@@ -1,10 +1,7 @@
 package request
 
-import "encoding/xml"
-
 type RequestToBankCard struct {
-	XMLName        xml.Name `xml:"xml"`
-	Text           string   `xml:",chardata"`
+
 	Amount         int64   `xml:"amount" json:"amount"`
 	BankCode       string   `xml:"bank_code" json:"bank_code"`
 	Desc           string   `xml:"desc" json:"desc"`

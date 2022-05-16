@@ -1,4 +1,5 @@
 package support
+
 import (
 	"crypto/hmac"
 	"crypto/md5"
@@ -9,6 +10,40 @@ import (
 	"sort"
 	"strings"
 )
+
+func PaymentV2ParamsJoinBackup(params *power.HashMap, key string) string {
+	var arr []string
+	for k, v := range *params {
+		if v == "" {
+			continue
+		}
+		arr = append(arr, k)
+	}
+	sort.Strings(arr)
+	//for i, k := range arr {
+	for i := 0; i < len(arr); i++ {
+		k := arr[i]
+		v := (*params)[k]
+		switch v.(type) {
+		case string:
+			arr[i] = fmt.Sprintf("%s=%s", k, v)
+			break
+		case int:
+		case int8:
+		case int16:
+		case int32:
+		case int64:
+			arr[i] = fmt.Sprintf("%s=%d", k, v)
+			break
+		case float32:
+		case float64:
+			arr[i] = fmt.Sprintf("%s=%f", k, v)
+			break
+		}
+		//arr[i] = fmt.Sprintf("%s=%x", k, (*params)[k])
+	}
+	return fmt.Sprintf("%s&key=%s", strings.Join(arr, "&"), key)
+}
 
 func PaymentV2ParamsJoin(params *power.StringMap, key string) string {
 	var arr []string
