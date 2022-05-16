@@ -22,13 +22,13 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 func (comp *Client) PayTransferToPocket(data *request.RequestPayTransferToPocket) (*response.ResponsePayTransferToPocket, error) {
 	result := &response.ResponsePayTransferToPocket{}
 
-	params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/promotion/paywwsptrans2pocket")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }
@@ -39,13 +39,13 @@ func (comp *Client) QueryTransferToPocket(data *request.RequestQueryTransferToPo
 
 	result := &response.ResponseQueryTransferToPocket{}
 
-	params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/promotion/querywwsptrans2pocket")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }

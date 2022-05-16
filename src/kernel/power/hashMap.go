@@ -1,7 +1,6 @@
 package power
 
 import (
-	"encoding/json"
 	"github.com/ArtisanCloud/PowerLibs/object"
 )
 
@@ -15,14 +14,37 @@ func (obj *HashMap) ToHashMap() *object.HashMap {
 }
 
 // ------------------------------- Conversion ---------------------------------------
-func HashMapToPower(obj interface{}) (newMap *HashMap, err error) {
-	data, err := json.Marshal(obj) // Convert to a json string
-
-	if err != nil {
-		return
-	}
+func HashMapToPower(obj *object.HashMap) (newMap *HashMap, err error) {
 
 	newMap = &HashMap{}
-	err = json.Unmarshal(data, newMap) // Convert to a map
-	return
+
+	if obj == nil {
+		return newMap, err
+	}
+
+	for k, v := range *obj {
+		(*newMap)[k] = v
+	}
+
+	return newMap, err
+
 }
+
+
+func PowerHashMapToObjectHashMap(obj *HashMap) (newMap *object.HashMap, err error) {
+
+	newMap = &object.HashMap{}
+
+	if obj == nil {
+		return newMap, err
+	}
+
+	for k, v := range *obj {
+		(*newMap)[k] = v
+	}
+
+	return newMap, err
+
+}
+
+

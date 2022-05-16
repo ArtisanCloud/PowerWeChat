@@ -26,10 +26,10 @@ func (comp *Client) SendWorkWX(data *request.RequestSendWorkWX) (*response.Respo
 		data.WXAppID = config.GetString("app_id", "")
 	}
 
-	params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }
@@ -44,10 +44,10 @@ func (comp *Client) QueryWorkWX(data *request.RequestQueryWorkWX) (*response.Res
 		data.Appid = config.GetString("app_id", "")
 	}
 
-	params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }

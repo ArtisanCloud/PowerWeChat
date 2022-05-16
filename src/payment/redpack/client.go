@@ -24,7 +24,7 @@ func (comp *Client) Info(mchBillNO string) (*response.ResponseSendNormal, error)
 
 	result := &response.ResponseSendNormal{}
 
-	params := &object.StringMap{
+	params := &object.HashMap{
 		"mch_billno": mchBillNO,
 		"appid":      config.GetString("app_id", ""),
 		"mch_id":     config.GetString("mch_id", ""),
@@ -33,10 +33,38 @@ func (comp *Client) Info(mchBillNO string) (*response.ResponseSendNormal, error)
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
+	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
+
+
+// Send Miniprogram Normal redpack.
+// https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
+func (comp *Client) SendMiniProgramNormal(data *request.RequestSendMiniProgramNormal) (*response.ResponseSendMiniProgramNormal, error) {
+
+	result:=&response.ResponseSendMiniProgramNormal{}
+
+	config := (*comp.App).GetConfig()
+
+	if data.TotalNum <= 0 {
+		data.TotalNum = 1
+	}
+	if data.WXAppID == "" {
+		data.WXAppID = config.GetString("app_id", "")
+	}
+	if data.MchID == "" {
+		data.MchID = config.GetString("mch_id", "")
+	}
+
+	params, err:= object.StructToHashMap(data)
+
+	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
+
+	return result, err
+}
+
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
@@ -45,26 +73,25 @@ func (comp *Client) SendNormal(data *request.RequestSendRedPack) (*response.Resp
 
 	result := &response.ResponseSendNormal{}
 
-	externalRequest := (*comp.App).GetExternalRequest()
-	clientIP := externalRequest.Host
-	if data.ClientIP == "" {
-		data.ClientIP = clientIP
-	}
+	//externalRequest := (*comp.App).GetExternalRequest()
+	//clientIP := externalRequest.Host
+	//if data.ClientIP == "" {
+	//	data.ClientIP = clientIP
+	//}
 	if data.TotalNum == 0 {
 		data.TotalNum = 1
 	}
 	if data.WXAppID == "" {
 		data.WXAppID = config.GetString("app_id", "")
 	}
-
-	if data.NonceStr == "" {
-		data.NonceStr = object.QuickRandom(10)
+	if data.MchID == "" {
+		data.MchID = config.GetString("mch_id", "")
 	}
 
-	params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -81,10 +108,14 @@ func (comp *Client) SendGroup(data *request.RequestSendGroupRedPack) (*response.
 	if data.WXAppID == "" {
 		data.WXAppID = config.GetString("app_id", "")
 	}
-	params, err := object.StructToStringMap(data, "xml")
+	if data.MchID == "" {
+		data.MchID = config.GetString("mch_id", "")
+	}
+
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }

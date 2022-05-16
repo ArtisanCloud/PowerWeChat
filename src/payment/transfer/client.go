@@ -26,14 +26,14 @@ func (comp *Client) QueryBalanceOrder(partnerTradeNo string) (*response.Response
 
 	result := &response.ResponseGetTransferInfo{}
 
-	params := &object.StringMap{
+	params := &object.HashMap{
 		"appid":            config.GetString("app_id", ""),
 		"mch_id":           config.GetString("mch_id", ""),
 		"partner_trade_no": partnerTradeNo,
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/gettransferinfo")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
+	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }
@@ -51,18 +51,19 @@ func (comp *Client) ToBalance(data *request.RequestTransferToBalance) (*response
 	//	params.SpBillCreateIP = externalRequest.Host
 	//}
 
-	params, err := object.StructToStringMap(data, "xml")
+	//params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMapWithTag(data, "xml")
 	if err != nil {
 		return nil, err
 	}
-	base := &object.StringMap{
+	base := &object.HashMap{
 		"mchid":     config.GetString("mch_id", ""),
 		"mch_appid": config.GetString("app_id", ""),
 	}
 
-	params = object.MergeStringMap(params, base)
+	params = object.MergeHashMap(params, base)
 	endpoint := comp.Wrap("mmpaymkttransfers/promotion/transfers")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -74,13 +75,13 @@ func (comp *Client) QueryBankCardOrder(partnerTradeNo string) (*response.Respons
 
 	result := &response.ResponseGetTransferInfo{}
 
-	params := &object.StringMap{
+	params := &object.HashMap{
 		"mch_id":           config.GetString("mch_id", ""),
 		"partner_trade_no": partnerTradeNo,
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/query_bank")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, false, result)
+	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
 
 	return result, err
 }
@@ -121,13 +122,13 @@ func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response.Respo
 		return nil, err
 	}
 
-	params, err := object.StructToStringMap(data, "xml")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}
 
 	endpoint := comp.Wrap("mmpaysptrans/pay_bank")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.StringMap{}, nil, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
