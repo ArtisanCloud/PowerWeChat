@@ -24,7 +24,7 @@ type AccessToken struct {
 	RequestMethod      string
 	EndpointToGetToken string
 	QueryName          string
-	Token              object.HashMap
+	Token              *object.HashMap
 	TokenKey           string
 	CachePrefix        string
 

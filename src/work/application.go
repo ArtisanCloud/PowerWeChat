@@ -167,7 +167,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
-			"http": object.HashMap{
+			"http": &object.HashMap{
 				"base_uri": "https://qyapi.weixin.qq.com/",
 			},
 		},
@@ -411,7 +411,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"callback_url": userConfig.CallbackURL,
 
 		"response_type": userConfig.ResponseType,
-		"log": object.StringMap{
+		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
