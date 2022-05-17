@@ -110,7 +110,7 @@ func (comp *Client) SendGroup(data *request.RequestSendGroupRedPack) (*response.
 		data.MchID = config.GetString("mch_id", "")
 	}
 
-	params, err := object.StructToHashMap(data)
+	params, err := object.StructToHashMapWithTag(data,"json")
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
 	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)

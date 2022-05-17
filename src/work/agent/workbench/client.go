@@ -40,12 +40,16 @@ func (comp Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGet
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90207
+// https://developer.work.weixin.qq.com/document/path/92535
 func (comp Client) SetWorkbenchData(data *request.RequestSetWorkBenchData) (*response.ResponseAgentSetWorkbenchData, error) {
 
 	result := &response.ResponseAgentSetWorkbenchData{}
 
-	_, err := comp.HttpGet("cgi-bin/agent/set_workbench_data", data, nil, result)
+	params, err:= object.StructToHashMap(data)
+	if err!=nil{
+		return nil, err
+	}
+	_, err = comp.HttpPost("cgi-bin/agent/set_workbench_data", params, nil, result)
 
 	return result, err
 }

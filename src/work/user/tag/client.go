@@ -1,6 +1,7 @@
 package tag
 
 import (
+	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
@@ -53,8 +54,8 @@ func (comp *Client) Delete(tagID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/delete", &object.HashMap{
-		"tagid": tagID,
+	_, err := comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
+		"tagid": fmt.Sprintf("%d", tagID),
 	}, nil, result)
 
 	return result, err
@@ -66,8 +67,8 @@ func (comp *Client) Get(tagID int64) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/get", &object.HashMap{
-		"tagid": tagID,
+	_, err := comp.HttpGet("cgi-bin/tag/get", &object.StringMap{
+		"tagid": fmt.Sprintf("%d", tagID),
 	}, nil, result)
 
 	return result, err

@@ -25,7 +25,7 @@ func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRe
 
 	result := &response.ResponseRefund{}
 
-	body, err := object.StructToHashMap(options)
+	body, err := object.StructToHashMapWithTag(options, "json")
 	if err != nil {
 		return nil, err
 	}

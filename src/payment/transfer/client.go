@@ -122,7 +122,7 @@ func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response.Respo
 		return nil, err
 	}
 
-	params, err := object.StructToHashMap(data)
+	params, err := object.StructToHashMapWithTag(data,"json")
 	if err != nil {
 		return nil, err
 	}

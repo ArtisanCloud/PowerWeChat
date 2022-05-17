@@ -52,7 +52,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 
 }
 
-func (client *BaseClient) HttpGet(url string, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpGet(url string, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"GET",

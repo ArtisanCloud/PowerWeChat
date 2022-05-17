@@ -12,11 +12,15 @@ type Client struct {
 }
 
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
-func (comp *Client) GetPaidUnionID(options *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
+func (comp *Client) GetPaidUnionID(data *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
 
 	result := &response.ResponseAuthGetPaidUnionID{}
 
-	_, err := comp.HttpGet("wxa/getpaidunionid", options, nil, result)
+	params, err := object.StructToStringMap(data)
+	if err != nil {
+		return nil, err
+	}
+	_, err = comp.HttpGet("wxa/getpaidunionid", params, nil, result)
 
 	return result, err
 }
@@ -35,4 +39,3 @@ func (comp *Client) CheckEncryptedData(encryptedMsgHash string) (*response.Respo
 
 	return result, err
 }
-

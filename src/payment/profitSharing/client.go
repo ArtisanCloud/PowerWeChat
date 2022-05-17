@@ -28,7 +28,7 @@ func (comp *Client) Share(param *request.RequestShare) (*response.ResponseProfit
 		config := (*comp.App).GetConfig()
 		param.AppID = config.GetString("app_id", "")
 	}
-	options, err := object.StructToHashMap(param)
+	options, err := object.StructToHashMapWithTag(param,"json")
 
 	endpoint := comp.Wrap("/v3/profitsharing/orders")
 	_, err = comp.Request(endpoint, nil, "POST", options, false, nil, result)

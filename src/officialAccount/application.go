@@ -7,6 +7,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
 	"net/http"
 )
 
@@ -17,6 +19,9 @@ type OfficialAccount struct {
 	AccessToken *auth.AccessToken
 
 	Config *kernel.Config
+
+	User *user.Client
+	Tag  *tag.Client
 
 	Media *media.Client
 }
@@ -76,6 +81,9 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	app.AccessToken = auth.RegisterProvider(app)
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
+
+	//-------------- register User --------------
+	app.User, app.Tag = user.RegisterProvider(app)
 
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)

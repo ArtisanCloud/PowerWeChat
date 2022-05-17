@@ -1,6 +1,7 @@
 package department
 
 import (
+	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
@@ -40,7 +41,9 @@ func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 
 	result := &response.ResponseDepartmentDelete{}
 
-	_, err := comp.HttpGet("cgi-bin/department/delete", &object.HashMap{"id": id}, nil, result)
+	_, err := comp.HttpGet("cgi-bin/department/delete", &object.StringMap{
+		"id": fmt.Sprintf("%d", id),
+	}, nil, result)
 
 	return result, err
 }

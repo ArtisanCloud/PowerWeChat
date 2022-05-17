@@ -380,8 +380,6 @@ func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, para
 		"body": signBody,
 	}, options)
 
-	//mapOptions, err := object.StructToHashMap(options)
-
 	return options, err
 }
 
