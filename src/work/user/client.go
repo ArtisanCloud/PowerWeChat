@@ -59,14 +59,14 @@ func (comp *Client) Delete(userID string) (*response2.ResponseWork, error) {
 }
 
 // 批量删除成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90198
+// https://developer.work.weixin.qq.com/document/path/90335
 func (comp *Client) BatchDelete(userIDs []string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/user/batchdelete", nil, &object.HashMap{
+	_, err := comp.HttpPostJson("cgi-bin/user/batchdelete", &object.HashMap{
 		"useridlist": userIDs,
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result, err
 }

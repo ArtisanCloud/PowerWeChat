@@ -78,7 +78,7 @@ func (client *BaseClient) HttpPost(url string, data interface{}, outHeader inter
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpPostJson(url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"POST",

@@ -2,8 +2,8 @@ package agent
 
 import (
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/agent/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/agent/response"
 )
@@ -23,7 +23,7 @@ func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 
 	result := &response.ResponseAgentGet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/agent/get", nil, &power.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/agent/get", nil, &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
