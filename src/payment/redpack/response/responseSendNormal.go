@@ -16,4 +16,3 @@ type ResponseSendNormal struct {
 	ReOpenID    string   `xml:"re_openid"`
 	TotalAmount string   `xml:"total_amount"`
 }
-

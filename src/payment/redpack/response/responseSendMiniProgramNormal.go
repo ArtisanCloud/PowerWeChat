@@ -14,8 +14,7 @@ type ResponseSendMiniProgramNormal struct {
 	MchID       string   `xml:"mch_id"`
 	WXAppID     string   `xml:"wxappid"`
 	ReOpenID    string   `xml:"re_openid"`
-	TotalAmount string   `xml:"total_amount"`
+	TotalAmount int      `xml:"total_amount"`
 	SendListID  string   `xml:"send_listid"`
 	Package     string   `xml:"package"`
 }
-

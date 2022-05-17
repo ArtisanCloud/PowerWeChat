@@ -26,7 +26,7 @@ type ServiceContainer struct {
 func (container *ServiceContainer) getBaseConfig() *object.HashMap {
 	return &object.HashMap{
 		// http://docs.guzzlephp.org/en/stable/request-options.html
-		"http": &object.HashMap{
+		"http": object.HashMap{
 			"timeout":  30.0,
 			"base_uri": "https://api.weixin.qq.com/",
 		},
@@ -37,14 +37,11 @@ func (container *ServiceContainer) GetConfig() *object.HashMap {
 
 	// init container config
 	var config *object.HashMap
-	if container.Config != nil {
-		config = container.Config
-	} else {
-		config = container.getBaseConfig()
-	}
+
+	basicConfig := container.getBaseConfig()
 
 	// merge config
-	container.Config = object.MergeHashMap(config, container.DefaultConfig, container.UserConfig)
+	container.Config = object.ReplaceHashMapRecursive(config, basicConfig, container.DefaultConfig, container.UserConfig)
 	//fmt.Dump(container.Config)
 	return container.Config
 }

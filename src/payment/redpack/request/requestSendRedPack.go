@@ -2,7 +2,7 @@ package request
 
 type RequestSendRedPack struct {
 	MchBillNO   string `xml:"mch_billno" json:"mch_billno"`
-	MchID       string `xml:"mch_id" json:"mch_billno"`
+	MchID       string `xml:"mch_id" json:"mch_id"`
 	WXAppID     string `xml:"wxappid" json:"wxappid"`
 	SendName    string `xml:"send_name" json:"send_name"`
 	ReOpenID    string `xml:"re_openid" json:"re_openid"`
