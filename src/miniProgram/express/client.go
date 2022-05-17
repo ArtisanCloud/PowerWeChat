@@ -110,7 +110,7 @@ func (comp *Client) GetOrder(orderID string, openID string, deliveryID string, w
 		"print_type":  printType,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/order/cancel", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/express/business/order/get", data, nil, nil, result)
 
 	return result, err
 }

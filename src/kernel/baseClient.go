@@ -78,7 +78,7 @@ func (client *BaseClient) HttpPost(url string, data interface{}, outHeader inter
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data interface{}, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpPostJson(url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		url,
 		"POST",
@@ -95,14 +95,14 @@ func (client *BaseClient) HttpPostJson(url string, data interface{}, query inter
 func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
 	multipart := []*object.HashMap{}
-	headers := object.HashMap{}
+	headers := &object.HashMap{}
 
 	if form != nil {
 		fileName := uuid.New().String()
 		if (*form)["filename"] != nil {
 			fileName = (*form)["filename"].(string)
 		}
-		headers["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", fileName)
+		(*headers)["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", fileName)
 	}
 
 	if files != nil {

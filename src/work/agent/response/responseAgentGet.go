@@ -6,7 +6,7 @@ import (
 
 type ResponseAgentGet struct {
 	*response.ResponseWork
-	AgentID            int16                       `json:"agentid"`         // "agentid": 1000005,
+	AgentID            int                         `json:"agentid"`         // "agentid": 1000005,
 	Name               string                      `json:"name"`            // "name": "HR助手",
 	SquareLogoURL      string                      `json:"square_logo_url"` // "square_logo_url":  "https://p.qlogo.cn/bizmail/FicwmI50icF8GH9ib7rUAYR5kicLTgP265naVFQKnleqSlRhiaBx7QA9u7Q/0",
 	Description        string                      `json:"description"`     // "description": "HR服务与员工自助平台",

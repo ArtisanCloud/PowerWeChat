@@ -56,7 +56,7 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
-			"http": object.HashMap{
+			"http": &object.HashMap{
 				"base_uri": "https://api.weixin.qq.com/",
 			},
 		},
@@ -127,7 +127,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"secret": userConfig.Secret,
 
 		"response_type": userConfig.ResponseType,
-		"log": object.StringMap{
+		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},

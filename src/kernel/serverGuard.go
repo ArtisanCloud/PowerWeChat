@@ -417,15 +417,15 @@ func (serverGuard *ServerGuard) parseMessage(content string) (callback *models.C
 	return callback, err
 }
 
-func (serverGuard *ServerGuard) parseMessage2(content string) (dataContent object.HashMap, err error) {
+func (serverGuard *ServerGuard) parseMessage2(content string) (dataContent *object.HashMap, err error) {
 
 	dataContent = nil
 	if content != "" {
 		// check xml format
 		if content[0] == '<' {
-			dataContent = object.HashMap{}
+			dataContent = &object.HashMap{}
 			//err = xml.Unmarshal([]byte(content), &dataContent)
-			dataContent, err = object.Xml2Map([]byte(content))
+			*dataContent, err = object.Xml2Map([]byte(content))
 			if err != nil {
 				return nil, err
 			}
@@ -434,7 +434,7 @@ func (serverGuard *ServerGuard) parseMessage2(content string) (dataContent objec
 
 	if dataContent == nil {
 		// Handle JSON format.
-		dataContent = object.HashMap{}
+		dataContent = &object.HashMap{}
 		err = json.Unmarshal([]byte(content), &dataContent)
 		if err != nil {
 			return dataContent, nil

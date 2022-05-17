@@ -93,7 +93,7 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	container := &kernel.ServiceContainer{
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
-			"http": object.HashMap{
+			"http": &object.HashMap{
 				"base_uri": "https://api.mch.weixin.qq.com",
 			},
 		},
@@ -272,11 +272,11 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"serial_no":      userConfig.SerialNo,
 
 		"response_type": userConfig.ResponseType,
-		"log": object.StringMap{
+		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
-		"http": object.HashMap{
+		"http": &object.HashMap{
 			"timeout":  userConfig.Http.Timeout,
 			"base_uri": userConfig.Http.BaseURI,
 		},

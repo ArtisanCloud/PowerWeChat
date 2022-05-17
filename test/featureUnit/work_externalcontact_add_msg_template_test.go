@@ -2,58 +2,26 @@ package featureUnit
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/fmt"
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/messageTemplate/request"
 	"testing"
 )
 
 func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 
-	msg := &object.HashMap{
-		"external_userid": []string{
+	msg := &request.RequestAddMsgTemplate{
+		ChatType: "",
+		ExternalUserID: []string{
 			"wm_ViZBwAApoZUCOn3JeqlfW1YUme5pg",
 		},
-		"sender": "WangChaoYi",
-		//"sender": "Matt",
-		"text": request.TextOfMessage{
+		Sender: "WangChaoYi",
+		Text: request.TextOfMessage{
 			Content: "新的活动现在开始啦！",
 		},
-		"attachments": []interface{}{
-			//request.ImageOfMessage{
-			//	MsgType: "image",
-			//	Image: request.Image{
-			//		MediaID: "",
-			//		PicURL:  "",
-			//	},
-			//},
-			request.LinkOfMessage{
-				MsgType: "link",
-				Link: request.Link{
-					Title:  "活动地址",
-					PicURL: "https://baidu.com",
-					Desc:   "好奖品等你来拿",
-					URL:    "https://baidu.com",
-				},
-			},
-			//request.MiniProgramOfMessage{
-			//	MsgType: "miniprogram",
-			//	MiniProgram: request.MiniProgram{
-			//		Title:      "消息标题",
-			//		PicMediaID: "MEDIA_ID",
-			//		AppID:      "wx8bd80126147df384",
-			//		Page:       "/path/index",
-			//	},
-			//},
-			//request.VideoOfMessage{
-			//	MsgType: "video",
-			//	Video: request.Video{
-			//		MediaID: "MEDIA_ID",
-			//	},
-			//},
-		},
+		Attachments: []*power.HashMap{},
 	}
 
-	response, err := Work.ExternalContactMessage.Submit(msg)
+	response, err := Work.ExternalContactMessageTemplate.AddMsgTemplate(msg)
 
 	if err != nil {
 		t.Error("error:", err.Error())
@@ -66,5 +34,4 @@ func Test_ExternalContact_Add_Msg_Template(t *testing.T) {
 	}
 
 	fmt.Dump(response)
-
 }
