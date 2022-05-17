@@ -59,7 +59,7 @@ func (comp *Client) SendMiniProgramNormal(data *request.RequestSendMiniProgramNo
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
