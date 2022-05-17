@@ -114,13 +114,14 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response interface{}, err error) {
 
-	config := (*client.App).GetConfig()
+	//config := (*client.App).GetConfig()
 
 	base := &object.HashMap{
-		//"mch_id":     config.GetString("mch_id", ""),
+		// 微信的接口如果传入接口意外的参数，签名会失败所以这里需要区分对待参数
 		"nonce_str":  object.RandStringBytesMask(32),
-		"sub_mch_id": config.GetString("sub_mch_id", ""),
-		"sub_appid":  config.GetString("sub_appid", ""),
+		//"mch_id":     config.GetString("mch_id", ""),
+		//"sub_mch_id": config.GetString("sub_mch_id", ""),
+		//"sub_appid":  config.GetString("sub_appid", ""),
 	}
 	params = object.MergeHashMap(params, base)
 	params = object.FilterEmptyHashMap(params)

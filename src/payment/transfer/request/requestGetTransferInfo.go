@@ -2,9 +2,9 @@ package request
 
 type RequestTransferToBalance struct {
 	MchAppID         string `xml:"mch_appid" json:"mch_appid"`
-	MchID            int    `xml:"mchid" json:"mchid"`
+	MchID            string    `xml:"mchid" json:"mchid"`
 	DeviceInfo       string `xml:"device_info" json:"device_info"`
-	NonceStr         int    `xml:"nonce_str" json:"nonce_str"`
+	NonceStr         string    `xml:"nonce_str" json:"nonce_str"`
 	PartnerTradeNo   string `xml:"partner_trade_no" json:"partner_trade_no"`
 	OpenID           string `xml:"openid" json:"openid"`
 	CheckName        string `xml:"check_name" json:"check_name"`
