@@ -1,4 +1,4 @@
-package jssdk
+package media
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"

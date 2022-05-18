@@ -1,4 +1,4 @@
-package jssdk
+package url
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"

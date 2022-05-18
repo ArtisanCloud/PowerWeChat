@@ -1,4 +1,4 @@
-package jssdk
+package qrCode
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"

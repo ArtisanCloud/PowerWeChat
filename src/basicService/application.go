@@ -2,34 +2,28 @@ package officialAccount
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerSocialite/src"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/contentSecurity"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/jssdk"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/media"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/qrCode"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/url"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
 	"net/http"
 )
 
-type OfficialAccount struct {
+type Application struct {
 	*kernel.ServiceContainer
 
-	Base        *base.Client
-	AccessToken *auth.AccessToken
+	Base *kernel.BaseClient
 
 	Config *kernel.Config
 
-	QRCode *qrCode.Client
-
-	OAuth *src.SocialiteManager
-
-	User *user.Client
-	Tag  *tag.Client
-
-	Media *media.Client
+	JSSDK           *jssdk.Client
+	QRCode          *qrCode.Client
+	Media           *media.Client
+	URL             *url.Client
+	ContentSecurity *contentSecurity.Client
 }
 
 type UserConfig struct {
@@ -55,7 +49,7 @@ type OAuth struct {
 	Scopes   []string
 }
 
-func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
+func NewApplication(config *UserConfig) (*Application, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -75,7 +69,7 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	container.GetConfig()
 
 	// init app
-	app := &OfficialAccount{
+	app := &Application{
 		ServiceContainer: container,
 	}
 
@@ -83,52 +77,46 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	//-------------- register Auth --------------
-	app.AccessToken = auth.RegisterProvider(app)
-	//-------------- register Base --------------
-	app.Base = base.RegisterProvider(app)
-
+	//-------------- register JSSDK --------------
+	app.JSSDK = jssdk.RegisterProvider(app)
 	//-------------- register QRCode --------------
 	app.QRCode = qrCode.RegisterProvider(app)
 
-	//-------------- register User --------------
-	app.User, app.Tag = user.RegisterProvider(app)
+	//-------------- register Media --------------
+	app.Media = media.RegisterProvider(app)
 
 	//-------------- media --------------
-	app.Media = media.RegisterProvider(app)
+	app.URL = url.RegisterProvider(app)
+	app.ContentSecurity = contentSecurity.RegisterProvider(app)
 
 	return app, err
 }
 
-func (app *OfficialAccount) GetContainer() *kernel.ServiceContainer {
+func (app *Application) GetContainer() *kernel.ServiceContainer {
 	return app.ServiceContainer
 }
 
-func (app *OfficialAccount) GetAccessToken() *kernel.AccessToken {
-	return app.AccessToken.AccessToken
+func (app *Application) GetAccessToken() *kernel.AccessToken {
+	return nil
 }
 
-func (app *OfficialAccount) GetConfig() *kernel.Config {
+func (app *Application) GetConfig() *kernel.Config {
 	return app.Config
 }
 
-func (app *OfficialAccount) GetComponent(name string) interface{} {
+func (app *Application) GetComponent(name string) interface{} {
 
 	switch name {
-	case "Base":
-		return app.Base
-	case "AccessToken":
-		return app.AccessToken
-	case "Config":
-		return app.Config
+	case "JSSDK":
+		return app.JSSDK
 	case "QRCode":
 		return app.QRCode
-	case "OAuth":
-		return app.OAuth
-	case "User":
-		return app.User
-	case "Tag":
-		return app.Tag
+	case "Media":
+		return app.Media
+	case "URL":
+		return app.URL
+	case "ContentSecurity":
+		return app.ContentSecurity
 
 	default:
 		return nil
@@ -136,11 +124,11 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 
 }
 
-func (app *OfficialAccount) SetExternalRequest(r *http.Request) {
+func (app *Application) SetExternalRequest(r *http.Request) {
 	app.Base.ExternalRequest = r
 }
 
-func (app *OfficialAccount) GetExternalRequest() (r *http.Request) {
+func (app *Application) GetExternalRequest() (r *http.Request) {
 	return app.Base.ExternalRequest
 }
 

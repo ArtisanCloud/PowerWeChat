@@ -1,4 +1,4 @@
-package jssdk
+package contentSecurity
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"

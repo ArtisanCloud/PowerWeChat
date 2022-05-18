@@ -2,8 +2,6 @@ package officialAccount
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerSocialite/src"
-	"github.com/ArtisanCloud/PowerWeChat/src/basicService/qrCode"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
@@ -21,10 +19,6 @@ type OfficialAccount struct {
 	AccessToken *auth.AccessToken
 
 	Config *kernel.Config
-
-	QRCode *qrCode.Client
-
-	OAuth *src.SocialiteManager
 
 	User *user.Client
 	Tag  *tag.Client
@@ -88,9 +82,6 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
 
-	//-------------- register QRCode --------------
-	app.QRCode = qrCode.RegisterProvider(app)
-
 	//-------------- register User --------------
 	app.User, app.Tag = user.RegisterProvider(app)
 
@@ -121,14 +112,6 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 		return app.AccessToken
 	case "Config":
 		return app.Config
-	case "QRCode":
-		return app.QRCode
-	case "OAuth":
-		return app.OAuth
-	case "User":
-		return app.User
-	case "Tag":
-		return app.Tag
 
 	default:
 		return nil
