@@ -163,12 +163,22 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 		return app.AccessToken
 	case "Config":
 		return app.Config
+
+	case "Media":
+		return app.Media
 	case "QRCode":
 		return app.QRCode
-	case "OAuth":
-		return app.WeChat
 	case "SubscribeMessage":
 		return app.SubscribeMessage
+	case "URL":
+		return app.URL
+
+	case "Encryptor":
+		return app.Encryptor
+	case "Server":
+		return app.Server
+	case "WeChat":
+		return app.WeChat
 	case "User":
 		return app.User
 	case "Tag":
