@@ -14,6 +14,7 @@ func NewRaw(content string) *Raw {
 		NewMessage(&object.HashMap{"content": nil}),
 	}
 
+	m.Type = "raw"
 
 	return m
 }

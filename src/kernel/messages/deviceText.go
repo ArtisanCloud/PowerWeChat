@@ -33,11 +33,13 @@ func NewDeviceText(items *object.HashMap) *DeviceText {
 func (msg *DeviceText) OverrideToXmlArray() {
 	msg.ToXmlArray = func() *object.HashMap {
 
+		content := base64.StdEncoding.EncodeToString([]byte(msg.GetString("content", "")))
+
 		return &object.HashMap{
 			"DeviceType": msg.Get("device_type", nil),
 			"DeviceID":   msg.Get("device_id", nil),
 			"SessionID":  msg.Get("session_id", nil),
-			"Content":    base64.StdEncoding.DecodeString(msg.GetString("content", "")),
+			"Content":    content,
 		}
 	}
 }
