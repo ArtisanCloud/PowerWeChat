@@ -1,8 +1,10 @@
 package request
 
+type UserList struct {
+	Openid string `json:"openid"`
+	Lang   string `json:"lang"`
+}
+
 type RequestBatchGetUserInfo struct {
-	UserList []struct {
-		Openid string `json:"openid"`
-		Lang   string `json:"lang"`
-	} `json:"user_list"`
+	UserList []*UserList `json:"user_list"`
 }
