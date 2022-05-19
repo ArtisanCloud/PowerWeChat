@@ -10,7 +10,7 @@ type Article struct {
 
 func NewArticle(items *object.HashMap) *Article {
 	m := &Article{
-		NewMessage(&object.HashMap{"items": items}),
+		NewMessage(items),
 	}
 
 	m.Type = "mpnews"
@@ -24,7 +24,19 @@ func NewArticle(items *object.HashMap) *Article {
 		"show_cover",
 	}
 
+	m.JsonAliases = &object.HashMap{
+		"content_source_url" : "source_url",
+		"show_cover_pic" : "show_cover",
+	}
 
+	m.SetAttributes(&object.HashMap{
+		"required":[]string{
+			"thumb_media_id",
+			"title",
+			"content",
+			"show_cover",
+		},
+	})
 
 	return m
 }
