@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerSocialite/src"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/qrCode"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/subscribeMessage"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
@@ -23,6 +24,8 @@ type OfficialAccount struct {
 	Config *kernel.Config
 
 	QRCode *qrCode.Client
+
+	SubscribeMessage *subscribeMessage.Client
 
 	OAuth *src.SocialiteManager
 
@@ -91,6 +94,10 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	//-------------- register QRCode --------------
 	app.QRCode = qrCode.RegisterProvider(app)
 
+	//-------------- register SubscribeMessage --------------
+	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
+
+
 	//-------------- register User --------------
 	app.User, app.Tag = user.RegisterProvider(app)
 
@@ -125,6 +132,8 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 		return app.QRCode
 	case "OAuth":
 		return app.OAuth
+	case "SubscribeMessage":
+		return app.SubscribeMessage
 	case "User":
 		return app.User
 	case "Tag":

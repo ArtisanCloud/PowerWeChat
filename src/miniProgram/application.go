@@ -3,6 +3,7 @@ package miniProgram
 import (
 	"github.com/ArtisanCloud/PowerLibs/cache"
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/subscribeMessage"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
@@ -26,7 +27,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/serviceMarket"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/shortLink"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/soter"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/subscribeMessage"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/uniformMessage"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/updatableMessage"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/urlLink"
