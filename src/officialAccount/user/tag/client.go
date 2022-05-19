@@ -17,9 +17,9 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 	}
 }
 
-// 用户标签管理
+// 创建标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) Get(name string) (*response.ResponseTagGet, error) {
+func (comp *Client) Create(name string) (*response.ResponseTagGet, error) {
 	result := &response.ResponseTagGet{}
 
 	params := &object.HashMap{
@@ -34,7 +34,7 @@ func (comp *Client) Get(name string) (*response.ResponseTagGet, error) {
 
 // 获取公众号已创建的标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) List(openID string, lang string) (*response.ResponseTagGetList, error) {
+func (comp *Client) List() (*response.ResponseTagGetList, error) {
 
 	result := &response.ResponseTagGetList{}
 
