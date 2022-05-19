@@ -1,6 +1,10 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+
 type ResponseGettingRulesForAutoReplies struct {
+	*response.ResponseOfficialAccount
+
 	IsAddFriendReplyOpen        int                          `json:"is_add_friend_reply_open"`
 	IsAutoReplyOpen             int                          `json:"is_autoreply_open"`
 	AddFriendAutoReplyInfo      *AddFriendAutoReplyInfo      `json:"add_friend_autoreply_info"`

@@ -1,5 +1,6 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 
 type KF struct {
 	KFAccount        string `json:"kf_account"`
@@ -13,6 +14,8 @@ type KF struct {
 }
 
 type ResponseList struct {
+	*response.ResponseOfficialAccount
+
 	KFList  []*KF `json:"kf_list"`
 }
 
@@ -26,5 +29,7 @@ type KFOnline struct {
 }
 
 type ResponseKFOnlineList struct {
+	*response.ResponseOfficialAccount
+
 	KfOnlineList []*KFOnline `json:"kf_online_list"`
 }

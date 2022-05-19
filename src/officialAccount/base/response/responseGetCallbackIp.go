@@ -6,5 +6,6 @@ import (
 
 type ResponseGetCallBackIP struct {
 	*response.ResponseOfficialAccount
+
 	IPList []string `json:"ip_list"`
 }

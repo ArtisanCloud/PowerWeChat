@@ -21,14 +21,20 @@ type ResponseAgentGet struct {
 }
 
 type ResponseAgentAllowUserInfos struct {
+	*response.ResponseWork
+
 	User ResponseAgentAllowUser `json:"user"`
 }
 
 type ResponseAgentAllowUser struct {
+	*response.ResponseWork
+
 	UserID string `json:"userid"`
 }
 
 type ResponseAgentAllowParty struct {
+	*response.ResponseWork
+
 	PartyID []int `json:"partyid"`
 }
 

@@ -1,6 +1,10 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+
 type ResponseGetUserPhoneNumber struct {
+	*response.ResponseMiniProgram
+
 	ErrCode   int    `json:"errcode"`
 	ErrMsg    string `json:"errmsg"`
 	PhoneInfo *struct {

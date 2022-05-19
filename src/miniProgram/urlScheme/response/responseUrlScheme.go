@@ -1,7 +1,9 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+
 type ResponseUrlScheme struct {
-  ErrCode  int    `json:"errcode"`
-  ErrMsg   string `json:"errmsg"`
-  OpenLink string `json:"openlink"`
+	*response.ResponseMiniProgram
+
+	OpenLink string `json:"openlink"`
 }

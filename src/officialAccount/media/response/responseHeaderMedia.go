@@ -1,6 +1,10 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+
 type ResponseHeaderMedia struct {
+	*response.ResponseOfficialAccount
+
 	Connection         string `header:"Connection" json:"Connection"`                   //: close
 	ContentType        string `header:"Content-Type" json:"Content-Type"`               //: image/jpeg
 	ContentDisposition string `header:"Content-disposition" json:"Content-disposition"` //: attachment; filename="MEDIA_ID.jpg"

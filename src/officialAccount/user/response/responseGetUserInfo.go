@@ -1,8 +1,12 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import (
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+)
 
 type ResponseGetUserInfo struct {
+	*response.ResponseOfficialAccount
+
 	Subscribe      int    `json:"subscribe"`
 	OpenID         string `json:"openid"`
 	Language       string `json:"language"`
@@ -17,10 +21,12 @@ type ResponseGetUserInfo struct {
 }
 
 type ResponseBatchGetUserInfo struct {
+	*response.ResponseOfficialAccount
 	ResponseGetUserInfo []*ResponseGetUserInfo `json:"user_info_list"`
 }
 
 type ResponseGetUserList struct {
+	*response.ResponseOfficialAccount
 	Total int `json:"total"`
 	Count int `json:"count"`
 	Data  struct {

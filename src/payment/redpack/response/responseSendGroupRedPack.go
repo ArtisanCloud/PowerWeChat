@@ -1,8 +1,13 @@
 package response
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+)
 
 type ResponseSendGroupRedPack struct {
+	*response.ResponsePayment
+
 	XMLName     xml.Name `xml:"xml"`
 	Text        string   `xml:",chardata"`
 	ReturnCode  string   `xml:"return_code"`

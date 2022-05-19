@@ -14,12 +14,11 @@ func NewRaw(content string) *Raw {
 		NewMessage(&object.HashMap{"content": nil}),
 	}
 
-	m.TransformForJsonRequest = m.OverrideTransformForJsonRequest
 
 	return m
 }
 
-func (msg *Raw) OverrideTransformForJsonRequest(appends *object.HashMap, withType bool) (data *object.HashMap, err error) {
+func (msg *Raw) TransformForJsonRequest(appends *object.HashMap, withType bool) (data *object.HashMap, err error) {
 
 	data = &object.HashMap{}
 

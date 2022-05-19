@@ -1,6 +1,10 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+
 type ResponseOCRVehicleLicense struct {
+	*response.ResponseMiniProgram
+
 	VhicleType     string `json:"vhicle_type"`     // "小型普通客⻋",
 	Owner          string `json:"owner"`           // "东莞市xxxxx机械厂",
 	Addr           string `json:"addr"`            // "广东省东莞市xxxxx号",
