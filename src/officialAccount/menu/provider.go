@@ -1,4 +1,4 @@
-package media
+package menu
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
@@ -6,9 +6,8 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {
 
-	client := &Client{
-		kernel.NewBaseClient(&app, nil),
-	}
+	client := NewClient(app)
 
 	return client
+
 }

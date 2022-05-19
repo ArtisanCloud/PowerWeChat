@@ -2,16 +2,32 @@ package officialAccount
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerSocialite/src"
+	providers2 "github.com/ArtisanCloud/PowerSocialite/src/providers"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/media"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/qrCode"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/subscribeMessage"
+	"github.com/ArtisanCloud/PowerWeChat/src/basicService/url"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/dataCube"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/autoReply"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/comment"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/customerService"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/customerService/session"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/device"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/menu"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/poi"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/semantic"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/server"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/store"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/wifi"
+
 	"net/http"
 )
 
@@ -23,16 +39,33 @@ type OfficialAccount struct {
 
 	Config *kernel.Config
 
-	QRCode *qrCode.Client
-
+	// basic services
+	Media            *media.Client
+	QRCode           *qrCode.Client
 	SubscribeMessage *subscribeMessage.Client
+	URL              *url.Client
 
-	OAuth *src.SocialiteManager
-
-	User *user.Client
-	Tag  *tag.Client
-
-	Media *media.Client
+	Encryptor              *kernel.Encryptor
+	Server                 *server.Guard
+	User                   *user.Client
+	UserTag                *tag.Client
+	Menu                   *menu.Client
+	Material               *material.Client
+	CustomerService        *customerService.Client
+	CustomerServiceSession *session.Client
+	Semantic               *semantic.Client
+	DataCube               *dataCube.Client
+	AutoReplay             *autoReply.Client
+	Device                 *device.Client
+	ShakeAround            *shakeAround.Client
+	POI                    *poi.Client
+	Store                  *store.Client
+	Comment                *comment.Client
+	WeChat                 *providers2.WeChat
+	Wifi                   *wifi.Client
+	WifiCard               *wifi.CardClient
+	WifiDevice             *wifi.DeviceClient
+	WifiShop               *wifi.ShopClient
 }
 
 type UserConfig struct {
@@ -91,18 +124,20 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	//-------------- register Base --------------
 	app.Base = base.RegisterProvider(app)
 
-	//-------------- register QRCode --------------
-	app.QRCode = qrCode.RegisterProvider(app)
-
-	//-------------- register SubscribeMessage --------------
-	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
-
-
-	//-------------- register User --------------
-	app.User, app.Tag = user.RegisterProvider(app)
-
 	//-------------- media --------------
 	app.Media = media.RegisterProvider(app)
+	//-------------- register QRCode --------------
+	app.QRCode = qrCode.RegisterProvider(app)
+	//-------------- register SubscribeMessage --------------
+	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
+	//-------------- register URL --------------
+	app.URL = url.RegisterProvider(app)
+
+	//-------------- register Encryptor and Server --------------
+	app.Encryptor, app.Server = server.RegisterProvider(app)
+
+	//-------------- register User --------------
+	app.User, app.UserTag = user.RegisterProvider(app)
 
 	return app, err
 }
@@ -131,13 +166,13 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 	case "QRCode":
 		return app.QRCode
 	case "OAuth":
-		return app.OAuth
+		return app.WeChat
 	case "SubscribeMessage":
 		return app.SubscribeMessage
 	case "User":
 		return app.User
 	case "Tag":
-		return app.Tag
+		return app.User
 
 	default:
 		return nil

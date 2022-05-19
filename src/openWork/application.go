@@ -2,11 +2,11 @@ package officialAccount
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	media2 "github.com/ArtisanCloud/PowerWeChat/src/basicService/media"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
 	"net/http"
@@ -23,7 +23,7 @@ type OfficialAccount struct {
 	User *user.Client
 	Tag  *tag.Client
 
-	Media *media.Client
+	Media *media2.Client
 }
 
 type UserConfig struct {
@@ -86,7 +86,7 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	app.User, app.Tag = user.RegisterProvider(app)
 
 	//-------------- media --------------
-	app.Media = media.RegisterProvider(app)
+	app.Media = media2.RegisterProvider(app)
 
 	return app, err
 }

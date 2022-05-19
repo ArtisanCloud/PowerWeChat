@@ -4,8 +4,8 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media/material/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/media/material/response"
+	request2 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/request"
+	response3 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/response"
 )
 
 type Client struct {
@@ -20,9 +20,9 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 新增永久图文素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) AddNews(options *request.RequestMaterialAddNews) (*response.ResponseMaterialAddNews, error) {
+func (comp *Client) AddNews(options *request2.RequestMaterialAddNews) (*response3.ResponseMaterialAddNews, error) {
 
-	result := &response.ResponseMaterialAddNews{}
+	result := &response3.ResponseMaterialAddNews{}
 
 	_, err := comp.HttpPostJson("cgi-bin/material/add_news", options, nil, nil, result)
 
@@ -31,9 +31,9 @@ func (comp *Client) AddNews(options *request.RequestMaterialAddNews) (*response.
 
 // 新增其他类型永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) AddMaterial(options *request.RequestMaterialAddMaterial) (*response.ResponseMaterialAddMaterial, error) {
+func (comp *Client) AddMaterial(options *request2.RequestMaterialAddMaterial) (*response3.ResponseMaterialAddMaterial, error) {
 
-	result := &response.ResponseMaterialAddMaterial{}
+	result := &response3.ResponseMaterialAddMaterial{}
 
 	jsonDescription, err := object.JsonEncode(&object.HashMap{
 		"title":        options.Title,
@@ -55,9 +55,9 @@ func (comp *Client) AddMaterial(options *request.RequestMaterialAddMaterial) (*r
 
 // 获取永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
-func (comp *Client) GetMaterial(mediaID int) (*response.ResponseMaterialGetMaterial, error) {
+func (comp *Client) GetMaterial(mediaID int) (*response3.ResponseMaterialGetMaterial, error) {
 
-	result := &response.ResponseMaterialGetMaterial{}
+	result := &response3.ResponseMaterialGetMaterial{}
 
 	options := &object.HashMap{
 		"media_id": mediaID,
@@ -85,7 +85,7 @@ func (comp *Client) DelMaterial(mediaID int) (*response2.ResponseOfficialAccount
 
 // 修改永久图文素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Editing_Permanent_Rich_Media_Assets.html
-func (comp *Client) UpdateNews(options *request.RequestMaterialUpdateNews) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) UpdateNews(options *request2.RequestMaterialUpdateNews) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -96,9 +96,9 @@ func (comp *Client) UpdateNews(options *request.RequestMaterialUpdateNews) (*res
 
 // 获取素材总数
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_the_total_of_all_materials.html
-func (comp *Client) GetMaterialCount() (*response.ResponseMaterialGetMaterialCount, error) {
+func (comp *Client) GetMaterialCount() (*response3.ResponseMaterialGetMaterialCount, error) {
 
-	result := &response.ResponseMaterialGetMaterialCount{}
+	result := &response3.ResponseMaterialGetMaterialCount{}
 
 	_, err := comp.HttpPostJson("cgi-bin/material/get_materialcount", nil, nil, nil, result)
 
@@ -108,9 +108,9 @@ func (comp *Client) GetMaterialCount() (*response.ResponseMaterialGetMaterialCou
 
 // 获取素材列表
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_materials_list.html
-func (comp *Client) BatchGetMaterial(options *request.RequestMaterialBatchGetMaterial) (*response.ResponseMaterialBatchGetMaterial, error) {
+func (comp *Client) BatchGetMaterial(options *request2.RequestMaterialBatchGetMaterial) (*response3.ResponseMaterialBatchGetMaterial, error) {
 
-	result := &response.ResponseMaterialBatchGetMaterial{}
+	result := &response3.ResponseMaterialBatchGetMaterial{}
 
 	_, err := comp.HttpPostJson("cgi-bin/material/batchget_material", options, nil, nil, result)
 
