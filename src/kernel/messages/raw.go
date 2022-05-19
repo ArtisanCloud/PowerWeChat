@@ -3,7 +3,6 @@ package messages
 import (
 	"encoding/json"
 	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Raw struct {
@@ -15,17 +14,21 @@ func NewRaw(content string) *Raw {
 		NewMessage(&object.HashMap{"content": nil}),
 	}
 
+	m.TransformForJsonRequest = m.OverrideTransformForJsonRequest
+
 	return m
 }
 
-func (msg *Raw) TransformForJsonRequest(appends *power.HashMap, withType bool) (data *power.HashMap) {
-	data = &power.HashMap{}
+func (msg *Raw) OverrideTransformForJsonRequest(appends *object.HashMap, withType bool) (data *object.HashMap, err error) {
 
-	err := json.Unmarshal([]byte(msg.content()), data)
+	data = &object.HashMap{}
+
+	err = json.Unmarshal([]byte(msg.content()), data)
 	if err != nil {
-		data = &power.HashMap{}
+		data = &object.HashMap{}
 	}
-	return data
+	return data, err
+
 }
 
 func (msg *Raw) content() string {

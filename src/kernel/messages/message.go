@@ -39,7 +39,9 @@ type Message struct {
 	Properties  []string
 	JsonAliases *object.HashMap
 
-	ToXmlArray func() *object.HashMap
+	TransformForJsonRequest func(appends *object.HashMap, withType bool) (*object.HashMap, error)
+	TransformToXml          func(appends *object.HashMap, returnAsArray bool) (interface{}, error)
+	ToXmlArray              func() *object.HashMap
 }
 
 func NewMessage(attributes *object.HashMap) *Message {
@@ -50,6 +52,8 @@ func NewMessage(attributes *object.HashMap) *Message {
 	m.ToXmlArray = func() *object.HashMap {
 		return m.toXmlArray()
 	}
+	m.TransformForJsonRequest = m.OverrideTransformForJsonRequest
+	m.TransformToXml = m.OverrideTransformToXml
 
 	return m
 }
@@ -66,7 +70,7 @@ func (msg *Message) TransformForJsonRequestWithoutType(appends *object.HashMap) 
 	return msg.TransformForJsonRequest(appends, false)
 }
 
-func (msg *Message) TransformForJsonRequest(appends *object.HashMap, withType bool) (*object.HashMap, error) {
+func (msg *Message) OverrideTransformForJsonRequest(appends *object.HashMap, withType bool) (*object.HashMap, error) {
 	if !withType {
 		return msg.PropertiesToArray(&object.HashMap{}, msg.JsonAliases)
 	}
@@ -87,7 +91,7 @@ func (msg *Message) TransformForJsonRequest(appends *object.HashMap, withType bo
 }
 
 // return string or hashmap
-func (msg *Message) TransformToXml(appends *object.HashMap, returnAsArray bool) (interface{}, error) {
+func (msg *Message) OverrideTransformToXml(appends *object.HashMap, returnAsArray bool) (interface{}, error) {
 	data := object.MergeHashMap(&object.HashMap{"MsgType": msg.GetType()}, msg.ToXmlArray(), appends)
 
 	if returnAsArray {
