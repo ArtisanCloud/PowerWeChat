@@ -104,7 +104,7 @@ func (comp *Client) UsersOfTag(tagID string, nextOpenID string) (*response.Respo
 
 // 批量为用户打标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) tagUsers(openIDs []string, tagID string) (*response.ResponseTagUsers, error) {
+func (comp *Client) TagUsers(openIDs []string, tagID string) (*response.ResponseTagUsers, error) {
 	result := &response.ResponseTagUsers{}
 
 	params := &object.HashMap{

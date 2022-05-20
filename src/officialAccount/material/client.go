@@ -10,11 +10,14 @@ import (
 
 type Client struct {
 	*kernel.BaseClient
+
+	AllowTypes []string
 }
 
 func NewClient(app kernel.ApplicationInterface) *Client {
 	return &Client{
-		kernel.NewBaseClient(&app, nil),
+		BaseClient: kernel.NewBaseClient(&app, nil),
+		AllowTypes: []string{"image", "voice", "video", "thumb", "news_image"},
 	}
 }
 
