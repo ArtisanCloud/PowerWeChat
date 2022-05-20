@@ -139,6 +139,13 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	//-------------- register User --------------
 	app.User, app.UserTag = user.RegisterProvider(app)
 
+
+	app.Menu = menu.RegisterProvider(app)
+	app.Material = material.RegisterProvider(app)
+	app.CustomerService,app.CustomerServiceSession = customerService.RegisterProvider(app)
+	app.Semantic = semantic.RegisterProvider(app)
+	app.DataCube = dataCube.RegisterProvider(app)
+
 	return app, err
 }
 
@@ -183,6 +190,20 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 		return app.User
 	case "Tag":
 		return app.User
+	case "Menu":
+		return app.Menu
+	case "Material":
+		return app.Material
+	case "CustomerService":
+		return app.CustomerService
+	case "CustomerServiceSession":
+		return app.CustomerServiceSession
+	case "Semantic":
+		return app.Semantic
+	case "DataCube":
+		return app.DataCube
+
+
 
 	default:
 		return nil

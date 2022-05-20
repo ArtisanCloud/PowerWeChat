@@ -12,6 +12,12 @@ type Client struct {
 	*kernel.BaseClient
 }
 
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
+		kernel.NewBaseClient(&app, nil),
+	}
+}
+
 // 获取客服会话列表
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
 func (comp *Client) List() (*response.ResponseKFSessionList, error) {
