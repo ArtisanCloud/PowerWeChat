@@ -41,12 +41,7 @@ func (comp *Client) BatchGet(data *request.RequestBatchGetUserInfo) (*response.R
 
 	result := &response.ResponseBatchGetUserInfo{}
 
-	params, err := object.StructToHashMapWithTag(data, "json")
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = comp.HttpPostJson("cgi-bin/user/info/batchget", params, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/user/info/batchget", data, nil, nil, result)
 
 	return result, err
 }

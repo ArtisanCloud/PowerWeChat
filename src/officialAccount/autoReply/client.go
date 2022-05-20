@@ -17,10 +17,12 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取公众号的自动回复规则
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Getting_Rules_for_Auto_Replies.html
-func (comp *Client) Current(mediaID string) (*response.ResponseGettingRulesForAutoReplies, error) {
+func (comp *Client) Current() (*response.ResponseGettingRulesForAutoReplies, error) {
 
-	//result :=
+	result := &response.ResponseGettingRulesForAutoReplies{}
 
-	//return response.ResponseGettingRulesForAutoReplies, err
-	return nil, nil
+	_, err := comp.HttpGet("cgi-bin/get_current_autoreply_info", nil, nil, result)
+
+	return result, err
+
 }
