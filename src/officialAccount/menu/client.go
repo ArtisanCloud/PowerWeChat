@@ -69,7 +69,7 @@ func (comp *Client) CreateConditional(buttons *request.RequestMenuCreate, rules 
 
 // 删除接口
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Deleting_Custom-Defined_Menu.html
-func (comp *Client) Delete( (*response.ResponseMenuDelete, error) {
+func (comp *Client) Delete() (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
