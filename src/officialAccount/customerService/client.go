@@ -78,7 +78,7 @@ func (comp *Client) Delete(account string) (*response2.ResponseOfficialAccount, 
 		"kf_account": account,
 	}
 
-	_, err := comp.HttpGet("customservice/kfaccount/update", query, nil, &result)
+	_, err := comp.HttpPostJson("customservice/kfaccount/delete",nil, query, nil, &result)
 
 	return result, err
 }
@@ -118,14 +118,14 @@ func (comp *Client) SetAvatar(account string, path string) (*response2.ResponseO
 	return result, err
 }
 
-func (comp *Client) Message(message *contract.MessageInterface) *Messenger {
+func (comp *Client) Message(message contract.MessageInterface) *Messenger {
 	messageBuilder := NewMessenger(comp)
-	return messageBuilder.SetMessage(message)
+	return messageBuilder.SetMessage(&message)
 }
 
 // 客服接口 - 发消息
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Service_Center_messages.html
-func (comp *Client) Send(message contract.MessageInterface) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Send(message interface{}) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
 	_, err := comp.HttpPostJson("cgi-bin/message/custom/send", message, nil, nil, result)

@@ -44,26 +44,26 @@ func (comp *Messenger) SetTo(openID string) *Messenger {
 	return comp
 }
 
-func (comp *Messenger) Send() (err error) {
+func (comp *Messenger) Send() (result interface{}, err error) {
 
 	if comp.Message == nil {
-		return errors.New("no message to send")
+		return result, errors.New("no message to send")
 	}
 
 	switch (*comp.Message).(type) {
 	case *messages.Raw:
 		content := (*comp.Message).(*messages.Raw).Get("content", nil)
 		json, err := object.StructToJson(content)
-		if err!=nil{
-			return err
+		if err != nil {
+			return result, err
 		}
 
-		message := messages.NewText(json)
-		_,err = comp.Client.Send(message)
+		result, err = comp.Client.Send(json)
 
 		break
 
-	case messages.Text:
+	default:
+
 		prepends := &object.HashMap{
 			"touser": comp.To,
 		}
@@ -72,19 +72,14 @@ func (comp *Messenger) Send() (err error) {
 				"kf_account": comp.Account,
 			}
 		}
-		json , err:= (*comp.Message).TransformForJsonRequest(prepends, true)
-		if err!=nil{
-			return err
+		json, err := (*comp.Message).TransformForJsonRequest(prepends, true)
+		if err != nil {
+			return result, err
 		}
-
-		message := messages.NewMessage(json)
-		_,err = comp.Client.Send(message)
-
-		break
-
-	default:
-		err = errors.New("message is not implement as message interface ")
+		result, err = comp.Client.Send(json)
 	}
 
-	return err
+
+
+	return result, err
 }

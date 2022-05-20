@@ -116,6 +116,8 @@ func (msg *Message) PropertiesToArray(data *object.HashMap, aliases *object.Hash
 		has, alias := object.InHash(property, aliases)
 		if has {
 			(*data)[alias] = msg.Get(property, nil)
+		}else{
+			(*data)[property] = msg.Get(property, nil)
 		}
 	}
 

@@ -20,10 +20,10 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 获取客服会话列表
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
-func (comp *Client) List() (*response.ResponseKFSessionList, error) {
+func (comp *Client) List(account string) (*response.ResponseKFSessionList, error) {
 	result := &response.ResponseKFSessionList{}
 
-	_, err := comp.HttpGet("customservice/kfsession/getsessionlist", nil, nil, &result)
+	_, err := comp.HttpGet("customservice/kfsession/getsessionlist", &object.StringMap{"kf_account": account}, nil, &result)
 
 	return result, err
 }
