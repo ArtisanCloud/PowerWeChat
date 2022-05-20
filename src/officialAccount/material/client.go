@@ -80,7 +80,7 @@ func (comp *Client) UploadArticle(articles request2.RequestAddArticles) (*respon
 func (comp *Client) UpdateArticle(mediaID string, articles request2.RequestAddArticles, index int) (response3.ResponseMaterialAddNews, error) {
 	result := response3.ResponseMaterialAddNews{}
 
-	params := &power.HashMap{
+	params := &object.HashMap{
 		"media_id": mediaID,
 		"index":    index,
 		"articles": articles,
