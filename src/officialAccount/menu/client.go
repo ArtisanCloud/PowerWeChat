@@ -1,11 +1,10 @@
 package menu
 
 import (
-	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/menu/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/menu/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/menu/request"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/menu/response"
 )
 
 type Client struct {
@@ -18,40 +17,89 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 	}
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90232
+// 获取自定义菜单配置
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Getting_Custom_Menu_Configurations.html
 func (comp *Client) Get() (*response.ResponseMenuGet, error) {
 
 	result := &response.ResponseMenuGet{}
 
-	agentID := (*comp.App).GetConfig().GetInt("agent_id", 0)
-	_, err := comp.HttpGet("cgi-bin/menu/get", &object.StringMap{
-		"agentid": fmt.Sprintf("%d", agentID),
-	}, nil, result)
+	_, err := comp.HttpGet("cgi-bin/menu/get", nil, nil, result)
 
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90231
-func (comp *Client) Create(data *request.RequestMenuSet) (*response.ResponseMenuCreate, error) {
+// 查询接口
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Querying_Custom_Menus.html
+func (comp *Client) CurrentSelfMenu() (*response.ResponseCurrentSelfMenu, error) {
+
+	result := &response.ResponseCurrentSelfMenu{}
+
+	_, err := comp.HttpGet("cgi-bin/get_current_selfmenu_info", nil, nil, result)
+
+	return result, err
+}
+
+// 创建接口
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Creating_Custom-Defined_Menu.html
+func (comp *Client) Create(buttons *request.RequestMenuCreate) (*response.ResponseMenuCreate, error) {
 
 	result := &response.ResponseMenuCreate{}
 
-	agentID := (*comp.App).GetConfig().GetInt("agent_id", 0)
-	_, err := comp.HttpPostJson("cgi-bin/menu/create", data, &object.StringMap{
-		"agentid": fmt.Sprintf("%d", agentID),
-	}, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/menu/create", &object.HashMap{
+		"button": buttons,
+	}, nil, nil, result)
 
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90233
-func (comp *Client) Delete(agentID int) (*response.ResponseMenuDelete, error) {
+// 创建个性化菜单
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html
+func (comp *Client) CreateConditional(buttons *request.RequestMenuCreate, rules *request.RequestMatchRule) (*response.ResponseMenuCreateConditional, error) {
+
+	result := &response.ResponseMenuCreateConditional{}
+
+	_, err := comp.HttpPostJson("cgi-bin/menu/addconditional", &object.HashMap{
+		"button":    buttons,
+		"matchrule": rules,
+	}, nil, nil, result)
+
+	return result, err
+
+}
+
+// 删除接口
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Deleting_Custom-Defined_Menu.html
+func (comp *Client) Delete( (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
-	_, err := comp.HttpGet("cgi-bin/menu/delete", &object.StringMap{
-		"agentid": fmt.Sprintf("%d", agentID),
-	}, nil, result)
+	_, err := comp.HttpGet("cgi-bin/menu/delete", nil, nil, result)
+
+	return result, err
+}
+
+// 删除个性化菜单
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html
+func (comp *Client) DeleteConditional(menuID int) (*response.ResponseMenuDelete, error) {
+
+	result := &response.ResponseMenuDelete{}
+
+	_, err := comp.HttpPostJson("cgi-bin/menu/delconditional", &object.HashMap{
+		"menuid": menuID,
+	}, nil, nil, result)
+
+	return result, err
+}
+
+// 测试个性化菜单匹配结果
+// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html#1
+func (comp *Client) TryMatch(userID string) (*response.ResponseMenuTryMatch, error) {
+
+	result := &response.ResponseMenuTryMatch{}
+
+	_, err := comp.HttpPostJson("cgi-bin/menu/trymatch", &object.HashMap{
+		"user_id": userID,
+	}, nil, nil, result)
 
 	return result, err
 }

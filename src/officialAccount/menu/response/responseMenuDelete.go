@@ -5,5 +5,5 @@ import (
 )
 
 type ResponseMenuDelete struct {
-	*response.ResponseWork
+	*response.ResponseOfficialAccount
 }
