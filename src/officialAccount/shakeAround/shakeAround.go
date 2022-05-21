@@ -1,14 +1,12 @@
 package shakeAround
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel"
+type ShakeAround struct {
+	*Client
 
-type ShakeAroundClient struct {
-	*kernel.BaseClient
-}
-
-
-func NewShakeAroundClient(app kernel.ApplicationInterface) *DeviceClient {
-	return &DeviceClient{
-		kernel.NewBaseClient(&app, nil),
-	}
+	Device      *DeviceClient
+	Page        *PageClient
+	Material    *MaterialClient
+	Group       *GroupClient
+	Relation    *RelationClient
+	Stats       *StatsClient
 }

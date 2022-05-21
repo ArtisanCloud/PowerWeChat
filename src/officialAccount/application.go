@@ -57,7 +57,7 @@ type OfficialAccount struct {
 	DataCube               *dataCube.Client
 	AutoReplay             *autoReply.Client
 	Device                 *device.Client
-	ShakeAround            *shakeAround.Client
+	ShakeAround            *shakeAround.ShakeAround
 	POI                    *poi.Client
 	Store                  *store.Client
 	Comment                *comment.Client

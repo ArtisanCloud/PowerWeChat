@@ -10,14 +10,13 @@ import (
 type Client struct {
 	*kernel.BaseClient
 
-	Device   *DeviceClient
-	Page     *PageClient
-	Material *MaterialClient
-	Group    *GroupClient
-	Relation *RelationClient
-	Stats    *StatsClient
 }
 
+func NewClient(app kernel.ApplicationInterface) *Client {
+	return &Client{
+		kernel.NewBaseClient(&app, nil),
+	}
+}
 
 // 申请开通摇一摇周边功能
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Apply/Application_for_opening_function.html
