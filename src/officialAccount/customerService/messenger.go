@@ -36,7 +36,7 @@ func (comp *Messenger) SetBy(account string) *Messenger {
 }
 
 func (comp *Messenger) From(account string) *Messenger {
-	return comp.SetTo(account)
+	return comp.SetBy(account)
 }
 
 func (comp *Messenger) SetTo(openID string) *Messenger {
