@@ -78,7 +78,7 @@ func (comp *Client) Delete(account string) (*response2.ResponseOfficialAccount, 
 		"kf_account": account,
 	}
 
-	_, err := comp.HttpPostJson("customservice/kfaccount/delete",nil, query, nil, &result)
+	_, err := comp.HttpGet("customservice/kfaccount/delete", query, nil, &result)
 
 	return result, err
 }

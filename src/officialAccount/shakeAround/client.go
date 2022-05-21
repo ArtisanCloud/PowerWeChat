@@ -2,13 +2,22 @@ package shakeAround
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/request"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
+
+	Device   *DeviceClient
+	Page     *PageClient
+	Material *MaterialClient
+	Group    *GroupClient
+	Relation *RelationClient
+	Stats    *StatsClient
 }
+
 
 // 申请开通摇一摇周边功能
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Apply/Application_for_opening_function.html

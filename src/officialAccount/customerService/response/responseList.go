@@ -5,7 +5,7 @@ import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 type KF struct {
 	KFAccount        string `json:"kf_account"`
 	KFHeadImgURL     string `json:"kf_headimgurl"`
-	KFId             string `json:"kf_id"`
+	KFID             int    `json:"kf_id"`
 	KFNick           string `json:"kf_nick"`
 	KFWx             string `json:"kf_wx,omitempty"`
 	InviteWx         string `json:"invite_wx,omitempty"`
@@ -16,7 +16,7 @@ type KF struct {
 type ResponseList struct {
 	*response.ResponseOfficialAccount
 
-	KFList  []*KF `json:"kf_list"`
+	KFList []*KF `json:"kf_list"`
 }
 
 // ------------------------------------------------------------
