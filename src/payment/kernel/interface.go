@@ -10,7 +10,7 @@ type ApplicationPaymentInterface interface {
 
 	Scheme(productID string) string
 	CodeUrlScheme(codeUrl string) string
-	SetSubMerchant(mchId string, appId string) ApplicationPaymentInterface
+	SetSubMerchant(mchID string, appID string) ApplicationPaymentInterface
 
 	InSandbox() bool
 	GetKey(endpoint string) (string, error)

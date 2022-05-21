@@ -4,7 +4,7 @@ import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 
 type BaseInfo struct {
 	DeviceType string `json:"device_type"`
-	DeviceId   string `json:"device_id"`
+	DeviceID   string `json:"device_id"`
 }
 
 type Resp struct {

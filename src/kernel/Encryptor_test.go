@@ -10,7 +10,7 @@ import (
 const (
 	token          = "pcoLldqMu2WQQtYBeDX5HiXPsBFlTnDM"
 	encodingAesKey = "CyjBvGm4tJNmcThkeL5Wajzom4jKlBygKtpTkYeqsnE"
-	appId          = "1000005"
+	appID          = "1000005"
 )
 
 func TestEncryptor_Decrypt(t *testing.T) {
@@ -26,7 +26,7 @@ func TestEncryptor_Decrypt(t *testing.T) {
 	// 解密之后的内容
 	decryptionText := "<xml><ToUserName><![CDATA[wwedab3d5fc43636d8]]></ToUserName><FromUserName><![CDATA[WangChaoYi]]></FromUserName><CreateTime>1623301925</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[密文测试]]></Content><MsgId>6972028683187026694</MsgId><AgentID>1000005</AgentID></xml>"
 
-	encryptor, err := NewEncryptor(appId, token, encodingAesKey)
+	encryptor, err := NewEncryptor(appID, token, encodingAesKey)
 	if err != nil {
 		log.Fatal("NewEncryptor init fail: ", err)
 	}
@@ -78,7 +78,7 @@ func TestEncryptor_Encrypt(t *testing.T) {
 	msgRecv := &WeComRecvMsg{
 		ToUserName: "232323",
 		Encrypt:    msgBiz.Encrypt.Value,
-		AgentId:    appId,
+		AgentID:    appID,
 	}
 	msgRecvXmlStr, err := xml.Marshal(msgRecv)
 	if err != nil {
@@ -128,7 +128,7 @@ func TestEncryptor_Signature(t *testing.T) {
 
 	ciphertext2 := ciphertext[1:]
 
-	encryptor, err := NewEncryptor(appId, token, encodingAesKey)
+	encryptor, err := NewEncryptor(appID, token, encodingAesKey)
 	if err != nil {
 		log.Fatal("NewEncryptor init fail: ", err)
 	}
@@ -151,7 +151,7 @@ func TestEncryptor_VerifyUrl(t *testing.T) {
 	// 原始密文内容
 	ciphertext := "o1XtmVltGmUAqoWee54yd4Q5ZBgrw4/9lFo5qdZoVPd1DybzarjuYCfFlR2AFbAcWHwFgmbrVBD+f9910QIF6g=="
 
-	encryptor, err := NewEncryptor(appId, token, encodingAesKey)
+	encryptor, err := NewEncryptor(appID, token, encodingAesKey)
 	if err != nil {
 		log.Fatal("NewEncryptor init fail: ", err)
 	}

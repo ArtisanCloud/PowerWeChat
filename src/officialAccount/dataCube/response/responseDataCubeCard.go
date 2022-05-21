@@ -2,7 +2,7 @@ package response
 
 type FreeCardSummary struct {
 	RefDate     string `json:"ref_date"`
-	CardId      string `json:"card_id"`
+	CardID      string `json:"card_id"`
 	CardType    int    `json:"card_type"`
 	ViewCnt     int    `json:"view_cnt"`
 	ViewUser    int    `json:"view_user"`

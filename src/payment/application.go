@@ -207,9 +207,9 @@ func (app *Payment) CodeUrlScheme(codeUrl string) string {
 	return fmt.Sprintf("weixin://wxpay/bizpayurl?sr=%s", codeUrl)
 }
 
-func (app *Payment) SetSubMerchant(mchId string, appId string) kernel2.ApplicationPaymentInterface {
-	app.Config.Set("sub_mch_id", mchId)
-	app.Config.Set("sub_appid", appId)
+func (app *Payment) SetSubMerchant(mchID string, appID string) kernel2.ApplicationPaymentInterface {
+	app.Config.Set("sub_mch_id", mchID)
+	app.Config.Set("sub_appid", appID)
 
 	return app
 }

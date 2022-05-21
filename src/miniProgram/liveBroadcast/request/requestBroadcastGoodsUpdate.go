@@ -5,7 +5,7 @@ type RequestBroadcastGoodsUpdate struct {
 }
 
 type RequestBroadcastGoodsUpdateInfo struct {
-	GoodsId         int     `json:"goodsId"`
+	GoodsID         int     `json:"goodsId"`
 	CoverImgUrl     string  `json:"coverImgUrl,omitempty"`
 	Name            string  `json:"name,omitempty"`
 	PriceType       int     `json:"priceType,omitempty'"`

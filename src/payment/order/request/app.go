@@ -6,8 +6,8 @@ type AppAmount struct {
 }
 
 type AppGoodsDetail struct {
-	MerchantGoodsId  string `json:"merchant_goods_id"`  // 商户侧商品编码
-	WechatPayGoodsId string `json:"wechatpay_goods_id"` // 微信侧商品编码
+	MerchantGoodsID  string `json:"merchant_goods_id"`  // 商户侧商品编码
+	WechatPayGoodsID string `json:"wechatpay_goods_id"` // 微信侧商品编码
 	GoodsName        string `json:"goods_name"`         // 商品名称
 	Quantity         int    `json:"quantity"`           // 商品数量
 	UnitPrice        int    `json:"unit_price"`         // 商品单价

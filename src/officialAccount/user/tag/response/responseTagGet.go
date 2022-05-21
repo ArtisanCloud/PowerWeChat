@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 
 type Tag struct {
-	Id    int    `json:"id"`
+	ID    int    `json:"id"`
 	Name  string `json:"name"`
 	Count int    `json:"count"`
 }

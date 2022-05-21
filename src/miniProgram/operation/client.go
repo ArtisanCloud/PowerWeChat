@@ -47,7 +47,7 @@ func (comp *Client) GetFeedback(feedbackType int, page int, num int) (*response.
 	return result, err
 }
 
-// 获取 mediaId 图片
+// 获取 mediaID 图片
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/operation/operation.getFeedbackmedia.html
 func (comp *Client) GetFeedbackMedia(recordID int, mediaID string) (*http.Response, error) {
 

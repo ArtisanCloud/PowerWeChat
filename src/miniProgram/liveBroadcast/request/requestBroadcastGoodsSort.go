@@ -1,5 +1,5 @@
 package request
 
 type RequestBroadcastGoodsSort struct {
-	GoodsId string `json:"goodsId"`
+	GoodsID string `json:"goodsId"`
 }

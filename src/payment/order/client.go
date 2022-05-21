@@ -111,8 +111,8 @@ func (comp *Client) QueryByTransactionId(number string) (*response.ResponseOrder
 	})
 }
 
-func (comp *Client) QueryByOutTradeNumber(transactionId string) (*response.ResponseOrder, error) {
-	endpoint := fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s", transactionId)
+func (comp *Client) QueryByOutTradeNumber(transactionID string) (*response.ResponseOrder, error) {
+	endpoint := fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s", transactionID)
 	return comp.Query(&object.HashMap{
 		"endpoint": endpoint,
 	})

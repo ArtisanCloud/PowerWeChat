@@ -33,14 +33,14 @@ type RefundAmount struct {
 }
 
 type RefundPromotionDetail struct {
-	PromotionId  string `json:"promotion_id"`
+	PromotionID  string `json:"promotion_id"`
 	Scope        string `json:"scope"`
 	Type         string `json:"type"`
 	Amount       int    `json:"amount"`
 	RefundAmount int    `json:"refund_amount"`
 	GoodsDetail  struct {
-		MerchantGoodsId  string `json:"merchant_goods_id"`
-		WechatPayGoodsId string `json:"wechatpay_goods_id"`
+		MerchantGoodsID  string `json:"merchant_goods_id"`
+		WechatPayGoodsID string `json:"wechatpay_goods_id"`
 		GoodsName        string `json:"goods_name"`
 		UnitPrice        int    `json:"unit_price"`
 		RefundAmount     int    `json:"refund_amount"`

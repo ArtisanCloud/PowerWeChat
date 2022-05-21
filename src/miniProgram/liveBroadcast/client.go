@@ -80,11 +80,11 @@ func (comp *Client) EditRoom(options *request.RequestBroadcastEditRoom) (*respon
 
 // 获取直播间推流地址
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/livebroadcast/liveBroadcast.getPushUrl.html
-func (comp *Client) GetPushUrl(roomId int) (*response.ResponseBroadcastGetPushUrl, error) {
+func (comp *Client) GetPushUrl(roomID int) (*response.ResponseBroadcastGetPushUrl, error) {
 	result := &response.ResponseBroadcastGetPushUrl{}
 
 	options := &object.StringMap{
-		"roomId": strconv.Itoa(roomId),
+		"roomId": strconv.Itoa(roomID),
 	}
 
 	_, err := comp.HttpGet("wxaapi/broadcast/room/getpushurl", options, nil, result)

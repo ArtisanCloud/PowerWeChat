@@ -25,10 +25,10 @@ type BeaconInfo struct {
 }
 
 type UserData struct {
-	PageId     int         `json:"page_id "`
+	PageID     int         `json:"page_id "`
 	BeaconInfo *BeaconInfo `json:"beacon_info"`
 	Openid     string      `json:"openid"`
-	PoiId      int         `json:" poi_id"`
+	PoiID      int         `json:" poi_id"`
 }
 
 type ResponseShakeAroundUser struct {

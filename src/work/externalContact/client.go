@@ -47,12 +47,12 @@ func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 // 获取外部联系人详情.
 // https://work.weixin.qq.com/api/doc/90000/90135/92114
-func (comp *Client) Get(externalUserId string, cursor string) (*weCom.ResponseGetExternalContact, error) {
+func (comp *Client) Get(externalUserID string, cursor string) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}
 
 	_, err := comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
-		"external_userid": externalUserId,
+		"external_userid": externalUserID,
 		"cursor":          cursor,
 	}, nil, result)
 

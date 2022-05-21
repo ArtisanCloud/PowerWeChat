@@ -35,11 +35,11 @@ type RequestAccountServiceMsgLink struct {
 	Title        string `json:"title"`
 	Desc         string `json:"desc"`
 	Url          string `json:"url"`
-	ThumbMediaId string `json:"thumb_media_id"`
+	ThumbMediaID string `json:"thumb_media_id"`
 }
 
 type RequestAccountServiceMsgMiniProgram struct {
-	AppId        string `json:"appid"`
+	AppID        string `json:"appid"`
 	Title        string `json:"title"`
 	ThumbMediaID string `json:"thumb_media_id"`
 	PagePath     string `json:"pagepath"`

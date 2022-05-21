@@ -25,10 +25,10 @@ func Test_ExternalContact_Get_Batch_ByUser(t *testing.T) {
 
 func Test_ExternalContact_Get_Unassigned(t *testing.T) {
 
-	pageId := 1
+	pageID := 1
 	pageSize := 50
 
-	response ,_:= Work.ExternalContact.GetUnassigned(pageId, pageSize)
+	response ,_:= Work.ExternalContact.GetUnassigned(pageID, pageSize)
 
 	if response == nil {
 		t.Error("response nil")
@@ -42,11 +42,11 @@ func Test_ExternalContact_Get_Unassigned(t *testing.T) {
 
 func Test_ExternalContact_Transfer(t *testing.T) {
 
-	handoverUserId := ""
-	takeoverUserId := ""
-	externalUserId := []string{""}
+	handoverUserID := ""
+	takeoverUserID := ""
+	externalUserID := []string{""}
 
-	response,_ := Work.ExternalContact.Transfer(externalUserId, handoverUserId, takeoverUserId)
+	response,_ := Work.ExternalContact.Transfer(externalUserID, handoverUserID, takeoverUserID)
 
 	if response == nil {
 		t.Error("response nil")

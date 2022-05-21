@@ -23,7 +23,7 @@ func NewClient(app *kernel2.ApplicationInterface) *Client {
 
 // JSAPI调起支付API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_4.shtml
-func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, error) {
+func (comp *Client) BridgeConfig(prepayID string, isJson bool) (interface{}, error) {
 
 	config := (*comp.App).GetConfig()
 	appID := config.GetString("app_id", "")
@@ -32,7 +32,7 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 		"appId":     appID,
 		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
 		"nonceStr":  object.QuickRandom(32),
-		"package":   fmt.Sprintf("prepay_id=%s", prepayId),
+		"package":   fmt.Sprintf("prepay_id=%s", prepayID),
 		"signType":  "RSA",
 	}
 
@@ -54,9 +54,9 @@ func (comp *Client) BridgeConfig(prepayId string, isJson bool) (interface{}, err
 
 }
 
-func (comp *Client) SDKConfig(prepayId string) (*object.StringMap, error) {
+func (comp *Client) SDKConfig(prepayID string) (*object.StringMap, error) {
 
-	result, err := comp.BridgeConfig(prepayId, false)
+	result, err := comp.BridgeConfig(prepayID, false)
 
 	config := result.(*object.StringMap)
 	(*config)["timestamp"] = (*config)["timeStamp"]
@@ -66,7 +66,7 @@ func (comp *Client) SDKConfig(prepayId string) (*object.StringMap, error) {
 
 }
 
-func (comp *Client) AppConfig(prepayId string) (*object.StringMap, error) {
+func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 
 	config := (*comp.App).GetConfig()
 	appID := config.GetString("app_id", "")
@@ -75,7 +75,7 @@ func (comp *Client) AppConfig(prepayId string) (*object.StringMap, error) {
 	params := &object.StringMap{
 		"appid":     appID,
 		"partnerid": mchID,
-		"prepayid":  prepayId,
+		"prepayid":  prepayID,
 		"noncestr":  object.UniqueID(""),
 		"timestamp": fmt.Sprintf("%d", time.Now().Unix()),
 		"package":   "Sign=WXPay",

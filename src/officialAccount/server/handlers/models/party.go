@@ -16,7 +16,7 @@ type EventPartyCreate struct {
 	models.CallbackMessageHeader
 	ID           string   `xml:"Id"`
 	Name         string   `xml:"Name"`
-	ParentId     string   `xml:"ParentId"`
+	ParentID     string   `xml:"ParentId"`
 	Order        string   `xml:"Order"`
 }
 
@@ -27,7 +27,7 @@ type EventPartyUpdate struct {
 	models.CallbackMessageHeader
 	ID           string   `xml:"Id"`
 	Name         string   `xml:"Name"`
-	ParentId     string   `xml:"ParentId"`
+	ParentID     string   `xml:"ParentId"`
 }
 
 

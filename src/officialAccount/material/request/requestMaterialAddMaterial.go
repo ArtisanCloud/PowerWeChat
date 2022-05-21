@@ -14,7 +14,7 @@ type RequestMaterialAddMaterial struct {
 
 type Article struct {
 	Title              string `json:"title"`
-	ThumbMediaId       string `json:"thumb_media_id"`
+	ThumbMediaID       string `json:"thumb_media_id"`
 	Author             string `json:"author"`
 	Digest             string `json:"digest"`
 	ShowCoverPic       string `json:"show_cover_pic"`

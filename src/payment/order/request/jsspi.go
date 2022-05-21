@@ -10,8 +10,8 @@ type JSAPIPayer struct {
 }
 
 type JSAPIGoodsDetail struct {
-	MerchantGoodsId  string `json:"merchant_goods_id"`  // 商户侧商品编码
-	WechatPayGoodsId string `json:"wechatpay_goods_id"` // 微信侧商品编码
+	MerchantGoodsID  string `json:"merchant_goods_id"`  // 商户侧商品编码
+	WechatPayGoodsID string `json:"wechatpay_goods_id"` // 微信侧商品编码
 	GoodsName        string `json:"goods_name"`         // 商品名称
 	Quantity         int    `json:"quantity"`           // 商品数量
 	UnitPrice        int    `json:"unit_price"`         // 商品单价
@@ -19,7 +19,7 @@ type JSAPIGoodsDetail struct {
 
 type JSAPIDetail struct {
 	CostPrice   int                `json:"cost_price"`   // 订单原价
-	InvoiceId   string             `json:"invoice_id"`   // 商品小票ID
+	InvoiceID   string             `json:"invoice_id"`   // 商品小票ID
 	GoodsDetail []*JSAPIGoodsDetail `json:"goods_detail"` // + 单品列表
 }
 

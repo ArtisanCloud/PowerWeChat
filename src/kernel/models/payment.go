@@ -33,7 +33,7 @@ type Transaction struct {
 	TradeState      string             `json:"trade_state,omitempty"`
 	TradeStateDesc  string             `json:"trade_state_desc,omitempty"`
 	TradeType       string             `json:"trade_type,omitempty"`
-	TransactionId   string             `json:"transaction_id,omitempty"`
+	TransactionID   string             `json:"transaction_id,omitempty"`
 }
 
 // TransactionAmount
@@ -52,7 +52,7 @@ type TransactionPayer struct {
 // PromotionDetail
 type PromotionDetail struct {
 	// 券ID
-	CouponId string `json:"coupon_id,omitempty"`
+	CouponID string `json:"coupon_id,omitempty"`
 	// 优惠名称
 	Name string `json:"name,omitempty"`
 	// GLOBAL：全场代金券；SINGLE：单品优惠
@@ -62,7 +62,7 @@ type PromotionDetail struct {
 	// 优惠券面额
 	Amount int64 `json:"amount,omitempty"`
 	// 活动ID，批次ID
-	StockId string `json:"stock_id,omitempty"`
+	StockID string `json:"stock_id,omitempty"`
 	// 单位为分
 	WechatpayContribute int64 `json:"wechatpay_contribute,omitempty"`
 	// 单位为分
@@ -77,7 +77,7 @@ type PromotionDetail struct {
 // PromotionGoodsDetail
 type PromotionGoodsDetail struct {
 	// 商品编码
-	GoodsId string `json:"goods_id"`
+	GoodsID string `json:"goods_id"`
 	// 商品数量
 	Quantity int64 `json:"quantity"`
 	// 商品价格
@@ -94,11 +94,11 @@ type Refund struct {
 	// 原支付交易对应的商户订单号
 	MchID string `json:"mchid"`
 	// 微信支付交易订单号
-	TransactionId string `json:"transaction_id"`
+	TransactionID string `json:"transaction_id"`
 	// 原支付交易对应的商户订单号
 	OutTradeNo string `json:"out_trade_no"`
 	// 微信支付退款号
-	RefundId string `json:"refund_id"`
+	RefundID string `json:"refund_id"`
 	// 商户系统内部的退款单号，商户系统内部唯一，只能是数字、大小写字母_-|*@ ，同一退款单号多次请求只退一笔。
 	OutRefundNo string `json:"out_refund_no"`
 	// 退款状态，枚举值

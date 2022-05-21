@@ -56,7 +56,7 @@ type EventBatchJobResult struct {
 	models.CallbackMessageHeader
 	BatchJob     struct {
 		Text    string `xml:",chardata"`
-		JobId   string `xml:"JobId"`
+		JobID   string `xml:"JobId"`
 		JobType string `xml:"JobType"`
 		ErrCode string `xml:"ErrCode"`
 		ErrMsg  string `xml:"ErrMsg"`
@@ -189,11 +189,11 @@ type EventOpenApprovalChange struct {
 		Text           string `xml:",chardata"`
 		ThirdNo        string `xml:"ThirdNo"`
 		OpenSpName     string `xml:"OpenSpName"`
-		OpenTemplateId string `xml:"OpenTemplateId"`
+		OpenTemplateID string `xml:"OpenTemplateId"`
 		OpenSpStatus   string `xml:"OpenSpStatus"`
 		ApplyTime      string `xml:"ApplyTime"`
 		ApplyUserName  string `xml:"ApplyUserName"`
-		ApplyUserId    string `xml:"ApplyUserId"`
+		ApplyUserID    string `xml:"ApplyUserId"`
 		ApplyUserParty string `xml:"ApplyUserParty"`
 		ApplyUserImage string `xml:"ApplyUserImage"`
 		ApprovalNodes  struct {
@@ -208,7 +208,7 @@ type EventOpenApprovalChange struct {
 					Item struct {
 						Text       string `xml:",chardata"`
 						ItemName   string `xml:"ItemName"`
-						ItemUserId string `xml:"ItemUserId"`
+						ItemUserID string `xml:"ItemUserId"`
 						ItemImage  string `xml:"ItemImage"`
 						ItemStatus string `xml:"ItemStatus"`
 						ItemSpeech string `xml:"ItemSpeech"`
@@ -222,7 +222,7 @@ type EventOpenApprovalChange struct {
 			NotifyNode struct {
 				Text       string `xml:",chardata"`
 				ItemName   string `xml:"ItemName"`
-				ItemUserId string `xml:"ItemUserId"`
+				ItemUserID string `xml:"ItemUserId"`
 				ItemImage  string `xml:"ItemImage"`
 			} `xml:"NotifyNode"`
 		} `xml:"NotifyNodes"`
@@ -242,7 +242,7 @@ type EventTemplateCardEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
 	EventKey      string   `xml:"EventKey"`
-	TaskId        string   `xml:"TaskId"`
+	TaskID        string   `xml:"TaskId"`
 	CardType      string   `xml:"CardType"`
 	ResponseCode  string   `xml:"ResponseCode"`
 	AgentID       string   `xml:"AgentID"`
@@ -253,7 +253,7 @@ type EventTemplateCardEvent struct {
 			QuestionKey string `xml:"QuestionKey"`
 			OptionIds   struct {
 				Text     string   `xml:",chardata"`
-				OptionId []string `xml:"OptionId"`
+				OptionID []string `xml:"OptionId"`
 			} `xml:"OptionIds"`
 		} `xml:"SelectedItem"`
 	} `xml:"SelectedItems"`
@@ -264,7 +264,7 @@ type EventTemplateCardMenuEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
 	EventKey     string   `xml:"EventKey"`
-	TaskId       string   `xml:"TaskId"`
+	TaskID       string   `xml:"TaskId"`
 	CardType     string   `xml:"CardType"`
 	ResponseCode string   `xml:"ResponseCode"`
 	AgentID      string   `xml:"AgentID"`

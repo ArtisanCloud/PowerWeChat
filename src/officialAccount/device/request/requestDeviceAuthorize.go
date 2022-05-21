@@ -18,5 +18,5 @@ type RequestDeviceAuthorize struct {
 	DeviceNum  string    `json:"device_num"`
 	DeviceList []*Device `json:"device_list"`
 	OpType     string    `json:"op_type"`
-	ProductId  string    `json:"product_id"`
+	ProductID  string    `json:"product_id"`
 }

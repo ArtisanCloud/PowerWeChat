@@ -20,7 +20,7 @@ const (
 	ErrorParseXml         = -40002 // xml/json解析失败
 	ErrorCalcSignature    = -40003 // sha加密生成签名失败
 	ErrorInvalidAesKey    = -40004 // AESKey 非法
-	ErrorInvalidAppId     = -40005 // ReceiveId 校验错误
+	ErrorInvalidAppID     = -40005 // ReceiveID 校验错误
 	ErrorEncryptAes       = -40006 // AES 加密失败
 	ErrorDecryptAes       = -40007 // AES 解密失败
 	ErrorInvalidXml       = -40008 // 解密后得到的buffer非法
@@ -46,18 +46,18 @@ type WeComReplyMsg struct {
 type WeComRecvMsg struct {
 	ToUserName string `xml:"ToUserName"`
 	Encrypt    string `xml:"Encrypt"`
-	AgentId    string `xml:"AgentID"`
+	AgentID    string `xml:"AgentID"`
 }
 
 type Encryptor struct {
-	appId     string // App token
+	appID     string // App token
 	token     string
 	aesKey    []byte
 	blockSize int64
 	aes       *support.AES
 }
 
-func NewEncryptor(appId, token, aesKey string) (*Encryptor, error) {
+func NewEncryptor(appID, token, aesKey string) (*Encryptor, error) {
 	// TODO: 不明白为什么需要等号
 	aesKey = aesKey + "="
 	aesKeyByte, err := base64.StdEncoding.DecodeString(aesKey)
@@ -65,7 +65,7 @@ func NewEncryptor(appId, token, aesKey string) (*Encryptor, error) {
 		return nil, err
 	}
 	return &Encryptor{
-		appId:     appId,
+		appID:     appID,
 		token:     token,
 		aesKey:    aesKeyByte,
 		blockSize: 32,
@@ -99,7 +99,7 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 	buffer.WriteString(msg)
 
 	// TODO 暂时不知道用途
-	//buffer.WriteString(wxBizMsgCrypt.receiverId)
+	//buffer.WriteString(wxBizMsgCrypt.receiverID)
 
 	tmpCiphertext, err := encryptor.aes.Encrypt(buffer.Bytes(), encryptor.aesKey, encryptor.aesKey[:aes.BlockSize])
 	if err != nil {
@@ -162,7 +162,7 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 	}
 
 	msg := plaintext[20 : 20+msgLen]
-	//receiverId := plaintext[20+msgLen:]
+	//receiverID := plaintext[20+msgLen:]
 
 	return msg, nil
 }

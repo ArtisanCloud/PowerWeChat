@@ -33,7 +33,7 @@ type Message struct {
 	*object.Attribute
 
 	Type        string
-	Id          int
+	ID          int
 	To          string
 	From        string
 	Properties  []string

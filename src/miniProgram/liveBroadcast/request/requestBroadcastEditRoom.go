@@ -1,7 +1,7 @@
 package request
 
 type RequestBroadcastEditRoom struct {
-	Id            int    `json:"id"`
+	ID            int    `json:"id"`
 	Name          string `json:"name"`
 	CoverImg      string `json:"coverImg"`
 	StartTime     int    `json:"startTime"`

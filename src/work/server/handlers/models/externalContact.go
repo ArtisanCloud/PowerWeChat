@@ -72,7 +72,7 @@ type EventExternalUserDelFollowUser struct {
 type EventExternalUserUpdateAddMember struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ChatId       string   `xml:"ChatId"`
+	ChatID       string   `xml:"ChatId"`
 	ChangeType   string   `xml:"ChangeType"`
 	UpdateDetail string   `xml:"UpdateDetail"`
 	JoinScene    string   `xml:"JoinScene"`
@@ -84,7 +84,7 @@ type EventExternalUserUpdateAddMember struct {
 type EventExternalUserDismiss struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ChatId       string   `xml:"ChatId"`
+	ChatID       string   `xml:"ChatId"`
 }
 
 
@@ -93,7 +93,7 @@ type EventExternalUserTagCreate struct {
 	models.CallbackMessageHeader
 	ID           string   `xml:"Id"`
 	TagType      string   `xml:"TagType"`
-	StrategyId   string   `xml:"StrategyId"`
+	StrategyID   string   `xml:"StrategyId"`
 }
 
 
@@ -102,7 +102,7 @@ type EventExternalUserTagUpdate struct {
 	models.CallbackMessageHeader
 	ID           string   `xml:"Id"`
 	TagType      string   `xml:"TagType"`
-	StrategyId   string   `xml:"StrategyId"`
+	StrategyID   string   `xml:"StrategyId"`
 }
 
 
@@ -111,7 +111,7 @@ type EventExternalUserTagDelete struct {
 	models.CallbackMessageHeader
 	ID           string   `xml:"Id"`
 	TagType      string   `xml:"TagType"`
-	StrategyId   string   `xml:"StrategyId"`
+	StrategyID   string   `xml:"StrategyId"`
 }
 
 
@@ -119,6 +119,6 @@ type EventExternalUserTagShuffle struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
 	ID           string   `xml:"Id"`
-	StrategyId   string   `xml:"StrategyId"`
+	StrategyID   string   `xml:"StrategyId"`
 	ChangeType   string   `xml:"ChangeType"`
 }
