@@ -1,4 +1,4 @@
-package reponse
+package response
 
 import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 
@@ -7,6 +7,7 @@ type Photo struct {
 }
 
 type BusinessInfo struct {
+	PoiID          string   `json:"poi_id"`
 	SID            string   `json:"sid"`
 	BusinessName   string   `json:"business_name"`
 	BranchName     string   `json:"branch_name"`
