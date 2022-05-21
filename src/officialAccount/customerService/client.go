@@ -110,7 +110,7 @@ func (comp *Client) SetAvatar(account string, path string) (*response2.ResponseO
 		}
 	}
 
-	params := &object.HashMap{
+	params := &object.StringMap{
 		"kf_account": account,
 	}
 	_, err := comp.HttpUpload("customservice/kfaccount/uploadheadimg", files, nil, params, nil, &result)
