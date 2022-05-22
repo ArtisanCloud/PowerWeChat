@@ -98,7 +98,7 @@ func (comp *Client) UploadArticleImage(path string) (interface{}, error) {
 
 // 获取永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
-func (comp *Client) Get(mediaID int) (*response3.ResponseMaterialGetMaterial, error) {
+func (comp *Client) Get(mediaID string) (*response3.ResponseMaterialGetMaterial, error) {
 
 	result := &response3.ResponseMaterialGetMaterial{}
 

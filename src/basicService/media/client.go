@@ -75,7 +75,7 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("media/get", "GET", &object.HashMap{
+	response, err := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
