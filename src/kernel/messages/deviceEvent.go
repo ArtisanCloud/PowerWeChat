@@ -1,14 +1,14 @@
 package messages
 
-import "github.com/ArtisanCloud/PowerLibs/object"
+import (
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+)
 
 type DeviceEvent struct {
 	*Message
-
-
 }
 
-func NewDeviceEvent(items *object.HashMap) *DeviceEvent {
+func NewDeviceEvent(items *power.HashMap) *DeviceEvent {
 	m := &DeviceEvent{
 		NewMessage(items),
 	}
@@ -24,4 +24,3 @@ func NewDeviceEvent(items *object.HashMap) *DeviceEvent {
 
 	return m
 }
-

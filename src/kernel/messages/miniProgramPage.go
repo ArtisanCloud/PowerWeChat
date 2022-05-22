@@ -2,13 +2,14 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type MiniProgramPage struct {
 	*Message
 }
 
-func NewMiniProgramPage(items *object.HashMap) *MiniProgramPage {
+func NewMiniProgramPage(items *power.HashMap) *MiniProgramPage {
 	m := &MiniProgramPage{
 		NewMessage(items),
 	}
@@ -22,7 +23,7 @@ func NewMiniProgramPage(items *object.HashMap) *MiniProgramPage {
 	}
 
 	m.SetAttributes(&object.HashMap{
-		"required":[]string{
+		"required": []string{
 			"thumb_media_id",
 			"appid",
 			"pagepath",

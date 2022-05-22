@@ -3,6 +3,7 @@ package messages
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 const VOID = 0
@@ -39,14 +40,16 @@ type Message struct {
 	Properties  []string
 	JsonAliases *object.HashMap
 
-	ToXmlArray              func() *object.HashMap
+	ToXmlArray func() *object.HashMap
 }
 
-func NewMessage(attributes *object.HashMap) *Message {
+func NewMessage(attributes *power.HashMap) *Message {
+	objAttribute, _ := power.PowerHashMapToObjectHashMap(attributes)
+
 	m := &Message{
 		Attribute: &object.Attribute{},
 	}
-	m.SetAttributes(attributes)
+	m.SetAttributes(objAttribute)
 	m.ToXmlArray = func() *object.HashMap {
 		return m.toXmlArray()
 	}
@@ -116,7 +119,7 @@ func (msg *Message) PropertiesToArray(data *object.HashMap, aliases *object.Hash
 		has, alias := object.InHash(property, aliases)
 		if has {
 			(*data)[alias] = msg.Get(property, nil)
-		}else{
+		} else {
 			(*data)[property] = msg.Get(property, nil)
 		}
 	}

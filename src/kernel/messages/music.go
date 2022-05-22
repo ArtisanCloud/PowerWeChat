@@ -2,13 +2,14 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Music struct {
 	*Message
 }
 
-func NewMusic(items *object.HashMap) *Music {
+func NewMusic(items *power.HashMap) *Music {
 	m := &Music{
 		NewMessage(items),
 	}

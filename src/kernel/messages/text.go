@@ -2,6 +2,7 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Text struct {
@@ -10,7 +11,7 @@ type Text struct {
 
 func NewText(content string) *Text {
 	m := &Text{
-		NewMessage(&object.HashMap{"content": content}),
+		NewMessage(&power.HashMap{"content": content}),
 	}
 
 	m.Type = "text"

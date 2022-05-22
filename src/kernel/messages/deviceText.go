@@ -3,13 +3,14 @@ package messages
 import (
 	"encoding/base64"
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type DeviceText struct {
 	*Message
 }
 
-func NewDeviceText(items *object.HashMap) *DeviceText {
+func NewDeviceText(items *power.HashMap) *DeviceText {
 	m := &DeviceText{
 		NewMessage(items),
 	}

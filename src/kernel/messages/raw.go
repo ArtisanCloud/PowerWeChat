@@ -3,6 +3,7 @@ package messages
 import (
 	"encoding/json"
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Raw struct {
@@ -11,7 +12,7 @@ type Raw struct {
 
 func NewRaw(content string) *Raw {
 	m := &Raw{
-		NewMessage(&object.HashMap{"content": content}),
+		NewMessage(&power.HashMap{"content": content}),
 	}
 
 	m.Type = "raw"

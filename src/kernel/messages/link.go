@@ -1,14 +1,14 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Link struct {
 	*Message
 }
 
-func NewLink(items *object.HashMap) *Link {
+func NewLink(items *power.HashMap) *Link {
 	m := &Link{
 		NewMessage(items),
 	}

@@ -1,17 +1,18 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type ShortVideo struct {
 	*Video
 }
 
-func NewShortVideo(mediaID string, items *object.HashMap) *ShortVideo {
+func NewShortVideo(mediaID string, items *power.HashMap) *ShortVideo {
 	m := &ShortVideo{
-		NewVideo(mediaID, "short_video", items),
+		NewVideo(mediaID,  items),
 	}
+	m.Type = "short_video"
 
 	return m
 }

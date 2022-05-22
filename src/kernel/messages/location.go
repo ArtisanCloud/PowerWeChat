@@ -1,14 +1,14 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Location struct {
 	*Message
 }
 
-func NewLocation(items *object.HashMap) *Location {
+func NewLocation(items *power.HashMap) *Location {
 	m := &Location{
 		NewMessage(items),
 	}

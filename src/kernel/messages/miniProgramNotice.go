@@ -1,14 +1,14 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type MiniProgramNotice struct {
 	*Message
 }
 
-func NewMiniProgramNotice(items *object.HashMap) *MiniProgramNotice {
+func NewMiniProgramNotice(items *power.HashMap) *MiniProgramNotice {
 	m := &MiniProgramNotice{
 		NewMessage(items),
 	}

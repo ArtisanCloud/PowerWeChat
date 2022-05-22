@@ -11,7 +11,7 @@ type News struct {
 
 func NewNews(items *object.HashMap) *News {
 	m := &News{
-		NewMessage(&object.HashMap{"items": items}),
+		NewMessage(&power.HashMap{"items": items}),
 	}
 	m.OverrideToXmlArray()
 

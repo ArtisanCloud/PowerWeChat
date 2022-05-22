@@ -1,14 +1,14 @@
 package messages
 
 import (
-"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type TextCard struct {
 	*Message
 }
 
-func NewTextCard(items *object.HashMap) *TextCard {
+func NewTextCard(items *power.HashMap) *TextCard {
 	m := &TextCard{
 		NewMessage(items),
 	}

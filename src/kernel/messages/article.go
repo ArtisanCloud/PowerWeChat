@@ -1,6 +1,9 @@
 package messages
 
-import "github.com/ArtisanCloud/PowerLibs/object"
+import (
+	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+)
 
 type Article struct {
 	*Message
@@ -8,7 +11,7 @@ type Article struct {
 
 }
 
-func NewArticle(items *object.HashMap) *Article {
+func NewArticle(items *power.HashMap) *Article {
 	m := &Article{
 		NewMessage(items),
 	}

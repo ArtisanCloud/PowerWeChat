@@ -1,6 +1,8 @@
 package messages
 
-import "github.com/ArtisanCloud/PowerLibs/object"
+import (
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+)
 
 type Card struct {
 	*Message
@@ -8,7 +10,7 @@ type Card struct {
 
 func NewCard(cardID string) *Card {
 	m := &Card{
-		NewMessage(&object.HashMap{"card_id": cardID}),
+		NewMessage(&power.HashMap{"card_id": cardID}),
 	}
 
 	m.Type = "wxcard"

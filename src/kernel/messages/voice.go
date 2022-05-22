@@ -1,14 +1,14 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Voice struct {
 	*Media
 }
 
-func NewVoice(mediaID string, item *object.HashMap) *Voice {
+func NewVoice(mediaID string, item *power.HashMap) *Voice {
 	m := &Voice{
 		NewMedia(mediaID, "voice", item),
 	}

@@ -2,15 +2,16 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Media struct {
 	*Message
 }
 
-func NewMedia(mediaID string, sType string, items *object.HashMap) *Media {
+func NewMedia(mediaID string, sType string, items *power.HashMap) *Media {
 
-	data := object.MergeHashMap(&object.HashMap{
+	data := power.MergeHashMap(&power.HashMap{
 		"media_id": mediaID,
 	}, items)
 	m := &Media{

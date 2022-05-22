@@ -2,18 +2,17 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Video struct {
 	*Media
 }
 
-func NewVideo(mediaID string, sType string, item *object.HashMap) *Video {
-	if sType==""{
-		sType = "video"
-	}
+func NewVideo(mediaID string, item *power.HashMap) *Video {
+
 	m := &Video{
-		NewMedia(mediaID, sType, item),
+		NewMedia(mediaID, "video", item),
 	}
 
 	m.Properties = []string{

@@ -2,6 +2,7 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type Transfer struct {
@@ -10,7 +11,7 @@ type Transfer struct {
 
 func NewTransfer(account string) *Transfer {
 	m := &Transfer{
-		NewMessage(&object.HashMap{"account": account}),
+		NewMessage(&power.HashMap{"account": account}),
 	}
 
 	m.Type = "transfer_customer_service"

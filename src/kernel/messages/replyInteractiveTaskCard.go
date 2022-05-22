@@ -2,6 +2,7 @@ package messages
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 )
 
 type ReplyInteractiveTaskCard struct {
@@ -10,7 +11,7 @@ type ReplyInteractiveTaskCard struct {
 
 func NewReplyInteractiveTaskCard(replaceName string) *ReplyInteractiveTaskCard {
 	m := &ReplyInteractiveTaskCard{
-		NewMessage(&object.HashMap{"replace_name": replaceName}),
+		NewMessage(&power.HashMap{"replace_name": replaceName}),
 	}
 
 	m.Type = "update_taskcard"
