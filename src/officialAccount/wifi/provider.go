@@ -2,11 +2,12 @@ package wifi
 
 import "github.com/ArtisanCloud/PowerWeChat/src/kernel"
 
-func RegisterProvider(app kernel.ApplicationInterface) *Client {
+func RegisterProvider(app kernel.ApplicationInterface) (*Client, *CardClient, *DeviceClient, *ShopClient) {
 
-	client := &Client{
-		kernel.NewBaseClient(&app, nil),
-	}
+	client := NewClient(app)
+	cardClient := NewCardClient(app)
+	deviceClient := NewDeviceClient(app)
+	shopClient := NewShopClient(app)
 
-	return client
+	return client, cardClient, deviceClient, shopClient
 }

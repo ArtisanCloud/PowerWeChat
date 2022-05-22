@@ -193,6 +193,10 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	app.OCR = ocr.RegisterProvider(app)
 	//-------------- register Goods --------------
 	app.Goods = goods.RegisterProvider(app)
+	//-------------- register wifi --------------
+	app.Wifi, app.WifiCard, app.WifiDevice, app.WifiShop = wifi.RegisterProvider(app)
+	//-------------- register Guide --------------
+	app.Guide = guide.RegisterProvider(app)
 
 	return app, err
 }
