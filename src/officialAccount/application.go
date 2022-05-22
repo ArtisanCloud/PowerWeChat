@@ -34,6 +34,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/wifi"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/oauth"
 
 	"net/http"
 )
@@ -193,6 +194,8 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	app.OCR = ocr.RegisterProvider(app)
 	//-------------- register Goods --------------
 	app.Goods = goods.RegisterProvider(app)
+	//-------------- register OAuth --------------
+	app.OAuth = oauth.RegisterProvider(app)
 	//-------------- register wifi --------------
 	app.Wifi, app.WifiCard, app.WifiDevice, app.WifiShop = wifi.RegisterProvider(app)
 	//-------------- register Guide --------------
