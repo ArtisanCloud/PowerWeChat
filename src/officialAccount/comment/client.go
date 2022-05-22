@@ -1,36 +1,149 @@
 package comment
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	request2 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/request"
-	response3 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/response"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/comment/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
 }
 
+// 打开已群发文章评论
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) Open(msgID string, index int) (*response2.ResponseOfficialAccount, error) {
 
-// 新增永久图文素材
-// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) AddNews(options *request2.RequestMaterialAddNews) (*response3.ResponseMaterialAddNews, error) {
+	result := &response2.ResponseOfficialAccount{}
 
-	result := &response3.ResponseMaterialAddNews{}
+	params := &object.HashMap{
+		"msg_data_id": msgID,
+		"index":       index,
+	}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/add_news", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/comment/open", params, nil, nil, result)
 
 	return result, err
 }
 
-
-// 修改永久图文素材
-// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Editing_Permanent_Rich_Media_Assets.html
-func (comp *Client) UpdateNews(options *request2.RequestMaterialUpdateNews) (*response2.ResponseOfficialAccount, error) {
+// 关闭已群发文章评论
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) Close(msgID string, index int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/update_news", options, nil, nil, result)
+	params := &object.HashMap{
+		"msg_data_id": msgID,
+		"index":       index,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/close", params, nil, nil, result)
+
+	return result, err
+}
+
+// 查看指定文章的评论数据
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) List(msgID string, index int, begin int, count int, Type int) (*response.ResponseCommentList, error) {
+
+	result := &response.ResponseCommentList{}
+
+	params := &object.HashMap{
+		"msg_data_id": msgID,
+		"index":       index,
+		"begin":       begin,
+		"count":       count,
+		"type":        Type,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/list", params, nil, nil, result)
+
+	return result, err
+}
+
+// 将评论标记精选（新增接口）
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) MarkElect(msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+
+	result := &response2.ResponseOfficialAccount{}
+
+	params := &object.HashMap{
+		"msg_data_id":     msgID,
+		"index":           index,
+		"user_comment_id": commentID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/markelect", params, nil, nil, result)
+
+	return result, err
+}
+
+// 将评论取消精选（新增接口）
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) UnmarkElect(msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+
+	result := &response2.ResponseOfficialAccount{}
+
+	params := &object.HashMap{
+		"msg_data_id":     msgID,
+		"index":           index,
+		"user_comment_id": commentID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/unmarkelect", params, nil, nil, result)
+
+	return result, err
+}
+
+// 删除评论（新增接口）
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) Delete(msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+
+	result := &response2.ResponseOfficialAccount{}
+
+	params := &object.HashMap{
+		"msg_data_id":     msgID,
+		"index":           index,
+		"user_comment_id": commentID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/delete", params, nil, nil, result)
+
+	return result, err
+}
+
+// 回复评论（新增接口）
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) Reply(msgID string, index int, commentID int, content string) (*response2.ResponseOfficialAccount, error) {
+
+	result := &response2.ResponseOfficialAccount{}
+
+	params := &object.HashMap{
+		"msg_data_id":     msgID,
+		"index":           index,
+		"user_comment_id": commentID,
+		"content":         content,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/reply/add", params, nil, nil, result)
+
+	return result, err
+}
+
+// 删除回复（新增接口）
+// https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
+func (comp *Client) DeleteReply(msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+
+	result := &response2.ResponseOfficialAccount{}
+
+	params := &object.HashMap{
+		"msg_data_id":     msgID,
+		"index":           index,
+		"user_comment_id": commentID,
+	}
+
+	_, err := comp.HttpPostJson("cgi-bin/comment/reply/delete", params, nil, nil, result)
 
 	return result, err
 }
