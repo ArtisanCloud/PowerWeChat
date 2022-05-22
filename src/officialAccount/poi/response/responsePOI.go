@@ -27,6 +27,10 @@ type BusinessInfo struct {
 	AvgPrice       int      `json:"avg_price"`
 	AvailableState int      `json:"available_state"`
 	UpdateStatus   int      `json:"update_status"`
+	Status            int    `json:"status"`
+	District          string `json:"district"`
+	QualificationNum  string `json:"qualification_num"`
+	QualificationName string `json:"qualification_name"`
 }
 
 type Business struct {
