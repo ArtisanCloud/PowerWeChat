@@ -1,22 +1,72 @@
 package media
 
 import (
+	"errors"
+	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/media/response"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
+	"os"
 )
 
 type Client struct {
 	*kernel.BaseClient
+
+	BaseURI    string
+	AllowTypes []string
 }
 
 func NewClient(app kernel.ApplicationInterface) *Client {
 	return &Client{
-		kernel.NewBaseClient(&app, nil),
+		BaseClient: kernel.NewBaseClient(&app, nil),
+		BaseURI:    "https://api.weixin.qq.com/cgi-bin/",
+		AllowTypes: []string{"image", "voice", "video", "thumb"},
 	}
+}
+
+// 新增临时素材
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
+func (comp *Client) UploadImage(path string) (*response.ResponseUploadMedia, error) {
+	return comp.Upload("image", path)
+}
+
+func (comp *Client) UploadVoice(path string) (*response.ResponseUploadMedia, error) {
+	return comp.Upload("voice", path)
+}
+
+func (comp *Client) UploadVideo(path string) (*response.ResponseUploadMedia, error) {
+	return comp.Upload("video", path)
+}
+
+func (comp *Client) UploadThumb(path string) (*response.ResponseUploadMedia, error) {
+	return comp.Upload("thumb", path)
+}
+
+// 上传临时素材
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
+func (comp *Client) Upload(mediaType string, path string) (*response.ResponseUploadMedia, error) {
+
+	_, err := os.Stat(path)
+	if (err != nil && os.IsExist(err)) && (err != nil && os.IsPermission(err)) {
+		return nil, errors.New(fmt.Sprintf("File does not exist, or the file is unreadable: \"%s\"", path))
+	}
+
+	if !object.ContainsString(comp.AllowTypes, mediaType) {
+		return nil, errors.New(fmt.Sprintf("Unsupported media type: '%s'", mediaType))
+	}
+
+	outResponse := &response.ResponseUploadMedia{}
+	files := &object.HashMap{
+		"media": path,
+	}
+
+	_, err = comp.HttpUpload("cgi-bin/media/upload", files,nil, &object.StringMap{
+		"type": mediaType,
+	}, nil, outResponse)
+
+	return outResponse, err
 }
 
 // 获取临时素材
@@ -25,7 +75,7 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{
+	response, err := comp.RequestRaw("media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
@@ -49,46 +99,4 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 
 	return response.(contract.ResponseInterface), err
 
-}
-
-// 上传图片
-// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
-func (comp *Client) UploadImage(path string, form *power.HashMap) (interface{}, error) {
-	files := &object.HashMap{
-		"media": path,
-	}
-	return comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, nil)
-}
-
-func (comp *Client) UploadTempImage(path string, form *power.HashMap) (*response.ResponseUploadMedia, error) {
-	return comp.Upload("image", path, form)
-}
-
-func (comp *Client) UploadTempVoice(path string, form *power.HashMap) (*response.ResponseUploadMedia, error) {
-	return comp.Upload("voice", path, form)
-}
-
-func (comp *Client) UploadTempVideo(path string, form *power.HashMap) (*response.ResponseUploadMedia, error) {
-	return comp.Upload("video", path, form)
-}
-
-// 新增临时文件
-// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
-func (comp *Client) UploadTempFile(path string, form *power.HashMap) (*response.ResponseUploadMedia, error) {
-	return comp.Upload("file", path, form)
-}
-
-// 上传临时素材
-// https://work.weixin.qq.com/api/doc/90000/90135/90253
-func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (*response.ResponseUploadMedia, error) {
-	outResponse := &response.ResponseUploadMedia{}
-	files := &object.HashMap{
-		"media": path,
-	}
-
-	_, err := comp.HttpUpload("cgi-bin/media/upload", files, form.ToHashMap(), &object.StringMap{
-		"type": mediaType,
-	}, nil, outResponse)
-
-	return outResponse, err
 }

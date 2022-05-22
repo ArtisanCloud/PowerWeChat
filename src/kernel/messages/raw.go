@@ -11,7 +11,7 @@ type Raw struct {
 
 func NewRaw(content string) *Raw {
 	m := &Raw{
-		NewMessage(&object.HashMap{"content": nil}),
+		NewMessage(&object.HashMap{"content": content}),
 	}
 
 	m.Type = "raw"

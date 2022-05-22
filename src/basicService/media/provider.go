@@ -6,9 +6,7 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {
 
-	client := &Client{
-		kernel.NewBaseClient(&app, nil),
-	}
+	client := NewClient(app)
 
 	return client
 }
