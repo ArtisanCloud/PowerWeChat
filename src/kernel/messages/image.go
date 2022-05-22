@@ -5,14 +5,13 @@ import (
 )
 
 type Image struct {
-	*Message
+	*Media
 }
 
-func NewImage(items *object.HashMap) *Image {
+func NewImage(mediaID string, items *object.HashMap) *Image {
 	m := &Image{
-		NewMessage(items),
+		NewMedia(mediaID, "image", items),
 	}
-	m.Type = "image"
 
 	return m
 }

@@ -3,7 +3,6 @@ package material
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	request2 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/request"
 	response3 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/response"
@@ -25,25 +24,33 @@ func NewClient(app kernel.ApplicationInterface) *Client {
 
 // 上传永久图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadImage(path string) (interface{}, error) {
-	return comp.Upload("image", path, nil)
+func (comp *Client) UploadImage(path string) (*response3.ResponseMaterialAddMaterial, error) {
+	result := &response3.ResponseMaterialAddMaterial{}
+	_, err := comp.Upload("image", path, &object.StringMap{}, result)
+	return result, err
 }
 
 // 上传永久语音素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadVoice(path string) (interface{}, error) {
-	return comp.Upload("voice", path, nil)
+func (comp *Client) UploadVoice(path string) (*response3.ResponseMaterialAddMaterial, error) {
+	result := &response3.ResponseMaterialAddMaterial{}
+	_, err := comp.Upload("voice", path, &object.StringMap{}, result)
+	return result, err
 }
 
 // 上传永久缩略图素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadThumb(path string) (interface{}, error) {
-	return comp.Upload("thumb", path, nil)
+func (comp *Client) UploadThumb(path string) (*response3.ResponseMaterialAddMaterial, error) {
+	result := &response3.ResponseMaterialAddMaterial{}
+	_, err := comp.Upload("thumb", path, &object.StringMap{}, result)
+	return result, err
 }
 
 // 上传永久视频素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadVideo(path string, title string, description string) (interface{}, error) {
+func (comp *Client) UploadVideo(path string, title string, description string) (*response3.ResponseMaterialAddMaterial, error) {
+
+	result := &response3.ResponseMaterialAddMaterial{}
 
 	jsonDescription, err := object.JsonEncode(&object.HashMap{
 		"title":        title,
@@ -53,11 +60,12 @@ func (comp *Client) UploadVideo(path string, title string, description string) (
 		return nil, err
 	}
 
-	params := &power.HashMap{
+	params := &object.StringMap{
 		"Description": jsonDescription,
 	}
 
-	return comp.Upload("video", path, params)
+	_, err = comp.Upload("video", path, params, result)
+	return result, err
 }
 
 // 新增永久素材
@@ -92,8 +100,10 @@ func (comp *Client) UpdateArticle(mediaID string, articles request2.RequestAddAr
 
 // 上传图文消息内的图片获取URL
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadArticleImage(path string) (interface{}, error) {
-	return comp.Upload("news_image", path, nil)
+func (comp *Client) UploadArticleImage(path string) (*response3.ResponseMaterialAddMaterial, error) {
+	result := &response3.ResponseMaterialAddMaterial{}
+	_, err := comp.Upload("news_image", path, &object.StringMap{}, result)
+	return result, err
 }
 
 // 获取永久素材
@@ -149,21 +159,21 @@ func (comp *Client) Stats() (*response3.ResponseMaterialGetMaterialCount, error)
 
 }
 
-func (comp *Client) Upload(Type string, path string, form *power.HashMap) (interface{}, error) {
+func (comp *Client) Upload(Type string, path string, form *object.StringMap, result interface{}) (interface{}, error) {
 
 	_, err := os.Stat(path)
 	if (err != nil && os.IsExist(err)) && (err != nil && os.IsPermission(err)) {
 		return "", err
 	}
 	file := &object.HashMap{
-		"file": path,
+		"media": path,
 	}
 
 	(*form)["type"] = Type
 
-	objForm, err := power.PowerHashMapToObjectHashMap(form)
+	//objForm, err := power.PowerHashMapToObjectHashMap(form)
 
-	return comp.HttpUpload(comp.getApiByType(Type), file, objForm, nil, nil, nil)
+	return comp.HttpUpload(comp.getApiByType(Type), file, nil, form, nil, result)
 }
 
 func (comp *Client) getApiByType(Type string) string {

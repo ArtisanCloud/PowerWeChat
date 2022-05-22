@@ -5,14 +5,13 @@ import (
 )
 
 type File struct {
-	*Message
+	*Media
 }
 
-func NewFile(items *object.HashMap) *File {
+func NewFile(mediaID string, items *object.HashMap) *File {
 	m := &File{
-		NewMessage(items),
+		NewMedia(mediaID, "file", items),
 	}
-	m.Type = "file"
 
 	return m
 }

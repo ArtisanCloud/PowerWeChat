@@ -5,15 +5,13 @@ import (
 )
 
 type ShortVideo struct {
-	*Message
+	*Video
 }
 
-func NewShortVideo(items *object.HashMap) *Music {
-	m := &Music{
-		NewMessage(items),
+func NewShortVideo(mediaID string, items *object.HashMap) *ShortVideo {
+	m := &ShortVideo{
+		NewVideo(mediaID, "short_video", items),
 	}
-
-	m.Type = "short_video"
 
 	return m
 }

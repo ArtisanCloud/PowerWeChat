@@ -8,12 +8,13 @@ type Video struct {
 	*Media
 }
 
-func NewVideo(mediaID string, item *object.HashMap) *Video {
-	m := &Video{
-		NewMedia(mediaID, "video", item),
+func NewVideo(mediaID string, sType string, item *object.HashMap) *Video {
+	if sType==""{
+		sType = "video"
 	}
-
-	m.Type = "video"
+	m := &Video{
+		NewMedia(mediaID, sType, item),
+	}
 
 	m.Properties = []string{
 		"title",
