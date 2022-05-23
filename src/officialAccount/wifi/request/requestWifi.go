@@ -9,3 +9,13 @@ type RequestWifiSetHomePage struct {
 	TemplateID int     `json:"template_id"`
 	Struct     *Struct `json:"struct"`
 }
+
+// ------------------------------------------------------------
+
+type RequestWifiCardSet struct {
+	ShopID       int    `json:"shop_id"`
+	CardID       string `json:"card_id"`
+	CardDescribe string `json:"card_describe"`
+	StartTime    int    `json:"start_time"`
+	EndTime      int    `json:"end_time"`
+}
