@@ -52,13 +52,11 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 
 	switch (*comp.Message).(type) {
 	case *messages.Raw:
-		content := (*comp.Message).(*messages.Raw).Get("content", nil)
-		json, err := object.StructToJson(content)
+		content := (*comp.Message).(*messages.Raw).GetString("content", "")
 		if err != nil {
 			return result, err
 		}
-
-		result, err = comp.Client.Send(json)
+		result, err = comp.Client.Send(content)
 
 		break
 
@@ -78,8 +76,6 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 		}
 		result, err = comp.Client.Send(json)
 	}
-
-
 
 	return result, err
 }
