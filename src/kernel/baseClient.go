@@ -102,15 +102,11 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 		if (*form)["filename"] != nil {
 			fileName = (*form)["filename"].(string)
 		}
-		(*headers)["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", fileName)
+		(*headers)["filename"] = fileName
 	}
 
 	if files != nil {
 		for name, path := range *files {
-			//content, err := ioutil.ReadFile(path.(string))
-			//if err != nil {
-			//	return nil, err
-			//}
 			multipart = append(multipart, &object.HashMap{
 				"name":    name,
 				"value":   path,
