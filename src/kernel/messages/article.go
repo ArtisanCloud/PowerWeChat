@@ -32,14 +32,12 @@ func NewArticle(items *power.HashMap) *Article {
 		"show_cover_pic" : "show_cover",
 	}
 
-	m.SetAttributes(&object.HashMap{
-		"required":[]string{
+	m.SetAttribute("required",[]string{
 			"thumb_media_id",
 			"title",
 			"content",
 			"show_cover",
-		},
-	})
+		})
 
 	return m
 }

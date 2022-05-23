@@ -24,10 +24,8 @@ func NewMedia(mediaID string, sType string, items *power.HashMap) *Media {
 		"media_id",
 	}
 
-	m.SetAttributes(&object.HashMap{
-		"required": []string{
-			"media_id",
-		},
+	m.SetAttribute("required", []string{
+		"media_id",
 	})
 
 	m.OverrideToXmlArray()
