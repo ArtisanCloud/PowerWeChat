@@ -7,7 +7,6 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/media/response"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 	"os"
 )
 
@@ -74,7 +73,7 @@ func (comp *Client) Upload(mediaType string, path string) (*response.ResponseUpl
 func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
-	header := &response2.ResponseHeaderMedia{}
+	header := &response.ResponseHeaderMedia{}
 	response, err := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
@@ -90,7 +89,7 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
-	header := &response2.ResponseHeaderMedia{}
+	header := &response.ResponseHeaderMedia{}
 	response, err := comp.RequestRaw("cgi-bin/media/get/jssdk", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,

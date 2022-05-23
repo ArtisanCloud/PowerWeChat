@@ -1,12 +1,30 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 )
 
-type ResponseMaterialGetMaterial struct {
+type NewsItems struct {
+	Title            string `json:"title"`
+	ThumbMediaId     string `json:"thumb_media_id"`
+	ShowCoverPic     int8   `json:"show_cover_pic"`
+	Author           string `json:"author"`
+	Digest           string `json:"digest"`
+	Content          string `json:"content"`
+	Url              string `json:"url"`
+	ContentSourceUrl string `json:"content_source_url"`
+}
+
+type ResponseMaterialGetNews struct {
 	*response.ResponseOfficialAccount
 
-	NewsItem []*power.HashMap `json:"news_item"`
+	NewsItem []NewsItems `json:"news_item"`
+}
+
+// ------------------------------------
+
+type ResponseMaterialGetVideo struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	DownUrl     string `json:"down_url"`
 }
