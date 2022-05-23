@@ -10,7 +10,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/url"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/dataCube"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/dataCube"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/autoReply"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
