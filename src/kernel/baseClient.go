@@ -107,6 +107,10 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 
 	if files != nil {
 		for name, path := range *files {
+			//content, err := ioutil.ReadFile(path.(string))
+			//if err != nil {
+			//	return nil, err
+			//}
 			multipart = append(multipart, &object.HashMap{
 				"name":    name,
 				"value":   path,

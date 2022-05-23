@@ -9,6 +9,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/response"
 	response4 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
 	"os"
+	"path/filepath"
 )
 
 type Client struct {
@@ -191,7 +192,7 @@ func (comp *Client) Stats() (*response.ResponseMaterialGetMaterialCount, error) 
 
 }
 
-func (comp *Client) Upload(Type string, path string, form *object.StringMap, result interface{}) (interface{}, error) {
+func (comp *Client) Upload(Type string, path string, query *object.StringMap, result interface{}) (interface{}, error) {
 
 	_, err := os.Stat(path)
 	if (err != nil && os.IsExist(err)) && (err != nil && os.IsPermission(err)) {
@@ -201,11 +202,13 @@ func (comp *Client) Upload(Type string, path string, form *object.StringMap, res
 		"media": path,
 	}
 
-	(*form)["type"] = Type
+	(*query)["type"] = Type
 
-	//objForm, err := power.PowerHashMapToObjectHashMap(form)
+	form:= &object.HashMap{
+		"filename":filepath.Base(path),
+	}
 
-	return comp.HttpUpload(comp.getApiByType(Type), file, nil, form, nil, result)
+	return comp.HttpUpload(comp.getApiByType(Type), file, form, query, nil, result)
 }
 
 func (comp *Client) getApiByType(Type string) string {
