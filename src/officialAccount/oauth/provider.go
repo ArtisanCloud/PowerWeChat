@@ -16,7 +16,7 @@ func RegisterProvider(app kernel.ApplicationInterface) *providers.WeChat {
 		"wechat": &object.HashMap{
 			"client_id":     config.GetString("app_id", ""),
 			"client_secret": config.GetString("secret", ""),
-			"redirect":      prepareCallbackUrl(app),
+			"redirect":      prepareCallbackURL(app),
 		},
 	}
 
@@ -43,7 +43,7 @@ func RegisterProvider(app kernel.ApplicationInterface) *providers.WeChat {
 	return wechatProvider
 }
 
-func prepareCallbackUrl(app kernel.ApplicationInterface) string {
+func prepareCallbackURL(app kernel.ApplicationInterface) string {
 	config := *app.GetConfig()
 
 	var callback string
