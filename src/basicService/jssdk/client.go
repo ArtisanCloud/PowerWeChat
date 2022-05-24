@@ -33,7 +33,7 @@ func NewClient(app *kernel.ApplicationInterface) *Client {
 	return client
 }
 
-func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, isJson bool, openTagList *object.StringMap, url string) (interface{}, error) {
+func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, isJson bool, openTagList []string, url string) (interface{}, error) {
 
 	config := object.MergeHashMap(&object.HashMap{
 		"debug":       debug,
@@ -50,7 +50,7 @@ func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, isJso
 
 }
 
-func (comp *Client) GetConfigArray(apis []string, debug bool, beta bool, openTagList *object.StringMap, url string) (string, error) {
+func (comp *Client) GetConfigArray(apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
 
 	result, err := comp.BuildConfig(apis, debug, beta, false, openTagList, url)
 
