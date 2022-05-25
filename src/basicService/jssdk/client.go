@@ -37,7 +37,7 @@ func NewClient(app *kernel.ApplicationInterface) *Client {
 
 func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, openTagList []string, url string) (interface{}, error) {
 
-	signature, err := comp.ConfigSignature(url, "", time.Time{})
+	signature, err := comp.ConfigSignature(url, "", 0)
 	if err != nil {
 		return signature, err
 	}
@@ -102,13 +102,13 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 	return resultData, nil
 }
 
-func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Time) (*object.HashMap, error) {
+func (comp *Client) ConfigSignature(url string, nonce string, timestamp int64) (*object.HashMap, error) {
 
-	if nonce != "" {
+	if nonce == "" {
 		nonce = object.QuickRandom(10)
 	}
-	if timestamp.IsZero() {
-		timestamp = time.Now()
+	if timestamp == 0 {
+		timestamp = time.Now().Unix()
 	}
 
 	result, err := comp.GetTicket(false, "jsapi")
@@ -118,7 +118,7 @@ func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Tim
 	ticket := (*result)["ticket"].(string)
 
 	return &object.HashMap{
-		"appId":     comp.getAgentID(),
+		"appId":     comp.GetAppID(),
 		"nonceStr":  nonce,
 		"timestamp": timestamp,
 		"url":       url,
@@ -127,7 +127,7 @@ func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Tim
 
 }
 
-func (comp *Client) GetTicketSignature(ticket string, nonce string, timestamp time.Time, url string) string {
+func (comp *Client) GetTicketSignature(ticket string, nonce string, timestamp int64, url string) string {
 
 	param := fmt.Sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", ticket, nonce, timestamp, url)
 
