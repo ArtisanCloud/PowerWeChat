@@ -10,11 +10,11 @@ type Client struct {
 
 func NewClient(app *kernel.ApplicationInterface) *Client {
 
-	return &Client{
+	client := &Client{
 		BaseClient: kernel.NewBaseClient(app, nil),
-
-		BaseUri: "https://api.weixin.qq.com/wxa/",
 	}
 
-}
+	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/wxa/"
 
+	return client
+}

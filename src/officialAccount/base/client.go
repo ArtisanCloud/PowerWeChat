@@ -18,9 +18,9 @@ func (comp *Client) ClearQuota() (*response2.ResponseOfficialAccount, error) {
 
 	config := (*comp.App).GetConfig()
 
-	_, err := comp.HttpPostJson("cgi-bin/clear_quota", nil, &object.StringMap{
+	_, err := comp.HttpPostJson("cgi-bin/clear_quota", &object.HashMap{
 		"appid": config.GetString("app_id", ""),
-	}, nil, result)
+	}, nil, nil, result)
 
 	return result, err
 }

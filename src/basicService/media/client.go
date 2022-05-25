@@ -13,16 +13,18 @@ import (
 type Client struct {
 	*kernel.BaseClient
 
-	BaseURI    string
 	AllowTypes []string
 }
 
 func NewClient(app kernel.ApplicationInterface) *Client {
-	return &Client{
+	client := &Client{
 		BaseClient: kernel.NewBaseClient(&app, nil),
-		BaseURI:    "https://api.weixin.qq.com/cgi-bin/",
+
 		AllowTypes: []string{"image", "voice", "video", "thumb"},
 	}
+
+	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
+	return client
 }
 
 // 新增临时素材
@@ -61,7 +63,7 @@ func (comp *Client) Upload(mediaType string, path string) (*response.ResponseUpl
 		"media": path,
 	}
 
-	_, err = comp.HttpUpload("cgi-bin/media/upload", files,nil, &object.StringMap{
+	_, err = comp.HttpUpload("media/upload", files, nil, &object.StringMap{
 		"type": mediaType,
 	}, nil, outResponse)
 
@@ -74,7 +76,7 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("cgi-bin/media/get", "GET", &object.HashMap{
+	response, err := comp.RequestRaw("media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
@@ -90,7 +92,7 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("cgi-bin/media/get/jssdk", "GET", &object.HashMap{
+	response, err := comp.RequestRaw("media/get/jssdk", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},

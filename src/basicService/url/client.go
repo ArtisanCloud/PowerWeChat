@@ -17,12 +17,12 @@ type Client struct {
 
 func NewClient(app *kernel.ApplicationInterface) *Client {
 
-	return &Client{
+	client := &Client{
 		BaseClient: kernel.NewBaseClient(app, nil),
-
-		BaseUri: "https://api.weixin.qq.com/",
 	}
+	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/"
 
+	return client
 }
 
 // 短key托管
@@ -32,10 +32,25 @@ func (comp *Client) ShortGenKey(longData string, expireSecond int) (*response.Re
 	result := &response.ResponseShortGenKey{}
 
 	params := &object.HashMap{
-		"long_data":longData,
+		"long_data":      longData,
 		"expire_seconds": int(math.Min(float64(expireSecond), float64(30*DAY))),
 	}
 	_, err := comp.HttpPostJson("cgi-bin/shorten/gen", params, nil, nil, result)
+
+	return result, err
+
+}
+
+// 获取端链接
+// https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
+func (comp *Client) FetchShorten(shortKey string) (*response.ResponseFetchShorten, error) {
+
+	result := &response.ResponseFetchShorten{}
+
+	params := &object.HashMap{
+		"short_key": shortKey,
+	}
+	_, err := comp.HttpPostJson("cgi-bin/shorten/fetch", params, nil, nil, result)
 
 	return result, err
 

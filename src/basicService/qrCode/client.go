@@ -20,18 +20,16 @@ const SCENE_QR_FOREVER_STR string = "QR_LIMIT_STR_SCENE"
 
 type Client struct {
 	*kernel.BaseClient
-
-	BaseUri string
 }
 
 func NewClient(app *kernel.ApplicationInterface) *Client {
 
-	return &Client{
+	client := &Client{
 		BaseClient: kernel.NewBaseClient(app, nil),
-
-		BaseUri: "https://api.weixin.qq.com/cgi-bin/",
 	}
 
+	client.HttpRequest.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
+	return client
 }
 
 // 生成永久二维码请求
