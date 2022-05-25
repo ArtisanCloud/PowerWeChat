@@ -1,6 +1,6 @@
 package contract
 
-
+import "net/http"
 
 type EventInterface interface {
 	GetToUserName() string
@@ -12,7 +12,6 @@ type EventInterface interface {
 	ReadMessage(msg interface{}) error
 }
 
-
 type EventHandlerInterface interface {
-	Handle(header EventInterface, content interface{}) interface{}
+	Handle(request *http.Request, header EventInterface, content interface{}) interface{}
 }

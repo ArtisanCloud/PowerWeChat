@@ -252,14 +252,6 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 
 }
 
-func (app *Payment) SetExternalRequest(r *http.Request) {
-	app.Base.ExternalRequest = r
-}
-
-func (app *Payment) GetExternalRequest() (r *http.Request) {
-	return app.Base.ExternalRequest
-}
-
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{

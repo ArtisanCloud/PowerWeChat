@@ -68,7 +68,7 @@ func (comp *Client) CreateAndGetID(data *request.BusinessInfo) (int, error) {
 
 	result, err := comp.Create(data)
 
-	poi, err := comp.DetectAndCastResponseToType(result, "array")
+	poi, err := comp.DetectAndCastResponseToType(result, response2.TYPE_MAP)
 	if err != nil {
 		return 0, err
 	}
@@ -78,7 +78,6 @@ func (comp *Client) CreateAndGetID(data *request.BusinessInfo) (int, error) {
 
 	return poiID, err
 }
-
 
 // 修改门店服务信息
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html

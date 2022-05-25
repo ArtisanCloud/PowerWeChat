@@ -71,11 +71,6 @@ func (comp *Client) SendNormal(data *request.RequestSendRedPack) (*response.Resp
 	result := &response.ResponseSendNormal{}
 
 	config := (*comp.App).GetConfig()
-	//externalRequest := (*comp.App).GetExternalRequest()
-	//clientIP := externalRequest.Host
-	//if data.ClientIP == "" {
-	//	data.ClientIP = clientIP
-	//}
 
 	params, err := object.StructToHashMapWithTag(data, "xml")
 	if err != nil {

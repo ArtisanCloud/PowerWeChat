@@ -124,13 +124,6 @@ func (app *Application) GetComponent(name string) interface{} {
 
 }
 
-func (app *Application) SetExternalRequest(r *http.Request) {
-	app.Base.ExternalRequest = r
-}
-
-func (app *Application) GetExternalRequest() (r *http.Request) {
-	return app.Base.ExternalRequest
-}
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 

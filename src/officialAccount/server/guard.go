@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"net/http"
 )
 
 type Guard struct {
@@ -23,8 +24,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 // Override Validate
 func (guard *Guard) OverrideShouldReturnRawResponse() {
-	guard.ShouldReturnRawResponse = func() bool {
-		request := (*guard.App).GetExternalRequest()
+	guard.ShouldReturnRawResponse = func(request *http.Request) bool {
 		if request == nil || request.URL.Query().Get("echostr") == "" {
 			return false
 		}

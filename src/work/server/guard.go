@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
 	models2 "github.com/ArtisanCloud/PowerWeChat/src/work/server/handlers/models"
+	"net/http"
 )
 
 type Guard struct {
@@ -31,20 +32,19 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 // Override Validate
 func (guard *Guard) OverrideIsSafeMode() {
-	guard.IsSafeMode = func() bool {
+	guard.IsSafeMode = func(request *http.Request) bool {
 		return true
 	}
 }
 
 func (guard *Guard) OverrideValidate() {
-	guard.Validate = func() (*kernel.ServerGuard, error) {
+	guard.Validate = func(request *http.Request) (*kernel.ServerGuard, error) {
 		return guard.ServerGuard, nil
 	}
 }
 
 func (guard *Guard) OverrideShouldReturnRawResponse() {
-	guard.ShouldReturnRawResponse = func() bool {
-		request := (*guard.App).GetExternalRequest()
+	guard.ShouldReturnRawResponse = func(request *http.Request) bool {
 		if request == nil || request.URL.Query().Get("echostr") == "" {
 			return false
 		}

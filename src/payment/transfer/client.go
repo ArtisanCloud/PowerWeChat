@@ -46,11 +46,6 @@ func (comp *Client) ToBalance(data *request.RequestTransferToBalance) (*response
 
 	config := (*comp.App).GetConfig()
 
-	//externalRequest := (*comp.App).GetExternalRequest()
-	//if params.SpBillCreateIP == "" {
-	//	params.SpBillCreateIP = externalRequest.Host
-	//}
-
 	//params, err := object.StructToStringMap(data, "xml")
 	params, err := object.StructToHashMapWithTag(data, "xml")
 	if err != nil {

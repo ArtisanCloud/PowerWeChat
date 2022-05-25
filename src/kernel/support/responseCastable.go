@@ -18,31 +18,37 @@ type ResponseCastable struct {
 
 func (responseCastable *ResponseCastable) CastResponseToType(response *http.Response, castType string) (interface{}, error) {
 
-	if castType==response2.TYPE_RAW{
+	if castType == response2.TYPE_RAW {
 		return response, nil
-	}
-
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return nil, err
 	}
 
 	switch castType {
 
+	case response2.TYPE_ARRAY:
+		body, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
+		data := []interface{}{}
+		err = json.Unmarshal(body, data)
+
+		return data, err
 	case response2.TYPE_MAP:
+		body, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			return nil, err
+		}
 		data := &object.HashMap{}
 		err = json.Unmarshal(body, data)
 
 		return data, err
-	case "power":
-		var data interface{}
-		err = json.Unmarshal(body, &data)
-		return data, err
+
+	case response2.TYPE_RAW:
+
+		return response, nil
 	default:
-
+		return nil, errors.New("Config key \"response_type\" classname must be an instanceof %s'")
 	}
-
-	return nil, nil
 }
 
 func (responseCastable *ResponseCastable) DetectAndCastResponseToType(response interface{}, toType string) (interface{}, error) {

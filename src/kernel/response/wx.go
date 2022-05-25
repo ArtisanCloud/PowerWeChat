@@ -46,8 +46,9 @@ type ResponseOfficialAccount struct {
 }
 
 const (
-	TYPE_RAW = "raw"
-	TYPE_MAP = "map"
+	TYPE_RAW   = "raw"
+	TYPE_MAP   = "map"
+	TYPE_ARRAY = "array"
 )
 
 //

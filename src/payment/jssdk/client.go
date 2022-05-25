@@ -7,6 +7,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/jssdk"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"net/http"
 	"net/url"
 	"time"
 )
@@ -86,7 +87,7 @@ func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 	return params, nil
 }
 
-func (comp *Client) ShareAddressConfig(accessToken string, isJson bool) (interface{}, error) {
+func (comp *Client) ShareAddressConfig(request *http.Request, accessToken string, isJson bool) (interface{}, error) {
 
 	config := (*comp.App).GetConfig()
 	appID := config.GetString("app_id", "")
@@ -101,7 +102,7 @@ func (comp *Client) ShareAddressConfig(accessToken string, isJson bool) (interfa
 
 	signParams := &object.StringMap{
 		"appid":       (*params)["appId"],
-		"url":         comp.GetUrl(),
+		"url":         comp.GetUrl(request),
 		"timestamp":   (*params)["timeStamp"],
 		"noncestr":    (*params)["nonceStr"],
 		"accesstoken": accessToken,

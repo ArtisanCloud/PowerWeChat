@@ -46,9 +46,9 @@ type ServerGuard struct {
 	alwaysValidate bool
 	App            *ApplicationInterface
 
-	IsSafeMode              func() bool
-	Validate                func() (*ServerGuard, error)
-	ShouldReturnRawResponse func() bool
+	IsSafeMode              func(request *http.Request) bool
+	Validate                func(request *http.Request) (*ServerGuard, error)
+	ShouldReturnRawResponse func(request *http.Request) bool
 
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
 }
@@ -60,29 +60,23 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 		App:        app,
 	}
 
-	serverGuard.IsSafeMode = func() bool {
-		return serverGuard.isSafeMode()
+	serverGuard.IsSafeMode = func(request *http.Request) bool {
+		return serverGuard.isSafeMode(request)
 	}
-	serverGuard.Validate = func() (*ServerGuard, error) {
-		return serverGuard.validate()
+	serverGuard.Validate = func(request *http.Request) (*ServerGuard, error) {
+		return serverGuard.validate(request)
 	}
-	serverGuard.ShouldReturnRawResponse = func() bool {
-		return serverGuard.shouldReturnRawResponse()
+	serverGuard.ShouldReturnRawResponse = func(request *http.Request) bool {
+		return serverGuard.shouldReturnRawResponse(request)
 	}
 
 	return serverGuard
 
 }
 
-func (serverGuard *ServerGuard) Notify(r *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error) {
+func (serverGuard *ServerGuard) Notify(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error) {
 
-	//-------------- external request --------------
-	request := &http.Request{}
-	if r != nil {
-		request = r
-	}
-
-	validatedGuard, err := serverGuard.Validate()
+	validatedGuard, err := serverGuard.Validate(request)
 	if err != nil {
 		return nil, err
 	}
@@ -92,22 +86,14 @@ func (serverGuard *ServerGuard) Notify(r *http.Request, closure func(event contr
 	return response, err
 }
 
-func (serverGuard *ServerGuard) Serve(r *http.Request) (response *response.HttpResponse, err error) {
+func (serverGuard *ServerGuard) Serve(request *http.Request) (response *response.HttpResponse, err error) {
 
-	//-------------- external request --------------
-	request := &http.Request{}
-	if r != nil {
-		request = r
-	}
-
-	(*serverGuard.App).SetExternalRequest(request)
-
-	validatedGuard, err := serverGuard.Validate()
+	validatedGuard, err := serverGuard.Validate(request)
 	if err != nil {
 		return nil, err
 	}
 
-	response, err = validatedGuard.resolve()
+	response, err = validatedGuard.resolve(request)
 
 	// tbd
 	// log here
@@ -115,13 +101,12 @@ func (serverGuard *ServerGuard) Serve(r *http.Request) (response *response.HttpR
 	return response, err
 }
 
-func (serverGuard *ServerGuard) validate() (*ServerGuard, error) {
+func (serverGuard *ServerGuard) validate(request *http.Request) (*ServerGuard, error) {
 
-	if !serverGuard.alwaysValidate && serverGuard.IsSafeMode() {
+	if !serverGuard.alwaysValidate && serverGuard.IsSafeMode(request) {
 		return serverGuard, nil
 	}
 
-	request := (*serverGuard.App).GetExternalRequest()
 	if request == nil {
 		return nil, errors.New("request is invalid")
 	}
@@ -158,9 +143,9 @@ func (serverGuard *ServerGuard) getEvent(request *http.Request) (callback *model
 		return nil, nil, err
 	}
 
-	if serverGuard.IsSafeMode() && callback.Encrypt != "" {
+	if serverGuard.IsSafeMode(request) && callback.Encrypt != "" {
 		callbackHeader, err = serverGuard.decryptEvent(request, string(b))
-	}else{
+	} else {
 		callbackHeader = &models.CallbackMessageHeader{}
 		err = xml.Unmarshal(b, callbackHeader)
 		callbackHeader.Content = b
@@ -170,12 +155,7 @@ func (serverGuard *ServerGuard) getEvent(request *http.Request) (callback *model
 
 }
 
-func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, Decrypted interface{}, err error) {
-
-	request := (*serverGuard.App).GetExternalRequest()
-	if request == nil {
-		return nil, nil, nil, errors.New("request is invalid")
-	}
+func (serverGuard *ServerGuard) getMessage(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, Decrypted interface{}, err error) {
 	var b []byte = []byte("<xml></xml>")
 	if request.Body != http.NoBody {
 		b, err = io.ReadAll(request.Body)
@@ -189,9 +169,9 @@ func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbac
 		return nil, nil, nil, err
 	}
 
-	if serverGuard.IsSafeMode() && callback.Encrypt != "" {
-		callbackHeader, Decrypted, err = serverGuard.decryptMessage(string(b))
-	}else{
+	if serverGuard.IsSafeMode(request) && callback.Encrypt != "" {
+		callbackHeader, Decrypted, err = serverGuard.decryptMessage(request,string(b))
+	} else {
 		callbackHeader = &models.CallbackMessageHeader{}
 		err = xml.Unmarshal(b, callbackHeader)
 	}
@@ -200,14 +180,14 @@ func (serverGuard *ServerGuard) getMessage() (callback *models.Callback, callbac
 
 }
 
-func (serverGuard *ServerGuard) resolveEvent(r *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *response.HttpResponse, err error) {
-	result, err := serverGuard.handleEvent(r, closure)
+func (serverGuard *ServerGuard) resolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *response.HttpResponse, err error) {
+	result, err := serverGuard.handleEvent(request, closure)
 	if err != nil {
 		return nil, err
 	}
 
 	var rs *http.Response
-	if serverGuard.ShouldReturnRawResponse() {
+	if serverGuard.ShouldReturnRawResponse(request) {
 		resultRS := ""
 		if (*result)["response"] != nil {
 			resultRS = (*result)["response"].(string)
@@ -217,7 +197,7 @@ func (serverGuard *ServerGuard) resolveEvent(r *http.Request, closure func(event
 		}
 
 	} else {
-		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
+		strBuiltResponse := serverGuard.buildResponse(request, (*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
 		header := http.Header{}
 		header.Set("Content-Type", "application/xml")
 		rs = &http.Response{
@@ -232,14 +212,14 @@ func (serverGuard *ServerGuard) resolveEvent(r *http.Request, closure func(event
 	return httpRS, nil
 }
 
-func (serverGuard *ServerGuard) resolve() (httpRS *response.HttpResponse, err error) {
-	result, err := serverGuard.handleRequest()
+func (serverGuard *ServerGuard) resolve(request *http.Request) (httpRS *response.HttpResponse, err error) {
+	result, err := serverGuard.handleRequest(request)
 	if err != nil {
 		return nil, err
 	}
 
 	var rs *http.Response
-	if serverGuard.ShouldReturnRawResponse() {
+	if serverGuard.ShouldReturnRawResponse(request) {
 		resultRS := ""
 		if (*result)["response"] != nil {
 			resultRS = (*result)["response"].(string)
@@ -249,7 +229,7 @@ func (serverGuard *ServerGuard) resolve() (httpRS *response.HttpResponse, err er
 		}
 
 	} else {
-		strBuiltResponse := serverGuard.buildResponse((*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
+		strBuiltResponse := serverGuard.buildResponse(request, (*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
 		header := http.Header{}
 		header.Set("Content-Type", "application/xml")
 		rs = &http.Response{
@@ -271,7 +251,7 @@ func (serverGuard *ServerGuard) getToken() string {
 	return token
 }
 
-func (serverGuard *ServerGuard) buildResponse(to string, from string, message interface{}) string {
+func (serverGuard *ServerGuard) buildResponse(request *http.Request, to string, from string, message interface{}) string {
 
 	var toMessage contract.MessageInterface
 	switch message.(type) {
@@ -303,7 +283,7 @@ func (serverGuard *ServerGuard) buildResponse(to string, from string, message in
 
 	}
 
-	return serverGuard.buildReply(to, from, toMessage)
+	return serverGuard.buildReply(request, to, from, toMessage)
 }
 
 func (serverGuard *ServerGuard) handleEvent(r *http.Request, closure func(event contract.EventInterface) interface{}) (*object.HashMap, error) {
@@ -315,7 +295,6 @@ func (serverGuard *ServerGuard) handleEvent(r *http.Request, closure func(event 
 
 	fromUserName := ""
 	toUserName := ""
-
 
 	if msgHeader != nil {
 		if msgHeader.MsgType != "" {
@@ -332,9 +311,9 @@ func (serverGuard *ServerGuard) handleEvent(r *http.Request, closure func(event 
 	}, nil
 }
 
-func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
+func (serverGuard *ServerGuard) handleRequest(request *http.Request) (*object.HashMap, error) {
 
-	_, msgHeader, decryptedMessage, err := serverGuard.getMessage()
+	_, msgHeader, decryptedMessage, err := serverGuard.getMessage(request)
 	if err != nil {
 		return nil, err
 	}
@@ -350,7 +329,7 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 			toUserName = msgHeader.ToUserName
 		}
 	}
-	response := serverGuard.Dispatch(MESSAGE_TYPE_MAPPING[messageType], msgHeader, decryptedMessage)
+	response := serverGuard.Dispatch(request, MESSAGE_TYPE_MAPPING[messageType], msgHeader, decryptedMessage)
 
 	return &object.HashMap{
 		"to":       fromUserName,
@@ -359,7 +338,7 @@ func (serverGuard *ServerGuard) handleRequest() (*object.HashMap, error) {
 	}, nil
 }
 
-func (serverGuard *ServerGuard) buildReply(to string, from string, message contract.MessageInterface) (response string) {
+func (serverGuard *ServerGuard) buildReply(request *http.Request, to string, from string, message contract.MessageInterface) (response string) {
 
 	prepends := &object.HashMap{
 		"ToUserName":   to,
@@ -369,7 +348,7 @@ func (serverGuard *ServerGuard) buildReply(to string, from string, message contr
 	}
 	transformedResponse, _ := message.TransformToXml(prepends, false)
 	response = transformedResponse.(string)
-	if serverGuard.IsSafeMode() {
+	if serverGuard.IsSafeMode(request) {
 		// tbd log here
 		encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 		encryptedResponse, err := encryptor.Encrypt(response, "", "")
@@ -397,12 +376,8 @@ func (serverGuard *ServerGuard) signature(params []string) string {
 	return string(bs)
 }
 
-func (serverGuard *ServerGuard) isSafeMode() bool {
-	request := (*serverGuard.App).GetExternalRequest()
-	if request == nil {
-		println("request is invalid")
-		return false
-	}
+func (serverGuard *ServerGuard) isSafeMode(request *http.Request) bool {
+
 	query := request.URL.Query()
 
 	return query.Get("signature") == "" && "aes" == query.Get("encrypt_type")
@@ -443,11 +418,11 @@ func (serverGuard *ServerGuard) parseMessage2(content string) (dataContent *obje
 
 	return dataContent, err
 }
-func (serverGuard *ServerGuard) shouldReturnRawResponse() bool {
+func (serverGuard *ServerGuard) shouldReturnRawResponse(request *http.Request) bool {
 	return false
 }
 
-func (serverGuard *ServerGuard) decryptEvent(request *http.Request,content string) (callbackHeader *models.CallbackMessageHeader, err error) {
+func (serverGuard *ServerGuard) decryptEvent(request *http.Request, content string) (callbackHeader *models.CallbackMessageHeader, err error) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 	query := request.URL.Query()
@@ -473,10 +448,9 @@ func (serverGuard *ServerGuard) decryptEvent(request *http.Request,content strin
 
 }
 
-func (serverGuard *ServerGuard) decryptMessage(content string) (callbackHeader *models.CallbackMessageHeader, decryptMessage interface{}, err error) {
+func (serverGuard *ServerGuard) decryptMessage(request *http.Request,content string) (callbackHeader *models.CallbackMessageHeader, decryptMessage interface{}, err error) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
-	request := (*serverGuard.App).GetExternalRequest()
 	query := request.URL.Query()
 	buf, cryptErr := encryptor.Decrypt(
 		[]byte(content),

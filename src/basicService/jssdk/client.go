@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/http/response"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"net/http"
 	"sort"
 	"strings"
@@ -24,7 +26,7 @@ type Client struct {
 
 func NewClient(app *kernel.ApplicationInterface) *Client {
 	client := &Client{
-		BaseClient:         kernel.NewBaseClient(app,nil),
+		BaseClient:         kernel.NewBaseClient(app, nil),
 		InteractsWithCache: &kernel.InteractsWithCache{},
 	}
 
@@ -33,14 +35,18 @@ func NewClient(app *kernel.ApplicationInterface) *Client {
 	return client
 }
 
-func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, isJson bool, openTagList []string, url string) (interface{}, error) {
+func (comp *Client) BuildConfig(request *http.Request, jsApiList []string, debug bool, beta bool, isJson bool, openTagList []string, url string) (interface{}, error) {
 
+	signature, err := comp.ConfigSignature(request, url, "", time.Time{})
+	if err != nil {
+		return signature, err
+	}
 	config := object.MergeHashMap(&object.HashMap{
 		"debug":       debug,
 		"beta":        beta,
 		"jsApiList":   jsApiList,
 		"openTagList": openTagList,
-	}, comp.ConfigSignature(url, "", time.Time{}))
+	}, signature)
 
 	if isJson {
 		return json.Marshal(config)
@@ -50,9 +56,9 @@ func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, isJso
 
 }
 
-func (comp *Client) GetConfigArray(apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
+func (comp *Client) GetConfigArray(request *http.Request, apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
 
-	result, err := comp.BuildConfig(apis, debug, beta, false, openTagList, url)
+	result, err := comp.BuildConfig(request, apis, debug, beta, false, openTagList, url)
 
 	return result.(string), err
 }
@@ -66,17 +72,28 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 		return ticket.(*object.HashMap), err
 	}
 
+	mapRSBody := &object.HashMap{}
+	resultBody := ""
 	rs, err := comp.RequestRaw(comp.TicketEndpoint, "GET", &object.HashMap{
-		"query": &object.HashMap{
+		"query": &object.StringMap{
 			"type": ticketType,
-		}}, nil, nil)
-	result, err := comp.CastResponseToType(rs.(*http.Response), "array")
+		}}, nil, &resultBody)
+	if err != nil {
+		return nil, err
+	}
+
+	err = object.JsonDecode([]byte(resultBody), mapRSBody)
+	if (*mapRSBody)["errcode"].(float64) != 0 {
+		return mapRSBody, errors.New((*mapRSBody)["errmsg"].(string))
+	}
+
+	result, err := comp.CastResponseToType(rs.(*response.HttpResponse).Response, response2.TYPE_MAP)
 	if err != nil {
 		return nil, err
 	}
 
 	resultData := result.(*object.HashMap)
-	err = comp.GetCache().Set(cacheKey, result, time.Duration((*resultData)["expires_in"].(int)-500)*time.Second)
+	err = comp.GetCache().Set(cacheKey, result, time.Duration((*resultData)["expires_in"].(float64)-500)*time.Second)
 	if err != nil {
 		return nil, err
 	}
@@ -88,10 +105,10 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 	return resultData, nil
 }
 
-func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Time) *object.HashMap {
+func (comp *Client) ConfigSignature(request *http.Request, url string, nonce string, timestamp time.Time) (*object.HashMap, error) {
 
 	if url != "" {
-		url = comp.GetUrl()
+		url = comp.GetUrl(request)
 	}
 	if nonce != "" {
 		nonce = object.QuickRandom(10)
@@ -100,9 +117,9 @@ func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Tim
 		timestamp = time.Now()
 	}
 
-	result, err := comp.GetTicket(false, "")
+	result, err := comp.GetTicket(false, "jsapi")
 	if err != nil {
-		return nil
+		return result, err
 	}
 	ticket := (*result)["ticket"].(string)
 
@@ -112,7 +129,7 @@ func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Tim
 		"timestamp": timestamp,
 		"url":       url,
 		"signature": comp.GetTicketSignature(ticket, nonce, timestamp, url),
-	}
+	}, nil
 
 }
 
@@ -140,13 +157,11 @@ func (comp *Client) SetUrl(url string) *Client {
 	return comp
 }
 
-func (comp *Client) GetUrl() string {
+func (comp *Client) GetUrl(externalRequest *http.Request) string {
 
 	if comp.url != "" {
 		return comp.url
 	}
-
-	externalRequest := (*comp.App).GetExternalRequest()
 	return externalRequest.URL.String()
 }
 

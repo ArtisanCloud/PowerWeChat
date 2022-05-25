@@ -54,11 +54,11 @@ func prepareCallbackURL(app kernel.ApplicationInterface) string {
 		}
 	}
 
-	externalRequest := app.GetExternalRequest()
+	//externalRequest := app.GetExternalRequest()
 	baseURL := config.GetString("oauth.callback", "")
-	if externalRequest != nil {
-		baseURL = app.GetExternalRequest().URL.Host
-	}
+	//if externalRequest != nil {
+	//	baseURL = app.GetExternalRequest().URL.Host
+	//}
 
 	return baseURL + "/" + callback
 

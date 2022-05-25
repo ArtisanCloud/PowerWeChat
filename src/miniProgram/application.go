@@ -32,7 +32,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/urlLink"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/urlScheme"
 	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/wxaCode"
-	"net/http"
 )
 
 type MiniProgram struct {
@@ -311,13 +310,6 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 
 }
 
-func (app *MiniProgram) SetExternalRequest(r *http.Request) {
-	app.Base.ExternalRequest = r
-}
-
-func (app *MiniProgram) GetExternalRequest() (r *http.Request) {
-	return app.Base.ExternalRequest
-}
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 

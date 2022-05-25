@@ -2,7 +2,6 @@ package kernel
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/object"
-	"net/http"
 )
 
 type ApplicationInterface interface {
@@ -11,8 +10,6 @@ type ApplicationInterface interface {
 	GetConfig() *Config
 	GetComponent(name string) interface{}
 
-	SetExternalRequest(r *http.Request)
-	GetExternalRequest() (r *http.Request)
 }
 
 type ServiceContainer struct {

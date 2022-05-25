@@ -10,7 +10,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/basicService/url"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/dataCube"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/autoReply"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
@@ -19,11 +18,13 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/comment"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/customerService"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/customerService/session"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/dataCube"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/device"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/goods"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/guide"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/menu"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/oauth"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/ocr"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/poi"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/semantic"
@@ -34,9 +35,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
 	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/wifi"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/oauth"
-
-	"net/http"
 )
 
 type OfficialAccount struct {
@@ -294,14 +292,6 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 		return nil
 	}
 
-}
-
-func (app *OfficialAccount) SetExternalRequest(r *http.Request) {
-	app.Base.ExternalRequest = r
-}
-
-func (app *OfficialAccount) GetExternalRequest() (r *http.Request) {
-	return app.Base.ExternalRequest
 }
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {

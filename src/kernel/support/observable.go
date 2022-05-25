@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/decorators"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
+	"net/http"
 	"reflect"
 )
 
@@ -59,11 +60,11 @@ func (observable *Observable) On(condition int, handler contract.EventHandlerInt
 	return observable.Push(handler, condition)
 }
 
-func (observable *Observable) Dispatch(event int, header contract.EventInterface, content interface{}) interface{} {
-	return observable.notify(event, header, content)
+func (observable *Observable) Dispatch(request *http.Request,event int, header contract.EventInterface, content interface{}) interface{} {
+	return observable.notify(request,event, header, content)
 }
 
-func (observable *Observable) notify(event int, header contract.EventInterface, content interface{}) interface{} {
+func (observable *Observable) notify(request *http.Request,event int, header contract.EventInterface, content interface{}) interface{} {
 
 	var (
 		finalResult interface{}
@@ -81,7 +82,7 @@ Loop1:
 				// tbd
 				// intercepted
 
-				response = observable.callHandler(handler, header, content)
+				response = observable.callHandler(request,handler, header, content)
 
 				switch response.(type) {
 
@@ -131,6 +132,6 @@ Loop1:
 	return finalResult
 }
 
-func (observable *Observable) callHandler(callable *contract.EventHandlerInterface, header contract.EventInterface, content interface{}) interface{} {
-	return (*callable).Handle(header, content)
+func (observable *Observable) callHandler(request *http.Request,callable *contract.EventHandlerInterface, header contract.EventInterface, content interface{}) interface{} {
+	return (*callable).Handle(request,header, content)
 }

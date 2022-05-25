@@ -4,6 +4,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/decorators"
+	"net/http"
 )
 
 type EchoStrHandler struct {
@@ -20,13 +21,8 @@ func NewEchoStrHandler(app *kernel.ApplicationInterface) *EchoStrHandler {
 	return handler
 }
 
-func (handler *EchoStrHandler) Handle(header contract.EventInterface, content interface{}) interface{} {
+func (handler *EchoStrHandler) Handle(request *http.Request,header contract.EventInterface, content interface{}) interface{} {
 
-	request := (*handler.App).GetExternalRequest()
-	if request == nil {
-		println("request is invalid")
-		return nil
-	}
 	encryptor := (*handler.App).GetComponent("Encryptor").(*kernel.Encryptor)
 
 	query := request.URL.Query()

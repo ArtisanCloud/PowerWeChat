@@ -118,7 +118,7 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 
 	base := &object.HashMap{
 		// 微信的接口如果传入接口意外的参数，签名会失败所以这里需要区分对待参数
-		"nonce_str":  object.RandStringBytesMask(32),
+		"nonce_str": object.RandStringBytesMask(32),
 		//"mch_id":     config.GetString("mch_id", ""),
 		//"sub_mch_id": config.GetString("sub_mch_id", ""),
 		//"sub_appid":  config.GetString("sub_appid", ""),
@@ -245,7 +245,7 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CastResponseToType(returnResponse.(*http2.Response), "array")
+	result, err := client.CastResponseToType(returnResponse.(*http2.Response), response2.TYPE_RAW)
 
 	return result.(*object.HashMap), err
 }
@@ -350,7 +350,7 @@ func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, para
 		return nil, err
 	}
 
-	strMapParams,err := object.HashMapToStringMap(params)
+	strMapParams, err := object.HashMapToStringMap(params)
 	if err != nil {
 		return nil, err
 	}
@@ -369,7 +369,7 @@ func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, para
 	if "get" != object.Lower(method) {
 		// check need sign body or not
 		objPara, err := power.PowerStringMapToObjectStringMap(powerStrMapParams)
-		if err!= nil{
+		if err != nil {
 			return nil, err
 		}
 		signBody = object.StringMap2Xml(objPara)

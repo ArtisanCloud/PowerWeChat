@@ -54,7 +54,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/src/work/user/exportJobs"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/user/linkedCorp"
 	"github.com/ArtisanCloud/PowerWeChat/src/work/user/tag"
-	"net/http"
 )
 
 type Work struct {
@@ -390,14 +389,6 @@ func (app *Work) GetComponent(name string) interface{} {
 		return nil
 	}
 
-}
-
-func (app *Work) SetExternalRequest(r *http.Request) {
-	app.Base.ExternalRequest = r
-}
-
-func (app *Work) GetExternalRequest() (r *http.Request) {
-	return app.Base.ExternalRequest
 }
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
