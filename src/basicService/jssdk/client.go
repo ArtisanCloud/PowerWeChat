@@ -2,12 +2,12 @@ package jssdk
 
 import (
 	"crypto/sha1"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/http/response"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
 	"net/http"
 	"sort"
@@ -35,9 +35,9 @@ func NewClient(app *kernel.ApplicationInterface) *Client {
 	return client
 }
 
-func (comp *Client) BuildConfig(request *http.Request, jsApiList []string, debug bool, beta bool, isJson bool, openTagList []string, url string) (interface{}, error) {
+func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, openTagList []string, url string) (interface{}, error) {
 
-	signature, err := comp.ConfigSignature(request, url, "", time.Time{})
+	signature, err := comp.ConfigSignature(url, "", time.Time{})
 	if err != nil {
 		return signature, err
 	}
@@ -48,17 +48,14 @@ func (comp *Client) BuildConfig(request *http.Request, jsApiList []string, debug
 		"openTagList": openTagList,
 	}, signature)
 
-	if isJson {
-		return json.Marshal(config)
-	} else {
-		return config, nil
-	}
+	powerConfig, err := power.HashMapToPower(config)
+	return powerConfig, err
 
 }
 
-func (comp *Client) GetConfigArray(request *http.Request, apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
+func (comp *Client) GetConfigArray(apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
 
-	result, err := comp.BuildConfig(request, apis, debug, beta, false, openTagList, url)
+	result, err := comp.BuildConfig(apis, debug, beta, openTagList, url)
 
 	return result.(string), err
 }
@@ -105,11 +102,8 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 	return resultData, nil
 }
 
-func (comp *Client) ConfigSignature(request *http.Request, url string, nonce string, timestamp time.Time) (*object.HashMap, error) {
+func (comp *Client) ConfigSignature(url string, nonce string, timestamp time.Time) (*object.HashMap, error) {
 
-	if url != "" {
-		url = comp.GetUrl(request)
-	}
 	if nonce != "" {
 		nonce = object.QuickRandom(10)
 	}
@@ -139,7 +133,8 @@ func (comp *Client) GetTicketSignature(ticket string, nonce string, timestamp ti
 
 	hash := sha1.New()
 	hash.Write([]byte(param))
-	return string(hash.Sum(nil))
+	bs := hash.Sum(nil)
+	return fmt.Sprintf("%x", bs)
 }
 
 func (comp *Client) dictionaryOrderSignature(params []string) string {
