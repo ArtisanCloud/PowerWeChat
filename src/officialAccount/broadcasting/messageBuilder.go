@@ -26,10 +26,15 @@ func (comp *MessageBuilder) SetMessage(message contract.MessageInterface) *Messa
 
 func (comp *MessageBuilder) SetTo(to *power.HashMap) *MessageBuilder {
 	comp.To = to
+
 	return comp
 }
 
 func (comp *MessageBuilder) ToTag(tagID int) {
-	//comp.SetTo(
-	//	)
+	comp.SetTo(&power.HashMap{
+		"filter": &power.HashMap{
+			"is_to_all": false,
+			"tag_id":    tagID,
+		},
+	})
 }
