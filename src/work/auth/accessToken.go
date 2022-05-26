@@ -29,6 +29,11 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 	config := (*accessToken.App).GetContainer().GetConfig()
 	accessToken.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
+			// this is for the cached key encoded
+			"appid":  (*config)["corp_id"].(string),
+			"secret": (*config)["secret"].(string),
+
+			// this is for the real credentials
 			"corpid":     (*config)["corp_id"].(string),
 			"corpsecret": (*config)["secret"].(string),
 		}
