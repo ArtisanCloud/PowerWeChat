@@ -1,13 +1,15 @@
 package broadcasting
 
 import (
+	"errors"
 	"github.com/ArtisanCloud/PowerLibs/object"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/broadcasting/request"
 )
 
 type MessageBuilder struct {
-	To *power.HashMap
+	To *object.HashMap
 
 	Message contract.MessageInterface
 
@@ -25,16 +27,71 @@ func (comp *MessageBuilder) SetMessage(message contract.MessageInterface) *Messa
 }
 
 func (comp *MessageBuilder) SetTo(to *power.HashMap) *MessageBuilder {
-	comp.To = to
+
+	objTo, _ := power.PowerHashMapToObjectHashMap(to)
+
+	comp.To = objTo
 
 	return comp
 }
 
-func (comp *MessageBuilder) ToTag(tagID int) {
+func (comp *MessageBuilder) ToTag(tagID int) *MessageBuilder {
 	comp.SetTo(&power.HashMap{
 		"filter": &power.HashMap{
 			"is_to_all": false,
 			"tag_id":    tagID,
 		},
+	})
+	return comp
+}
+
+func (comp *MessageBuilder) ToUsers(openIDs []string) *MessageBuilder {
+	comp.SetTo(&power.HashMap{
+		"touser": openIDs,
+	})
+	return comp
+}
+
+func (comp *MessageBuilder) ToAll() *MessageBuilder {
+	comp.SetTo(&power.HashMap{
+		"filter": &power.HashMap{
+			"is_to_all": true,
+		},
+	})
+	return comp
+}
+
+func (comp *MessageBuilder) With(attributes *power.HashMap) (*MessageBuilder, error) {
+
+	objAttributes, _ := power.PowerHashMapToObjectHashMap(attributes)
+
+	comp.Attribute.SetAttributes(objAttributes)
+	return comp, nil
+}
+
+func (comp *MessageBuilder) Build(prepends *object.HashMap) (*object.HashMap, error) {
+
+	if comp.Message == nil {
+		return nil, errors.New("no message content to send")
+	}
+
+	content, err := comp.Message.TransformForJsonRequest(&object.HashMap{}, true)
+	if err != nil {
+		return nil, err
+	}
+
+	if content == nil {
+		prepends = comp.To
+
+	}
+
+	message := object.MergeHashMap(prepends, content, comp.Attribute.GetAttributes())
+
+	return message, nil
+}
+
+func (comp *MessageBuilder) BuildForPreview(by string, user *request.Reception) (*object.HashMap, error) {
+	return comp.Build(&object.HashMap{
+		by: user,
 	})
 }
