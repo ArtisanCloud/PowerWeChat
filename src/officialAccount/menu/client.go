@@ -41,7 +41,7 @@ func (comp *Client) CurrentSelfMenu() (*response.ResponseCurrentSelfMenu, error)
 
 // 创建接口
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Creating_Custom-Defined_Menu.html
-func (comp *Client) Create(buttons *request.RequestMenuCreate) (*response.ResponseMenuCreate, error) {
+func (comp *Client) Create(buttons []*request.Button) (*response.ResponseMenuCreate, error) {
 
 	result := &response.ResponseMenuCreate{}
 
@@ -54,7 +54,7 @@ func (comp *Client) Create(buttons *request.RequestMenuCreate) (*response.Respon
 
 // 创建个性化菜单
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html
-func (comp *Client) CreateConditional(buttons *request.RequestMenuCreate, rules *request.RequestMatchRule) (*response.ResponseMenuCreateConditional, error) {
+func (comp *Client) CreateConditional(buttons []*request.Button, rules *request.RequestMatchRule) (*response.ResponseMenuCreateConditional, error) {
 
 	result := &response.ResponseMenuCreateConditional{}
 

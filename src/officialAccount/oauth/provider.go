@@ -17,6 +17,8 @@ func RegisterProvider(app kernel.ApplicationInterface) *providers.WeChat {
 			"client_id":     config.GetString("app_id", ""),
 			"client_secret": config.GetString("secret", ""),
 			"redirect":      prepareCallbackURL(app),
+			"http_debug":    config.GetBool("http_debug", false),
+			"debug":         config.GetBool("http_debug", false),
 		},
 	}
 
