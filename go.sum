@@ -1,3 +1,7 @@
+github.com/ArtisanCloud/PowerLibs v1.2.9-0.20220525160519-50eedbfdd394 h1:VqzXHatXb5QXpo4PUe8UWuzxD22NC6hCCJh7+zwqQRc=
+github.com/ArtisanCloud/PowerLibs v1.2.9-0.20220525160519-50eedbfdd394/go.mod h1:lINI3JhD1m2kmB8DxBBbhoyHSQYy9bmuRUXJrj3IuMU=
+github.com/ArtisanCloud/PowerSocialite v1.2.1-0.20220527080504-3dfb9dab9082 h1:/hWoqfKU7EgRQ/UC8yr55N3Ta3P9kLz0A1Au2V3uOgE=
+github.com/ArtisanCloud/PowerSocialite v1.2.1-0.20220527080504-3dfb9dab9082/go.mod h1:5BStXz5yDWTdDV40a5WrJUqH2LTJCmobwHbd+XIuhu8=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=

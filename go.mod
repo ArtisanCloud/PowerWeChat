@@ -2,13 +2,13 @@ module github.com/ArtisanCloud/PowerWeChat
 
 go 1.17
 
-replace github.com/ArtisanCloud/PowerLibs => ../PowerLibs
-
-replace github.com/ArtisanCloud/PowerSocialite => ../PowerSocialite
+//replace github.com/ArtisanCloud/PowerLibs => ../PowerLibs
+//
+//replace github.com/ArtisanCloud/PowerSocialite => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs v1.3.3
-	github.com/ArtisanCloud/PowerSocialite v1.2.2
+	github.com/ArtisanCloud/PowerLibs v1.2.9-0.20220525160519-50eedbfdd394
+	github.com/ArtisanCloud/PowerSocialite v1.2.1-0.20220527080504-3dfb9dab9082
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/google/uuid v1.1.1
 	github.com/stretchr/testify v1.7.0
