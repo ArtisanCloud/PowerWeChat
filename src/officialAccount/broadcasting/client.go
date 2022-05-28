@@ -136,7 +136,7 @@ func (comp *Client) SendMessage(message contract.MessageInterface, reception *re
 		messageBuilder.ToUsers(reception.ToUser)
 	}
 
-	msg, err := messageBuilder.Build(&object.HashMap{})
+	msg, err := messageBuilder.Build(nil)
 	if err != nil {
 		return nil, err
 	}

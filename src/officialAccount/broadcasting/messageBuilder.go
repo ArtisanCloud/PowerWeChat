@@ -17,7 +17,9 @@ type MessageBuilder struct {
 }
 
 func NewMessengerBuilder() *MessageBuilder {
-	return &MessageBuilder{}
+	return &MessageBuilder{
+		Attribute: object.NewAttribute(&object.HashMap{}),
+	}
 }
 
 func (comp *MessageBuilder) SetMessage(message contract.MessageInterface) *MessageBuilder {
@@ -80,7 +82,7 @@ func (comp *MessageBuilder) Build(prepends *object.HashMap) (*object.HashMap, er
 		return nil, err
 	}
 
-	if content == nil {
+	if prepends == nil {
 		prepends = comp.To
 
 	}
