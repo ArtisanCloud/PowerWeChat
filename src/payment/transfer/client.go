@@ -46,8 +46,7 @@ func (comp *Client) ToBalance(data *request.RequestTransferToBalance) (*response
 
 	config := (*comp.App).GetConfig()
 
-	//params, err := object.StructToStringMap(data, "xml")
-	params, err := object.StructToHashMapWithTag(data, "xml")
+	params, err := object.StructToHashMapWithXML(data)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +116,8 @@ func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response.Respo
 		return nil, err
 	}
 
-	params, err := object.StructToHashMapWithTag(data,"json")
+	//params, err := object.StructToHashMapWithTag(data,"json")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}

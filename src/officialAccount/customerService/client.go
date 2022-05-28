@@ -168,7 +168,8 @@ func (comp *Client) HideTypingStatusToUser(openID string) (*response2.ResponseOf
 func (comp *Client) Messages(data *request.RequestMessages) (*response.ResponseMessages, error) {
 	result := &response.ResponseMessages{}
 
-	params, err := object.StructToHashMapWithTag(data, "json")
+	//params, err := object.StructToHashMapWithTag(data, "json")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}

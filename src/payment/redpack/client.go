@@ -46,7 +46,7 @@ func (comp *Client) SendMiniProgramNormal(data *request.RequestSendMiniProgramNo
 
 	config := (*comp.App).GetConfig()
 
-	params, err := object.StructToHashMapWithTag(data, "xml")
+	params, err := object.StructToHashMapWithXML(data)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (comp *Client) SendNormal(data *request.RequestSendRedPack) (*response.Resp
 
 	config := (*comp.App).GetConfig()
 
-	params, err := object.StructToHashMapWithTag(data, "xml")
+	params, err := object.StructToHashMapWithXML(data)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,8 @@ func (comp *Client) SendGroup(data *request.RequestSendGroupRedPack) (*response.
 		data.MchID = config.GetString("mch_id", "")
 	}
 
-	params, err := object.StructToHashMapWithTag(data,"json")
+	//params, err := object.StructToHashMapWithTag(data,"json")
+	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
 	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)

@@ -106,7 +106,8 @@ func (comp *Client) Create(data *request.RequestQRCodeCreate, temporary bool, ex
 
 	result := &response.ResponseQRCodeCreate{}
 
-	params, err := object.StructToHashMapWithTag(data, "json")
+	//params, err := object.StructToHashMapWithTag(data, "json")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}

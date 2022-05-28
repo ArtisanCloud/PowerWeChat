@@ -77,7 +77,8 @@ func (comp *Client) UploadArticle(articles request2.RequestAddArticles) (*respon
 
 	result := &response.ResponseMaterialAddNews{}
 
-	params, err := object.StructToHashMapWithTag(articles, "json")
+	//params, err := object.StructToHashMapWithTag(articles, "json")
+	params, err := object.StructToHashMap(articles)
 	if err != nil {
 		return nil, err
 	}
@@ -204,8 +205,8 @@ func (comp *Client) Upload(Type string, path string, query *object.StringMap, re
 
 	(*query)["type"] = Type
 
-	form:= &object.HashMap{
-		"filename":filepath.Base(path),
+	form := &object.HashMap{
+		"filename": filepath.Base(path),
 	}
 
 	return comp.HttpUpload(comp.getApiByType(Type), file, form, query, nil, result)

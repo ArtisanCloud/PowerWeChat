@@ -22,7 +22,8 @@ func NewClient(app *payment.ApplicationPaymentInterface) *Client {
 func (comp *Client) PayTransferToPocket(data *request.RequestPayTransferToPocket) (*response.ResponsePayTransferToPocket, error) {
 	result := &response.ResponsePayTransferToPocket{}
 
-	params, err := object.StructToHashMapWithTag(data, "json")
+	//params, err := object.StructToHashMapWithTag(data, "json")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +40,8 @@ func (comp *Client) QueryTransferToPocket(data *request.RequestQueryTransferToPo
 
 	result := &response.ResponseQueryTransferToPocket{}
 
-	params, err := object.StructToHashMapWithTag(data,"json")
+	//params, err := object.StructToHashMapWithTag(data,"json")
+	params, err := object.StructToHashMap(data)
 	if err != nil {
 		return nil, err
 	}

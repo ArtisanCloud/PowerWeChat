@@ -20,7 +20,8 @@ func (comp *Client) Generate(options *request.URLSchemeGenerate) (*http.Response
 	var result string
 	var header = &response4.ResponseHeaderMedia{}
 
-	data, err := object.StructToHashMapWithTag(options, "json")
+	//data, err := object.StructToHashMapWithTag(options, "json")
+	data, err := object.StructToHashMap(options)
 	if err != nil {
 		return nil, err
 	}

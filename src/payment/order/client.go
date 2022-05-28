@@ -94,7 +94,8 @@ func (comp *Client) PayTransaction(entryPoint string, params request.Prepay, res
 	mchID := config.GetString("mch_id", "")
 	params.SetMchID(mchID)
 
-	options, err := object.StructToHashMapWithTag(params,"json")
+	//options, err := object.StructToHashMapWithTag(params,"json")
+	options, err := object.StructToHashMap(params)
 	if err != nil {
 		return nil, err
 	}
