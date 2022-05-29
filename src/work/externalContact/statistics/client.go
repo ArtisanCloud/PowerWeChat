@@ -1,9 +1,9 @@
 package statistics
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/statistics/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/statistics/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/statistics/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/statistics/response"
 )
 
 type Client struct {
@@ -26,8 +26,6 @@ func (comp *Client) GetUserBehaviorData(options *request.RequestGetUserBehaviorD
 
 	return result, err
 }
-
-
 
 // 获取「群聊数据统计」数据
 // https://work.weixin.qq.com/api/doc/90000/90135/92133

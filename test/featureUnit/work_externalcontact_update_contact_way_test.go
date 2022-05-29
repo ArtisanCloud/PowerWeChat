@@ -1,9 +1,9 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/fmt"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	request2 "github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/contactWay/request"
+	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	request2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/contactWay/request"
 	"testing"
 )
 
@@ -29,7 +29,7 @@ func Test_ExternalContact_Update_Contact_Way(t *testing.T) {
 		},
 	}
 
-	response,_ := Work.ExternalContactContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &power.HashMap{"para": para})
+	response, _ := Work.ExternalContactContactWay.Update("f3626f74a7f94784115b0b8a729c471f", &power.HashMap{"para": para})
 
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")

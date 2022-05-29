@@ -1,10 +1,10 @@
 package serviceState
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/serviceState/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/serviceState/response"
 )
 
 type Client struct {
@@ -33,17 +33,16 @@ func (comp *Client) Get(openKFID string, externalUserID string) (*response.Respo
 	return result, err
 }
 
-
 // 变更会话状态
 // https://work.weixin.qq.com/api/doc/90000/90135/94669
-func (comp *Client) Trans(openKFID string, externalUserID string, serviceState int, servicerUserID string ) (*response2.ResponseWork, error) {
+func (comp *Client) Trans(openKFID string, externalUserID string, serviceState int, servicerUserID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
 	options := &object.HashMap{
 		"open_kfid":       openKFID,
 		"external_userid": externalUserID,
-		"service_state": serviceState,
+		"service_state":   serviceState,
 		"servicer_userid": servicerUserID,
 	}
 

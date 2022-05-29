@@ -1,10 +1,10 @@
 package webdrive
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/webdrive/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/webdrive/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/webdrive/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/webdrive/response"
 )
 
 type Client struct {
@@ -28,7 +28,6 @@ func (comp *Client) SpaceCreate(options *request.RequestWebDriveSpaceCreate) (*r
 	return result, err
 }
 
-
 // 重命名空间
 // https://work.weixin.qq.com/api/doc/90000/90135/93655
 func (comp *Client) SpaceRename(options *request.RequestWebDriveSpaceRename) (*response2.ResponseWork, error) {
@@ -39,7 +38,6 @@ func (comp *Client) SpaceRename(options *request.RequestWebDriveSpaceRename) (*r
 
 	return result, err
 }
-
 
 // 解散空间
 // https://work.weixin.qq.com/api/doc/90000/90135/93655
@@ -63,9 +61,6 @@ func (comp *Client) SpaceInfo(options *request.RequestWebDriveSpaceInfo) (*respo
 	return result, err
 }
 
-
-
-
 // 添加成员/部门
 // https://work.weixin.qq.com/api/doc/90000/90135/93656
 func (comp *Client) SpaceACLAdd(options *request.RequestWebDriveSpaceACLAdd) (*response2.ResponseWork, error) {
@@ -76,8 +71,6 @@ func (comp *Client) SpaceACLAdd(options *request.RequestWebDriveSpaceACLAdd) (*r
 
 	return result, err
 }
-
-
 
 // 移除成员/部门
 // https://work.weixin.qq.com/api/doc/90000/90135/93656
@@ -90,8 +83,6 @@ func (comp *Client) SpaceACLDel(options *request.RequestWebDriveSpaceACLDel) (*r
 	return result, err
 }
 
-
-
 // 权限管理
 // https://work.weixin.qq.com/api/doc/90000/90135/93656
 func (comp *Client) SpaceSetting(options *request.RequestWebDriveSpaceSetting) (*response2.ResponseWork, error) {
@@ -103,7 +94,6 @@ func (comp *Client) SpaceSetting(options *request.RequestWebDriveSpaceSetting) (
 	return result, err
 }
 
-
 // 获取邀请链接
 // https://work.weixin.qq.com/api/doc/90000/90135/93656
 func (comp *Client) SpaceShare(options *request.RequestWebDriveSpaceShare) (*response.ResponseWebDriveSpaceShare, error) {
@@ -114,7 +104,6 @@ func (comp *Client) SpaceShare(options *request.RequestWebDriveSpaceShare) (*res
 
 	return result, err
 }
-
 
 // 获取文件列表
 // https://work.weixin.qq.com/api/doc/90000/90135/93657
@@ -149,7 +138,6 @@ func (comp *Client) FileDownload(options *request.RequestWebDriveFileDownload) (
 	return result, err
 }
 
-
 // 新建文件/微文档
 // https://work.weixin.qq.com/api/doc/90000/90135/93657
 func (comp *Client) FileCreate(options *request.RequestWebDriveFileCreate) (*response.ResponseWebDriveFileCreate, error) {
@@ -160,7 +148,6 @@ func (comp *Client) FileCreate(options *request.RequestWebDriveFileCreate) (*res
 
 	return result, err
 }
-
 
 // 重命名文件
 // https://work.weixin.qq.com/api/doc/90000/90135/93657
@@ -194,7 +181,6 @@ func (comp *Client) FileDelete(options *request.RequestWebDriveFileDelete) (*res
 
 	return result, err
 }
-
 
 // 新增指定人
 // https://work.weixin.qq.com/api/doc/90000/90135/93658

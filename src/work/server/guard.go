@@ -3,10 +3,10 @@ package server
 import (
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
-	models2 "github.com/ArtisanCloud/PowerWeChat/src/work/server/handlers/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
+	models2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/server/handlers/models"
 	"net/http"
 )
 
@@ -103,7 +103,6 @@ func (guard *Guard) OverrideToCallbackType() {
 		default:
 			return nil, errors.New("not found wechat msg type")
 		}
-
 
 		return decryptMessage, err
 	}

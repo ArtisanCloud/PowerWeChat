@@ -1,11 +1,11 @@
 package store
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/store/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/store/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/store/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/store/response"
 )
 
 type Client struct {
@@ -146,7 +146,6 @@ func (comp *Client) List(offset int, limit int) (*response.ResponseStoreInfo, er
 
 	return result, err
 }
-
 
 // 删除门店
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Shop_Miniprogram_Interface.html

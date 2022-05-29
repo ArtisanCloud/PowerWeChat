@@ -1,16 +1,15 @@
 package wifi
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/wifi/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/wifi/response"
 )
 
 type DeviceClient struct {
 	*kernel.BaseClient
 }
-
 
 func NewDeviceClient(app kernel.ApplicationInterface) *DeviceClient {
 	return &DeviceClient{

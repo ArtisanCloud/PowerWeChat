@@ -2,12 +2,12 @@ package operation
 
 import (
 	"fmt"
-	response3 "github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/operation/response"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
+	response3 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/operation/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
 	"net/http"
 )
 

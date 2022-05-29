@@ -1,14 +1,12 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 )
 
 type Article struct {
 	*Message
-
-
 }
 
 func NewArticle(items *power.HashMap) *Article {
@@ -28,17 +26,16 @@ func NewArticle(items *power.HashMap) *Article {
 	}
 
 	m.JsonAliases = &object.HashMap{
-		"content_source_url" : "source_url",
-		"show_cover_pic" : "show_cover",
+		"content_source_url": "source_url",
+		"show_cover_pic":     "show_cover",
 	}
 
-	m.SetAttribute("required",[]string{
-			"thumb_media_id",
-			"title",
-			"content",
-			"show_cover",
-		})
+	m.SetAttribute("required", []string{
+		"thumb_media_id",
+		"title",
+		"content",
+		"show_cover",
+	})
 
 	return m
 }
-

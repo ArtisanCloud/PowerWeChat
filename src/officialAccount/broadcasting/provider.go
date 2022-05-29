@@ -1,6 +1,6 @@
 package broadcasting
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {
 
@@ -10,5 +10,3 @@ func RegisterProvider(app kernel.ApplicationInterface) *Client {
 
 	return client
 }
-
-

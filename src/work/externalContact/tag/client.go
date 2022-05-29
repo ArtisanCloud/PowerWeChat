@@ -1,11 +1,11 @@
 package tag
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/tag/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/tag/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/tag/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/tag/response"
 )
 
 type Client struct {
@@ -45,7 +45,6 @@ func (comp *Client) AddCorpTag(options *request.RequestTagAddCorpTag) (*response
 	return result, err
 }
 
-
 // 编辑企业客户标签
 // https://work.weixin.qq.com/api/doc/90000/90135/92117
 func (comp *Client) EditCorpTag(options *request.RequestTagEditCorpTag) (*response2.ResponseWork, error) {
@@ -68,7 +67,6 @@ func (comp *Client) DelCorpTag(options *request.RequestTagDelCorpTag) (*response
 	return result, err
 }
 
-
 // 获取指定规则组下的企业客户标签
 // https://work.weixin.qq.com/api/doc/90000/90135/94882
 func (comp *Client) GetStrategyTagList(options *request.RequestTagGetStrategyTagList) (*response.ResponseTagGetStrategyTagList, error) {
@@ -90,7 +88,6 @@ func (comp *Client) AddStrategyTag(options *request.RequestTagAddStrategyTag) (*
 
 	return result, err
 }
-
 
 // 编辑指定规则组下的企业客户标签
 // https://work.weixin.qq.com/api/doc/90000/90135/94882

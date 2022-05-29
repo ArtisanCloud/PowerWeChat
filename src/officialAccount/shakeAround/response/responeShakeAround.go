@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type AccountRegisgerData struct {
 	ApplyTime    int    `json:"apply_time"`
@@ -34,7 +34,7 @@ type UserData struct {
 type ResponseShakeAroundUser struct {
 	*response.ResponseOfficialAccount
 
-	Data    *UserData `json:"data"`
+	Data *UserData `json:"data"`
 }
 
 // ---------------------------------------------------------

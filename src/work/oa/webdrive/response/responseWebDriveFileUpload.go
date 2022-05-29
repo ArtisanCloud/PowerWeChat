@@ -1,11 +1,11 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseWebDriveFileUpload struct {
 	*response.ResponseWork
 
-	FileID   string             `json:"fileid"`
+	FileID string `json:"fileid"`
 }

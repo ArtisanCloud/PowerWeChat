@@ -1,9 +1,9 @@
 package pstncc
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/pstncc/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/pstncc/response"
 )
 
 type Client struct {
@@ -39,7 +39,7 @@ func (comp *Client) GetStates(calleeUserID string, callID string) (*response.Res
 
 	options := &object.HashMap{
 		"callee_userid": calleeUserID,
-		"callid": callID,
+		"callid":        callID,
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/pstncc/getstates", options, nil, nil, result)

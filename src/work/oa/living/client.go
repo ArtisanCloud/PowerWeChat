@@ -1,11 +1,11 @@
 package living
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/living/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/living/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/living/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/living/response"
 )
 
 type Client struct {
@@ -133,7 +133,6 @@ func (comp *Client) GetWatchStat(livingID string, nextKey string) (*response.Res
 
 	return result, err
 }
-
 
 // 获取跳转小程序商城的直播观众信息
 // https://work.weixin.qq.com/api/doc/90000/90135/94442

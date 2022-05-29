@@ -1,7 +1,7 @@
 package wxaCode
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) *Client {

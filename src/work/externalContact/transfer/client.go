@@ -1,10 +1,10 @@
 package transfer
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/transfer/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/transfer/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/transfer/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/transfer/response"
 )
 
 type Client struct {
@@ -28,7 +28,6 @@ func (comp *Client) TransferCustomer(options *request.RequestTransferCustomer) (
 	return result, err
 }
 
-
 // 查询客户接替状态
 // https://work.weixin.qq.com/api/doc/90000/90135/94088
 func (comp *Client) TransferResult(options *request.RequestTransferResult) (*response.ResponseTransferResult, error) {
@@ -39,8 +38,6 @@ func (comp *Client) TransferResult(options *request.RequestTransferResult) (*res
 
 	return result, err
 }
-
-
 
 // 获取待分配的离职成员列表
 // https://work.weixin.qq.com/api/doc/90000/90135/92125
@@ -70,7 +67,6 @@ func (comp *Client) ResignedTransferCustomer(options *request.RequestResignedTra
 	return result, err
 }
 
-
 // 查询客户接替状态
 // https://work.weixin.qq.com/api/doc/90000/90135/94082
 func (comp *Client) ResignedTransferResult(options *request.RequestResignedTransferResult) (*response.ResponseResignedTransferResult, error) {
@@ -82,7 +78,6 @@ func (comp *Client) ResignedTransferResult(options *request.RequestResignedTrans
 	return result, err
 }
 
-
 // 分配离职成员的客户群
 // https://work.weixin.qq.com/api/doc/90000/90135/92127
 func (comp *Client) GroupChatTransfer(options *request.RequestGroupChatTransfer) (*response.ResponseGroupChatTransfer, error) {
@@ -93,4 +88,3 @@ func (comp *Client) GroupChatTransfer(options *request.RequestGroupChatTransfer)
 
 	return result, err
 }
-

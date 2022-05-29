@@ -3,10 +3,10 @@ package media
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/basicService/media/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/media/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"os"
 )
 

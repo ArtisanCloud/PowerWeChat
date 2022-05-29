@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type DataPage struct {
 	PageID int `json:"page_id"`
@@ -11,7 +11,6 @@ type ResponsePage struct {
 
 	Data *DataPage `json:"data"`
 }
-
 
 // ---------------------------------------------------
 
@@ -25,8 +24,8 @@ type Page struct {
 }
 
 type DataPageList struct {
-	Pages []*Page`json:"pages"`
-	TotalCount int `json:"total_count"`
+	Pages      []*Page `json:"pages"`
+	TotalCount int     `json:"total_count"`
 }
 
 type ResponsePageList struct {

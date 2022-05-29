@@ -1,9 +1,9 @@
 package exportJobs
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/user/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/user/response"
 )
 
 type Client struct {
@@ -31,7 +31,6 @@ func (comp *Client) SimpleUser(encodingAESKey string, blockSize int64) (*respons
 	return result, err
 }
 
-
 // 导出成员详情
 // https://work.weixin.qq.com/api/doc/90000/90135/94851
 func (comp *Client) User(encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
@@ -46,7 +45,6 @@ func (comp *Client) User(encodingAESKey string, blockSize int64) (*response.Resp
 
 	return result, err
 }
-
 
 // 导出部门
 // https://work.weixin.qq.com/api/doc/90000/90135/94852
@@ -63,15 +61,14 @@ func (comp *Client) Department(encodingAESKey string, blockSize int64) (*respons
 	return result, err
 }
 
-
 // 导出标签成员
 // https://work.weixin.qq.com/api/doc/90000/90135/94853
-func (comp *Client) TagUser(tagID int,encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
+func (comp *Client) TagUser(tagID int, encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
 
 	result := &response.ResponseUserExportJobs{}
 
 	options := &object.HashMap{
-		"tagid": tagID,
+		"tagid":           tagID,
 		"encoding_aeskey": encodingAESKey,
 		"block_size":      blockSize,
 	}
@@ -87,7 +84,7 @@ func (comp *Client) GetExportResult(jobID string) (*response.ResponseUserExportG
 	result := &response.ResponseUserExportGetResult{}
 
 	options := &object.HashMap{
-		"jobid":  jobID,
+		"jobid": jobID,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/export/get_result", options, nil, nil, result)
 

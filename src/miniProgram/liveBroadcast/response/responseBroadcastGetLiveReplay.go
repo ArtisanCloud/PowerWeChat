@@ -1,15 +1,13 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseBroadcastGetLiveReplay struct {
 	*response.ResponseMiniProgram
 
-	Total int `json:"total"`
+	Total      int              `json:"total"`
 	LiveReplay []*power.HashMap `json:"live_replay"`
-
-
 }

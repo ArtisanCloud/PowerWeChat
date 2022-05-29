@@ -1,11 +1,11 @@
 package immediateDelivery
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/miniProgram/immediateDelivery/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/immediateDelivery/response"
 )
 
 type Client struct {
@@ -172,10 +172,9 @@ func (comp *Client) PreCancelOrder(data *power.HashMap) (*response2.ResponseImme
 
 // 模拟配送公司更新配送单状态
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.realMockUpdateOrder.html
-func (comp *Client) RealMockUpdateOrder(options *power.HashMap ) (*response.ResponseMiniProgram, error) {
+func (comp *Client) RealMockUpdateOrder(options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
-
 
 	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/realmock_update_order", options, nil, nil, result)
 

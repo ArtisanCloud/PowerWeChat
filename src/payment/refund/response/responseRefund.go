@@ -1,26 +1,25 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
 
 type ResponseRefund struct {
 	*response.ResponsePayment
 
-	RefundID            string         `json:"refund_id"`
-	OutRefundNO         string         `json:"out_refund_no"`
-	TransactionID       string         `json:"transaction_id"`
-	OutTradeNO          string         `json:"out_trade_no"`
-	Channel             string         `json:"channel"`
-	UserReceivedAccount string         `json:"user_received_account"`
-	SuccessTime         string         `json:"success_time"`
-	CreateTime          string         `json:"create_time"`
-	Status              string         `json:"status"`
-	FundsAccount        string         `json:"funds_account"`
-	Amount              *RefundAmount  `json:"amount"`
+	RefundID            string                   `json:"refund_id"`
+	OutRefundNO         string                   `json:"out_refund_no"`
+	TransactionID       string                   `json:"transaction_id"`
+	OutTradeNO          string                   `json:"out_trade_no"`
+	Channel             string                   `json:"channel"`
+	UserReceivedAccount string                   `json:"user_received_account"`
+	SuccessTime         string                   `json:"success_time"`
+	CreateTime          string                   `json:"create_time"`
+	Status              string                   `json:"status"`
+	FundsAccount        string                   `json:"funds_account"`
+	Amount              *RefundAmount            `json:"amount"`
 	PromotionDetail     []*RefundPromotionDetail `json:"promotion_detail,omitempty"`
 }
-
 
 type RefundAmount struct {
 	Refund int `json:"refund"`

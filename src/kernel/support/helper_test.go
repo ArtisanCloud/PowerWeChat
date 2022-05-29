@@ -1,7 +1,7 @@
 package support
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 	"github.com/go-playground/assert/v2"
 	"testing"
 )
@@ -35,9 +35,9 @@ import (
 
 func TestPaymentV2ParamsJoin(t *testing.T) {
 	params := &power.StringMap{
-		"appid": "f323",
-		"c": "12",
-		"d": "34",
+		"appid":  "f323",
+		"c":      "12",
+		"d":      "34",
 		"mch_id": "2323532",
 	}
 	key := "HelloPowerWeChat"
@@ -49,9 +49,9 @@ func TestPaymentV2ParamsJoin(t *testing.T) {
 
 func TestGenerateSignMD5(t *testing.T) {
 	params := &power.StringMap{
-		"appid": "f323",
-		"c": "12",
-		"d": "34",
+		"appid":  "f323",
+		"c":      "12",
+		"d":      "34",
 		"mch_id": "2323532",
 	}
 	key := "HelloPowerWeChat"
@@ -63,9 +63,9 @@ func TestGenerateSignMD5(t *testing.T) {
 
 func TestGenerateSignHmacSHA256(t *testing.T) {
 	params := &power.StringMap{
-		"appid": "f323",
-		"c": "12",
-		"d": "34",
+		"appid":  "f323",
+		"c":      "12",
+		"d":      "34",
 		"mch_id": "2323532",
 	}
 	key := "HelloPowerWeChat"
@@ -74,4 +74,3 @@ func TestGenerateSignHmacSHA256(t *testing.T) {
 
 	assert.Equal(t, expectSignHmacSHA256, signHmacSHA256)
 }
-

@@ -1,11 +1,11 @@
 package wxaCode
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response4 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
 	"net/http"
 )
 
@@ -61,7 +61,7 @@ func (comp *Client) Get(path string, width int64,
 		},
 	}
 
-	rs, err := comp.RequestRaw("wxa/getwxacode", "POST", data,  &header, &result)
+	rs, err := comp.RequestRaw("wxa/getwxacode", "POST", data, &header, &result)
 
 	httpRS := rs.(*response.HttpResponse).Response
 
@@ -92,7 +92,7 @@ func (comp *Client) GetUnlimited(
 		},
 	}
 
-	rs, err := comp.RequestRaw("wxa/getwxacodeunlimit", "POST",data, &header, &result)
+	rs, err := comp.RequestRaw("wxa/getwxacodeunlimit", "POST", data, &header, &result)
 
 	httpRS := rs.(*response.HttpResponse).Response
 

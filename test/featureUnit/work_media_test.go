@@ -1,10 +1,10 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/fmt"
-	"github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/media"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/media"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
 	"image/jpeg"
 	"io/ioutil"
 	"os"

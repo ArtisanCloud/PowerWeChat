@@ -1,7 +1,7 @@
 package kernel
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
 )
 
 type ApplicationInterface interface {
@@ -9,7 +9,6 @@ type ApplicationInterface interface {
 	GetAccessToken() *AccessToken
 	GetConfig() *Config
 	GetComponent(name string) interface{}
-
 }
 
 type ServiceContainer struct {

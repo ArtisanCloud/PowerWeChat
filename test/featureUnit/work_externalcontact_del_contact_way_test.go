@@ -1,13 +1,13 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"testing"
 )
 
 func Test_ExternalContact_Del_Contact_Way(t *testing.T) {
 
-	response ,_:= Work.ExternalContactContactWay.Delete("f3626f74a7f94784115b0b8a729c471f")
+	response, _ := Work.ExternalContactContactWay.Delete("f3626f74a7f94784115b0b8a729c471f")
 
 	if response == nil {
 		t.Error("response nil")

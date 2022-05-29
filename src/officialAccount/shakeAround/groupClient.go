@@ -1,10 +1,10 @@
 package shakeAround
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/response"
 )
 
 type GroupClient struct {
@@ -81,21 +81,20 @@ func (comp *GroupClient) List(begin int, count int) (*response.ResponseGroupList
 
 // 查询分组详情
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/Search_grouping_details.html
-func (comp *GroupClient) Get(groupID int, begin int,count int) (*response.ResponseGroupDetail, error) {
+func (comp *GroupClient) Get(groupID int, begin int, count int) (*response.ResponseGroupDetail, error) {
 
 	result := &response.ResponseGroupDetail{}
 
 	params := &object.HashMap{
 		"group_id": groupID,
-		"begin": begin,
-		"count": count,
+		"begin":    begin,
+		"count":    count,
 	}
 
 	_, err := comp.HttpPostJson("shakearound/device/group/getdetail", params, nil, nil, result)
 
 	return result, err
 }
-
 
 // 添加设备到分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/Add_device_to_group.html
@@ -104,7 +103,7 @@ func (comp *GroupClient) AddDevice(groupID int, deviceIdentifiers []*request.Req
 	result := &response.ResponseGroup{}
 
 	params := &object.HashMap{
-		"group_id": groupID,
+		"group_id":           groupID,
 		"device_identifiers": deviceIdentifiers,
 	}
 
@@ -120,7 +119,7 @@ func (comp *GroupClient) RemoveDevices(groupID int, deviceIdentifiers []*request
 	result := &response.ResponseGroup{}
 
 	params := &object.HashMap{
-		"group_id": groupID,
+		"group_id":           groupID,
 		"device_identifiers": deviceIdentifiers,
 	}
 

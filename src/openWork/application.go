@@ -1,15 +1,14 @@
 package officialAccount
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	media2 "github.com/ArtisanCloud/PowerWeChat/src/basicService/media"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/auth"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/base"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag"
-	"net/http"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	media2 "github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/media"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/auth"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/base"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/user"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/user/tag"
 )
 
 type OfficialAccount struct {
@@ -118,7 +117,6 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 	}
 
 }
-
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 

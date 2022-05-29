@@ -2,7 +2,7 @@ package response
 
 import (
 	"encoding/xml"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseSendWorkWX struct {
@@ -23,4 +23,3 @@ type ResponseSendWorkWX struct {
 	SenderName          string   `xml:"sender_name"`
 	SenderHeaderMediaID string   `xml:"sender_header_media_id"`
 }
-

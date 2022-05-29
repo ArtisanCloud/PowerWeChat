@@ -2,10 +2,10 @@ package journal
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/journal/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/journal/response"
 )
 
 type Client struct {
@@ -72,4 +72,3 @@ func (comp *Client) GetStatList(templateID string, startTime int, endTime int) (
 
 	return result, err
 }
-

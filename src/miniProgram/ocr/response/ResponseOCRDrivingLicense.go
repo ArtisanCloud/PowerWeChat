@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseOCRDrivingLicense struct {
@@ -17,5 +17,4 @@ type ResponseOCRDrivingLicense struct {
 	ValidFrom    string `json:"valid_from"`
 	ValidTo      string `json:"valid_to"`
 	OfficialSeal string `json:"official_seal"`
-
 }

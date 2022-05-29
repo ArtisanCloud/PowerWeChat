@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type Relation struct {
 	DeviceID int    `json:"device_id"`
@@ -11,13 +11,12 @@ type Relation struct {
 }
 
 type DataRelationSearch struct {
-	Relations []*Relation `json:"relations"`
-	TotalCount int `json:"total_count"`
+	Relations  []*Relation `json:"relations"`
+	TotalCount int         `json:"total_count"`
 }
 
 type ResponseRelationSearch struct {
 	*response.ResponseOfficialAccount
 
 	Data *DataRelationSearch `json:"data"`
-
 }

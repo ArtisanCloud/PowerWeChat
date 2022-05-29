@@ -1,9 +1,9 @@
 package soter
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/soter/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/soter/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/soter/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/soter/response"
 )
 
 type Client struct {

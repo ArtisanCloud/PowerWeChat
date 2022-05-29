@@ -1,12 +1,12 @@
 package templateMessage
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/templateMessage/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/templateMessage/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/templateMessage/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/templateMessage/response"
 )
 
 const API_TEMPLATE_MESSAGE_SEND string = "cgi-bin/message/template/send"
@@ -91,17 +91,16 @@ func (comp *Client) Send(message *request.RequestTemlateMessage) (*response.Resp
 
 	result := &response.ResponseTemplateSend{}
 
-	_, err:= comp.HttpPostJson(API_TEMPLATE_MESSAGE_SEND, message, nil, nil, result)
+	_, err := comp.HttpPostJson(API_TEMPLATE_MESSAGE_SEND, message, nil, nil, result)
 
 	return result, err
 }
-
 
 func (comp *Client) SendSubscription(message *request.RequestTemlateMessageSubscribe) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err:= comp.HttpPostJson("cgi-bin/message/template/subscribe", message, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/message/template/subscribe", message, nil, nil, result)
 
 	return result, err
 }

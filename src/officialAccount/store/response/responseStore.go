@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/poi/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/poi/response"
 )
 
 type Inner struct {
@@ -147,7 +147,5 @@ type ResponseStoreList struct {
 	*response.ResponseOfficialAccount
 
 	BusinessList []*response2.Business `json:"business_list"`
-	TotalCount   int         `json:"total_count"`
+	TotalCount   int                   `json:"total_count"`
 }
-
-

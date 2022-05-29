@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/decorators"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/decorators"
 	"net/http"
 )
 
@@ -21,7 +21,7 @@ func NewEchoStrHandler(app *kernel.ApplicationInterface) *EchoStrHandler {
 	return handler
 }
 
-func (handler *EchoStrHandler) Handle(request *http.Request,header contract.EventInterface, content interface{}) interface{} {
+func (handler *EchoStrHandler) Handle(request *http.Request, header contract.EventInterface, content interface{}) interface{} {
 
 	encryptor := (*handler.App).GetComponent("Encryptor").(*kernel.Encryptor)
 

@@ -1,8 +1,8 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/payment"
-	"github.com/ArtisanCloud/PowerWeChat/src/work"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work"
 	"log"
 	"os"
 	"strconv"

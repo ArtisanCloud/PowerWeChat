@@ -1,7 +1,7 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 	"testing"
 )
 
@@ -23,15 +23,15 @@ func Test_Message_Send_Text(t *testing.T) {
 	//}
 
 	powerPara := &power.HashMap{
-		"touser" : "michaelhu",
-		"msgtype" : "text",
-		"agentid" : 1000004,
-		"text" : power.HashMap{
-			"content" : "您已经成功测试收到系统推送消息",
+		"touser":  "michaelhu",
+		"msgtype": "text",
+		"agentid": 1000004,
+		"text": power.HashMap{
+			"content": "您已经成功测试收到系统推送消息",
 		},
-		"safe":0,
-		"enable_id_trans": 0,
-		"enable_duplicate_check": 0,
+		"safe":                     0,
+		"enable_id_trans":          0,
+		"enable_duplicate_check":   0,
 		"duplicate_check_interval": 1800,
 	}
 

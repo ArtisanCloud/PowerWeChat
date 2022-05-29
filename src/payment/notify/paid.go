@@ -1,11 +1,11 @@
 package notify
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/notify/request"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/notify/request"
 	"net/http"
 )
 
@@ -36,7 +36,7 @@ func (comp *Paid) Handle(closure func(message *request.RequestNotify, transactio
 
 	// struct the content
 	transaction := &models.Transaction{}
-	err = object.JsonDecode([]byte( reqInfo), transaction)
+	err = object.JsonDecode([]byte(reqInfo), transaction)
 	if err != nil {
 		return nil, err
 	}
@@ -47,4 +47,3 @@ func (comp *Paid) Handle(closure func(message *request.RequestNotify, transactio
 	return comp.ToResponse()
 
 }
-

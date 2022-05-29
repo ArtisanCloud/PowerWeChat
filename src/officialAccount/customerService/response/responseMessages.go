@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type Record struct {
 	OpenID   string `json:"openid"`
@@ -14,6 +14,6 @@ type ResponseMessages struct {
 	*response.ResponseOfficialAccount
 
 	RecordList []*Record `json:"recordlist"`
-	Number int `json:"number"`
-	MsgID  int `json:"msgid"`
+	Number     int       `json:"number"`
+	MsgID      int       `json:"msgid"`
 }

@@ -1,12 +1,12 @@
 package liveBroadcast
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/liveBroadcast/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/liveBroadcast/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/liveBroadcast/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/liveBroadcast/response"
 	"strconv"
 )
 
@@ -98,8 +98,8 @@ func (comp *Client) GetSharedCode(roomID int, params string) (*response.Response
 	result := &response.ResponseBroadcastGetSharedCode{}
 
 	options := &object.StringMap{
-		"roomId" : strconv.Itoa(roomID),
-		"params" : params,
+		"roomId": strconv.Itoa(roomID),
+		"params": params,
 	}
 
 	_, err := comp.HttpGet("wxaapi/broadcast/room/getsharedcode", options, nil, result)
@@ -173,7 +173,7 @@ func (comp *Client) ModifySubAnchor(roomID int, username string) (*response2.Res
 	result := &response2.ResponseMiniProgram{}
 
 	options := &object.HashMap{
-		"roomId": roomID,
+		"roomId":   roomID,
 		"username": username,
 	}
 
@@ -424,7 +424,7 @@ func (comp *Client) GoodsList(offset, count, status string) (*response.ResponseB
 
 	options := &object.StringMap{
 		"offset": offset,
-		"count": count,
+		"count":  count,
 		"status": status,
 	}
 

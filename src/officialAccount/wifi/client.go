@@ -1,11 +1,11 @@
 package wifi
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/wifi/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/wifi/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/wifi/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/wifi/response"
 )
 
 type Client struct {
@@ -70,7 +70,6 @@ func (comp *Client) SetFinishPage(bShopID int, finishPageURL string) (*response2
 	return result, err
 
 }
-
 
 // 设置商户主页后，点击微信聊首页欢迎语，即可进入设置的商户主页。
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Home_Page_management/Set_up_a_merchant_home_page.html

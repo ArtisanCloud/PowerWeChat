@@ -1,12 +1,12 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/message/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/message/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/response"
 )
 
 type Client struct {
@@ -52,6 +52,7 @@ func (comp *Client) send(messages interface{}) (*response.ResponseMessageSend, e
 func (comp *Client) SendText(messages *request.RequestMessageSendText) (*response.ResponseMessageSend, error) {
 	return comp.send(messages)
 }
+
 // SendImage 图片消息
 func (comp *Client) SendImage(messages *request.RequestMessageSendImage) (*response.ResponseMessageSend, error) {
 	return comp.send(messages)
@@ -101,7 +102,6 @@ func (comp *Client) SendMiniProgramNotice(messages *request.RequestMessageSendMi
 func (comp *Client) SendTemplateCard(messages *request.RequestMessageSendTemplateCard) (*response.ResponseMessageSend, error) {
 	return comp.send(messages)
 }
-
 
 // 更新模版卡片消息
 // https://work.weixin.qq.com/api/doc/90000/90135/94888

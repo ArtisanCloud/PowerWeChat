@@ -3,11 +3,11 @@ package order
 import (
 	"errors"
 	"fmt"
-	response2 "github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	payment "github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/order/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/order/response"
+	response2 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order/response"
 	"net/http"
 )
 

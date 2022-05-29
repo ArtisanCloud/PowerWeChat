@@ -1,10 +1,10 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/base/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/base/response"
 )
 
 type Client struct {
