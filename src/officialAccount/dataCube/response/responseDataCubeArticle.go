@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type ArticleSummary struct {
 	RefDate          string `json:"ref_date"`
@@ -115,7 +115,7 @@ type UserShareHourly struct {
 type ResponseDataCubeUserShareHourly struct {
 	*response.ResponseOfficialAccount
 
-	List []*UserShareHourly`json:"list"`
+	List []*UserShareHourly `json:"list"`
 }
 
 // ----------------------------------------------------------------------

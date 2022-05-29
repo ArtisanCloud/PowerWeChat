@@ -1,18 +1,18 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseExpressGetOrder struct {
 	*response.ResponseMiniProgram
 
-	PrintHTML   string              `json:"print_html"`   //  "客户密码不正确"
+	PrintHTML   string             `json:"print_html"`   //  "客户密码不正确"
 	WaybillData []*power.StringMap `json:"waybill_data"` //
-	DeliveryID  string              `json:"delivery_id"`  //  "",
-	WaybillID   string              `json:"waybill_id"`   //   "123456789",
-	OrderID     string              `json:"order_id"`     //   "01234567890123456789",
-	OrderStatus int                 `json:"order_status"` //  0
+	DeliveryID  string             `json:"delivery_id"`  //  "",
+	WaybillID   string             `json:"waybill_id"`   //   "123456789",
+	OrderID     string             `json:"order_id"`     //   "01234567890123456789",
+	OrderStatus int                `json:"order_status"` //  0
 
 }

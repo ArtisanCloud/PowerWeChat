@@ -1,11 +1,11 @@
 package momentStrategy
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/momentStrategy/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/momentStrategy/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/momentStrategy/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/momentStrategy/response"
 )
 
 type Client struct {
@@ -66,7 +66,6 @@ func (comp *Client) GetRange(strategyID int, cursor string, limit int) (*respons
 	return result, err
 }
 
-
 // 创建新的规则组
 // https://work.weixin.qq.com/api/doc/90000/90135/94890
 func (comp *Client) Create(options *request.RequestMomentStrategyCreate) (*response.ResponseMomentStrategyCreate, error) {
@@ -78,7 +77,6 @@ func (comp *Client) Create(options *request.RequestMomentStrategyCreate) (*respo
 	return result, err
 }
 
-
 // 编辑规则组及其管理范围
 // https://work.weixin.qq.com/api/doc/90000/90135/94890
 func (comp *Client) Edit(options *request.RequestMomentStrategyEdit) (*response.ResponseMomentStrategyCreate, error) {
@@ -89,7 +87,6 @@ func (comp *Client) Edit(options *request.RequestMomentStrategyEdit) (*response.
 
 	return result, err
 }
-
 
 // 删除规则组
 // https://work.weixin.qq.com/api/doc/90000/90135/94890

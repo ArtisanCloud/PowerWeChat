@@ -1,11 +1,11 @@
 package user
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/user/batchJobs"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/user/exportJobs"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/user/linkedCorp"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/user/tag"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/user/batchJobs"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/user/exportJobs"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/user/linkedCorp"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/user/tag"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (

@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type Code struct {
 	DeviceID string `json:"device_id"`
@@ -10,6 +10,6 @@ type Code struct {
 type ResponseDeviceCreateQRCode struct {
 	*response.ResponseOfficialAccount
 
-	DeviceNum int    `json:"device_num"`
+	DeviceNum int     `json:"device_num"`
 	CodeList  []*Code `json:"code_list"`
 }

@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type ResponseOCRIDCard struct {
 	*response.ResponseOfficialAccount
@@ -99,26 +99,24 @@ type ResponseOCRBizLicense struct {
 	ImgSize             *ImgSize      `json:"img_size"`
 }
 
-
 // ----------------------------------------
 
 type Item struct {
-	Text string `json:"text"`
+	Text string   `json:"text"`
 	Pos  Position `json:"pos"`
 }
 
 type ResponseOCRCommon struct {
 	*response.ResponseOfficialAccount
 
-	Items   []Item `json:"items"`
-	ImgSize ImgSize`json:"img_size"`
+	Items   []Item  `json:"items"`
+	ImgSize ImgSize `json:"img_size"`
 }
 
 // ----------------------------------------
 
-
 type ResponseOCRPlateNumber struct {
 	*response.ResponseOfficialAccount
 
-	Number  string `json:"number"`
+	Number string `json:"number"`
 }

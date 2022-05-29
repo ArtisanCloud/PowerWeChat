@@ -1,11 +1,11 @@
 package groupWelcomeTemplate
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupWelcomeTemplate/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/groupWelcomeTemplate/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/groupWelcomeTemplate/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/groupWelcomeTemplate/response"
 )
 
 type Client struct {
@@ -54,7 +54,6 @@ func (comp *Client) GetGroupWelcomeTemplate(templateID string) (*response.Respon
 	return result, err
 }
 
-
 // 删除入群欢迎语素材
 // https://work.weixin.qq.com/api/doc/90000/90135/92366
 func (comp *Client) DelGroupWelcomeTemplate(templateID string, agentID int64) (*response2.ResponseWork, error) {
@@ -63,7 +62,7 @@ func (comp *Client) DelGroupWelcomeTemplate(templateID string, agentID int64) (*
 
 	options := &object.HashMap{
 		"template_id": templateID,
-		"agentid": agentID,
+		"agentid":     agentID,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/del", options, nil, nil, result)
 

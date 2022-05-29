@@ -1,23 +1,21 @@
 package shakeAround
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/response"
 )
 
 type PageClient struct {
 	*kernel.BaseClient
 }
 
-
 func NewPageClient(app kernel.ApplicationInterface) *PageClient {
 	return &PageClient{
 		kernel.NewBaseClient(&app, nil),
 	}
 }
-
 
 // 新增摇一摇出来的页面信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Page_management.html
@@ -41,7 +39,6 @@ func (comp *PageClient) Update(data request.RequestPageUpdate) (*response.Respon
 	return result, err
 }
 
-
 // 更新设备分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Query_page_list.html
 func (comp *PageClient) List(begin int, count int) (*response.ResponsePageList, error) {
@@ -49,7 +46,7 @@ func (comp *PageClient) List(begin int, count int) (*response.ResponsePageList, 
 	result := &response.ResponsePageList{}
 
 	params := &object.HashMap{
-		"type": 2,
+		"type":  2,
 		"begin": begin,
 		"count": count,
 	}
@@ -58,7 +55,6 @@ func (comp *PageClient) List(begin int, count int) (*response.ResponsePageList, 
 
 	return result, err
 }
-
 
 // 删除已有的页面
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Delete_page.html

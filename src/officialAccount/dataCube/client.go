@@ -1,9 +1,9 @@
 package dataCube
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/dataCube/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/dataCube/response"
 )
 
 type Client struct {
@@ -202,7 +202,6 @@ func (comp *Client) FreeCardSummary(from string, to string, condSource int, card
 	return result, err
 }
 
-
 // 拉取会员卡数据接口.
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html
 func (comp *Client) MemberCardSummary(from string, to string, condSource int, cardID string) (*response.ResponseDataCubeMemberCardSummary, error) {
@@ -226,7 +225,7 @@ func (comp *Client) memberCardSummaryByID(from string, to string, cardID string)
 	result := &response.ResponseDataCubeMemberCardSummaryByID{}
 
 	ext := &object.HashMap{
-		"card_id":     cardID,
+		"card_id": cardID,
 	}
 
 	err := comp.Query("datacube/getcardmembercarddetail", from, to, ext, result)

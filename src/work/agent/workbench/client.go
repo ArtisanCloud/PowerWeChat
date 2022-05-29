@@ -2,10 +2,10 @@ package workbench
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/agent/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/agent/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/agent/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/agent/response"
 )
 
 type Client struct {
@@ -45,8 +45,8 @@ func (comp Client) SetWorkbenchData(data *request.RequestSetWorkBenchData) (*res
 
 	result := &response.ResponseAgentSetWorkbenchData{}
 
-	params, err:= object.StructToHashMap(data)
-	if err!=nil{
+	params, err := object.StructToHashMap(data)
+	if err != nil {
 		return nil, err
 	}
 	_, err = comp.HttpPost("cgi-bin/agent/set_workbench_data", params, nil, result)

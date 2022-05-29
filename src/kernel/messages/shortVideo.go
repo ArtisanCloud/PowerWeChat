@@ -1,7 +1,7 @@
 package messages
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 )
 
 type ShortVideo struct {
@@ -10,7 +10,7 @@ type ShortVideo struct {
 
 func NewShortVideo(mediaID string, items *power.HashMap) *ShortVideo {
 	m := &ShortVideo{
-		NewVideo(mediaID,  items),
+		NewVideo(mediaID, items),
 	}
 	m.Type = "short_video"
 

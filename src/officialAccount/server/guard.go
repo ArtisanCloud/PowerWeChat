@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"net/http"
 )
 

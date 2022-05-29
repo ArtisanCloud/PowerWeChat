@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
 const (
@@ -14,26 +14,22 @@ const (
 type EventPartyCreate struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ID           string   `xml:"Id"`
-	Name         string   `xml:"Name"`
-	ParentID     string   `xml:"ParentId"`
-	Order        string   `xml:"Order"`
+	ID       string `xml:"Id"`
+	Name     string `xml:"Name"`
+	ParentID string `xml:"ParentId"`
+	Order    string `xml:"Order"`
 }
-
-
 
 type EventPartyUpdate struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ID           string   `xml:"Id"`
-	Name         string   `xml:"Name"`
-	ParentID     string   `xml:"ParentId"`
+	ID       string `xml:"Id"`
+	Name     string `xml:"Name"`
+	ParentID string `xml:"ParentId"`
 }
-
-
 
 type EventPartyDelete struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ID           string   `xml:"Id"`
+	ID string `xml:"Id"`
 }

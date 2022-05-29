@@ -8,7 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/xml"
 	"fmt"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	"math/rand"
 	"sort"
 	"strings"

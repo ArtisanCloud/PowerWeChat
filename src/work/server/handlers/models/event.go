@@ -1,28 +1,26 @@
 package models
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
 const (
-	CALLBACK_EVENT_SUBSCRIBE   = "subscribe"
-	CALLBACK_EVENT_ENTER_AGENT = "enter_agent"
-	CALLBACK_EVENT_LOCATION = "LOCATION"
-	CALLBACK_EVENT_BATCH_JOB_RESULT = "batch_job_result"
-	CALLBACK_EVENT_CLICK = "click"
-	CALLBACK_EVENT_VIEW = "view"
-	CALLBACK_EVENT_SCANCODE_PUSH = "scancode_push"
-	CALLBACK_EVENT_SCANCODE_WAITMSG = "scancode_waitmsg"
-	CALLBACK_EVENT_PIC_SYSPHOTO = "pic_sysphoto"
-	CALLBACK_EVENT_PIC_PHOTO_OR_ALBUM = "pic_photo_or_album"
-	CALLBACK_EVENT_PIC_WEIXIN = "pic_weixin"
-	CALLBACK_EVENT_LOCATION_SELECT = "location_select"
-	CALLBACK_EVENT_OPEN_APPROVAL_CHANGE = "open_approval_change"
-	CALLBACK_EVENT_SHARE_AGENT_CHANGE = "share_agent_change"
+	CALLBACK_EVENT_SUBSCRIBE                = "subscribe"
+	CALLBACK_EVENT_ENTER_AGENT              = "enter_agent"
+	CALLBACK_EVENT_LOCATION                 = "LOCATION"
+	CALLBACK_EVENT_BATCH_JOB_RESULT         = "batch_job_result"
+	CALLBACK_EVENT_CLICK                    = "click"
+	CALLBACK_EVENT_VIEW                     = "view"
+	CALLBACK_EVENT_SCANCODE_PUSH            = "scancode_push"
+	CALLBACK_EVENT_SCANCODE_WAITMSG         = "scancode_waitmsg"
+	CALLBACK_EVENT_PIC_SYSPHOTO             = "pic_sysphoto"
+	CALLBACK_EVENT_PIC_PHOTO_OR_ALBUM       = "pic_photo_or_album"
+	CALLBACK_EVENT_PIC_WEIXIN               = "pic_weixin"
+	CALLBACK_EVENT_LOCATION_SELECT          = "location_select"
+	CALLBACK_EVENT_OPEN_APPROVAL_CHANGE     = "open_approval_change"
+	CALLBACK_EVENT_SHARE_AGENT_CHANGE       = "share_agent_change"
 	CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT = "template_card_menu_event"
-
-
 )
 
 type EventSubscribe struct {
@@ -31,30 +29,27 @@ type EventSubscribe struct {
 	AgentID string `xml:"AgentID"`
 }
 
-
 type EventEnterAgent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
-	AgentID      string   `xml:"AgentID"`
+	EventKey string `xml:"EventKey"`
+	AgentID  string `xml:"AgentID"`
 }
-
 
 type EventLocation struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	Latitude     string   `xml:"Latitude"`
-	Longitude    string   `xml:"Longitude"`
-	Precision    string   `xml:"Precision"`
-	AgentID      string   `xml:"AgentID"`
-	AppType      string   `xml:"AppType"`
+	Latitude  string `xml:"Latitude"`
+	Longitude string `xml:"Longitude"`
+	Precision string `xml:"Precision"`
+	AgentID   string `xml:"AgentID"`
+	AppType   string `xml:"AppType"`
 }
-
 
 type EventBatchJobResult struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	BatchJob     struct {
+	BatchJob struct {
 		Text    string `xml:",chardata"`
 		JobID   string `xml:"JobId"`
 		JobType string `xml:"JobType"`
@@ -63,29 +58,24 @@ type EventBatchJobResult struct {
 	} `xml:"BatchJob"`
 }
 
-
-
-
 type EventClick struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
-	AgentID      string   `xml:"AgentID"`
+	EventKey string `xml:"EventKey"`
+	AgentID  string `xml:"AgentID"`
 }
-
 
 type EventView struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
-	AgentID      string   `xml:"AgentID"`
+	EventKey string `xml:"EventKey"`
+	AgentID  string `xml:"AgentID"`
 }
-
 
 type EventScanCodePush struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
+	EventKey     string `xml:"EventKey"`
 	ScanCodeInfo struct {
 		Text       string `xml:",chardata"`
 		ScanType   string `xml:"ScanType"`
@@ -93,12 +83,11 @@ type EventScanCodePush struct {
 	} `xml:"ScanCodeInfo"`
 	AgentID string `xml:"AgentID"`
 }
-
 
 type EventScancodeWaitMsg struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
+	EventKey     string `xml:"EventKey"`
 	ScanCodeInfo struct {
 		Text       string `xml:",chardata"`
 		ScanType   string `xml:"ScanType"`
@@ -107,11 +96,10 @@ type EventScancodeWaitMsg struct {
 	AgentID string `xml:"AgentID"`
 }
 
-
 type EventPicSysPhoto struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
+	EventKey     string `xml:"EventKey"`
 	SendPicsInfo struct {
 		Text    string `xml:",chardata"`
 		Count   string `xml:"Count"`
@@ -126,11 +114,10 @@ type EventPicSysPhoto struct {
 	AgentID string `xml:"AgentID"`
 }
 
-
 type EventPicPhotoOrAlbum struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
+	EventKey     string `xml:"EventKey"`
 	SendPicsInfo struct {
 		Text    string `xml:",chardata"`
 		Count   string `xml:"Count"`
@@ -148,7 +135,7 @@ type EventPicPhotoOrAlbum struct {
 type EventPicWeixin struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
+	EventKey     string `xml:"EventKey"`
 	SendPicsInfo struct {
 		Text    string `xml:",chardata"`
 		Count   string `xml:"Count"`
@@ -163,11 +150,10 @@ type EventPicWeixin struct {
 	AgentID string `xml:"AgentID"`
 }
 
-
 type EventLocationSelect struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey         string   `xml:"EventKey"`
+	EventKey         string `xml:"EventKey"`
 	SendLocationInfo struct {
 		Text      string `xml:",chardata"`
 		LocationX string `xml:"Location_X"`
@@ -180,11 +166,10 @@ type EventLocationSelect struct {
 	AppType string `xml:"AppType"`
 }
 
-
 type EventOpenApprovalChange struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	AgentID      string   `xml:"AgentID"`
+	AgentID      string `xml:"AgentID"`
 	ApprovalInfo struct {
 		Text           string `xml:",chardata"`
 		ThirdNo        string `xml:"ThirdNo"`
@@ -230,22 +215,20 @@ type EventOpenApprovalChange struct {
 	} `xml:"ApprovalInfo"`
 }
 
-
 type EventShareAgentChange struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	AgentID      string   `xml:"AgentID"`
+	AgentID string `xml:"AgentID"`
 }
-
 
 type EventTemplateCardEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey      string   `xml:"EventKey"`
-	TaskID        string   `xml:"TaskId"`
-	CardType      string   `xml:"CardType"`
-	ResponseCode  string   `xml:"ResponseCode"`
-	AgentID       string   `xml:"AgentID"`
+	EventKey      string `xml:"EventKey"`
+	TaskID        string `xml:"TaskId"`
+	CardType      string `xml:"CardType"`
+	ResponseCode  string `xml:"ResponseCode"`
+	AgentID       string `xml:"AgentID"`
 	SelectedItems struct {
 		Text         string `xml:",chardata"`
 		SelectedItem []struct {
@@ -259,14 +242,12 @@ type EventTemplateCardEvent struct {
 	} `xml:"SelectedItems"`
 }
 
-
 type EventTemplateCardMenuEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string   `xml:"EventKey"`
-	TaskID       string   `xml:"TaskId"`
-	CardType     string   `xml:"CardType"`
-	ResponseCode string   `xml:"ResponseCode"`
-	AgentID      string   `xml:"AgentID"`
+	EventKey     string `xml:"EventKey"`
+	TaskID       string `xml:"TaskId"`
+	CardType     string `xml:"CardType"`
+	ResponseCode string `xml:"ResponseCode"`
+	AgentID      string `xml:"AgentID"`
 }
-

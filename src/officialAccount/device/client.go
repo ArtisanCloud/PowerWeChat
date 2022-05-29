@@ -1,10 +1,10 @@
 package device
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/device/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/device/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/device/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/device/response"
 )
 
 type Client struct {
@@ -97,8 +97,6 @@ func (comp *Client) Unbind(openID string, deviceID string, ticket string) (*resp
 
 	return result, err
 }
-
-
 
 // 设备绑定
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7

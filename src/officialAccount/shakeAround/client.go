@@ -1,15 +1,14 @@
 package shakeAround
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/shakeAround/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/response"
 )
 
 type Client struct {
 	*kernel.BaseClient
-
 }
 
 func NewClient(app kernel.ApplicationInterface) *Client {

@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type InterfaceSummary struct {
 	RefDate       string `json:"ref_date"`
@@ -10,14 +10,11 @@ type InterfaceSummary struct {
 	MaxTimeCost   int    `json:"max_time_cost"`
 }
 
-
 type ResponseDataCubeInterfaceSummary struct {
 	*response.ResponseOfficialAccount
 
-	List []*InterfaceSummary`json:"list"`
+	List []*InterfaceSummary `json:"list"`
 }
-
-
 
 // ----------------------------------------------------------------------
 
@@ -35,4 +32,3 @@ type ResponseDataCubeInterfaceSummaryHourly struct {
 
 	List []*InterfaceSummaryHourly `json:"list"`
 }
-

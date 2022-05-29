@@ -1,10 +1,10 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/message/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/message/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/message/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/message/response"
 )
 
 type Client struct {
@@ -50,7 +50,6 @@ func (comp *Client) SendMsg(messages *request.RequestAccountServiceSendMsg) (*re
 func (comp *Client) SendMsgOnEvent(messages *request.RequestAccountServiceSendMsgOnEvent) (*response.ResponseAccountServiceSendMsgOnEvent, error) {
 
 	result := &response.ResponseAccountServiceSendMsgOnEvent{}
-
 
 	_, err := comp.HttpPostJson("cgi-bin/kf/send_msg_on_event", messages, nil, nil, result)
 

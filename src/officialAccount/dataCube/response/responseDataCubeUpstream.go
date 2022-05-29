@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type UpstreamMessageSummary struct {
 	RefDate  string `json:"ref_date"`
@@ -14,7 +14,6 @@ type ResponseDataCubeUpstreamMessageSummary struct {
 
 	List []*UpstreamMessageSummary `json:"list"`
 }
-
 
 // ----------------------------------------------------------------------
 
@@ -32,8 +31,6 @@ type ResponseDataCubeUpstreamMessageHourly struct {
 	List []*UpstreamMessageHourly `json:"list"`
 }
 
-
-
 // ----------------------------------------------------------------------
 
 type UpstreamMessageWeekly struct {
@@ -48,7 +45,6 @@ type ResponseDataCubeUpstreamMessageWeekly struct {
 
 	List []*UpstreamMessageWeekly `json:"list"`
 }
-
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +61,6 @@ type ResponseDataCubeUpstreamMessageMonthly struct {
 	List []*UpstreamMessageMonthly `json:"list"`
 }
 
-
 // ----------------------------------------------------------------------
 
 type UpstreamMessageDistSummary struct {
@@ -79,7 +74,6 @@ type ResponseDataCubeUpstreamMessageDistSummary struct {
 
 	List []*UpstreamMessageDistSummary `json:"list"`
 }
-
 
 // ----------------------------------------------------------------------
 
@@ -110,5 +104,3 @@ type ResponseDataCubeUpstreamMessageDistMonthly struct {
 }
 
 // ----------------------------------------------------------------------
-
-

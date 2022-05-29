@@ -1,12 +1,12 @@
 package customer
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/customer/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/customer/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/customer/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/customer/response"
 )
 
 type Client struct {
@@ -62,7 +62,7 @@ func (comp *Client) CancelUpgradeService(openKFID, externalUserID string) (*resp
 
 	result := &response2.ResponseWork{}
 	options := &power.StringMap{
-		"open_kfid": openKFID,
+		"open_kfid":       openKFID,
 		"external_userid": externalUserID,
 	}
 

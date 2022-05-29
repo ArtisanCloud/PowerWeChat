@@ -1,9 +1,9 @@
 package linkedCorp
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/message/linkedCorp/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/linkedCorp/response"
 )
 
 type Client struct {

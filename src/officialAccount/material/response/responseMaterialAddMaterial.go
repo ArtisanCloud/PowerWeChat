@@ -1,12 +1,12 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseMaterialAddMaterial struct {
 	*response.ResponseOfficialAccount
 
 	MediaID string `json:"media_id"`
-	URL string `json:"url"`
+	URL     string `json:"url"`
 }

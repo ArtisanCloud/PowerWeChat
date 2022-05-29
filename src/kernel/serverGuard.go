@@ -6,12 +6,12 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -170,7 +170,7 @@ func (serverGuard *ServerGuard) getMessage(request *http.Request) (callback *mod
 	}
 
 	if serverGuard.IsSafeMode(request) && callback.Encrypt != "" {
-		callbackHeader, Decrypted, err = serverGuard.decryptMessage(request,string(b))
+		callbackHeader, Decrypted, err = serverGuard.decryptMessage(request, string(b))
 	} else {
 		callbackHeader = &models.CallbackMessageHeader{}
 		err = xml.Unmarshal(b, callbackHeader)
@@ -448,7 +448,7 @@ func (serverGuard *ServerGuard) decryptEvent(request *http.Request, content stri
 
 }
 
-func (serverGuard *ServerGuard) decryptMessage(request *http.Request,content string) (callbackHeader *models.CallbackMessageHeader, decryptMessage interface{}, err error) {
+func (serverGuard *ServerGuard) decryptMessage(request *http.Request, content string) (callbackHeader *models.CallbackMessageHeader, decryptMessage interface{}, err error) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 	query := request.URL.Query()

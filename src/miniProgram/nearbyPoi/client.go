@@ -2,11 +2,11 @@ package nearbyPoi
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/nearbyPoi/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/nearbyPoi/response"
 )
 
 type Client struct {
@@ -55,7 +55,6 @@ func (comp *Client) GetList(page int, pageRows int) (*response.ResponseNearbyPoi
 	return result, err
 }
 
-
 // 展示/取消展示附近小程序
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/nearby-poi/nearbyPoi.setShowStatus.html
 func (comp *Client) SetShowStatus(poiID string, status int) (*response2.ResponseMiniProgram, error) {
@@ -71,4 +70,3 @@ func (comp *Client) SetShowStatus(poiID string, status int) (*response2.Response
 
 	return result, err
 }
-

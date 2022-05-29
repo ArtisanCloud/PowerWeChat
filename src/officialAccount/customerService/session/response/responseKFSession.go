@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type Session struct {
 	CreateTime int    `json:"createtime"`
@@ -26,7 +26,6 @@ type ResponseKFSessionWaitCaseList struct {
 	Count        int         `json:"count"`
 	WaitCaseList []*WaitCase `json:"waitcaselist"`
 }
-
 
 // ---------------------------------------------------
 

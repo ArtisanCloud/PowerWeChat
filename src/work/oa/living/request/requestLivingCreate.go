@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 
 type RequestLivingCreate struct {
 	AnchorUserID         string         `json:"anchor_userid"`

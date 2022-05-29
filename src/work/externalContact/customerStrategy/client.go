@@ -1,11 +1,11 @@
 package customerStrategy
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/customerStrategy/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/customerStrategy/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/customerStrategy/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/customerStrategy/response"
 )
 
 type Client struct {
@@ -66,7 +66,6 @@ func (comp *Client) GetRange(strategyID int64, cursor string, limit int64) (*res
 	return result, err
 }
 
-
 // 创建新的规则组
 // https://work.weixin.qq.com/api/doc/90000/90135/94883
 func (comp *Client) Create(options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
@@ -77,7 +76,6 @@ func (comp *Client) Create(options *request.RequestCustomerStrategyCreate) (*res
 
 	return result, err
 }
-
 
 // 编辑规则组及其管理范围
 // https://work.weixin.qq.com/api/doc/90000/90135/94883

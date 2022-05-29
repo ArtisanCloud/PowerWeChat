@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseMaterialGetMaterialCount struct {
@@ -10,7 +10,6 @@ type ResponseMaterialGetMaterialCount struct {
 	VoiceCount string `json:"voice_count"`
 	VideoCount string `json:"video_count"`
 	ImageCount string `json:"image_count"`
-	NewsCount string `json:"news_count"`
-	MediaID string `json:"media_id"`
-
+	NewsCount  string `json:"news_count"`
+	MediaID    string `json:"media_id"`
 }

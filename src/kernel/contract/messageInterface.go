@@ -1,7 +1,7 @@
 package contract
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
 )
 
 type MessageInterface interface {

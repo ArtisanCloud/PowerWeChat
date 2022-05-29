@@ -1,13 +1,13 @@
 package material
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	request2 "github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/material/response"
-	response4 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	request2 "github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/material/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/material/response"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
 	"os"
 	"path/filepath"
 )

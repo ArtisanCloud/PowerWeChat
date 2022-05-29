@@ -1,10 +1,10 @@
 package meetingroom
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/meetingroom/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/oa/meetingroom/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/meetingroom/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/meetingroom/response"
 )
 
 type Client struct {
@@ -61,7 +61,6 @@ func (comp *Client) Del(options *request.RequestMeetingRoomDel) (*response2.Resp
 	return result, err
 }
 
-
 // 查询会议室的预定信息
 // https://work.weixin.qq.com/api/doc/90000/90135/93620#%E6%9F%A5%E8%AF%A2%E4%BC%9A%E8%AE%AE%E5%AE%A4%E7%9A%84%E9%A2%84%E5%AE%9A%E4%BF%A1%E6%81%AF
 func (comp *Client) GetBookingInfo(options *request.RequestMeetingRoomGetBookingInfo) (*response.ResponseMeetingRoomGetBookingInfo, error) {
@@ -72,7 +71,6 @@ func (comp *Client) GetBookingInfo(options *request.RequestMeetingRoomGetBooking
 
 	return result, err
 }
-
 
 // 预定会议室
 // https://work.weixin.qq.com/api/doc/90000/90135/93620

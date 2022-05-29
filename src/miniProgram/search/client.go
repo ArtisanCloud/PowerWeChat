@@ -1,11 +1,11 @@
 package search
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/search/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/search/response"
 )
 
 type Client struct {
@@ -50,7 +50,7 @@ func (comp *Client) SubmitPages(pages []*power.HashMap) (*response2.ResponseMini
 	result := &response2.ResponseMiniProgram{}
 
 	data := &object.HashMap{
-		"pages":        pages,
+		"pages": pages,
 	}
 
 	_, err := comp.HttpPostJson("wxa/search/wxaapi_submitpages", data, nil, nil, result)

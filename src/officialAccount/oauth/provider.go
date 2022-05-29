@@ -1,10 +1,10 @@
 package oauth
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerSocialite/src"
-	"github.com/ArtisanCloud/PowerSocialite/src/providers"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerSocialite/v2/src"
+	"github.com/ArtisanCloud/PowerSocialite/v2/src/providers"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"strings"
 )
 

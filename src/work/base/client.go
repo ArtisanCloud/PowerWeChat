@@ -1,8 +1,8 @@
 package base
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/base/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/base/response"
 )
 
 type Client struct {
@@ -28,4 +28,3 @@ func (comp *Client) GetAPIDomainIP() (*response.ResponseGetAPIDomainIP, error) {
 
 	return result, err
 }
-

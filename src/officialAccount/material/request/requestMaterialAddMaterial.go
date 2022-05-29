@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 
 type RequestMaterialAddMaterial struct {
 	Type         string         `json:"type"`
@@ -8,7 +8,6 @@ type RequestMaterialAddMaterial struct {
 	Title        string         `json:"title"`
 	Introduction string         `json:"introduction"`
 }
-
 
 // ---------------------------------------------------
 

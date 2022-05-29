@@ -1,37 +1,37 @@
 package miniProgram
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/cache"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/basicService/subscribeMessage"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/auth"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/base"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/dataCube"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/express"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/image"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/immediateDelivery"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/internet"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/liveBroadcast"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/nearbyPoi"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/ocr"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/operation"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/phoneNumber"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/plugin"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/riskControl"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/search"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/security"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/serviceMarket"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/shortLink"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/soter"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/uniformMessage"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/updatableMessage"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/urlLink"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/urlScheme"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/wxaCode"
+	"github.com/ArtisanCloud/PowerLibs/v2/cache"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/auth"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/base"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/customerServiceMessage"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/dataCube"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/express"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/image"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/immediateDelivery"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/internet"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/liveBroadcast"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/nearbyPoi"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/ocr"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/operation"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/phoneNumber"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/plugin"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/riskControl"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/search"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/security"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/serviceMarket"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/shortLink"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/soter"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/uniformMessage"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/updatableMessage"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlLink"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlScheme"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/wxaCode"
 )
 
 type MiniProgram struct {
@@ -309,7 +309,6 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 	}
 
 }
-
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 

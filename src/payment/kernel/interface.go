@@ -1,6 +1,6 @@
 package kernel
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 
 type ApplicationPaymentInterface interface {
 	kernel.ApplicationInterface

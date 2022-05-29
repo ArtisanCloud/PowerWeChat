@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseUploadMedia struct {
@@ -9,5 +9,5 @@ type ResponseUploadMedia struct {
 
 	Type      string `json:"type"`
 	MediaID   string `json:"media_id"`
-	CreatedAt int `json:"created_at"`
+	CreatedAt int    `json:"created_at"`
 }

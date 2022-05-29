@@ -2,7 +2,7 @@ package models
 
 import (
 	"encoding/xml"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
 )
 
 type Callback struct {
@@ -14,13 +14,13 @@ type Callback struct {
 }
 
 const (
-	CALLBACK_MSG_TYPE_EVENT = "event"
-	CALLBACK_MSG_TYPE_TEXT = "text"
-	CALLBACK_MSG_TYPE_IMAGE = "image"
-	CALLBACK_MSG_TYPE_VOICE = "voice"
-	CALLBACK_MSG_TYPE_VIDEO = "video"
+	CALLBACK_MSG_TYPE_EVENT    = "event"
+	CALLBACK_MSG_TYPE_TEXT     = "text"
+	CALLBACK_MSG_TYPE_IMAGE    = "image"
+	CALLBACK_MSG_TYPE_VOICE    = "voice"
+	CALLBACK_MSG_TYPE_VIDEO    = "video"
 	CALLBACK_MSG_TYPE_LOCATION = "location"
-	CALLBACK_MSG_TYPE_LINK = "link"
+	CALLBACK_MSG_TYPE_LINK     = "link"
 )
 
 type CallbackMessageHeader struct {
@@ -33,7 +33,7 @@ type CallbackMessageHeader struct {
 	MsgType      string   `xml:"MsgType"`
 	Event        string   `xml:"Event"`
 	ChangeType   string   `xml:"ChangeType"`
-	Content []byte
+	Content      []byte
 }
 
 func (header CallbackMessageHeader) GetToUserName() string {
@@ -60,6 +60,6 @@ func (header CallbackMessageHeader) GetChangeType() string {
 	return header.ChangeType
 }
 
-func (header CallbackMessageHeader) ReadMessage(msg interface{}) error{
-	return  xml.Unmarshal(header.Content, msg)
+func (header CallbackMessageHeader) ReadMessage(msg interface{}) error {
+	return xml.Unmarshal(header.Content, msg)
 }

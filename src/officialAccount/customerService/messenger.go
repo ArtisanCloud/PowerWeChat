@@ -2,9 +2,9 @@ package customerService
 
 import (
 	"errors"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/messages"
 )
 
 type Messenger struct {

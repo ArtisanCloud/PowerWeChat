@@ -1,8 +1,8 @@
 package autoReply
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/autoReply/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/autoReply/response"
 )
 
 type Client struct {

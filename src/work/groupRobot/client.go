@@ -1,11 +1,11 @@
 package groupRobot
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/groupRobot/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/groupRobot/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/groupRobot/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/groupRobot/response"
 )
 
 type Client struct {
@@ -39,13 +39,13 @@ func (comp *Client) Send(key string, message *power.HashMap) (*response.Response
 func (comp *Client) SendText(key string, message *request.GroupRobotMsgText) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "text",
-		"text": message,
+		"text":    message,
 	}
 	return comp.Send(key, options)
 }
 func (comp *Client) SendMarkdown(key string, message *request.GroupRobotMsgMarkdown) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
-		"msgtype": "markdown",
+		"msgtype":  "markdown",
 		"markdown": message,
 	}
 	return comp.Send(key, options)
@@ -53,7 +53,7 @@ func (comp *Client) SendMarkdown(key string, message *request.GroupRobotMsgMarkd
 func (comp *Client) SendImage(key string, message *request.GroupRobotMsgImage) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "image",
-		"image": message,
+		"image":   message,
 	}
 	return comp.Send(key, options)
 }
@@ -71,16 +71,15 @@ func (comp *Client) SendNewsArticles(key string, message []*request.GroupRobotMs
 func (comp *Client) SendFile(key string, message *request.GroupRobotMsgFile) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "file",
-		"file": message,
+		"file":    message,
 	}
 	return comp.Send(key, options)
 }
 
 func (comp *Client) SendTemplateCard(key string, message *request.GroupRobotMsgTemplateCard) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
-		"msgtype": "template_card",
+		"msgtype":       "template_card",
 		"template_card": message,
 	}
 	return comp.Send(key, options)
 }
-

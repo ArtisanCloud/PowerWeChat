@@ -2,7 +2,7 @@ package power
 
 import (
 	"encoding/json"
-	"github.com/ArtisanCloud/PowerLibs/object"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
 )
 
 type StringMap object.StringMap
@@ -25,7 +25,6 @@ func StringMapToPower(obj interface{}) (newMap *StringMap, err error) {
 	err = json.Unmarshal(data, newMap) // Convert to a string map
 	return
 }
-
 
 func PowerStringMapToObjectStringMap(obj *StringMap) (newMap *object.StringMap, err error) {
 

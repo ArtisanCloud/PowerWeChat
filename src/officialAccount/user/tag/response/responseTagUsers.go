@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type ResponseTagUsers struct {
 	*response.ResponseOfficialAccount
@@ -8,7 +8,6 @@ type ResponseTagUsers struct {
 	OpenIDList []string `json:"openid_list"`
 	TagID      int      `json:"tagid"`
 }
-
 
 type ResponseUntagUsers struct {
 	*response.ResponseOfficialAccount

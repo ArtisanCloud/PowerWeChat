@@ -1,10 +1,10 @@
 package moment
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/moment/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/moment/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/moment/response"
 )
 
 type Client struct {
@@ -63,7 +63,6 @@ func (comp *Client) GetMomentCustomerList(momentID string, userID string, cursor
 	return result, err
 }
 
-
 // 获取客户朋友圈发表后的可见客户列表
 // https://work.weixin.qq.com/api/doc/90000/90135/93333
 func (comp *Client) GetMomentSendResult(momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentSendResult, error) {
@@ -82,10 +81,9 @@ func (comp *Client) GetMomentSendResult(momentID string, userID string, cursor s
 	return result, err
 }
 
-
 // 获取客户朋友圈的互动数据
 // https://work.weixin.qq.com/api/doc/90000/90135/93333
-func (comp *Client)GetMomentComments(momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
+func (comp *Client) GetMomentComments(momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
 
 	result := &response.ResponseMomentGetMomentComments{}
 

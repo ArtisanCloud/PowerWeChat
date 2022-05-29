@@ -1,9 +1,9 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/fmt"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/externalContact/messageTemplate/request"
+	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/messageTemplate/request"
 	"testing"
 )
 

@@ -1,7 +1,7 @@
 package response
 
 import (
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseExpressPreviewTemplate struct {

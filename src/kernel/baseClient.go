@@ -2,12 +2,12 @@ package kernel
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/http/request"
-	"github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
+	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	"github.com/google/uuid"
 	http2 "net/http"
 	"time"

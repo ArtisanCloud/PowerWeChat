@@ -1,8 +1,8 @@
 package jssdk
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/basicService/jssdk"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/jssdk"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 )
 
 type Client struct {
@@ -22,13 +22,11 @@ func NewClient(app *kernel.ApplicationInterface) *Client {
 	return client
 }
 
-
-
 func (comp *Client) GetAppID() string {
 	config := (*comp.App).GetConfig()
 	return config.GetString("corp_id", "")
 }
 
-func (comp *Client)GetAgentConfigArray()  {
-	
+func (comp *Client) GetAgentConfigArray() {
+
 }

@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type Wifi struct {
 	ShopID         string `json:"shop_id"`
@@ -51,10 +51,10 @@ type ResponseWifiCardGet struct {
 // ------------------------------------------------------------
 
 type Record struct {
-	ShopID       int    `json:"shop_id"`
-	SSID         string `json:"ssid"`
-	BssID        string `json:"bssid"`
-	ProtocolType int    `json:"protocol_type"`
+	ShopID       int      `json:"shop_id"`
+	SSID         string   `json:"ssid"`
+	BssID        string   `json:"bssid"`
+	ProtocolType int      `json:"protocol_type"`
 	ShopName     string   `json:"shop_name"`
 	SSIDList     []string `json:"ssid_list"`
 	SID          string   `json:"sid"`
@@ -108,20 +108,17 @@ type ResponseWifiShopGet struct {
 	Data *Shop `json:"data"`
 }
 
-
-
-
 // ------------------------------------------------------------
 
 type ShopList struct {
-	TotalCount int `json:"totalcount"`
-	PageIndex  int `json:"pageindex"`
-	PageCount  int `json:"pagecount"`
+	TotalCount int       `json:"totalcount"`
+	PageIndex  int       `json:"pageindex"`
+	PageCount  int       `json:"pagecount"`
 	Records    []*Record `json:"records"`
 }
 
 type ResponseWifiShopList struct {
 	*response.ResponseOfficialAccount
 
-	Data    *ShopList `json:"data"`
+	Data *ShopList `json:"data"`
 }

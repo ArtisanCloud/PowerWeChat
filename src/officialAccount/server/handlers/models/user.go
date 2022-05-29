@@ -1,18 +1,16 @@
 package models
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
 const (
-	CALLBACK_EVENT_CHANGE_CONTACT   = "change_contact"
+	CALLBACK_EVENT_CHANGE_CONTACT = "change_contact"
 
-	CALLBACK_EVENT_CHANGE_TYPE_CREATE_USER  = "create_user"
-	CALLBACK_EVENT_CHANGE_TYPE_UPDATE_USER  = "update_user"
-	CALLBACK_EVENT_CHANGE_TYPE_DELETE_USER  = "delete_user"
-
-
+	CALLBACK_EVENT_CHANGE_TYPE_CREATE_USER = "create_user"
+	CALLBACK_EVENT_CHANGE_TYPE_UPDATE_USER = "update_user"
+	CALLBACK_EVENT_CHANGE_TYPE_DELETE_USER = "delete_user"
 )
 
 type EventUserCreate struct {
@@ -90,11 +88,8 @@ type EventUserUpdate struct {
 	} `xml:"ExtAttr"`
 }
 
-
 type EventUserDelete struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	UserID       string   `xml:"UserID"`
+	UserID string `xml:"UserID"`
 }
-
-

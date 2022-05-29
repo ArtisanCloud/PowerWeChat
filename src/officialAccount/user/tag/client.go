@@ -1,10 +1,10 @@
 package tag
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/user/tag/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/user/tag/response"
 )
 
 type Client struct {
@@ -115,8 +115,6 @@ func (comp *Client) TagUsers(openIDs []string, tagID string) (*response.Response
 
 	return result, err
 }
-
-
 
 // 批量为用户取消标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html

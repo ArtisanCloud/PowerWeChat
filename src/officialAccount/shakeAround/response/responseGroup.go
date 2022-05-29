@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type GroupData struct {
 	GroupID   int    `json:"group_id"`
@@ -56,9 +56,6 @@ type ResponseGroupAddDevices struct {
 	Data *DataGroupAddDevice `json:"data"`
 }
 
-
 // ----------------------------------------------
-
-
 
 // ----------------------------------------------

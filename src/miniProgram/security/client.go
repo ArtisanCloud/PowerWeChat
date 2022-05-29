@@ -1,11 +1,11 @@
 package security
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/security/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/security/response"
 )
 
 type Client struct {
@@ -28,12 +28,12 @@ func (comp *Client) ImgSecCheck(path string, form *power.HashMap) (*response2.Re
 	var formData *object.HashMap
 	if form != nil {
 		formData = &object.HashMap{
-			"name": (*form)["name"],
+			"name":  (*form)["name"],
 			"value": (*form)["value"],
 		}
 	}
 
-	_, err := comp.HttpUpload("wxa/img_sec_check", files, formData, nil, nil,result)
+	_, err := comp.HttpUpload("wxa/img_sec_check", files, formData, nil, nil, result)
 
 	return result, err
 }

@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerSocialite/src/models"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
+	"github.com/ArtisanCloud/PowerSocialite/v2/src/models"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseGetUserList struct {

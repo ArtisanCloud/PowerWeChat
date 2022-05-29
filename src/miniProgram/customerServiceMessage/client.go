@@ -1,14 +1,14 @@
 package customerServiceMessage
 
 import (
-	response3 "github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/customerServiceMessage/response"
-	response4 "github.com/ArtisanCloud/PowerWeChat/src/work/media/response"
+	response3 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/customerServiceMessage/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/customerServiceMessage/response"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
 	"net/http"
 )
 
@@ -64,7 +64,6 @@ func (comp *Client) SendLink(toUser string, msg *request.CustomerServiceMsgLink)
 func (comp *Client) SendMiniProgramPage(toUser string, msg *request.CustomerServiceMsgMpPage) (*response2.ResponseMiniProgram, error) {
 	return comp.Send(toUser, "miniprogrampage", msg)
 }
-
 
 // 下发客服当前输入状态给用户
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.setTyping.html

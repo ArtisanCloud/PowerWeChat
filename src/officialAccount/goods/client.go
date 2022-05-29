@@ -1,10 +1,10 @@
 package goods
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/goods/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/officialAccount/goods/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/goods/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/goods/response"
 )
 
 type Client struct {

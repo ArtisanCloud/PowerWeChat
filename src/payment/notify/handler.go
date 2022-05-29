@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	response2 "github.com/ArtisanCloud/PowerLibs/http/response"
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/support"
-	base2 "github.com/ArtisanCloud/PowerWeChat/src/payment/base"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/payment/notify/request"
+	response2 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
+	base2 "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/base"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/notify/request"
 	"io/ioutil"
 	"net/http"
 )
@@ -97,7 +97,7 @@ func (handler *Handler) GetMessage() (notify *request.RequestNotify, err error) 
 	externalRequest := handler.ExternalRequest
 
 	requestBody, err := ioutil.ReadAll(externalRequest.Body)
-	if err!=nil{
+	if err != nil {
 		return nil, err
 	}
 	handler.Message = &request.RequestNotify{}
@@ -154,7 +154,6 @@ func (handler *Handler) Strict(result interface{}) {
 		handler.Fail(strResult)
 	}
 }
-
 
 func (handler *Handler) reqInfo() (content string, err error) {
 

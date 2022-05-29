@@ -1,10 +1,10 @@
 package plugin
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/plugin/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/plugin/response"
 )
 
 type Client struct {
@@ -13,7 +13,7 @@ type Client struct {
 
 // 向插件开发者发起使用插件的申请
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/plugin-management/pluginManager.applyPlugin.html
-func (comp *Client) ApplyPlugin( pluginAppID string, reason string) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) ApplyPlugin(pluginAppID string, reason string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 

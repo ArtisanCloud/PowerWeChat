@@ -1,11 +1,11 @@
 package express
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/miniProgram/express/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/express/response"
 )
 
 type Client struct {
@@ -202,7 +202,6 @@ func (comp *Client) UpdatePrinter(openID string, updateType string, tagidList st
 	return result, err
 }
 
-
 // 获取面单联系人信息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.getContact.html
 func (comp *Client) GetContact(token string, waybillID string) (*response.ResponseExpressGetContact, error) {
@@ -210,7 +209,7 @@ func (comp *Client) GetContact(token string, waybillID string) (*response.Respon
 	result := &response.ResponseExpressGetContact{}
 
 	data := &object.HashMap{
-		"token": token,
+		"token":      token,
 		"waybill_id": waybillID,
 	}
 
@@ -225,7 +224,6 @@ func (comp *Client) PreviewTemplate(options *power.HashMap) (*response.ResponseE
 
 	result := &response.ResponseExpressPreviewTemplate{}
 
-
 	_, err := comp.HttpPostJson("cgi-bin/express/delivery/template/preview", options, nil, nil, result)
 
 	return result, err
@@ -236,7 +234,6 @@ func (comp *Client) PreviewTemplate(options *power.HashMap) (*response.ResponseE
 func (comp *Client) UpdateBusiness(options *power.HashMap) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
-
 
 	_, err := comp.HttpPostJson("cgi-bin/express/delivery/service/business/update", options, nil, nil, result)
 

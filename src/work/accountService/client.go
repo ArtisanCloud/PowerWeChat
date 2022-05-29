@@ -1,11 +1,11 @@
 package accountService
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/object"
-	"github.com/ArtisanCloud/PowerWeChat/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/request"
-	"github.com/ArtisanCloud/PowerWeChat/src/work/accountService/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/request"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/response"
 )
 
 type Client struct {
