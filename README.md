@@ -30,10 +30,10 @@ import (
 
 // 1. 初始化小程序应用实例
 app, err := miniProgram.NewMiniProgram(&miniProgram.UserConfig{
-AppID:  os.Getenv("miniprogram_app_id"), // 小程序、公众号或者企业微信的appid
-Secret: os.Getenv("miniprogram_secret"), // 商户号 appID
-HttpDebug: true,
-Debug:     false,
+	AppID:  os.Getenv("miniprogram_app_id"), // 小程序、公众号或者企业微信的appid
+	Secret: os.Getenv("miniprogram_secret"), // 商户号 appID
+	HttpDebug: true,
+	Debug:     false,
 })
 
 // 2. 调用小程序的授权登陆接口
