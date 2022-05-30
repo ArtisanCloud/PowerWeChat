@@ -1,7 +1,7 @@
 # PowerWeChat SDK
 
-[![Go Build](https://github.com/ArtisanCloud/PowerWeChat/v2/actions/workflows/go-build.yml/badge.svg?branch=release%2F1.2.0)](https://github.com/ArtisanCloud/PowerWeChat/v2/actions/workflows/go-build.yml)
-[![Go Test](https://github.com/ArtisanCloud/PowerWeChat/v2/actions/workflows/go-test.yml/badge.svg?branch=release%2F1.2.0)](https://github.com/ArtisanCloud/PowerWeChat/v2/actions/workflows/go-test.yml)
+[![Go Build](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml/badge.svg?branch=release%2F2.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml)
+[![Go Test](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml/badge.svg?branch=release%2F2.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml)
 
 PowerWeChat是一款基于Golang的微信SDK开发框架。目前已经覆盖了微信小程序、企业微信、微信支付等绝大部分场景的API。
 
