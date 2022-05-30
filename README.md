@@ -24,8 +24,8 @@ go get -u github.com/ArtisanCloud/PowerWeChat/v2
 
 ```go
 import (
-"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
-"os"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
+	"os"
 )
 
 // 1. 初始化小程序应用实例
