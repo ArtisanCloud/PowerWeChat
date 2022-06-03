@@ -57,7 +57,7 @@ func (comp *Client) Get(data *request.RequestProductGet) (*response.ResponseProd
 
 // 全量商品信息查询接口
 // https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2
-func (comp *Client) List(context string, page string, size string) (*response.ResponseProductGet, error) {
+func (comp *Client) List(context string, page int, size int) (*response.ResponseProductGet, error) {
 
 	result := &response.ResponseProductGet{}
 

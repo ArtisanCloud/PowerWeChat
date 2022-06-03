@@ -48,7 +48,7 @@ type Custom struct {
 }
 
 type CustomInfo struct {
-	CustomList []Custom `json:"custom_list"`
+	CustomList []*Custom `json:"custom_list"`
 }
 
 type AttributeItem struct {
@@ -80,7 +80,7 @@ type TagItem struct {
 	TagName string `json:"tag_name"`
 }
 
-type TagInfo  struct {
+type TagInfo struct {
 	TagItem []*TagItem `json:"tag_item"`
 }
 
@@ -100,14 +100,12 @@ type Product struct {
 	CustomInfo           *CustomInfo           `json:"custom_info,omitempty"`
 	SKUInfo              *SKUInfo              `json:"sku_info"`
 	PartialUpdate        int                   `json:"partial_update"`
-	TagInfo             *TagInfo `json:"tag_info,omitempty"`
+	TagInfo              *TagInfo              `json:"tag_info,omitempty"`
 }
 
 type RequestProduct struct {
 	Product []*Product `json:"product"`
 }
-
-
 
 // ----------------------------------------
 
