@@ -66,9 +66,9 @@ func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*respon
 	result := &response.ResponseBatchGetByUser{}
 
 	options := &object.HashMap{
-		"userid": userID,
-		"cursor": cursor,
-		"limit":  limit,
+		"userid_list": userID,
+		"cursor":      cursor,
+		"limit":       limit,
 	}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", options, nil, nil, result)
@@ -102,7 +102,7 @@ func (comp *Client) GetUnassigned(pageID int, pageSize int) (*response.ResponseG
 }
 
 // 离职成员的外部联系人再分配.
-// https://work.weixin.qq.com/api/doc#90000/90135/91564
+// https://developer.work.weixin.qq.com/document/path/94081
 func (comp *Client) Transfer(externalUserID []string, handoverUserID string, takeoverUserID string) (*response.ResponseGetTransferedCustomerList, error) {
 
 	result := &response.ResponseGetTransferedCustomerList{}
