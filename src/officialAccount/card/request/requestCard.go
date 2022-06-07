@@ -74,12 +74,14 @@ type AdvancedInfo struct {
 // ------------------------------------------------------------
 
 type GroupOn struct {
+	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	DealDetail   string        `json:"deal_detail"`
 }
 
 type Cash struct {
+	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	LeastCost    int           `json:"least_cost"`
@@ -87,33 +89,77 @@ type Cash struct {
 }
 
 type Discount struct {
+	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	Discount     int           `json:"discount"`
 }
 
 type Gift struct {
+	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	Gift         string        `json:"gift"`
 }
 
 type GeneralCoupon struct {
+	CardInterface
 	BaseInfo      *BaseInfo     `json:"base_info"`
 	AdvancedInfo  *AdvancedInfo `json:"advanced_info"`
 	DefaultDetail string        `json:"default_detail"`
 }
 
+type MemberCard struct {
+	CardInterface
+	BaseInfo     *BaseInfo `json:"base_info"`
+	BonusCleared string    `json:"bonus_cleared"`
+	BonusRules   string    `json:"bonus_rules"`
+	Prerogative  string    `json:"prerogative"`
+}
+
+type ScenicTicket struct {
+	CardInterface
+	BaseInfo *BaseInfo `json:"base_info"`
+}
+type MovieTicket struct {
+	CardInterface
+	BaseInfo *BaseInfo `json:"base_info"`
+}
+
+type BoardingPass struct {
+	CardInterface
+	BaseInfo *BaseInfo `json:"base_info"`
+}
+
+type MeetingTicket struct {
+	CardInterface
+	BaseInfo *BaseInfo `json:"base_info"`
+}
+
+type BusTicket struct {
+	CardInterface
+	BaseInfo *BaseInfo `json:"base_info"`
+}
+
 // -----------------------------------------------------------------
 
-type Card struct {
-	CardType string    `json:"card_type"`
-	Groupon  *GroupOn  `json:"groupon"`
-	Cash     *Cash     `json:"cash"`
-	Discount *Discount `json:"discount"`
-	Gift     *Gift     `json:"gift"`
+type CardInterface interface {
+	GetCardType() string
+}
 
+type Card struct {
+	CardType      string         `json:"card_type"`
+	Groupon       *GroupOn       `json:"groupon"`
+	Cash          *Cash          `json:"cash"`
+	Discount      *Discount      `json:"discount"`
+	Gift          *Gift          `json:"gift"`
 	GeneralCoupon *GeneralCoupon `json:"general_coupon"`
+	MemberCard    *MemberCard    `json:"member_card"`
+	ScenicTicket  *ScenicTicket  `json:"scenic_ticket"`
+	MovieTicket   *MovieTicket   `json:"movie_ticket"`
+	BoardingPass  *BoardingPass  `json:"boarding_pass"`
+	MeetingTicket *MeetingTicket `json:"meeting_ticket"`
+	BusTicket     *BusTicket     `json:"bus_ticket"`
 }
 
 type RequestCardCreate struct {
