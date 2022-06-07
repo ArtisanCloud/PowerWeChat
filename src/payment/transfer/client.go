@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerLibs/v2/security/sign"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer/request"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer/response"
@@ -82,9 +83,9 @@ func (comp *Client) QueryBankCardOrder(partnerTradeNo string) (*response.Respons
 
 // Send MerchantPay to BankCard.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_2
-func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response.ResponseTransfer, error) {
+func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response2.ResponsePayment, error) {
 
-	result := &response.ResponseTransfer{}
+	result := &response2.ResponsePayment{}
 
 	config := (*comp.App).GetConfig()
 

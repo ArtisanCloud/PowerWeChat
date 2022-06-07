@@ -1,7 +1,9 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+
 type ResponseTransferToBalance struct {
-	*ResponseTransfer
+	*response.ResponsePayment
 
 	MchAppID       string `xml:"mch_appid"`
 	MchID          string `xml:"mchid"`
