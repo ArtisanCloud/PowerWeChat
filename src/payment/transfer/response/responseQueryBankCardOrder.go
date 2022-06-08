@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 
 type ResponseGetTransferInfo struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	MchID          string `xml:"mch_id"`
 	AppID          string `xml:"appid"`

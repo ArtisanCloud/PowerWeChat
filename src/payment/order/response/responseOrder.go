@@ -8,7 +8,7 @@ import (
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml
 
 type ResponseOrder struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	Amount          *object.HashMap   `json:"amount"`
 	AppID           string            `json:"appid"`

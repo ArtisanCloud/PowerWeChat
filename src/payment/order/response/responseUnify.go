@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseUnitfy struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	PrepayID string `json:"prepay_id"`
 }

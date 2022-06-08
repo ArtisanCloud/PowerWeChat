@@ -1,5 +1,6 @@
-github.com/ArtisanCloud/PowerLibs/v2 v2.0.2 h1:wq0WSRY9eKX7+0WDN7+ba9g5TX84F10aD11haIEUh/c=
 github.com/ArtisanCloud/PowerLibs/v2 v2.0.2/go.mod h1:geiRu1Fv9YnHR8qPfV0/eGA1duOwAafR46YzYHCfviY=
+github.com/ArtisanCloud/PowerLibs/v2 v2.0.3 h1:0lVlUuHmLIT0EfE26lROwjydb0D0lAUN6gx1jqQVOC8=
+github.com/ArtisanCloud/PowerLibs/v2 v2.0.3/go.mod h1:geiRu1Fv9YnHR8qPfV0/eGA1duOwAafR46YzYHCfviY=
 github.com/ArtisanCloud/PowerSocialite/v2 v2.0.1 h1:8wkgBfLKt0z4OXSYzlLDvwHIypOiUHg6m1dlT+zHZKg=
 github.com/ArtisanCloud/PowerSocialite/v2 v2.0.1/go.mod h1:1FXnZ2A4YfWsRxW+tBiWzO13O8hJ/lb7DX/u1vCB128=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=

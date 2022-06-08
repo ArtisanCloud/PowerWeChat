@@ -117,7 +117,7 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 	//config := (*client.App).GetConfig()
 
 	base := &object.HashMap{
-		// 微信的接口如果传入接口意外的参数，签名会失败所以这里需要区分对待参数
+		// 微信的接口如果传入接口以外的参数，签名会失败所以这里需要区分对待参数
 		"nonce_str": object.RandStringBytesMask(32),
 		//"mch_id":     config.GetString("mch_id", ""),
 		//"sub_mch_id": config.GetString("sub_mch_id", ""),
@@ -333,7 +333,8 @@ func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string
 
 	options = object.MergeHashMap(&object.HashMap{
 		"headers": &object.HashMap{
-			"Authorization": authorization,
+			"Authorization":    authorization,
+			"Wechatpay-Serial": config.GetString("serial_no", ""),
 		},
 		"body": signBody,
 	}, options)

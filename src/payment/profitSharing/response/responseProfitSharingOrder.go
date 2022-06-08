@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseProfitSharingOrder struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	TransactionID string           `json:"transaction_id"`
 	OutOrderNO    string           `json:"out_order_no"`

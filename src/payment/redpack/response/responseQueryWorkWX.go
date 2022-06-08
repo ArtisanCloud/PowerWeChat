@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseQueryWorkWX struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	XMLName             xml.Name `xml:"xml"`
 	Text                string   `xml:",chardata"`

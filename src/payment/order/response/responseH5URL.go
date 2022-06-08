@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseH5URL struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	H5URL string `json:"h5_url"`
 }

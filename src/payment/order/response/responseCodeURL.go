@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseCodeURL struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	CodeURL string `json:"code_url"`
 }

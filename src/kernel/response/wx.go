@@ -6,42 +6,42 @@ type ResponseBase struct {
 }
 
 type ResponseWork struct {
-	*ResponseBase
+	ResponseBase
 
-	ErrCode int    `json:"errcode"`
+	ErrCode int    `json:"errcode,omitempty"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 }
 
 type ResponsePayment struct {
-	*ResponseBase
+	ResponseBase
 
-	ReturnCode string `xml:"return_code" json:"return_code"`
+	ReturnCode string `xml:"return_code,omitempty" json:"return_code"`
 	ReturnMSG  string `xml:"return_msg,omitempty" json:"return_msg,omitempty"`
 
-	ResultCode string `xml:"result_code" json:"result_code"`               // 是	String(16)	SUCCESS/FAIL
+	ResultCode string `xml:"result_code,omitempty" json:"result_code"`     // 是	String(16)	SUCCESS/FAIL
 	ErrCode    string `xml:"err_code,omitempty" json:"err_code,omitempty"` // 否	String(32)	SYSTEMERROR--系统错误
 	ErrMSG     string `xml:"errmsg,omitempty" json:"errmsg,omitempty"`
 	ErrCodeDes string `xml:"err_code_des,omitempty" json:"err_code_des,omitempty"`
 }
 
 type ResponseMiniProgram struct {
-	*ResponseBase
+	ResponseBase
 
 	Msg     string `json:"msg,omitempty"` // 小程序直播的部分接口会把错误提示抛在msg字段
-	ErrCode int    `json:"errcode"`
+	ErrCode int    `json:"errcode,omitempty"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 
-	ResultCode string `json:"resultcode"`
+	ResultCode string `json:"resultcode,omitempty"`
 	ResultMSG  string `json:"resultmsg,omitempty"`
 }
 
 type ResponseOfficialAccount struct {
-	*ResponseBase
+	ResponseBase
 
-	ErrCode int    `json:"errcode"`
+	ErrCode int    `json:"errcode,omitempty"`
 	ErrMSG  string `json:"errmsg,omitempty"`
 
-	ResultCode string `json:"resultcode"`
+	ResultCode string `json:"resultcode,omitempty"`
 	ResultMSG  string `json:"resultmsg,omitempty"`
 }
 

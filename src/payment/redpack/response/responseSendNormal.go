@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseSendNormal struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	XMLName     xml.Name `xml:"xml"`
 	Text        string   `xml:",chardata"`
