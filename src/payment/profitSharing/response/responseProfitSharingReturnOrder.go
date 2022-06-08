@@ -5,7 +5,7 @@ import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
 
 type ResponseProfitSharingReturnOrder struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	OrderID     string  `json:"order_id"`
 	OutOrderNO  string  `json:"out_order_no"`

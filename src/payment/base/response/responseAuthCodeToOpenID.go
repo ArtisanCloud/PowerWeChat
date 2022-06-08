@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAuthCodeToOpenID struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	AppID    string `json:"appid"`     // 是	String(32)	微信分配的公众账号ID
 	MchID    string `json:"mch_id"`    // 是	String(32)	微信支付分配的商户号

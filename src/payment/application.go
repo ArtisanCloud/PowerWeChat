@@ -40,6 +40,7 @@ type Payment struct {
 
 	RedPack       *redpack.Client
 	Transfer      *transfer.Client
+	TransferBatch *transfer.BatchClient
 	Reverse       *reverse.Client
 	ProfitSharing *profitSharing.Client
 
@@ -130,7 +131,7 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	app.RedPack = redpack.RegisterProvider(app)
 
 	//-------------- Transfer --------------
-	app.Transfer = transfer.RegisterProvider(app)
+	app.Transfer, app.TransferBatch = transfer.RegisterProvider(app)
 
 	//-------------- Reverse --------------
 	app.Reverse = reverse.RegisterProvider(app)

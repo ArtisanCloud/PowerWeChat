@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseHeaderCloseOrdr struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	Status string `header:"status"`
 }

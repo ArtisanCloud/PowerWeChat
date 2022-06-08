@@ -5,7 +5,7 @@ import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 // https://work.weixin.qq.com/api/doc/90000/90135/90278
 
 type ResponseQueryTransferToPocket struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	MchID          string `json:"mch_id"`
 	AppID          string `json:"appid"`

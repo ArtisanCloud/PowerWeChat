@@ -5,7 +5,7 @@ import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
 
 type ResponseRefund struct {
-	*response.ResponsePayment
+	response.ResponsePayment
 
 	RefundID            string                   `json:"refund_id"`
 	OutRefundNO         string                   `json:"out_refund_no"`
