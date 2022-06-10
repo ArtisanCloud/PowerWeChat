@@ -146,11 +146,6 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 		return nil, cryptErr
 	}
 
-	plaintext, cryptErr = encryptor.aes.PKCS7UnPadding(plaintext)
-	if cryptErr != nil {
-		return nil, cryptErr
-	}
-
 	textLen := uint32(len(plaintext))
 	if textLen < 20 {
 		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 1")

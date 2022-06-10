@@ -1,6 +1,7 @@
 package work
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
@@ -126,6 +127,8 @@ type Work struct {
 
 	GroupRobot          *groupRobot.Client
 	GroupRobotMessenger *groupRobot.Messager
+
+	Logger *logger.Logger
 }
 
 type UserConfig struct {
@@ -147,6 +150,7 @@ type UserConfig struct {
 type Log struct {
 	Level string
 	File  string
+	ENV   string
 }
 
 type OAuth struct {
@@ -263,6 +267,15 @@ func NewWork(config *UserConfig) (*Work, error) {
 	app.Invoice = invoice.RegisterProvider(app)
 
 	app.GroupRobot, app.GroupRobotMessenger = groupRobot.RegisterProvider(app)
+
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return app, err
 }
@@ -385,6 +398,9 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "GroupRobotMessenger":
 		return app.GroupRobotMessenger
 
+	case "Logger":
+		return app.Logger
+
 	default:
 		return nil
 	}
@@ -405,6 +421,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"env":   userConfig.Log.ENV,
 		},
 		"oauth.callback": userConfig.OAuth.Callback,
 		"oauth.scopes":   userConfig.OAuth.Scopes,
