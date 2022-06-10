@@ -20,8 +20,9 @@ func GetWorkConfig() *work.UserConfig {
 
 		ResponseType: os.Getenv("array"),
 		Log: work.Log{
-			"debug",
-			"./wechat.log",
+			Level: "debug",
+			File:  "./wechat.log",
+			ENV:   os.Getenv("work.env"),
 		},
 
 		OAuth: work.OAuth{

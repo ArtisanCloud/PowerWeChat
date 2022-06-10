@@ -8,9 +8,9 @@ import (
 type Callback struct {
 	XMLName    xml.Name `xml:"xml"`
 	Text       string   `xml:",chardata"`
-	ToUserName string   `xml:"ToUserName"`
-	AgentID    string   `xml:"AgentID"`
-	Encrypt    string   `xml:"Encrypt"`
+	ToUserName string   `xml:"ToUserName" json:"ToUserName"`
+	AgentID    string   `xml:"AgentID" json:"AgentID"`
+	Encrypt    string   `xml:"Encrypt" json:"Encrypt"`
 }
 
 const (

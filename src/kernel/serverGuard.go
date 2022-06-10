@@ -7,6 +7,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	logger2 "github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/messages"
@@ -86,7 +87,17 @@ func (serverGuard *ServerGuard) Notify(request *http.Request, closure func(event
 	return response, err
 }
 
+// 回调配置
+// https://developer.work.weixin.qq.com/document/path/90930
 func (serverGuard *ServerGuard) Serve(request *http.Request) (response *response.HttpResponse, err error) {
+
+	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
+	logger.Info("Request received:",
+		"method", request.Method,
+		"uri", request.URL,
+		"content-type", request.Header.Get("Content-Type"),
+		"content", request.Body,
+	)
 
 	validatedGuard, err := serverGuard.Validate(request)
 	if err != nil {
@@ -95,8 +106,7 @@ func (serverGuard *ServerGuard) Serve(request *http.Request) (response *response
 
 	response, err = validatedGuard.resolve(request)
 
-	// tbd
-	// log here
+	logger.Info("Server response created:", "content", response.GetBody())
 
 	return response, err
 }
@@ -156,7 +166,7 @@ func (serverGuard *ServerGuard) getEvent(request *http.Request) (callback *model
 }
 
 func (serverGuard *ServerGuard) getMessage(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, Decrypted interface{}, err error) {
-	var b []byte = []byte("<xml></xml>")
+	var b = []byte("")
 	if request.Body != http.NoBody {
 		b, err = io.ReadAll(request.Body)
 		if err != nil || b == nil {
@@ -172,8 +182,11 @@ func (serverGuard *ServerGuard) getMessage(request *http.Request) (callback *mod
 	if serverGuard.IsSafeMode(request) && callback.Encrypt != "" {
 		callbackHeader, Decrypted, err = serverGuard.decryptMessage(request, string(b))
 	} else {
-		callbackHeader = &models.CallbackMessageHeader{}
-		err = xml.Unmarshal(b, callbackHeader)
+		callbackHeader = &models.CallbackMessageHeader{
+			Text:       callback.Text,
+			ToUserName: callback.ToUserName,
+		}
+
 	}
 
 	return callback, callbackHeader, Decrypted, err
@@ -387,7 +400,23 @@ func (serverGuard *ServerGuard) isSafeMode(request *http.Request) bool {
 func (serverGuard *ServerGuard) parseMessage(content string) (callback *models.Callback, err error) {
 
 	callback = &models.Callback{}
-	err = xml.Unmarshal([]byte(content), callback)
+
+	if len(content) > 0 {
+		if content[0:1] == "<" {
+			err = xml.Unmarshal([]byte(content), callback)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			// Handle JSON format.
+			err = object.JsonDecode([]byte(content), callback)
+			if err != nil {
+				return nil, err
+			}
+		}
+	} else {
+
+	}
 
 	return callback, err
 }

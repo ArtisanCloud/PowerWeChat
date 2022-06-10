@@ -1,7 +1,11 @@
 .idea
 .DS_Store
 
+
+
 environment.yml
 environment.yaml
 
 temp.go
+
+*.log

@@ -41,6 +41,7 @@ func (handler *EchoStrHandler) Handle(request *http.Request, header contract.Eve
 
 		if err != nil {
 			println(err.ErrCode, err.ErrMsg)
+			panic(err.ErrMsg)
 			return nil
 		}
 
