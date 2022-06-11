@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
@@ -45,6 +46,8 @@ type Payment struct {
 	ProfitSharing *profitSharing.Client
 
 	Base *base.Client
+
+	Logger *logger.Logger
 }
 
 type UserConfig struct {
@@ -70,6 +73,7 @@ type UserConfig struct {
 type Log struct {
 	Level string
 	File  string
+	ENV   string
 }
 
 type OAuth struct {
@@ -139,6 +143,15 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	//-------------- ProfitSharing --------------
 	app.ProfitSharing = profitSharing.RegisterProvider(app)
 
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -180,6 +193,9 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.Reverse
 	case "ProfitSharing":
 		return app.ProfitSharing
+
+	case "Logger":
+		return app.Logger
 	default:
 		return nil
 	}
@@ -268,6 +284,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"env":   userConfig.Log.ENV,
 		},
 		"http": &object.HashMap{
 			"timeout":  userConfig.Http.Timeout,
