@@ -113,36 +113,61 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	//-------------- global app config --------------
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Base --------------
-	app.Base = base.RegisterProvider(app)
+	app.Base, err = base.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- Order --------------
-	app.Order = order.RegisterProvider(app)
-
+	app.Order, err = order.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- JSSDK --------------
-	app.JSSDK = jssdk.RegisterProvider(app)
-
+	app.JSSDK, err = jssdk.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- Sandbox --------------
-	app.Sandbox = sandbox.RegisterProvider(app)
-
+	app.Sandbox, err = sandbox.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- Refund --------------
-	app.Refund = refund.RegisterProvider(app)
-
+	app.Refund, err = refund.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- Bill --------------
-	app.Bill = bill.RegisterProvider(app)
-
+	app.Bill, err = bill.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- Red Pack --------------
-	app.RedPack = redpack.RegisterProvider(app)
-
+	app.RedPack, err = redpack.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- Transfer --------------
-	app.Transfer, app.TransferBatch = transfer.RegisterProvider(app)
+	app.Transfer, app.TransferBatch, err = transfer.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- Reverse --------------
-	app.Reverse = reverse.RegisterProvider(app)
-
+	app.Reverse, err = reverse.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- ProfitSharing --------------
-	app.ProfitSharing = profitSharing.RegisterProvider(app)
-
+	app.ProfitSharing, err = profitSharing.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
 		"outputPath": app.Config.GetString("file", "./wechat.log"),

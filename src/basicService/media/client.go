@@ -16,15 +16,19 @@ type Client struct {
 	AllowTypes []string
 }
 
-func NewClient(app kernel.ApplicationInterface) *Client {
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
+	}
 	client := &Client{
-		BaseClient: kernel.NewBaseClient(&app, nil),
+		BaseClient: baseClient,
 
 		AllowTypes: []string{"image", "voice", "video", "thumb"},
 	}
 
 	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
-	return client
+	return client, nil
 }
 
 // 新增临时素材

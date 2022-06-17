@@ -12,10 +12,14 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewClient(app kernel.ApplicationInterface) *Client {
-	return &Client{
-		kernel.NewBaseClient(&app, nil),
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		baseClient,
+	}, nil
 }
 
 // 查询一定时间范围内的 WiFi 连接总人数、微信方式连 Wi-Fi 人数、商家主页访问人数、连网后消息发送人数、新增公众号关注人数和累计公众号关注人数。

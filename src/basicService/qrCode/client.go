@@ -22,14 +22,17 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewClient(app *kernel.ApplicationInterface) *Client {
-
+func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(app, nil)
+	if err != nil {
+		return nil, err
+	}
 	client := &Client{
-		BaseClient: kernel.NewBaseClient(app, nil),
+		BaseClient: baseClient,
 	}
 
 	client.HttpRequest.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
-	return client
+	return client, nil
 }
 
 // 生成永久二维码请求

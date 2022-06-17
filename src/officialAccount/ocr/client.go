@@ -14,11 +14,15 @@ type Client struct {
 	AllowTypes []string
 }
 
-func NewClient(app kernel.ApplicationInterface) *Client {
-	return &Client{
-		BaseClient: kernel.NewBaseClient(&app, nil),
-		AllowTypes: []string{"photo", "scan"},
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		BaseClient: baseClient,
+		AllowTypes: []string{"photo", "scan"},
+	}, nil
 }
 
 // 身份证 OCR 识别接口

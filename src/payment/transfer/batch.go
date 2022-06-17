@@ -14,11 +14,15 @@ type BatchClient struct {
 	Version string
 }
 
-func NewBatchClient(app *payment.ApplicationPaymentInterface) *BatchClient {
-	return &BatchClient{
-		BaseClient: payment.NewBaseClient(app),
-		Version:    "v3",
+func NewBatchClient(app *payment.ApplicationPaymentInterface) (*BatchClient, error) {
+	baseClient, err := payment.NewBaseClient(app)
+	if err != nil {
+		return nil, err
 	}
+	return &BatchClient{
+		BaseClient: baseClient,
+		Version:    "v3",
+	}, nil
 }
 
 // 发起商家转账API

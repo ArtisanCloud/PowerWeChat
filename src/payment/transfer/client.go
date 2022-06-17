@@ -14,10 +14,14 @@ type Client struct {
 	*payment.BaseClient
 }
 
-func NewClient(app *payment.ApplicationPaymentInterface) *Client {
-	return &Client{
-		payment.NewBaseClient(app),
+func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
+	baseClient, err := payment.NewBaseClient(app)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		baseClient,
+	}, nil
 }
 
 // Query MerchantPay to balance.

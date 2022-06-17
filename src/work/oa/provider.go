@@ -23,20 +23,51 @@ func RegisterProvider(app kernel.ApplicationInterface) (*Client,
 	*pstncc.Client,
 	*schedule.Client,
 	*webdrive.Client,
+	error,
 
 ) {
 	//config := app.GetConfig()
 
-	Client := NewClient(app)
-	Calendar := calendar.NewClient(app)
-	Dial := dial.NewClient(app)
-	Journal := journal.NewClient(app)
-	Living := living.NewClient(app)
-	Meeting := meeting.NewClient(app)
-	MeetingRoom := meetingroom.NewClient(app)
-	PSTNCC := pstncc.NewClient(app)
-	Schedule := schedule.NewClient(app)
-	WebDrive := webdrive.NewClient(app)
+	Client, err := NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Calendar, err := calendar.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Dial, err := dial.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Journal, err := journal.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Living, err := living.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Meeting, err := meeting.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	MeetingRoom, err := meetingroom.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	PSTNCC, err := pstncc.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Schedule, err := schedule.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	WebDrive, err := webdrive.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
 
 	return Client,
 		Calendar,
@@ -47,6 +78,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (*Client,
 		MeetingRoom,
 		PSTNCC,
 		Schedule,
-		WebDrive
+		WebDrive,
+		nil
 
 }

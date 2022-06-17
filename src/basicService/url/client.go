@@ -15,14 +15,18 @@ type Client struct {
 	BaseUri string
 }
 
-func NewClient(app *kernel.ApplicationInterface) *Client {
-
+func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(app, nil)
+	if err != nil {
+		return nil, err
+	}
 	client := &Client{
-		BaseClient: kernel.NewBaseClient(app, nil),
+		baseClient,
+		"",
 	}
 	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/"
 
-	return client
+	return client, nil
 }
 
 // 短key托管

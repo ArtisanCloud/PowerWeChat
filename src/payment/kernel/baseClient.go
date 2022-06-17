@@ -24,12 +24,17 @@ type BaseClient struct {
 	App *ApplicationPaymentInterface
 }
 
-func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
+func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 	config := (*app).GetContainer().GetConfig()
+
+	httpRequest, err := request.NewHttpRequest(config)
+	if err != nil {
+		return nil, err
+	}
 
 	client := &BaseClient{
 		BaseClient: kernel.BaseClient{
-			HttpRequest: request.NewHttpRequest(config),
+			HttpRequest: httpRequest,
 			Signer: &support.SHA256WithRSASigner{
 				MchID:               (*config)["mch_id"].(string),
 				CertificateSerialNo: (*config)["serial_no"].(string),
@@ -38,7 +43,7 @@ func NewBaseClient(app *ApplicationPaymentInterface) *BaseClient {
 		},
 		App: app,
 	}
-	return client
+	return client, nil
 
 }
 

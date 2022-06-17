@@ -12,10 +12,14 @@ type Client struct {
 	*kernel.BaseClient
 }
 
-func NewClient(app kernel.ApplicationInterface) *Client {
-	return &Client{
-		kernel.NewBaseClient(&app, nil),
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		baseClient,
+	}, nil
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90227

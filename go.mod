@@ -2,13 +2,12 @@ module github.com/ArtisanCloud/PowerWeChat/v2
 
 go 1.17
 
-//replace github.com/ArtisanCloud/PowerLibs/ => ../PowerLibs
-//
+//replace github.com/ArtisanCloud/PowerLibs/v2 => ../PowerLibs
 //replace github.com/ArtisanCloud/PowerSocialite/v2 => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs/v2 v2.0.3
-	github.com/ArtisanCloud/PowerSocialite/v2 v2.0.1
+	github.com/ArtisanCloud/PowerLibs/v2 v2.0.6
+	github.com/ArtisanCloud/PowerSocialite/v2 v2.0.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/google/uuid v1.1.1
 	github.com/stretchr/testify v1.7.0
@@ -27,8 +26,6 @@ require (
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

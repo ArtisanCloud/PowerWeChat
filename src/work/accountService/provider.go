@@ -16,20 +16,40 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 	*servicer.Client,
 	*serviceState.Client,
 	*tag.Client,
+	error,
 ) {
 	//config := app.GetConfig()
 
-	Client := NewClient(app)
-	Customer := customer.NewClient(app)
-	Message := message.NewClient(app)
-	Servicer := servicer.NewClient(app)
-	ServiceState := serviceState.NewClient(app)
-	Tag := tag.NewClient(app)
+	Client, err := NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, err
+	}
+	Customer, err := customer.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, err
+	}
+	Message, err := message.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, err
+	}
+	Servicer, err := servicer.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, err
+	}
+	ServiceState, err := serviceState.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, err
+	}
+	Tag, err := tag.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, err
+	}
 
 	return Client,
 		Customer,
 		Message,
 		Servicer,
 		ServiceState,
-		Tag
+		Tag,
+		nil
 }

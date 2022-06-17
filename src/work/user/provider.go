@@ -14,19 +14,34 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 	*exportJobs.Client,
 	*linkedCorp.Client,
 	*tag.Client,
+	error,
 ) {
 	//config := app.GetConfig()
 
-	client := NewClient(app)
-
-	UserBatchJobs := batchJobs.NewClient(app)
-	UserExportJobs := exportJobs.NewClient(app)
-	UserLinkedCorp := linkedCorp.NewClient(app)
-	UserTag := tag.NewClient(app)
-
+	client, err := NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
+	UserBatchJobs, err := batchJobs.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
+	UserExportJobs, err := exportJobs.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
+	UserLinkedCorp, err := linkedCorp.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
+	UserTag, err := tag.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
 	return client,
 		UserBatchJobs,
 		UserExportJobs,
 		UserLinkedCorp,
-		UserTag
+		UserTag,
+		nil
 }

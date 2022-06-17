@@ -16,10 +16,14 @@ type Client struct {
 	*jssdk.Client
 }
 
-func NewClient(app *kernel2.ApplicationInterface) *Client {
-	return &Client{
-		jssdk.NewClient(app),
+func NewClient(app *kernel2.ApplicationInterface) (*Client, error) {
+	jssdkClient, err := jssdk.NewClient(app)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		jssdkClient,
+	}, nil
 }
 
 // JSAPI调起支付API
