@@ -4,10 +4,14 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) *Client {
+func RegisterProvider(app kernel.ApplicationInterface) (*Client, error) {
 
-	return &Client{
-		kernel.NewBaseClient(&app, nil),
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		baseClient,
+	}, nil
 
 }

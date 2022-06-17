@@ -24,15 +24,19 @@ type Client struct {
 	url            string
 }
 
-func NewClient(app *kernel.ApplicationInterface) *Client {
+func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(app, nil)
+	if err != nil {
+		return nil, err
+	}
 	client := &Client{
-		BaseClient:         kernel.NewBaseClient(app, nil),
+		BaseClient:         baseClient,
 		InteractsWithCache: &kernel.InteractsWithCache{},
 	}
 
 	client.TicketEndpoint = "https://api.weixin.qq.com/cgi-bin/ticket/getticket"
 
-	return client
+	return client, nil
 }
 
 func (comp *Client) BuildConfig(jsApiList []string, debug bool, beta bool, openTagList []string, url string) (interface{}, error) {

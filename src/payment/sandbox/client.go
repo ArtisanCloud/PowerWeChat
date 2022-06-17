@@ -15,11 +15,15 @@ type Client struct {
 	*kernel2.InteractsWithCache
 }
 
-func NewClient(app *kernel.ApplicationPaymentInterface) *Client {
-	return &Client{
-		kernel.NewBaseClient(app),
-		&kernel2.InteractsWithCache{},
+func NewClient(app *kernel.ApplicationPaymentInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(app)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		baseClient,
+		&kernel2.InteractsWithCache{},
+	}, nil
 }
 
 func (comp *Client) GetKey() (string, error) {

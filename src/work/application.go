@@ -187,35 +187,57 @@ func NewWork(config *UserConfig) (*Work, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 
 	//-------------- register Auth --------------
-	app.AccessToken = auth.RegisterProvider(app)
+	app.AccessToken, err = auth.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Base --------------
-	app.Base = base.RegisterProvider(app)
+	app.Base, err = base.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register oauth --------------
 	app.OAuth, err = oauth.RegisterProvider(app)
-
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register agent --------------
 	app.Agent,
-		app.AgentWorkbench = agent.RegisterProvider(app)
+		app.AgentWorkbench, err = agent.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Department --------------
-	app.Department = department.RegisterProvider(app)
+	app.Department, err = department.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Message --------------
 	app.Message, app.Messager,
 		app.MessageAppChat,
 		app.MessageExternalContact,
-		app.MessageLinkedCorp = message.RegisterProvider(app)
+		app.MessageLinkedCorp, err = message.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Encryptor --------------
-	app.Encryptor, app.Server = server.RegisterProvider(app)
-
+	app.Encryptor, app.Server, err = server.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register user --------------
 	app.User,
 		app.UserBatchJobs,
 		app.UserExportJobs,
 		app.UserLinkedCorp,
-		app.UserTag = user.RegisterProvider(app)
+		app.UserTag, err = user.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register external contact --------------
 	app.ExternalContact,
@@ -229,7 +251,10 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.ExternalContactSchool,
 		app.ExternalContactStatistics,
 		app.ExternalContactTag,
-		app.ExternalContactTransfer = externalContact.RegisterProvider(app)
+		app.ExternalContactTransfer, err = externalContact.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register account service --------------
 	app.AccountService,
@@ -237,13 +262,22 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.AccountServiceMessage,
 		app.AccountServiceServicer,
 		app.AccountServiceState,
-		app.AccountServiceTag = accountService.RegisterProvider(app)
+		app.AccountServiceTag, err = accountService.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- media --------------
-	app.Media = media.RegisterProvider(app)
+	app.Media, err = media.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- menu --------------
-	app.Menu = menu.RegisterProvider(app)
+	app.Menu, err = menu.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- oa --------------
 	app.OA,
@@ -255,18 +289,33 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.OAMeetingRoom,
 		app.OAPSTNCC,
 		app.OASchedule,
-		app.OAWebDrive = oa.RegisterProvider(app)
+		app.OAWebDrive, err = oa.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- msg audit --------------
-	app.MsgAudit = msgaudit.RegisterProvider(app)
+	app.MsgAudit, err = msgaudit.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- corp group --------------
-	app.CorpGroup = corpgroup.RegisterProvider(app)
+	app.CorpGroup, err = corpgroup.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- invoice --------------
-	app.Invoice = invoice.RegisterProvider(app)
+	app.Invoice, err = invoice.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
-	app.GroupRobot, app.GroupRobotMessenger = groupRobot.RegisterProvider(app)
+	app.GroupRobot, app.GroupRobotMessenger, err = groupRobot.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),

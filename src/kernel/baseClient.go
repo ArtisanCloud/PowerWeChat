@@ -27,15 +27,18 @@ type BaseClient struct {
 	Token *AccessToken
 }
 
-func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
+func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, error) {
 	config := (*app).GetContainer().GetConfig()
 
 	if token == nil {
 		token = (*app).GetAccessToken()
 	}
-
+	httpRequest, err := request.NewHttpRequest(config)
+	if err != nil {
+		return nil, err
+	}
 	client := &BaseClient{
-		HttpRequest: request.NewHttpRequest(config),
+		HttpRequest: httpRequest,
 		App:         app,
 		Token:       token,
 	}
@@ -48,7 +51,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) *BaseClient {
 		}
 	}
 
-	return client
+	return client, nil
 
 }
 

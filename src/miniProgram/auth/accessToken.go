@@ -11,16 +11,17 @@ type AccessToken struct {
 	*kernel.AccessToken
 }
 
-func NewAccessToken(app *kernel.ApplicationInterface) *AccessToken {
+func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
+	kernelToken, err := kernel.NewAccessToken(app)
 	token := &AccessToken{
-		kernel.NewAccessToken(app),
+		kernelToken,
 	}
 
 	// Override fields and functions
 	token.EndpointToGetToken = "https://api.weixin.qq.com/cgi-bin/token"
 	token.OverrideGetCredentials()
 
-	return token
+	return token, err
 }
 
 // Override GetCredentials

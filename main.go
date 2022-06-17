@@ -115,7 +115,7 @@ func main() {
 	configWecom := GetWorkConfig()
 	wecomApp, err := work.NewWork(configWecom)
 	if err != nil {
-		fmt.Println(err.Error())
+		panic(err.Error())
 	}
 	fmt2.Dump("wecom config:", wecomApp.GetConfig().All())
 

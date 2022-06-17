@@ -33,7 +33,7 @@ type AccessToken struct {
 	GetCredentials func() *object.StringMap
 }
 
-func NewAccessToken(app *ApplicationInterface) *AccessToken {
+func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 	config := (*app).GetContainer().GetConfig()
 
 	var cacheClient cache.CacheInterface = nil
@@ -41,9 +41,13 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		cacheClient = (*config)["cache"].(cache.CacheInterface)
 	}
 
+	httpRequest, err := request.NewHttpRequest(config)
+	if err != nil {
+		return nil, err
+	}
 	token := &AccessToken{
 		App:         app,
-		HttpRequest: request.NewHttpRequest(config),
+		HttpRequest: httpRequest,
 
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
@@ -54,7 +58,7 @@ func NewAccessToken(app *ApplicationInterface) *AccessToken {
 		InteractsWithCache: NewInteractsWithCache(cacheClient),
 	}
 
-	return token
+	return token, nil
 }
 
 func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken, error) {

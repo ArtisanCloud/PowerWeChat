@@ -5,12 +5,18 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/agent/workbench"
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) (*Client, *workbench.Client) {
+func RegisterProvider(app kernel.ApplicationInterface) (*Client, *workbench.Client, error) {
 
-	client := NewClient(app)
+	client, err := NewClient(app)
+	if err != nil {
+		return nil, nil, err
+	}
 
-	Workbench := workbench.NewClient(app)
+	Workbench, err := workbench.NewClient(app)
+	if err != nil {
+		return nil, nil, err
+	}
 
-	return client, Workbench
+	return client, Workbench, nil
 
 }

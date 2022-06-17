@@ -28,21 +28,58 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 	*statistics.Client,
 	*tag.Client,
 	*transfer.Client,
+	error,
 ) {
 	//config := app.GetConfig()
 
-	Client := NewClient(app)
-	ContactWayClient := contactWay.NewClient(app)
-	CustomerStrategy := customerStrategy.NewClient(app)
-	GroupChat := groupChat.NewClient(app)
-	GroupWelcomeTemplate := groupWelcomeTemplate.NewClient(app)
-	MessageTemplate := messageTemplate.NewClient(app)
-	Moment := moment.NewClient(app)
-	MomentStrategy := momentStrategy.NewClient(app)
-	School := school.NewClient(app)
-	Statistics := statistics.NewClient(app)
-	Tag := tag.NewClient(app)
-	Transfer := transfer.NewClient(app)
+	Client, err := NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	ContactWayClient, err := contactWay.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	CustomerStrategy, err := customerStrategy.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	GroupChat, err := groupChat.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	GroupWelcomeTemplate, err := groupWelcomeTemplate.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	MessageTemplate, err := messageTemplate.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Moment, err := moment.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	MomentStrategy, err := momentStrategy.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	School, err := school.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Statistics, err := statistics.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Tag, err := tag.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	Transfer, err := transfer.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
 
 	return Client,
 		ContactWayClient,
@@ -55,6 +92,6 @@ func RegisterProvider(app kernel.ApplicationInterface) (
 		School,
 		Statistics,
 		Tag,
-		Transfer
-
+		Transfer,
+		nil
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseDataCubeSummary struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	List []*power.HashMap `json:"list"`
 }

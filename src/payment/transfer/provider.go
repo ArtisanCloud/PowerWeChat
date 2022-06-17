@@ -4,11 +4,17 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
 )
 
-func RegisterProvider(app kernel.ApplicationPaymentInterface) (*Client, *BatchClient) {
+func RegisterProvider(app kernel.ApplicationPaymentInterface) (*Client, *BatchClient, error) {
 
-	client := NewClient(&app)
-	batchClient := NewBatchClient(&app)
+	client, err := NewClient(&app)
+	if err != nil {
+		return nil, nil, err
+	}
+	batchClient, err := NewBatchClient(&app)
+	if err != nil {
+		return nil, nil, err
+	}
 
-	return client, batchClient
+	return client, batchClient, nil
 
 }

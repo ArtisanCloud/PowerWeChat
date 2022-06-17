@@ -108,3 +108,14 @@ func (comp *Client) Delete(cardID string) (*response2.ResponseOfficialAccount, e
 	return result, err
 
 }
+
+// 创建二维码接口
+// https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Distributing_Coupons_Vouchers_and_Cards.html#0
+func (comp *Client) CreateQrCode(param request.RequestCreateQrCode) (*response.ResponseCreateQrCode, error) {
+	result := &response.ResponseCreateQrCode{}
+
+	_, err := comp.HttpPostJson("card/qrcode/create", param, nil, nil, result)
+
+	return result, err
+
+}

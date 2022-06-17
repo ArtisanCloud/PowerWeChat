@@ -12,14 +12,27 @@ func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager,
 	*appChat.Client,
 	*externalContact.Client,
 	*linkedCorp.Client,
+	error,
 ) {
 	config := app.GetConfig()
 
-	client := NewClient(app)
+	client, err := NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
 
-	AppChat := appChat.NewClient(app)
-	ExternalContact := externalContact.NewClient(app)
-	LinkedCorp := linkedCorp.NewClient(app)
+	AppChat, err := appChat.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
+	ExternalContact, err := externalContact.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
+	LinkedCorp, err := linkedCorp.NewClient(app)
+	if err != nil {
+		return nil, nil, nil, nil, nil, err
+	}
 
 	messager := NewMessager(client)
 
@@ -32,5 +45,6 @@ func RegisterProvider(app kernel.ApplicationInterface) (*Client, *Messager,
 	return client, messager,
 		AppChat,
 		ExternalContact,
-		LinkedCorp
+		LinkedCorp,
+		nil
 }

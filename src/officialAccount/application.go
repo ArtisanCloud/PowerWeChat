@@ -1,6 +1,7 @@
 package officialAccount
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	providers2 "github.com/ArtisanCloud/PowerSocialite/v2/src/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/jssdk"
@@ -79,6 +80,8 @@ type OfficialAccount struct {
 	WifiDevice             *wifi.DeviceClient
 	WifiShop               *wifi.ShopClient
 	Guide                  *guide.Client
+
+	Logger *logger.Logger
 }
 
 type UserConfig struct {
@@ -97,6 +100,7 @@ type UserConfig struct {
 type Log struct {
 	Level string
 	File  string
+	ENV   string
 }
 
 type OAuth struct {
@@ -199,6 +203,15 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	//-------------- register Guide --------------
 	app.Guide = guide.RegisterProvider(app)
 
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -288,6 +301,9 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 	case "Guide":
 		return app.Guide
 
+	case "Logger":
+		return app.Logger
+
 	default:
 		return nil
 	}
@@ -305,6 +321,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"env":   userConfig.Log.ENV,
 		},
 		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,

@@ -2,6 +2,7 @@ package miniProgram
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/cache"
+	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
@@ -86,6 +87,8 @@ type MiniProgram struct {
 	RiskControl *riskControl.Client
 
 	Config *kernel.Config
+
+	Logger *logger.Logger
 }
 
 type UserConfig struct {
@@ -103,6 +106,7 @@ type UserConfig struct {
 type Log struct {
 	Level string
 	File  string
+	ENV   string
 }
 
 func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
@@ -134,86 +138,180 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 
 	//-------------- register Auth,AccessToken --------------
-	app.AccessToken = auth.RegisterProvider(app)
-	app.Auth = auth.RegisterAuthProvider(app)
+	app.AccessToken, err = auth.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+	app.Auth, err = auth.RegisterAuthProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
-	app.PhoneNumber = phoneNumber.RegisterProvider(app)
+	app.PhoneNumber, err = phoneNumber.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	// -------------- register Encryptor --------------
 	app.Encryptor = &Encryptor{aes: &support.AES{}}
 
 	//-------------- register Base --------------
-	app.Base = base.RegisterProvider(app)
+	app.Base, err = base.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Broadcast --------------
-	app.Broadcast = liveBroadcast.RegisterProvider(app)
+	app.Broadcast, err = liveBroadcast.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register CustomerServiceMessage --------------
-	app.CustomerServiceMessage = customerServiceMessage.RegisterProvider(app)
+	app.CustomerServiceMessage, err = customerServiceMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Data cube --------------
-	app.DataCube = dataCube.RegisterProvider(app)
+	app.DataCube, err = dataCube.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register ActiveMessage --------------
-	app.ActiveMessage = updatableMessage.RegisterProvider(app)
+	app.ActiveMessage, err = updatableMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Message --------------
-	app.UniformMessage = uniformMessage.RegisterProvider(app)
+	app.UniformMessage, err = uniformMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Image --------------
-	app.Image = image.RegisterProvider(app)
+	app.Image, err = image.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Internet --------------
-	app.Internet = internet.RegisterProvider(app)
+	app.Internet, err = internet.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Express --------------
-	app.Express = express.RegisterProvider(app)
+	app.Express, err = express.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Delivery --------------
-	app.Delivery = immediateDelivery.RegisterProvider(app)
+	app.Delivery, err = immediateDelivery.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register OCR --------------
-	app.OCR = ocr.RegisterProvider(app)
+	app.OCR, err = ocr.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Operation --------------
-	app.Operation = operation.RegisterProvider(app)
+	app.Operation, err = operation.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Plugin --------------
-	app.Plugin = plugin.RegisterProvider(app)
+	app.Plugin, err = plugin.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register NearbyPoi --------------
-	app.NearbyPoi = nearbyPoi.RegisterProvider(app)
+	app.NearbyPoi, err = nearbyPoi.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register WXACode --------------
-	app.WXACode = wxaCode.RegisterProvider(app)
+	app.WXACode, err = wxaCode.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register URLScheme --------------
-	app.URLScheme = urlScheme.RegisterProvider(app)
+	app.URLScheme, err = urlScheme.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register URLLink --------------
-	app.URLLink = urlLink.RegisterProvider(app)
+	app.URLLink, err = urlLink.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Security --------------
-	app.Security = security.RegisterProvider(app)
+	app.Security, err = security.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Search --------------
-	app.Search = search.RegisterProvider(app)
+	app.Search, err = search.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register ShortLink --------------
-	app.ShortLink = shortLink.RegisterProvider(app)
+	app.ShortLink, err = shortLink.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Soter --------------
-	app.Soter = soter.RegisterProvider(app)
+	app.Soter, err = soter.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Service Market --------------
-	app.ServiceMarket = serviceMarket.RegisterProvider(app)
+	app.ServiceMarket, err = serviceMarket.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register SubscribeMessage --------------
-	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
+	app.SubscribeMessage, err = subscribeMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register UpdatableMessage --------------
-	app.UpdatableMessage = updatableMessage.RegisterProvider(app)
+	app.UpdatableMessage, err = updatableMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register RiskControl --------------
-	app.RiskControl = riskControl.RegisterProvider(app)
+	app.RiskControl, err = riskControl.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return app, err
 }
@@ -304,6 +402,9 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 	case "RiskControl":
 		return app.RiskControl
 
+	case "Logger":
+		return app.Logger
+
 	default:
 		return nil
 	}
@@ -321,6 +422,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.StringMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"env":   userConfig.Log.ENV,
 		},
 		"cache": userConfig.Cache,
 
