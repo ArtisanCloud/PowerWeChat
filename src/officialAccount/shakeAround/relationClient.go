@@ -11,10 +11,14 @@ type RelationClient struct {
 	*kernel.BaseClient
 }
 
-func NewRelationClient(app kernel.ApplicationInterface) *RelationClient {
-	return &RelationClient{
-		kernel.NewBaseClient(&app, nil),
+func NewRelationClient(app kernel.ApplicationInterface) (*RelationClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &RelationClient{
+		baseClient,
+	}, nil
 }
 
 // 新增摇一摇出来的页面信息

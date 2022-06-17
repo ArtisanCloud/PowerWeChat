@@ -11,10 +11,14 @@ type ShopClient struct {
 	*kernel.BaseClient
 }
 
-func NewShopClient(app kernel.ApplicationInterface) *ShopClient {
-	return &ShopClient{
-		kernel.NewBaseClient(&app, nil),
+func NewShopClient(app kernel.ApplicationInterface) (*ShopClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &ShopClient{
+		baseClient,
+	}, nil
 }
 
 // 查询门店 WiFi 信息接口

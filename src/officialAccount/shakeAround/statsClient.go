@@ -11,10 +11,14 @@ type StatsClient struct {
 	*kernel.BaseClient
 }
 
-func NewStatsClient(app kernel.ApplicationInterface) *StatsClient {
-	return &StatsClient{
-		kernel.NewBaseClient(&app, nil),
+func NewStatsClient(app kernel.ApplicationInterface) (*StatsClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &StatsClient{
+		baseClient,
+	}, nil
 }
 
 // 查询单个设备进行摇周边操作的人数、次数，点击摇周边消息的人数、次数

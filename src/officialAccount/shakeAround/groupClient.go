@@ -11,10 +11,14 @@ type GroupClient struct {
 	*kernel.BaseClient
 }
 
-func NewGroupClient(app kernel.ApplicationInterface) *GroupClient {
-	return &GroupClient{
-		kernel.NewBaseClient(&app, nil),
+func NewGroupClient(app kernel.ApplicationInterface) (*GroupClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &GroupClient{
+		baseClient,
+	}, nil
 }
 
 // 新建设备分组

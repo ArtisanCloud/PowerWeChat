@@ -11,10 +11,14 @@ type PageClient struct {
 	*kernel.BaseClient
 }
 
-func NewPageClient(app kernel.ApplicationInterface) *PageClient {
-	return &PageClient{
-		kernel.NewBaseClient(&app, nil),
+func NewPageClient(app kernel.ApplicationInterface) (*PageClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &PageClient{
+		baseClient,
+	}, nil
 }
 
 // 新增摇一摇出来的页面信息

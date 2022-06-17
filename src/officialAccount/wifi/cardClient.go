@@ -12,10 +12,14 @@ type CardClient struct {
 	*kernel.BaseClient
 }
 
-func NewCardClient(app kernel.ApplicationInterface) *CardClient {
-	return &CardClient{
-		kernel.NewBaseClient(&app, nil),
+func NewCardClient(app kernel.ApplicationInterface) (*CardClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &CardClient{
+		baseClient,
+	}, nil
 }
 
 // 调用设置门店卡劵投放信息接口

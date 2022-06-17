@@ -17,14 +17,19 @@ type Client struct {
 	TicketCachePrefix string
 }
 
-func NewClient(app kernel.ApplicationInterface) *Client {
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
+	}
 	client := &Client{
-		BaseClient: kernel.NewBaseClient(&app, nil),
+		BaseClient: baseClient,
 	}
 
 	client.TicketCachePrefix = "powerwechat.official_account.card.api_ticket."
 
-	return client
+	return client, nil
+
 }
 
 func (comp *Client) Colors() {
