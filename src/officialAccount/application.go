@@ -87,6 +87,8 @@ type OfficialAccount struct {
 type UserConfig struct {
 	AppID  string
 	Secret string
+	Token  string
+	AESKey string
 
 	ResponseType string
 	Log          Log
@@ -137,71 +139,167 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 
 	//-------------- register Auth --------------
-	app.AccessToken = auth.RegisterProvider(app)
+	app.AccessToken, err = auth.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Base --------------
-	app.Base = base.RegisterProvider(app)
+	app.Base, err = base.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- media --------------
-	app.Media = media.RegisterProvider(app)
+	app.Media, err = media.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register QRCode --------------
-	app.QRCode = qrCode.RegisterProvider(app)
+	app.QRCode, err = qrCode.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register URL --------------
-	app.URL = url.RegisterProvider(app)
+	app.URL, err = url.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register JSSDK --------------
-	app.JSSDK = jssdk.RegisterProvider(app)
+	app.JSSDK, err = jssdk.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register SubscribeMessage --------------
-	app.SubscribeMessage = subscribeMessage.RegisterProvider(app)
+	app.SubscribeMessage, err = subscribeMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Menu --------------
-	app.Menu = menu.RegisterProvider(app)
+	app.Menu, err = menu.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Material --------------
-	app.Material = material.RegisterProvider(app)
+	app.Material, err = material.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register CustomerService --------------
-	app.CustomerService, app.CustomerServiceSession = customerService.RegisterProvider(app)
+	app.CustomerService, app.CustomerServiceSession, err = customerService.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Semantic --------------
-	app.Semantic = semantic.RegisterProvider(app)
+	app.Semantic, err = semantic.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Encryptor and Server --------------
-	app.Encryptor, app.Server = server.RegisterProvider(app)
+	app.Encryptor, app.Server, err = server.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register User --------------
-	app.User, app.UserTag = user.RegisterProvider(app)
+	app.User, app.UserTag, err = user.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Menu --------------
-	app.Menu = menu.RegisterProvider(app)
+	app.Menu, err = menu.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register TemplateMessage --------------
-	app.TemplateMessage = templateMessage.RegisterProvider(app)
+	app.TemplateMessage, err = templateMessage.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Material --------------
-	app.Material = material.RegisterProvider(app)
+	app.Material, err = material.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register CustomerService --------------
-	app.CustomerService, app.CustomerServiceSession = customerService.RegisterProvider(app)
+	app.CustomerService, app.CustomerServiceSession, err = customerService.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Semantic --------------
-	app.Semantic = semantic.RegisterProvider(app)
+	app.Semantic, err = semantic.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register DataCube --------------
-	app.DataCube = dataCube.RegisterProvider(app)
+	app.DataCube, err = dataCube.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register AutoReply --------------
-	app.AutoReply = autoReply.RegisterProvider(app)
+	app.AutoReply, err = autoReply.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Broadcasting --------------
-	app.Broadcasting = broadcasting.RegisterProvider(app)
+	app.Broadcasting, err = broadcasting.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Card --------------
-	app.Card = card.RegisterProvider(app)
+	app.Card, err = card.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Device --------------
-	app.Device = device.RegisterProvider(app)
+	app.Device, err = device.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register ShakeAround --------------
-	app.ShakeAround = shakeAround.RegisterProvider(app)
+	app.ShakeAround, err = shakeAround.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register POI --------------
-	app.POI = poi.RegisterProvider(app)
+	app.POI, err = poi.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Store --------------
-	app.Store = store.RegisterProvider(app)
+	app.Store, err = store.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Comment --------------
-	app.Comment = comment.RegisterProvider(app)
+	app.Comment, err = comment.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register OCR --------------
-	app.OCR = ocr.RegisterProvider(app)
+	app.OCR, err = ocr.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Goods --------------
-	app.Goods = goods.RegisterProvider(app)
+	app.Goods, err = goods.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register OAuth --------------
 	app.OAuth = oauth.RegisterProvider(app)
 	//-------------- register wifi --------------
-	app.Wifi, app.WifiCard, app.WifiDevice, app.WifiShop = wifi.RegisterProvider(app)
+	app.Wifi, app.WifiCard, app.WifiDevice, app.WifiShop, err = wifi.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register Guide --------------
-	app.Guide = guide.RegisterProvider(app)
+	app.Guide, err = guide.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
@@ -314,8 +412,10 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
 
-		"app_id": userConfig.AppID,
-		"secret": userConfig.Secret,
+		"app_id":  userConfig.AppID,
+		"secret":  userConfig.Secret,
+		"token":   userConfig.Token,
+		"aes_key": userConfig.AESKey,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.StringMap{

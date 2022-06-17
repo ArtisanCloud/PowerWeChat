@@ -5,10 +5,14 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 )
 
-func RegisterProvider(app kernel.ApplicationInterface) *Client {
+func RegisterProvider(app kernel.ApplicationInterface) (*Client, error) {
 
-	return &Client{
-		jssdk.NewClient(&app),
+	jssdkClient, err := jssdk.NewClient(&app)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		jssdkClient,
+	}, nil
 
 }

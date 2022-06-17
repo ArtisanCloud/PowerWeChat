@@ -11,10 +11,14 @@ type DeviceClient struct {
 	*kernel.BaseClient
 }
 
-func NewDeviceClient(app kernel.ApplicationInterface) *DeviceClient {
-	return &DeviceClient{
-		kernel.NewBaseClient(&app, nil),
+func NewDeviceClient(app kernel.ApplicationInterface) (*DeviceClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &DeviceClient{
+		baseClient,
+	}, nil
 }
 
 // 调用此接口向指定门店添加密码型设备的 Wi-Fi 信息

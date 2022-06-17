@@ -18,11 +18,15 @@ type Client struct {
 	AllowTypes []string
 }
 
-func NewClient(app kernel.ApplicationInterface) *Client {
-	return &Client{
-		BaseClient: kernel.NewBaseClient(&app, nil),
-		AllowTypes: []string{"image", "voice", "video", "thumb", "news_image"},
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		BaseClient: baseClient,
+		AllowTypes: []string{"image", "voice", "video", "thumb", "news_image"},
+	}, nil
 }
 
 // 上传永久图片素材

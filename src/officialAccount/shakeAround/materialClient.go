@@ -14,10 +14,14 @@ type MaterialClient struct {
 	*kernel.BaseClient
 }
 
-func NewMaterialClient(app kernel.ApplicationInterface) *MaterialClient {
-	return &MaterialClient{
-		kernel.NewBaseClient(&app, nil),
+func NewMaterialClient(app kernel.ApplicationInterface) (*MaterialClient, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
+	if err != nil {
+		return nil, err
 	}
+	return &MaterialClient{
+		baseClient,
+	}, nil
 }
 
 // 上传在摇一摇功能中需使用到的图片素材
