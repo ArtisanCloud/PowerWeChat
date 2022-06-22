@@ -1,12 +1,11 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
 type ResponseTagGetCorpTagList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
-	ExternalContactList *power.HashMap `json:"tag_group"`
+	TagGroups []*CorpTagGroup `json:"tag_group"`
 }

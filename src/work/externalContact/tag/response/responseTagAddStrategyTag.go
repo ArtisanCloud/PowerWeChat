@@ -1,12 +1,20 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 )
 
-type ResponseTagAddStrategyTag struct {
-	*response.ResponseWork
+type StrategyTagGroup struct {
+	GroupId    string `json:"group_id"`
+	GroupName  string `json:"group_name"`
+	CreateTime int    `json:"create_time"`
+	Order      int    `json:"order"`
+	StrategyID int    `json:"strategy_id"`
+	Tag        []*Tag `json:"tag"`
+}
 
-	ExternalContactList *power.HashMap `json:"tag_group"`
+type ResponseTagAddStrategyTag struct {
+	response.ResponseWork
+
+	TagGroups []*StrategyTagGroup `json:"tag_group"`
 }
