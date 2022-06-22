@@ -50,11 +50,13 @@ func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 
 // 获取部门列表
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90208
-func (comp *Client) List() (*response.ResponseDepartmentList, error) {
+func (comp *Client) List(id int) (*response.ResponseDepartmentList, error) {
 
 	result := &response.ResponseDepartmentList{}
 
-	_, err := comp.HttpGet("cgi-bin/department/list", nil, nil, result)
+	_, err := comp.HttpGet("cgi-bin/department/list", &object.StringMap{
+		"id": fmt.Sprintf("%d", id),
+	}, nil, result)
 
 	return result, err
 }
