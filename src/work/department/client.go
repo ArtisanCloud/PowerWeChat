@@ -60,3 +60,16 @@ func (comp *Client) List(id int) (*response.ResponseDepartmentList, error) {
 
 	return result, err
 }
+
+// 获取子部门ID列表
+// https://developer.work.weixin.qq.com/document/path/95350
+func (comp *Client) SimpleList(id int) (*response.ResponseDepartmentIDList, error) {
+
+	result := &response.ResponseDepartmentIDList{}
+
+	_, err := comp.HttpGet("cgi-bin/department/simplelist", &object.StringMap{
+		"id": fmt.Sprintf("%d", id),
+	}, nil, result)
+
+	return result, err
+}
