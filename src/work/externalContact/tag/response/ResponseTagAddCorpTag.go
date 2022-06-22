@@ -24,5 +24,5 @@ type CorpTagGroup struct {
 type ResponseTagAddCorpTag struct {
 	response.ResponseWork
 
-	TagGroups []*CorpTagGroup `json:"tag_group"`
+	TagGroups *CorpTagGroup `json:"tag_group"`
 }
