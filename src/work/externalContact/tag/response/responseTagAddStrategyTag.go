@@ -16,5 +16,5 @@ type StrategyTagGroup struct {
 type ResponseTagAddStrategyTag struct {
 	response.ResponseWork
 
-	TagGroups []*StrategyTagGroup `json:"tag_group"`
+	TagGroups *StrategyTagGroup `json:"tag_group"`
 }
