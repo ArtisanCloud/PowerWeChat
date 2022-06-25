@@ -20,4 +20,5 @@ type ResponseSendNormal struct {
 	WXAppID     string   `xml:"wxappid"`
 	ReOpenID    string   `xml:"re_openid"`
 	TotalAmount string   `xml:"total_amount"`
+	SendListID  string   `xml:"send_listid"`
 }
