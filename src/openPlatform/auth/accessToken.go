@@ -14,6 +14,11 @@ type AccessToken struct {
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
 func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
+
+	kernelToken.RequestMethod = "POST"
+	kernelToken.TokenKey = "component_access_token"
+	kernelToken.EndpointToGetToken = "cgi-bin/component/api_component_token"
+
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +27,6 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 	}
 
 	// Override fields and functions
-	token.EndpointToGetToken = "https://api.weixin.qq.com/cgi-bin/token"
 	token.OverrideGetCredentials()
 
 	return token, nil
@@ -32,11 +36,17 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 func (accessToken *AccessToken) OverrideGetCredentials() {
 	config := (*accessToken.App).GetContainer().GetConfig()
 	accessToken.GetCredentials = func() *object.StringMap {
+
+		ticket, _ := (*config)["verify_ticket"].(*VerifyTicket).GetTicket()
+
 		return &object.StringMap{
-			"grant_type": "client_credential",
-			"appid":      (*config)["app_id"].(string),
-			"secret":     (*config)["secret"].(string),
-			"ticket":     "",
+			"component_appid":         (*config)["app_id"].(string),
+			"component_appsecret":     (*config)["secret"].(string),
+			"component_verify_ticket": ticket,
+
+			"appid":  (*config)["corp_id"].(string),
+			"secret": (*config)["secret"].(string),
+			"ticket": ticket,
 		}
 	}
 }

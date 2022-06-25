@@ -36,6 +36,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 			// this is for the cached key encoded
 			"appid":  (*config)["corp_id"].(string),
 			"secret": (*config)["secret"].(string),
+			"ticket": "",
 
 			// this is for the real credentials
 			"corpid":     (*config)["corp_id"].(string),

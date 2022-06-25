@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/cache"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
@@ -194,7 +195,8 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 // 3. 加上PowerWeChat前缀命名空间："powerwechat.access_token."，最终结果为："powerwechat.access_token.edc5f6181730baffc0b88cf96658aeff"
 func (accessToken *AccessToken) GetCacheKey() string {
 	credentials := *accessToken.GetCredentials()
-	data := fmt.Sprintf("%s%s", credentials["appid"], credentials["secret"])
+	data := fmt.Sprintf("%s%s%s", credentials["appid"], credentials["secret"], credentials["ticket"])
+	fmt2.Dump(data)
 	buffer := md5.Sum([]byte(data))
 	cacheKey := accessToken.CachePrefix + hex.EncodeToString(buffer[:])
 
