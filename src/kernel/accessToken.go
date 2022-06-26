@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/cache"
-	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
@@ -196,7 +195,6 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 func (accessToken *AccessToken) GetCacheKey() string {
 	credentials := *accessToken.GetCredentials()
 	data := fmt.Sprintf("%s%s%s", credentials["appid"], credentials["secret"], credentials["ticket"])
-	fmt2.Dump(data)
 	buffer := md5.Sum([]byte(data))
 	cacheKey := accessToken.CachePrefix + hex.EncodeToString(buffer[:])
 
