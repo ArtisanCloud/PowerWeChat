@@ -45,6 +45,13 @@ type ResponseOfficialAccount struct {
 	ResultMSG  string `json:"resultmsg,omitempty"`
 }
 
+type ResponseOpenPlatform struct {
+	ResponseBase
+
+	ErrCode int    `json:"errcode,omitempty"`
+	ErrMSG  string `json:"errmsg,omitempty"`
+}
+
 const (
 	TYPE_RAW   = "raw"
 	TYPE_MAP   = "map"

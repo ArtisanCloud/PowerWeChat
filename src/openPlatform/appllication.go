@@ -25,8 +25,9 @@ type OpenPlatform struct {
 }
 
 type UserConfig struct {
-	AppID  string
-	Secret string
+	AppID    string
+	Secret   string
+	AuthCode string
 	//Token  string
 	//AESKey string
 
@@ -148,8 +149,9 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
 
-		"app_id": userConfig.AppID,
-		"secret": userConfig.Secret,
+		"app_id":    userConfig.AppID,
+		"secret":    userConfig.Secret,
+		"auth_code": userConfig.AuthCode,
 		//"token":   userConfig.Token,
 		//"aes_key": userConfig.AESKey,
 
