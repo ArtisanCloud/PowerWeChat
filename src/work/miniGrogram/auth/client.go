@@ -21,7 +21,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 第三方登录凭证校验
-// https://developers.weixin.qq.com/miniprogram/dev/dev_wxwork/third-party-services.html
+// https://developers.weixin.qq.com/miniprogram/dev/dev_wxwork/dev-doc/qywx-api/login/code2session.html
 func (comp *Client) Session(code string) (*response.ResponseSession, error) {
 
 	result := &response.ResponseSession{}
