@@ -38,7 +38,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/appChat"
 	externalContact2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/externalContact"
 	linkedCorp2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/linkedCorp"
-	miniProgram "github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniGrogram"
+	miniProgram "github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniProgram"
 	msgaudit "github.com/ArtisanCloud/PowerWeChat/v2/src/work/msgAudit"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/calendar"

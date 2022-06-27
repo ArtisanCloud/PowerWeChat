@@ -4,7 +4,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/auth"
-	auth2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniGrogram/auth"
+	auth2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniProgram/auth"
 )
 
 type Application struct {

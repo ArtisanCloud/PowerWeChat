@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniGrogram/response"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniProgram/response"
 )
 
 type Client struct {
