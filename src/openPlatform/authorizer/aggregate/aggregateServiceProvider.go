@@ -7,10 +7,12 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (*account.Client, error) {
 
-	account, err := account.NewClient(app)
-	if err != nil {
-		return nil, err
-	}
+	//account, err := account.NewClient(app)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//
+	//return account, nil
 
-	return account, nil
+	return nil, nil
 }
