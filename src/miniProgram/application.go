@@ -434,3 +434,25 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	return config, nil
 
 }
+
+func MapConfigToUserConfig(app kernel.ApplicationInterface) (userConfig *UserConfig, err error) {
+
+	config := app.GetConfig()
+	cache := config.Get("cache", nil).(cache.CacheInterface)
+
+	userConfig = &UserConfig{
+		AppID:        config.GetString("agent_id", ""),
+		Secret:       config.GetString("secret", ""),
+		ResponseType: config.GetString("response_type", ""),
+		Log: Log{
+			Level: config.GetString("log.level", ""),
+			File:  config.GetString("log.file", ""),
+			ENV:   config.GetString("log.env", ""),
+		},
+		Cache:     cache,
+		HttpDebug: config.GetBool("http_debug", false),
+		Debug:     config.GetBool("debug", false),
+	}
+
+	return userConfig, err
+}

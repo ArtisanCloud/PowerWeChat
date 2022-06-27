@@ -485,6 +485,12 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 }
 
-func (app *Work) MiniProgram(config *miniProgram2.UserConfig) (*miniProgram.Application, error) {
-	return miniProgram.NewApplication(config)
+func (app *Work) MiniProgram() (*miniProgram.Application, error) {
+
+	userConfig, err := miniProgram2.MapConfigToUserConfig(app)
+	if err != nil {
+		return nil, err
+	}
+
+	return miniProgram.NewApplication(userConfig)
 }

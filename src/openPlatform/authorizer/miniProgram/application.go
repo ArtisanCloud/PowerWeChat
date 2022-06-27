@@ -5,12 +5,14 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/account"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/code"
 )
 
 type Application struct {
 	*miniProgram.MiniProgram
 
 	Account *account.Client
+	Code    *code.Client
 }
 
 func NewApplication(config *miniProgram.UserConfig, extraInfos ...*kernel.ExtraInfo) (*Application, error) {
@@ -34,6 +36,12 @@ func NewApplication(config *miniProgram.UserConfig, extraInfos ...*kernel.ExtraI
 
 	//-------------- register Aggregate --------------
 	app.Account, err = account.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
+	//-------------- register Code --------------
+	app.Code, err = code.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
