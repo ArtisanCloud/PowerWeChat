@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
+	miniProgram2 "github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/customer"
 	message3 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/message"
@@ -37,6 +38,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/appChat"
 	externalContact2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/externalContact"
 	linkedCorp2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/linkedCorp"
+	miniProgram "github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniGrogram"
 	msgaudit "github.com/ArtisanCloud/PowerWeChat/v2/src/work/msgAudit"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/calendar"
@@ -481,4 +483,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	return config, nil
 
+}
+
+func (app *Work) MiniProgram(config *miniProgram2.UserConfig) (*miniProgram.Application, error) {
+	return miniProgram.NewApplication(config)
 }
