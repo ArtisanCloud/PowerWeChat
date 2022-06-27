@@ -44,9 +44,9 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 			"component_appsecret":     (*config)["secret"].(string),
 			"component_verify_ticket": ticket,
 
-			"appid":  (*config)["corp_id"].(string),
-			"secret": (*config)["secret"].(string),
-			"ticket": ticket,
+			"appid":      (*config)["corp_id"].(string),
+			"secret":     (*config)["secret"].(string),
+			"neededText": ticket,
 		}
 	}
 }

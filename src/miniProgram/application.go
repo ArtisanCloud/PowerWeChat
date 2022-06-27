@@ -109,7 +109,7 @@ type Log struct {
 	ENV   string
 }
 
-func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
+func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniProgram, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -117,14 +117,15 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 		return nil, err
 	}
 
+	var extraInfo = &kernel.ExtraInfo{}
+	if len(extraInfos) > 0 {
+		extraInfo = extraInfos[0]
+	}
+
 	// init an app container
-	container := &kernel.ServiceContainer{
-		UserConfig: userConfig,
-		DefaultConfig: &object.HashMap{
-			"http": &object.HashMap{
-				"base_uri": "https://api.weixin.qq.com/",
-			},
-		},
+	container, err := kernel.NewServiceContainer(userConfig, extraInfo)
+	if err != nil {
+		return nil, err
 	}
 	container.GetConfig()
 
@@ -137,7 +138,7 @@ func NewMiniProgram(config *UserConfig) (*MiniProgram, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	//-------------- register Auth,AccessToken --------------
+	//-------------- register auth,AccessToken --------------
 	app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
 		return nil, err
@@ -335,7 +336,7 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Base
 	case "AccessToken":
 		return app.AccessToken
-	case "Auth":
+	case "auth":
 		return app.Auth
 	case "Config":
 		return app.Config

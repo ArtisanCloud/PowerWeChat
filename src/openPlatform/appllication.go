@@ -80,7 +80,7 @@ func NewOpenPlatform(config *UserConfig) (*OpenPlatform, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	//-------------- register Auth --------------
+	//-------------- register auth --------------
 	app.VerifyTicket, app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
 		return nil, err

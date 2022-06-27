@@ -186,7 +186,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	//-------------- register Auth --------------
+	//-------------- register auth --------------
 	app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
 		return nil, err

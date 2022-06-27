@@ -52,6 +52,8 @@ type ServerGuard struct {
 	ShouldReturnRawResponse func(request *http.Request) bool
 
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
+
+	GetToken func() string
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -70,6 +72,8 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 	serverGuard.ShouldReturnRawResponse = func(request *http.Request) bool {
 		return serverGuard.shouldReturnRawResponse(request)
 	}
+
+	serverGuard.OverrideGetToken()
 
 	return serverGuard
 
@@ -123,7 +127,7 @@ func (serverGuard *ServerGuard) validate(request *http.Request) (*ServerGuard, e
 	query := request.URL.Query()
 
 	sign := serverGuard.signature([]string{
-		serverGuard.getToken(),
+		serverGuard.GetToken(),
 		query.Get("timestamp"),
 		query.Get("nonce"),
 	})
@@ -257,11 +261,13 @@ func (serverGuard *ServerGuard) resolve(request *http.Request) (httpRS *response
 	return httpRS, nil
 }
 
-func (serverGuard *ServerGuard) getToken() string {
-	config := (*serverGuard.App).GetConfig()
-	token := config.Get("token", "").(string)
+func (serverGuard *ServerGuard) OverrideGetToken() {
+	serverGuard.GetToken = func() string {
+		config := (*serverGuard.App).GetConfig()
+		token := config.Get("token", "").(string)
 
-	return token
+		return token
+	}
 }
 
 func (serverGuard *ServerGuard) buildResponse(request *http.Request, to string, from string, message interface{}) string {
