@@ -17,7 +17,7 @@ type Application struct {
 
 func NewApplication(config *miniProgram.UserConfig, extraInfos ...*kernel.ExtraInfo) (*Application, error) {
 
-	var extraInfo = &kernel.ExtraInfo{}
+	var extraInfo, _ = kernel.NewExtraInfo()
 	if len(extraInfos) > 0 {
 		extraInfo = extraInfos[0]
 	}

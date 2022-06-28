@@ -12,8 +12,8 @@ type AccessToken struct {
 }
 
 // https://open.work.weixin.qq.com/api/doc/90000/90135/91039
-func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
-	kernelToken, err := kernel.NewAccessToken(app)
+func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
+	kernelToken, err := kernel.NewAccessToken(&app)
 	if err != nil {
 		return nil, err
 	}
@@ -30,17 +30,17 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-	config := (*accessToken.App).GetContainer().GetConfig()
+	config := (*accessToken.App).GetConfig()
 	accessToken.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
 			// this is for the cached key encoded
-			"appid":      (*config)["corp_id"].(string),
-			"secret":     (*config)["secret"].(string),
+			"appid":      config.GetString("corp_id", ""),
+			"secret":     config.GetString("secret", ""),
 			"neededText": "",
 
 			// this is for the real credentials
-			"corpid":     (*config)["corp_id"].(string),
-			"corpsecret": (*config)["secret"].(string),
+			"corpid":     config.GetString("corp_id", ""),
+			"corpsecret": config.GetString("secret", ""),
 		}
 	}
 }

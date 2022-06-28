@@ -18,6 +18,13 @@ type ExtraInfo struct {
 	ID       string
 }
 
+func NewExtraInfo() (*ExtraInfo, error) {
+	return &ExtraInfo{
+		Prepends: &power.HashMap{},
+		ID:       "",
+	}, nil
+}
+
 type ServiceContainer struct {
 	ID string
 
@@ -71,12 +78,10 @@ func (container *ServiceContainer) getBaseConfig() *object.HashMap {
 func (container *ServiceContainer) GetConfig() *object.HashMap {
 
 	// init container config
-	var config *object.HashMap
-
 	basicConfig := container.getBaseConfig()
 
 	// merge config
-	container.Config = object.ReplaceHashMapRecursive(config, basicConfig, container.DefaultConfig, container.UserConfig)
+	container.Config = object.ReplaceHashMapRecursive(container.Config, basicConfig, container.DefaultConfig, container.UserConfig)
 	//fmt.Dump(container.Config)
 	return container.Config
 }

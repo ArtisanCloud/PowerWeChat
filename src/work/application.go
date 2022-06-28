@@ -1,6 +1,7 @@
 package work
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/v2/cache"
 	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
@@ -487,10 +488,44 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 func (app *Work) MiniProgram() (*miniProgram.Application, error) {
 
-	userConfig, err := miniProgram2.MapConfigToUserConfig(app)
+	userConfig, err := MapConfigToMiniProgramUserConfig(app)
 	if err != nil {
 		return nil, err
 	}
 
-	return miniProgram.NewApplication(userConfig)
+	miniProgramApp, err := miniProgram.NewApplication(userConfig)
+	miniProgramApp.Config = app.Config
+
+	return miniProgramApp, err
+}
+
+func MapConfigToMiniProgramUserConfig(app kernel.ApplicationInterface) (userConfig *miniProgram.UserConfig, err error) {
+
+	config := app.GetConfig()
+	cache := config.Get("cache", nil).(cache.CacheInterface)
+	log := config.Get("log", nil).(*object.StringMap)
+	userConfig = &miniProgram.UserConfig{
+		MiniProgramUserConfig: &miniProgram2.UserConfig{
+			AppID:        config.GetString("corp_id", ""),
+			Secret:       config.GetString("secret", ""),
+			ResponseType: config.GetString("response_type", ""),
+			Log: miniProgram2.Log{
+				Level: (*log)["level"],
+				File:  (*log)["file"],
+				ENV:   (*log)["env"],
+			},
+			Cache:     cache,
+			HttpDebug: config.GetBool("http_debug", false),
+			Debug:     config.GetBool("debug", false),
+		},
+		CorpID:      config.GetString("corp_id", ""),
+		AgentID:     config.GetInt("agent_id", 0),
+		Secret:      config.GetString("secret", ""),
+		Token:       config.GetString("token", ""),
+		AESKey:      config.GetString("aes_key", ""),
+		CallbackURL: config.GetString("callback_url", ""),
+		Http:        config.Get("http", nil).(*object.HashMap),
+	}
+
+	return userConfig, err
 }
