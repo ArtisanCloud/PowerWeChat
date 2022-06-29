@@ -36,6 +36,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 			"grant_type": "client_credential",
 			"appid":      (*config)["app_id"].(string),
 			"secret":     (*config)["secret"].(string),
+			"neededText": "",
 		}
 	}
 }

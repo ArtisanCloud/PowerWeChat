@@ -33,6 +33,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 			"grant_type": "client_credential",
 			"appid":      config.GetString("app_id", ""),
 			"secret":     config.GetString("secret", ""),
+			"neededText": "",
 		}
 	}
 }

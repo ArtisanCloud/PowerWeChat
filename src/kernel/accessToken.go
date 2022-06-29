@@ -31,6 +31,7 @@ type AccessToken struct {
 	*InteractsWithCache
 
 	GetCredentials func() *object.StringMap
+	GetEndpoint    func() (string, error)
 }
 
 func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
@@ -57,6 +58,8 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 		CachePrefix:        "powerwechat.access_token.",
 		InteractsWithCache: NewInteractsWithCache(cacheClient),
 	}
+
+	token.OverrideGetEndpoint()
 
 	return token, nil
 }
@@ -172,7 +175,7 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 
 	res := &response2.ResponseGetToken{}
 
-	strEndpoint, err := accessToken.getEndpoint()
+	strEndpoint, err := accessToken.GetEndpoint()
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +197,7 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 // 3. 加上PowerWeChat前缀命名空间："powerwechat.access_token."，最终结果为："powerwechat.access_token.edc5f6181730baffc0b88cf96658aeff"
 func (accessToken *AccessToken) GetCacheKey() string {
 	credentials := *accessToken.GetCredentials()
-	data := fmt.Sprintf("%s%s", credentials["appid"], credentials["secret"])
+	data := fmt.Sprintf("%s%s%s", credentials["appid"], credentials["secret"], credentials["neededText"])
 	buffer := md5.Sum([]byte(data))
 	cacheKey := accessToken.CachePrefix + hex.EncodeToString(buffer[:])
 
@@ -226,12 +229,16 @@ func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
 
 }
 
-func (accessToken *AccessToken) getEndpoint() (string, error) {
-	if accessToken.EndpointToGetToken == "" {
-		return "", errors.New("no endpoint for access token request")
+func (accessToken *AccessToken) OverrideGetEndpoint() {
+
+	accessToken.GetEndpoint = func() (string, error) {
+		if accessToken.EndpointToGetToken == "" {
+			return "", errors.New("no endpoint for access token request")
+		}
+
+		return accessToken.EndpointToGetToken, nil
 	}
 
-	return accessToken.EndpointToGetToken, nil
 }
 
 func (accessToken *AccessToken) getTokenKey() string {

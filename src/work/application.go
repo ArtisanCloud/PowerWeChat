@@ -1,10 +1,12 @@
 package work
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/v2/cache"
 	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
+	miniProgram2 "github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/customer"
 	message3 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/accountService/message"
@@ -37,6 +39,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/appChat"
 	externalContact2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/externalContact"
 	linkedCorp2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/message/linkedCorp"
+	miniProgram "github.com/ArtisanCloud/PowerWeChat/v2/src/work/miniProgram"
 	msgaudit "github.com/ArtisanCloud/PowerWeChat/v2/src/work/msgAudit"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/calendar"
@@ -186,7 +189,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	//-------------- register Auth --------------
+	//-------------- register auth --------------
 	app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
 		return nil, err
@@ -481,4 +484,48 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	return config, nil
 
+}
+
+func (app *Work) MiniProgram() (*miniProgram.Application, error) {
+
+	userConfig, err := MapConfigToMiniProgramUserConfig(app)
+	if err != nil {
+		return nil, err
+	}
+
+	miniProgramApp, err := miniProgram.NewApplication(userConfig)
+	miniProgramApp.Config = app.Config
+
+	return miniProgramApp, err
+}
+
+func MapConfigToMiniProgramUserConfig(app kernel.ApplicationInterface) (userConfig *miniProgram.UserConfig, err error) {
+
+	config := app.GetConfig()
+	cache := config.Get("cache", nil).(cache.CacheInterface)
+	log := config.Get("log", nil).(*object.StringMap)
+	userConfig = &miniProgram.UserConfig{
+		MiniProgramUserConfig: &miniProgram2.UserConfig{
+			AppID:        config.GetString("corp_id", ""),
+			Secret:       config.GetString("secret", ""),
+			ResponseType: config.GetString("response_type", ""),
+			Log: miniProgram2.Log{
+				Level: (*log)["level"],
+				File:  (*log)["file"],
+				ENV:   (*log)["env"],
+			},
+			Cache:     cache,
+			HttpDebug: config.GetBool("http_debug", false),
+			Debug:     config.GetBool("debug", false),
+		},
+		CorpID:      config.GetString("corp_id", ""),
+		AgentID:     config.GetInt("agent_id", 0),
+		Secret:      config.GetString("secret", ""),
+		Token:       config.GetString("token", ""),
+		AESKey:      config.GetString("aes_key", ""),
+		CallbackURL: config.GetString("callback_url", ""),
+		Http:        config.Get("http", nil).(*object.HashMap),
+	}
+
+	return userConfig, err
 }

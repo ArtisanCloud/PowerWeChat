@@ -1,7 +1,9 @@
 package kernel
 
 import (
+	"crypto/md5"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 )
 
 type ApplicationInterface interface {
@@ -11,12 +13,56 @@ type ApplicationInterface interface {
 	GetComponent(name string) interface{}
 }
 
-type ServiceContainer struct {
-	ID int
+type ExtraInfo struct {
+	Prepends *power.HashMap
+	ID       string
+}
 
+func NewExtraInfo() (*ExtraInfo, error) {
+	return &ExtraInfo{
+		Prepends: &power.HashMap{},
+		ID:       "",
+	}, nil
+}
+
+type ServiceContainer struct {
+	ID string
+
+	Prepends      *object.Attribute
 	DefaultConfig *object.HashMap
 	UserConfig    *object.HashMap
 	Config        *object.HashMap
+}
+
+func NewServiceContainer(config *object.HashMap, extraInfos ...*ExtraInfo) (*ServiceContainer, error) {
+
+	var extraInfo = &ExtraInfo{}
+	if len(extraInfos) > 0 {
+		extraInfo = extraInfos[0]
+	}
+
+	prepends, err := power.PowerHashMapToObjectHashMap(extraInfo.Prepends)
+	if err != nil {
+		return nil, err
+	}
+	container := &ServiceContainer{
+		ID:         extraInfo.ID,
+		UserConfig: config,
+		Prepends:   object.NewAttribute(prepends),
+	}
+
+	return container, nil
+}
+
+func (container *ServiceContainer) GetID() string {
+
+	if container.ID == "" {
+		data, _ := object.JsonEncode(container.UserConfig)
+		encodeData := md5.Sum([]byte(data))
+		container.ID = string(encodeData[:])
+	}
+
+	return container.ID
 }
 
 func (container *ServiceContainer) getBaseConfig() *object.HashMap {
@@ -32,12 +78,10 @@ func (container *ServiceContainer) getBaseConfig() *object.HashMap {
 func (container *ServiceContainer) GetConfig() *object.HashMap {
 
 	// init container config
-	var config *object.HashMap
-
 	basicConfig := container.getBaseConfig()
 
 	// merge config
-	container.Config = object.ReplaceHashMapRecursive(config, basicConfig, container.DefaultConfig, container.UserConfig)
+	container.Config = object.ReplaceHashMapRecursive(container.Config, basicConfig, container.DefaultConfig, container.UserConfig)
 	//fmt.Dump(container.Config)
 	return container.Config
 }

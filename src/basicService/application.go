@@ -77,16 +77,29 @@ func NewApplication(config *UserConfig) (*Application, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 
 	//-------------- register JSSDK --------------
-	app.JSSDK = jssdk.RegisterProvider(app)
+	app.JSSDK, err = jssdk.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register QRCode --------------
-	app.QRCode = qrCode.RegisterProvider(app)
-
+	app.QRCode, err = qrCode.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- register Media --------------
-	app.Media = media.RegisterProvider(app)
-
+	app.Media, err = media.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 	//-------------- media --------------
-	app.URL = url.RegisterProvider(app)
-	app.ContentSecurity = contentSecurity.RegisterProvider(app)
+	app.URL, err = url.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+	app.ContentSecurity, err = contentSecurity.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	return app, err
 }

@@ -37,6 +37,7 @@ func GetWorkConfig() *work.UserConfig {
 		Log: work.Log{
 			"debug",
 			"./wechat.log",
+			"develop",
 		},
 
 		OAuth: work.OAuth{
