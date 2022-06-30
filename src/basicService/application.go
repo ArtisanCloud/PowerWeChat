@@ -1,4 +1,4 @@
-package officialAccount
+package basicService
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"

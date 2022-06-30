@@ -14,8 +14,8 @@ type Client struct {
 	component kernel.ApplicationInterface
 }
 
-func NewClient(app *kernel.ApplicationInterface, component kernel.ApplicationInterface) (*Client, error) {
-	baseClient, err := kernel.NewBaseClient(app, nil)
+func NewClient(app kernel.ApplicationInterface, component kernel.ApplicationInterface) (*Client, error) {
+	baseClient, err := kernel.NewBaseClient(&app, nil)
 	if err != nil {
 		return nil, err
 	}

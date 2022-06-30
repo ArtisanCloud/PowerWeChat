@@ -110,7 +110,7 @@ type OAuth struct {
 	Scopes   []string
 }
 
-func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
+func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*OfficialAccount, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -118,14 +118,15 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 		return nil, err
 	}
 
+	var extraInfo, _ = kernel.NewExtraInfo()
+	if len(extraInfos) > 0 {
+		extraInfo = extraInfos[0]
+	}
+
 	// init an app container
-	container := &kernel.ServiceContainer{
-		UserConfig: userConfig,
-		DefaultConfig: &object.HashMap{
-			"http": &object.HashMap{
-				"base_uri": "https://api.weixin.qq.com/",
-			},
-		},
+	container, err := kernel.NewServiceContainer(userConfig, extraInfo)
+	if err != nil {
+		return nil, err
 	}
 	container.GetConfig()
 
