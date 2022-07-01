@@ -5,6 +5,7 @@ import (
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work"
 	"os"
@@ -107,6 +108,30 @@ func GetMiniProgramConfig() *miniProgram.UserConfig {
 
 }
 
+func GetOpenPlatformConfig() *openPlatform.UserConfig {
+	return &openPlatform.UserConfig{
+		AppID:        "123",
+		Secret:       "321",
+		AuthCode:     "123",
+		AESKey:       "321",
+		ResponseType: os.Getenv("array"),
+		Log: openPlatform.Log{
+			Level: "debug",
+			File:  "./wechat.log",
+		},
+		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
+			Addr:     "127.0.0.1:6379",
+			Password: "",
+			DB:       1,
+		}),
+		//OAuth:        "",
+		//HttpDebug:    "",
+		//Debug:        "",
+		//NotifyURL:    "",
+		//Sandbox:      "",
+	}
+}
+
 func main() {
 
 	fmt.Printf("hello Wechat! \n")
@@ -134,5 +159,13 @@ func main() {
 		fmt.Println(err.Error())
 	}
 	fmt2.Dump("miniprogram config:", miniProgramApp.GetConfig().All())
+
+	// init miniProgram app
+	configOpenPlatform := GetOpenPlatformConfig()
+	openPlatform, err := openPlatform.NewOpenPlatform(configOpenPlatform)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt2.Dump("openPlatform config:", openPlatform.GetConfig().All())
 
 }

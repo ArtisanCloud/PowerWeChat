@@ -41,6 +41,7 @@ type UserConfig struct {
 	AppID    string
 	Secret   string
 	AuthCode string
+	AESKey   string
 
 	ResponseType string
 	Log          Log
@@ -82,7 +83,6 @@ func NewOpenPlatform(config *UserConfig) (*OpenPlatform, error) {
 			},
 		},
 	}
-	container.GetConfig()
 
 	// init app
 	app := &OpenPlatform{
@@ -185,7 +185,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"secret":    userConfig.Secret,
 		"auth_code": userConfig.AuthCode,
 		//"token":   userConfig.Token,
-		//"aes_key": userConfig.AESKey,
+		"aes_key": userConfig.AESKey,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.StringMap{
