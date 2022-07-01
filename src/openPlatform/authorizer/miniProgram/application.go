@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/material"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/account"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/auth"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/code"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/domain"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/privacy"
@@ -16,6 +17,7 @@ import (
 type Application struct {
 	*miniProgram.MiniProgram
 
+	Auth     *auth.Client
 	Account  *account.Client
 	Code     *code.Client
 	Domain   *domain.Client

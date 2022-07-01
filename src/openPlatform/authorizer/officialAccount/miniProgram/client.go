@@ -4,8 +4,6 @@ import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 
 type Client struct {
 	*kernel.BaseClient
-
-	AllowTypes []string
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -15,6 +13,5 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 	}
 	return &Client{
 		BaseClient: baseClient,
-		AllowTypes: []string{"image", "voice", "video", "thumb", "news_image"},
 	}, nil
 }

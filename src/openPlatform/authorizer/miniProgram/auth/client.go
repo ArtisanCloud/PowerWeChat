@@ -1,4 +1,4 @@
-package account
+package auth
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"

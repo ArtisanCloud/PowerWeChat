@@ -36,10 +36,16 @@ func NewApplication(config *officialAccount.UserConfig, extraInfos ...*kernel.Ex
 	app.Config = providers.RegisterConfigProvider(app)
 
 	//-------------- register Aggregate --------------
-	//app.Account, err = account.NewClient(app)
-	//if err != nil {
-	//	return nil, err
-	//}
+	app.Account, err = account.NewClient(app, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	//-------------- register MiniProgram --------------
+	app.MiniProgram, err = miniProgram.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	return app, err
 }

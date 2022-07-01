@@ -146,8 +146,11 @@ type UserConfig struct {
 	Log          Log
 	OAuth        OAuth
 	Cache        kernel.CacheInterface
-	HttpDebug    bool
-	Debug        bool
+
+	HttpDebug bool
+	Debug     bool
+	NotifyURL string
+	Sandbox   bool
 }
 
 type Log struct {
@@ -506,8 +509,9 @@ func MapConfigToMiniProgramUserConfig(app kernel.ApplicationInterface) (userConf
 	log := config.Get("log", nil).(*object.StringMap)
 	userConfig = &miniProgram.UserConfig{
 		MiniProgramUserConfig: &miniProgram2.UserConfig{
-			AppID:        config.GetString("corp_id", ""),
-			Secret:       config.GetString("secret", ""),
+			AppID:  config.GetString("corp_id", ""),
+			Secret: config.GetString("secret", ""),
+
 			ResponseType: config.GetString("response_type", ""),
 			Log: miniProgram2.Log{
 				Level: (*log)["level"],
@@ -518,6 +522,7 @@ func MapConfigToMiniProgramUserConfig(app kernel.ApplicationInterface) (userConf
 			HttpDebug: config.GetBool("http_debug", false),
 			Debug:     config.GetBool("debug", false),
 		},
+
 		CorpID:      config.GetString("corp_id", ""),
 		AgentID:     config.GetInt("agent_id", 0),
 		Secret:      config.GetString("secret", ""),
