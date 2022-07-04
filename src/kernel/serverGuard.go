@@ -54,6 +54,7 @@ type ServerGuard struct {
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
 
 	GetToken func() string
+	Resolve  func(request *http.Request) (httpRS *response.HttpResponse, err error)
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -108,7 +109,7 @@ func (serverGuard *ServerGuard) Serve(request *http.Request) (response *response
 		return nil, err
 	}
 
-	response, err = validatedGuard.resolve(request)
+	response, err = validatedGuard.Resolve(request)
 
 	logger.Info("Server response created:", "content", response.GetBody())
 
@@ -169,7 +170,7 @@ func (serverGuard *ServerGuard) getEvent(request *http.Request) (callback *model
 
 }
 
-func (serverGuard *ServerGuard) getMessage(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, Decrypted interface{}, err error) {
+func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, Decrypted interface{}, err error) {
 	var b = []byte("")
 	if request.Body != http.NoBody {
 		b, err = io.ReadAll(request.Body)
@@ -229,36 +230,38 @@ func (serverGuard *ServerGuard) resolveEvent(request *http.Request, closure func
 	return httpRS, nil
 }
 
-func (serverGuard *ServerGuard) resolve(request *http.Request) (httpRS *response.HttpResponse, err error) {
-	result, err := serverGuard.handleRequest(request)
-	if err != nil {
-		return nil, err
+func (serverGuard *ServerGuard) OverrideResolve() {
+	serverGuard.Resolve = func(request *http.Request) (httpRS *response.HttpResponse, err error) {
+		result, err := serverGuard.handleRequest(request)
+		if err != nil {
+			return nil, err
+		}
+
+		var rs *http.Response
+		if serverGuard.ShouldReturnRawResponse(request) {
+			resultRS := ""
+			if (*result)["response"] != nil {
+				resultRS = (*result)["response"].(string)
+			}
+			rs = &http.Response{
+				Body: ioutil.NopCloser(bytes.NewBufferString(resultRS)),
+			}
+
+		} else {
+			strBuiltResponse := serverGuard.buildResponse(request, (*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
+			header := http.Header{}
+			header.Set("Content-Type", "application/xml")
+			rs = &http.Response{
+				Body:       ioutil.NopCloser(bytes.NewBufferString(strBuiltResponse)),
+				StatusCode: http.StatusOK,
+				Header:     header,
+			}
+		}
+		httpRS = response.NewHttpResponse(http.StatusOK)
+		httpRS.Response = rs
+
+		return httpRS, nil
 	}
-
-	var rs *http.Response
-	if serverGuard.ShouldReturnRawResponse(request) {
-		resultRS := ""
-		if (*result)["response"] != nil {
-			resultRS = (*result)["response"].(string)
-		}
-		rs = &http.Response{
-			Body: ioutil.NopCloser(bytes.NewBufferString(resultRS)),
-		}
-
-	} else {
-		strBuiltResponse := serverGuard.buildResponse(request, (*result)["to"].(string), (*result)["from"].(string), (*result)["response"])
-		header := http.Header{}
-		header.Set("Content-Type", "application/xml")
-		rs = &http.Response{
-			Body:       ioutil.NopCloser(bytes.NewBufferString(strBuiltResponse)),
-			StatusCode: http.StatusOK,
-			Header:     header,
-		}
-	}
-	httpRS = response.NewHttpResponse(http.StatusOK)
-	httpRS.Response = rs
-
-	return httpRS, nil
 }
 
 func (serverGuard *ServerGuard) OverrideGetToken() {
@@ -332,7 +335,7 @@ func (serverGuard *ServerGuard) handleEvent(r *http.Request, closure func(event 
 
 func (serverGuard *ServerGuard) handleRequest(request *http.Request) (*object.HashMap, error) {
 
-	_, msgHeader, decryptedMessage, err := serverGuard.getMessage(request)
+	_, msgHeader, decryptedMessage, err := serverGuard.GetMessage(request)
 	if err != nil {
 		return nil, err
 	}

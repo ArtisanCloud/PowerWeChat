@@ -85,10 +85,14 @@ type OfficialAccount struct {
 }
 
 type UserConfig struct {
-	AppID  string
-	Secret string
-	Token  string
-	AESKey string
+	AppID        string
+	Secret       string
+	Token        string
+	AESKey       string
+	RefreshToken string
+
+	ComponentAppID    string
+	ComponentAppToken string
 
 	ResponseType string
 	Log          Log
@@ -97,6 +101,8 @@ type UserConfig struct {
 
 	HttpDebug bool
 	Debug     bool
+	NotifyURL string
+	Sandbox   bool
 }
 
 type Log struct {
@@ -110,7 +116,7 @@ type OAuth struct {
 	Scopes   []string
 }
 
-func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
+func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*OfficialAccount, error) {
 	var err error
 
 	userConfig, err := MapUserConfig(config)
@@ -118,14 +124,15 @@ func NewOfficialAccount(config *UserConfig) (*OfficialAccount, error) {
 		return nil, err
 	}
 
+	var extraInfo, _ = kernel.NewExtraInfo()
+	if len(extraInfos) > 0 {
+		extraInfo = extraInfos[0]
+	}
+
 	// init an app container
-	container := &kernel.ServiceContainer{
-		UserConfig: userConfig,
-		DefaultConfig: &object.HashMap{
-			"http": &object.HashMap{
-				"base_uri": "https://api.weixin.qq.com/",
-			},
-		},
+	container, err := kernel.NewServiceContainer(userConfig, extraInfo)
+	if err != nil {
+		return nil, err
 	}
 	container.GetConfig()
 
@@ -412,10 +419,14 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
 
-		"app_id":  userConfig.AppID,
-		"secret":  userConfig.Secret,
-		"token":   userConfig.Token,
-		"aes_key": userConfig.AESKey,
+		"app_id":        userConfig.AppID,
+		"secret":        userConfig.Secret,
+		"token":         userConfig.Token,
+		"aes_key":       userConfig.AESKey,
+		"refresh_token": userConfig.RefreshToken,
+
+		"component_app_id":    userConfig.ComponentAppID,
+		"component_app_token": userConfig.ComponentAppToken,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.StringMap{

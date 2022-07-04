@@ -58,18 +58,18 @@ type UserConfig struct {
 	CertPath    string
 	KeyPath     string
 	SerialNo    string
+	Http        Http
 
 	ResponseType string
 	Log          Log
 	OAuth        OAuth
-	Http         Http
-	NotifyURL    string
 	Cache        kernel.CacheInterface
-	HttpDebug    bool
-	Debug        bool
-	Sandbox      bool
-}
 
+	HttpDebug bool
+	Debug     bool
+	NotifyURL string
+	Sandbox   bool
+}
 type Log struct {
 	Level string
 	File  string
@@ -80,7 +80,6 @@ type OAuth struct {
 	Callback string
 	Scopes   []string
 }
-
 type Http struct {
 	Timeout float64
 	BaseURI string

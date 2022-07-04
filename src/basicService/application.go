@@ -1,4 +1,4 @@
-package officialAccount
+package basicService
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
@@ -36,11 +36,14 @@ type UserConfig struct {
 
 	HttpDebug bool
 	Debug     bool
+	NotifyURL string
+	Sandbox   bool
 }
 
 type Log struct {
 	Level string
 	File  string
+	ENV   string
 }
 
 type OAuth struct {

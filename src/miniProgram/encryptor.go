@@ -2,11 +2,25 @@ package miniProgram
 
 import (
 	"encoding/base64"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 )
 
 type Encryptor struct {
-	aes *support.AES
+	BaseEncryptor *kernel.Encryptor
+	aes           *support.AES
+}
+
+func NewEncryptor(appID, token, aesKey string) (*Encryptor, error) {
+	baseEncryptor, err := kernel.NewEncryptor(appID, token, aesKey)
+	if err != nil {
+		return nil, err
+	}
+	return &Encryptor{
+		BaseEncryptor: baseEncryptor,
+		aes:           &support.AES{},
+	}, nil
+
 }
 
 func (encryptor Encryptor) DecryptData(encrypted string, sessionKey string, iv string) ([]byte, *support.CryptError) {

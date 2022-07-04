@@ -1,7 +1,6 @@
 package miniProgram
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/cache"
 	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage"
@@ -95,18 +94,29 @@ type UserConfig struct {
 	AppID  string
 	Secret string
 
+	RefreshToken      string
+	ComponentAppID    string
+	ComponentAppToken string
+
 	ResponseType string
 	Log          Log
-	Cache        cache.CacheInterface
+	OAuth        OAuth
+	Cache        kernel.CacheInterface
 
 	HttpDebug bool
 	Debug     bool
+	NotifyURL string
+	Sandbox   bool
 }
-
 type Log struct {
 	Level string
 	File  string
 	ENV   string
+}
+
+type OAuth struct {
+	Callback string
+	Scopes   []string
 }
 
 func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniProgram, error) {
@@ -418,6 +428,10 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"app_id": userConfig.AppID,
 		"secret": userConfig.Secret,
+
+		"refresh_token":       userConfig.RefreshToken,
+		"component_app_id":    userConfig.ComponentAppID,
+		"component_app_token": userConfig.ComponentAppToken,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.StringMap{
