@@ -34,7 +34,7 @@ func (comp *Client) List(params *request.RequestGroupChatList) (*response.Respon
 
 // 获取客户群详情
 // https://work.weixin.qq.com/api/doc/90000/90135/92122
-func (comp *Client) Get(chatID string, needName bool) (*response.ResponseGroupChatGet, error) {
+func (comp *Client) Get(chatID string, needName int) (*response.ResponseGroupChatGet, error) {
 
 	result := &response.ResponseGroupChatGet{}
 

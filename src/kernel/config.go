@@ -7,6 +7,7 @@ type Config struct {
 }
 
 func NewConfig(items *object.HashMap) *Config {
+
 	return &Config{
 		object.NewCollection(items),
 	}
