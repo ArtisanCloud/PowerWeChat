@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/department/request"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/department/response"
 )
 
@@ -14,23 +14,22 @@ type Client struct {
 
 // 创建部门
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90205
-func (comp *Client) Create(data *power.HashMap) (*response.ResponseDepartmentCreate, error) {
+func (comp *Client) Create(params *request.RequestDepartmentUpsert) (*response.ResponseDepartmentCreate, error) {
 
 	result := &response.ResponseDepartmentCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/department/create", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/department/create", params, nil, nil, result)
 
 	return result, err
 }
 
 // 更新部门
 // https://open.work.weixin.qq.com/api/doc/90000/90135/90206
-func (comp *Client) Update(id int, data *power.HashMap) (*response.ResponseDepartmentUpdate, error) {
+func (comp *Client) Update(params *request.RequestDepartmentUpsert) (*response.ResponseDepartmentUpdate, error) {
 
 	result := &response.ResponseDepartmentUpdate{}
 
-	(*data)["id"] = id
-	_, err := comp.HttpPostJson("cgi-bin/department/update", data, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/department/update", params, nil, nil, result)
 
 	return result, err
 }
