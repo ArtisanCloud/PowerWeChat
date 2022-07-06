@@ -146,7 +146,7 @@ func (comp *Client) dictionaryOrderSignature(params []string) string {
 	strJoined := strings.Join(params, "")
 	hash := sha1.New()
 	hash.Write([]byte(strJoined))
-	return string(hash.Sum(nil))
+	return fmt.Sprintf("%x", hash.Sum(nil))
 }
 
 func (comp *Client) SetUrl(url string) *Client {

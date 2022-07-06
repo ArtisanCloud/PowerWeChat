@@ -121,7 +121,7 @@ func (comp *Client) ShareAddressConfig(request *http.Request, accessToken string
 
 	hash := sha1.New()
 	hash.Write([]byte(strJoinedSignParams))
-	(*params)["paySign"] = string(hash.Sum(nil))
+	(*params)["paySign"] = fmt.Sprintf("%x", hash.Sum(nil))
 	if isJson {
 		return json.Marshal(params)
 	} else {
