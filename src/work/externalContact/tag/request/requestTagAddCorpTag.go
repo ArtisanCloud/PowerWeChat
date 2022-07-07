@@ -5,7 +5,7 @@ type RequestTagAddCorpTag struct {
 	GroupName string                         `json:"group_name"`
 	Order     int                            `json:"order"`
 	Tag       []RequestTagAddCorpTagFieldTag `json:"tag"`
-	AgentID   int64                          `json:"agentid"`
+	AgentID   *int64                         `json:"agentid"`
 }
 
 type RequestTagAddCorpTagFieldTag struct {
