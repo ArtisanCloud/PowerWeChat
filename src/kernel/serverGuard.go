@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
+	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	logger2 "github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
@@ -75,6 +76,7 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 	}
 
 	serverGuard.OverrideGetToken()
+	serverGuard.OverrideResolve()
 
 	return serverGuard
 
@@ -395,7 +397,7 @@ func (serverGuard *ServerGuard) signature(params []string) string {
 	hash.Write([]byte(strJoined))
 	bs := hash.Sum(nil)
 
-	return string(bs)
+	return fmt.Sprintf("%x", bs)
 }
 
 func (serverGuard *ServerGuard) isSafeMode(request *http.Request) bool {
