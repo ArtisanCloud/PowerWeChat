@@ -59,9 +59,9 @@ func (comp *Client) List(options *request2.RequestListContactWay) (*response3.Re
 
 // 更新企业已配置的「联系我」方式
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) Update(config *request2.RequestUpdateContactWay) (*response3.ResponseAddContactWay, error) {
+func (comp *Client) Update(config *request2.RequestUpdateContactWay) (*response2.ResponseWork, error) {
 
-	result := &response3.ResponseAddContactWay{}
+	result := &response2.ResponseWork{}
 
 	_, err := comp.HttpPostJson("cgi-bin/externalcontact/update_contact_way", config, nil, nil, result)
 
