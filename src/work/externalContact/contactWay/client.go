@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 配置客户联系「联系我」方式.
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92572
+// https://developer.work.weixin.qq.com/document/path/92572
 func (comp *Client) Add(options *request2.RequestAddContactWay) (*response3.ResponseAddContactWay, error) {
 
 	result := &response3.ResponseAddContactWay{}
@@ -34,7 +34,7 @@ func (comp *Client) Add(options *request2.RequestAddContactWay) (*response3.Resp
 }
 
 // 获取企业已配置的「联系我」方式
-// https://work.weixin.qq.com/api/doc/90000/90135/92572
+// https://developer.work.weixin.qq.com/document/path/92572
 func (comp *Client) Get(configID string) (*response3.ResponseGetContactWay, error) {
 
 	result := &response3.ResponseGetContactWay{}
@@ -47,7 +47,7 @@ func (comp *Client) Get(configID string) (*response3.ResponseGetContactWay, erro
 }
 
 // 获取企业已配置的「联系我」列表
-// https://work.weixin.qq.com/api/doc/90000/90135/92572
+// https://developer.work.weixin.qq.com/document/path/92572
 func (comp *Client) List(options *request2.RequestListContactWay) (*response3.ResponseListContactWay, error) {
 
 	result := &response3.ResponseListContactWay{}
@@ -57,6 +57,8 @@ func (comp *Client) List(options *request2.RequestListContactWay) (*response3.Re
 	return result, err
 }
 
+// 更新企业已配置的「联系我」方式
+// https://developer.work.weixin.qq.com/document/path/92572
 func (comp *Client) Update(config *request2.RequestUpdateContactWay) (*response3.ResponseAddContactWay, error) {
 
 	result := &response3.ResponseAddContactWay{}
@@ -66,6 +68,8 @@ func (comp *Client) Update(config *request2.RequestUpdateContactWay) (*response3
 	return result, err
 }
 
+// 删除企业已配置的「联系我」方式
+// https://developer.work.weixin.qq.com/document/path/92572
 func (comp *Client) Delete(configID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -77,6 +81,8 @@ func (comp *Client) Delete(configID string) (*response2.ResponseWork, error) {
 	return result, err
 }
 
+// 结束临时会话
+// https://developer.work.weixin.qq.com/document/path/92572
 func (comp *Client) CloseTempChat(userID string, externalUserID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
