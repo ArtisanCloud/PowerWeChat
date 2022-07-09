@@ -5,24 +5,27 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
-const (
-	CALLBACK_EVENT_CHANGE_EXTERNAL_CONTACT = "change_external_contact"
-	CALLBACK_EVENT_CHANGE_EXTERNAL_TAG     = "change_external_tag"
+// https://developer.work.weixin.qq.com/document/path/92130
 
+const (
+	CALLBACK_EVENT_CHANGE_EXTERNAL_CONTACT               = "change_external_contact"
 	CALLBACK_EVENT_CHANGE_TYPE_ADD_EXTERNAL_CONTACT      = "add_external_contact"
 	CALLBACK_EVENT_CHANGE_TYPE_EDIT_EXTERNAL_CONTACT     = "edit_external_contact"
 	CALLBACK_EVENT_CHANGE_TYPE_ADD_HALF_EXTERNAL_CONTACT = "add_half_external_contact"
 	CALLBACK_EVENT_CHANGE_TYPE_DEL_EXTERNAL_CONTACT      = "del_external_contact"
 	CALLBACK_EVENT_CHANGE_TYPE_DEL_FOLLOW_USER           = "del_follow_user"
 	CALLBACK_EVENT_CHANGE_TYPE_TRANSFER_FAIL             = "transfer_fail"
-	CALLBACK_EVENT_CHANGE_TYPE_CREATE                    = "create"
-	CALLBACK_EVENT_CHANGE_TYPE_UPDATE                    = "update"
-	CALLBACK_EVENT_CHANGE_TYPE_DISMISS                   = "dismiss"
-	CALLBACK_EVENT_CHANGE_TYPE_DELETE                    = "delete"
-	CALLBACK_EVENT_CHANGE_TYPE_SHUFFLE                   = "shuffle"
 
-	CALLBACK_EVENT_UPDATE_DETAIL = "add_member"
-	CALLBACK_EVENT_TAG_TYPE      = "tag"
+	CALLBACK_EVENT_CHANGE_EXTERNAL_CHAT = "change_external_chat"
+	CALLBACK_EVENT_UPDATE_DETAIL        = "add_member"
+
+	CALLBACK_EVENT_CHANGE_EXTERNAL_TAG = "change_external_tag"
+	CALLBACK_EVENT_CHANGE_TYPE_CREATE  = "create"
+	CALLBACK_EVENT_CHANGE_TYPE_UPDATE  = "update"
+	CALLBACK_EVENT_CHANGE_TYPE_DISMISS = "dismiss"
+	CALLBACK_EVENT_CHANGE_TYPE_DELETE  = "delete"
+	CALLBACK_EVENT_CHANGE_TYPE_SHUFFLE = "shuffle"
+	CALLBACK_EVENT_TAG_TYPE            = "tag"
 )
 
 type EventExternalUserAdd struct {
