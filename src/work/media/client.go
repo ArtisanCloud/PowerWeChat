@@ -2,7 +2,6 @@ package media
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
@@ -57,12 +56,15 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 
 // 上传图片
 // https://work.weixin.qq.com/api/doc/90000/90135/90256
-func (comp *Client) UploadImage(path string, form *power.HashMap) (*response.HttpResponse, error) {
+func (comp *Client) UploadImage(path string, form *power.HashMap) (*response2.ResponseUploadImage, error) {
+	result := &response2.ResponseUploadImage{}
+
 	files := &object.HashMap{
 		"media": path,
 	}
-	rs, err := comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, nil)
-	return rs.(*response.HttpResponse), err
+
+	_, err := comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, &result)
+	return result, err
 }
 
 func (comp *Client) UploadTempImage(path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
