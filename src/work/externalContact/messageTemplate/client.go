@@ -81,7 +81,7 @@ func (comp *Client) GetGroupMsgSendResult(msgID string, userID string, limit int
 }
 
 // 发送新客户欢迎语
-// https://work.weixin.qq.com/api/doc/90000/90135/93338
+// https://developer.work.weixin.qq.com/document/path/92599
 func (comp *Client) SendWelcomeMsg(options *request.RequestSendWelcomeMsg) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

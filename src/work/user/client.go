@@ -89,7 +89,7 @@ func (comp *Client) Get(userID string) (*response.ResponseGetUserDetail, error) 
 }
 
 // 获取部门的成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90200
+// https://developer.work.weixin.qq.com/document/path/90200
 func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild int) (*response.ResponseGetSimpleUserList, error) {
 
 	result := &response.ResponseGetSimpleUserList{}
@@ -103,7 +103,7 @@ func (comp *Client) GetDepartmentUsers(departmentID int, fetchChild int) (*respo
 }
 
 // 获取部门成员详情
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90201
+// https://developer.work.weixin.qq.com/document/path/90201
 func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int) (*response.ResponseGetUserList, error) {
 
 	result := &response.ResponseGetUserList{}
@@ -117,7 +117,7 @@ func (comp *Client) GetDetailedDepartmentUsers(departmentID int, fetchChild int)
 }
 
 // userid与openid互换
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90202
+// https://developer.work.weixin.qq.com/document/path/90202
 func (comp *Client) UserIdToOpenID(userID string) (*response.ResponseUserIDToOpenID, error) {
 
 	result := &response.ResponseUserIDToOpenID{}
@@ -129,8 +129,8 @@ func (comp *Client) UserIdToOpenID(userID string) (*response.ResponseUserIDToOpe
 	return result, err
 }
 
-// userid与openid互换
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90202
+// openid转userid
+// https://developer.work.weixin.qq.com/document/path/90202
 func (comp *Client) OpenIDToUserID(openID string) (*response.ResponseOpenIDToUserID, error) {
 
 	result := &response.ResponseOpenIDToUserID{}
@@ -142,8 +142,8 @@ func (comp *Client) OpenIDToUserID(openID string) (*response.ResponseOpenIDToUse
 	return result, err
 }
 
-// userid与openid互换
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90202
+// 手机号获取userid
+// https://developer.work.weixin.qq.com/document/path/95402
 func (comp *Client) MobileToUserID(mobile string) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
@@ -156,7 +156,7 @@ func (comp *Client) MobileToUserID(mobile string) (*response.ResponseMobileToUse
 }
 
 // 二次验证
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90203
+// https://developer.work.weixin.qq.com/document/path/90203
 func (comp *Client) Accept(userID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -180,7 +180,7 @@ func (comp *Client) Invite(params *power.HashMap) (*response.ResponseMobileToUse
 }
 
 // 获取加入企业二维码
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91714
+// https://developer.work.weixin.qq.com/document/path/91714
 func (comp *Client) GetJoinQrCode(sizeType int) (*response.ResponseJoinCode, error) {
 
 	if sizeType < 1 || sizeType > 4 {
