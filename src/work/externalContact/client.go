@@ -37,7 +37,7 @@ func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList, error
 }
 
 // 获取外部联系人列表.
-// https://work.weixin.qq.com/api/doc/90000/90135/92113
+// https://developer.work.weixin.qq.com/document/path/92113
 func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 	result := &response.ResponseGetList{}
@@ -50,7 +50,7 @@ func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 }
 
 // 获取外部联系人详情.
-// https://work.weixin.qq.com/api/doc/90000/90135/92114
+// https://developer.work.weixin.qq.com/document/path/92114
 func (comp *Client) Get(externalUserID string, cursor string) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}

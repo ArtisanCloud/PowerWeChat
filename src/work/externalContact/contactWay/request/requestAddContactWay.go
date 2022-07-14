@@ -1,32 +1,12 @@
 package request
 
-type Text struct {
-	Content string `json:"content"`
-}
-
-type Image struct {
-	MediaID string `json:"media_id"`
-}
-
-type MiniProgram struct {
-	Title      string `json:"title"`
-	PicMediaID string `json:"pic_media_id"`
-	Appid      string `json:"appid"`
-	Page       string `json:"page"`
-}
-
-type Link struct {
-	Title  string `json:"title"`
-	PicURL string `json:"picurl"`
-	Desc   string `json:"desc"`
-	URL    string `json:"url"`
-}
+import "github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/messageTemplate/request"
 
 type Conclusions struct {
-	Text        *Text        `json:"text"`
-	Image       *Image       `json:"image"`
-	Link        *Link        `json:"link"`
-	MiniProgram *MiniProgram `json:"miniprogram"`
+	Text        *request.TextOfMessage `json:"text"`
+	Image       *request.Image         `json:"image"`
+	Link        *request.Link          `json:"link"`
+	MiniProgram *request.MiniProgram   `json:"miniprogram"`
 }
 
 type RequestAddContactWay struct {
