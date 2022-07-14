@@ -9,5 +9,5 @@ type ResponseUploadMedia struct {
 
 	Type      string `json:"type"`
 	MediaID   string `json:"media_id"`
-	CreatedAt int    `json:"created_at"`
+	CreatedAt string `json:"created_at"`
 }
