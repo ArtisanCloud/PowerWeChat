@@ -9,7 +9,7 @@ type Invitor struct {
 }
 
 type Member struct {
-	Userid        string   `json:"userid"`
+	UserID        string   `json:"userid"`
 	Type          int      `json:"type"`
 	JoinTime      int      `json:"join_time"`
 	JoinScene     int      `json:"join_scene"`
