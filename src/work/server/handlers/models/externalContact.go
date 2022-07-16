@@ -8,24 +8,29 @@ import (
 // https://developer.work.weixin.qq.com/document/path/92130
 
 const (
-	CALLBACK_EVENT_CHANGE_EXTERNAL_CONTACT               = "change_external_contact"
-	CALLBACK_EVENT_CHANGE_TYPE_ADD_EXTERNAL_CONTACT      = "add_external_contact"
-	CALLBACK_EVENT_CHANGE_TYPE_EDIT_EXTERNAL_CONTACT     = "edit_external_contact"
-	CALLBACK_EVENT_CHANGE_TYPE_ADD_HALF_EXTERNAL_CONTACT = "add_half_external_contact"
-	CALLBACK_EVENT_CHANGE_TYPE_DEL_EXTERNAL_CONTACT      = "del_external_contact"
-	CALLBACK_EVENT_CHANGE_TYPE_DEL_FOLLOW_USER           = "del_follow_user"
-	CALLBACK_EVENT_CHANGE_TYPE_TRANSFER_FAIL             = "transfer_fail"
+	CALLBACK_EVENT_CHANGE_EXTERNAL_CONTACT               = "change_external_contact"   // 变更外部联系人事件
+	CALLBACK_EVENT_CHANGE_TYPE_ADD_EXTERNAL_CONTACT      = "add_external_contact"      // 新增外部联系人事件
+	CALLBACK_EVENT_CHANGE_TYPE_EDIT_EXTERNAL_CONTACT     = "edit_external_contact"     // 编辑外部联系人事件
+	CALLBACK_EVENT_CHANGE_TYPE_ADD_HALF_EXTERNAL_CONTACT = "add_half_external_contact" // 外部联系人免验证添加成员事件
+	CALLBACK_EVENT_CHANGE_TYPE_DEL_EXTERNAL_CONTACT      = "del_external_contact"      // 删除企业客户事件
+	CALLBACK_EVENT_CHANGE_TYPE_DEL_FOLLOW_USER           = "del_follow_user"           // 删除跟进成员事件
+	CALLBACK_EVENT_CHANGE_TYPE_TRANSFER_FAIL             = "transfer_fail"             // 客户接替失败事件
 
-	CALLBACK_EVENT_CHANGE_EXTERNAL_CHAT = "change_external_chat"
-	CALLBACK_EVENT_UPDATE_DETAIL        = "add_member"
+	CALLBACK_EVENT_CHANGE_EXTERNAL_CHAT        = "change_external_chat" // 客户群创建事件
+	CALLBACK_EVENT_UPDATE_DETAIL_ADD_MEMBER    = "add_member"           // 成员入群事件
+	CALLBACK_EVENT_UPDATE_DETAIL_DEL_MEMBER    = "del_member"           // 成员退群事件
+	CALLBACK_EVENT_UPDATE_DETAIL_CHANGE_OWNER  = "change_owner"         // 群主变更事件
+	CALLBACK_EVENT_UPDATE_DETAIL_CHANGE_NAME   = "change_name"          // 群名变更事件
+	CALLBACK_EVENT_UPDATE_DETAIL_CHANGE_NOTICE = "change_notice"        // 群公告变更事件
 
-	CALLBACK_EVENT_CHANGE_EXTERNAL_TAG = "change_external_tag"
-	CALLBACK_EVENT_CHANGE_TYPE_CREATE  = "create"
-	CALLBACK_EVENT_CHANGE_TYPE_UPDATE  = "update"
-	CALLBACK_EVENT_CHANGE_TYPE_DISMISS = "dismiss"
-	CALLBACK_EVENT_CHANGE_TYPE_DELETE  = "delete"
-	CALLBACK_EVENT_CHANGE_TYPE_SHUFFLE = "shuffle"
-	CALLBACK_EVENT_TAG_TYPE            = "tag"
+	CALLBACK_EVENT_CHANGE_EXTERNAL_TAG = "change_external_tag" // 企业客户标签变更事件
+	CALLBACK_EVENT_CHANGE_TYPE_CREATE  = "create"              // 创建标签事件
+	CALLBACK_EVENT_CHANGE_TYPE_UPDATE  = "update"              // 更新标签名称事件
+	CALLBACK_EVENT_CHANGE_TYPE_DELETE  = "delete"              // 删除标签事件
+	CALLBACK_EVENT_CHANGE_TYPE_DISMISS = "dismiss"             // 解散群事件
+	CALLBACK_EVENT_CHANGE_TYPE_SHUFFLE = "shuffle"             // 标签重排事件
+	CALLBACK_EVENT_TAG_TYPE            = "tag"                 // 标签事件
+	CALLBACK_EVENT_TAG_TYPE_GROUP      = "tag_group"           // 标签组事件
 )
 
 type EventExternalUserAdd struct {

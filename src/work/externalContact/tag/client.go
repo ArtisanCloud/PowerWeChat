@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取企业标签库
-// https://work.weixin.qq.com/api/doc/90000/90135/92117
+// https://developer.work.weixin.qq.com/document/path/92117
 func (comp *Client) GetCorpTagList(tagID []string, groupID []string) (*response.ResponseTagGetCorpTagList, error) {
 
 	result := &response.ResponseTagGetCorpTagList{}
@@ -39,7 +39,7 @@ func (comp *Client) GetCorpTagList(tagID []string, groupID []string) (*response.
 }
 
 // 添加企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/92117
+// https://developer.work.weixin.qq.com/document/path/92117
 func (comp *Client) AddCorpTag(options *request.RequestTagAddCorpTag) (*response.ResponseTagAddCorpTag, error) {
 
 	result := &response.ResponseTagAddCorpTag{}
@@ -50,7 +50,7 @@ func (comp *Client) AddCorpTag(options *request.RequestTagAddCorpTag) (*response
 }
 
 // 编辑企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/92117
+// https://developer.work.weixin.qq.com/document/path/92117
 func (comp *Client) EditCorpTag(options *request.RequestTagEditCorpTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -61,7 +61,7 @@ func (comp *Client) EditCorpTag(options *request.RequestTagEditCorpTag) (*respon
 }
 
 // 删除企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/92117
+// https://developer.work.weixin.qq.com/document/path/92117
 func (comp *Client) DelCorpTag(options *request.RequestTagDelCorpTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -72,7 +72,7 @@ func (comp *Client) DelCorpTag(options *request.RequestTagDelCorpTag) (*response
 }
 
 // 获取指定规则组下的企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/94882
+// https://developer.work.weixin.qq.com/document/path/94882
 func (comp *Client) GetStrategyTagList(options *request.RequestTagGetStrategyTagList) (*response.ResponseTagGetStrategyTagList, error) {
 
 	result := &response.ResponseTagGetStrategyTagList{}
@@ -83,7 +83,7 @@ func (comp *Client) GetStrategyTagList(options *request.RequestTagGetStrategyTag
 }
 
 // 为指定规则组创建企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/94882
+// https://developer.work.weixin.qq.com/document/path/94882
 func (comp *Client) AddStrategyTag(options *request.RequestTagAddStrategyTag) (*response.ResponseTagAddStrategyTag, error) {
 
 	result := &response.ResponseTagAddStrategyTag{}
@@ -94,7 +94,7 @@ func (comp *Client) AddStrategyTag(options *request.RequestTagAddStrategyTag) (*
 }
 
 // 编辑指定规则组下的企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/94882
+// https://developer.work.weixin.qq.com/document/path/94882
 func (comp *Client) EditStrategyTag(options *request.RequestTagEditStrategyTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -105,7 +105,7 @@ func (comp *Client) EditStrategyTag(options *request.RequestTagEditStrategyTag) 
 }
 
 // 删除指定规则组下的企业客户标签
-// https://work.weixin.qq.com/api/doc/90000/90135/94882
+// https://developer.work.weixin.qq.com/document/path/94882
 func (comp *Client) DelStrategyTag(options *request.RequestTagDelStrategyTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -116,7 +116,7 @@ func (comp *Client) DelStrategyTag(options *request.RequestTagDelStrategyTag) (*
 }
 
 // 编辑客户企业标签
-// https://work.weixin.qq.com/api/doc/90000/90135/92118
+// https://developer.work.weixin.qq.com/document/path/94882
 func (comp *Client) MarkTag(options *request.RequestTagMarkTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
