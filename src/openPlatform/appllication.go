@@ -41,6 +41,7 @@ type UserConfig struct {
 	AppID    string
 	Secret   string
 	AuthCode string
+	Token    string
 	AESKey   string
 
 	ResponseType string
@@ -184,8 +185,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"app_id":    userConfig.AppID,
 		"secret":    userConfig.Secret,
 		"auth_code": userConfig.AuthCode,
-		//"token":   userConfig.Token,
-		"aes_key": userConfig.AESKey,
+		"token":     userConfig.Token,
+		"aes_key":   userConfig.AESKey,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.StringMap{
