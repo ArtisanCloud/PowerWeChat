@@ -11,8 +11,8 @@ type ImageOfMessage struct {
 }
 
 type Image struct {
-	MediaID string `json:"mediaid"` // "MEDIA_ID",
-	PicURL  string `json:"pic_url"` // "http://p.qpic.cn/pic_wework/3474110808/7a6344sdadfwehe42060/0"
+	MediaID string `json:"media_id"` // "MEDIA_ID",
+	PicURL  string `json:"pic_url"`  // "http://p.qpic.cn/pic_wework/3474110808/7a6344sdadfwehe42060/0"
 }
 
 type LinkOfMessage struct {
@@ -40,7 +40,7 @@ type MiniProgram struct {
 }
 
 type File struct {
-	MediaID    string `json:"media_id"`
+	MediaID string `json:"media_id"`
 }
 
 type VideoOfMessage struct {

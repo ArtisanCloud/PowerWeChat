@@ -116,7 +116,7 @@ func (comp *Client) DelStrategyTag(options *request.RequestTagDelStrategyTag) (*
 }
 
 // 编辑客户企业标签
-// https://developer.work.weixin.qq.com/document/path/94882
+// https://developer.work.weixin.qq.com/document/path/92118
 func (comp *Client) MarkTag(options *request.RequestTagMarkTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
