@@ -64,7 +64,7 @@ func (comp *Client) Get(externalUserID string, cursor string) (*weCom.ResponseGe
 }
 
 // 批量获取客户详情.
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92994
+// https://developer.work.weixin.qq.com/document/path/92994
 func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
 
 	result := &response.ResponseBatchGetByUser{}
@@ -81,7 +81,7 @@ func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*respon
 }
 
 // 修改客户备注信息.
-// https://work.weixin.qq.com/api/doc/90000/90135/92115
+// https://developer.work.weixin.qq.com/document/path/92115
 func (comp *Client) Remark(data *request.RequestExternalContactRemark) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -91,8 +91,8 @@ func (comp *Client) Remark(data *request.RequestExternalContactRemark) (*respons
 	return result, err
 }
 
-// 获取离职成员的客户列表.
-// https://work.weixin.qq.com/api/doc#90000/90135/91563
+// 获取待分配的离职成员列表
+// https://developer.work.weixin.qq.com/document/path/92124
 func (comp *Client) GetUnassigned(pageID int, pageSize int) (*response.ResponseGetUnassignedList, error) {
 
 	result := &response.ResponseGetUnassignedList{}
@@ -105,7 +105,7 @@ func (comp *Client) GetUnassigned(pageID int, pageSize int) (*response.ResponseG
 	return result, err
 }
 
-// 离职成员的外部联系人再分配.
+// 分配离职成员的客户
 // https://developer.work.weixin.qq.com/document/path/94081
 func (comp *Client) Transfer(externalUserID []string, handoverUserID string, takeoverUserID string) (*response.ResponseGetTransferedCustomerList, error) {
 
@@ -120,7 +120,7 @@ func (comp *Client) Transfer(externalUserID []string, handoverUserID string, tak
 	return result, err
 }
 
-// 离职成员的群再分配.
+// 分配离职成员的客户群
 // https://work.weixin.qq.com/api/doc/90000/90135/92127
 func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*response3.ResponseGroupChatTransfer, error) {
 
