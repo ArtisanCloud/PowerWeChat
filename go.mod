@@ -7,8 +7,8 @@ go 1.17
 //replace github.com/ArtisanCloud/PowerSocialite/v2 => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs/v2 v2.0.19
-	github.com/ArtisanCloud/PowerSocialite/v2 v2.0.5
+	github.com/ArtisanCloud/PowerLibs/v2 v2.0.20
+	github.com/ArtisanCloud/PowerSocialite/v2 v2.0.6
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/google/uuid v1.1.1
 	github.com/stretchr/testify v1.7.0
