@@ -5,6 +5,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
+// https://developer.work.weixin.qq.com/document/path/90967
+
 const (
 	CALLBACK_EVENT_SUBSCRIBE                = "subscribe"
 	CALLBACK_EVENT_ENTER_AGENT              = "enter_agent"

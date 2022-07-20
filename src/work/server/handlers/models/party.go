@@ -5,6 +5,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
+// https://developer.work.weixin.qq.com/document/path/90971
+
 const (
 	CALLBACK_EVENT_CHANGE_TYPE_CREATE_PARTY = "create_party"
 	CALLBACK_EVENT_CHANGE_TYPE_UPDATE_PARTY = "update_party"

@@ -5,6 +5,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
+// https://developer.work.weixin.qq.com/document/path/90970
+
 const (
 	CALLBACK_EVENT_CHANGE_CONTACT = "change_contact"
 
