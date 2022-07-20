@@ -5,6 +5,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
 )
 
+// https://developer.work.weixin.qq.com/document/path/90972
+
 const CALLBACK_EVENT_CHANGE_TYPE_UPDATE_TAG = "update_tag"
 
 type EventTagUpdate struct {
