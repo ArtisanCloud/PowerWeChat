@@ -76,7 +76,7 @@ func (comp *Client) BatchDelete(userIDs []string) (*response2.ResponseWork, erro
 }
 
 // 获取成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90196
+// https://developer.work.weixin.qq.com/document/path/90196
 func (comp *Client) Get(userID string) (*response.ResponseGetUserDetail, error) {
 
 	result := &response.ResponseGetUserDetail{}

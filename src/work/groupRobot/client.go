@@ -26,7 +26,8 @@ func (comp *Client) Message(message interface{}) (*Messager, error) {
 	return NewMessager(comp).Message(message)
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90136/91770#%E6%96%87%E6%9C%AC%E7%B1%BB%E5%9E%8B
+// 群机器人配置说明
+// https://developer.work.weixin.qq.com/document/path/91770#文本类型
 func (comp *Client) Send(key string, message *power.HashMap) (*response.ResponseGroupRobotSend, error) {
 
 	result := &response.ResponseGroupRobotSend{}
