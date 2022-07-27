@@ -21,7 +21,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取公费电话拨打记录
-// https://work.weixin.qq.com/api/doc/90000/90135/93662
+// https://developer.work.weixin.qq.com/document/path/93662
 func (comp *Client) GetDialRecord(options *request.RequestDialGetDialRecord) (*response.ResponseDialGetDialRecord, error) {
 
 	result := &response.ResponseDialGetDialRecord{}

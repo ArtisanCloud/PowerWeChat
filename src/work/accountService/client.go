@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 添加客服帐号
-// https://work.weixin.qq.com/api/doc/90000/90135/94648
+// https://developer.work.weixin.qq.com/document/path/94648
 func (comp *Client) Add(name string, mediaID string) (*response.ResponseAccountAdd, error) {
 
 	result := &response.ResponseAccountAdd{}
@@ -39,7 +39,7 @@ func (comp *Client) Add(name string, mediaID string) (*response.ResponseAccountA
 }
 
 // 删除客服帐号
-// https://work.weixin.qq.com/api/doc/90000/90135/94663
+// https://developer.work.weixin.qq.com/document/path/94663
 func (comp *Client) Del(openKFID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -54,7 +54,7 @@ func (comp *Client) Del(openKFID string) (*response2.ResponseWork, error) {
 }
 
 // 修改客服帐号
-// https://work.weixin.qq.com/api/doc/90000/90135/94664
+// https://developer.work.weixin.qq.com/document/path/94664
 func (comp *Client) Update(options *request.RequestAccountUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -65,7 +65,7 @@ func (comp *Client) Update(options *request.RequestAccountUpdate) (*response2.Re
 }
 
 // 获取客服帐号列表
-// https://work.weixin.qq.com/api/doc/90000/90135/94661
+// https://developer.work.weixin.qq.com/document/path/94661
 func (comp *Client) List() (*response.ResponseAccountList, error) {
 
 	result := &response.ResponseAccountList{}
@@ -76,7 +76,7 @@ func (comp *Client) List() (*response.ResponseAccountList, error) {
 }
 
 // 获取客服帐号链接
-// https://work.weixin.qq.com/api/doc/90000/90135/94665
+// https://developer.work.weixin.qq.com/document/path/94665
 func (comp *Client) AddContactWay(openKFID string, scene string) (*response.ResponseAccountServiceAddContactWay, error) {
 
 	result := &response.ResponseAccountServiceAddContactWay{}

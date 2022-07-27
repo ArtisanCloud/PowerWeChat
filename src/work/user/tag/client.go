@@ -22,10 +22,8 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90209
-
 // 创建标签
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90210
+// https://developer.work.weixin.qq.com/document/path/90210
 func (comp *Client) Create(tagName string, tagID int64) (*response.ResponseTagCreate, error) {
 
 	result := &response.ResponseTagCreate{}
@@ -39,7 +37,7 @@ func (comp *Client) Create(tagName string, tagID int64) (*response.ResponseTagCr
 }
 
 // 更新标签名字
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90211
+// https://developer.work.weixin.qq.com/document/path/90211
 func (comp *Client) Update(tagName string, tagID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -53,7 +51,7 @@ func (comp *Client) Update(tagName string, tagID int64) (*response2.ResponseWork
 }
 
 // 删除标签
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90198
+// https://developer.work.weixin.qq.com/document/path/90212
 func (comp *Client) Delete(tagID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -66,7 +64,7 @@ func (comp *Client) Delete(tagID int64) (*response2.ResponseWork, error) {
 }
 
 // 获取标签成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90196
+// https://developer.work.weixin.qq.com/document/path/90832
 func (comp *Client) Get(tagID int64) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
@@ -79,13 +77,13 @@ func (comp *Client) Get(tagID int64) (*response.ResponseTagDetail, error) {
 }
 
 // 获取标签成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90196
+// https://developer.work.weixin.qq.com/document/path/90833
 func (comp *Client) TagUsers(tagID int64, userList []string) (*response.ResponseTagCreateUser, error) {
 	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
 }
 
-// 获取标签成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90196
+// 增加标签成员
+// https://developer.work.weixin.qq.com/document/path/90833
 func (comp *Client) TagDepartments(tagID int64, partyList []string) (*response.ResponseTagCreateUser, error) {
 	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
 }
@@ -104,7 +102,7 @@ func (comp *Client) TagOrUntagUsers(endpoint string, tagID int64, userList []str
 }
 
 // 获取标签列表
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90216
+// https://developer.work.weixin.qq.com/document/path/90216
 func (comp *Client) List() (*response.ResponseTagList, error) {
 
 	result := &response.ResponseTagList{}

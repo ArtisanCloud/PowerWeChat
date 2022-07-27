@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 创建群聊会话
-// https://work.weixin.qq.com/api/doc/90000/90135/90245
+// https://developer.work.weixin.qq.com/document/path/90245
 func (comp *Client) Create(options *request.RequestAppChatCreate) (*response.ResponseAppChatCreate, error) {
 
 	result := &response.ResponseAppChatCreate{}
@@ -35,7 +35,7 @@ func (comp *Client) Create(options *request.RequestAppChatCreate) (*response.Res
 }
 
 // 修改群聊会话
-// https://work.weixin.qq.com/api/doc/90000/90135/90246
+// https://developer.work.weixin.qq.com/document/path/90246
 func (comp *Client) Update(options *request.RequestAppChatUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -46,7 +46,7 @@ func (comp *Client) Update(options *request.RequestAppChatUpdate) (*response2.Re
 }
 
 // 获取群聊会话
-// https://work.weixin.qq.com/api/doc/90000/90135/90247
+// https://developer.work.weixin.qq.com/document/path/90247
 func (comp *Client) Get(chatID string) (*response.ResponseAppChatGet, error) {
 
 	result := &response.ResponseAppChatGet{}
@@ -61,7 +61,7 @@ func (comp *Client) Get(chatID string) (*response.ResponseAppChatGet, error) {
 }
 
 // 应用推送消息
-// https://work.weixin.qq.com/api/doc/90000/90135/90248
+// https://developer.work.weixin.qq.com/document/path/90248
 func (comp *Client) Send(messages *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

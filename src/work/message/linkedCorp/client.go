@@ -21,7 +21,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 应用推送消息
-// https://work.weixin.qq.com/api/doc/90000/90135/90250
+// https://developer.work.weixin.qq.com/document/path/90250
 func (comp *Client) Send(messages *power.HashMap) (*response.ResponseLinkCorpMessageSend, error) {
 
 	result := &response.ResponseLinkCorpMessageSend{}

@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90205
+// https://developer.work.weixin.qq.com/document/path/90205
 func (comp *Client) SetWorkbenchTemplate(data *request.RequestSetWorkbenchTemplate) (*response.ResponseAgentSetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentSetWorkbenchTemplate{}
@@ -32,7 +32,7 @@ func (comp *Client) SetWorkbenchTemplate(data *request.RequestSetWorkbenchTempla
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90206
+// https://developer.work.weixin.qq.com/document/path/90206
 func (comp Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentGetWorkbenchTemplate{}

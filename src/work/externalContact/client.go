@@ -26,7 +26,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取配置了客户联系功能的成员列表.
-// https://work.weixin.qq.com/api/doc/90000/90135/92571
+// https://developer.work.weixin.qq.com/document/path/92571
 func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList, error) {
 
 	result := &response.ResponseGetFollowUserList{}
@@ -121,7 +121,7 @@ func (comp *Client) Transfer(externalUserID []string, handoverUserID string, tak
 }
 
 // 分配离职成员的客户群
-// https://work.weixin.qq.com/api/doc/90000/90135/92127
+// https://developer.work.weixin.qq.com/document/path/92127
 func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*response3.ResponseGroupChatTransfer, error) {
 
 	result := &response3.ResponseGroupChatTransfer{}
@@ -135,7 +135,7 @@ func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*respo
 }
 
 // 查询客户接替结果.
-// https://work.weixin.qq.com/api/doc/90000/90135/94082
+// https://developer.work.weixin.qq.com/document/path/94082
 func (comp *Client) GetResignedTransferResult(handoverUserID string, takeoverUserID string, cursor string) (*response.ResponseGetTransferedCustomerList, error) {
 
 	result := &response.ResponseGetTransferedCustomerList{}

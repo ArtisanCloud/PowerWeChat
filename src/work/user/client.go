@@ -25,10 +25,8 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90194
-
 // 创建成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90195
+// https://developer.work.weixin.qq.com/document/path/90195
 func (comp *Client) Create(data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -39,7 +37,7 @@ func (comp *Client) Create(data *response3.RequestUserDetail) (*response2.Respon
 }
 
 // 更新成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90197
+// https://developer.work.weixin.qq.com/document/path/90197
 func (comp *Client) Update(data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -50,7 +48,7 @@ func (comp *Client) Update(data *response3.RequestUserDetail) (*response2.Respon
 }
 
 // 删除成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90198
+// https://developer.work.weixin.qq.com/document/path/90198
 func (comp *Client) Delete(userID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -169,7 +167,7 @@ func (comp *Client) Accept(userID string) (*response2.ResponseWork, error) {
 }
 
 // 邀请成员
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90975
+// https://developer.work.weixin.qq.com/document/path/90975
 func (comp *Client) Invite(params *power.HashMap) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
@@ -197,7 +195,7 @@ func (comp *Client) GetJoinQrCode(sizeType int) (*response.ResponseJoinCode, err
 }
 
 // 获取企业活跃成员数
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92714
+// https://developer.work.weixin.qq.com/document/path/92714
 func (comp *Client) GetActiveStat(date string) (*response.ResponseUserActiveCount, error) {
 
 	result := &response.ResponseUserActiveCount{}

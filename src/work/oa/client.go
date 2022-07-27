@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取企业所有打卡规则
-// https://work.weixin.qq.com/api/doc/90000/90135/93384
+// https://developer.work.weixin.qq.com/document/path/93384
 func (comp *Client) GetCorpCheckInOption() (*response.ResponseCorpCheckInRules, error) {
 	result := &response.ResponseCorpCheckInRules{}
 
@@ -36,7 +36,7 @@ func (comp *Client) GetCorpCheckInOption() (*response.ResponseCorpCheckInRules, 
 }
 
 // 获取员工打卡规则
-// https://work.weixin.qq.com/api/doc/90000/90135/90263
+// https://developer.work.weixin.qq.com/document/path/90263
 func (comp *Client) GetCheckInOption(datetime int, userList []string) (*response.ResponseCheckInRules, error) {
 	result := &response.ResponseCheckInRules{}
 
@@ -49,7 +49,7 @@ func (comp *Client) GetCheckInOption(datetime int, userList []string) (*response
 }
 
 // 获取打卡记录数据
-// https://work.weixin.qq.com/api/doc/90000/90135/90262
+// https://developer.work.weixin.qq.com/document/path/90262
 func (comp *Client) GetCheckinData(recordType int, startTime int, endTime int, userList []string) (*response.ResponseCheckInRecords, error) {
 	result := &response.ResponseCheckInRecords{}
 
@@ -64,7 +64,7 @@ func (comp *Client) GetCheckinData(recordType int, startTime int, endTime int, u
 }
 
 // 获取打卡日报数据
-// https://work.weixin.qq.com/api/doc/90000/90135/93374
+// https://developer.work.weixin.qq.com/document/path/93374
 func (comp *Client) GetCheckinDayData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 
 	result := &response.ResponseCheckInDatas{}
@@ -80,7 +80,7 @@ func (comp *Client) GetCheckinDayData(startTime int, endTime int, userIDs []stri
 }
 
 // 获取打卡月报数据
-// https://work.weixin.qq.com/api/doc/90000/90135/93387
+// https://developer.work.weixin.qq.com/document/path/93387
 func (comp *Client) GetCheckInMonthData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 	result := &response.ResponseCheckInDatas{}
 
@@ -94,7 +94,7 @@ func (comp *Client) GetCheckInMonthData(startTime int, endTime int, userIDs []st
 }
 
 // 获取打卡人员排班信息
-// https://work.weixin.qq.com/api/doc/90000/90135/93380
+// https://developer.work.weixin.qq.com/document/path/93380
 func (comp *Client) GetCheckInScheduleList(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
 	result := &response.ResponseCheckInSchedulist{}
 
@@ -108,7 +108,7 @@ func (comp *Client) GetCheckInScheduleList(startTime int, endTime int, userIDs [
 }
 
 // 为打卡人员排班
-// https://work.weixin.qq.com/api/doc/90000/90135/93385
+// https://developer.work.weixin.qq.com/document/path/93385
 func (comp *Client) SetCheckInScheduleList(options *request.RequestCheckInSetScheduleList) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
@@ -118,7 +118,7 @@ func (comp *Client) SetCheckInScheduleList(options *request.RequestCheckInSetSch
 }
 
 // 录入打卡人员人脸信息
-// https://work.weixin.qq.com/api/doc/90000/90135/93378
+// https://developer.work.weixin.qq.com/document/path/93378
 func (comp *Client) AddCheckInUserFace(userID string, userFace string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -132,7 +132,7 @@ func (comp *Client) AddCheckInUserFace(userID string, userFace string) (*respons
 }
 
 // 获取审批模板详情
-// https://work.weixin.qq.com/api/doc/90000/90135/91982
+// https://developer.work.weixin.qq.com/document/path/91982
 func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseApprovalTemplate, error) {
 	result := &response.ResponseApprovalTemplate{}
 
@@ -144,7 +144,7 @@ func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseAppro
 }
 
 // 提交审批申请
-// https://work.weixin.qq.com/api/doc/90000/90135/91853
+// https://developer.work.weixin.qq.com/document/path/91853
 func (comp *Client) CreateApproval(data *power.HashMap) (*response.ResponseApprovalCreate, error) {
 	result := &response.ResponseApprovalCreate{}
 
@@ -154,7 +154,7 @@ func (comp *Client) CreateApproval(data *power.HashMap) (*response.ResponseAppro
 }
 
 // 批量获取审批单号
-// https://work.weixin.qq.com/api/doc/90000/90135/91816
+// https://developer.work.weixin.qq.com/document/path/91816
 func (comp *Client) GetApprovalInfo(startTime int, endTime int, nextCursor int, size int, filters *object.HashMap) (*response.ResponseApprovalNoList, error) {
 
 	result := &response.ResponseApprovalNoList{}
@@ -177,7 +177,7 @@ func (comp *Client) GetApprovalInfo(startTime int, endTime int, nextCursor int, 
 }
 
 // 获取审批申请详情
-// https://work.weixin.qq.com/api/doc/90000/90135/91983
+// https://developer.work.weixin.qq.com/document/path/91983
 func (comp *Client) GetApprovalDetail(number int) (*response.ResponseApprovalDetail, error) {
 	result := &response.ResponseApprovalDetail{}
 
@@ -189,7 +189,7 @@ func (comp *Client) GetApprovalDetail(number int) (*response.ResponseApprovalDet
 }
 
 // 获取审批数据（旧）
-// https://work.weixin.qq.com/api/doc/90000/90135/91530
+// https://developer.work.weixin.qq.com/document/path/91530
 func (comp *Client) GetApprovalData(startTime int, endTime int, nextNumber int) (*response.ResponseApprovalGetData, error) {
 
 	result := &response.ResponseApprovalGetData{}
@@ -206,7 +206,7 @@ func (comp *Client) GetApprovalData(startTime int, endTime int, nextNumber int) 
 }
 
 // 获取企业假期管理配置
-// https://work.weixin.qq.com/api/doc/90000/90135/93375
+// https://developer.work.weixin.qq.com/document/path/93375
 func (comp *Client) GetCorpConfig() (*response.ResponseCorpVacationGetConfig, error) {
 
 	result := &response.ResponseCorpVacationGetConfig{}
@@ -218,7 +218,7 @@ func (comp *Client) GetCorpConfig() (*response.ResponseCorpVacationGetConfig, er
 }
 
 // 获取成员假期余额
-// https://work.weixin.qq.com/api/doc/90000/90135/93376
+// https://developer.work.weixin.qq.com/document/path/93376
 func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpVacationGetQuota, error) {
 
 	result := &response.ResponseCorpVacationGetQuota{}
@@ -232,7 +232,7 @@ func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpV
 }
 
 // 修改成员假期余额
-// https://work.weixin.qq.com/api/doc/90000/90135/93376
+// https://developer.work.weixin.qq.com/document/path/94213
 func (comp *Client) SetOneUserQuota(data *object.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

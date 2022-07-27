@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90227
+// https://developer.work.weixin.qq.com/document/path/90227
 func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 
 	result := &response.ResponseAgentGet{}
@@ -34,7 +34,7 @@ func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90228
+// https://developer.work.weixin.qq.com/document/path/90228
 func (comp *Client) Set(data *request.RequestAgentSet) (*response.ResponseAgentSet, error) {
 
 	result := &response.ResponseAgentSet{}
@@ -44,7 +44,7 @@ func (comp *Client) Set(data *request.RequestAgentSet) (*response.ResponseAgentS
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90227
+// https://developer.work.weixin.qq.com/document/path/90227
 func (comp *Client) List() (*response.ResponseAgentList, error) {
 
 	result := &response.ResponseAgentList{}

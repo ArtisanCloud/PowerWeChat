@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 读取消息
-// https://work.weixin.qq.com/api/doc/90000/90135/94670
+// https://developer.work.weixin.qq.com/document/path/94670
 func (comp *Client) BatchGet(externalUserIDList []string) (*response.ResponseCustomerBatchGet, error) {
 
 	result := &response.ResponseCustomerBatchGet{}
@@ -39,7 +39,7 @@ func (comp *Client) BatchGet(externalUserIDList []string) (*response.ResponseCus
 }
 
 // 获取配置的专员与客户群
-// https://work.weixin.qq.com/api/doc/90000/90135/94674
+// https://developer.work.weixin.qq.com/document/path/94674
 func (comp *Client) GetUpgradeServiceConfig() (*response.ResponseCustomerGetUpgradeServiceConfig, error) {
 
 	result := &response.ResponseCustomerGetUpgradeServiceConfig{}
@@ -50,7 +50,7 @@ func (comp *Client) GetUpgradeServiceConfig() (*response.ResponseCustomerGetUpgr
 }
 
 // 为客户升级为专员或客户群服务
-// https://work.weixin.qq.com/api/doc/90000/90135/94674
+// https://developer.work.weixin.qq.com/document/path/94674
 func (comp *Client) UpgradeService(options *request.RequestUpgradeService) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -61,7 +61,7 @@ func (comp *Client) UpgradeService(options *request.RequestUpgradeService) (*res
 }
 
 // 为客户取消推荐
-// https://work.weixin.qq.com/api/doc/90000/90135/94674
+// https://developer.work.weixin.qq.com/document/path/94674
 func (comp *Client) CancelUpgradeService(openKFID, externalUserID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

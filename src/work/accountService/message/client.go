@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 读取消息
-// https://work.weixin.qq.com/api/doc/90000/90135/94670
+// https://developer.work.weixin.qq.com/document/path/94670
 func (comp *Client) SyncMsg(cursor string, token string, limit int) (*response.ResponseMessageSyncMsg, error) {
 
 	result := &response.ResponseMessageSyncMsg{}
@@ -39,7 +39,7 @@ func (comp *Client) SyncMsg(cursor string, token string, limit int) (*response.R
 }
 
 // 发送消息
-// https://work.weixin.qq.com/api/doc/90000/90135/90236
+// https://developer.work.weixin.qq.com/document/path/90236
 func (comp *Client) SendMsg(messages *request.RequestAccountServiceSendMsg) (*response.ResponseAccountServiceSendMsg, error) {
 
 	result := &response.ResponseAccountServiceSendMsg{}
@@ -50,7 +50,7 @@ func (comp *Client) SendMsg(messages *request.RequestAccountServiceSendMsg) (*re
 }
 
 // 发送消息
-// https://work.weixin.qq.com/api/doc/90000/90135/95122
+// https://developer.work.weixin.qq.com/document/path/95122
 func (comp *Client) SendMsgOnEvent(messages *request.RequestAccountServiceSendMsgOnEvent) (*response.ResponseAccountServiceSendMsgOnEvent, error) {
 
 	result := &response.ResponseAccountServiceSendMsgOnEvent{}

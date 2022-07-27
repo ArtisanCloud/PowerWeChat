@@ -34,7 +34,7 @@ func (comp *Client) Message(message *messages.Message) *Messager {
 }
 
 // 发送应用消息
-// https://work.weixin.qq.com/api/doc/90000/90135/90236
+// https://developer.work.weixin.qq.com/document/path/90236
 func (comp *Client) Send(messages interface{}) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
@@ -100,7 +100,7 @@ func (comp *Client) SendTemplateCard(messages *request.RequestMessageSendTemplat
 }
 
 // 更新模版卡片消息
-// https://work.weixin.qq.com/api/doc/90000/90135/94888
+// https://developer.work.weixin.qq.com/document/path/94888
 func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
@@ -115,7 +115,7 @@ func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseM
 }
 
 // Recall 撤回应用消息
-// https://open.work.weixin.qq.com/api/doc/90000/90135/94867
+// https://developer.work.weixin.qq.com/document/path/94867
 func (comp *Client) Recall(msgID string) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 

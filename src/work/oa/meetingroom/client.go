@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 添加会议室
-// https://work.weixin.qq.com/api/doc/90000/90135/93619
+// https://developer.work.weixin.qq.com/document/path/93619
 func (comp *Client) Add(options *request.RequestMeetingRoomAdd) (*response.ResponseMeetingRoomAdd, error) {
 
 	result := &response.ResponseMeetingRoomAdd{}
@@ -33,7 +33,7 @@ func (comp *Client) Add(options *request.RequestMeetingRoomAdd) (*response.Respo
 }
 
 // 查询会议室
-// https://work.weixin.qq.com/api/doc/90000/90135/93619
+// https://developer.work.weixin.qq.com/document/path/93619
 func (comp *Client) List(options *request.RequestMeetingRoomList) (*response.ResponseMeetingRoomList, error) {
 
 	result := &response.ResponseMeetingRoomList{}
@@ -44,7 +44,7 @@ func (comp *Client) List(options *request.RequestMeetingRoomList) (*response.Res
 }
 
 // 编辑会议室
-// https://work.weixin.qq.com/api/doc/90000/90135/93619
+// https://developer.work.weixin.qq.com/document/path/93619
 func (comp *Client) Edit(options *request.RequestMeetingRoomEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -55,7 +55,7 @@ func (comp *Client) Edit(options *request.RequestMeetingRoomEdit) (*response2.Re
 }
 
 // 删除会议室
-// https://work.weixin.qq.com/api/doc/90000/90135/93619
+// https://developer.work.weixin.qq.com/document/path/93619
 func (comp *Client) Del(options *request.RequestMeetingRoomDel) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -66,7 +66,7 @@ func (comp *Client) Del(options *request.RequestMeetingRoomDel) (*response2.Resp
 }
 
 // 查询会议室的预定信息
-// https://work.weixin.qq.com/api/doc/90000/90135/93620#%E6%9F%A5%E8%AF%A2%E4%BC%9A%E8%AE%AE%E5%AE%A4%E7%9A%84%E9%A2%84%E5%AE%9A%E4%BF%A1%E6%81%AF
+// https://developer.work.weixin.qq.com/document/path/93620#%E6%9F%A5%E8%AF%A2%E4%BC%9A%E8%AE%AE%E5%AE%A4%E7%9A%84%E9%A2%84%E5%AE%9A%E4%BF%A1%E6%81%AF
 func (comp *Client) GetBookingInfo(options *request.RequestMeetingRoomGetBookingInfo) (*response.ResponseMeetingRoomGetBookingInfo, error) {
 
 	result := &response.ResponseMeetingRoomGetBookingInfo{}
@@ -77,7 +77,7 @@ func (comp *Client) GetBookingInfo(options *request.RequestMeetingRoomGetBooking
 }
 
 // 预定会议室
-// https://work.weixin.qq.com/api/doc/90000/90135/93620
+// https://developer.work.weixin.qq.com/document/path/93620
 func (comp *Client) Book(options *request.RequestMeetingRoomBook) (*response.ResponseMeetingRoomGetBook, error) {
 
 	result := &response.ResponseMeetingRoomGetBook{}
@@ -88,7 +88,7 @@ func (comp *Client) Book(options *request.RequestMeetingRoomBook) (*response.Res
 }
 
 // 取消预定会议室
-// https://work.weixin.qq.com/api/doc/90000/90135/93620
+// https://developer.work.weixin.qq.com/document/path/93620
 func (comp *Client) CancelBook(options *request.RequestMeetingRoomCancelBook) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

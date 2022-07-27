@@ -21,7 +21,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 发起语音电话
-// https://work.weixin.qq.com/api/doc/90000/90135/91627
+// https://developer.work.weixin.qq.com/document/path/91627
 func (comp *Client) Call(calleeUserID []string) (*response.ResponsePSTNCCCall, error) {
 
 	result := &response.ResponsePSTNCCCall{}
@@ -36,7 +36,7 @@ func (comp *Client) Call(calleeUserID []string) (*response.ResponsePSTNCCCall, e
 }
 
 // 获取接听状态
-// https://work.weixin.qq.com/api/doc/90000/90135/91628
+// https://developer.work.weixin.qq.com/document/path/91628
 func (comp *Client) GetStates(calleeUserID string, callID string) (*response.ResponsePSTNCCGetStates, error) {
 
 	result := &response.ResponsePSTNCCGetStates{}

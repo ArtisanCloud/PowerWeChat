@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // 查询电子发票
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90284
+// https://developer.work.weixin.qq.com/document/path/90284
 func (comp *Client) GetInvoiceInfo(cardID string, encryptCode string) (*response.ResponseInvoiceGetInfo, error) {
 
 	result := &response.ResponseInvoiceGetInfo{}
@@ -28,7 +28,7 @@ func (comp *Client) GetInvoiceInfo(cardID string, encryptCode string) (*response
 }
 
 // 批量查询电子发票
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90287
+// https://developer.work.weixin.qq.com/document/path/90287
 func (comp *Client) GetInvoiceInfoBatch(invoiceList []*request.RequestCardInvoice) (*response.ResponseInvoiceGetInfoBatch, error) {
 
 	result := &response.ResponseInvoiceGetInfoBatch{}
@@ -42,7 +42,7 @@ func (comp *Client) GetInvoiceInfoBatch(invoiceList []*request.RequestCardInvoic
 }
 
 // 更新发票状态
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90285
+// https://developer.work.weixin.qq.com/document/path/90285
 func (comp *Client) UpdateInvoiceStatus(cardID string, encryptCode string, status string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -58,7 +58,7 @@ func (comp *Client) UpdateInvoiceStatus(cardID string, encryptCode string, statu
 }
 
 // 批量更新发票状态
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90286
+// https://developer.work.weixin.qq.com/document/path/90286
 func (comp *Client) UpdateStatusBatch(openid string, status string, invoiceList []*request.RequestCardInvoice) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

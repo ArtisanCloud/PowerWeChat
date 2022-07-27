@@ -21,7 +21,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 导出成员
-// https://work.weixin.qq.com/api/doc/90000/90135/94849
+// https://developer.work.weixin.qq.com/document/path/94849
 func (comp *Client) SimpleUser(encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
 
 	result := &response.ResponseUserExportJobs{}
@@ -36,7 +36,7 @@ func (comp *Client) SimpleUser(encodingAESKey string, blockSize int64) (*respons
 }
 
 // 导出成员详情
-// https://work.weixin.qq.com/api/doc/90000/90135/94851
+// https://developer.work.weixin.qq.com/document/path/94851
 func (comp *Client) User(encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
 
 	result := &response.ResponseUserExportJobs{}
@@ -51,7 +51,7 @@ func (comp *Client) User(encodingAESKey string, blockSize int64) (*response.Resp
 }
 
 // 导出部门
-// https://work.weixin.qq.com/api/doc/90000/90135/94852
+// https://developer.work.weixin.qq.com/document/path/94852
 func (comp *Client) Department(encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
 
 	result := &response.ResponseUserExportJobs{}
@@ -66,7 +66,7 @@ func (comp *Client) Department(encodingAESKey string, blockSize int64) (*respons
 }
 
 // 导出标签成员
-// https://work.weixin.qq.com/api/doc/90000/90135/94853
+// https://developer.work.weixin.qq.com/document/path/94853
 func (comp *Client) TagUser(tagID int, encodingAESKey string, blockSize int64) (*response.ResponseUserExportJobs, error) {
 
 	result := &response.ResponseUserExportJobs{}
@@ -82,7 +82,7 @@ func (comp *Client) TagUser(tagID int, encodingAESKey string, blockSize int64) (
 }
 
 // 获取导出结果
-// https://work.weixin.qq.com/api/doc/90000/90135/94854
+// https://developer.work.weixin.qq.com/document/path/94854
 func (comp *Client) GetExportResult(jobID string) (*response.ResponseUserExportGetResult, error) {
 
 	result := &response.ResponseUserExportGetResult{}

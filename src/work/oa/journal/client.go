@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 批量获取汇报记录单号
-// https://work.weixin.qq.com/api/doc/90000/90135/93393
+// https://developer.work.weixin.qq.com/document/path/93393
 func (comp *Client) GetRecordList(startTime int, endTime int, nextCursor int, size int, filters []*power.StringMap) (*response.ResponseJournalGetRecordList, error) {
 
 	result := &response.ResponseJournalGetRecordList{}
@@ -46,7 +46,7 @@ func (comp *Client) GetRecordList(startTime int, endTime int, nextCursor int, si
 }
 
 // 获取汇报记录详情
-// https://work.weixin.qq.com/api/doc/90000/90135/93394
+// https://developer.work.weixin.qq.com/document/path/93394
 func (comp *Client) GetRecordDetail(JournalUUID string) (*response.ResponseJournalGetRecordDetail, error) {
 
 	result := &response.ResponseJournalGetRecordDetail{}
@@ -61,7 +61,7 @@ func (comp *Client) GetRecordDetail(JournalUUID string) (*response.ResponseJourn
 }
 
 // 获取汇报记录详情
-// https://work.weixin.qq.com/api/doc/90000/90135/93395
+// https://developer.work.weixin.qq.com/document/path/93395
 func (comp *Client) GetStatList(templateID string, startTime int, endTime int) (*response.ResponseJournalGetStatList, error) {
 
 	result := &response.ResponseJournalGetStatList{}

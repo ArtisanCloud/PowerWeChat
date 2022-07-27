@@ -1,6 +1,6 @@
 package auth
 
-// #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
+// #reference: https://developer.work.weixin.qq.com/document/path/91039
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
@@ -11,7 +11,7 @@ type AccessToken struct {
 	*kernel.AccessToken
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91039
+// https://developer.work.weixin.qq.com/document/path/91039
 func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(&app)
 	if err != nil {
