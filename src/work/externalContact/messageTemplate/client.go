@@ -28,7 +28,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 var required = []string{"content", "title", "url", "pic_media_id", "appid", "page"}
 
 // 创建企业群发
-// https://work.weixin.qq.com/api/doc/90000/90135/92135
+// https://developer.work.weixin.qq.com/document/path/92135
 func (comp *Client) AddMsgTemplate(options *request.RequestAddMsgTemplate) (*response.ResponseAddMessageTemplate, error) {
 
 	result := &response.ResponseAddMessageTemplate{}
@@ -39,7 +39,7 @@ func (comp *Client) AddMsgTemplate(options *request.RequestAddMsgTemplate) (*res
 }
 
 // 获取群发记录列表
-// https://work.weixin.qq.com/api/doc/90000/90135/93338
+// https://developer.work.weixin.qq.com/document/path/93338#获取群发记录列表
 func (comp *Client) GetGroupMsgListV2(options *request.RequestGetGroupMsgListV2) (*response.ResponseGetGroupMsgListV2, error) {
 
 	result := &response.ResponseGetGroupMsgListV2{}
@@ -50,7 +50,7 @@ func (comp *Client) GetGroupMsgListV2(options *request.RequestGetGroupMsgListV2)
 }
 
 // 获取群发成员发送任务列表
-// https://work.weixin.qq.com/api/doc/90000/90135/93338
+// https://developer.work.weixin.qq.com/document/path/93338#获取群发成员发送任务列表
 func (comp *Client) GetGroupMsgTask(msgID string, limit int, cursor string) (*response.ResponseGetGroupMsgTask, error) {
 
 	result := &response.ResponseGetGroupMsgTask{}
@@ -65,7 +65,7 @@ func (comp *Client) GetGroupMsgTask(msgID string, limit int, cursor string) (*re
 }
 
 // 获取企业群发成员执行结果
-// https://work.weixin.qq.com/api/doc/90000/90135/93338
+// https://developer.work.weixin.qq.com/document/path/93338#获取企业群发成员执行结果
 func (comp *Client) GetGroupMsgSendResult(msgID string, userID string, limit int, cursor string) (*response.ResponseGetGroupMsgSendResult, error) {
 
 	result := &response.ResponseGetGroupMsgSendResult{}

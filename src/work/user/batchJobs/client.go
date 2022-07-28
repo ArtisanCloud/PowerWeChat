@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 增量更新成员
-// https://work.weixin.qq.com/api/doc/90000/90135/90980
+// https://developer.work.weixin.qq.com/document/path/90980
 func (comp *Client) SyncUser(mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
 
 	result := &response.ResponseUserBatchJobs{}
@@ -38,7 +38,7 @@ func (comp *Client) SyncUser(mediaID string, toInvite bool, callback *power.Stri
 }
 
 // 全量覆盖成员
-// https://work.weixin.qq.com/api/doc/90000/90135/90981
+// https://developer.work.weixin.qq.com/document/path/90981
 func (comp *Client) ReplaceUser(mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
 
 	result := &response.ResponseUserBatchJobs{}
@@ -54,7 +54,7 @@ func (comp *Client) ReplaceUser(mediaID string, toInvite bool, callback *power.S
 }
 
 // 全量覆盖部门
-// https://work.weixin.qq.com/api/doc/90000/90135/90982
+// https://developer.work.weixin.qq.com/document/path/90982
 func (comp *Client) ReplaceParty(mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
 
 	result := &response.ResponseUserBatchJobs{}
@@ -70,7 +70,7 @@ func (comp *Client) ReplaceParty(mediaID string, toInvite bool, callback *power.
 }
 
 // 获取异步任务结果
-// https://work.weixin.qq.com/api/doc/90000/90135/90983
+// https://developer.work.weixin.qq.com/document/path/90983
 func (comp *Client) GetBatchResult(jobID string) (*response.ResponseUserBatchGetResult, error) {
 
 	result := &response.ResponseUserBatchGetResult{}

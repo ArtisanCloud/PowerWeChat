@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取规则组列表
-// https://work.weixin.qq.com/api/doc/90000/90135/94883
+// https://developer.work.weixin.qq.com/document/path/94883
 func (comp *Client) List(cursor string, limit int64) (*response.ResponseCustomerStrategyList, error) {
 
 	result := &response.ResponseCustomerStrategyList{}
@@ -39,7 +39,7 @@ func (comp *Client) List(cursor string, limit int64) (*response.ResponseCustomer
 }
 
 // 获取规则组详情
-// https://work.weixin.qq.com/api/doc/90000/90135/94883
+// https://developer.work.weixin.qq.com/document/path/94883
 func (comp *Client) Get(strategyID int64) (*response.ResponseCustomerStrategyGet, error) {
 
 	result := &response.ResponseCustomerStrategyGet{}
@@ -54,7 +54,7 @@ func (comp *Client) Get(strategyID int64) (*response.ResponseCustomerStrategyGet
 }
 
 // 获取规则组管理范围
-// https://work.weixin.qq.com/api/doc/90000/90135/94883
+// https://developer.work.weixin.qq.com/document/path/94883
 func (comp *Client) GetRange(strategyID int64, cursor string, limit int64) (*response.ResponseCustomerStrategyGetRange, error) {
 
 	result := &response.ResponseCustomerStrategyGetRange{}
@@ -71,7 +71,7 @@ func (comp *Client) GetRange(strategyID int64, cursor string, limit int64) (*res
 }
 
 // 创建新的规则组
-// https://work.weixin.qq.com/api/doc/90000/90135/94883
+// https://developer.work.weixin.qq.com/document/path/94883
 func (comp *Client) Create(options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
 
 	result := &response.ResponseCustomerStrategyCreate{}
@@ -82,7 +82,7 @@ func (comp *Client) Create(options *request.RequestCustomerStrategyCreate) (*res
 }
 
 // 编辑规则组及其管理范围
-// https://work.weixin.qq.com/api/doc/90000/90135/94883
+// https://developer.work.weixin.qq.com/document/path/94883
 func (comp *Client) Edit(options *request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -93,7 +93,7 @@ func (comp *Client) Edit(options *request.RequestCustomerStrategyEdit) (*respons
 }
 
 // 删除规则组
-// https://work.weixin.qq.com/api/doc/90000/90135/94883
+// https://developer.work.weixin.qq.com/document/path/94883
 func (comp *Client) Del(strategyID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

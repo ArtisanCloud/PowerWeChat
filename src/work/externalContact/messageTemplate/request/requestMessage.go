@@ -7,7 +7,11 @@ type TextOfMessage struct {
 
 type ImageOfMessage struct {
 	MsgType string `json:"msgtype"` // "image"
-	Image   Image  `json:"image"`
+	Image   *Image `json:"image"`
+}
+
+func (media *ImageOfMessage) GetMsgType() string {
+	return "image"
 }
 
 type Image struct {
@@ -17,7 +21,11 @@ type Image struct {
 
 type LinkOfMessage struct {
 	MsgType string `json:"msgtype"` // "link"
-	Link    Link   `json:"link"`
+	Link    *Link  `json:"link"`
+}
+
+func (media *LinkOfMessage) GetMsgType() string {
+	return "link"
 }
 
 type Link struct {
@@ -28,8 +36,12 @@ type Link struct {
 }
 
 type MiniProgramOfMessage struct {
-	MsgType     string      `json:"msgtype"` // "miniprogram"
-	MiniProgram MiniProgram `json:"miniprogram"`
+	MsgType     string       `json:"msgtype"` // "miniprogram"
+	MiniProgram *MiniProgram `json:"miniprogram"`
+}
+
+func (media *MiniProgramOfMessage) GetMsgType() string {
+	return "miniprogram"
 }
 
 type MiniProgram struct {
@@ -42,12 +54,37 @@ type MiniProgram struct {
 type File struct {
 	MediaID string `json:"media_id"`
 }
+type FileOfMessage struct {
+	MsgType string `json:"msgtype"` // "file"
+	Video   *File  `json:"file"`
+}
+
+func (media *FileOfMessage) GetMsgType() string {
+	return "file"
+}
 
 type VideoOfMessage struct {
 	MsgType string `json:"msgtype"` // "video"
-	Video   Video  `json:"video"`
+	Video   *Video `json:"video"`
+}
+
+func (media *VideoOfMessage) GetMsgType() string {
+	return "video"
 }
 
 type Video struct {
 	MediaID string `json:"media_id"` // "MEDIA_ID",
+}
+
+type MessageTemplateInterface interface {
+	GetMsgType() string
+}
+
+type Attachment struct {
+	MsgType     string       `json:"msgtype"`
+	Image       *Image       `json:"image,omitempty"`
+	Link        *Link        `json:"link,omitempty"`
+	MiniProgram *MiniProgram `json:"miniprogram,omitempty"`
+	Video       *Video       `json:"video,omitempty"`
+	File        *File        `json:"file,omitempty"`
 }

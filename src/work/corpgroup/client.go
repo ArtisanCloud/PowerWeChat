@@ -12,7 +12,7 @@ type Client struct {
 }
 
 // 获取应用共享信息
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93403
+// https://developer.work.weixin.qq.com/document/path/93403
 func (comp *Client) GetAppShareInfo(agentID int) (*response.ResponseCorpGroupListAPPShareInfo, error) {
 
 	result := &response.ResponseCorpGroupListAPPShareInfo{}
@@ -26,7 +26,7 @@ func (comp *Client) GetAppShareInfo(agentID int) (*response.ResponseCorpGroupLis
 }
 
 // 获取下级企业的access_token
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93359
+// https://developer.work.weixin.qq.com/document/path/93359
 func (comp *Client) GetToken(corpID string, agentID string) (*response.ResponseCorpGroupGetToken, error) {
 
 	result := &response.ResponseCorpGroupGetToken{}
@@ -42,7 +42,7 @@ func (comp *Client) GetToken(corpID string, agentID string) (*response.ResponseC
 }
 
 // 获取下级企业的小程序session
-// https://open.work.weixin.qq.com/api/doc/90000/90135/93355
+// https://developer.work.weixin.qq.com/document/path/93355
 func (comp *Client) GetMiniProgramTransferSession(userID string, sessionKey string) (*response.ResponseCorpGroupTransferSession, error) {
 
 	result := &response.ResponseCorpGroupTransferSession{}

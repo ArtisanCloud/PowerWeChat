@@ -1,6 +1,6 @@
 package request
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90236#文件消息
+// https://developer.work.weixin.qq.com/document/path/90236#文件消息
 type RequestMessageSendInterface interface {
 	GetAgentID() int
 	SetAgentID(agentID int) RequestMessageSendInterface

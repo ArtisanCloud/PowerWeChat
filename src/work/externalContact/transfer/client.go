@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 分配在职成员的客户
-// https://work.weixin.qq.com/api/doc/90000/90135/92125
+// https://developer.work.weixin.qq.com/document/path/92125
 func (comp *Client) TransferCustomer(options *request.RequestTransferCustomer) (*response.ResponseTransferCustomer, error) {
 
 	result := &response.ResponseTransferCustomer{}
@@ -33,7 +33,7 @@ func (comp *Client) TransferCustomer(options *request.RequestTransferCustomer) (
 }
 
 // 查询客户接替状态
-// https://work.weixin.qq.com/api/doc/90000/90135/94088
+// https://developer.work.weixin.qq.com/document/path/94088
 func (comp *Client) TransferResult(options *request.RequestTransferResult) (*response.ResponseTransferResult, error) {
 
 	result := &response.ResponseTransferResult{}
@@ -44,7 +44,7 @@ func (comp *Client) TransferResult(options *request.RequestTransferResult) (*res
 }
 
 // 获取待分配的离职成员列表
-// https://work.weixin.qq.com/api/doc/90000/90135/92125
+// https://developer.work.weixin.qq.com/document/path/92125
 func (comp *Client) GetUnassignedList(pageID int, cursor string, pageSize int) (*response.ResponseResignedGetUnassignedList, error) {
 
 	result := &response.ResponseResignedGetUnassignedList{}
@@ -61,7 +61,7 @@ func (comp *Client) GetUnassignedList(pageID int, cursor string, pageSize int) (
 }
 
 // 分配离职成员的客户
-// https://work.weixin.qq.com/api/doc/90000/90135/94081
+// https://developer.work.weixin.qq.com/document/path/94081
 func (comp *Client) ResignedTransferCustomer(options *request.RequestResignedTransferCustomer) (*response.ResponseResignedTransferCustomer, error) {
 
 	result := &response.ResponseResignedTransferCustomer{}
@@ -72,7 +72,7 @@ func (comp *Client) ResignedTransferCustomer(options *request.RequestResignedTra
 }
 
 // 查询客户接替状态
-// https://work.weixin.qq.com/api/doc/90000/90135/94082
+// https://developer.work.weixin.qq.com/document/path/94082
 func (comp *Client) ResignedTransferResult(options *request.RequestResignedTransferResult) (*response.ResponseResignedTransferResult, error) {
 
 	result := &response.ResponseResignedTransferResult{}
@@ -83,7 +83,7 @@ func (comp *Client) ResignedTransferResult(options *request.RequestResignedTrans
 }
 
 // 分配离职成员的客户群
-// https://work.weixin.qq.com/api/doc/90000/90135/92127
+// https://developer.work.weixin.qq.com/document/path/92127
 func (comp *Client) GroupChatTransfer(options *request.RequestGroupChatTransfer) (*response.ResponseGroupChatTransfer, error) {
 
 	result := &response.ResponseGroupChatTransfer{}

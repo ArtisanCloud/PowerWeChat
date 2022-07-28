@@ -12,7 +12,7 @@ type Client struct {
 }
 
 // 获取会话内容存档开启成员列表
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91614
+// https://developer.work.weixin.qq.com/document/path/91614
 func (comp *Client) GetPermitUsersList(msgType string) (*response.ResponseMsgAuditGetPermitUsers, error) {
 
 	result := &response.ResponseMsgAuditGetPermitUsers{}
@@ -27,7 +27,7 @@ func (comp *Client) GetPermitUsersList(msgType string) (*response.ResponseMsgAud
 }
 
 // 获取会话同意情况
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91782
+// https://developer.work.weixin.qq.com/document/path/91782
 func (comp *Client) CheckSingleAgree(info []*power.StringMap) (*response.ResponseMsgAuditGetAgreeInfo, error) {
 
 	result := &response.ResponseMsgAuditGetAgreeInfo{}
@@ -42,7 +42,7 @@ func (comp *Client) CheckSingleAgree(info []*power.StringMap) (*response.Respons
 }
 
 // 获取会话同意情况
-// https://open.work.weixin.qq.com/api/doc/90000/90135/91782
+// https://developer.work.weixin.qq.com/document/path/91782
 func (comp *Client) CheckRoomAgree(roomID string) (*response.ResponseMsgAuditGetAgreeInfo, error) {
 
 	result := &response.ResponseMsgAuditGetAgreeInfo{}
@@ -57,7 +57,7 @@ func (comp *Client) CheckRoomAgree(roomID string) (*response.ResponseMsgAuditGet
 }
 
 // 获取会话内容存档内部群信息
-// https://open.work.weixin.qq.com/api/doc/90000/90135/92951
+// https://developer.work.weixin.qq.com/document/path/92951
 func (comp *Client) GroupchatGet(roomID string) (*response.ResponseMsgAuditGetRoom, error) {
 
 	result := &response.ResponseMsgAuditGetRoom{}

@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 发送新客户欢迎语
-// https://work.weixin.qq.com/api/doc/90000/90135/92366
+// https://developer.work.weixin.qq.com/document/path/92366
 func (comp *Client) AddGroupWelcomeTemplate(options *request.RequestGroupWelcomeTemplateAdd) (*response.ResponseAddGroupWelcomeTemplate, error) {
 
 	result := &response.ResponseAddGroupWelcomeTemplate{}
@@ -34,7 +34,7 @@ func (comp *Client) AddGroupWelcomeTemplate(options *request.RequestGroupWelcome
 }
 
 // 编辑入群欢迎语素材
-// https://work.weixin.qq.com/api/doc/90000/90135/92366
+// https://developer.work.weixin.qq.com/document/path/92366#编辑入群欢迎语素材
 func (comp *Client) EditGroupWelcomeTemplate(options *request.RequestGroupWelcomeTemplateEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -45,7 +45,7 @@ func (comp *Client) EditGroupWelcomeTemplate(options *request.RequestGroupWelcom
 }
 
 // 获取入群欢迎语素材
-// https://work.weixin.qq.com/api/doc/90000/90135/92366
+// https://developer.work.weixin.qq.com/document/path/92366#获取入群欢迎语素材
 func (comp *Client) GetGroupWelcomeTemplate(templateID string) (*response.ResponseGetGroupWelcomeTemplate, error) {
 
 	result := &response.ResponseGetGroupWelcomeTemplate{}
@@ -59,7 +59,7 @@ func (comp *Client) GetGroupWelcomeTemplate(templateID string) (*response.Respon
 }
 
 // 删除入群欢迎语素材
-// https://work.weixin.qq.com/api/doc/90000/90135/92366
+// https://developer.work.weixin.qq.com/document/path/92366#删除入群欢迎语素材
 func (comp *Client) DelGroupWelcomeTemplate(templateID string, agentID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

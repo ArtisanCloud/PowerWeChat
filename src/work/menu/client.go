@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90232
+// https://developer.work.weixin.qq.com/document/path/90232
 func (comp *Client) Get() (*response.ResponseMenuGet, error) {
 
 	result := &response.ResponseMenuGet{}
@@ -35,7 +35,7 @@ func (comp *Client) Get() (*response.ResponseMenuGet, error) {
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90231
+// https://developer.work.weixin.qq.com/document/path/90231
 func (comp *Client) Create(data *request.RequestMenuSet) (*response.ResponseMenuCreate, error) {
 
 	result := &response.ResponseMenuCreate{}
@@ -48,7 +48,7 @@ func (comp *Client) Create(data *request.RequestMenuSet) (*response.ResponseMenu
 	return result, err
 }
 
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90233
+// https://developer.work.weixin.qq.com/document/path/90233
 func (comp *Client) Delete(agentID int) (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}

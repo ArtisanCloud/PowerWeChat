@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // 创建部门
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90205
+// https://developer.work.weixin.qq.com/document/path/90205
 func (comp *Client) Create(params *request.RequestDepartmentUpsert) (*response.ResponseDepartmentCreate, error) {
 
 	result := &response.ResponseDepartmentCreate{}
@@ -24,7 +24,7 @@ func (comp *Client) Create(params *request.RequestDepartmentUpsert) (*response.R
 }
 
 // 更新部门
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90206
+// https://developer.work.weixin.qq.com/document/path/90206
 func (comp *Client) Update(params *request.RequestDepartmentUpsert) (*response.ResponseDepartmentUpdate, error) {
 
 	result := &response.ResponseDepartmentUpdate{}
@@ -35,7 +35,7 @@ func (comp *Client) Update(params *request.RequestDepartmentUpsert) (*response.R
 }
 
 // 删除部门
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90207
+// https://developer.work.weixin.qq.com/document/path/90207
 func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 
 	result := &response.ResponseDepartmentDelete{}
@@ -48,7 +48,7 @@ func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 }
 
 // 获取部门列表
-// https://open.work.weixin.qq.com/api/doc/90000/90135/90208
+// https://developer.work.weixin.qq.com/document/path/90208
 func (comp *Client) List(id int) (*response.ResponseDepartmentList, error) {
 
 	result := &response.ResponseDepartmentList{}

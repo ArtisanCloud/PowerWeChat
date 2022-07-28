@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 创建日程
-// https://work.weixin.qq.com/api/doc/90000/90135/93648
+// https://developer.work.weixin.qq.com/document/path/93648
 func (comp *Client) Add(schedule *power.HashMap, agentID int) (*response.ResponseScheduleAdd, error) {
 
 	result := &response.ResponseScheduleAdd{}
@@ -39,7 +39,7 @@ func (comp *Client) Add(schedule *power.HashMap, agentID int) (*response.Respons
 }
 
 // 更新日程
-// https://work.weixin.qq.com/api/doc/90000/90135/93648
+// https://developer.work.weixin.qq.com/document/path/93648
 func (comp *Client) Update(schedule *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -54,7 +54,7 @@ func (comp *Client) Update(schedule *power.HashMap) (*response2.ResponseWork, er
 }
 
 // 获取日程详情
-// https://work.weixin.qq.com/api/doc/90000/90135/93648
+// https://developer.work.weixin.qq.com/document/path/93648
 func (comp *Client) Get(scheduleIDList []string) (*response.ResponseScheduleGet, error) {
 
 	result := &response.ResponseScheduleGet{}
@@ -69,7 +69,7 @@ func (comp *Client) Get(scheduleIDList []string) (*response.ResponseScheduleGet,
 }
 
 // 删除日程
-// https://work.weixin.qq.com/api/doc/90000/90135/93648
+// https://developer.work.weixin.qq.com/document/path/93648
 func (comp *Client) Del(scheduleID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

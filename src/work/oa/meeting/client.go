@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 创建预约会议
-// https://work.weixin.qq.com/api/doc/90000/90135/93627
+// https://developer.work.weixin.qq.com/document/path/93627
 func (comp *Client) Create(options *request.RequestMeetingCreate) (*response.ResponseMeetingCreate, error) {
 
 	result := &response.ResponseMeetingCreate{}
@@ -34,7 +34,7 @@ func (comp *Client) Create(options *request.RequestMeetingCreate) (*response.Res
 }
 
 // 修改预约会议
-// https://work.weixin.qq.com/api/doc/90000/90135/93631
+// https://developer.work.weixin.qq.com/document/path/93631
 func (comp *Client) Update(options *request.RequestMeetingUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -45,7 +45,7 @@ func (comp *Client) Update(options *request.RequestMeetingUpdate) (*response2.Re
 }
 
 // 取消预约会议
-// https://work.weixin.qq.com/api/doc/90000/90135/93630
+// https://developer.work.weixin.qq.com/document/path/93630
 func (comp *Client) Cancel(meetingID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -60,7 +60,7 @@ func (comp *Client) Cancel(meetingID string) (*response2.ResponseWork, error) {
 }
 
 // 获取成员会议ID列表
-// https://work.weixin.qq.com/api/doc/90000/90135/93628
+// https://developer.work.weixin.qq.com/document/path/93628
 func (comp *Client) GetUserMeetingID(userID string, cursor string, beginTime int64, endTime int64, limit int) (*response.ResponseMeetingGetUserMeetingID, error) {
 
 	result := &response.ResponseMeetingGetUserMeetingID{}
@@ -79,7 +79,7 @@ func (comp *Client) GetUserMeetingID(userID string, cursor string, beginTime int
 }
 
 // 获取会议详情
-// https://work.weixin.qq.com/api/doc/90000/90135/93629
+// https://developer.work.weixin.qq.com/document/path/93629
 func (comp *Client) GetBookingInfo(meetingID string) (*response.ResponseMeetingGetBookingInfo, error) {
 
 	result := &response.ResponseMeetingGetBookingInfo{}

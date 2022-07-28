@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 新建空间
-// https://work.weixin.qq.com/api/doc/90000/90135/93655
+// https://developer.work.weixin.qq.com/document/path/93655#新建空间
 func (comp *Client) SpaceCreate(options *request.RequestWebDriveSpaceCreate) (*response.ResponseWebDriveSpaceCreate, error) {
 
 	result := &response.ResponseWebDriveSpaceCreate{}
@@ -33,7 +33,7 @@ func (comp *Client) SpaceCreate(options *request.RequestWebDriveSpaceCreate) (*r
 }
 
 // 重命名空间
-// https://work.weixin.qq.com/api/doc/90000/90135/93655
+// https://developer.work.weixin.qq.com/document/path/93655#重命名空间
 func (comp *Client) SpaceRename(options *request.RequestWebDriveSpaceRename) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -44,7 +44,7 @@ func (comp *Client) SpaceRename(options *request.RequestWebDriveSpaceRename) (*r
 }
 
 // 解散空间
-// https://work.weixin.qq.com/api/doc/90000/90135/93655
+// https://developer.work.weixin.qq.com/document/path/93655#解散空间
 func (comp *Client) SpaceDismiss(options *request.RequestWebDriveSpaceDismiss) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -55,7 +55,7 @@ func (comp *Client) SpaceDismiss(options *request.RequestWebDriveSpaceDismiss) (
 }
 
 // 获取空间信息
-// https://work.weixin.qq.com/api/doc/90000/90135/93655
+// https://developer.work.weixin.qq.com/document/path/93655#获取空间相册信息
 func (comp *Client) SpaceInfo(options *request.RequestWebDriveSpaceInfo) (*response.ResponseWebDriveSpaceInfo, error) {
 
 	result := &response.ResponseWebDriveSpaceInfo{}
@@ -66,7 +66,7 @@ func (comp *Client) SpaceInfo(options *request.RequestWebDriveSpaceInfo) (*respo
 }
 
 // 添加成员/部门
-// https://work.weixin.qq.com/api/doc/90000/90135/93656
+// https://developer.work.weixin.qq.com/document/path/93656#添加成员部门
 func (comp *Client) SpaceACLAdd(options *request.RequestWebDriveSpaceACLAdd) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -77,7 +77,7 @@ func (comp *Client) SpaceACLAdd(options *request.RequestWebDriveSpaceACLAdd) (*r
 }
 
 // 移除成员/部门
-// https://work.weixin.qq.com/api/doc/90000/90135/93656
+// https://developer.work.weixin.qq.com/document/path/93656#移除成员部门
 func (comp *Client) SpaceACLDel(options *request.RequestWebDriveSpaceACLDel) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -87,8 +87,8 @@ func (comp *Client) SpaceACLDel(options *request.RequestWebDriveSpaceACLDel) (*r
 	return result, err
 }
 
-// 权限管理
-// https://work.weixin.qq.com/api/doc/90000/90135/93656
+// 安全设置
+// https://developer.work.weixin.qq.com/document/path/93656#安全设置
 func (comp *Client) SpaceSetting(options *request.RequestWebDriveSpaceSetting) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -99,7 +99,7 @@ func (comp *Client) SpaceSetting(options *request.RequestWebDriveSpaceSetting) (
 }
 
 // 获取邀请链接
-// https://work.weixin.qq.com/api/doc/90000/90135/93656
+// https://developer.work.weixin.qq.com/document/path/93656#获取邀请链接
 func (comp *Client) SpaceShare(options *request.RequestWebDriveSpaceShare) (*response.ResponseWebDriveSpaceShare, error) {
 
 	result := &response.ResponseWebDriveSpaceShare{}
@@ -110,7 +110,7 @@ func (comp *Client) SpaceShare(options *request.RequestWebDriveSpaceShare) (*res
 }
 
 // 获取文件列表
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#获取文件列表
 func (comp *Client) FileList(options *request.RequestWebDriveFileList) (*response.ResponseWebDriveFileList, error) {
 
 	result := &response.ResponseWebDriveFileList{}
@@ -121,7 +121,7 @@ func (comp *Client) FileList(options *request.RequestWebDriveFileList) (*respons
 }
 
 // 上传文件
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#上传文件
 func (comp *Client) FileUpload(options *request.RequestWebDriveFileUpload) (*response.ResponseWebDriveFileUpload, error) {
 
 	result := &response.ResponseWebDriveFileUpload{}
@@ -132,7 +132,7 @@ func (comp *Client) FileUpload(options *request.RequestWebDriveFileUpload) (*res
 }
 
 // 下载文件
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#下载文件
 func (comp *Client) FileDownload(options *request.RequestWebDriveFileDownload) (*response.ResponseWebDriveFileDownload, error) {
 
 	result := &response.ResponseWebDriveFileDownload{}
@@ -143,7 +143,7 @@ func (comp *Client) FileDownload(options *request.RequestWebDriveFileDownload) (
 }
 
 // 新建文件/微文档
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#新建文件文档
 func (comp *Client) FileCreate(options *request.RequestWebDriveFileCreate) (*response.ResponseWebDriveFileCreate, error) {
 
 	result := &response.ResponseWebDriveFileCreate{}
@@ -154,7 +154,7 @@ func (comp *Client) FileCreate(options *request.RequestWebDriveFileCreate) (*res
 }
 
 // 重命名文件
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#重命名文件
 func (comp *Client) FileRename(options *request.RequestWebDriveFileRename) (*response.ResponseWebDriveFileRename, error) {
 
 	result := &response.ResponseWebDriveFileRename{}
@@ -165,7 +165,7 @@ func (comp *Client) FileRename(options *request.RequestWebDriveFileRename) (*res
 }
 
 // 移动文件
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#移动文件
 func (comp *Client) FileMove(options *request.RequestWebDriveFileMove) (*response.ResponseWebDriveFileMove, error) {
 
 	result := &response.ResponseWebDriveFileMove{}
@@ -176,7 +176,7 @@ func (comp *Client) FileMove(options *request.RequestWebDriveFileMove) (*respons
 }
 
 // 删除文件
-// https://work.weixin.qq.com/api/doc/90000/90135/93657
+// https://developer.work.weixin.qq.com/document/path/93657#删除文件
 func (comp *Client) FileDelete(options *request.RequestWebDriveFileDelete) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -186,8 +186,8 @@ func (comp *Client) FileDelete(options *request.RequestWebDriveFileDelete) (*res
 	return result, err
 }
 
-// 新增指定人
-// https://work.weixin.qq.com/api/doc/90000/90135/93658
+// 新增成员
+// https://developer.work.weixin.qq.com/document/path/93658
 func (comp *Client) FileACLAdd(options *request.RequestWebDriveFileACLAdd) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -197,8 +197,8 @@ func (comp *Client) FileACLAdd(options *request.RequestWebDriveFileACLAdd) (*res
 	return result, err
 }
 
-// 删除指定人
-// https://work.weixin.qq.com/api/doc/90000/90135/93658
+// 删除成员
+// https://developer.work.weixin.qq.com/document/path/93658#删除成员
 func (comp *Client) FileACLDel(options *request.RequestWebDriveFileACLDel) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -209,7 +209,7 @@ func (comp *Client) FileACLDel(options *request.RequestWebDriveFileACLDel) (*res
 }
 
 // 分享设置
-// https://work.weixin.qq.com/api/doc/90000/90135/93658
+// https://developer.work.weixin.qq.com/document/path/93658#分享设置
 func (comp *Client) FileSetting(options *request.RequestWebDriveFileSetting) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
@@ -220,7 +220,7 @@ func (comp *Client) FileSetting(options *request.RequestWebDriveFileSetting) (*r
 }
 
 // 获取分享链接
-// https://work.weixin.qq.com/api/doc/90000/90135/93658
+// https://developer.work.weixin.qq.com/document/path/95860#获取分享链接
 func (comp *Client) FileShare(options *request.RequestWebDriveFileShare) (*response.ResponseWebDriveFileShare, error) {
 
 	result := &response.ResponseWebDriveFileShare{}

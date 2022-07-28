@@ -13,7 +13,7 @@ type RequestRefund struct {
 
 type RefundAmount struct {
 	Refund   int                 `json:"refund"`
-	From     []*RefundAmountFrom `json:"from"`
+	From     []*RefundAmountFrom `json:"from,omitempty"`
 	Total    int                 `json:"total"`
 	Currency string              `json:"currency"`
 }

@@ -20,8 +20,8 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-// 应用推送消息
-// https://work.weixin.qq.com/api/doc/90000/90135/90250
+// 发送「学校通知」
+// https://developer.work.weixin.qq.com/document/path/92291
 func (comp *Client) Send(messages *power.HashMap) (*response.ResponseExternalContactMessageSend, error) {
 
 	result := &response.ResponseExternalContactMessageSend{}

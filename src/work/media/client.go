@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取临时素材
-// https://work.weixin.qq.com/api/doc/90000/90135/90254
+// https://developer.work.weixin.qq.com/document/path/90254
 func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
@@ -39,7 +39,7 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 }
 
 // 获取高清语音素材
-// https://work.weixin.qq.com/api/doc/90000/90135/90255
+// https://developer.work.weixin.qq.com/document/path/90255
 func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error) {
 
 	result := ""
@@ -55,7 +55,7 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 }
 
 // 上传图片
-// https://work.weixin.qq.com/api/doc/90000/90135/90256
+// https://developer.work.weixin.qq.com/document/path/90256
 func (comp *Client) UploadImage(path string, form *power.HashMap) (*response2.ResponseUploadImage, error) {
 	result := &response2.ResponseUploadImage{}
 
@@ -84,7 +84,7 @@ func (comp *Client) UploadTempFile(path string, form *power.HashMap) (*response2
 }
 
 // 上传临时素材
-// https://work.weixin.qq.com/api/doc/90000/90135/90253
+// https://developer.work.weixin.qq.com/document/path/90253
 func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	outResponse := &response2.ResponseUploadMedia{}
 	files := &object.HashMap{

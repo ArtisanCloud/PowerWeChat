@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取会话状态
-// https://work.weixin.qq.com/api/doc/90000/90135/94669
+// https://developer.work.weixin.qq.com/document/path/94669
 func (comp *Client) Get(openKFID string, externalUserID string) (*response.ResponseServiceStateGet, error) {
 
 	result := &response.ResponseServiceStateGet{}
@@ -38,7 +38,7 @@ func (comp *Client) Get(openKFID string, externalUserID string) (*response.Respo
 }
 
 // 变更会话状态
-// https://work.weixin.qq.com/api/doc/90000/90135/94669
+// https://developer.work.weixin.qq.com/document/path/94669
 func (comp *Client) Trans(openKFID string, externalUserID string, serviceState int, servicerUserID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}

@@ -21,7 +21,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // 获取应用的可见范围
-// https://work.weixin.qq.com/api/doc/90000/90135/93172
+// https://developer.work.weixin.qq.com/document/path/93172
 func (comp *Client) GetPermList() (*response.ResponseLinkCorpGetPermList, error) {
 
 	result := &response.ResponseLinkCorpGetPermList{}
@@ -32,7 +32,7 @@ func (comp *Client) GetPermList() (*response.ResponseLinkCorpGetPermList, error)
 }
 
 // 获取互联企业成员详细信息
-// https://work.weixin.qq.com/api/doc/90000/90135/93171
+// https://developer.work.weixin.qq.com/document/path/93171
 func (comp *Client) GetUser(userID string) (*response.ResponseLinkCorpGetUser, error) {
 
 	result := &response.ResponseLinkCorpGetUser{}
@@ -47,7 +47,7 @@ func (comp *Client) GetUser(userID string) (*response.ResponseLinkCorpGetUser, e
 }
 
 // 获取互联企业部门成员
-// https://work.weixin.qq.com/api/doc/90000/90135/93168
+// https://developer.work.weixin.qq.com/document/path/93168
 func (comp *Client) GetUserSimpleList(departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserSimpleList, error) {
 
 	result := &response.ResponseLinkCorpGetUserSimpleList{}
@@ -63,7 +63,7 @@ func (comp *Client) GetUserSimpleList(departmentID string, fetchChild bool) (*re
 }
 
 // 获取互联企业部门成员详情
-// https://work.weixin.qq.com/api/doc/90000/90135/93169
+// https://developer.work.weixin.qq.com/document/path/93169
 func (comp *Client) GetUserList(departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserList, error) {
 
 	result := &response.ResponseLinkCorpGetUserList{}
@@ -79,7 +79,7 @@ func (comp *Client) GetUserList(departmentID string, fetchChild bool) (*response
 }
 
 // 获取互联企业部门列表
-// https://work.weixin.qq.com/api/doc/90000/90135/93170
+// https://developer.work.weixin.qq.com/document/path/93170
 func (comp *Client) GetDepartmentList(departmentID string) (*response.ResponseLinkCorpGetDepartmentList, error) {
 
 	result := &response.ResponseLinkCorpGetDepartmentList{}
