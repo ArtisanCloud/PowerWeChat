@@ -8,6 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/xml"
 	"fmt"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	"math/rand"
 	"sort"
@@ -58,12 +59,20 @@ type Encryptor struct {
 }
 
 func NewEncryptor(appID, token, aesKey string) (*Encryptor, error) {
-	// TODO: 不明白为什么需要等号
-	aesKey = aesKey + "="
-	aesKeyByte, err := base64.StdEncoding.DecodeString(aesKey)
-	if err != nil {
-		return nil, err
+
+	var aesKeyByte []byte
+	var err error
+	if aesKey == "" {
+		fmt2.Dump("AES Key is empty, this may occur errors when decode callback message")
 	}
+	aesKeyByte, err = base64.StdEncoding.DecodeString(aesKey)
+	if err != nil {
+		aesKeyByte, err = base64.RawStdEncoding.DecodeString(aesKey)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	return &Encryptor{
 		appID:     appID,
 		token:     token,

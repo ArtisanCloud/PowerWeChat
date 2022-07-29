@@ -23,6 +23,7 @@ const (
 	CALLBACK_EVENT_OPEN_APPROVAL_CHANGE     = "open_approval_change"
 	CALLBACK_EVENT_SHARE_AGENT_CHANGE       = "share_agent_change"
 	CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT = "template_card_menu_event"
+	CALLBACK_EVENT_SYS_APPROVAL_CHANGE      = "sys_approval_change"
 )
 
 type EventSubscribe struct {
@@ -48,16 +49,18 @@ type EventLocation struct {
 	AppType   string `xml:"AppType"`
 }
 
+type BatchJob struct {
+	Text    string `xml:",chardata"`
+	JobID   string `xml:"JobId"`
+	JobType string `xml:"JobType"`
+	ErrCode string `xml:"ErrCode"`
+	ErrMsg  string `xml:"ErrMsg"`
+}
+
 type EventBatchJobResult struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	BatchJob struct {
-		Text    string `xml:",chardata"`
-		JobID   string `xml:"JobId"`
-		JobType string `xml:"JobType"`
-		ErrCode string `xml:"ErrCode"`
-		ErrMsg  string `xml:"ErrMsg"`
-	} `xml:"BatchJob"`
+	BatchJob *BatchJob `xml:"BatchJob"`
 }
 
 type EventClick struct {
@@ -77,144 +80,148 @@ type EventView struct {
 type EventScanCodePush struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
-	ScanCodeInfo struct {
-		Text       string `xml:",chardata"`
-		ScanType   string `xml:"ScanType"`
-		ScanResult string `xml:"ScanResult"`
-	} `xml:"ScanCodeInfo"`
-	AgentID string `xml:"AgentID"`
+	EventKey     string        `xml:"EventKey"`
+	ScanCodeInfo *ScanCodeInfo `xml:"ScanCodeInfo"`
+	AgentID      string        `xml:"AgentID"`
+}
+
+type ScanCodeInfo struct {
+	Text       string `xml:",chardata"`
+	ScanType   string `xml:"ScanType"`
+	ScanResult string `xml:"ScanResult"`
 }
 
 type EventScancodeWaitMsg struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
-	ScanCodeInfo struct {
-		Text       string `xml:",chardata"`
-		ScanType   string `xml:"ScanType"`
-		ScanResult string `xml:"ScanResult"`
-	} `xml:"ScanCodeInfo"`
-	AgentID string `xml:"AgentID"`
+	EventKey     string        `xml:"EventKey"`
+	ScanCodeInfo *ScanCodeInfo `xml:"ScanCodeInfo"`
+	AgentID      string        `xml:"AgentID"`
 }
 
 type EventPicSysPhoto struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
-	SendPicsInfo struct {
-		Text    string `xml:",chardata"`
-		Count   string `xml:"Count"`
-		PicList struct {
-			Text string `xml:",chardata"`
-			Item struct {
-				Text      string `xml:",chardata"`
-				PicMd5Sum string `xml:"PicMd5Sum"`
-			} `xml:"item"`
-		} `xml:"PicList"`
-	} `xml:"SendPicsInfo"`
-	AgentID string `xml:"AgentID"`
+	EventKey     string        `xml:"EventKey"`
+	SendPicsInfo *SendPicsInfo `xml:"SendPicsInfo"`
+	AgentID      string        `xml:"AgentID"`
 }
 
 type EventPicPhotoOrAlbum struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
-	SendPicsInfo struct {
-		Text    string `xml:",chardata"`
-		Count   string `xml:"Count"`
-		PicList struct {
-			Text string `xml:",chardata"`
-			Item struct {
-				Text      string `xml:",chardata"`
-				PicMd5Sum string `xml:"PicMd5Sum"`
-			} `xml:"item"`
-		} `xml:"PicList"`
-	} `xml:"SendPicsInfo"`
-	AgentID string `xml:"AgentID"`
+	EventKey     string        `xml:"EventKey"`
+	SendPicsInfo *SendPicsInfo `xml:"SendPicsInfo"`
+	AgentID      string        `xml:"AgentID"`
+}
+
+type Item struct {
+	Text      string `xml:",chardata"`
+	PicMd5Sum string `xml:"PicMd5Sum"`
+}
+
+type PicList struct {
+	Text string `xml:",chardata"`
+	Item *Item  `xml:"item"`
+}
+
+type SendPicsInfo struct {
+	Text    string   `xml:",chardata"`
+	Count   string   `xml:"Count"`
+	PicList *PicList `xml:"PicList"`
 }
 
 type EventPicWeixin struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
-	SendPicsInfo struct {
-		Text    string `xml:",chardata"`
-		Count   string `xml:"Count"`
-		PicList struct {
-			Text string `xml:",chardata"`
-			Item struct {
-				Text      string `xml:",chardata"`
-				PicMd5Sum string `xml:"PicMd5Sum"`
-			} `xml:"item"`
-		} `xml:"PicList"`
-	} `xml:"SendPicsInfo"`
-	AgentID string `xml:"AgentID"`
+	EventKey     string       `xml:"EventKey"`
+	SendPicsInfo SendPicsInfo `xml:"SendPicsInfo"`
+	AgentID      string       `xml:"AgentID"`
+}
+
+type SendLocationInfo struct {
+	Text      string `xml:",chardata"`
+	LocationX string `xml:"Location_X"`
+	LocationY string `xml:"Location_Y"`
+	Scale     string `xml:"Scale"`
+	Label     string `xml:"Label"`
+	PoiName   string `xml:"Poiname"`
 }
 
 type EventLocationSelect struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey         string `xml:"EventKey"`
-	SendLocationInfo struct {
-		Text      string `xml:",chardata"`
-		LocationX string `xml:"Location_X"`
-		LocationY string `xml:"Location_Y"`
-		Scale     string `xml:"Scale"`
-		Label     string `xml:"Label"`
-		Poiname   string `xml:"Poiname"`
-	} `xml:"SendLocationInfo"`
-	AgentID string `xml:"AgentID"`
-	AppType string `xml:"AppType"`
+	EventKey         string            `xml:"EventKey"`
+	SendLocationInfo *SendLocationInfo `xml:"SendLocationInfo"`
+	AgentID          string            `xml:"AgentID"`
+	AppType          string            `xml:"AppType"`
+}
+
+// ----------------------------------------------------------------------------
+
+type Applier struct {
+	Text   string `xml:",chardata"`
+	UserID string `xml:"UserId"`
+	Party  string `xml:"Party"`
+}
+
+type Approver struct {
+	Text   string `xml:",chardata"`
+	UserID string `xml:"UserId"`
+}
+
+type Detail struct {
+	Text     string    `xml:",chardata"`
+	Approver *Approver `xml:"Approver"`
+	Speech   string    `xml:"Speech"`
+	SpStatus string    `xml:"SpStatus"`
+	SpTime   string    `xml:"SpTime"`
+}
+
+type SPRecord struct {
+	Text         string   `xml:",chardata"`
+	SpStatus     string   `xml:"SpStatus"`
+	ApproverAttr string   `xml:"ApproverAttr"`
+	Details      []Detail `xml:"Details"`
+}
+
+type Notifier struct {
+	Text   string `xml:",chardata"`
+	UserID string `xml:"UserId"`
+}
+
+type CommentUserInfo struct {
+	Text   string `xml:",chardata"`
+	UserID string `xml:"UserId"`
+}
+
+type Comments struct {
+	Text            string           `xml:",chardata"`
+	CommentUserInfo *CommentUserInfo `xml:"CommentUserInfo"`
+	CommentTime     string           `xml:"CommentTime"`
+	CommentContent  string           `xml:"CommentContent"`
+	CommentID       string           `xml:"CommentId"`
+}
+
+type ApprovalInfo struct {
+	Text              string      `xml:",chardata"`
+	SpNO              string      `xml:"SpNo"`
+	SpName            string      `xml:"SpName"`
+	SpStatus          string      `xml:"SpStatus"`
+	TemplateID        string      `xml:"TemplateId"`
+	ApplyTime         string      `xml:"ApplyTime"`
+	Applier           *Applier    `xml:"Applyer"`
+	SpRecord          []*SPRecord `xml:"SpRecord"`
+	Notifier          *Notifier   `xml:"Notifyer"`
+	Comments          *Comments   `xml:"Comments"`
+	StatusChangeEvent string      `xml:"StatuChangeEvent"`
 }
 
 type EventOpenApprovalChange struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	AgentID      string `xml:"AgentID"`
-	ApprovalInfo struct {
-		Text           string `xml:",chardata"`
-		ThirdNo        string `xml:"ThirdNo"`
-		OpenSpName     string `xml:"OpenSpName"`
-		OpenTemplateID string `xml:"OpenTemplateId"`
-		OpenSpStatus   string `xml:"OpenSpStatus"`
-		ApplyTime      string `xml:"ApplyTime"`
-		ApplyUserName  string `xml:"ApplyUserName"`
-		ApplyUserID    string `xml:"ApplyUserId"`
-		ApplyUserParty string `xml:"ApplyUserParty"`
-		ApplyUserImage string `xml:"ApplyUserImage"`
-		ApprovalNodes  struct {
-			Text         string `xml:",chardata"`
-			ApprovalNode struct {
-				Text       string `xml:",chardata"`
-				NodeStatus string `xml:"NodeStatus"`
-				NodeAttr   string `xml:"NodeAttr"`
-				NodeType   string `xml:"NodeType"`
-				Items      struct {
-					Text string `xml:",chardata"`
-					Item struct {
-						Text       string `xml:",chardata"`
-						ItemName   string `xml:"ItemName"`
-						ItemUserID string `xml:"ItemUserId"`
-						ItemImage  string `xml:"ItemImage"`
-						ItemStatus string `xml:"ItemStatus"`
-						ItemSpeech string `xml:"ItemSpeech"`
-						ItemOpTime string `xml:"ItemOpTime"`
-					} `xml:"Item"`
-				} `xml:"Items"`
-			} `xml:"ApprovalNode"`
-		} `xml:"ApprovalNodes"`
-		NotifyNodes struct {
-			Text       string `xml:",chardata"`
-			NotifyNode struct {
-				Text       string `xml:",chardata"`
-				ItemName   string `xml:"ItemName"`
-				ItemUserID string `xml:"ItemUserId"`
-				ItemImage  string `xml:"ItemImage"`
-			} `xml:"NotifyNode"`
-		} `xml:"NotifyNodes"`
-		Approverstep string `xml:"approverstep"`
-	} `xml:"ApprovalInfo"`
+	AgentID      string        `xml:"AgentID"`
+	ApprovalInfo *ApprovalInfo `xml:"ApprovalInfo"`
 }
 
 type EventShareAgentChange struct {
@@ -223,25 +230,33 @@ type EventShareAgentChange struct {
 	AgentID string `xml:"AgentID"`
 }
 
+// ----------------------------------------------------------------------------
+
+type OptionID struct {
+	Text     string   `xml:",chardata"`
+	OptionID []string `xml:"OptionId"`
+}
+
+type SelectItem struct {
+	Text        string    `xml:",chardata"`
+	QuestionKey string    `xml:"QuestionKey"`
+	OptionIDs   *OptionID `xml:"OptionIds"`
+}
+
+type SelectItems struct {
+	Text         string        `xml:",chardata"`
+	SelectedItem []*SelectItem `xml:"SelectedItem"`
+}
+
 type EventTemplateCardEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey      string `xml:"EventKey"`
-	TaskID        string `xml:"TaskId"`
-	CardType      string `xml:"CardType"`
-	ResponseCode  string `xml:"ResponseCode"`
-	AgentID       string `xml:"AgentID"`
-	SelectedItems struct {
-		Text         string `xml:",chardata"`
-		SelectedItem []struct {
-			Text        string `xml:",chardata"`
-			QuestionKey string `xml:"QuestionKey"`
-			OptionIds   struct {
-				Text     string   `xml:",chardata"`
-				OptionID []string `xml:"OptionId"`
-			} `xml:"OptionIds"`
-		} `xml:"SelectedItem"`
-	} `xml:"SelectedItems"`
+	EventKey      string       `xml:"EventKey"`
+	TaskID        string       `xml:"TaskId"`
+	CardType      string       `xml:"CardType"`
+	ResponseCode  string       `xml:"ResponseCode"`
+	AgentID       string       `xml:"AgentID"`
+	SelectedItems *SelectItems `xml:"SelectedItems"`
 }
 
 type EventTemplateCardMenuEvent struct {
