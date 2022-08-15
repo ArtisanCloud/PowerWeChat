@@ -478,11 +478,11 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"file":  userConfig.Log.File,
 			"env":   userConfig.Log.ENV,
 		},
-		"oauth.callback": userConfig.OAuth.Callback,
-		"oauth.scopes":   userConfig.OAuth.Scopes,
-		"cache":          userConfig.Cache,
-		"http_debug":     userConfig.HttpDebug,
-		"debug":          userConfig.Debug,
+		"oauth.callbacks": userConfig.OAuth.Callback,
+		"oauth.scopes":    userConfig.OAuth.Scopes,
+		"cache":           userConfig.Cache,
+		"http_debug":      userConfig.HttpDebug,
+		"debug":           userConfig.Debug,
 	}
 
 	return config, nil

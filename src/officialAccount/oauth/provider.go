@@ -49,7 +49,7 @@ func prepareCallbackURL(app kernel.ApplicationInterface) string {
 	config := *app.GetConfig()
 
 	var callback string
-	callback = config.GetString("oauth.callback", "")
+	callback = config.GetString("oauth.callbacks", "")
 	if callback != "" {
 		if strings.Index(callback, "http") == 0 {
 			return callback
@@ -57,7 +57,7 @@ func prepareCallbackURL(app kernel.ApplicationInterface) string {
 	}
 
 	//externalRequest := app.GetExternalRequest()
-	baseURL := config.GetString("oauth.callback", "")
+	baseURL := config.GetString("oauth.callbacks", "")
 	//if externalRequest != nil {
 	//	baseURL = app.GetExternalRequest().URL.Host
 	//}

@@ -199,8 +199,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"debug":      userConfig.Debug,
 
 		"oauth": &object.HashMap{
-			"scopes":   userConfig.OAuth.Scopes,
-			"callback": userConfig.OAuth.Callback,
+			"scopes":    userConfig.OAuth.Scopes,
+			"callbacks": userConfig.OAuth.Callback,
 		},
 	}
 

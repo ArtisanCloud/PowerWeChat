@@ -45,7 +45,7 @@ func (comp *Client) CheckCallbackURL(action string, checkOperator string) (*resp
 		"check_operator": checkOperator,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/callback/check", options, nil, nil, result)
+	_, err := comp.HttpPostJson("cgi-bin/callbacks/check", options, nil, nil, result)
 
 	return result, err
 }

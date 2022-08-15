@@ -54,8 +54,10 @@ type ServerGuard struct {
 
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
 
-	GetToken func() string
-	Resolve  func(request *http.Request) (httpRS *response.HttpResponse, err error)
+	GetToken    func() string
+	Resolve     func(request *http.Request) (httpRS *response.HttpResponse, err error)
+	Notify      func(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error)
+	HandleEvent func(request *http.Request, closure func(event contract.EventInterface) interface{}) (*object.HashMap, error)
 }
 
 func NewServerGuard(app *ApplicationInterface) *ServerGuard {
@@ -77,21 +79,24 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 
 	serverGuard.OverrideGetToken()
 	serverGuard.OverrideResolve()
+	serverGuard.OverrideNotify()
+	serverGuard.OverrideHandleEvent()
 
 	return serverGuard
 
 }
 
-func (serverGuard *ServerGuard) Notify(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error) {
+func (serverGuard *ServerGuard) OverrideNotify() {
+	serverGuard.Notify = func(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error) {
+		validatedGuard, err := serverGuard.Validate(request)
+		if err != nil {
+			return nil, err
+		}
 
-	validatedGuard, err := serverGuard.Validate(request)
-	if err != nil {
-		return nil, err
+		response, err = validatedGuard.ResolveEvent(request, closure)
+
+		return response, err
 	}
-
-	response, err = validatedGuard.resolveEvent(request, closure)
-
-	return response, err
 }
 
 // 回调配置
@@ -142,7 +147,7 @@ func (serverGuard *ServerGuard) validate(request *http.Request) (*ServerGuard, e
 	return serverGuard, nil
 }
 
-func (serverGuard *ServerGuard) getEvent(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, err error) {
+func (serverGuard *ServerGuard) GetEvent(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, err error) {
 
 	if request == nil {
 		return nil, nil, errors.New("request is invalid")
@@ -155,13 +160,13 @@ func (serverGuard *ServerGuard) getEvent(request *http.Request) (callback *model
 		}
 	}
 
-	callback, err = serverGuard.parseMessage(string(b))
+	callback, err = serverGuard.ParseMessage(string(b))
 	if err != nil {
 		return nil, nil, err
 	}
 
 	if serverGuard.IsSafeMode(request) && callback.Encrypt != "" {
-		callbackHeader, err = serverGuard.decryptEvent(request, string(b))
+		callbackHeader, err = serverGuard.DecryptEvent(request, string(b))
 	} else {
 		callbackHeader = &models.CallbackMessageHeader{}
 		err = xml.Unmarshal(b, callbackHeader)
@@ -181,7 +186,7 @@ func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *mod
 		}
 	}
 
-	callback, err = serverGuard.parseMessage(string(b))
+	callback, err = serverGuard.ParseMessage(string(b))
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -200,8 +205,8 @@ func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *mod
 
 }
 
-func (serverGuard *ServerGuard) resolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *response.HttpResponse, err error) {
-	result, err := serverGuard.handleEvent(request, closure)
+func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *response.HttpResponse, err error) {
+	result, err := serverGuard.HandleEvent(request, closure)
 	if err != nil {
 		return nil, err
 	}
@@ -310,29 +315,31 @@ func (serverGuard *ServerGuard) buildResponse(request *http.Request, to string, 
 	return serverGuard.buildReply(request, to, from, toMessage)
 }
 
-func (serverGuard *ServerGuard) handleEvent(r *http.Request, closure func(event contract.EventInterface) interface{}) (*object.HashMap, error) {
+func (serverGuard *ServerGuard) OverrideHandleEvent() {
+	serverGuard.HandleEvent = func(r *http.Request, closure func(event contract.EventInterface) interface{}) (*object.HashMap, error) {
 
-	_, msgHeader, err := serverGuard.getEvent(r)
-	if err != nil {
-		return nil, err
-	}
-
-	fromUserName := ""
-	toUserName := ""
-
-	if msgHeader != nil {
-		if msgHeader.MsgType != "" {
-			fromUserName = msgHeader.FromUserName
-			toUserName = msgHeader.ToUserName
+		_, msgHeader, err := serverGuard.GetEvent(r)
+		if err != nil {
+			return nil, err
 		}
-	}
-	response := closure(msgHeader)
 
-	return &object.HashMap{
-		"to":       fromUserName,
-		"from":     toUserName,
-		"response": response,
-	}, nil
+		fromUserName := ""
+		toUserName := ""
+
+		if msgHeader != nil {
+			if msgHeader.MsgType != "" {
+				fromUserName = msgHeader.FromUserName
+				toUserName = msgHeader.ToUserName
+			}
+		}
+		response := closure(msgHeader)
+
+		return &object.HashMap{
+			"to":       fromUserName,
+			"from":     toUserName,
+			"response": response,
+		}, nil
+	}
 }
 
 func (serverGuard *ServerGuard) handleRequest(request *http.Request) (*object.HashMap, error) {
@@ -404,11 +411,11 @@ func (serverGuard *ServerGuard) isSafeMode(request *http.Request) bool {
 
 	query := request.URL.Query()
 
-	return query.Get("signature") == "" && "aes" == query.Get("encrypt_type")
+	return query.Get("signature") != "" && "aes" == query.Get("encrypt_type")
 
 }
 
-func (serverGuard *ServerGuard) parseMessage(content string) (callback *models.Callback, err error) {
+func (serverGuard *ServerGuard) ParseMessage(content string) (callback *models.Callback, err error) {
 
 	callback = &models.Callback{}
 
@@ -462,7 +469,7 @@ func (serverGuard *ServerGuard) shouldReturnRawResponse(request *http.Request) b
 	return false
 }
 
-func (serverGuard *ServerGuard) decryptEvent(request *http.Request, content string) (callbackHeader *models.CallbackMessageHeader, err error) {
+func (serverGuard *ServerGuard) DecryptEvent(request *http.Request, content string) (callbackHeader *models.CallbackMessageHeader, err error) {
 
 	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 	query := request.URL.Query()
