@@ -2,6 +2,12 @@ package openplatform
 
 import "encoding/xml"
 
+const EVENT_AUTHORIZED string = "authorized"
+const EVENT_UNAUTHORIZED string = "unauthorized"
+const EVENT_UPDATE_AUTHORIZED string = "updateauthorized"
+const EVENT_COMPONENT_VERIFY_TICKET string = "component_verify_ticket"
+const EVENT_THIRD_FAST_REGISTERED string = "notify_third_fasteregister"
+
 type Callback struct {
 	XMLName xml.Name `xml:"xml"`
 	Text    string   `xml:",chardata"`
