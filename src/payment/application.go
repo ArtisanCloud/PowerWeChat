@@ -316,13 +316,13 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"timeout":  userConfig.Http.Timeout,
 			"base_uri": userConfig.Http.BaseURI,
 		},
-		"oauth.callback": userConfig.OAuth.Callback,
-		"oauth.scopes":   userConfig.OAuth.Scopes,
-		"notify_url":     userConfig.NotifyURL,
-		"cache":          userConfig.Cache,
-		"http_debug":     userConfig.HttpDebug,
-		"debug":          userConfig.Debug,
-		"sandbox":        userConfig.Sandbox,
+		"oauth.callbacks": userConfig.OAuth.Callback,
+		"oauth.scopes":    userConfig.OAuth.Scopes,
+		"notify_url":      userConfig.NotifyURL,
+		"cache":           userConfig.Cache,
+		"http_debug":      userConfig.HttpDebug,
+		"debug":           userConfig.Debug,
+		"sandbox":         userConfig.Sandbox,
 	}
 
 	return config, nil

@@ -8,6 +8,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/response"
+	openplatform "github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/server/callbacks"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/server/handlers"
 	"io"
 	"io/ioutil"
@@ -49,8 +50,64 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 	}
 
 	guard.OverrideResolve()
+	guard.OverrideNotify()
 
 	return guard
+
+}
+
+func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte) interface{}) (httpRS *response.HttpResponse, err error) {
+	// validate the signature
+	_, err = guard.Validate(request)
+	if err != nil {
+		return nil, err
+	}
+
+	// read body content
+	requestXML, _ := ioutil.ReadAll(request.Body)
+	request.Body = ioutil.NopCloser(bytes.NewBuffer(requestXML))
+	println(string(requestXML))
+
+	// convert to openplatform event
+	callbackEvent := &openplatform.Callback{}
+	err = xml.Unmarshal(requestXML, callbackEvent)
+	if err != nil {
+		return nil, err
+	}
+
+	// decrypt event content
+	var bufDecrypted []byte = nil
+	if guard.IsSafeMode(request) && callbackEvent.Encrypt != "" {
+		bufDecrypted, err = guard.DecryptEvent(callbackEvent.Encrypt)
+	}
+
+	// call the closure for handling the event
+	result := closure(callbackEvent, bufDecrypted)
+
+	// convert the result to http response
+	strResult, err := object.JsonEncode(result)
+	if err != nil {
+		return nil, err
+	}
+	httpRS = response.NewHttpResponse(http.StatusOK)
+	httpRS.Response = &http.Response{
+		Body: ioutil.NopCloser(bytes.NewBuffer([]byte(strResult))),
+	}
+
+	return httpRS, err
+
+}
+
+func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error) {
+
+	encryptor := (*guard.App).GetComponent("Encryptor").(*kernel.Encryptor)
+
+	bufDecrypted, cryptErr := encryptor.DecryptContent(content)
+	if cryptErr != nil {
+		return nil, errors.New(cryptErr.ErrMsg)
+	}
+
+	return bufDecrypted, err
 
 }
 

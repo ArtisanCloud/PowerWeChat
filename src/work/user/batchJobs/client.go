@@ -30,7 +30,7 @@ func (comp *Client) SyncUser(mediaID string, toInvite bool, callback *power.Stri
 	options := &object.HashMap{
 		"media_id":  mediaID,
 		"to_invite": toInvite,
-		"callback":  callback,
+		"callbacks": callback,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/batch/syncuser", options, nil, nil, result)
 
@@ -46,7 +46,7 @@ func (comp *Client) ReplaceUser(mediaID string, toInvite bool, callback *power.S
 	options := &object.HashMap{
 		"media_id":  mediaID,
 		"to_invite": toInvite,
-		"callback":  callback,
+		"callbacks": callback,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/batch/replaceuser", options, nil, nil, result)
 
@@ -62,7 +62,7 @@ func (comp *Client) ReplaceParty(mediaID string, toInvite bool, callback *power.
 	options := &object.HashMap{
 		"media_id":  mediaID,
 		"to_invite": toInvite,
-		"callback":  callback,
+		"callbacks": callback,
 	}
 	_, err := comp.HttpPostJson("cgi-bin/batch/replaceparty", options, nil, nil, result)
 

@@ -46,13 +46,13 @@ func prepareCallbackUrl(app kernel.ApplicationInterface) (string, error) {
 	config := *app.GetContainer().Config
 
 	var callback string
-	if config["oauth.callback"] != nil {
-		callback = config["oauth.callback"].(string)
+	if config["oauth.callbacks"] != nil {
+		callback = config["oauth.callbacks"].(string)
 		if strings.Index(callback, "http") == 0 {
 			return callback, nil
 		}
 	}
 
-	return callback, errors.New(fmt.Sprintf("OAuth callback format invalid, please make sure that schema 'http' added: %v", callback))
+	return callback, errors.New(fmt.Sprintf("OAuth callbacks format invalid, please make sure that schema 'http' added: %v", callback))
 
 }
