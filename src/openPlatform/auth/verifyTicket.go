@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v2/cache"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"time"
 )
 
 type VerifyTicket struct {
@@ -29,10 +30,15 @@ func NewVerifyTicket(app *kernel.ApplicationInterface) (*VerifyTicket, error) {
 	return ticket, nil
 }
 
-func (verifyTicket *VerifyTicket) SetTicket(ticket string) error {
-	verifyTicket.GetCache().Set(verifyTicket.getCacheKey(), ticket, 3600)
+func (verifyTicket *VerifyTicket) SetTicket(ticket string) (err error) {
+	cacheHandle := verifyTicket.GetCache()
+	cacheKey := verifyTicket.getCacheKey()
+	err = cacheHandle.Set(cacheKey, ticket, 3600*time.Second)
+	if err != nil {
+		return err
+	}
 
-	if !verifyTicket.GetCache().Has(verifyTicket.getCacheKey()) {
+	if !cacheHandle.Has(cacheKey) {
 		return errors.New("failed to cache verify ticket")
 	}
 
@@ -41,7 +47,9 @@ func (verifyTicket *VerifyTicket) SetTicket(ticket string) error {
 
 func (verifyTicket *VerifyTicket) GetTicket() (ticket string, err error) {
 
-	cached, err := verifyTicket.GetCache().Get(verifyTicket.getCacheKey(), "")
+	cacheHandle := verifyTicket.GetCache()
+	cacheKey := verifyTicket.getCacheKey()
+	cached, err := cacheHandle.Get(cacheKey, "")
 	if err != nil {
 		return "", err
 	}

@@ -47,7 +47,7 @@ func (interactCache *InteractsWithCache) GetCache() CacheInterface {
 	return interactCache.Cache
 }
 
-func (interactCache *InteractsWithCache) setCache(cache CacheInterface) *InteractsWithCache {
+func (interactCache *InteractsWithCache) SetCache(cache CacheInterface) *InteractsWithCache {
 
 	interactCache.Cache = cache
 

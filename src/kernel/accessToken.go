@@ -85,35 +85,38 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	}
 
 	// request token from power
-	response, err := accessToken.requestToken(accessToken.GetCredentials())
+	resToken, err = accessToken.requestToken(accessToken.GetCredentials())
 	if err != nil {
 		return nil, err
 	}
-
-	// save token into cache
-	resToken = response
-	var expireIn float64 = 7200
-	if resToken.ExpiresIn > 0 {
-		expireIn = resToken.ExpiresIn
-	}
-	_, err = accessToken.SetToken(resToken.AccessToken, expireIn)
+	_, err = accessToken.SetToken(resToken)
 
 	// tbd dispatch an event for AccessTokenRefresh
 
 	return resToken, err
 }
 
-func (accessToken *AccessToken) SetToken(token string, lifeTime float64) (tokenInterface contract.AccessTokenInterface, err error) {
-	if lifeTime <= 0 {
-		lifeTime = 7200
+func (accessToken *AccessToken) SetToken(token *response2.ResponseGetToken) (tokenInterface contract.AccessTokenInterface, err error) {
+	if token.ExpiresIn <= 0 {
+		token.ExpiresIn = 7200
+	}
+
+	strAccessToken := ""
+	if token.AccessToken != "" {
+		strAccessToken = token.AccessToken
+	} else if token.ComponentAccessToken != "" {
+		strAccessToken = token.ComponentAccessToken
+	} else {
+		return nil, errors.New("access token is empty")
+
 	}
 
 	// set token into cache
 	cache := accessToken.GetCache()
 	err = cache.Set(accessToken.GetCacheKey(), &object.HashMap{
-		accessToken.TokenKey: token,
-		"expires_in":         lifeTime,
-	}, time.Duration(lifeTime)*time.Second)
+		accessToken.TokenKey: strAccessToken,
+		"expires_in":         token.ExpiresIn,
+	}, time.Duration(token.ExpiresIn)*time.Second)
 
 	if err != nil {
 		return nil, err
@@ -140,7 +143,7 @@ func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*re
 	}
 	token := res
 
-	if token == nil || token.AccessToken == "" {
+	if token == nil || (token.AccessToken == "" && token.ComponentAccessToken == "") {
 		return nil, errors.New(fmt.Sprintf("Request access_token fail: %v", res))
 	}
 
