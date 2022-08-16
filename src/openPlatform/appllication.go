@@ -315,6 +315,7 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 }
 
 // Return the pre-authorization login page url.
+// https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Authorization_Process_Technical_Description.html
 func (app *OpenPlatform) GetFastRegistrationURL(callbackUrl string, optional *object.StringMap) string {
 
 	config := app.GetConfig()

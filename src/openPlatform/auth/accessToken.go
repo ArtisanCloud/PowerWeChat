@@ -11,7 +11,7 @@ type AccessToken struct {
 	*kernel.AccessToken
 }
 
-// https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
+// https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/component_access_token.html
 func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
@@ -34,17 +34,18 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-	config := (*accessToken.App).GetContainer().GetConfig()
-	accessToken.GetCredentials = func() *object.StringMap {
 
-		ticket, _ := (*config)["verify_ticket"].(*VerifyTicket).GetTicket()
+	accessToken.GetCredentials = func() *object.StringMap {
+		config := (*accessToken.App).GetContainer().GetConfig()
+		verifyTicket := (*accessToken.App).GetComponent("VerifyTicket").(*VerifyTicket)
+		ticket, _ := verifyTicket.GetTicket()
 
 		return &object.StringMap{
 			"component_appid":         (*config)["app_id"].(string),
 			"component_appsecret":     (*config)["secret"].(string),
 			"component_verify_ticket": ticket,
 
-			"appid":      (*config)["corp_id"].(string),
+			"appid":      (*config)["app_id"].(string),
 			"secret":     (*config)["secret"].(string),
 			"neededText": ticket,
 		}
