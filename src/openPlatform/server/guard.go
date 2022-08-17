@@ -56,7 +56,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte) interface{}) (httpRS *response.HttpResponse, err error) {
+func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte, infoType string) interface{}) (httpRS *response.HttpResponse, err error) {
 	// validate the signature
 	_, err = guard.Validate(request)
 	if err != nil {
@@ -82,7 +82,8 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	}
 
 	// call the closure for handling the event
-	result := closure(callbackEvent, bufDecrypted)
+	msg, err := guard.GetMessage(request)
+	result := closure(callbackEvent, bufDecrypted, msg.InfoType)
 
 	// convert the result to http response
 	strResult, err := object.JsonEncode(result)
