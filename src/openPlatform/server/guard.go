@@ -82,7 +82,8 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	}
 
 	// call the closure for handling the event
-	msg, err := guard.GetMessage(request)
+	msg := &response2.ResponseVerifyTicket{}
+	err = xml.Unmarshal(bufDecrypted, msg)
 	result := closure(callbackEvent, bufDecrypted, msg.InfoType)
 
 	// convert the result to http response
@@ -147,6 +148,7 @@ func (guard *Guard) GetMessage(request *http.Request) (verifyTicket *response2.R
 		if err != nil || b == nil {
 			return nil, err
 		}
+		request.Body = ioutil.NopCloser(bytes.NewBuffer(b))
 	}
 	verifyTicket = &response2.ResponseVerifyTicket{}
 	err = guard.parseMessage(string(b), verifyTicket)
