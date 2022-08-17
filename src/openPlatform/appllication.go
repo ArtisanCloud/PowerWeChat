@@ -209,12 +209,24 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 }
 
 func (app *OpenPlatform) OfficialAccount(appID string, refreshToken string, accessToken *auth2.AccessToken) (application *officialAccount.Application, err error) {
-	userConfig := app.GetOfficialAuthorizerConfig(appID, refreshToken)
+	userConfig, err := app.GetOfficialAuthorizerConfig(appID, refreshToken)
+	if err != nil {
+		return nil, err
+	}
 	application, err = officialAccount.NewApplication(userConfig)
+	if err != nil {
+		return nil, err
+	}
 
+	if accessToken == nil {
+		accessToken, err = auth2.NewAccessToken(application.OfficialAccount, app)
+		if err != nil {
+			return nil, err
+		}
+	}
 	application.AccessToken.AccessToken = accessToken.AccessToken
 	application.Encryptor = app.Encryptor
-	application.Account, err = account.NewClient(app, application)
+	application.Account, err = account.NewClient(application, app)
 
 	token, err := app.AccessToken.GetToken(false)
 	if err != nil {
@@ -245,12 +257,17 @@ func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessTo
 
 }
 
-func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken string) (userConfig *officialAccount2.UserConfig) {
+func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken string) (userConfig *officialAccount2.UserConfig, err error) {
 
 	token, _ := app.AccessToken.GetToken(false)
 	config := app.GetConfig()
-	cache := config.Get("cache", nil).(cache.CacheInterface)
-	oauth := config.Get("oauth", nil).(officialAccount2.OAuth)
+	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
+	var oauth = officialAccount2.OAuth{}
+	err = object.HashMapToStructure(config.Get("oauth", nil).(*object.HashMap), &oauth)
+	if err != nil {
+		return nil, err
+	}
+
 	log := config.Get("log", nil).(*object.StringMap)
 
 	userConfig = &officialAccount2.UserConfig{
@@ -269,7 +286,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 			ENV:   (*log)["env"],
 		},
 		OAuth: oauth,
-		Cache: cache,
+		Cache: cacheHandle,
 
 		HttpDebug: config.GetBool("http_debug", false),
 		Debug:     config.GetBool("debug", false),
@@ -277,7 +294,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 		Sandbox:   config.GetBool("sandbox", false),
 	}
 
-	return userConfig
+	return userConfig, err
 }
 
 func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshToken string) (userConfig *miniProgram2.UserConfig) {

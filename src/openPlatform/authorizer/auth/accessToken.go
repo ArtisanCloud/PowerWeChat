@@ -12,12 +12,12 @@ type AccessToken struct {
 	*kernel.AccessToken
 
 	// PowerWechat\OpenPlatform\Application
-	component kernel.ApplicationInterface
+	Component kernel.ApplicationInterface
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
-func NewAccessToken(app *kernel.ApplicationInterface, component kernel.ApplicationInterface) (*AccessToken, error) {
-	kernelToken, err := kernel.NewAccessToken(app)
+func NewAccessToken(app kernel.ApplicationInterface, component kernel.ApplicationInterface) (*AccessToken, error) {
+	kernelToken, err := kernel.NewAccessToken(&app)
 
 	kernelToken.RequestMethod = "POST"
 	kernelToken.QueryName = "access_token"
@@ -30,21 +30,22 @@ func NewAccessToken(app *kernel.ApplicationInterface, component kernel.Applicati
 		AccessToken: kernelToken,
 	}
 
-	token.component = component
+	token.Component = component
 
 	// Override fields and functions
 	token.OverrideGetCredentials()
+	token.OverrideGetEndpoint()
 
 	return token, nil
 }
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-	config := (*accessToken.App).GetContainer().GetConfig()
-	componentConfig := (*accessToken.App).GetContainer().GetConfig()
 
 	accessToken.GetCredentials = func() *object.StringMap {
 
+		config := (*accessToken.App).GetContainer().GetConfig()
+		componentConfig := accessToken.Component.GetContainer().GetConfig()
 		return &object.StringMap{
 			"component_appid":          (*componentConfig)["app_id"].(string),
 			"authorizer_appid":         (*config)["app_id"].(string),
@@ -58,9 +59,10 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 }
 
 // Override GetEndpoint
+// https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/api_authorizer_token.html
 func (accessToken *AccessToken) OverrideGetEndpoint() {
 	accessToken.GetEndpoint = func() (string, error) {
-		token := accessToken.component.GetComponent("AccessToken").(*auth.AccessToken)
+		token := accessToken.Component.GetComponent("AccessToken").(*auth.AccessToken)
 		componentToken, err := token.GetToken(false)
 		if err != nil {
 			return "", err
