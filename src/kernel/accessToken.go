@@ -76,11 +76,33 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	if !refresh && cache.Has(cacheKey) {
 		value, err := cache.Get(cacheKey, nil)
 		if err == nil && value != nil {
+
 			token := (object.HashMap)(value.(map[string]interface{}))
-			return &response2.ResponseGetToken{
-				AccessToken: token[accessToken.TokenKey].(string),
-				ExpiresIn:   token["expires_in"].(float64),
-			}, err
+
+			resToken = &response2.ResponseGetToken{
+				ExpiresIn: token["expires_in"].(float64),
+			}
+
+			if accessToken.TokenKey == "access_token" && token["access_token"] != nil {
+				resToken.AccessToken = token[accessToken.TokenKey].(string)
+
+			} else if accessToken.TokenKey == "component_access_token" && token["component_access_token"] != nil {
+				resToken.AccessToken = token[accessToken.TokenKey].(string)
+				resToken.ComponentAccessToken = token[accessToken.TokenKey].(string)
+
+			} else if accessToken.TokenKey == "authorizer_access_token" && token["authorizer_access_token"] != nil {
+				resToken.AccessToken = token[accessToken.TokenKey].(string)
+				resToken.AuthorizerAccessToken = token[accessToken.TokenKey].(string)
+
+			} else if accessToken.TokenKey == "authorizer_refresh_token" && token["authorizer_refresh_token"] != nil {
+				resToken.AccessToken = token[accessToken.TokenKey].(string)
+				resToken.AuthorizerRefreshToken = token[accessToken.TokenKey].(string)
+
+			} else {
+				return nil, errors.New("no token found in cache")
+			}
+
+			return resToken, err
 		}
 	}
 
@@ -101,22 +123,9 @@ func (accessToken *AccessToken) SetToken(token *response2.ResponseGetToken) (tok
 		token.ExpiresIn = 7200
 	}
 
-	strAccessToken := ""
-	if token.AccessToken != "" {
-		strAccessToken = token.AccessToken
-	} else if token.ComponentAccessToken != "" {
-		strAccessToken = token.ComponentAccessToken
-	} else {
-		return nil, errors.New("access token is empty")
-
-	}
-
 	// set token into cache
 	cache := accessToken.GetCache()
-	err = cache.Set(accessToken.GetCacheKey(), &object.HashMap{
-		accessToken.TokenKey: strAccessToken,
-		"expires_in":         token.ExpiresIn,
-	}, time.Duration(token.ExpiresIn)*time.Second)
+	err = cache.Set(accessToken.GetCacheKey(), token, time.Duration(token.ExpiresIn)*time.Second)
 
 	if err != nil {
 		return nil, err
@@ -143,7 +152,10 @@ func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*re
 	}
 	token := res
 
-	if token == nil || (token.AccessToken == "" && token.ComponentAccessToken == "") {
+	if token == nil || (token.AccessToken == "" &&
+		token.ComponentAccessToken == "" &&
+		token.AuthorizerAccessToken == "" &&
+		token.AuthorizerRefreshToken == "") {
 		return nil, errors.New(fmt.Sprintf("Request access_token fail: %v", res))
 	}
 
