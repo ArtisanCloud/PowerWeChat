@@ -8,7 +8,7 @@ go 1.17
 
 require (
 	github.com/ArtisanCloud/PowerLibs/v2 v2.0.34
-	github.com/ArtisanCloud/PowerSocialite/v2 v2.0.10
+	github.com/ArtisanCloud/PowerSocialite/v2 v2.0.11
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/google/uuid v1.1.1
 	github.com/stretchr/testify v1.8.0
@@ -25,7 +25,6 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/guonaihong/gout v0.2.12 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
-	github.com/kr/pretty v0.2.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
