@@ -33,8 +33,9 @@ func RegisterProvider(app kernel.ApplicationInterface) (*Manager, error) {
 
 	if len(scopes) > 0 {
 		socialite.Provider.Scopes(scopes)
-	} else {
-		agentID := globalConfig.Get("agent_id", 0).(int)
+	}
+	agentID := globalConfig.Get("agent_id", 0).(int)
+	if agentID > 0 {
 		socialite.Provider.SetAgentID(agentID)
 	}
 
