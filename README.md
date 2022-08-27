@@ -132,9 +132,59 @@ printf(rs.OpenID)
 团队也是很多同学一样，从 PHP 转向 Golang，具体为什么，有什么好处，就不用我这里多介绍了吧。 但是现在因为微信的生态做私域化管理是得天独厚，所以我们公司也开发了蛮多企业微信的功能。只是在转型 golang 的过程中，没有找到像 （[easywechat](https://easywechat.com)）这样好用的 sdk。所以我们就自己想为 golang 的同学们做一点贡献。产品会长期维护，迭代，希望同学们有兴趣在使用的过程中，多给意见。
 
 
+<!-- CONTRIBUTORS -->
+## Contributors
+
+
+<a href="https://github.com/mryangjiang">
+  <img width="50" src="https://avatars.githubusercontent.com/u/23132307?v=4">
+</a>
+<a href="https://github.com/zhou7507">
+  <img width="50" src="https://avatars.githubusercontent.com/u/51078932?v=4">
+</a>
+<a href="https://github.com/jeffid">
+  <img width="50" src="https://avatars.githubusercontent.com/u/22427722?v=4">
+</a>
+<a href="https://github.com/bugstark">
+  <img width="50" src="https://avatars.githubusercontent.com/u/29302590?v=4">
+</a>
+<a href="https://github.com/sohenk">
+  <img width="50" src="https://avatars.githubusercontent.com/u/5018122?v=4">
+</a>
+<a href="https://github.com/YangCSir">
+  <img width="50" src="https://avatars.githubusercontent.com/u/21410207?v=4">
+</a>
+<a href="https://github.com/obe007">
+  <img width="50" src="https://avatars.githubusercontent.com/u/16457340?v=4">
+</a>
+<a href="https://github.com/panw3i">
+  <img width="50" src="https://avatars.githubusercontent.com/u/16938611?v=4">
+</a>
+<a href="https://github.com/tesun">
+  <img width="50" src="https://avatars.githubusercontent.com/u/36953434?v=4">
+</a>
+<a href="https://github.com/liyiwu">
+  <img width="50" src="https://avatars.githubusercontent.com/u/895138?v=4">
+</a>
+<a href="https://github.com/erlangzhang">
+  <img width="50" src="https://avatars.githubusercontent.com/u/782958?v=4">
+</a>
+
+
+
+<br><br>
+<a href="https://github.com/ArtisanCloud/PowerWeChat/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ArtisanCloud/PowerWechat" />
+</a >
+
+
+
+
 ## 联系我们
 
 如果有任何意见，欢迎在Github Issue上提供意见反馈。同时，也欢迎扫描下方二维码加入企业微信讨论群。
+
+
 
 ![image info](./resource/assets/contact_me_qr.png)
 
