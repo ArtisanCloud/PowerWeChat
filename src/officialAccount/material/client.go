@@ -161,7 +161,7 @@ func (comp *Client) GetNews(mediaID string) (*response.ResponseMaterialGetNews, 
 
 // 删除永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Deleting_Permanent_Assets.html
-func (comp *Client) Delete(mediaID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Delete(mediaID string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
