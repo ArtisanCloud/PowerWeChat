@@ -173,7 +173,7 @@ printf(rs.OpenID)
 
 
 <br><br>
-<a href=" ">
+<a href="https://github.com/ArtisanCloud/PowerWeChat/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ArtisanCloud/PowerWechat" />
 </a >
 
