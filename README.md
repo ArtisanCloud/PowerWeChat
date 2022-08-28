@@ -136,6 +136,12 @@ printf(rs.OpenID)
 ## Contributors
 
 
+<a href="https://github.com/AlvinQinwen">
+  <img width="50" src="https://avatars.githubusercontent.com/u/40420020?v=4">
+</a>
+<a href="https://github.com/yosink">
+  <img width="50" src="https://avatars.githubusercontent.com/u/10346255?v=4">
+</a>
 <a href="https://github.com/mryangjiang">
   <img width="50" src="https://avatars.githubusercontent.com/u/23132307?v=4">
 </a>
@@ -168,6 +174,9 @@ printf(rs.OpenID)
 </a>
 <a href="https://github.com/erlangzhang">
   <img width="50" src="https://avatars.githubusercontent.com/u/782958?v=4">
+</a>
+<a href="https://github.com/GJHaoo">
+  <img width="50" src="https://avatars.githubusercontent.com/u/31203943?v=4">
 </a>
 
 
