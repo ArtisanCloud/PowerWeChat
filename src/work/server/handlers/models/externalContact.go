@@ -90,6 +90,14 @@ type EventExternalUserDismiss struct {
 	ChatID string `xml:"ChatId"`
 }
 
+type EventExternalTransferFail struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	FailReason     string `xml:"FailReason"`
+	UserID         string `xml:"UserID"`
+	ExternalUserID string `xml:"ExternalUserID"`
+}
+
 type EventExternalUserTagCreate struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
