@@ -1,6 +1,7 @@
 package customerService
 
 import (
+	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
@@ -112,6 +113,8 @@ func (comp *Client) SetAvatar(account string, path string) (*response2.ResponseO
 		files = &object.HashMap{
 			"media": path,
 		}
+	} else {
+		return nil, errors.New("path is empty")
 	}
 
 	params := &object.StringMap{

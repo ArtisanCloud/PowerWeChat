@@ -35,10 +35,16 @@ func (comp *MaterialClient) UploadImage(path string, Type string) (*response.Res
 		return nil, errors.New(fmt.Sprintf("File does not exist, or the file is unreadable: \"%s\"", path))
 	}
 
-	file := &object.HashMap{
-		"media": path,
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
+	} else {
+		return nil, errors.New("path is empty")
+		
 	}
 
-	_, err = comp.HttpUpload("shakearound/material/add", file, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)
+	_, err = comp.HttpUpload("shakearound/material/add", files, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)
 	return result, err
 }

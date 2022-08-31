@@ -63,8 +63,13 @@ func (comp *Client) Upload(mediaType string, path string) (*response.ResponseUpl
 	}
 
 	outResponse := &response.ResponseUploadMedia{}
-	files := &object.HashMap{
-		"media": path,
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
+	} else {
+		return nil, errors.New("path is empty")
 	}
 
 	_, err = comp.HttpUpload("media/upload", files, nil, &object.StringMap{

@@ -59,11 +59,26 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 func (comp *Client) UploadImage(path string, form *power.HashMap) (*response2.ResponseUploadImage, error) {
 	result := &response2.ResponseUploadImage{}
 
-	files := &object.HashMap{
-		"media": path,
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
 	}
 
-	_, err := comp.HttpUpload("cgi-bin/media/uploadimg", files, form.ToHashMap(), nil, nil, &result)
+	var formData *kernel.UploadForm
+	if form != nil {
+		formData = &kernel.UploadForm{
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  (*form)["name"].(string),
+					Value: (*form)["value"],
+				},
+			},
+		}
+	}
+
+	_, err := comp.HttpUpload("cgi-bin/media/uploadimg", files, formData, nil, nil, &result)
 	return result, err
 }
 
@@ -87,11 +102,27 @@ func (comp *Client) UploadTempFile(path string, form *power.HashMap) (*response2
 // https://developer.work.weixin.qq.com/document/path/90253
 func (comp *Client) Upload(mediaType string, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	outResponse := &response2.ResponseUploadMedia{}
-	files := &object.HashMap{
-		"media": path,
+
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
 	}
 
-	_, err := comp.HttpUpload("cgi-bin/media/upload", files, form.ToHashMap(), &object.StringMap{
+	var formData *kernel.UploadForm
+	if form != nil {
+		formData = &kernel.UploadForm{
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  (*form)["name"].(string),
+					Value: (*form)["value"],
+				},
+			},
+		}
+	}
+
+	_, err := comp.HttpUpload("cgi-bin/media/upload", files, formData, &object.StringMap{
 		"type": mediaType,
 	}, nil, outResponse)
 

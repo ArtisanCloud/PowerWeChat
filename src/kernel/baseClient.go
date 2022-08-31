@@ -8,8 +8,9 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
-	"github.com/google/uuid"
 	http2 "net/http"
+	"os"
+	"path/filepath"
 	"time"
 )
 
@@ -25,6 +26,15 @@ type BaseClient struct {
 
 	App   *ApplicationInterface
 	Token *AccessToken
+}
+
+type UploadForm struct {
+	FileName string
+	Contents []*UploadContent
+}
+type UploadContent struct {
+	Name  string
+	Value interface{}
 }
 
 func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, error) {
@@ -95,22 +105,31 @@ func (client *BaseClient) HttpPostJson(url string, data interface{}, query *obje
 	)
 }
 
-func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *object.HashMap, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
 	multipart := []*object.HashMap{}
 	headers := &object.HashMap{}
 
+	// 如果设置了filename，则初始化一个header，在每一个multipart里注入
 	if form != nil {
-		fileName := uuid.New().String()
-		if (*form)["filename"] != nil {
-			fileName = (*form)["filename"].(string)
+		if form.FileName != "" {
+			fileName := form.FileName
+			(*headers)["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", fileName)
 		}
-		(*headers)["filename"] = fileName
 	}
 
+	// 遍历文件目录
 	if files != nil {
 		for name, path := range *files {
-			(*headers)["filename"] = name
+
+			_, err := os.Open(path.(string))
+			if err != nil {
+				return nil, err
+			}
+			if (*headers)["filename"] == nil {
+				(*headers)["filename"] = filepath.Base(path.(string))
+			}
+
 			multipart = append(multipart, &object.HashMap{
 				"name":    name,
 				"value":   path,
@@ -119,12 +138,15 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *ob
 		}
 	}
 
+	// 遍历表单的数据
 	if form != nil {
-		for name, content := range *form {
-			multipart = append(multipart, &object.HashMap{
-				"name":  name,
-				"value": object.EncodeToBytes(content),
-			})
+		for _, content := range form.Contents {
+			part := &object.HashMap{
+				"name": content.Name,
+				//"value": object.EncodeToBytes(content.Value),
+				"value": content.Value,
+			}
+			multipart = append(multipart, part)
 		}
 	}
 

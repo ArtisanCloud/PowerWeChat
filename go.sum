@@ -1,5 +1,6 @@
-github.com/ArtisanCloud/PowerLibs/v2 v2.0.39 h1:/A0Rx9udvAWLwDrVOw9x9gllKmEYRA7olAzpwqi6lUI=
 github.com/ArtisanCloud/PowerLibs/v2 v2.0.39/go.mod h1:J4tjhrGFOUByNk5rmwQftYoJ1mU7xaKF1ztjj7H8fa4=
+github.com/ArtisanCloud/PowerLibs/v2 v2.0.40 h1:OINoefF+M8HjO8aoxb7BD6BSNjdz1CBlMc0+egNkU6s=
+github.com/ArtisanCloud/PowerLibs/v2 v2.0.40/go.mod h1:d13Xz4I57htBopbQ8kArvoKBopXGGi6nw9ggRB/DLbQ=
 github.com/ArtisanCloud/PowerSocialite/v2 v2.0.14 h1:tlJiA4gjveUYDW9Ix8UMK+Up/Dyk/OrYqTZ4M5HsP3g=
 github.com/ArtisanCloud/PowerSocialite/v2 v2.0.14/go.mod h1:2vUPuyiQi4k4aMBbJE8jEM36hjB9jx1YOY0ML+25lSU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
@@ -62,8 +63,9 @@ github.com/google/go-cmp v0.5.6/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/guonaihong/gout v0.2.12 h1:ZNtg0Nq6yzlBNgDhFF2YaRdngZCIPuijgaA0s+rCvfY=
 github.com/guonaihong/gout v0.2.12/go.mod h1:25bJRA+9fErgSvEUF5UAazc9dME+VdkjrFu7yrrVQUg=
+github.com/guonaihong/gout v0.3.1 h1:pj/44Jw0TTmcHF2RjMaCWhKPwCH98YuQejbN15Hts/o=
+github.com/guonaihong/gout v0.3.1/go.mod h1:lhje0jRkh/gcIogrG22ENPITo9tylQa3kwD9eVxcDrk=
 github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T20WEQ=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
@@ -75,6 +77,7 @@ github.com/json-iterator/go v1.1.9/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/u
 github.com/json-iterator/go v1.1.11 h1:uVUAXhF2To8cbw/3xN3pxj6kk7TYKs98NIrTqPlMWAQ=
 github.com/json-iterator/go v1.1.11/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/uOdHXbAo4=
 github.com/karrick/godirwalk v1.10.12/go.mod h1:RoGL9dQei4vP9ilrpETWE8CLOZ1kiN0LhBygSwrAsHA=
+github.com/kisielk/godepgraph v0.0.0-20220719222756-573dc89cecc8/go.mod h1:Gb5YEgxqiSSVrXKWQxDcKoCM94NO5QAwOwTaVmIUAMI=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/konsorten/go-windows-terminal-sequences v1.0.2/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
