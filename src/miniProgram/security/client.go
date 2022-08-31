@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // 向插件开发者发起使用插件的申请
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.imgSecCheck.html
+// https://developers.weixin.qq.com/miniprogram/dev/framework/security.imgSecCheck.html
 func (comp *Client) ImgSecCheck(path string, form *power.HashMap) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
@@ -25,11 +25,16 @@ func (comp *Client) ImgSecCheck(path string, form *power.HashMap) (*response2.Re
 		}
 	}
 
-	var formData *object.HashMap
+	var formData *kernel.UploadForm
 	if form != nil {
-		formData = &object.HashMap{
-			"name":  (*form)["name"],
-			"value": (*form)["value"],
+		formData = &kernel.UploadForm{
+			FileName: (*form)["name"].(string),
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  "media",
+					Value: (*form)["value"],
+				},
+			},
 		}
 	}
 
@@ -39,7 +44,7 @@ func (comp *Client) ImgSecCheck(path string, form *power.HashMap) (*response2.Re
 }
 
 // 异步校验图片/音频是否含有违法违规内容
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.mediaCheckAsync.html
+// https://developers.weixin.qq.com/miniprogram/dev/framework/security.mediaCheckAsync-v1.html#请求地址
 func (comp *Client) MediaCheckAsync(mediaURL string, mediaType int, version int, openID string, scene int) (*response.ResponseSecurityMediaCheckASync, error) {
 
 	result := &response.ResponseSecurityMediaCheckASync{}
@@ -58,7 +63,7 @@ func (comp *Client) MediaCheckAsync(mediaURL string, mediaType int, version int,
 }
 
 // 检查一段文本是否含有违法违规内容
-// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html
+// https://developers.weixin.qq.com/miniprogram/dev/framework/security.msgSecCheck-v1.html#HTTPS%20调用
 func (comp *Client) MsgSecCheck(
 	openID string, scene int, version int, content string,
 	nickname string, title string, signature string) (*response.ResponseSecurityMsgCheckASync, error) {

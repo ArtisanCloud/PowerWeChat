@@ -51,16 +51,20 @@ func (comp *Client) SuperResolution(imgURL string, img *power.HashMap) (*respons
 func (comp *Client) UploadImage(entryPoint string, imgURL string, img *power.HashMap, result interface{}) (interface{}, error) {
 
 	params := &object.StringMap{}
-	var formData *object.HashMap
+	var formData *kernel.UploadForm
 
 	if imgURL != "" {
 		params = &object.StringMap{
 			"img_url": imgURL,
 		}
 	} else if img != nil {
-		formData = &object.HashMap{
-			"name":  (*img)["name"],
-			"value": (*img)["value"],
+		formData = &kernel.UploadForm{
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  (*img)["name"].(string),
+					Value: (*img)["value"],
+				},
+			},
 		}
 	} else {
 		return nil, errors.New("Please send image url or image form data ")

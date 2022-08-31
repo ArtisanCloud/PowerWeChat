@@ -127,6 +127,20 @@ func (comp *Client) UserIdToOpenID(userID string) (*response.ResponseUserIDToOpe
 	return result, err
 }
 
+// 获取成员ID列表
+// https://developer.work.weixin.qq.com/document/path/96067
+func (comp *Client) ListID(cursor string, limit int) (*response.ResponseListID, error) {
+
+	result := &response.ResponseListID{}
+
+	_, err := comp.HttpPostJson("cgi-bin/user/list_id", &object.HashMap{
+		"cursor": cursor,
+		"limit":  limit,
+	}, nil, nil, result)
+
+	return result, err
+}
+
 // openid转userid
 // https://developer.work.weixin.qq.com/document/path/90202
 func (comp *Client) OpenIDToUserID(openID string) (*response.ResponseOpenIDToUserID, error) {
@@ -148,6 +162,20 @@ func (comp *Client) MobileToUserID(mobile string) (*response.ResponseMobileToUse
 
 	_, err := comp.HttpPostJson("cgi-bin/user/getuserid", &object.StringMap{
 		"mobile": mobile,
+	}, nil, nil, result)
+
+	return result, err
+}
+
+// 邮箱获取userid
+// https://developer.work.weixin.qq.com/document/path/95895
+func (comp *Client) EmailToUserID(email string, emailType int) (*response.ResponseConvertToUserID, error) {
+
+	result := &response.ResponseConvertToUserID{}
+
+	_, err := comp.HttpPostJson("cgi-bin/user/get_userid_by_email", &object.HashMap{
+		"email":      email,
+		"email_type": emailType,
 	}, nil, nil, result)
 
 	return result, err

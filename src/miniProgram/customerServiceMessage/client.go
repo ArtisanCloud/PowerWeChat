@@ -94,11 +94,15 @@ func (comp *Client) UploadTempMedia(mediaType string, path string, form *power.H
 		}
 	}
 
-	var formData *object.HashMap
+	var formData *kernel.UploadForm
 	if form != nil {
-		formData = &object.HashMap{
-			"name":  (*form)["name"],
-			"value": (*form)["value"],
+		formData = &kernel.UploadForm{
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  (*form)["name"].(string),
+					Value: (*form)["value"],
+				},
+			},
 		}
 	}
 

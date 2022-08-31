@@ -203,17 +203,21 @@ func (comp *Client) Upload(Type string, path string, query *object.StringMap, re
 	if (err != nil && os.IsExist(err)) && (err != nil && os.IsPermission(err)) {
 		return "", err
 	}
-	file := &object.HashMap{
-		"media": path,
+
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
 	}
 
 	(*query)["type"] = Type
 
-	form := &object.HashMap{
-		"filename": filepath.Base(path),
+	form := &kernel.UploadForm{
+		FileName: filepath.Base(path),
 	}
 
-	return comp.HttpUpload(comp.getApiByType(Type), file, form, query, nil, result)
+	return comp.HttpUpload(comp.getApiByType(Type), files, form, query, nil, result)
 }
 
 func (comp *Client) getApiByType(Type string) string {
