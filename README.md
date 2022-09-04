@@ -79,7 +79,10 @@ printf(rs.OpenID)
 	* [自动回复](https://powerwechat.artisan-cloud.com/zh/official-account/reply.html)
 	* [评论数据管理](https://powerwechat.artisan-cloud.com/zh/official-account/comment.html)
 	* [返佣商品](https://powerwechat.artisan-cloud.com/zh/official-account/goods.html)
-
+* 开放平台
+	* [入门](https://powerwechat.artisan-cloud.com/zh/open-platform/index.html)
+	* [服务端](https://powerwechat.artisan-cloud.com/zh/open-platform/server.html)
+	* [代授权](https://powerwechat.artisan-cloud.com/zh/open-platform/authorizer-delegate.html)
 * 小程序
 	* [用户信息](https://powerwechat.artisan-cloud.com/zh/mini-program/user-info.html)
 	* [数据统计与分析](https://powerwechat.artisan-cloud.com/zh/mini-program/statistics.html)
