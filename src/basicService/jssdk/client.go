@@ -70,7 +70,8 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 
 	if !refresh && comp.GetCache().Has(cacheKey) {
 		ticket, err := comp.GetCache().Get(cacheKey, nil)
-		return ticket.(*object.HashMap), err
+		ticket2 := ticket.(map[string]interface{})
+		return (*object.HashMap)(&ticket2), err
 	}
 
 	mapRSBody := &object.HashMap{}
