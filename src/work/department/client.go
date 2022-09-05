@@ -72,3 +72,16 @@ func (comp *Client) SimpleList(id int) (*response.ResponseDepartmentIDList, erro
 
 	return result, err
 }
+
+// 获取单个部门详情
+// https://developer.work.weixin.qq.com/document/path/95351
+func (comp *Client) Get(id int) (*response.ResponseDepartmentGet, error) {
+
+	result := &response.ResponseDepartmentGet{}
+
+	_, err := comp.HttpGet("cgi-bin/department/get", &object.StringMap{
+		"id": fmt.Sprintf("%d", id),
+	}, nil, result)
+
+	return result, err
+}
