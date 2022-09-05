@@ -133,7 +133,7 @@ func (comp *Client) ConfigSignature(url string, nonce string, timestamp int64) (
 
 func (comp *Client) GetTicketSignature(ticket string, nonce string, timestamp int64, url string) string {
 
-	param := fmt.Sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", ticket, nonce, timestamp, url)
+	param := fmt.Sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%d&url=%s", ticket, nonce, timestamp, url)
 
 	hash := sha1.New()
 	hash.Write([]byte(param))
