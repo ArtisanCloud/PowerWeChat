@@ -1,7 +1,6 @@
 package miniProgram
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/logger"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage"
@@ -316,13 +315,11 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 		return nil, err
 	}
 
-	fmt.Dump(app.Config.GetString("log.file", "./wechat.log"))
-	configLog := &object.HashMap{
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("log.env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
 		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
-	}
-	app.Logger, err = logger.NewLogger("", configLog)
+	})
 	if err != nil {
 		return nil, err
 	}
