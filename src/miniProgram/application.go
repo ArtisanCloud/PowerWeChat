@@ -316,9 +316,9 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 	}
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
-		"env":        app.Config.GetString("env", "develop"),
-		"outputPath": app.Config.GetString("file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("file", "./wechat.log"),
+		"env":        app.Config.GetString("log.env", "develop"),
+		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
 	})
 	if err != nil {
 		return nil, err
@@ -434,7 +434,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"component_app_token": userConfig.ComponentAppToken,
 
 		"response_type": userConfig.ResponseType,
-		"log": &object.StringMap{
+		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 			"env":   userConfig.Log.ENV,

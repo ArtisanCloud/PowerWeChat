@@ -147,7 +147,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"secret": userConfig.Secret,
 
 		"response_type": userConfig.ResponseType,
-		"log": &object.StringMap{
+		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
 		},
