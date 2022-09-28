@@ -38,7 +38,7 @@ func (comp *Client) QueryBalanceOrder(partnerTradeNo string) (*response.Response
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/gettransferinfo")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
+	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -80,7 +80,7 @@ func (comp *Client) QueryBankCardOrder(partnerTradeNo string) (*response.Respons
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/query_bank")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, false, result)
+	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
