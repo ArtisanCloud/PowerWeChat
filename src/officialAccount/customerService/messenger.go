@@ -2,6 +2,7 @@ package customerService
 
 import (
 	"errors"
+
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/messages"
@@ -44,6 +45,7 @@ func (comp *Messenger) SetTo(openID string) *Messenger {
 	return comp
 }
 
+
 func (comp *Messenger) Send() (result interface{}, err error) {
 
 	if comp.Message == nil {
@@ -53,13 +55,8 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 	switch (*comp.Message).(type) {
 	case *messages.Raw:
 		content := (*comp.Message).(*messages.Raw).GetString("content", "")
-		if err != nil {
-			return result, err
-		}
+
 		result, err = comp.Client.Send(content)
-
-		break
-
 	default:
 
 		prepends := &object.HashMap{
@@ -70,12 +67,15 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 				"kf_account": comp.Account,
 			}
 		}
-		json, err := (*comp.Message).TransformForJsonRequest(prepends, true)
+
+		var json *object.HashMap
+		json, err = (*comp.Message).TransformForJsonRequest(prepends, true)
 		if err != nil {
-			return result, err
+			return 
 		}
 		result, err = comp.Client.Send(json)
 	}
 
 	return result, err
 }
+
