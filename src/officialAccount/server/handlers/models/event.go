@@ -7,6 +7,7 @@ import (
 
 const (
 	CALLBACK_EVENT_SUBSCRIBE                = "subscribe"
+	CALLBACK_EVENT_UNSUBSCRIBE              = "unsubscribe"
 	CALLBACK_EVENT_ENTER_AGENT              = "enter_agent"
 	CALLBACK_EVENT_LOCATION                 = "LOCATION"
 	CALLBACK_EVENT_BATCH_JOB_RESULT         = "batch_job_result"
@@ -24,6 +25,12 @@ const (
 )
 
 type EventSubscribe struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	AgentID string `xml:"AgentID"`
+}
+
+type EventUnSubscribe struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
 	AgentID string `xml:"AgentID"`
