@@ -10,9 +10,10 @@ type SubButton struct {
 }
 
 type Button struct {
-	Type      string `json:"type,omitempty"`
-	Name      string `json:"name"`
-	Key       string `json:"key,omitempty"`
+	Type       string      `json:"type,omitempty"`
+	Name       string      `json:"name"`
+	Key        string      `json:"key,omitempty"`
+	URL        string      `json:"url,omitempty"`
 	SubButtons []SubButton `json:"sub_button,omitempty"`
 }
 
