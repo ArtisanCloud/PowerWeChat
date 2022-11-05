@@ -268,7 +268,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 		return nil, err
 	}
 
-	log := config.Get("log", nil).(*object.StringMap)
+	log := config.Get("log", nil).(*object.HashMap)
 
 	userConfig = &officialAccount2.UserConfig{
 		AppID:             appID,
@@ -281,9 +281,9 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 
 		ResponseType: config.GetString("secret", ""),
 		Log: officialAccount2.Log{
-			Level: (*log)["level"],
-			File:  (*log)["file"],
-			ENV:   (*log)["env"],
+			Level: (*log)["level"].(string),
+			File:  (*log)["file"].(string),
+			ENV:   (*log)["env"].(string),
 		},
 		OAuth: oauth,
 		Cache: cacheHandle,
@@ -303,7 +303,7 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 	config := app.GetConfig()
 	cache := config.Get("cache", nil).(cache.CacheInterface)
 	oauth := config.Get("oauth", nil).(miniProgram2.OAuth)
-	log := config.Get("log", nil).(*object.StringMap)
+	log := config.Get("log", nil).(*object.HashMap)
 
 	userConfig = &miniProgram2.UserConfig{
 		AppID:  appID,
@@ -315,9 +315,9 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 
 		ResponseType: config.GetString("secret", ""),
 		Log: miniProgram2.Log{
-			Level: (*log)["level"],
-			File:  (*log)["file"],
-			ENV:   (*log)["env"],
+			Level: (*log)["level"].(string),
+			File:  (*log)["file"].(string),
+			ENV:   (*log)["env"].(string),
 		},
 		OAuth: oauth,
 		Cache: cache,
