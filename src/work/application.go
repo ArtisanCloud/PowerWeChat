@@ -506,7 +506,7 @@ func MapConfigToMiniProgramUserConfig(app kernel.ApplicationInterface) (userConf
 
 	config := app.GetConfig()
 	cache := config.Get("cache", nil).(cache.CacheInterface)
-	log := config.Get("log", nil).(*object.StringMap)
+	log := config.Get("log", nil).(*object.HashMap)
 	userConfig = &miniProgram.UserConfig{
 		MiniProgramUserConfig: &miniProgram2.UserConfig{
 			AppID:  config.GetString("corp_id", ""),
@@ -514,9 +514,9 @@ func MapConfigToMiniProgramUserConfig(app kernel.ApplicationInterface) (userConf
 
 			ResponseType: config.GetString("response_type", ""),
 			Log: miniProgram2.Log{
-				Level: (*log)["level"],
-				File:  (*log)["file"],
-				ENV:   (*log)["env"],
+				Level: (*log)["level"].(string),
+				File:  (*log)["file"].(string),
+				ENV:   (*log)["env"].(string),
 			},
 			Cache:     cache,
 			HttpDebug: config.GetBool("http_debug", false),
