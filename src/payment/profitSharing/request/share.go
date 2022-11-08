@@ -4,7 +4,7 @@ type RequestShare struct {
 	AppID           string      `json:"appid,omitempty"`
 	TransactionID   string      `json:"transaction_id,omitempty"` // OutTradeNo 和 TransactionID 二选一
 	OutOrderNO      string      `json:"out_order_no,omitempty"`
-	Receivers       []*Receiver `json:"reason,omitempty"`
+	Receivers       []*Receiver `json:"receivers,omitempty"`
 	UnfreezeUnSplit bool        `json:"notify_url,omitempty"`
 }
 
