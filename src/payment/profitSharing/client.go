@@ -117,7 +117,7 @@ func (comp *Client) AddReceiver(
 
 	options := &object.HashMap{
 		"type":            receiverType,
-		"accountService":  account,
+		"account":         account,
 		"name":            name,
 		"relation_type":   relationType,
 		"custom_relation": customRelation,
