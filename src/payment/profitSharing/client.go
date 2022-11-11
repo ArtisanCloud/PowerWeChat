@@ -138,9 +138,9 @@ func (comp *Client) DeleteReceiver(receiverType string, account string) (*respon
 
 	config := (*comp.App).GetConfig()
 	options := &object.HashMap{
-		"appid":          config.GetString("app_id", ""),
-		"type":           receiverType,
-		"accountService": account,
+		"appid":   config.GetString("app_id", ""),
+		"type":    receiverType,
+		"account": account,
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/receivers/delete")
