@@ -11,7 +11,7 @@ type RequestShare struct {
 type Receiver struct {
 	Type        string `json:"type"`
 	Account     string `json:"account"`
-	Name        string `json:"name"`
-	Amount      int64  `json:"amount"`
-	Description string `json:"description"`
+	Name        string `json:"name,omitempty"`
+	Amount      int64  `json:"amount,omitempty"`
+	Description string `json:"description,omitempty"`
 }
