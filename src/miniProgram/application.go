@@ -101,6 +101,8 @@ type UserConfig struct {
 	RefreshToken      string
 	ComponentAppID    string
 	ComponentAppToken string
+	Token             string
+	AESKey            string
 
 	ResponseType string
 	Log          Log
@@ -436,6 +438,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"app_id": userConfig.AppID,
 		"secret": userConfig.Secret,
 
+		"token":               userConfig.Token,
+		"aes_key":             userConfig.AESKey,
 		"refresh_token":       userConfig.RefreshToken,
 		"component_app_id":    userConfig.ComponentAppID,
 		"component_app_token": userConfig.ComponentAppToken,
