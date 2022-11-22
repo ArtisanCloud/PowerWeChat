@@ -24,6 +24,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/riskControl"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/search"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/security"
+	server2 "github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/server"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/serviceMarket"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/shortLink"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/soter"
@@ -32,6 +33,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlLink"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlScheme"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/wxaCode"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/server"
 )
 
 type MiniProgram struct {
@@ -40,6 +42,8 @@ type MiniProgram struct {
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
+
+	Server *server.Guard
 
 	ActiveMessage *updatableMessage.Client
 
@@ -165,6 +169,9 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 
 	// -------------- register Encryptor --------------
 	app.Encryptor = &Encryptor{aes: &support.AES{}}
+
+	//-------------- register Encryptor and Server --------------
+	app.Encryptor, app.Server, err = server2.RegisterProvider(app)
 
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
