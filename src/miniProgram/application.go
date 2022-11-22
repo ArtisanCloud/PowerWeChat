@@ -171,7 +171,7 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 	app.Encryptor = &Encryptor{aes: &support.AES{}}
 
 	//-------------- register Encryptor and Server --------------
-	app.Encryptor, app.Server, err = server2.RegisterProvider(app)
+	app.Server, err = server2.RegisterProvider(app)
 
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
