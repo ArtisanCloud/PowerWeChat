@@ -14,7 +14,7 @@ type Client struct {
 
 // 创建部门
 // https://developer.work.weixin.qq.com/document/path/90205
-func (comp *Client) Create(params *request.RequestDepartmentUpsert) (*response.ResponseDepartmentCreate, error) {
+func (comp *Client) Create(params *request.RequestDepartmentInsert) (*response.ResponseDepartmentCreate, error) {
 
 	result := &response.ResponseDepartmentCreate{}
 
@@ -25,7 +25,7 @@ func (comp *Client) Create(params *request.RequestDepartmentUpsert) (*response.R
 
 // 更新部门
 // https://developer.work.weixin.qq.com/document/path/90206
-func (comp *Client) Update(params *request.RequestDepartmentUpsert) (*response.ResponseDepartmentUpdate, error) {
+func (comp *Client) Update(params *request.RequestDepartmentUpdate) (*response.ResponseDepartmentUpdate, error) {
 
 	result := &response.ResponseDepartmentUpdate{}
 
