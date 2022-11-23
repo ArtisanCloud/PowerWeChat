@@ -6,7 +6,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/auth"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/base"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/customerServiceMessage"
@@ -24,6 +23,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/riskControl"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/search"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/security"
+	server2 "github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/server"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/serviceMarket"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/shortLink"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/soter"
@@ -32,6 +32,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlLink"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlScheme"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/wxaCode"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/server"
 )
 
 type MiniProgram struct {
@@ -40,6 +41,8 @@ type MiniProgram struct {
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
+
+	Server *server.Guard
 
 	ActiveMessage *updatableMessage.Client
 
@@ -97,6 +100,8 @@ type UserConfig struct {
 	RefreshToken      string
 	ComponentAppID    string
 	ComponentAppToken string
+	Token             string
+	AESKey            string
 
 	ResponseType string
 	Log          Log
@@ -164,7 +169,17 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 	}
 
 	// -------------- register Encryptor --------------
-	app.Encryptor = &Encryptor{aes: &support.AES{}}
+	app.Encryptor, err = NewEncryptor(
+		(app.Config).GetString("app_id", ""),
+		(app.Config).GetString("token", ""),
+		(app.Config).GetString("aes_key", ""),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	//-------------- register Encryptor and Server --------------
+	app.Server, err = server2.RegisterProvider(app)
 
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
@@ -429,6 +444,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"app_id": userConfig.AppID,
 		"secret": userConfig.Secret,
 
+		"token":               userConfig.Token,
+		"aes_key":             userConfig.AESKey,
 		"refresh_token":       userConfig.RefreshToken,
 		"component_app_id":    userConfig.ComponentAppID,
 		"component_app_token": userConfig.ComponentAppToken,
