@@ -365,6 +365,11 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.Auth
 	case "Config":
 		return app.Config
+	case "Server":
+		return app.Server
+	case "Encryptor":
+		return app.Encryptor.BaseEncryptor
+
 	case "ActiveMessage":
 		return app.ActiveMessage
 	case "Broadcast":
