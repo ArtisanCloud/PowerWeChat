@@ -5,8 +5,6 @@ import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 type ResponseGetUserPhoneNumber struct {
 	*response.ResponseMiniProgram
 
-	ErrCode   int    `json:"errcode"`
-	ErrMsg    string `json:"errmsg"`
 	PhoneInfo *struct {
 		PhoneNumber     string `json:"phoneNumber,omitempty"`
 		PurePhoneNumber string `json:"purePhoneNumber,omitempty"`
