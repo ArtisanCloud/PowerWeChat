@@ -12,6 +12,7 @@ import (
 	http2 "net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 )
 
@@ -175,10 +176,10 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		return nil, err
 	}
 
-	err = client.CheckTokenNeedRefresh(response)
-	if err != nil {
-		return nil, err
-	}
+	_ = client.CheckTokenNeedRefresh(response)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	if returnRaw {
 		return response, err
@@ -277,7 +278,7 @@ func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
 	return nil
 }
 func (d *MiddlewareRetry) RetryDecider(conditions *object.HashMap) bool {
-	code := (*conditions)["code"].(float64)
+	code := (*conditions)["code"].(int)
 	if code == 40001 || code == 40014 || code == 42001 {
 		return true
 	}
@@ -294,8 +295,20 @@ func (client *BaseClient) CheckTokenNeedRefresh(rs contract.ResponseInterface) e
 	if err != nil {
 		return err
 	}
+
+	errCode := 0
 	if (*mapResponse)["errcode"] != nil {
-		errCode := (*mapResponse)["errcode"].(float64)
+		switch (*mapResponse)["errcode"].(type) {
+		case float64:
+			errCode = int((*mapResponse)["errcode"].(float64))
+		case int:
+			errCode = (*mapResponse)["errcode"].(int)
+		case string:
+			errCode, err = strconv.Atoi((*mapResponse)["errcode"].(string))
+		default:
+
+		}
+
 		conditions := &object.HashMap{
 			"code": errCode,
 		}
