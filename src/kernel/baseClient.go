@@ -1,6 +1,7 @@
 package kernel
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
@@ -174,6 +175,11 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		return nil, err
 	}
 
+	err = client.CheckTokenNeedRefresh(response)
+	if err != nil {
+		return nil, err
+	}
+
 	if returnRaw {
 		return response, err
 	} else {
@@ -271,13 +277,34 @@ func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
 	return nil
 }
 func (d *MiddlewareRetry) RetryDecider(conditions *object.HashMap) bool {
-	code := (*conditions)["code"].(int)
+	code := (*conditions)["code"].(float64)
 	if code == 40001 || code == 40014 || code == 42001 {
-		d.BaseClient.Token.Refresh()
-
 		return true
 	}
 	return false
+}
+
+func (client *BaseClient) CheckTokenNeedRefresh(rs contract.ResponseInterface) error {
+	data, err := rs.GetBodyData()
+	if err != nil {
+		return err
+	}
+	mapResponse := &object.HashMap{}
+	err = json.Unmarshal(data, mapResponse)
+	if err != nil {
+		return err
+	}
+	if (*mapResponse)["errcode"] != nil {
+		errCode := (*mapResponse)["errcode"].(float64)
+		conditions := &object.HashMap{
+			"code": errCode,
+		}
+		if client.retryMiddleware().RetryDecider(conditions) {
+			client.Token.Refresh()
+		}
+	}
+
+	return nil
 }
 
 // ---
