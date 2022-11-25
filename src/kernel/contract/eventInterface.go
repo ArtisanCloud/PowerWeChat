@@ -10,6 +10,7 @@ type EventInterface interface {
 	GetEvent() string
 	GetChangeType() string
 	ReadMessage(msg interface{}) error
+	GetContent() []byte
 }
 
 type EventHandlerInterface interface {

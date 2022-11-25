@@ -63,3 +63,7 @@ func (header CallbackMessageHeader) GetChangeType() string {
 func (header CallbackMessageHeader) ReadMessage(msg interface{}) error {
 	return xml.Unmarshal(header.Content, msg)
 }
+
+func (header CallbackMessageHeader) GetContent() []byte {
+	return header.Content
+}
