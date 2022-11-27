@@ -70,3 +70,18 @@ func (comp *Client) GroupchatGet(roomID string) (*response.ResponseMsgAuditGetRo
 
 	return result, err
 }
+
+// 获取机器人信息
+// https://developer.work.weixin.qq.com/document/path/91774
+func (comp *Client) GetRobotInfo(robotID string) (*response.ResponseMsgAuditGetRobotInfo, error) {
+
+	result := &response.ResponseMsgAuditGetRobotInfo{}
+
+	params := &object.StringMap{
+		"robot_id": robotID,
+	}
+
+	_, err := comp.HttpGet("cgi-bin/msgaudit/get_robot_info?", params, nil, result)
+
+	return result, err
+}
