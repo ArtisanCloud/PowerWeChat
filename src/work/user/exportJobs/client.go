@@ -87,10 +87,10 @@ func (comp *Client) GetExportResult(jobID string) (*response.ResponseUserExportG
 
 	result := &response.ResponseUserExportGetResult{}
 
-	options := &object.HashMap{
+	options := &object.StringMap{
 		"jobid": jobID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/export/get_result", options, nil, nil, result)
+	_, err := comp.HttpGet("cgi-bin/export/get_result", options, nil, result)
 
 	return result, err
 }
