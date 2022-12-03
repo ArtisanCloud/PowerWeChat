@@ -308,6 +308,8 @@ func (serverGuard *ServerGuard) buildResponse(request *http.Request, to string, 
 	case *object.HashMap:
 		toMessage = messages.NewNews(message.(*object.HashMap))
 		break
+	case contract.MessageInterface:
+		toMessage = message.(contract.MessageInterface)
 	default:
 
 	}
