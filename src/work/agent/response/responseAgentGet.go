@@ -23,7 +23,7 @@ type ResponseAgentGet struct {
 type ResponseAgentAllowUserInfos struct {
 	*response.ResponseWork
 
-	User ResponseAgentAllowUser `json:"user"`
+	User []*ResponseAgentAllowUser `json:"user"`
 }
 
 type ResponseAgentAllowUser struct {
