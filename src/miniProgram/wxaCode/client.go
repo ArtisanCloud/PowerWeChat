@@ -64,7 +64,9 @@ func (comp *Client) Get(path string, width int64,
 	}
 
 	rs, err := comp.RequestRaw("wxa/getwxacode", "POST", data, &header, &result)
-
+	if err != nil {
+		return rs, err
+	}
 	httpRS := rs.(*response.HttpResponse).Response
 
 	return httpRS, err
