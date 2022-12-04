@@ -6,6 +6,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
 	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
+	"io/fs"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -66,6 +68,23 @@ func (comp *Client) Get(path string, width int64,
 	httpRS := rs.(*response.HttpResponse).Response
 
 	return httpRS, err
+}
+
+// 获取小程序码，适用于需要的码数量较少的业务场景
+// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
+func (comp *Client) SaveAs(savedPath string, perm fs.FileMode,
+	path string, width int64,
+	autoColor bool, lineColor *power.HashMap, isHyaline bool) error {
+
+	rs, err := comp.Get(path, width, autoColor, lineColor, isHyaline)
+	if err != nil {
+		return err
+	}
+
+	body, err := ioutil.ReadAll(rs.Body)
+	err = ioutil.WriteFile(savedPath, body, perm) //保存图片地址
+
+	return err
 }
 
 // 获取小程序码，适用于需要的码数量极多的业务场景
