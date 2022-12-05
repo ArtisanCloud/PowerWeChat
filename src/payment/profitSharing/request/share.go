@@ -22,9 +22,9 @@ type RequestShareReturn struct {
 	XMLName xml.Name `xml:"xml"`
 	Text    string   `xml:",chardata"`
 
-	AppID    string `xml:"appid"`
-	MchID    string `xml:"mch_id"`
-	NonceStr string `xml:"nonce_str"`
+	AppID string `xml:"appid"`
+	MchID string `xml:"mch_id"`
+	//NonceStr string `xml:"nonce_str"`
 	//SignType          string `xml:"sign_type"`
 	//Sign              string `xml:"sign"`
 	OutOrderNo        string `xml:"out_order_no"`
