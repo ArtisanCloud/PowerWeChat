@@ -1,23 +1,20 @@
 package kernel
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/coreClient"
+	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/middleware"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	http2 "net/http"
 	"os"
 	"path/filepath"
-	"strconv"
-	"time"
 )
 
 type BaseClient struct {
-	*request.HttpRequest
+	coreClient.CoreClient
 	*response.HttpResponse
 
 	*support.ResponseCastable
@@ -45,14 +42,15 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 	if token == nil {
 		token = (*app).GetAccessToken()
 	}
-	httpRequest, err := request.NewHttpRequest(config)
+	tokenSource := middleware.NewAccessToken(token)
+	coreClient, err := coreClient.NewClient(config, middleware.QueryAccessTokenMiddleware(tokenSource))
 	if err != nil {
 		return nil, err
 	}
 	client := &BaseClient{
-		HttpRequest: httpRequest,
-		App:         app,
-		Token:       token,
+		CoreClient: coreClient,
+		App:        app,
+		Token:      token,
 	}
 
 	if (*config)["mch_id"] != nil && (*config)["serial_no"] != nil && (*config)["key_path"] != nil {
@@ -165,21 +163,12 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (interface{}, error) {
 
-	// to be setup middleware here
-	if client.Middlewares == nil {
-		client.registerHttpMiddlewares()
-	}
 	// http client request
 	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
 
 	if err != nil {
 		return nil, err
 	}
-
-	_ = client.CheckTokenNeedRefresh(response)
-	//if err != nil {
-	//	return nil, err
-	//}
 
 	if returnRaw {
 		return response, err
@@ -197,151 +186,4 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 
 func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(url, method, options, true, outHeader, outBody)
-}
-
-func (client *BaseClient) registerHttpMiddlewares() {
-
-	client.Middlewares = []interface{}{}
-
-	// retry
-	retryMiddleware := client.retryMiddleware()
-	client.PushMiddleware(retryMiddleware, retryMiddleware.Name)
-	// access token
-	accessTokenMiddleware := client.accessTokenMiddleware()
-	client.PushMiddleware(accessTokenMiddleware, "access_token")
-	// log
-	//logMiddleware:=client.logMiddleware()
-	//client.PushMiddleware(logMiddleware, logMiddleware.Name)
-
-}
-
-// ----------------------------------------------------------------------
-type Middleware struct {
-	contract.MiddlewareInterface
-	*BaseClient
-	Name string
-}
-
-func (d *Middleware) GetName() string {
-	return d.Name
-}
-
-func (d *Middleware) SetName(name string) {
-	d.Name = name
-}
-
-func (d *Middleware) Retries() int {
-	config := (*d.BaseClient.App).GetConfig()
-	return config.GetInt("http.max_retries", 1)
-}
-
-func (d *Middleware) Delay() time.Duration {
-	config := (*d.BaseClient.App).GetConfig()
-	second := time.Duration(config.GetInt("http.retry_delay", 500))
-	return second * time.Second
-}
-
-func (d *Middleware) RetryDecider(conditions *object.HashMap) bool {
-	return false
-}
-
-type MiddlewareAccessToken struct {
-	*Middleware
-}
-type MiddlewareLogMiddleware struct {
-	*Middleware
-}
-type MiddlewareRetry struct {
-	*Middleware
-}
-
-// --- MiddlewareAccessToken ---
-func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
-	accessToken := (*d.App).GetAccessToken()
-
-	if accessToken != nil {
-		config := (*d.App).GetContainer().Config
-		_, err = accessToken.ApplyToRequest(req, config)
-	}
-
-	return err
-}
-
-// --- MiddlewareLogMiddleware ---
-func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
-	fmt.Println("logMiddleware")
-	return nil
-}
-
-// --- MiddlewareRetry ---
-func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
-	return nil
-}
-func (d *MiddlewareRetry) RetryDecider(conditions *object.HashMap) bool {
-	code := (*conditions)["code"].(int)
-	if code == 40001 || code == 40014 || code == 42001 {
-		return true
-	}
-	return false
-}
-
-func (client *BaseClient) CheckTokenNeedRefresh(rs contract.ResponseInterface) error {
-	data, err := rs.GetBodyData()
-	if err != nil {
-		return err
-	}
-	mapResponse := &object.HashMap{}
-	err = json.Unmarshal(data, mapResponse)
-	if err != nil {
-		return err
-	}
-
-	errCode := 0
-	if (*mapResponse)["errcode"] != nil {
-		switch (*mapResponse)["errcode"].(type) {
-		case float64:
-			errCode = int((*mapResponse)["errcode"].(float64))
-		case int:
-			errCode = (*mapResponse)["errcode"].(int)
-		case string:
-			errCode, err = strconv.Atoi((*mapResponse)["errcode"].(string))
-		default:
-
-		}
-
-		conditions := &object.HashMap{
-			"code": errCode,
-		}
-		if client.retryMiddleware().RetryDecider(conditions) {
-			client.Token.Refresh()
-		}
-	}
-
-	return nil
-}
-
-// ---
-func (client *BaseClient) accessTokenMiddleware() *MiddlewareAccessToken {
-	return &MiddlewareAccessToken{
-		&Middleware{
-			BaseClient: client,
-			Name:       "access_token",
-		},
-	}
-}
-func (client *BaseClient) logMiddleware() *MiddlewareLogMiddleware {
-	return &MiddlewareLogMiddleware{
-		&Middleware{
-			BaseClient: client,
-			Name:       "log",
-		},
-	}
-}
-func (client *BaseClient) retryMiddleware() *MiddlewareRetry {
-	return &MiddlewareRetry{
-		&Middleware{
-			BaseClient: client,
-			Name:       "retry",
-		},
-	}
 }
