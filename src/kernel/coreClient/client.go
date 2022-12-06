@@ -58,6 +58,10 @@ func NewClient(config *object.HashMap, middlewares ...Middleware) (CoreClient, e
 		handle = md(handle)
 	}
 
+	for i := len(middlewares) - 1; i >= 0; i-- {
+		handle = middlewares[i](handle)
+	}
+
 	return &RequestClient{
 		httpClient: client,
 		doRequest:  handle,
@@ -113,16 +117,6 @@ type AfterResponse struct {
 type HandleFunc func(req *PreRequest, res *AfterResponse) error
 
 type Middleware func(handle HandleFunc) HandleFunc
-
-func ExampleMiddleware(handle HandleFunc) HandleFunc {
-	return func(req *PreRequest, res *AfterResponse) error {
-		// do something before request
-
-		return handle(req, res)
-
-		// do something after request
-	}
-}
 
 func newTLSHttpClient(certFile string, keyFile string) (httpClient *http.Client, err error) {
 	cert, err := tls.LoadX509KeyPair(certFile, keyFile)

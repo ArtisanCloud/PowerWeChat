@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"encoding/json"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/coreClient"
@@ -88,6 +89,9 @@ func QueryAccessTokenMiddleware(tokenSource AccessTokenSource) coreClient.Middle
 				return err
 			}
 
+			// 序列化请求的 options
+			reqData, _ := json.Marshal(req.Options)
+
 			// do request
 			if err := handle(req, res); err != nil {
 				return err
@@ -103,9 +107,18 @@ func QueryAccessTokenMiddleware(tokenSource AccessTokenSource) coreClient.Middle
 				if err = tokenSource.RefreshToken(); err != nil {
 					return err
 				}
-				if err := setToken(); err != nil {
+				if err = setToken(); err != nil {
 					return err
 				}
+
+				// 这里 req 的 option 经过上次请求, 已经发生了变化, 因此使用序列化 options 重置
+				var retryData *object.HashMap
+				err = json.Unmarshal(reqData, retryData)
+				if err != nil {
+					return err
+				}
+				req.Options = retryData
+
 				if err = handle(req, res); err != nil {
 					return err
 				}

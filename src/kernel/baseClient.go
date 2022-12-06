@@ -43,12 +43,12 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 		token = (*app).GetAccessToken()
 	}
 	tokenSource := middleware.NewAccessToken(token)
-	coreClient, err := coreClient.NewClient(config, middleware.QueryAccessTokenMiddleware(tokenSource))
+	cClient, err := coreClient.NewClient(config, middleware.QueryAccessTokenMiddleware(tokenSource))
 	if err != nil {
 		return nil, err
 	}
 	client := &BaseClient{
-		CoreClient: coreClient,
+		CoreClient: cClient,
 		App:        app,
 		Token:      token,
 	}
