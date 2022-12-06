@@ -92,7 +92,8 @@ func (comp *Client) SaveAs(savedPath string, perm fs.FileMode,
 // 获取小程序码，适用于需要的码数量极多的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
 func (comp *Client) GetUnlimited(
-	scene string, page string, width int64,
+	scene string, page string,
+	checkPath bool, envVersion string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
 
 	var result string
@@ -104,12 +105,14 @@ func (comp *Client) GetUnlimited(
 
 	data := &object.HashMap{
 		"form_params": &object.HashMap{
-			"scene":      scene,
-			"page":       page,
-			"width":      width,
-			"auto_color": autoColor,
-			"line_color": lineColor.ToHashMap(),
-			"is_hyaline": isHyaline,
+			"scene":       scene,
+			"page":        page,
+			"width":       width,
+			"check_path":  checkPath,
+			"env_version": envVersion,
+			"auto_color":  autoColor,
+			"line_color":  lineColor.ToHashMap(),
+			"is_hyaline":  isHyaline,
 		},
 	}
 
