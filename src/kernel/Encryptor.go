@@ -9,10 +9,12 @@ import (
 	"encoding/xml"
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v2/object"
 	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
 	"math/rand"
 	"sort"
 	"strings"
+	"time"
 )
 
 // Wechat Docs: https://open.work.weixin.qq.com/api/doc/90000/90138/90307
@@ -116,6 +118,12 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 	}
 	ciphertext := string(tmpCiphertext)
 
+	if timestamp == "" {
+		timestamp = fmt.Sprintf("%d", time.Now().Unix())
+	}
+	if nonce == "" {
+		nonce = object.QuickRandom(10)
+	}
 	signature := encryptor.Signature(encryptor.token, timestamp, nonce, ciphertext)
 
 	msg4Send := &WeComReplyMsg{

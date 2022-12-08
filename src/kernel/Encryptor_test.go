@@ -47,6 +47,8 @@ func TestEncryptor_Decrypt(t *testing.T) {
 func TestEncryptor_Encrypt(t *testing.T) {
 	timestamp := "1623301925"
 	nonce := "1624217036"
+	//timestamp := ""
+	//nonce := ""
 
 	// Original plain text
 	// 原始明文消息

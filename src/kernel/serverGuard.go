@@ -386,11 +386,10 @@ func (serverGuard *ServerGuard) buildReply(request *http.Request, to string, fro
 		encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
 		encryptedResponse, err := encryptor.Encrypt(response, "", "")
 		if err == nil {
-
 			response = string(encryptedResponse)
 		} else {
 			// tbd log here
-			println("encryptor error: ", err.ErrMsg)
+			println("encryptor encrypt message error: ", err.ErrMsg)
 		}
 
 	}
