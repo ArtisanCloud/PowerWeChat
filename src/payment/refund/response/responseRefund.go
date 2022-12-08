@@ -31,18 +31,20 @@ type RefundAmount struct {
 	Currency string `json:"currency"`
 }
 
+type GoodsDetail struct {
+	MerchantGoodsID  string `json:"merchant_goods_id"`
+	WechatPayGoodsID string `json:"wechatpay_goods_id"`
+	GoodsName        string `json:"goods_name"`
+	UnitPrice        int    `json:"unit_price"`
+	RefundAmount     int    `json:"refund_amount"`
+	RefundQuantity   int    `json:"refund_quantity"`
+}
+
 type RefundPromotionDetail struct {
-	PromotionID  string `json:"promotion_id"`
-	Scope        string `json:"scope"`
-	Type         string `json:"type"`
-	Amount       int    `json:"amount"`
-	RefundAmount int    `json:"refund_amount"`
-	GoodsDetail  struct {
-		MerchantGoodsID  string `json:"merchant_goods_id"`
-		WechatPayGoodsID string `json:"wechatpay_goods_id"`
-		GoodsName        string `json:"goods_name"`
-		UnitPrice        int    `json:"unit_price"`
-		RefundAmount     int    `json:"refund_amount"`
-		RefundQuantity   int    `json:"refund_quantity"`
-	} `json:"goods_detail"`
+	PromotionID  string         `json:"promotion_id"`
+	Scope        string         `json:"scope"`
+	Type         string         `json:"type"`
+	Amount       int            `json:"amount"`
+	RefundAmount int            `json:"refund_amount"`
+	GoodsDetail  []*GoodsDetail `json:"goods_detail"`
 }

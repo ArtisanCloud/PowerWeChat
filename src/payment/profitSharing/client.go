@@ -57,6 +57,31 @@ func (comp *Client) Query(transactionID string, outOrderNO string) (*response.Re
 	return result, err
 }
 
+// Share Return.
+// https://pay.weixin.qq.com/wiki/doc/api/allocation.php?chapter=27_7&index=8
+func (comp *Client) Return(data *request.RequestShareReturn) (*response.ResponseProfitSharingReturn, error) {
+
+	result := &response.ResponseProfitSharingReturn{}
+
+	config := (*comp.App).GetConfig()
+
+	params, err := object.StructToHashMapWithXML(data)
+	if err != nil {
+		return nil, err
+	}
+	base := &object.HashMap{
+		"return_amount": 1,
+		"appid":         config.GetString("app_id", ""),
+		"mch_id":        config.GetString("mch_id", ""),
+	}
+	params = object.MergeHashMap(params, base)
+
+	endpoint := comp.Wrap("/secapi/pay/profitsharingreturn")
+	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+
+	return result, err
+}
+
 // Query Return Orders Result.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
 
