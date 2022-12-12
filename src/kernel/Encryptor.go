@@ -111,7 +111,7 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 
 	// TODO 暂时不知道用途
 	//buffer.WriteString(wxBizMsgCrypt.receiverID)
-	(buffer.WriteString(encryptor.appID))
+	buffer.WriteString(encryptor.appID)
 
 	tmpCiphertext, err := encryptor.aes.Encrypt(buffer.Bytes(), encryptor.aesKey, encryptor.aesKey[:aes.BlockSize])
 	if err != nil {
