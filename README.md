@@ -21,14 +21,14 @@ PowerWeChat致力于减少微信开发中的各种上手难度，使用者只需
 ## 快速上手
 
 ```bash
-go get -u github.com/ArtisanCloud/PowerWeChat/v2
+go get -u github.com/ArtisanCloud/PowerWeChat/v3
 ```
 
 示范：初始化实例对象，调用小程序的授权登陆接口
 
 ```go
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
 	"os"
 )
 
@@ -137,6 +137,14 @@ printf(rs.OpenID)
 
 <!-- CONTRIBUTORS -->
 ## Contributors
+
+特别感谢 <a href="https://github.com/northseadl">Northseadl</a>为版本3所做的贡献
+
+<a href="https://github.com/northseadl">
+  <img width="50" src="https://avatars.githubusercontent.com/u/99570485?v=4">
+</a>
+
+---
 
 
 <a href="https://github.com/AlvinQinwen">

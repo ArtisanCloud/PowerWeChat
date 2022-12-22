@@ -3,8 +3,8 @@ package material
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 )
 
 type Client struct {

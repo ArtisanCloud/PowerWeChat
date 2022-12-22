@@ -2,10 +2,10 @@ package miniProgram
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/codeTemplate/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openWork/auth"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/codeTemplate/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/auth"
 )
 
 type Client struct {

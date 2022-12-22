@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work"
 	"os"
 	"strconv"
 )

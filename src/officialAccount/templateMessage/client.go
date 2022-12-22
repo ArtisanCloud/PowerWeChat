@@ -2,11 +2,11 @@ package templateMessage
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/templateMessage/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/templateMessage/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/templateMessage/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/templateMessage/response"
 )
 
 const API_TEMPLATE_MESSAGE_SEND string = "cgi-bin/message/template/send"

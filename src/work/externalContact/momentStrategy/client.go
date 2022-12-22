@@ -2,10 +2,10 @@ package momentStrategy
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/momentStrategy/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/momentStrategy/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/momentStrategy/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/momentStrategy/response"
 )
 
 type Client struct {

@@ -1,9 +1,9 @@
 package serviceMarket
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/serviceMarket/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/serviceMarket/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/serviceMarket/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/serviceMarket/response"
 )
 
 type Client struct {

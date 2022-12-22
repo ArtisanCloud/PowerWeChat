@@ -2,9 +2,9 @@ package dataCube
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/dataCube/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/dataCube/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/dataCube/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/dataCube/response"
 )
 
 type Client struct {

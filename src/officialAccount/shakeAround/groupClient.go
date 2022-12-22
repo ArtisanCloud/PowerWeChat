@@ -2,9 +2,9 @@ package shakeAround
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/shakeAround/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/shakeAround/response"
 )
 
 type GroupClient struct {

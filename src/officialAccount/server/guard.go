@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	logger2 "github.com/ArtisanCloud/PowerLibs/v2/logger"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"io/ioutil"
 	"net/http"
 )

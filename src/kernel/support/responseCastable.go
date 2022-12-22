@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"go/types"
 	"io/ioutil"
 	"net/http"

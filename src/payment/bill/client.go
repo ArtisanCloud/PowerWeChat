@@ -2,9 +2,9 @@ package bill
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/bill/response"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill/response"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 )
 
 type Client struct {

@@ -1,8 +1,8 @@
 package models
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 )
 
 // https://developer.work.weixin.qq.com/document/path/90970

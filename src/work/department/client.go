@@ -3,9 +3,9 @@ package department
 import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/department/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/department/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/department/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/department/response"
 )
 
 type Client struct {

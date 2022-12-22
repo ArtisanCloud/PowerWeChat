@@ -3,10 +3,10 @@ package subscribeMessage
 import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage/request"
-	response3 "github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/subscribeMessage/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/subscribeMessage/request"
+	response3 "github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/subscribeMessage/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
 type Client struct {

@@ -2,10 +2,10 @@ package living
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/living/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/living/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/living/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/living/response"
 )
 
 type Client struct {

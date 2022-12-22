@@ -1,6 +1,6 @@
 package store
 
-import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client, error) {
 	baseClient, err := kernel.NewBaseClient(&app, nil)

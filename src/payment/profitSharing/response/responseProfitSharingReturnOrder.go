@@ -2,7 +2,7 @@ package response
 
 import (
 	"encoding/xml"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml

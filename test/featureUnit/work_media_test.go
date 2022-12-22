@@ -4,7 +4,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	"github.com/ArtisanCloud/PowerLibs/v2/media"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"image/jpeg"
 	"io/ioutil"
 	"os"

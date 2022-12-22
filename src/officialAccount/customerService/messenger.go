@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/messages"
 )
 
 type Messenger struct {
@@ -45,7 +45,6 @@ func (comp *Messenger) SetTo(openID string) *Messenger {
 	return comp
 }
 
-
 func (comp *Messenger) Send() (result interface{}, err error) {
 
 	if comp.Message == nil {
@@ -71,11 +70,10 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 		var json *object.HashMap
 		json, err = (*comp.Message).TransformForJsonRequest(prepends, true)
 		if err != nil {
-			return 
+			return
 		}
 		result, err = comp.Client.Send(json)
 	}
 
 	return result, err
 }
-

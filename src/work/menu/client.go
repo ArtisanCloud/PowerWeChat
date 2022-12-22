@@ -3,9 +3,9 @@ package menu
 import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/menu/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/menu/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/menu/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/menu/response"
 )
 
 type Client struct {

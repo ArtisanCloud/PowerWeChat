@@ -3,10 +3,10 @@ package transfer
 import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/response"
 )
 
 type BatchClient struct {

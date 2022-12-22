@@ -10,7 +10,7 @@ import (
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"math/rand"
 	"sort"
 	"strings"

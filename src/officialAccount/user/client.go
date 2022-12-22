@@ -2,10 +2,10 @@ package user
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/user/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/user/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/user/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/user/response"
 )
 
 type Client struct {

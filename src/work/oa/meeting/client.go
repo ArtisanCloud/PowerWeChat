@@ -2,10 +2,10 @@ package meeting
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/meeting/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/meeting/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/meeting/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/meeting/response"
 )
 
 type Client struct {

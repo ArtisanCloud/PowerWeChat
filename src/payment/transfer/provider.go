@@ -1,7 +1,7 @@
 package transfer
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 )
 
 func RegisterProvider(app kernel.ApplicationPaymentInterface) (*Client, *BatchClient, error) {

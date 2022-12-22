@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/shakeAround/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/shakeAround/response"
 	"os"
 	"strings"
 )
@@ -42,7 +42,7 @@ func (comp *MaterialClient) UploadImage(path string, Type string) (*response.Res
 		}
 	} else {
 		return nil, errors.New("path is empty")
-		
+
 	}
 
 	_, err = comp.HttpUpload("shakearound/material/add", files, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)

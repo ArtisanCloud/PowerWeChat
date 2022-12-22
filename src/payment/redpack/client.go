@@ -2,9 +2,9 @@ package redpack
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/redpack/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/redpack/response"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack/response"
 )
 
 type Client struct {

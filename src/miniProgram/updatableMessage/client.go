@@ -2,10 +2,10 @@ package updatableMessage
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/updatableMessage/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/updatableMessage/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/updatableMessage/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/updatableMessage/response"
 )
 
 type Client struct {

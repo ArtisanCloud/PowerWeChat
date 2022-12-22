@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 
 type RequestMeetingCreate struct {
 	CreatorUserID   string         `json:"creator_userid"`

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	response2 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order/response"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order/response"
 	"net/http"
 )
 

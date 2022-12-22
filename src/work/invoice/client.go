@@ -2,10 +2,10 @@ package invoice
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/invoice/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/invoice/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/invoice/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/invoice/response"
 )
 
 type Client struct {
