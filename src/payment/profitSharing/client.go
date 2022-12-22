@@ -2,7 +2,7 @@ package profitSharing
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing/response"

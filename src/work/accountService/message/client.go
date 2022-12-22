@@ -1,7 +1,7 @@
 package message
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/message/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/message/response"

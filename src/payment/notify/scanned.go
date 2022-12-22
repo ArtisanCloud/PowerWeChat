@@ -1,8 +1,7 @@
 package notify
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
 	"net/http"
@@ -29,7 +28,7 @@ func (comp *Scanned) Alert(message string) {
 	comp.alert = message
 }
 
-func (comp *Scanned) Handle(closure func(message *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*response.HttpResponse, error) {
+func (comp *Scanned) Handle(closure func(message *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*http.Response, error) {
 	message, err := comp.GetMessage()
 	if err != nil {
 		return nil, err

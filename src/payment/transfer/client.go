@@ -2,8 +2,8 @@ package transfer
 
 import (
 	"crypto"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerLibs/v2/security/sign"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/request"

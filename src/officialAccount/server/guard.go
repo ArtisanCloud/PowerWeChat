@@ -2,8 +2,8 @@ package server
 
 import (
 	"bytes"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	logger2 "github.com/ArtisanCloud/PowerLibs/v2/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/response"
+	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"io/ioutil"
 	"net/http"
@@ -26,7 +26,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-func (guard *Guard) VerifyURL(request *http.Request) (httpRS *response.HttpResponse, err error) {
+func (guard *Guard) VerifyURL(request *http.Request) (httpRS *http.Response, err error) {
 	logger := (*guard.App).GetComponent("Logger").(*logger2.Logger)
 
 	_, err = guard.Validate(request)

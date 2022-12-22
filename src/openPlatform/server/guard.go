@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/response"
 	openplatform "github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/server/callbacks"
@@ -56,7 +56,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte, infoType string) interface{}) (httpRS *response.HttpResponse, err error) {
+func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte, infoType string) interface{}) (httpRS *http.Response, err error) {
 	// validate the signature
 	_, err = guard.Validate(request)
 	if err != nil {
@@ -115,7 +115,7 @@ func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error
 
 // Override Validate
 func (guard *Guard) OverrideResolve() {
-	guard.Resolve = func(request *http.Request) (httpRS *response.HttpResponse, err error) {
+	guard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
 		guard.registerHandlers()
 
 		message, err := guard.GetMessage(request)

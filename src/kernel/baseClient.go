@@ -1,28 +1,25 @@
 package kernel
 
 import (
-	"encoding/json"
+	"bytes"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
-	http2 "net/http"
+	"io/ioutil"
+	"log"
+	http "net/http"
 	"os"
 	"path/filepath"
-	"strconv"
-	"time"
 )
 
 type BaseClient struct {
-	*request.HttpRequest
-	*response.HttpResponse
+	Helper *helper.RequestHelper
+
+	Middlewares []contract.RequestMiddleware
 
 	*support.ResponseCastable
-
-	ExternalRequest *http2.Request
 
 	Signer *support.SHA256WithRSASigner
 
@@ -40,26 +37,33 @@ type UploadContent struct {
 }
 
 func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, error) {
-	config := (*app).GetContainer().GetConfig()
+
+	config := (*app).GetConfig()
+	baseURI := config.GetString("http.base_uri", "/")
 
 	if token == nil {
 		token = (*app).GetAccessToken()
 	}
-	httpRequest, err := request.NewHttpRequest(config)
+	h, err := helper.NewRequestHelper(&helper.Config{
+		BaseUrl: baseURI,
+	})
 	if err != nil {
 		return nil, err
 	}
 	client := &BaseClient{
-		HttpRequest: httpRequest,
-		App:         app,
-		Token:       token,
+		Helper: h,
+		App:    app,
+		Token:  token,
 	}
 
-	if (*config)["mch_id"] != nil && (*config)["serial_no"] != nil && (*config)["key_path"] != nil {
+	mchID := config.GetString("mch_id", "")
+	serialNO := config.GetString("serial_no", "")
+	keyPath := config.GetString("key_path", "")
+	if mchID != "" && serialNO != "" && keyPath != "" {
 		client.Signer = &support.SHA256WithRSASigner{
-			MchID:               (*config)["mch_id"].(string),
-			CertificateSerialNo: (*config)["serial_no"].(string),
-			PrivateKeyPath:      (*config)["key_path"].(string),
+			MchID:               mchID,
+			CertificateSerialNo: serialNO,
+			PrivateKeyPath:      keyPath,
 		}
 	}
 
@@ -163,185 +167,127 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *Up
 
 func (client *BaseClient) Request(url string, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) (interface{}, error) {
+) (*http.Response, error) {
 
 	// to be setup middleware here
-	if client.Middlewares == nil {
+	if len(client.Middlewares) == 0 {
 		client.registerHttpMiddlewares()
 	}
 	// http client request
-	response, err := client.PerformRequest(url, method, options, returnRaw, outHeader, outBody)
+	response, err := client.Helper.Df().Url(url).Method(method).Json(options).Request()
+
+	// decode response body to outBody
+	bodyData, _ := ioutil.ReadAll(response.Body)
+	response.Body = ioutil.NopCloser(bytes.NewBuffer(bodyData))
+	err = object.JsonDecode(bodyData, outBody)
+
+	// decode response header to outHeader
+	//headerData, _ := ioutil.ReadAll(response.Header)
+	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
+	//err = object.JsonDecode(headerData, outHeader)
 
 	if err != nil {
 		return nil, err
 	}
 
-	_ = client.CheckTokenNeedRefresh(response)
-	//if err != nil {
-	//	return nil, err
-	//}
+	return response, err
 
-	if returnRaw {
-		return response, err
-	} else {
-		// tbf
-		var rs http2.Response = http2.Response{
-			StatusCode: response.GetStatusCode(),
-			Header:     response.GetHeader(),
-			Body:       response.GetBody(),
-		}
-		returnResponse, err := client.CastResponseToType(&rs, response2.TYPE_MAP)
-		return returnResponse, err
-	}
+	//if returnRaw {
+	//	return response, err
+	//} else {
+	//	// tbf
+	//	returnResponse, err := client.CastResponseToType(response, response2.TYPE_MAP)
+	//	return returnResponse, err
+	//}
 }
 
-func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*http.Response, error) {
 	return client.Request(url, method, options, true, outHeader, outBody)
 }
 
 func (client *BaseClient) registerHttpMiddlewares() {
 
-	client.Middlewares = []interface{}{}
+	client.Middlewares = []contract.RequestMiddleware{}
 
-	// retry
-	retryMiddleware := client.retryMiddleware()
-	client.PushMiddleware(retryMiddleware, retryMiddleware.Name)
 	// access token
-	accessTokenMiddleware := client.accessTokenMiddleware()
-	client.PushMiddleware(accessTokenMiddleware, "access_token")
+	accessMiddleware := func(handle contract.RequestHandle) contract.RequestHandle {
+		return func(request *http.Request) (response *http.Response, err error) {
+			// 前置中间件
+			fmt.Println("这里是前置中间件2, 在请求前执行")
+
+			accessToken := (*client.App).GetAccessToken()
+
+			if accessToken != nil {
+				config := (*client.App).GetContainer().Config
+				_, err = accessToken.ApplyToRequest(request, config)
+			}
+
+			if err != nil {
+				return nil, err
+			}
+
+			response, err = handle(request)
+			// handle 执行之后就可以操作 response 和 err
+
+			// 后置中间件
+			fmt.Println("这里是后置置中间件2, 在请求后执行")
+			return
+		}
+	}
 	// log
-	//logMiddleware:=client.logMiddleware()
-	//client.PushMiddleware(logMiddleware, logMiddleware.Name)
+	logMiddleware := func(logger *log.Logger) contract.RequestMiddleware {
+		return contract.RequestMiddleware(func(handle contract.RequestHandle) contract.RequestHandle {
+			return func(request *http.Request) (response *http.Response, err error) {
+				// 前置中间件
+				logger.Println("这里是前置中间件log, 在请求前执行")
+
+				response, err = handle(request)
+				// handle 执行之后就可以操作 response 和 err
+
+				// 后置中间件
+				logger.Println("这里是后置置中间件log, 在请求后执行")
+				return
+			}
+		})
+	}
+
+	client.Helper.WithMiddleware(accessMiddleware, logMiddleware(log.Default()))
 
 }
 
 // ----------------------------------------------------------------------
-type Middleware struct {
-	contract.MiddlewareInterface
-	*BaseClient
-	Name string
-}
 
-func (d *Middleware) GetName() string {
-	return d.Name
-}
-
-func (d *Middleware) SetName(name string) {
-	d.Name = name
-}
-
-func (d *Middleware) Retries() int {
-	config := (*d.BaseClient.App).GetConfig()
-	return config.GetInt("http.max_retries", 1)
-}
-
-func (d *Middleware) Delay() time.Duration {
-	config := (*d.BaseClient.App).GetConfig()
-	second := time.Duration(config.GetInt("http.retry_delay", 500))
-	return second * time.Second
-}
-
-func (d *Middleware) RetryDecider(conditions *object.HashMap) bool {
-	return false
-}
-
-type MiddlewareAccessToken struct {
-	*Middleware
-}
-type MiddlewareLogMiddleware struct {
-	*Middleware
-}
-type MiddlewareRetry struct {
-	*Middleware
-}
-
-// --- MiddlewareAccessToken ---
-func (d *MiddlewareAccessToken) ModifyRequest(req *http2.Request) (err error) {
-	accessToken := (*d.App).GetAccessToken()
-
-	if accessToken != nil {
-		config := (*d.App).GetContainer().Config
-		_, err = accessToken.ApplyToRequest(req, config)
-	}
-
-	return err
-}
-
-// --- MiddlewareLogMiddleware ---
-func (d *MiddlewareLogMiddleware) ModifyRequest(req *http2.Request) error {
-	fmt.Println("logMiddleware")
-	return nil
-}
-
-// --- MiddlewareRetry ---
-func (d *MiddlewareRetry) ModifyRequest(req *http2.Request) error {
-	return nil
-}
-func (d *MiddlewareRetry) RetryDecider(conditions *object.HashMap) bool {
-	code := (*conditions)["code"].(int)
-	if code == 40001 || code == 40014 || code == 42001 {
-		return true
-	}
-	return false
-}
-
-func (client *BaseClient) CheckTokenNeedRefresh(rs contract.ResponseInterface) error {
-	data, err := rs.GetBodyData()
-	if err != nil {
-		return err
-	}
-	mapResponse := &object.HashMap{}
-	err = json.Unmarshal(data, mapResponse)
-	if err != nil {
-		return err
-	}
-
-	errCode := 0
-	if (*mapResponse)["errcode"] != nil {
-		switch (*mapResponse)["errcode"].(type) {
-		case float64:
-			errCode = int((*mapResponse)["errcode"].(float64))
-		case int:
-			errCode = (*mapResponse)["errcode"].(int)
-		case string:
-			errCode, err = strconv.Atoi((*mapResponse)["errcode"].(string))
-		default:
-
-		}
-
-		conditions := &object.HashMap{
-			"code": errCode,
-		}
-		if client.retryMiddleware().RetryDecider(conditions) {
-			client.Token.Refresh()
-		}
-	}
-
-	return nil
-}
-
-// ---
-func (client *BaseClient) accessTokenMiddleware() *MiddlewareAccessToken {
-	return &MiddlewareAccessToken{
-		&Middleware{
-			BaseClient: client,
-			Name:       "access_token",
-		},
-	}
-}
-func (client *BaseClient) logMiddleware() *MiddlewareLogMiddleware {
-	return &MiddlewareLogMiddleware{
-		&Middleware{
-			BaseClient: client,
-			Name:       "log",
-		},
-	}
-}
-func (client *BaseClient) retryMiddleware() *MiddlewareRetry {
-	return &MiddlewareRetry{
-		&Middleware{
-			BaseClient: client,
-			Name:       "retry",
-		},
-	}
-}
+//func (client *BaseClient) CheckTokenNeedRefresh(rs contract.ResponseInterface) error {
+//	data, err := rs.GetBodyData()
+//	if err != nil {
+//		return err
+//	}
+//	mapResponse := &object.HashMap{}
+//	err = json.Unmarshal(data, mapResponse)
+//	if err != nil {
+//		return err
+//	}
+//
+//	errCode := 0
+//	if (*mapResponse)["errcode"] != nil {
+//		switch (*mapResponse)["errcode"].(type) {
+//		case float64:
+//			errCode = int((*mapResponse)["errcode"].(float64))
+//		case int:
+//			errCode = (*mapResponse)["errcode"].(int)
+//		case string:
+//			errCode, err = strconv.Atoi((*mapResponse)["errcode"].(string))
+//		default:
+//
+//		}
+//
+//		conditions := &object.HashMap{
+//			"code": errCode,
+//		}
+//		if client.retryMiddleware().RetryDecider(conditions) {
+//			client.Token.Refresh()
+//		}
+//	}
+//
+//	return nil
+//}

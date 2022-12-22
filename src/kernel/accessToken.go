@@ -5,10 +5,9 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/cache"
 	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/cache"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"net/http"
@@ -18,8 +17,8 @@ import (
 type AccessToken struct {
 	App *ApplicationInterface
 
-	*request.HttpRequest
-	*response.HttpResponse
+	HttpRequest *http.Request
+	HttpResponse *http.Response
 
 	RequestMethod      string
 	EndpointToGetToken string
@@ -48,7 +47,7 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 	}
 	token := &AccessToken{
 		App:         app,
-		HttpRequest: httpRequest,
+		HttpRequest: ,
 
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",

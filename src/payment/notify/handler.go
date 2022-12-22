@@ -5,8 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	response2 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	base2 "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/base"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
@@ -58,7 +57,7 @@ func (handler *Handler) RespondWith(attributes *object.StringMap, sign bool) *Ha
 
 	return handler
 }
-func (handler *Handler) ToResponse() (response *response2.HttpResponse, err error) {
+func (handler *Handler) ToResponse() (response *http.Response, err error) {
 
 	returnCode := SUCCESS
 	returnMsg := "成功"
@@ -82,7 +81,9 @@ func (handler *Handler) ToResponse() (response *response2.HttpResponse, err erro
 	}
 
 	bodyBuffer, _ := json.Marshal(attributes)
-	rs := response2.NewHttpResponse(http.StatusOK)
+	rs := &http.Response{
+		StatusCode: http.StatusOK,
+	}
 	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
 
 	return rs, err

@@ -3,7 +3,7 @@ package auth
 // #reference: https://developer.work.weixin.qq.com/document/path/91039
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 )
 

@@ -3,8 +3,7 @@ package order
 import (
 	"errors"
 	"fmt"
-	response2 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order/response"
@@ -153,7 +152,7 @@ func (comp *Client) Close(tradeNo string) (*http.Response, error) {
 
 	var httpResponse *http.Response = nil
 	if err != nil {
-		httpResponse = rs.(*response2.HttpResponse).Response
+		httpResponse = rs.(*http.Response).Response
 	}
 
 	return httpResponse, err

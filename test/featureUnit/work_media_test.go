@@ -1,12 +1,12 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/media"
+	"github.com/ArtisanCloud/PowerLibs/v3/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/media"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"image/jpeg"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"testing"
 )
@@ -50,7 +50,7 @@ func Test_Media_Get(t *testing.T) {
 	//if response == nil {
 	//	t.Error("response nil")
 	//}
-	resp := respContract.(*response.HttpResponse)
+	resp := respContract.(*http.Response)
 	defer resp.Body.Close()
 
 	imageBuffer, err := ioutil.ReadAll(resp.GetBody())

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"go/types"
 	"io/ioutil"

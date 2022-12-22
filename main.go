@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform"

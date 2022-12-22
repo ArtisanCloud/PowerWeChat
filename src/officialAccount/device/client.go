@@ -1,7 +1,7 @@
 package device
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/device/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/device/response"

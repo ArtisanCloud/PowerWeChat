@@ -1,7 +1,7 @@
 package transfer
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/transfer/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/transfer/response"

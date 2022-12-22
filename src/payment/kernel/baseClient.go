@@ -5,9 +5,9 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -27,7 +27,7 @@ type BaseClient struct {
 func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 	config := (*app).GetContainer().GetConfig()
 
-	httpRequest, err := request.NewHttpRequest(config)
+	httpRequest, err := helper.NewRequestHelper(config)
 	if err != nil {
 		return nil, err
 	}

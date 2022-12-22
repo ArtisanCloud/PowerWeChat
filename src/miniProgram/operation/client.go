@@ -2,8 +2,7 @@ package operation
 
 import (
 	"fmt"
-	response3 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/operation/response"
@@ -63,7 +62,7 @@ func (comp *Client) GetFeedbackMedia(recordID int, mediaID string) (*http.Respon
 
 	rs, err := comp.RequestRaw("cgi-bin/media/getfeedbackmedia", "GET", data, header, &result)
 
-	return rs.(*response3.HttpResponse).Response, err
+	return rs.(*http.Response).Response, err
 }
 
 // 查询当前分阶段发布详情

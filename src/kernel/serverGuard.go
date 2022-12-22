@@ -7,9 +7,8 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	logger2 "github.com/ArtisanCloud/PowerLibs/v2/logger"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/messages"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
@@ -55,8 +54,8 @@ type ServerGuard struct {
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
 
 	GetToken    func() string
-	Resolve     func(request *http.Request) (httpRS *response.HttpResponse, err error)
-	Notify      func(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error)
+	Resolve     func(request *http.Request) (httpRS *http.Response, err error)
+	Notify      func(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *http.Response, err error)
 	HandleEvent func(request *http.Request, closure func(event contract.EventInterface) interface{}) (*object.HashMap, error)
 }
 
@@ -87,7 +86,7 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 }
 
 func (serverGuard *ServerGuard) OverrideNotify() {
-	serverGuard.Notify = func(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *response.HttpResponse, err error) {
+	serverGuard.Notify = func(request *http.Request, closure func(event contract.EventInterface) interface{}) (response *http.Response, err error) {
 		validatedGuard, err := serverGuard.Validate(request)
 		if err != nil {
 			return nil, err
@@ -101,7 +100,7 @@ func (serverGuard *ServerGuard) OverrideNotify() {
 
 // 回调配置
 // https://developer.work.weixin.qq.com/document/path/90930
-func (serverGuard *ServerGuard) Serve(request *http.Request) (response *response.HttpResponse, err error) {
+func (serverGuard *ServerGuard) Serve(request *http.Request) (response *http.Response, err error) {
 
 	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
 	logger.Info("Request received:",
@@ -205,7 +204,7 @@ func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *mod
 
 }
 
-func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *response.HttpResponse, err error) {
+func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *http.Response, err error) {
 	result, err := serverGuard.HandleEvent(request, closure)
 	if err != nil {
 		return nil, err
@@ -238,7 +237,7 @@ func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func
 }
 
 func (serverGuard *ServerGuard) OverrideResolve() {
-	serverGuard.Resolve = func(request *http.Request) (httpRS *response.HttpResponse, err error) {
+	serverGuard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
 		result, err := serverGuard.handleRequest(request)
 		if err != nil {
 			return nil, err

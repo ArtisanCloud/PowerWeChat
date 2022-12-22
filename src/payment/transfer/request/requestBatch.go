@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/PowerLibs/v2/object"
+import "github.com/ArtisanCloud/PowerLibs/v3/object"
 
 type TransferDetail struct {
 	OutDetailNO    string            `json:"out_detail_no"`
