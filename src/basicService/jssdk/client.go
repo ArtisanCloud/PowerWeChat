@@ -4,11 +4,10 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"net/http"
 	"sort"
 	"strings"
@@ -89,7 +88,7 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 		return mapRSBody, errors.New((*mapRSBody)["errmsg"].(string))
 	}
 
-	result, err := comp.CastResponseToType(rs.(*response.HttpResponse).Response, response2.TYPE_MAP)
+	result, err := comp.CastResponseToType(rs, response2.TYPE_MAP)
 	if err != nil {
 		return nil, err
 	}

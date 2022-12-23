@@ -1,6 +1,6 @@
 package kernel
 
-import "github.com/ArtisanCloud/PowerLibs/v2/object"
+import "github.com/ArtisanCloud/PowerLibs/v3/object"
 
 type Config struct {
 	*object.Collection

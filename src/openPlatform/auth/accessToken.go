@@ -3,8 +3,8 @@ package auth
 // #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 )
 
 type AccessToken struct {

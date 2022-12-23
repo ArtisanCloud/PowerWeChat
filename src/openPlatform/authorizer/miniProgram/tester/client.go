@@ -1,11 +1,11 @@
 package tester
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/tester/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/miniProgram/tester/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/miniProgram/tester/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/miniProgram/tester/response"
 )
 
 type Client struct {

@@ -1,11 +1,11 @@
 package tag
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/tag/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/tag/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/tag/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/tag/response"
 )
 
 type Client struct {

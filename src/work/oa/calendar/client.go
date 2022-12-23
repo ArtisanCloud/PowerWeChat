@@ -1,11 +1,11 @@
 package calendar
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/calendar/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/calendar/response"
 )
 
 type Client struct {

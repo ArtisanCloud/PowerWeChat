@@ -1,10 +1,10 @@
 package plugin
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/plugin/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/plugin/response"
 )
 
 type Client struct {

@@ -1,7 +1,7 @@
 package power
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 )
 
 type HashMap object.HashMap

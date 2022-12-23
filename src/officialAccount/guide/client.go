@@ -2,11 +2,11 @@ package guide
 
 import (
 	"errors"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/guide/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/guide/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/guide/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/guide/response"
 )
 
 type Client struct {

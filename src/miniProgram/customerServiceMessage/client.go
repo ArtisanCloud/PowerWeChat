@@ -1,14 +1,13 @@
 package customerServiceMessage
 
 import (
-	response3 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/customerServiceMessage/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/customerServiceMessage/response"
-	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/customerServiceMessage/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/customerServiceMessage/response"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"net/http"
 )
 
@@ -31,9 +30,7 @@ func (comp *Client) GetTempMedia(mediaID string) (*http.Response, error) {
 
 	rs, err := comp.RequestRaw("cgi-bin/media/get", "GET", params, &header, &result)
 
-	httpRS := rs.(*response3.HttpResponse).Response
-
-	return httpRS, err
+	return rs, err
 }
 
 // 发送客服消息给用户

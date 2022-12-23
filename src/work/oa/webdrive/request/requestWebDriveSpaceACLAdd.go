@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 
 type RequestWebDriveSpaceACLAdd struct {
 	UserID   string           `json:"userid"`

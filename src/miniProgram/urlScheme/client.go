@@ -1,9 +1,9 @@
 package urlScheme
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlScheme/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/urlScheme/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/urlScheme/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/urlScheme/response"
 )
 
 type Client struct {

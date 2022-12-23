@@ -1,9 +1,9 @@
 package url
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/url/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/url/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"math"
 )
 
@@ -24,7 +24,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		baseClient,
 		"",
 	}
-	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/"
+	client.BaseClient.BaseURI = "https://api.weixin.qq.com/"
 
 	return client, nil
 }

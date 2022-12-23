@@ -5,12 +5,11 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/cache"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/cache"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"net/http"
 	"time"
 )
@@ -18,8 +17,7 @@ import (
 type AccessToken struct {
 	App *ApplicationInterface
 
-	*request.HttpRequest
-	*response.HttpResponse
+	HttpHelper *helper.RequestHelper
 
 	RequestMethod      string
 	EndpointToGetToken string
@@ -35,20 +33,24 @@ type AccessToken struct {
 }
 
 func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
-	config := (*app).GetContainer().GetConfig()
+	config := (*app).GetConfig()
+	baseURI := config.GetString("http.base_uri", "/")
 
 	var cacheClient cache.CacheInterface = nil
-	if (*config)["cache"] != nil {
-		cacheClient = (*config)["cache"].(cache.CacheInterface)
+	c := config.Get("cache", nil)
+	if c != nil {
+		cacheClient = c.(cache.CacheInterface)
 	}
 
-	httpRequest, err := request.NewHttpRequest(config)
+	h, err := helper.NewRequestHelper(&helper.Config{
+		BaseUrl: baseURI,
+	})
 	if err != nil {
 		return nil, err
 	}
 	token := &AccessToken{
-		App:         app,
-		HttpRequest: httpRequest,
+		App:        app,
+		HttpHelper: h,
 
 		RequestMethod:      "GET",
 		EndpointToGetToken: "",
@@ -195,14 +197,13 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 		return nil, err
 	}
 
-	_, err = accessToken.SetHttpClient(accessToken.GetHttpClient()).PerformRequest(
-		strEndpoint,
-		accessToken.RequestMethod,
-		options,
-		false,
-		nil,
-		res,
-	)
+	rs, err := accessToken.HttpHelper.Df().Url(strEndpoint).
+		Method(accessToken.RequestMethod).
+		Json(options).Request()
+
+	// decode response body to outBody
+	err = accessToken.HttpHelper.ParseResponseBodyContent(rs, res)
+
 	return res, err
 }
 

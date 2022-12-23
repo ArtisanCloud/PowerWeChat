@@ -2,10 +2,10 @@ package qrCode
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/qrCode/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/basicService/qrCode/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/qrCode/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/qrCode/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"math"
 	"net/url"
 )
@@ -31,7 +31,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		BaseClient: baseClient,
 	}
 
-	client.HttpRequest.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
+	client.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
 	return client, nil
 }
 

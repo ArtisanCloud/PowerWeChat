@@ -1,8 +1,8 @@
 package aggregate
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/authorizer/aggregate/account"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/aggregate/account"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (*account.Client, error) {

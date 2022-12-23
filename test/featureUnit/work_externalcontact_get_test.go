@@ -1,7 +1,7 @@
 package featureUnit
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"testing"
 )
 

@@ -3,10 +3,10 @@ package server
 import (
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
-	models2 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/server/handlers/models"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
+	models2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/server/handlers/models"
 	"net/http"
 )
 

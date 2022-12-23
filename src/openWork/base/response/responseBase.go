@@ -1,6 +1,6 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type FuncScopeCategory struct {
 	ID int `json:"id"`
@@ -28,7 +28,7 @@ type AuthorizationInfo struct {
 
 type ResponseHandleAuthorize struct {
 	response.ResponseOpenPlatform
-	
+
 	AuthorizationInfo *AuthorizationInfo `json:"authorization_info"`
 }
 

@@ -2,9 +2,8 @@ package server
 
 import (
 	"bytes"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	logger2 "github.com/ArtisanCloud/PowerLibs/v2/logger"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"io/ioutil"
 	"net/http"
 )
@@ -26,7 +25,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-func (guard *Guard) VerifyURL(request *http.Request) (httpRS *response.HttpResponse, err error) {
+func (guard *Guard) VerifyURL(request *http.Request) (httpRS *http.Response, err error) {
 	logger := (*guard.App).GetComponent("Logger").(*logger2.Logger)
 
 	_, err = guard.Validate(request)
@@ -34,17 +33,15 @@ func (guard *Guard) VerifyURL(request *http.Request) (httpRS *response.HttpRespo
 		return nil, err
 	}
 
+	bodyData := ioutil.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
 	rs := &http.Response{
-		Body:       ioutil.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr"))),
+		Body:       bodyData,
 		StatusCode: http.StatusOK,
 	}
 
-	httpRS = response.NewHttpResponse(http.StatusOK)
-	httpRS.Response = rs
+	logger.Info("Server response created:", "content", request.URL.Query().Get("echostr"))
 
-	logger.Info("Server response created:", "content", httpRS.GetBody())
-
-	return httpRS, err
+	return rs, err
 }
 
 // Override Validate

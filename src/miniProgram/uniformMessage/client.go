@@ -1,9 +1,9 @@
 package uniformMessage
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/uniformMessage/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/uniformMessage/request"
 )
 
 type Client struct {

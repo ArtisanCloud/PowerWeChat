@@ -5,16 +5,16 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/PowerLibs/v2/fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/request"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/support"
+	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
 	"log"
-	http2 "net/http"
+	http "net/http"
 	"os"
 )
 
@@ -25,20 +25,23 @@ type BaseClient struct {
 }
 
 func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
-	config := (*app).GetContainer().GetConfig()
+	config := (*app).GetConfig()
+	baseURI := config.GetString("http.base_uri", "/")
 
-	httpRequest, err := request.NewHttpRequest(config)
+	httpRequest, err := helper.NewRequestHelper(&helper.Config{
+		BaseUrl: baseURI,
+	})
 	if err != nil {
 		return nil, err
 	}
 
 	client := &BaseClient{
 		BaseClient: kernel.BaseClient{
-			HttpRequest: httpRequest,
+			HttpHelper: httpRequest,
 			Signer: &support.SHA256WithRSASigner{
-				MchID:               (*config)["mch_id"].(string),
-				CertificateSerialNo: (*config)["serial_no"].(string),
-				PrivateKeyPath:      (*config)["key_path"].(string),
+				MchID:               config.GetString("mch_id", ""),
+				CertificateSerialNo: config.GetString("serial_no", ""),
+				PrivateKeyPath:      config.GetString("key_path", ""),
 			},
 		},
 		App: app,
@@ -53,7 +56,7 @@ func (client *BaseClient) prepends() *object.HashMap {
 
 func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) (response interface{}, err error) {
+) (response *http.Response, err error) {
 
 	//config := (*client.App).GetConfig()
 	base := &object.HashMap{}
@@ -96,22 +99,32 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
-	returnResponse, err := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	returnResponse, err := client.HttpHelper.Df().
+		Url(endpoint).Method(method).Json(options).Request()
+
+	// decode response body to outBody
+	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
+
 	if err != nil {
 		return nil, err
 	}
+	// decode response header to outHeader
+	//headerData, _ := ioutil.ReadAll(response.Header)
+	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
+	//err = object.JsonDecode(headerData, outHeader)
 
-	if returnRaw {
-		return returnResponse, nil
-	} else {
-		var rs http2.Response = http2.Response{
-			StatusCode: 200,
-			Header:     nil,
-		}
-		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, response2.TYPE_RAW)
-		return result, nil
-	}
+	return returnResponse, err
+	//if returnRaw {
+	//	return returnResponse, nil
+	//} else {
+	//	var rs http.Response = http.Response{
+	//		StatusCode: 200,
+	//		Header:     nil,
+	//	}
+	//	rs.Body = returnResponse.GetBody()
+	//	result, _ := client.CastResponseToType(&rs, response2.TYPE_RAW)
+	//	return result, nil
+	//}
 
 }
 
@@ -140,22 +153,33 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
-	returnResponse, err := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	returnResponse, err := client.HttpHelper.Df().
+		Url(endpoint).Method(method).Json(options).Request()
+
+	// decode response body to outBody
+	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
+
 	if err != nil {
 		return nil, err
 	}
+	// decode response header to outHeader
+	//headerData, _ := ioutil.ReadAll(response.Header)
+	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
+	//err = object.JsonDecode(headerData, outHeader)
 
-	if returnRaw {
-		return returnResponse, nil
-	} else {
-		var rs http2.Response = http2.Response{
-			StatusCode: 200,
-			Header:     nil,
-		}
-		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
-		return result, nil
-	}
+	return returnResponse, err
+
+	//if returnRaw {
+	//	return returnResponse, nil
+	//} else {
+	//	var rs http.Response = http.Response{
+	//		StatusCode: 200,
+	//		Header:     nil,
+	//	}
+	//	rs.Body = returnResponse.GetBody()
+	//	result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
+	//	return result, nil
+	//}
 
 }
 
@@ -175,22 +199,33 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
-	returnResponse, err := client.PerformRequest(endpoint, method, options, returnRaw, outHeader, outBody)
+	returnResponse, err := client.HttpHelper.Df().
+		Url(endpoint).Method(method).Json(options).Request()
+
+	// decode response body to outBody
+	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
+
 	if err != nil {
 		return nil, err
 	}
+	// decode response header to outHeader
+	//headerData, _ := ioutil.ReadAll(response.Header)
+	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
+	//err = object.JsonDecode(headerData, outHeader)
 
-	if returnRaw {
-		return returnResponse, nil
-	} else {
-		var rs http2.Response = http2.Response{
-			StatusCode: 200,
-			Header:     nil,
-		}
-		rs.Body = returnResponse.GetBody()
-		result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
-		return result, nil
-	}
+	return returnResponse, err
+
+	//if returnRaw {
+	//	return returnResponse, nil
+	//} else {
+	//	var rs http.Response = http.Response{
+	//		StatusCode: 200,
+	//		Header:     nil,
+	//	}
+	//	rs.Body = returnResponse.GetBody()
+	//	result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
+	//	return result, nil
+	//}
 
 }
 
@@ -213,12 +248,17 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 		return 0, err
 	}
 
-	_, err = client.PerformRequest(requestDownload.DownloadURL, method, options, true, nil, fileHandler)
+	rs, err := client.HttpHelper.Df().Url(requestDownload.DownloadURL).Method(method).Json(options).Request()
 	if err != nil {
 		return 0, err
 	}
+	result, err := fileHandler.ReadFrom(rs.Body)
+	if err != nil {
+		return result, err
+	}
+	fmt2.Dump("http stream download file size:", result)
 
-	// 校验下载文件
+	// 校验已下载文件
 	downloadedHandler, err := os.Open(filePath)
 	if err != nil {
 		return 0, err
@@ -250,7 +290,7 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CastResponseToType(returnResponse.(*http2.Response), response2.TYPE_RAW)
+	result, err := client.CastResponseToType(returnResponse.(*http.Response), response2.TYPE_RAW)
 
 	return result.(*object.HashMap), err
 }

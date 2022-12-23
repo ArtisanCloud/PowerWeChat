@@ -1,9 +1,9 @@
 package riskControl
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/riskControl/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/miniProgram/riskControl/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/riskControl/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/riskControl/response"
 )
 
 type Client struct {

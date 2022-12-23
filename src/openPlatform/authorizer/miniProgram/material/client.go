@@ -1,10 +1,9 @@
 package material
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/http/contract"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 )
 
 type Client struct {
@@ -26,7 +25,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 获取永久素材图片
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
-func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
+func (comp *Client) Get(mediaID string) (*http.response, error) {
 
 	result := ""
 	header := &response4.ResponseHeaderMedia{}
@@ -36,5 +35,5 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseInterface), err
+	return response.(*http.response), err
 }

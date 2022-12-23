@@ -3,11 +3,10 @@ package order
 import (
 	"errors"
 	"fmt"
-	response2 "github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order/response"
 	"net/http"
 )
 
@@ -151,10 +150,5 @@ func (comp *Client) Close(tradeNo string) (*http.Response, error) {
 		"mchid": config.GetString("mch_id", ""),
 	}, false, nil, nil)
 
-	var httpResponse *http.Response = nil
-	if err != nil {
-		httpResponse = rs.(*response2.HttpResponse).Response
-	}
-
-	return httpResponse, err
+	return rs, err
 }

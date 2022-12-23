@@ -3,25 +3,24 @@ package payment
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/logger"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/providers"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/base"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/bill"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/jssdk"
-	kernel2 "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/notify"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/notify/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/order"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/profitSharing"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/redpack"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/refund"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/reverse"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/sandbox"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer"
+	"github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/base"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/jssdk"
+	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/reverse"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/sandbox"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer"
 	"net/http"
 	"time"
 )
@@ -256,15 +255,15 @@ func (app *Payment) SetSubMerchant(mchID string, appID string) kernel2.Applicati
 	return app
 }
 
-func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) (*response.HttpResponse, error) {
+func (app *Payment) HandlePaidNotify(request *http.Request, closure func(message *request.RequestNotify, transaction *models.Transaction, fail func(message string)) interface{}) (*http.Response, error) {
 	return notify.NewPaidNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *request.RequestNotify, transaction *models.Refund, fail func(message string)) interface{}) (*response.HttpResponse, error) {
+func (app *Payment) HandleRefundedNotify(request *http.Request, closure func(message *request.RequestNotify, transaction *models.Refund, fail func(message string)) interface{}) (*http.Response, error) {
 	return notify.NewRefundNotify(app, request).Handle(closure)
 }
 
-func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*response.HttpResponse, error) {
+func (app *Payment) HandleScannedNotify(request *http.Request, closure func(message *request.RequestNotify, fail func(message string), alert func(message string)) interface{}) (*http.Response, error) {
 	return notify.NewScannedNotify(app, request).Handle(closure)
 }
 

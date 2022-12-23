@@ -1,11 +1,10 @@
 package wxaCode
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/power"
-	response4 "github.com/ArtisanCloud/PowerWeChat/v2/src/work/media/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"io/fs"
 	"io/ioutil"
 	"net/http"
@@ -35,9 +34,7 @@ func (comp *Client) CreateQRCode(path string, width int64) (*http.Response, erro
 
 	rs, err := comp.RequestRaw("cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
 
-	httpRS := rs.(*response.HttpResponse).Response
-
-	return httpRS, err
+	return rs, err
 
 }
 
@@ -64,12 +61,8 @@ func (comp *Client) Get(path string, width int64,
 	}
 
 	rs, err := comp.RequestRaw("wxa/getwxacode", "POST", data, &header, &result)
-	if err != nil {
-		return nil, err
-	}
-	httpRS := rs.(*response.HttpResponse).Response
 
-	return httpRS, err
+	return rs, err
 }
 
 // 获取小程序码，适用于需要的码数量较少的业务场景
@@ -118,7 +111,5 @@ func (comp *Client) GetUnlimited(
 
 	rs, err := comp.RequestRaw("wxa/getwxacodeunlimit", "POST", data, &header, &result)
 
-	httpRS := rs.(*response.HttpResponse).Response
-
-	return httpRS, err
+	return rs, err
 }

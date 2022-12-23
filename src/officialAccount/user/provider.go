@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/officialAccount/user/tag"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/user/tag"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client, *tag.Client, error) {

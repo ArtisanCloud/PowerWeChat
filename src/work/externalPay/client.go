@@ -1,11 +1,11 @@
 package externalPay
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalPay/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalPay/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalPay/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalPay/response"
 )
 
 type Client struct {

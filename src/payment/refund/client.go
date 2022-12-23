@@ -2,10 +2,10 @@ package refund
 
 import (
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/refund/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/refund/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund/response"
 )
 
 type Client struct {

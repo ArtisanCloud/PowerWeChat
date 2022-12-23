@@ -1,10 +1,10 @@
 package moment
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/moment/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/moment/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/moment/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/moment/response"
 )
 
 type Client struct {

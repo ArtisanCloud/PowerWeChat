@@ -4,12 +4,11 @@ import (
 	"bytes"
 	"encoding/xml"
 	"errors"
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/response"
-	openplatform "github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/server/callbacks"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/openPlatform/server/handlers"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/response"
+	openplatform "github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/server/callbacks"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/server/handlers"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -56,7 +55,7 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 
 }
 
-func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte, infoType string) interface{}) (httpRS *response.HttpResponse, err error) {
+func (guard *Guard) Notify(request *http.Request, closure func(content *openplatform.Callback, decrypted []byte, infoType string) interface{}) (httpRS *http.Response, err error) {
 	// validate the signature
 	_, err = guard.Validate(request)
 	if err != nil {
@@ -91,9 +90,10 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	if err != nil {
 		return nil, err
 	}
-	httpRS = response.NewHttpResponse(http.StatusOK)
-	httpRS.Response = &http.Response{
-		Body: ioutil.NopCloser(bytes.NewBuffer([]byte(strResult))),
+
+	httpRS = &http.Response{
+		StatusCode: http.StatusOK,
+		Body:       ioutil.NopCloser(bytes.NewBuffer([]byte(strResult))),
 	}
 
 	return httpRS, err
@@ -115,18 +115,18 @@ func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error
 
 // Override Validate
 func (guard *Guard) OverrideResolve() {
-	guard.Resolve = func(request *http.Request) (httpRS *response.HttpResponse, err error) {
+	guard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
 		guard.registerHandlers()
 
 		message, err := guard.GetMessage(request)
 
-		var rs *http.Response = &http.Response{}
 		if message.InfoType != "" {
 			_ = guard.Dispatch(request, GetOpenPlatformEvent(message.InfoType), nil, message)
 		}
-		httpRS = response.NewHttpResponse(http.StatusOK)
-		rs.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(kernel.SUCCESS_EMPTY_RESPONSE)))
-		httpRS.Response = rs
+		httpRS = &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       ioutil.NopCloser(bytes.NewBuffer([]byte(kernel.SUCCESS_EMPTY_RESPONSE))),
+		}
 
 		return httpRS, nil
 	}

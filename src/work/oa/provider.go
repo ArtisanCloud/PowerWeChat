@@ -1,16 +1,16 @@
 package oa
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/calendar"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/dial"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/journal"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/living"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/meeting"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/meetingroom"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/pstncc"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/schedule"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/work/oa/webdrive"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/calendar"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/dial"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/journal"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/living"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/meeting"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/meetingroom"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/pstncc"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/schedule"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/webdrive"
 )
 
 func RegisterProvider(app kernel.ApplicationInterface) (*Client,

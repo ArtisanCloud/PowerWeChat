@@ -1,7 +1,7 @@
 package kernel
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/cache"
+	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"time"
 )
 

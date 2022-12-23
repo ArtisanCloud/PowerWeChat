@@ -2,7 +2,7 @@ package power
 
 import (
 	"encoding/json"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 )
 
 type StringMap object.StringMap

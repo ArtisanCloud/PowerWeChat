@@ -2,12 +2,12 @@ package transfer
 
 import (
 	"crypto"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerLibs/v2/security/sign"
-	response2 "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/response"
-	payment "github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer/request"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/transfer/response"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/response"
 )
 
 type Client struct {

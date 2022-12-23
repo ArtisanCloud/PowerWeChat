@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 )
 
 type Guard struct {

@@ -1,6 +1,6 @@
 package request
 
-import "github.com/ArtisanCloud/PowerWeChat/v2/src/work/externalContact/messageTemplate/request"
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/messageTemplate/request"
 
 type Conclusions struct {
 	Text        *request.TextOfMessage `json:"text"`

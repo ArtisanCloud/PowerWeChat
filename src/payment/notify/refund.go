@@ -1,11 +1,10 @@
 package notify
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v2/http/response"
-	"github.com/ArtisanCloud/PowerLibs/v2/object"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/kernel/models"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v2/src/payment/notify/request"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
 	"net/http"
 )
 
@@ -22,7 +21,7 @@ func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Reque
 	return paid
 }
 
-func (comp *Refund) Handle(closure func(message *request.RequestNotify, refund *models.Refund, fail func(message string)) interface{}) (*response.HttpResponse, error) {
+func (comp *Refund) Handle(closure func(message *request.RequestNotify, refund *models.Refund, fail func(message string)) interface{}) (*http.Response, error) {
 
 	message, err := comp.GetMessage()
 	if err != nil {

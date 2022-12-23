@@ -1,6 +1,6 @@
 package contentSecurity
 
-import "github.com/ArtisanCloud/PowerWeChat/v2/src/kernel"
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 
 type Client struct {
 	*kernel.BaseClient
@@ -18,7 +18,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		BaseClient: baseClient,
 	}
 
-	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/wxa/"
+	client.BaseClient.BaseURI = "https://api.weixin.qq.com/wxa/"
 
 	return client, nil
 }
