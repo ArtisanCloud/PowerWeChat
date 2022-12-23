@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -46,6 +47,11 @@ func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 		},
 		App: app,
 	}
+
+	// to be setup middleware here
+	client.OverrideGetMiddlewares()
+	client.RegisterHttpMiddlewares()
+
 	return client, nil
 
 }
@@ -149,12 +155,35 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 		return nil, err
 	}
 
-	// to be setup middleware here
-	//client.PushMiddleware(client.logMiddleware(), "access_token")
-
 	// http client request
-	returnResponse, err := client.HttpHelper.Df().
-		Url(endpoint).Method(method).Json(options).Request()
+	df := client.HttpHelper.Df().
+		Uri(endpoint).Method(method)
+
+	// 检查是否需要有请求参数配置
+	if options != nil {
+		// set query key values
+		if (*options)["query"] != nil {
+			queries := (*options)["query"].(*object.StringMap)
+			if queries != nil {
+				for k, v := range *queries {
+					df.Query(k, v)
+				}
+			}
+		}
+		config := (*client.App).GetConfig()
+		// 微信如果需要传debug模式
+		debug := config.GetBool("debug", false)
+		if debug {
+			df.Query("debug", "1")
+		}
+
+		// set body json
+		if (*options)["body"] != nil {
+			df.Json((*options)["body"])
+		}
+	}
+
+	returnResponse, err := df.Request()
 
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
@@ -297,10 +326,11 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 
 func (client *BaseClient) SafeRequest(url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	config := (*client.App).GetConfig()
-	option = object.MergeHashMap(option, &object.HashMap{
-		"cert":    config.GetString("cert_path", ""),
-		"ssl_key": config.GetString("key_path", ""),
-	})
+
+	httpConfig := client.HttpHelper.GetClient().GetConfig()
+	httpConfig.Cert.CertFile = config.GetString("cert_path", "")
+	httpConfig.Cert.KeyFile = config.GetString("key_path", "")
+	client.HttpHelper.GetClient().SetConfig(&httpConfig)
 
 	strOutBody := ""
 	// get xml string result from return raw as true
@@ -430,12 +460,35 @@ func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, para
 }
 
 // ----------------------------------------------------------------------
-type MiddlewareLogMiddleware struct {
-	*BaseClient
+func (client *BaseClient) OverrideGetMiddlewares() {
+	client.OverrideGetMiddlewareOfAccessToken()
+	client.OverrideGetMiddlewareOfLog()
+	client.OverrideGetMiddlewareOfRefreshAccessToken()
 }
 
-func (client *BaseClient) logMiddleware() interface{} {
-	return &MiddlewareLogMiddleware{
-		client,
+func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
+	client.GetMiddlewareOfAccessToken = func(handle contract.RequestHandle) contract.RequestHandle {
+		return func(request *http.Request) (response *http.Response, err error) {
+			// 前置中间件
+			//fmt.Println("获取access token, 在请求前执行")
+
+			accessToken := (*client.App).GetAccessToken()
+
+			if accessToken != nil {
+				config := (*client.App).GetContainer().Config
+				_, err = accessToken.ApplyToRequest(request, config)
+			}
+
+			if err != nil {
+				return nil, err
+			}
+
+			response, err = handle(request)
+			// handle 执行之后就可以操作 response 和 err
+
+			// 后置中间件
+			//fmt.Println("获取access token, 在请求后执行")
+			return
+		}
 	}
 }

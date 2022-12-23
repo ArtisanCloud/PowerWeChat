@@ -197,9 +197,31 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 		return nil, err
 	}
 
-	rs, err := accessToken.HttpHelper.Df().Url(strEndpoint).
-		Method(accessToken.RequestMethod).
-		Json(options).Request()
+	df := accessToken.HttpHelper.Df().Uri(strEndpoint).
+		Method(accessToken.RequestMethod)
+
+	// 检查是否需要有请求参数配置
+	if options != nil {
+		// set query key values
+		if (*options)["query"] != nil {
+			queries := (*options)["query"].(*object.StringMap)
+			if queries != nil {
+				for k, v := range *queries {
+					df.Query(k, v)
+				}
+			}
+		}
+
+		// set body json
+		if (*options)["form_params"] != nil {
+			df.Json((*options)["form_params"])
+		}
+	}
+
+	rs, err := df.Request()
+	if err != nil {
+		return nil, err
+	}
 
 	// decode response body to outBody
 	err = accessToken.HttpHelper.ParseResponseBodyContent(rs, res)
