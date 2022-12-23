@@ -24,7 +24,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		baseClient,
 		"",
 	}
-	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/"
+	client.BaseClient.BaseURI = "https://api.weixin.qq.com/"
 
 	return client, nil
 }

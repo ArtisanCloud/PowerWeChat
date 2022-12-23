@@ -2,7 +2,6 @@ package server
 
 import (
 	"bytes"
-	"github.com/ArtisanCloud/PowerLibs/v3/http/response"
 	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"io/ioutil"
@@ -34,17 +33,15 @@ func (guard *Guard) VerifyURL(request *http.Request) (httpRS *http.Response, err
 		return nil, err
 	}
 
+	bodyData := ioutil.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
 	rs := &http.Response{
-		Body:       ioutil.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr"))),
+		Body:       bodyData,
 		StatusCode: http.StatusOK,
 	}
 
-	httpRS = response.NewHttpResponse(http.StatusOK)
-	httpRS.Response = rs
+	logger.Info("Server response created:", "content", request.URL.Query().Get("echostr"))
 
-	logger.Info("Server response created:", "content", httpRS.GetBody())
-
-	return httpRS, err
+	return rs, err
 }
 
 // Override Validate

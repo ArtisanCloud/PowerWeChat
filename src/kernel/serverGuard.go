@@ -117,7 +117,7 @@ func (serverGuard *ServerGuard) Serve(request *http.Request) (response *http.Res
 
 	response, err = validatedGuard.Resolve(request)
 
-	logger.Info("Server response created:", "content", response.GetBody())
+	logger.Info("Server response created:", "content", response.ContentLength)
 
 	return response, err
 }
@@ -204,13 +204,12 @@ func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *mod
 
 }
 
-func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (httpRS *http.Response, err error) {
+func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (rs *http.Response, err error) {
 	result, err := serverGuard.HandleEvent(request, closure)
 	if err != nil {
 		return nil, err
 	}
 
-	var rs *http.Response
 	if serverGuard.ShouldReturnRawResponse(request) {
 		resultRS := ""
 		if (*result)["response"] != nil {
@@ -230,20 +229,17 @@ func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func
 			Header:     header,
 		}
 	}
-	httpRS = response.NewHttpResponse(http.StatusOK)
-	httpRS.Response = rs
 
-	return httpRS, nil
+	return rs, nil
 }
 
 func (serverGuard *ServerGuard) OverrideResolve() {
-	serverGuard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
+	serverGuard.Resolve = func(request *http.Request) (rs *http.Response, err error) {
 		result, err := serverGuard.handleRequest(request)
 		if err != nil {
 			return nil, err
 		}
 
-		var rs *http.Response
 		if serverGuard.ShouldReturnRawResponse(request) {
 			resultRS := ""
 			if (*result)["response"] != nil {
@@ -263,10 +259,8 @@ func (serverGuard *ServerGuard) OverrideResolve() {
 				Header:     header,
 			}
 		}
-		httpRS = response.NewHttpResponse(http.StatusOK)
-		httpRS.Response = rs
 
-		return httpRS, nil
+		return rs, nil
 	}
 }
 

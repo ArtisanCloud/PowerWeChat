@@ -62,7 +62,7 @@ func (comp *Client) GetFeedbackMedia(recordID int, mediaID string) (*http.Respon
 
 	rs, err := comp.RequestRaw("cgi-bin/media/getfeedbackmedia", "GET", data, header, &result)
 
-	return rs.(*http.Response).Response, err
+	return rs, err
 }
 
 // 查询当前分阶段发布详情

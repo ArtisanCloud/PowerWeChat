@@ -150,10 +150,5 @@ func (comp *Client) Close(tradeNo string) (*http.Response, error) {
 		"mchid": config.GetString("mch_id", ""),
 	}, false, nil, nil)
 
-	var httpResponse *http.Response = nil
-	if err != nil {
-		httpResponse = rs.(*http.Response).Response
-	}
-
-	return httpResponse, err
+	return rs, err
 }

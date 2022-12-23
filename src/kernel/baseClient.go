@@ -1,13 +1,11 @@
 package kernel
 
 import (
-	"bytes"
 	"fmt"
 	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
-	"io/ioutil"
 	"log"
 	http "net/http"
 	"os"
@@ -15,7 +13,9 @@ import (
 )
 
 type BaseClient struct {
-	Helper *helper.RequestHelper
+	HttpHelper *helper.RequestHelper
+
+	BaseURI string
 
 	Middlewares []contract.RequestMiddleware
 
@@ -51,9 +51,9 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 		return nil, err
 	}
 	client := &BaseClient{
-		Helper: h,
-		App:    app,
-		Token:  token,
+		HttpHelper: h,
+		App:        app,
+		Token:      token,
 	}
 
 	mchID := config.GetString("mch_id", "")
@@ -174,17 +174,14 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 		client.registerHttpMiddlewares()
 	}
 	// http client request
-	response, err := client.Helper.Df().Url(url).Method(method).Json(options).Request()
+	response, err := client.HttpHelper.Df().Url(url).Method(method).Json(options).Request()
 
 	// decode response body to outBody
-	bodyData, _ := ioutil.ReadAll(response.Body)
-	response.Body = ioutil.NopCloser(bytes.NewBuffer(bodyData))
-	err = object.JsonDecode(bodyData, outBody)
+	err = client.HttpHelper.ParseResponseBodyContent(response, outBody)
 
 	// decode response header to outHeader
-	//headerData, _ := ioutil.ReadAll(response.Header)
-	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
-	//err = object.JsonDecode(headerData, outHeader)
+	strHeader, err := object.JsonEncode(response.Header)
+	err = object.JsonDecode([]byte(strHeader), outHeader)
 
 	if err != nil {
 		return nil, err
@@ -251,13 +248,13 @@ func (client *BaseClient) registerHttpMiddlewares() {
 		})
 	}
 
-	client.Helper.WithMiddleware(accessMiddleware, logMiddleware(log.Default()))
+	client.HttpHelper.WithMiddleware(accessMiddleware, logMiddleware(log.Default()))
 
 }
 
 // ----------------------------------------------------------------------
 
-//func (client *BaseClient) CheckTokenNeedRefresh(rs contract.ResponseInterface) error {
+//func (client *BaseClient) CheckTokenNeedRefresh(rs *http.response) error {
 //	data, err := rs.GetBodyData()
 //	if err != nil {
 //		return err

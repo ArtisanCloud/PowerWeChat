@@ -88,7 +88,7 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 		return mapRSBody, errors.New((*mapRSBody)["errmsg"].(string))
 	}
 
-	result, err := comp.CastResponseToType(rs.(*http.Response).Response, response2.TYPE_MAP)
+	result, err := comp.CastResponseToType(rs, response2.TYPE_MAP)
 	if err != nil {
 		return nil, err
 	}

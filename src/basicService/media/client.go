@@ -3,10 +3,10 @@ package media
 import (
 	"errors"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/media/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"net/http"
 	"os"
 )
 
@@ -27,7 +27,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 		AllowTypes: []string{"image", "voice", "video", "thumb"},
 	}
 
-	client.BaseClient.HttpRequest.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
+	client.BaseClient.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
 	return client, nil
 }
 
@@ -81,7 +81,7 @@ func (comp *Client) Upload(mediaType string, path string) (*response.ResponseUpl
 
 // 获取临时素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90254
-func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
+func (comp *Client) Get(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
@@ -91,13 +91,13 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseInterface), err
+	return response, err
 
 }
 
 // 获取高清语音素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90255
-func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error) {
+func (comp *Client) GetJSSDK(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
@@ -107,6 +107,6 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseInterface), err
+	return response, err
 
 }

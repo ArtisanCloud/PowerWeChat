@@ -3,7 +3,7 @@ package officialAccount
 import (
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
-	providers2 "github.com/ArtisanCloud/PowerSocialite/v2/src/providers"
+	providers2 "github.com/ArtisanCloud/PowerSocialite/v3/src/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/jssdk"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/media"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/qrCode"

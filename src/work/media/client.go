@@ -1,11 +1,11 @@
 package media
 
 import (
-	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
+	"net/http"
 )
 
 type Client struct {
@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取临时素材
 // https://developer.work.weixin.qq.com/document/path/90254
-func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
+func (comp *Client) Get(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
@@ -34,13 +34,13 @@ func (comp *Client) Get(mediaID string) (contract.ResponseInterface, error) {
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseInterface), err
+	return response, err
 
 }
 
 // 获取高清语音素材
 // https://developer.work.weixin.qq.com/document/path/90255
-func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error) {
+func (comp *Client) GetJSSDK(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
@@ -50,7 +50,7 @@ func (comp *Client) GetJSSDK(mediaID string) (contract.ResponseInterface, error)
 		},
 	}, header, &result)
 
-	return response.(contract.ResponseInterface), err
+	return response, err
 
 }
 

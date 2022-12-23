@@ -1,5 +1,5 @@
 package power
 
-import "github.com/ArtisanCloud/PowerLibs/v2/http/response"
+import "github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 
-type RequestDownload response.RequestDownload
+type RequestDownload helper.RequestDownload
