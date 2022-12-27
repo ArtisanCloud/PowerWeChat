@@ -8,7 +8,7 @@ import (
 )
 
 type PageClient struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewPageClient(app kernel.ApplicationInterface) (*PageClient, error) {
@@ -27,7 +27,7 @@ func (comp *PageClient) Create(data *request.RequestPageInfo) (*response.Respons
 
 	result := &response.ResponsePage{}
 
-	_, err := comp.HttpPostJson("shakearound/page/add", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/page/add", data, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *PageClient) Update(data request.RequestPageUpdate) (*response.Respon
 
 	result := &response.ResponsePage{}
 
-	_, err := comp.HttpPostJson("shakearound/page/update", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/page/update", data, nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *PageClient) List(begin int, count int) (*response.ResponsePageList, 
 		"count": count,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/page/search", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/page/search", params, nil, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *PageClient) Delete(pageID string) (*response.ResponsePage, error) {
 		"page_id": pageID,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/page/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/page/delete", params, nil, nil, result)
 
 	return result, err
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取用户增减数据
@@ -241,7 +241,7 @@ func (comp *Client) Query(api string, from string, to string, ext *object.HashMa
 	}
 	params = object.MergeHashMap(params, ext)
 
-	_, err = comp.HttpPostJson(api, params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(api, params, nil, nil, result)
 
 	return err
 

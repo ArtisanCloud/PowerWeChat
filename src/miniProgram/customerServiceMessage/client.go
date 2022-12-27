@@ -12,7 +12,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取客服消息内的临时素材
@@ -28,7 +28,7 @@ func (comp *Client) GetTempMedia(mediaID string) (*http.Response, error) {
 		},
 	}
 
-	rs, err := comp.RequestRaw("cgi-bin/media/get", "GET", params, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw("cgi-bin/media/get", "GET", params, &header, &result)
 
 	return rs, err
 }
@@ -45,7 +45,7 @@ func (comp *Client) Send(toUser string, msgType string, msg interface{}) (*respo
 		msgType:   msg,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/send", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/custom/send", data, nil, nil, result)
 
 	return result, err
 }
@@ -73,7 +73,7 @@ func (comp *Client) SetTyping(toUser string, command string) (*response2.Respons
 		"command": command,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/typing", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/custom/typing", data, nil, nil, result)
 
 	return result, err
 }
@@ -103,7 +103,7 @@ func (comp *Client) UploadTempMedia(mediaType string, path string, form *power.H
 		}
 	}
 
-	_, err := comp.HttpUpload("cgi-bin/media/upload", files, formData, &object.StringMap{
+	_, err := comp.BaseClient.HttpUpload("cgi-bin/media/upload", files, formData, &object.StringMap{
 		"type": mediaType,
 	}, nil, result)
 

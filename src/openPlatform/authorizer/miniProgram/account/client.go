@@ -29,7 +29,7 @@ func (comp *Client) GetBasicInfo() (*response.ResponseGetBasicInfo, error) {
 
 	result := &response.ResponseGetBasicInfo{}
 
-	_, err := comp.HttpPostJson("cgi-bin/account/getaccountbasicinfo", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/getaccountbasicinfo", nil, nil, nil, result)
 
 	return result, err
 
@@ -54,7 +54,7 @@ func (comp *Client) UpdateAvatar(
 		"x2":                fmt.Sprintf("%f", right),
 		"y2":                fmt.Sprintf("%f", bottom),
 	}
-	_, err := comp.HttpPostJson("cgi-bin/account/modifyheadimage", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/modifyheadimage", params, nil, nil, result)
 
 	return result, err
 
@@ -69,7 +69,7 @@ func (comp *Client) UpdateSignature(signature string) (*response2.ResponseOpenPl
 	params := &object.HashMap{
 		"signature": signature,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/account/modifysignature", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/modifysignature", params, nil, nil, result)
 
 	return result, err
 

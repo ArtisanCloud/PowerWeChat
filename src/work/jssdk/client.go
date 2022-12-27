@@ -27,7 +27,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 }
 
 func (comp *Client) GetAppID() string {
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	return config.GetString("corp_id", "")
 }
 

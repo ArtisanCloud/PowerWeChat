@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取用户访问小程序数据概况
@@ -28,7 +28,7 @@ func (comp *Client) GetPerformanceData(options *request.RequestGetPerformanceDat
 
 	result := &response.ResponseDataCubeGetPerformanceData{}
 
-	_, err := comp.HttpPostJson("wxa/business/performance/boot", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/performance/boot", options, nil, nil, result)
 
 	return result, err
 }
@@ -139,7 +139,7 @@ func (comp *Client) Query(endpoint string, from string, to string, outHeader int
 		"end_date":   to,
 	}
 
-	rs, err := comp.HttpPostJson(endpoint, data, nil, outHeader, outBody)
+	rs, err := comp.BaseClient.HttpPostJson(endpoint, data, nil, outHeader, outBody)
 
 	return rs, err
 }

@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -32,7 +32,7 @@ func (comp *Client) Get(openKFID string, externalUserID string) (*response.Respo
 		"external_userid": externalUserID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/service_state/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/service_state/get", options, nil, nil, result)
 
 	return result, err
 }
@@ -50,7 +50,7 @@ func (comp *Client) Trans(openKFID string, externalUserID string, serviceState i
 		"servicer_userid": servicerUserID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/service_state/trans", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/service_state/trans", options, nil, nil, result)
 
 	return result, err
 }

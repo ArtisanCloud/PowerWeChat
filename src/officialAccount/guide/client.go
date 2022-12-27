@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 为服务号添加顾问
@@ -31,7 +31,7 @@ func (comp *Client) CreateAdviser(guideAccount string, guideOpenID string, guide
 	if guideNickname != "" {
 		(*params)["guide_nickname"] = guideNickname
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/addguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguideacct", params, nil, nil, result)
 
 	return result, err
 }
@@ -47,7 +47,7 @@ func (comp *Client) GetAdviser(guideAccount string, guideOpenID string) (*respon
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideacct", params, nil, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *Client) UpdateAdviser(guideAccount string, guideOpenID string, guide
 	if guideNickname != "" {
 		(*params)["guide_nickname"] = guideNickname
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/updateguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/updateguideacct", params, nil, nil, result)
 
 	return result, err
 }
@@ -86,7 +86,7 @@ func (comp *Client) DeleteAdviser(guideAccount string, guideOpenID string) (*res
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/delguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/delguideacct", params, nil, nil, result)
 
 	return result, err
 }
@@ -102,7 +102,7 @@ func (comp *Client) GetAdvisers(guideAccount string, guideOpenID string) (*respo
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguideacctlist", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideacctlist", params, nil, nil, result)
 
 	return result, err
 }
@@ -121,7 +121,7 @@ func (comp *Client) CreateQrCode(guideAccount string, guideOpenID string, qrCode
 	if qrCodeInfo != "" {
 		(*params)["qrcode_info"] = qrCodeInfo
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/guidecreateqrcode", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/guidecreateqrcode", params, nil, nil, result)
 
 	return result, err
 }
@@ -146,7 +146,7 @@ func (comp *Client) GetBuyerChatRecords(guideAccount string, guideOpenID string,
 	if endTime != "" {
 		(*params)["end_time"] = endTime
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguidebuyerchatrecord", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerchatrecord", params, nil, nil, result)
 
 	return result, err
 }
@@ -174,7 +174,7 @@ func (comp *Client) SetConfig(guideAccount string, guideOpenID string, isDelete 
 	if guideAutoReplyPlus != nil {
 		(*params)["guide_auto_reply_plus"] = guideAutoReplyPlus
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/setguideconfig", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/setguideconfig", params, nil, nil, result)
 
 	return result, err
 }
@@ -190,7 +190,7 @@ func (comp *Client) GetConfig(guideAccount string, guideOpenID string) (*respons
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguideconfig", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideconfig", params, nil, nil, result)
 
 	return result, err
 }
@@ -216,7 +216,7 @@ func (comp *Client) SetAdviserConfig(guideAccount string, guideOpenID string, is
 		(*params)["guide_auto_reply"] = guideAutoReply
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/setguideacctconfig", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/setguideacctconfig", params, nil, nil, result)
 
 	return result, err
 }
@@ -227,7 +227,7 @@ func (comp *Client) GetAdviserConfig() (*response.ResponseGuideGetAdviserConfig,
 
 	result := &response.ResponseGuideGetAdviserConfig{}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguideacctconfig", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideacctconfig", nil, nil, nil, result)
 
 	return result, err
 }
@@ -242,7 +242,7 @@ func (comp *Client) AllowCopyMiniAppPath(wxaAppID string, wxUsername string) (*r
 		"wxa_appid":   wxaAppID,
 		"wx_username": wxUsername,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/pushshowwxapathmenu", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/pushshowwxapathmenu", params, nil, nil, result)
 
 	return result, err
 }
@@ -276,7 +276,7 @@ func (comp *Client) CreateGroup(groupName string) (*response.ResponseGuideCreate
 	params := &object.HashMap{
 		"group_name": groupName,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/newguidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/newguidegroup", params, nil, nil, result)
 
 	return result, err
 }
@@ -287,7 +287,7 @@ func (comp *Client) GetGuideGroups() (*response.ResponseGuideGetGroupList, error
 
 	result := &response.ResponseGuideGetGroupList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguidegrouplist", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidegrouplist", nil, nil, nil, result)
 
 	return result, err
 }
@@ -301,7 +301,7 @@ func (comp *Client) GetGroups(groupName string) (*response.ResponseGuideGetGroup
 	params := &object.HashMap{
 		"group_name": groupName,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/getgroupinfo", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getgroupinfo", params, nil, nil, result)
 
 	return result, err
 }
@@ -316,7 +316,7 @@ func (comp *Client) AddGroupGuide(groupID int, guideAccount string) (*response2.
 		"group_id":      groupID,
 		"guide_account": guideAccount,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/addguide2guidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/addguide2guidegroup", params, nil, nil, result)
 
 	return result, err
 }
@@ -331,7 +331,7 @@ func (comp *Client) DeleteGroupGuide(groupID int, guideAccount string) (*respons
 		"group_id":      groupID,
 		"guide_account": guideAccount,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/delguide2guidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguide2guidegroup", params, nil, nil, result)
 
 	return result, err
 }
@@ -345,7 +345,7 @@ func (comp *Client) GetGuideGroup(guideAccount string) (*response.ResponseGuideG
 	params := &object.HashMap{
 		"guide_account": guideAccount,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/getgroupbyguide", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getgroupbyguide", params, nil, nil, result)
 
 	return result, err
 }
@@ -359,7 +359,7 @@ func (comp *Client) DeleteGroup(groupID int) (*response2.ResponseOfficialAccount
 	params := &object.HashMap{
 		"group_id": groupID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/guide/delguidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidegroup", params, nil, nil, result)
 
 	return result, err
 }
@@ -379,7 +379,7 @@ func (comp *Client) CreateBuyerRelation(guideAccount string, guideOpenID string,
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/addguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
@@ -399,7 +399,7 @@ func (comp *Client) DeleteBuyerRelation(guideAccount string, guideOpenID string,
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/delguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
@@ -420,7 +420,7 @@ func (comp *Client) GetBuyerRelations(guideAccount string, guideOpenID string, p
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguidebuyerrelationlist", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerrelationlist", params, nil, nil, result)
 
 	return result, err
 }
@@ -443,7 +443,7 @@ func (comp *Client) RebindBuyerGuide(oldGuideTarget string, newGuideTarget strin
 		(*params)["new_guide_account"] = newGuideTarget
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/rebindguideacctforbuyer", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/rebindguideacctforbuyer", params, nil, nil, result)
 
 	return result, err
 }
@@ -464,7 +464,7 @@ func (comp *Client) UpdateBuyerRelation(guideAccount string, guideOpenID string,
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/updateguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/updateguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
@@ -479,7 +479,7 @@ func (comp *Client) GetBuyerRelation(openID string) (*response.ResponseGuideGetB
 		"openid": openID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguidebuyerrelationbybuyer", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerrelationbybuyer", params, nil, nil, result)
 
 	return result, err
 }
@@ -499,7 +499,7 @@ func (comp *Client) GetBuyerRelationByGuide(guideAccount string, guideOpenID str
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
@@ -515,7 +515,7 @@ func (comp *Client) NewTagOption(tagName string, tagValues []string) (*response2
 		"tag_values": tagValues,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/newguidetagoption", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/newguidetagoption", params, nil, nil, result)
 
 	return result, err
 }
@@ -530,7 +530,7 @@ func (comp *Client) DeleteTagOption(tagName string) (*response2.ResponseOfficial
 		"tag_name": tagName,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/delguidetagoption", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidetagoption", params, nil, nil, result)
 
 	return result, err
 }
@@ -546,7 +546,7 @@ func (comp *Client) CreateTagOption(tagName string, tagValues []string) (*respon
 		"tag_values": tagValues,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/addguidetagoption", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidetagoption", params, nil, nil, result)
 
 	return result, err
 }
@@ -557,7 +557,7 @@ func (comp *Client) GetTagOption(tagName string, tagValues []string) (*response.
 
 	result := &response.ResponseGuideTagOption{}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguidetagoption", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidetagoption", nil, nil, nil, result)
 
 	return result, err
 }
@@ -578,7 +578,7 @@ func (comp *Client) SetBuyersTag(guideAccount string, guideOpenID string, openID
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
 
 	return result, err
 }
@@ -599,7 +599,7 @@ func (comp *Client) GetBuyerTags(guideAccount string, guideOpenID string, openID
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
 
 	return result, err
 }
@@ -624,7 +624,7 @@ func (comp *Client) GetBuyerByTag(guideAccount string, guideOpenID string, pushC
 		(*params)["tag_values"] = tagValues
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/queryguidebuyerbytag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/queryguidebuyerbytag", params, nil, nil, result)
 
 	return result, err
 }
@@ -648,7 +648,7 @@ func (comp *Client) DeleteBuyerTag(guideAccount string, guideOpenID string, tagV
 		(*params)["openid_list"] = openIDList
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/delguidebuyertag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidebuyertag", params, nil, nil, result)
 
 	return result, err
 }
@@ -669,7 +669,7 @@ func (comp *Client) SetBuyerDisplayTags(guideAccount string, guideOpenID string,
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/addguidebuyerdisplaytag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyerdisplaytag", params, nil, nil, result)
 
 	return result, err
 }
@@ -689,7 +689,7 @@ func (comp *Client) GetBuyerDisplayTags(guideAccount string, guideOpenID string,
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/guide/getguidebuyerdisplaytag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerdisplaytag", params, nil, nil, result)
 
 	return result, err
 }
@@ -708,7 +708,7 @@ func (comp *Client) CreateCardMaterial(mediaID string, title string, path string
 		"appid":    appID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/setguidecardmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/setguidecardmaterial", params, nil, nil, result)
 
 	return result, err
 }
@@ -723,7 +723,7 @@ func (comp *Client) GetCardMaterial(mType int) (*response.ResponseGuideGetCardMa
 		"type": mType,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguidecardmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidecardmaterial", params, nil, nil, result)
 
 	return result, err
 }
@@ -741,7 +741,7 @@ func (comp *Client) DeleteCardMaterial(title string, path string, appID string, 
 		"appid": appID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/delguidecardmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidecardmaterial", params, nil, nil, result)
 
 	return result, err
 }
@@ -757,7 +757,7 @@ func (comp *Client) CreateImageMaterial(mediaID string, mType int) (*response2.R
 		"type":     mType,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/setguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/setguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
@@ -772,7 +772,7 @@ func (comp *Client) GetImageMaterial(mType int) (*response.ResponseGuideGetImage
 		"type": mType,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
@@ -788,7 +788,7 @@ func (comp *Client) DeleteImageMaterial(mType int, picURL string) (*response2.Re
 		"picurl": picURL,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/delguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
@@ -804,7 +804,7 @@ func (comp *Client) CreateWordMaterial(mType int, word string) (*response2.Respo
 		"word": word,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/setguidewordmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/setguidewordmaterial", params, nil, nil, result)
 
 	return result, err
 }
@@ -821,7 +821,7 @@ func (comp *Client) GetWordMaterial(mType int, start int, num int) (*response.Re
 		"num":   num,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
@@ -837,7 +837,7 @@ func (comp *Client) DeleteWordMaterial(mType int, word string) (*response2.Respo
 		"word": word,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/guide/delguidewordmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidewordmaterial", params, nil, nil, result)
 
 	return result, err
 }

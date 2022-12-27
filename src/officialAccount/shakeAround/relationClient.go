@@ -8,7 +8,7 @@ import (
 )
 
 type RelationClient struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewRelationClient(app kernel.ApplicationInterface) (*RelationClient, error) {
@@ -31,7 +31,7 @@ func (comp *RelationClient) BindPages(data *request.RequestDeviceIdentifier, pag
 		"device_identifier": data,
 		"page_ids":          pageIDs,
 	}
-	_, err := comp.HttpPostJson("shakearound/device/bindpage", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/bindpage", params, nil, nil, result)
 
 	return result, err
 }
@@ -46,7 +46,7 @@ func (comp *RelationClient) ListByDeviceID(data *request.RequestDeviceIdentifier
 		"type":              1,
 		"device_identifier": data,
 	}
-	_, err := comp.HttpPostJson("shakearound/relation/search", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/relation/search", params, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *RelationClient) ListByPageId(pageID int, begin int, count int) (*res
 		"begin":   begin,
 		"count":   count,
 	}
-	_, err := comp.HttpPostJson("shakearound/relation/search", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/relation/search", params, nil, nil, result)
 
 	return result, err
 }

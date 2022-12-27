@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) GetCorpTagList(tagID []string, groupID []string) (*response.
 		"group_id": groupID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_corp_tag_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_corp_tag_list", options, nil, nil, result)
 
 	return result, err
 }
@@ -44,7 +44,7 @@ func (comp *Client) AddCorpTag(options *request.RequestTagAddCorpTag) (*response
 
 	result := &response.ResponseTagAddCorpTag{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/add_corp_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/add_corp_tag", options, nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) EditCorpTag(options *request.RequestTagEditCorpTag) (*respon
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/edit_corp_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/edit_corp_tag", options, nil, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) DelCorpTag(options *request.RequestTagDelCorpTag) (*response
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/del_corp_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/del_corp_tag", options, nil, nil, result)
 
 	return result, err
 }
@@ -77,7 +77,7 @@ func (comp *Client) GetStrategyTagList(options *request.RequestTagGetStrategyTag
 
 	result := &response.ResponseTagGetStrategyTagList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_strategy_tag_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_strategy_tag_list", options, nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *Client) AddStrategyTag(options *request.RequestTagAddStrategyTag) (*
 
 	result := &response.ResponseTagAddStrategyTag{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/add_strategy_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/add_strategy_tag", options, nil, nil, result)
 
 	return result, err
 }
@@ -99,7 +99,7 @@ func (comp *Client) EditStrategyTag(options *request.RequestTagEditStrategyTag) 
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/edit_strategy_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/edit_strategy_tag", options, nil, nil, result)
 
 	return result, err
 }
@@ -110,7 +110,7 @@ func (comp *Client) DelStrategyTag(options *request.RequestTagDelStrategyTag) (*
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/edit_strategy_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/edit_strategy_tag", options, nil, nil, result)
 
 	return result, err
 }
@@ -121,7 +121,7 @@ func (comp *Client) MarkTag(options *request.RequestTagMarkTag) (*response2.Resp
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/mark_tag", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/mark_tag", options, nil, nil, result)
 
 	return result, err
 }

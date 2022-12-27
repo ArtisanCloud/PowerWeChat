@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 向插件开发者发起使用插件的申请
@@ -38,7 +38,7 @@ func (comp *Client) ImgSecCheck(path string, form *power.HashMap) (*response2.Re
 		}
 	}
 
-	_, err := comp.HttpUpload("wxa/img_sec_check", files, formData, nil, nil, result)
+	_, err := comp.BaseClient.HttpUpload("wxa/img_sec_check", files, formData, nil, nil, result)
 
 	return result, err
 }
@@ -57,7 +57,7 @@ func (comp *Client) MediaCheckAsync(mediaURL string, mediaType int, version int,
 		"scene":      scene,
 	}
 
-	_, err := comp.HttpPostJson("wxa/media_check_async", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/media_check_async", data, nil, nil, result)
 
 	return result, err
 }
@@ -80,7 +80,7 @@ func (comp *Client) MsgSecCheck(
 		"signature": signature,
 	}
 
-	_, err := comp.HttpPostJson("wxa/msg_sec_check", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/msg_sec_check", data, nil, nil, result)
 
 	return result, err
 }

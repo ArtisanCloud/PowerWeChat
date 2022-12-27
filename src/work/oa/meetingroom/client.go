@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) Add(options *request.RequestMeetingRoomAdd) (*response.Respo
 
 	result := &response.ResponseMeetingRoomAdd{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) List(options *request.RequestMeetingRoomList) (*response.Res
 
 	result := &response.ResponseMeetingRoomList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/list", options, nil, nil, result)
 
 	return result, err
 }
@@ -49,7 +49,7 @@ func (comp *Client) Edit(options *request.RequestMeetingRoomEdit) (*response2.Re
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/edit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/edit", options, nil, nil, result)
 
 	return result, err
 }
@@ -60,7 +60,7 @@ func (comp *Client) Del(options *request.RequestMeetingRoomDel) (*response2.Resp
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/del", options, nil, nil, result)
 
 	return result, err
 }
@@ -71,7 +71,7 @@ func (comp *Client) GetBookingInfo(options *request.RequestMeetingRoomGetBooking
 
 	result := &response.ResponseMeetingRoomGetBookingInfo{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/get_booking_info", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/get_booking_info", options, nil, nil, result)
 
 	return result, err
 }
@@ -82,7 +82,7 @@ func (comp *Client) Book(options *request.RequestMeetingRoomBook) (*response.Res
 
 	result := &response.ResponseMeetingRoomGetBook{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/book", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/book", options, nil, nil, result)
 
 	return result, err
 }
@@ -93,7 +93,7 @@ func (comp *Client) CancelBook(options *request.RequestMeetingRoomCancelBook) (*
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/meetingroom/cancel_book", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/meetingroom/cancel_book", options, nil, nil, result)
 
 	return result, err
 }

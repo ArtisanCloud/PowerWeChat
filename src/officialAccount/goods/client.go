@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 导入商品接口
@@ -17,7 +17,7 @@ func (comp *Client) Add(data *request.RequestProduct) (*response.ResponseProduct
 
 	result := &response.ResponseProductAdd{}
 
-	_, err := comp.HttpPostJson("scan/product/v2/add", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("scan/product/v2/add", data, nil, nil, result)
 
 	return result, err
 }
@@ -28,7 +28,7 @@ func (comp *Client) Update(data *request.RequestProduct) (*response.ResponseProd
 
 	result := &response.ResponseProductAdd{}
 
-	_, err := comp.HttpPostJson("scan/product/v2/add", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("scan/product/v2/add", data, nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) Status(ticket string) (*response.ResponseProductStatus, erro
 
 	result := &response.ResponseProductStatus{}
 
-	_, err := comp.HttpPostJson("scan/product/v2/status", &object.HashMap{"status_ticket": ticket}, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("scan/product/v2/status", &object.HashMap{"status_ticket": ticket}, nil, nil, result)
 
 	return result, err
 }
@@ -50,7 +50,7 @@ func (comp *Client) Get(data *request.RequestProductGet) (*response.ResponseProd
 
 	result := &response.ResponseProductGet{}
 
-	_, err := comp.HttpPostJson("scan/product/v2/getinfo", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("scan/product/v2/getinfo", data, nil, nil, result)
 
 	return result, err
 }
@@ -67,7 +67,7 @@ func (comp *Client) List(context string, page int, size int) (*response.Response
 		"page_size":    size,
 	}
 
-	_, err := comp.HttpPostJson("scan/product/v2/getinfobypage", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("scan/product/v2/getinfobypage", params, nil, nil, result)
 
 	return result, err
 }

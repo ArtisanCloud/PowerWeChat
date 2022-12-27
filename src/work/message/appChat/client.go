@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -29,7 +29,7 @@ func (comp *Client) Create(options *request.RequestAppChatCreate) (*response.Res
 
 	result := &response.ResponseAppChatCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/appchat/create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/appchat/create", options, nil, nil, result)
 
 	return result, err
 }
@@ -40,7 +40,7 @@ func (comp *Client) Update(options *request.RequestAppChatUpdate) (*response2.Re
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/appchat/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/appchat/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) Get(chatID string) (*response.ResponseAppChatGet, error) {
 		"chatid": chatID,
 	}
 
-	_, err := comp.HttpGet("cgi-bin/appchat/get", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/appchat/get", params, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) Send(messages *power.HashMap) (*response2.ResponseWork, erro
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/appchat/send", messages, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/appchat/send", messages, nil, nil, result)
 
 	return result, err
 }

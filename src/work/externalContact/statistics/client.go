@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) GetUserBehaviorData(options *request.RequestGetUserBehaviorD
 
 	result := &response.ResponseGetUserBehaviorData{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_user_behavior_data", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_user_behavior_data", options, nil, nil, result)
 
 	return result, err
 }
@@ -37,7 +37,7 @@ func (comp *Client) Statistic(options *request.RequestStatistic) (*response.Resp
 
 	result := &response.ResponseStatistic{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/statistic", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/statistic", options, nil, nil, result)
 
 	return result, err
 }

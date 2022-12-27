@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -32,7 +32,7 @@ func (comp *Client) SyncUser(mediaID string, toInvite bool, callback *power.Stri
 		"to_invite": toInvite,
 		"callbacks": callback,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/batch/syncuser", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/batch/syncuser", options, nil, nil, result)
 
 	return result, err
 }
@@ -48,7 +48,7 @@ func (comp *Client) ReplaceUser(mediaID string, toInvite bool, callback *power.S
 		"to_invite": toInvite,
 		"callbacks": callback,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/batch/replaceuser", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/batch/replaceuser", options, nil, nil, result)
 
 	return result, err
 }
@@ -64,7 +64,7 @@ func (comp *Client) ReplaceParty(mediaID string, toInvite bool, callback *power.
 		"to_invite": toInvite,
 		"callbacks": callback,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/batch/replaceparty", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/batch/replaceparty", options, nil, nil, result)
 
 	return result, err
 }
@@ -78,7 +78,7 @@ func (comp *Client) GetBatchResult(jobID string) (*response.ResponseUserBatchGet
 	params := &object.StringMap{
 		"jobid": jobID,
 	}
-	_, err := comp.HttpGet("cgi-bin/batch/getresult", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/batch/getresult", params, nil, result)
 
 	return result, err
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 根据提交的用户信息数据获取用户的安全等级 risk_rank，无需用户授权。
@@ -16,7 +16,7 @@ func (comp *Client) GetUserRiskRank(data *request.RequestRiskControl) (*response
 
 	result := &response.ResponseRiskControlGetUserRiskRank{}
 
-	_, err := comp.HttpPostJson("wxa/getuserriskrank", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/getuserriskrank", data, nil, nil, result)
 
 	return result, err
 }

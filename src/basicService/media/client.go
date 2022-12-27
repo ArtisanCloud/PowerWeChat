@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	AllowTypes []string
 }
@@ -72,7 +72,7 @@ func (comp *Client) Upload(mediaType string, path string) (*response.ResponseUpl
 		return nil, errors.New("path is empty")
 	}
 
-	_, err = comp.HttpUpload("media/upload", files, nil, &object.StringMap{
+	_, err = comp.BaseClient.HttpUpload("media/upload", files, nil, &object.StringMap{
 		"type": mediaType,
 	}, nil, outResponse)
 
@@ -85,7 +85,7 @@ func (comp *Client) Get(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("media/get", "GET", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw("media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
@@ -101,7 +101,7 @@ func (comp *Client) GetJSSDK(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("media/get/jssdk", "GET", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw("media/get/jssdk", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},

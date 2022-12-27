@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -40,7 +40,7 @@ func (comp *Client) GetRecordList(startTime int, endTime int, nextCursor int, si
 		"filters":   filters,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/journal/get_record_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/journal/get_record_list", options, nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) GetRecordDetail(JournalUUID string) (*response.ResponseJourn
 		"journaluuid": JournalUUID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/journal/get_record_detail", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/journal/get_record_detail", options, nil, nil, result)
 
 	return result, err
 }
@@ -72,7 +72,7 @@ func (comp *Client) GetStatList(templateID string, startTime int, endTime int) (
 		"endtime":     fmt.Sprintf("%d", endTime),
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/journal/get_stat_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/journal/get_stat_list", options, nil, nil, result)
 
 	return result, err
 }

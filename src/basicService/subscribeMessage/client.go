@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 组合模板并添加至帐号下的个人模板库
@@ -25,7 +25,7 @@ func (comp *Client) AddTemplate(tid string, kidList []int, sceneDesc string) (*r
 		"sceneDesc": sceneDesc,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/newtmpl/addtemplate", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/newtmpl/addtemplate", data, nil, nil, result)
 
 	return result, err
 }
@@ -40,7 +40,7 @@ func (comp *Client) DeleteTemplate(priTmplID string) (*response2.ResponseMiniPro
 		"priTmplId": priTmplID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/newtmpl/deltemplate", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/newtmpl/deltemplate", data, nil, nil, result)
 
 	return result, err
 }
@@ -51,7 +51,7 @@ func (comp *Client) GetCategory() (*response3.ResponseSubscribeMessageGetCategor
 
 	result := &response3.ResponseSubscribeMessageGetCategory{}
 
-	_, err := comp.HttpGet("wxaapi/newtmpl/getcategory", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/newtmpl/getcategory", nil, nil, result)
 
 	return result, err
 }
@@ -65,7 +65,7 @@ func (comp *Client) GetPubTemplateKeyWordsByID(tid string) (*response3.ResponseS
 	params := &object.StringMap{
 		"tid": tid,
 	}
-	_, err := comp.HttpGet("wxaapi/newtmpl/getpubtemplatekeywords", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/newtmpl/getpubtemplatekeywords", params, nil, result)
 
 	return result, err
 }
@@ -81,7 +81,7 @@ func (comp *Client) GetPubTemplateTitleList(ids string, start int, limit int) (*
 		"start": fmt.Sprintf("%d", start),
 		"limit": fmt.Sprintf("%d", limit),
 	}
-	_, err := comp.HttpGet("wxaapi/newtmpl/getpubtemplatetitles", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/newtmpl/getpubtemplatetitles", params, nil, result)
 
 	return result, err
 }
@@ -92,7 +92,7 @@ func (comp *Client) GetTemplateList() (*response3.ResponseSubscribeMessageGetTem
 
 	result := &response3.ResponseSubscribeMessageGetTemplateList{}
 
-	_, err := comp.HttpGet("wxaapi/newtmpl/gettemplate", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/newtmpl/gettemplate", nil, nil, result)
 
 	return result, err
 }
@@ -103,7 +103,7 @@ func (comp *Client) Send(data *request.RequestSubscribeMessageSend) (*response2.
 
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/subscribe/send", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/subscribe/send", data, nil, nil, result)
 
 	return result, err
 }

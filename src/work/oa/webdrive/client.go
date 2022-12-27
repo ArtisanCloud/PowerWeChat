@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) SpaceCreate(options *request.RequestWebDriveSpaceCreate) (*r
 
 	result := &response.ResponseWebDriveSpaceCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_create", options, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) SpaceRename(options *request.RequestWebDriveSpaceRename) (*r
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_rename", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_rename", options, nil, nil, result)
 
 	return result, err
 }
@@ -49,7 +49,7 @@ func (comp *Client) SpaceDismiss(options *request.RequestWebDriveSpaceDismiss) (
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_dismiss", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_dismiss", options, nil, nil, result)
 
 	return result, err
 }
@@ -60,7 +60,7 @@ func (comp *Client) SpaceInfo(options *request.RequestWebDriveSpaceInfo) (*respo
 
 	result := &response.ResponseWebDriveSpaceInfo{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_info", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_info", options, nil, nil, result)
 
 	return result, err
 }
@@ -71,7 +71,7 @@ func (comp *Client) SpaceACLAdd(options *request.RequestWebDriveSpaceACLAdd) (*r
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_acl_add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_acl_add", options, nil, nil, result)
 
 	return result, err
 }
@@ -82,7 +82,7 @@ func (comp *Client) SpaceACLDel(options *request.RequestWebDriveSpaceACLDel) (*r
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_acl_del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_acl_del", options, nil, nil, result)
 
 	return result, err
 }
@@ -93,7 +93,7 @@ func (comp *Client) SpaceSetting(options *request.RequestWebDriveSpaceSetting) (
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_setting", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_setting", options, nil, nil, result)
 
 	return result, err
 }
@@ -104,7 +104,7 @@ func (comp *Client) SpaceShare(options *request.RequestWebDriveSpaceShare) (*res
 
 	result := &response.ResponseWebDriveSpaceShare{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/space_share", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/space_share", options, nil, nil, result)
 
 	return result, err
 }
@@ -115,7 +115,7 @@ func (comp *Client) FileList(options *request.RequestWebDriveFileList) (*respons
 
 	result := &response.ResponseWebDriveFileList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_list", options, nil, nil, result)
 
 	return result, err
 }
@@ -126,7 +126,7 @@ func (comp *Client) FileUpload(options *request.RequestWebDriveFileUpload) (*res
 
 	result := &response.ResponseWebDriveFileUpload{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_upload", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_upload", options, nil, nil, result)
 
 	return result, err
 }
@@ -137,7 +137,7 @@ func (comp *Client) FileDownload(options *request.RequestWebDriveFileDownload) (
 
 	result := &response.ResponseWebDriveFileDownload{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_download", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_download", options, nil, nil, result)
 
 	return result, err
 }
@@ -148,7 +148,7 @@ func (comp *Client) FileCreate(options *request.RequestWebDriveFileCreate) (*res
 
 	result := &response.ResponseWebDriveFileCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_create", options, nil, nil, result)
 
 	return result, err
 }
@@ -159,7 +159,7 @@ func (comp *Client) FileRename(options *request.RequestWebDriveFileRename) (*res
 
 	result := &response.ResponseWebDriveFileRename{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_rename", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_rename", options, nil, nil, result)
 
 	return result, err
 }
@@ -170,7 +170,7 @@ func (comp *Client) FileMove(options *request.RequestWebDriveFileMove) (*respons
 
 	result := &response.ResponseWebDriveFileMove{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_move", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_move", options, nil, nil, result)
 
 	return result, err
 }
@@ -181,7 +181,7 @@ func (comp *Client) FileDelete(options *request.RequestWebDriveFileDelete) (*res
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_delete", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_delete", options, nil, nil, result)
 
 	return result, err
 }
@@ -192,7 +192,7 @@ func (comp *Client) FileACLAdd(options *request.RequestWebDriveFileACLAdd) (*res
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_acl_add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_acl_add", options, nil, nil, result)
 
 	return result, err
 }
@@ -203,7 +203,7 @@ func (comp *Client) FileACLDel(options *request.RequestWebDriveFileACLDel) (*res
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_acl_del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_acl_del", options, nil, nil, result)
 
 	return result, err
 }
@@ -214,7 +214,7 @@ func (comp *Client) FileSetting(options *request.RequestWebDriveFileSetting) (*r
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_setting", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_setting", options, nil, nil, result)
 
 	return result, err
 }
@@ -225,7 +225,7 @@ func (comp *Client) FileShare(options *request.RequestWebDriveFileShare) (*respo
 
 	result := &response.ResponseWebDriveFileShare{}
 
-	_, err := comp.HttpPostJson("cgi-bin/webdrive/file_share", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webdrive/file_share", options, nil, nil, result)
 
 	return result, err
 }

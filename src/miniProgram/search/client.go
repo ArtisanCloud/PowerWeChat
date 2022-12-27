@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 本接口提供基于小程序的站内搜商品图片搜索能力
@@ -22,7 +22,7 @@ func (comp *Client) ImageSearch(img []*power.HashMap) (*response.ResponseSearchI
 		"img": img,
 	}
 
-	_, err := comp.HttpPostJson("wxa/imagesearch", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/imagesearch", data, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) SiteSearch(keyword string, nextPageInfo string) (*response.R
 		"next_page_info": nextPageInfo,
 	}
 
-	_, err := comp.HttpPostJson("wxa/sitesearch", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/sitesearch", data, nil, nil, result)
 
 	return result, err
 }
@@ -53,7 +53,7 @@ func (comp *Client) SubmitPages(pages []*power.HashMap) (*response2.ResponseMini
 		"pages": pages,
 	}
 
-	_, err := comp.HttpPostJson("wxa/search/wxaapi_submitpages", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/search/wxaapi_submitpages", data, nil, nil, result)
 
 	return result, err
 }

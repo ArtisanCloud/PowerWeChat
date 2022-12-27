@@ -12,7 +12,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -31,7 +31,7 @@ func (comp *Client) GetFollowUsers() (*response.ResponseGetFollowUserList, error
 
 	result := &response.ResponseGetFollowUserList{}
 
-	_, err := comp.HttpGet("cgi-bin/externalcontact/get_follow_user_list", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/externalcontact/get_follow_user_list", nil, nil, result)
 
 	return result, err
 }
@@ -42,7 +42,7 @@ func (comp *Client) List(userID string) (*response.ResponseGetList, error) {
 
 	result := &response.ResponseGetList{}
 
-	_, err := comp.HttpGet("cgi-bin/externalcontact/list", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/externalcontact/list", &object.StringMap{
 		"userid": userID,
 	}, nil, result)
 
@@ -55,7 +55,7 @@ func (comp *Client) Get(externalUserID string, cursor string) (*weCom.ResponseGe
 
 	result := &weCom.ResponseGetExternalContact{}
 
-	_, err := comp.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/externalcontact/get", &object.StringMap{
 		"external_userid": externalUserID,
 		"cursor":          cursor,
 	}, nil, result)
@@ -75,7 +75,7 @@ func (comp *Client) BatchGet(userID []string, cursor string, limit int) (*respon
 		"limit":       limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/batch/get_by_user", options, nil, nil, result)
 
 	return result, err
 }
@@ -86,7 +86,7 @@ func (comp *Client) Remark(data *request.RequestExternalContactRemark) (*respons
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/remark", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/remark", data, nil, nil, result)
 
 	return result, err
 }
@@ -97,7 +97,7 @@ func (comp *Client) GetUnassigned(pageID int, pageSize int) (*response.ResponseG
 
 	result := &response.ResponseGetUnassignedList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", &object.HashMap{
 		"page_id":   strconv.Itoa(pageID),
 		"page_size": strconv.Itoa(pageSize),
 	}, nil, nil, result)
@@ -111,7 +111,7 @@ func (comp *Client) Transfer(externalUserID []string, handoverUserID string, tak
 
 	result := &response.ResponseGetTransferedCustomerList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/transfer_customer", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/transfer_customer", &object.HashMap{
 		"handover_userid": handoverUserID,
 		"takeover_userid": takeoverUserID,
 		"external_userid": externalUserID,
@@ -126,7 +126,7 @@ func (comp *Client) TransferGroupChat(chatIDs []string, newOwner string) (*respo
 
 	result := &response3.ResponseGroupChatTransfer{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", &object.HashMap{
 		"chat_id_list": chatIDs,
 		"new_owner":    newOwner,
 	}, nil, nil, result)
@@ -140,7 +140,7 @@ func (comp *Client) GetResignedTransferResult(handoverUserID string, takeoverUse
 
 	result := &response.ResponseGetTransferedCustomerList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_result?", &object.StringMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_result?", &object.StringMap{
 		"handover_userid": handoverUserID,
 		"takeover_userid": takeoverUserID,
 		"cursor":          cursor,

@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	AllowTypes []string
 }
@@ -40,7 +40,7 @@ func (comp *Client) IDCard(path string, IDType string) (*response.ResponseOCRIDC
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/idcard", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/idcard", params, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) BankCard(path string) (*response.ResponseOCRBankCard, error)
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/bankcard", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/bankcard", params, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *Client) VehicleLicense(path string) (*response.ResponseOCRVehicleLic
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/drivinglicense", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/drivinglicense", params, nil, result)
 
 	return result, err
 }
@@ -85,7 +85,7 @@ func (comp *Client) Driving(path string) (*response.ResponseOCRDriving, error) {
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/driving", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/driving", params, nil, result)
 
 	return result, err
 }
@@ -100,7 +100,7 @@ func (comp *Client) BizLicense(path string) (*response.ResponseOCRBizLicense, er
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/bizlicense", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/bizlicense", params, nil, result)
 
 	return result, err
 }
@@ -115,7 +115,7 @@ func (comp *Client) Common(path string) (*response.ResponseOCRCommon, error) {
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/comm", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/comm", params, nil, result)
 
 	return result, err
 }
@@ -130,7 +130,7 @@ func (comp *Client) PlateNumber(path string) (*response.ResponseOCRPlateNumber, 
 		"img_url": path,
 	}
 
-	_, err := comp.HttpPost("cv/ocr/platenum", params, nil, result)
+	_, err := comp.BaseClient.HttpPost("cv/ocr/platenum", params, nil, result)
 
 	return result, err
 }

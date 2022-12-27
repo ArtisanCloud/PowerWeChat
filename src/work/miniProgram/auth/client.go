@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) Session(code string) (*response.ResponseSession, error) {
 
 	result := &response.ResponseSession{}
 
-	_, err := comp.HttpGet("cgi-bin/miniprogram/jscode2session", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/miniprogram/jscode2session", &object.StringMap{
 		"js_code":    code,
 		"grant_type": "authorization_code",
 	}, nil, result)

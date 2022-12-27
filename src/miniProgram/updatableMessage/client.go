@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 创建被分享动态消息或私密消息的 activity_id
@@ -23,7 +23,7 @@ func (comp *Client) CreateActivityID(unionID string, openID string) (*response.R
 		"openid":  openID,
 	}
 
-	_, err := comp.HttpGet("cgi-bin/message/wxopen/activityid/create", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/message/wxopen/activityid/create", params, nil, result)
 
 	return result, err
 }
@@ -34,7 +34,7 @@ func (comp *Client) SetUpdatableMsg(options *request.RequestSetUpdatableMsg) (*r
 
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/updatablemsg/send", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/wxopen/updatablemsg/send", options, nil, nil, result)
 
 	return result, err
 }

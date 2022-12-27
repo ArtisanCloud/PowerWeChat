@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -34,7 +34,7 @@ func (comp *Client) Commit(templateID string, extJson string, version string, de
 		"user_version": version,
 		"user_desc":    description,
 	}
-	_, err := comp.HttpPostJson("wxa/commit", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/commit", params, nil, nil, result)
 
 	return result, err
 
@@ -46,7 +46,7 @@ func (comp *Client) GetQrCode(path string) (*response2.ResponseOpenPlatform, err
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.RequestRaw("wxa/get_qrcode", "GET", &object.HashMap{
+	_, err := comp.BaseClient.RequestRaw("wxa/get_qrcode", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"path": path,
 		}}, nil, result)
@@ -61,7 +61,7 @@ func (comp *Client) GetCategory() (*response.ResponseGetCategory, error) {
 
 	result := &response.ResponseGetCategory{}
 
-	_, err := comp.HttpGet("wxa/get_category", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/get_category", nil, nil, result)
 
 	return result, err
 
@@ -73,7 +73,7 @@ func (comp *Client) GetPage() (*response.ResponseGetPage, error) {
 
 	result := &response.ResponseGetPage{}
 
-	_, err := comp.HttpGet("wxa/get_page", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/get_page", nil, nil, result)
 
 	return result, err
 
@@ -85,7 +85,7 @@ func (comp *Client) SubmitAudit(params *request.RequestSubmitAudit) (*response.R
 
 	result := &response.ResponseSubmitAudit{}
 
-	_, err := comp.HttpPostJson("wxa/submit_audit", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/submit_audit", params, nil, nil, result)
 
 	return result, err
 
@@ -101,7 +101,7 @@ func (comp *Client) GetAuditStatus(auditID int) (*response.ResponseGetAuditStatu
 		"auditid": auditID,
 	}
 
-	_, err := comp.HttpPostJson("wxa/get_auditstatus", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/get_auditstatus", params, nil, nil, result)
 
 	return result, err
 
@@ -113,7 +113,7 @@ func (comp *Client) GetLatestAuditStatus() (*response.ResponseGetLatestAuditStat
 
 	result := &response.ResponseGetLatestAuditStatus{}
 
-	_, err := comp.HttpGet("wxa/get_latest_auditstatus", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/get_latest_auditstatus", nil, nil, result)
 
 	return result, err
 
@@ -125,7 +125,7 @@ func (comp *Client) Release() (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpPostJson("wxa/release", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/release", nil, nil, nil, result)
 
 	return result, err
 
@@ -137,7 +137,7 @@ func (comp *Client) WithdrawAudit() (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpGet("wxa/undocodeaudit", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/undocodeaudit", nil, nil, result)
 
 	return result, err
 
@@ -149,7 +149,7 @@ func (comp *Client) RollbackRelease() (*response.ResponseRollbackRelease, error)
 
 	result := &response.ResponseRollbackRelease{}
 
-	_, err := comp.HttpGet("wxa/revertcoderelease", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/revertcoderelease", nil, nil, result)
 
 	return result, err
 
@@ -165,7 +165,7 @@ func (comp *Client) ChangeVisitStatus(action string) (*response2.ResponseOpenPla
 		"action": action,
 	}
 
-	_, err := comp.HttpPostJson("wxa/change_visitstatus", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/change_visitstatus", params, nil, nil, result)
 
 	return result, err
 
@@ -181,7 +181,7 @@ func (comp *Client) GrayRelease(grayPercentage int) (*response2.ResponseOpenPlat
 		"gray_percentage": grayPercentage,
 	}
 
-	_, err := comp.HttpPostJson("wxa/grayrelease", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/grayrelease", params, nil, nil, result)
 
 	return result, err
 
@@ -193,7 +193,7 @@ func (comp *Client) RevertGrayRelease() (*response2.ResponseOpenPlatform, error)
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpGet("wxa/revertgrayrelease", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/revertgrayrelease", nil, nil, result)
 
 	return result, err
 
@@ -205,7 +205,7 @@ func (comp *Client) GetGrayRelease() (*response.ResponseGetGrayRelease, error) {
 
 	result := &response.ResponseGetGrayRelease{}
 
-	_, err := comp.HttpGet("wxa/getgrayreleaseplan", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/getgrayreleaseplan", nil, nil, result)
 
 	return result, err
 
@@ -217,7 +217,7 @@ func (comp *Client) GetSupportVersion() (*response.ResponseGetSupportVersion, er
 
 	result := &response.ResponseGetSupportVersion{}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxopen/getweappsupportversion", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxopen/getweappsupportversion", nil, nil, nil, result)
 
 	return result, err
 
@@ -229,7 +229,7 @@ func (comp *Client) SetSupportVersion(version string) (*response2.ResponseOpenPl
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxopen/setweappsupportversion", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxopen/setweappsupportversion", &object.HashMap{
 		"version": version,
 	}, nil, nil, result)
 
@@ -243,7 +243,7 @@ func (comp *Client) QueryQuota() (*response.ResponseQueryQuota, error) {
 
 	result := &response.ResponseQueryQuota{}
 
-	_, err := comp.HttpGet("wxa/queryquota", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/queryquota", nil, nil, result)
 
 	return result, err
 
@@ -255,7 +255,7 @@ func (comp *Client) SpeedupAudit(auditID int) (*response2.ResponseOpenPlatform, 
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpPostJson("wxa/speedupaudit", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("wxa/speedupaudit", &object.HashMap{
 		"auditid": auditID,
 	}, nil, nil, result)
 

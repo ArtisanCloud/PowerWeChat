@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -30,7 +30,7 @@ func (comp *Client) Call(calleeUserID []string) (*response.ResponsePSTNCCCall, e
 		"callee_userid": calleeUserID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/pstncc/call", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/pstncc/call", options, nil, nil, result)
 
 	return result, err
 }
@@ -46,7 +46,7 @@ func (comp *Client) GetStates(calleeUserID string, callID string) (*response.Res
 		"callid":        callID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/pstncc/getstates", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/pstncc/getstates", options, nil, nil, result)
 
 	return result, err
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) Get() (*response.ResponseGet, error) {
 
 	result := &response.ResponseGet{}
 
-	_, err := comp.HttpPostJson("wxa/security/get_privacy_interface", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/security/get_privacy_interface", nil, nil, nil, result)
 
 	return result, err
 
@@ -38,7 +38,7 @@ func (comp *Client) Set(params *request.RequestSet) (*response.ResponseSet, erro
 
 	result := &response.ResponseSet{}
 
-	_, err := comp.HttpPostJson("wxa/security/apply_privacy_interface", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/security/apply_privacy_interface", params, nil, nil, result)
 
 	return result, err
 

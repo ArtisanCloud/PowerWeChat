@@ -6,7 +6,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -25,7 +25,7 @@ func (comp *Client) Current() (*response.ResponseGettingRulesForAutoReplies, err
 
 	result := &response.ResponseGettingRulesForAutoReplies{}
 
-	_, err := comp.HttpGet("cgi-bin/get_current_autoreply_info", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/get_current_autoreply_info", nil, nil, result)
 
 	return result, err
 

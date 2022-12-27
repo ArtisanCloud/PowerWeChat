@@ -14,7 +14,7 @@ import (
 type Application struct {
 	*kernel.ServiceContainer
 
-	Base *kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	Config *kernel.Config
 

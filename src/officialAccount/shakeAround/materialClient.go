@@ -11,7 +11,7 @@ import (
 )
 
 type MaterialClient struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewMaterialClient(app kernel.ApplicationInterface) (*MaterialClient, error) {
@@ -45,6 +45,6 @@ func (comp *MaterialClient) UploadImage(path string, Type string) (*response.Res
 
 	}
 
-	_, err = comp.HttpUpload("shakearound/material/add", files, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)
+	_, err = comp.BaseClient.HttpUpload("shakearound/material/add", files, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)
 	return result, err
 }

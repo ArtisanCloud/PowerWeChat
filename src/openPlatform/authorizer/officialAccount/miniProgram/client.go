@@ -3,7 +3,7 @@ package miniProgram
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {

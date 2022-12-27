@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) BatchGet(externalUserIDList []string) (*response.ResponseCus
 		"external_userid_list": externalUserIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/customer/batchget", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/customer/batchget", options, nil, nil, result)
 
 	return result, err
 }
@@ -44,7 +44,7 @@ func (comp *Client) GetUpgradeServiceConfig() (*response.ResponseCustomerGetUpgr
 
 	result := &response.ResponseCustomerGetUpgradeServiceConfig{}
 
-	_, err := comp.HttpGet("cgi-bin/kf/customer/get_upgrade_service_config", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/kf/customer/get_upgrade_service_config", nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) UpgradeService(options *request.RequestUpgradeService) (*res
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/customer/upgrade_service", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/customer/upgrade_service", options, nil, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *Client) CancelUpgradeService(openKFID, externalUserID string) (*resp
 		"external_userid": externalUserID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/customer/cancel_upgrade_service", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/customer/cancel_upgrade_service", options, nil, nil, result)
 
 	return result, err
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) Session(code string) (*response.ResponseCode2Session, error)
 
 	result := &response.ResponseCode2Session{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.StringMap{
 		"appid":      config.GetString("app_id", ""),
@@ -35,7 +35,7 @@ func (comp *Client) Session(code string) (*response.ResponseCode2Session, error)
 		"grant_type": "authorization_code",
 	}
 
-	_, err := comp.HttpGet("sns/jscode2session", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("sns/jscode2session", params, nil, result)
 
 	return result, err
 }

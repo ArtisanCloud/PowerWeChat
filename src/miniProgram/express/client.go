@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 生成运单
@@ -18,7 +18,7 @@ func (comp *Client) AddOrder(data *power.HashMap) (*response.ResponseExpressAddO
 
 	result := &response.ResponseExpressAddOrder{}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/order/add", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/order/add", data, nil, nil, result)
 
 	return result, err
 }
@@ -33,7 +33,7 @@ func (comp *Client) BatchGetOrder(orderList []*power.HashMap) (*response.Respons
 		"order_list": orderList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/order/batchget", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/order/batchget", data, nil, nil, result)
 
 	return result, err
 }
@@ -51,7 +51,7 @@ func (comp *Client) BindAccount(actionType string, bizID string, deliveryID stri
 		"password":    password,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/accountService/bind", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/accountService/bind", data, nil, nil, result)
 
 	return result, err
 }
@@ -69,7 +69,7 @@ func (comp *Client) CancelOrder(orderID string, openID string, deliveryID string
 		"waybill_id":  waybillID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/order/cancel", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/order/cancel", data, nil, nil, result)
 
 	return result, err
 }
@@ -80,7 +80,7 @@ func (comp *Client) GetAllAccount() (*response.ResponseExpressAccountGetAll, err
 
 	result := &response.ResponseExpressAccountGetAll{}
 
-	_, err := comp.HttpGet("cgi-bin/express/business/accountService/getall", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/express/business/accountService/getall", nil, nil, result)
 
 	return result, err
 }
@@ -91,7 +91,7 @@ func (comp *Client) GetAllDelivery() (*response.ResponseExpressDeliveryGetAll, e
 
 	result := &response.ResponseExpressDeliveryGetAll{}
 
-	_, err := comp.HttpGet("cgi-bin/express/business/delivery/getall", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/express/business/delivery/getall", nil, nil, result)
 
 	return result, err
 }
@@ -110,7 +110,7 @@ func (comp *Client) GetOrder(orderID string, openID string, deliveryID string, w
 		"print_type":  printType,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/order/get", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/order/get", data, nil, nil, result)
 
 	return result, err
 }
@@ -128,7 +128,7 @@ func (comp *Client) GetPath(orderID string, openID string, deliveryID string, wa
 		"waybill_id":  waybillID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/path/get", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/path/get", data, nil, nil, result)
 
 	return result, err
 }
@@ -139,7 +139,7 @@ func (comp *Client) GetPrinter() (*response.ResponseExpressGetPrinter, error) {
 
 	result := &response.ResponseExpressGetPrinter{}
 
-	_, err := comp.HttpGet("cgi-bin/express/business/path/get", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/express/business/path/get", nil, nil, result)
 
 	return result, err
 }
@@ -155,7 +155,7 @@ func (comp *Client) GetQuota(deliveryID string, bizID string) (*response.Respons
 		"biz_id":      bizID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/quota/get", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/quota/get", data, nil, nil, result)
 
 	return result, err
 }
@@ -180,7 +180,7 @@ func (comp *Client) TestUpdateOrder(
 		"action_msg":  ActionMsg,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/test_update_order", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/test_update_order", data, nil, nil, result)
 
 	return result, err
 }
@@ -197,7 +197,7 @@ func (comp *Client) UpdatePrinter(openID string, updateType string, tagidList st
 		"tagid_list":  tagidList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/business/printer/update", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/business/printer/update", data, nil, nil, result)
 
 	return result, err
 }
@@ -213,7 +213,7 @@ func (comp *Client) GetContact(token string, waybillID string) (*response.Respon
 		"waybill_id": waybillID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/delivery/contact/get", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/delivery/contact/get", data, nil, nil, result)
 
 	return result, err
 }
@@ -224,7 +224,7 @@ func (comp *Client) PreviewTemplate(options *power.HashMap) (*response.ResponseE
 
 	result := &response.ResponseExpressPreviewTemplate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/delivery/template/preview", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/delivery/template/preview", options, nil, nil, result)
 
 	return result, err
 }
@@ -235,7 +235,7 @@ func (comp *Client) UpdateBusiness(options *power.HashMap) (*response2.ResponseM
 
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/delivery/service/business/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/delivery/service/business/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -246,7 +246,7 @@ func (comp *Client) UpdatePath(options *power.HashMap) (*response2.ResponseMiniP
 
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/delivery/path/update?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/delivery/path/update?", options, nil, nil, result)
 
 	return result, err
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) GetDialRecord(options *request.RequestDialGetDialRecord) (*r
 
 	result := &response.ResponseDialGetDialRecord{}
 
-	_, err := comp.HttpPostJson("cgi-bin/dial/get_dial_record", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/dial/get_dial_record", options, nil, nil, result)
 
 	return result, err
 }

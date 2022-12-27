@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 创建直播间
@@ -19,7 +19,7 @@ type Client struct {
 func (comp *Client) CreateRoom(options *request.RequestBroadcastCreateRoom) (*response.ResponseBroadcastCreateRoom, error) {
 	result := &response.ResponseBroadcastCreateRoom{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/create", options, nil, nil, result)
 
 	return result, err
 }
@@ -29,7 +29,7 @@ func (comp *Client) CreateRoom(options *request.RequestBroadcastCreateRoom) (*re
 func (comp *Client) GetLiveInfo(options *request.RequestBroadcastGetLiveInfo) (*response.ResponseBroadcastGetLiveInfo, error) {
 	result := &response.ResponseBroadcastGetLiveInfo{}
 
-	_, err := comp.HttpPostJson("wxa/business/getliveinfo", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/getliveinfo", options, nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) GetLiveInfo(options *request.RequestBroadcastGetLiveInfo) (*
 func (comp *Client) GetLiveReplay(options *request.RequestBroadcastGetLiveReplay) (*response.ResponseBroadcastGetLiveReplay, error) {
 	result := &response.ResponseBroadcastGetLiveReplay{}
 
-	_, err := comp.HttpPostJson("wxa/business/getliveinfo", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/getliveinfo", options, nil, nil, result)
 
 	return result, err
 }
@@ -49,7 +49,7 @@ func (comp *Client) GetLiveReplay(options *request.RequestBroadcastGetLiveReplay
 func (comp *Client) AddGoods(options *request.RequestBroadcastAddGoods) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addgoods", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/addgoods", options, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *Client) DeleteRoom(id int) (*response2.ResponseMiniProgram, error) {
 		"id": id,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deleteroom", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/deleteroom", options, nil, nil, result)
 
 	return result, err
 }
@@ -73,7 +73,7 @@ func (comp *Client) DeleteRoom(id int) (*response2.ResponseMiniProgram, error) {
 func (comp *Client) EditRoom(options *request.RequestBroadcastEditRoom) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/editroom", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/editroom", options, nil, nil, result)
 
 	return result, err
 }
@@ -87,7 +87,7 @@ func (comp *Client) GetPushUrl(roomID int) (*response.ResponseBroadcastGetPushUr
 		"roomId": strconv.Itoa(roomID),
 	}
 
-	_, err := comp.HttpGet("wxaapi/broadcast/room/getpushurl", options, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/broadcast/room/getpushurl", options, nil, result)
 
 	return result, err
 }
@@ -102,7 +102,7 @@ func (comp *Client) GetSharedCode(roomID int, params string) (*response.Response
 		"params": params,
 	}
 
-	_, err := comp.HttpGet("wxaapi/broadcast/room/getsharedcode", options, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/broadcast/room/getsharedcode", options, nil, result)
 
 	return result, err
 }
@@ -113,7 +113,7 @@ func (comp *Client) AddAssistant(options *request.RequestBroadcastAddAssistant) 
 
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addassistant", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/addassistant", options, nil, nil, result)
 
 	return result, err
 }
@@ -123,7 +123,7 @@ func (comp *Client) AddAssistant(options *request.RequestBroadcastAddAssistant) 
 func (comp *Client) ModifyAssistant(options *request.RequestBroadcastModifyAssistant) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifyassistant", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/modifyassistant", options, nil, nil, result)
 
 	return result, err
 }
@@ -133,7 +133,7 @@ func (comp *Client) ModifyAssistant(options *request.RequestBroadcastModifyAssis
 func (comp *Client) RemoveAssistant(options *request.RequestBroadcastRemoveAssistant) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/removeassistant", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/removeassistant", options, nil, nil, result)
 
 	return result, err
 }
@@ -147,7 +147,7 @@ func (comp *Client) GetAssistantList(roomID int) (*response.ResponseBroadcastGet
 		"roomId": strconv.Itoa(roomID),
 	}
 
-	_, err := comp.HttpGet("wxaapi/broadcast/room/getassistantlist", options, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/broadcast/room/getassistantlist", options, nil, result)
 
 	return result, err
 }
@@ -162,7 +162,7 @@ func (comp *Client) AddSubAnchor(roomID int, userName string) (*response2.Respon
 		"username": userName,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/addsubanchor", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/addsubanchor", options, nil, nil, result)
 
 	return result, err
 }
@@ -177,7 +177,7 @@ func (comp *Client) ModifySubAnchor(roomID int, username string) (*response2.Res
 		"username": username,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/modifysubanchor", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/modifysubanchor", options, nil, nil, result)
 
 	return result, err
 }
@@ -191,7 +191,7 @@ func (comp *Client) DeleteSubAnchor(roomID int) (*response2.ResponseMiniProgram,
 		"roomId": roomID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/deletesubanchor", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/deletesubanchor", options, nil, nil, result)
 
 	return result, err
 }
@@ -205,7 +205,7 @@ func (comp *Client) GetSubAnchor(roomID int) (*response.ResponseBroadcastGetSubA
 		"roomId": strconv.Itoa(roomID),
 	}
 
-	_, err := comp.HttpGet("wxaapi/broadcast/room/getsubanchor", options, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/broadcast/room/getsubanchor", options, nil, result)
 
 	return result, err
 }
@@ -220,7 +220,7 @@ func (comp *Client) UpdateFeedPublic(roomID int, isFeedsPublic int) (*response2.
 		"isFeedsPublic": isFeedsPublic,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatefeedpublic", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/updatefeedpublic", options, nil, nil, result)
 
 	return result, err
 }
@@ -234,7 +234,7 @@ func (comp *Client) UpdateReplay(roomID int, closeReplay int) (*response2.Respon
 		"closeReplay": closeReplay,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatereplay", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/updatereplay", options, nil, nil, result)
 
 	return result, err
 }
@@ -249,7 +249,7 @@ func (comp *Client) UpdateKF(roomID int, closeKF int) (*response2.ResponseMiniPr
 		"closeKf": closeKF,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatekf", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/updatekf", options, nil, nil, result)
 
 	return result, err
 }
@@ -264,7 +264,7 @@ func (comp *Client) UpdateComment(roomID int, banComment int) (*response2.Respon
 		"banComment": banComment,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/room/updatecomment", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/room/updatecomment", options, nil, nil, result)
 
 	return result, err
 }
@@ -280,7 +280,7 @@ func (comp *Client) GoodsSale(roomID int, goodsID int, onSale int) (*response2.R
 		"onSale":  onSale,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/onsale", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/onsale", options, nil, nil, result)
 
 	return result, err
 }
@@ -295,7 +295,7 @@ func (comp *Client) GoodsDeleteInRoom(roomID int, goodsID int) (*response2.Respo
 		"goodsId": goodsID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/deleteInRoom", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/deleteInRoom", options, nil, nil, result)
 
 	return result, err
 }
@@ -310,7 +310,7 @@ func (comp *Client) GoodsPush(roomID int, goodsID int) (*response2.ResponseMiniP
 		"goodsId": goodsID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/push", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/push", options, nil, nil, result)
 
 	return result, err
 }
@@ -325,7 +325,7 @@ func (comp *Client) GoodsSort(roomID int, goods []request.RequestBroadcastGoodsS
 		"goods":  goods,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/sort", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/sort", options, nil, nil, result)
 
 	return result, err
 }
@@ -340,7 +340,7 @@ func (comp *Client) GoodsVideo(roomID int, goodsID int) (*response.ResponseBroad
 		"goodsId": goodsID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/getVideo", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/getVideo", options, nil, nil, result)
 
 	return result, err
 }
@@ -350,7 +350,7 @@ func (comp *Client) GoodsVideo(roomID int, goodsID int) (*response.ResponseBroad
 func (comp *Client) GoodsAdd(options *request.RequestBroadcastGoodsAdd) (*response.ResponseBroadcastGoodsAdd, error) {
 	result := &response.ResponseBroadcastGoodsAdd{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -360,7 +360,7 @@ func (comp *Client) GoodsAdd(options *request.RequestBroadcastGoodsAdd) (*respon
 func (comp *Client) GoodsResetAudit(options *request.RequestBroadcastGoodsResetAudit) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/resetaudit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/resetaudit", options, nil, nil, result)
 
 	return result, err
 }
@@ -374,7 +374,7 @@ func (comp *Client) GoodsAudit(goodsID int) (*response.ResponseBroadcastGoodsAud
 		"goodsId": goodsID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/audit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/audit", options, nil, nil, result)
 
 	return result, err
 }
@@ -388,7 +388,7 @@ func (comp *Client) GoodsDelete(goodsID int) (*response2.ResponseMiniProgram, er
 		"goodsId": goodsID,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/delete", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/delete", options, nil, nil, result)
 
 	return result, err
 }
@@ -398,7 +398,7 @@ func (comp *Client) GoodsDelete(goodsID int) (*response2.ResponseMiniProgram, er
 func (comp *Client) GoodsUpdate(options *request.RequestBroadcastGoodsUpdate) (*response2.ResponseMiniProgram, error) {
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/goods/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/goods/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -412,7 +412,7 @@ func (comp *Client) GoodsInfo(goodsIDs []int) (*response.ResponseBroadcastGoodsI
 		"goods_ids": goodsIDs,
 	}
 
-	_, err := comp.HttpPostJson("wxa/business/getgoodswarehouse", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/getgoodswarehouse", options, nil, nil, result)
 
 	return result, err
 }
@@ -428,7 +428,7 @@ func (comp *Client) GoodsList(offset, count, status string) (*response.ResponseB
 		"status": status,
 	}
 
-	_, err := comp.HttpGet("wxaapi/broadcast/goods/getapproved", options, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/broadcast/goods/getapproved", options, nil, result)
 
 	return result, err
 }
@@ -443,7 +443,7 @@ func (comp *Client) AddRole(userName string, role int) (*response2.ResponseMiniP
 		"role":     role,
 	}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/role/addrole", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/role/addrole", options, nil, nil, result)
 
 	return result, err
 }
@@ -457,7 +457,7 @@ func (comp *Client) DeleteRole(userName string, role int) (*response2.ResponseMi
 		"username": userName,
 		"role":     role,
 	}
-	_, err := comp.HttpPostJson("wxaapi/broadcast/role/deleterole", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/role/deleterole", options, nil, nil, result)
 
 	return result, err
 }
@@ -468,7 +468,7 @@ func (comp *Client) DeleteRole(userName string, role int) (*response2.ResponseMi
 func (comp *Client) GetRoleList(options *request.RequestBroadcastGetRoleList) (*response.ResponseBroadcastGetRoleList, error) {
 	result := &response.ResponseBroadcastGetRoleList{}
 
-	_, err := comp.HttpPostJson("wxaapi/broadcast/role/getrolelist", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/broadcast/role/getrolelist", options, nil, nil, result)
 
 	return result, err
 }
@@ -482,7 +482,7 @@ func (comp *Client) GetFollowers(limit int, pageBreak int) (*response.ResponseBr
 		"limit":      limit,
 		"page_break": pageBreak,
 	}
-	_, err := comp.HttpPostJson("wxa/business/get_wxa_followers", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/get_wxa_followers", options, nil, nil, result)
 
 	return result, err
 }
@@ -497,7 +497,7 @@ func (comp *Client) PushMessage(roomID int, userOpenID []string) (*response2.Res
 		"user_openid": userOpenID,
 	}
 
-	_, err := comp.HttpPostJson("wxa/business/push_message", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/push_message", options, nil, nil, result)
 
 	return result, err
 }

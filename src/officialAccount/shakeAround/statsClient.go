@@ -8,7 +8,7 @@ import (
 )
 
 type StatsClient struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewStatsClient(app kernel.ApplicationInterface) (*StatsClient, error) {
@@ -32,7 +32,7 @@ func (comp *StatsClient) DeviceSummary(data *request.RequestDeviceIdentifier, be
 		"begin_date":        beginTime,
 		"end_date":          endTime,
 	}
-	_, err := comp.HttpPostJson("shakearound/statistics/device", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/statistics/device", params, nil, nil, result)
 
 	return result, err
 }
@@ -47,7 +47,7 @@ func (comp *StatsClient) devicesSummary(timestamp int, pageIndex int) (*response
 		"date":       timestamp,
 		"page_index": pageIndex,
 	}
-	_, err := comp.HttpPostJson("shakearound/statistics/devicelist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/statistics/devicelist", params, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *StatsClient) PageSummary(pageID int, beginTime int, endTime int) (*r
 		"begin_date": beginTime,
 		"end_date":   endTime,
 	}
-	_, err := comp.HttpPostJson("shakearound/statistics/page", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/statistics/page", params, nil, nil, result)
 
 	return result, err
 }
@@ -78,7 +78,7 @@ func (comp *StatsClient) pagesSummary(timestamp int, pageIndex int) (*response.R
 		"date":       timestamp,
 		"page_index": pageIndex,
 	}
-	_, err := comp.HttpPostJson("shakearound/statistics/pagelist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/statistics/pagelist", params, nil, nil, result)
 
 	return result, err
 }

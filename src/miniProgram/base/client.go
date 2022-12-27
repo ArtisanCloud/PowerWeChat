@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
@@ -20,7 +20,7 @@ func (comp *Client) GetPaidUnionID(data *request.RequestGetPaidUnionID) (*respon
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpGet("wxa/getpaidunionid", params, nil, result)
+	_, err = comp.BaseClient.HttpGet("wxa/getpaidunionid", params, nil, result)
 
 	return result, err
 }
@@ -35,7 +35,7 @@ func (comp *Client) CheckEncryptedData(encryptedMsgHash string) (*response.Respo
 		"encrypted_msg_hash": encryptedMsgHash,
 	}
 
-	_, err := comp.HttpPostJson("wxa/business/checkencryptedmsg", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/checkencryptedmsg", options, nil, nil, result)
 
 	return result, err
 }

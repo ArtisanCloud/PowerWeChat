@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) TransferCustomer(options *request.RequestTransferCustomer) (
 
 	result := &response.ResponseTransferCustomer{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/transfer_customer", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/transfer_customer", options, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) TransferResult(options *request.RequestTransferResult) (*res
 
 	result := &response.ResponseTransferResult{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/transfer_result", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/transfer_result", options, nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) GetUnassignedList(pageID int, cursor string, pageSize int) (
 		"page_size": pageSize,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_unassigned_list", options, nil, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) ResignedTransferCustomer(options *request.RequestResignedTra
 
 	result := &response.ResponseResignedTransferCustomer{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_customer", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_customer", options, nil, nil, result)
 
 	return result, err
 }
@@ -77,7 +77,7 @@ func (comp *Client) ResignedTransferResult(options *request.RequestResignedTrans
 
 	result := &response.ResponseResignedTransferResult{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_result", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/resigned/transfer_result", options, nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *Client) GroupChatTransfer(options *request.RequestGroupChatTransfer)
 
 	result := &response.ResponseGroupChatTransfer{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/transfer", options, nil, nil, result)
 
 	return result, err
 }

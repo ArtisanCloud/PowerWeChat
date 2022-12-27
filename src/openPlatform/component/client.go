@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) RegisterMiniProgram(params *request.RequestRegisterMiniProgr
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/fastregisterweapp", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/fastregisterweapp", params, nil, nil, result)
 
 	return result, err
 
@@ -45,7 +45,7 @@ func (comp *Client) GetRegistrationStatus(companyName string, legalPersonaWechat
 		"legal_persona_name":   legalPersonaName,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/fastregisterweapp", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/fastregisterweapp", params, nil, nil, result)
 
 	return result, err
 

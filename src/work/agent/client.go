@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) Get(agentID int) (*response.ResponseAgentGet, error) {
 
 	result := &response.ResponseAgentGet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/agent/get", nil, &object.StringMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/agent/get", nil, &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
@@ -39,7 +39,7 @@ func (comp *Client) Set(data *request.RequestAgentSet) (*response.ResponseAgentS
 
 	result := &response.ResponseAgentSet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/agent/set", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/agent/set", data, nil, nil, result)
 
 	return result, err
 }
@@ -49,7 +49,7 @@ func (comp *Client) List() (*response.ResponseAgentList, error) {
 
 	result := &response.ResponseAgentList{}
 
-	_, err := comp.HttpGet("cgi-bin/agent/list", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/agent/list", nil, nil, result)
 
 	return result, err
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Get(poiID int) (*response.ResponsePOIGet, error) {
 
 	result := &response.ResponsePOIGet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/poi/getpoi", &object.HashMap{"poi_id": poiID}, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/poi/getpoi", &object.HashMap{"poi_id": poiID}, nil, nil, result)
 
 	return result, err
 }
@@ -44,7 +44,7 @@ func (comp *Client) List(offset int, limit int) (*response.ResponsePOIList, erro
 		"limit": limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/poi/getpoilist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/poi/getpoilist", params, nil, nil, result)
 
 	return result, err
 }
@@ -61,7 +61,7 @@ func (comp *Client) Create(data *request.BusinessInfo) (*response2.ResponseOffic
 		},
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/poi/addpoi", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/poi/addpoi", params, nil, nil, result)
 
 	return result, err
 }
@@ -72,7 +72,7 @@ func (comp *Client) CreateAndGetID(data *request.BusinessInfo) (int, error) {
 
 	result, err := comp.Create(data)
 
-	poi, err := comp.DetectAndCastResponseToType(result, response2.TYPE_MAP)
+	poi, err := comp.BaseClient.DetectAndCastResponseToType(result, response2.TYPE_MAP)
 	if err != nil {
 		return 0, err
 	}
@@ -95,7 +95,7 @@ func (comp *Client) Update(data *request.BusinessInfo) (*response2.ResponseOffic
 		},
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/poi/updatepoi", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/poi/updatepoi", params, nil, nil, result)
 
 	return result, err
 }
@@ -106,7 +106,7 @@ func (comp *Client) Delete(poiID int) (*response.ResponsePOIGet, error) {
 
 	result := &response.ResponsePOIGet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/poi/delpoi", &object.HashMap{"poi_id": poiID}, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/poi/delpoi", &object.HashMap{"poi_id": poiID}, nil, nil, result)
 
 	return result, err
 }

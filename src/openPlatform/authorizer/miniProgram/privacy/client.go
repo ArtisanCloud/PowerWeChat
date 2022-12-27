@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Get() (*response.ResponseGet, error) {
 
 	result := &response.ResponseGet{}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/getprivacysetting", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/getprivacysetting", nil, nil, nil, result)
 
 	return result, err
 
@@ -40,7 +40,7 @@ func (comp *Client) Set(params *request.RequestSet) (*response2.ResponseOpenPlat
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/setprivacysetting", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/setprivacysetting", params, nil, nil, result)
 
 	return result, err
 
@@ -59,7 +59,7 @@ func (comp *Client) Upload(path string) (*response.ResponseUpload, error) {
 		}
 	}
 
-	_, err := comp.HttpUpload("cgi-bin/component/uploadprivacyextfile", files, nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpUpload("cgi-bin/component/uploadprivacyextfile", files, nil, nil, nil, result)
 
 	return result, err
 

@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/API_Call_Limits.html
@@ -16,9 +16,9 @@ func (comp *Client) ClearQuota() (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
-	_, err := comp.HttpPostJson("cgi-bin/clear_quota", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/clear_quota", &object.HashMap{
 		"appid": config.GetString("app_id", ""),
 	}, nil, nil, result)
 
@@ -30,7 +30,7 @@ func (comp *Client) GetCallbackIP() (*response.ResponseGetCallBackIP, error) {
 
 	result := &response.ResponseGetCallBackIP{}
 
-	_, err := comp.HttpGet("cgi-bin/getcallbackip", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/getcallbackip", nil, nil, result)
 
 	return result, err
 }
@@ -45,7 +45,7 @@ func (comp *Client) CheckCallbackURL(action string, checkOperator string) (*resp
 		"check_operator": checkOperator,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/callbacks/check", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/callbacks/check", options, nil, nil, result)
 
 	return result, err
 }

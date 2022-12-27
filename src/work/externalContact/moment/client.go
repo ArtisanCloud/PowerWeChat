@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) GetMomentList(params *request.RequestGetMomentList) (*respon
 
 	result := &response.ResponseGetMomentList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_list", params, nil, nil, result)
 
 	return result, err
 }
@@ -44,7 +44,7 @@ func (comp *Client) GetMomentTask(momentID string, cursor string, limit int) (*r
 		"limit":     limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_task", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_task", options, nil, nil, result)
 
 	return result, err
 }
@@ -62,7 +62,7 @@ func (comp *Client) GetMomentCustomerList(momentID string, userID string, cursor
 		"limit":     limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_customer_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_customer_list", options, nil, nil, result)
 
 	return result, err
 }
@@ -80,7 +80,7 @@ func (comp *Client) GetMomentSendResult(momentID string, userID string, cursor s
 		"limit":     limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_send_result", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_send_result", options, nil, nil, result)
 
 	return result, err
 }
@@ -96,7 +96,7 @@ func (comp *Client) GetMomentComments(momentID string, userID string) (*response
 		"userid":    userID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_moment_comments", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_comments", options, nil, nil, result)
 
 	return result, err
 }

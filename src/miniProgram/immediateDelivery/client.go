@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 异常件退回商家商家确认收货接口
@@ -18,7 +18,7 @@ func (comp *Client) AbnormalConfirm(options *power.HashMap) (*response.ResponseM
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/local/business/order/confirm_return", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/local/business/order/confirm_return", options, nil, nil, result)
 
 	return result, err
 }
@@ -29,7 +29,7 @@ func (comp *Client) AddOrder(options *power.HashMap) (*response.ResponseMiniProg
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -40,7 +40,7 @@ func (comp *Client) AddTips(options *power.HashMap) (*response.ResponseMiniProgr
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", options, nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) BindAccount(deliveryID string) (*response.ResponseMiniProgra
 		"delivery_id": deliveryID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/local/business/shop/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/local/business/shop/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *Client) AddShops(deliveryID string) (*response.ResponseMiniProgram, 
 		"delivery_id": deliveryID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", nil, query, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", nil, query, nil, result)
 
 	return result, err
 }
@@ -81,7 +81,7 @@ func (comp *Client) CancelOrder(options *power.HashMap) (*response2.ResponseImme
 
 	result := &response2.ResponseImmediateDeliveryCancelOrder{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/cancel", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/cancel", options, nil, nil, result)
 
 	return result, err
 }
@@ -92,7 +92,7 @@ func (comp *Client) GetAllImmeDelivery() (*response2.ResponseImmediateDeliveryDe
 
 	result := &response2.ResponseImmediateDeliveryDelivery{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/delivery/getall", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/delivery/getall", nil, nil, nil, result)
 
 	return result, err
 }
@@ -103,7 +103,7 @@ func (comp *Client) GetBindAccount() (*response2.ResponseImmediateDeliveryBindAc
 
 	result := &response2.ResponseImmediateDeliveryBindAccount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/express/local/business/shop/get", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/express/local/business/shop/get", nil, nil, nil, result)
 
 	return result, err
 }
@@ -121,7 +121,7 @@ func (comp *Client) GetOrder(shopID string, shopOrderID string, shopNO string, d
 		"delivery_sign": deliverySign,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/addtips", data, nil, nil, result)
 
 	return result, err
 }
@@ -132,7 +132,7 @@ func (comp *Client) MockUpdateOrder(options *power.HashMap) (*response.ResponseM
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/test_update_order", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/test_update_order", options, nil, nil, result)
 
 	return result, err
 }
@@ -143,7 +143,7 @@ func (comp *Client) OpenDelivery() (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/open", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/open", nil, nil, nil, result)
 
 	return result, err
 }
@@ -154,7 +154,7 @@ func (comp *Client) PreAddOrder(data *power.HashMap) (*response2.ResponseImmedia
 
 	result := &response2.ResponseImmediateDeliveryPreAddOrder{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/pre_add", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/pre_add", data, nil, nil, result)
 
 	return result, err
 }
@@ -165,7 +165,7 @@ func (comp *Client) PreCancelOrder(data *power.HashMap) (*response2.ResponseImme
 
 	result := &response2.ResponseImmediateDeliveryPreCancelOrder{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/precancel", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/precancel", data, nil, nil, result)
 
 	return result, err
 }
@@ -176,7 +176,7 @@ func (comp *Client) RealMockUpdateOrder(options *power.HashMap) (*response.Respo
 
 	result := &response.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/realmock_update_order", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/realmock_update_order", options, nil, nil, result)
 
 	return result, err
 }
@@ -187,7 +187,7 @@ func (comp *Client) ReOrder(data *power.HashMap) (*response2.ResponseImmediateDe
 
 	result := &response2.ResponseImmediateDeliveryReOrder{}
 
-	_, err := comp.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/readd", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/immediateDelivery/local/business/order/readd", data, nil, nil, result)
 
 	return result, err
 }

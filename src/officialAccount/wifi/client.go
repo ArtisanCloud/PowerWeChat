@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -34,7 +34,7 @@ func (comp *Client) Summary(beginDate string, endDate string, shopID int) (*resp
 		"shop_id":    shopID,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/statistics/list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/statistics/list", params, nil, nil, result)
 
 	return result, err
 
@@ -52,7 +52,7 @@ func (comp *Client) GetQrCodeUrl(bShopID int, ssid string, ImageID int) (*respon
 		"img_id":  ImageID,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/qrcode/get", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/qrcode/get", params, nil, nil, result)
 
 	return result, err
 
@@ -69,7 +69,7 @@ func (comp *Client) SetFinishPage(bShopID int, finishPageURL string) (*response2
 		"finishpage_url": finishPageURL,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/finishpage/set", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/finishpage/set", params, nil, nil, result)
 
 	return result, err
 
@@ -81,7 +81,7 @@ func (comp *Client) SetHomePage(data *request.RequestWifiSetHomePage) (*response
 
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err := comp.HttpPostJson("bizwifi/homepage/set", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/homepage/set", data, nil, nil, result)
 
 	return result, err
 

@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取会话内容存档开启成员列表
@@ -21,7 +21,7 @@ func (comp *Client) GetPermitUsersList(msgType string) (*response.ResponseMsgAud
 	if msgType != "" {
 		(*params)["type"] = msgType
 	}
-	_, err := comp.HttpPostJson("cgi-bin/msgaudit/get_permit_user_list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/msgaudit/get_permit_user_list", params, nil, nil, result)
 
 	return result, err
 }
@@ -36,7 +36,7 @@ func (comp *Client) CheckSingleAgree(info []*power.StringMap) (*response.Respons
 		"info": info,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/msgaudit/check_single_agree", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/msgaudit/check_single_agree", params, nil, nil, result)
 
 	return result, err
 }
@@ -51,7 +51,7 @@ func (comp *Client) CheckRoomAgree(roomID string) (*response.ResponseMsgAuditGet
 		"roomid": roomID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/msgaudit/check_room_agree?", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/msgaudit/check_room_agree?", params, nil, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) GroupchatGet(roomID string) (*response.ResponseMsgAuditGetRo
 		"roomid": roomID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/msgaudit/groupchat/get?", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/msgaudit/groupchat/get?", params, nil, nil, result)
 
 	return result, err
 }
@@ -81,7 +81,7 @@ func (comp *Client) GetRobotInfo(robotID string) (*response.ResponseMsgAuditGetR
 		"robot_id": robotID,
 	}
 
-	_, err := comp.HttpGet("cgi-bin/msgaudit/get_robot_info?", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/msgaudit/get_robot_info?", params, nil, result)
 
 	return result, err
 }

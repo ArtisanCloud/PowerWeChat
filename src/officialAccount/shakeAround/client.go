@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) Register(data *request.RequestShakeAroundAccountRegister) (*
 
 	result := &response.ResponseShakeAroundAccountRegister{}
 
-	_, err := comp.HttpPostJson("shakearound/account/register", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/account/register", data, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) Status() (*response.ResponseShakeAroundAccountRegister, erro
 
 	result := &response.ResponseShakeAroundAccountRegister{}
 
-	_, err := comp.HttpGet("shakearound/account/auditstatus", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("shakearound/account/auditstatus", nil, nil, result)
 
 	return result, err
 }
@@ -49,7 +49,7 @@ func (comp *Client) User(data *request.RequestShakeAroundUser) (*response.Respon
 
 	result := &response.ResponseShakeAroundUser{}
 
-	_, err := comp.HttpPostJson("shakearound/user/getshakeinfo", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/user/getshakeinfo", data, nil, nil, result)
 
 	return result, err
 }

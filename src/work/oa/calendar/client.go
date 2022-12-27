@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) Add(calendar *power.HashMap, agentID int) (*response.Respons
 		"agentid":  agentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/calendar/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -48,7 +48,7 @@ func (comp *Client) Update(calendar *power.HashMap) (*response2.ResponseWork, er
 		"calendar": calendar,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/calendar/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *Client) Get(calIDList []string) (*response.ResponseCalendarGet, erro
 		"cal_id_list": calIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/calendar/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/get", options, nil, nil, result)
 
 	return result, err
 }
@@ -78,7 +78,7 @@ func (comp *Client) Del(calID string) (*response2.ResponseWork, error) {
 		"cal_id": calID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/calendar/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/del", options, nil, nil, result)
 
 	return result, err
 }

@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) Get() (*response.ResponseMenuGet, error) {
 
 	result := &response.ResponseMenuGet{}
 
-	_, err := comp.HttpGet("cgi-bin/menu/get", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/menu/get", nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) CurrentSelfMenu() (*response.ResponseCurrentSelfMenu, error)
 
 	result := &response.ResponseCurrentSelfMenu{}
 
-	_, err := comp.HttpGet("cgi-bin/get_current_selfmenu_info", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/get_current_selfmenu_info", nil, nil, result)
 
 	return result, err
 }
@@ -49,7 +49,7 @@ func (comp *Client) Create(buttons []*request.Button) (*response.ResponseMenuCre
 
 	result := &response.ResponseMenuCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/menu/create", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/menu/create", &object.HashMap{
 		"button": buttons,
 	}, nil, nil, result)
 
@@ -62,7 +62,7 @@ func (comp *Client) CreateConditional(buttons []*request.Button, rules *request.
 
 	result := &response.ResponseMenuCreateConditional{}
 
-	_, err := comp.HttpPostJson("cgi-bin/menu/addconditional", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/menu/addconditional", &object.HashMap{
 		"button":    buttons,
 		"matchrule": rules,
 	}, nil, nil, result)
@@ -77,7 +77,7 @@ func (comp *Client) Delete() (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
-	_, err := comp.HttpGet("cgi-bin/menu/delete", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/menu/delete", nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *Client) DeleteConditional(menuID int) (*response.ResponseMenuDelete,
 
 	result := &response.ResponseMenuDelete{}
 
-	_, err := comp.HttpPostJson("cgi-bin/menu/delconditional", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/menu/delconditional", &object.HashMap{
 		"menuid": menuID,
 	}, nil, nil, result)
 
@@ -101,7 +101,7 @@ func (comp *Client) TryMatch(userID string) (*response.ResponseMenuTryMatch, err
 
 	result := &response.ResponseMenuTryMatch{}
 
-	_, err := comp.HttpPostJson("cgi-bin/menu/trymatch", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/menu/trymatch", &object.HashMap{
 		"user_id": userID,
 	}, nil, nil, result)
 

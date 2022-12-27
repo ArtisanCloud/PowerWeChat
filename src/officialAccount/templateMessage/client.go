@@ -12,7 +12,7 @@ import (
 const API_TEMPLATE_MESSAGE_SEND string = "cgi-bin/message/template/send"
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	Message  *object.HashMap
 	Required []string
@@ -27,7 +27,7 @@ func (comp *Client) SetIndustry(industryOne string, industryTwo string, optional
 		"industry_id1": industryOne,
 		"industry_id2": industryTwo,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/template/api_set_industry", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/template/api_set_industry", params, nil, nil, result)
 
 	return result, err
 
@@ -39,7 +39,7 @@ func (comp *Client) GetIndustry() (*response.ResponseTemplateIndustry, error) {
 
 	result := &response.ResponseTemplateIndustry{}
 
-	_, err := comp.HttpPostJson("cgi-bin/template/get_industry", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/template/get_industry", nil, nil, nil, result)
 
 	return result, err
 
@@ -54,7 +54,7 @@ func (comp *Client) AddTemplate(industryOne string) (*response.ResponseTemplate,
 	params := &object.HashMap{
 		"template_id_short": industryOne,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/template/api_add_template", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/template/api_add_template", params, nil, nil, result)
 
 	return result, err
 
@@ -66,7 +66,7 @@ func (comp *Client) GetPrivateTemplates() (*response.ResponseTemplateGetPrivate,
 
 	result := &response.ResponseTemplateGetPrivate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/template/get_all_private_template", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/template/get_all_private_template", nil, nil, nil, result)
 
 	return result, err
 
@@ -81,7 +81,7 @@ func (comp *Client) DeletePrivateTemplate(templateID string) (*response2.Respons
 	params := &object.HashMap{
 		"template_id": templateID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/template/del_private_template", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/template/del_private_template", params, nil, nil, result)
 
 	return result, err
 
@@ -91,7 +91,7 @@ func (comp *Client) Send(message *request.RequestTemlateMessage) (*response.Resp
 
 	result := &response.ResponseTemplateSend{}
 
-	_, err := comp.HttpPostJson(API_TEMPLATE_MESSAGE_SEND, message, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(API_TEMPLATE_MESSAGE_SEND, message, nil, nil, result)
 
 	return result, err
 }
@@ -100,7 +100,7 @@ func (comp *Client) SendSubscription(message *request.RequestTemlateMessageSubsc
 
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/template/subscribe", message, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/template/subscribe", message, nil, nil, result)
 
 	return result, err
 }

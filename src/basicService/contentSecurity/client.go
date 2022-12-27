@@ -3,7 +3,7 @@ package contentSecurity
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	BaseUri string
 }

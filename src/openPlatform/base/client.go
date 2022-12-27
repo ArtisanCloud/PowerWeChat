@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 使用授权码获取授权信息
@@ -17,7 +17,7 @@ func (comp *Client) HandleAuthorize(authCode string) (*response.ResponseHandleAu
 
 	result := &response.ResponseHandleAuthorize{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	if authCode == "" {
 		authCode = config.GetString("app_id", "auth_code")
@@ -28,7 +28,7 @@ func (comp *Client) HandleAuthorize(authCode string) (*response.ResponseHandleAu
 		"authorization_code": authCode,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/api_query_auth", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_query_auth", params, nil, nil, result)
 
 	return result, err
 }
@@ -39,14 +39,14 @@ func (comp *Client) GetAuthorizer(appID string) (*response.ResponseGetAuthorizer
 
 	result := &response.ResponseGetAuthorizer{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.HashMap{
 		"component_appid":  config.GetString("app_id", ""),
 		"authorizer_appid": appID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/api_get_authorizer_info", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_get_authorizer_info", params, nil, nil, result)
 
 	return result, err
 }
@@ -57,7 +57,7 @@ func (comp *Client) GetAuthorizerOption(appID string, name string) (*response.Re
 
 	result := &response.ResponseGetAuthorizerOption{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.HashMap{
 		"component_appid":  config.GetString("app_id", ""),
@@ -65,7 +65,7 @@ func (comp *Client) GetAuthorizerOption(appID string, name string) (*response.Re
 		"option_name":      name,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/api_get_authorizer_option", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_get_authorizer_option", params, nil, nil, result)
 
 	return result, err
 }
@@ -76,7 +76,7 @@ func (comp *Client) SetAuthorizerOption(appID string, name string, value string)
 
 	result := &response2.ResponseOpenPlatform{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.HashMap{
 		"component_appid":  config.GetString("app_id", ""),
@@ -85,7 +85,7 @@ func (comp *Client) SetAuthorizerOption(appID string, name string, value string)
 		"option_value":     value,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/api_set_authorizer_option", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_set_authorizer_option", params, nil, nil, result)
 
 	return result, err
 }
@@ -96,7 +96,7 @@ func (comp *Client) GetAuthorizers(offset int, count int) (*response2.ResponseOp
 
 	result := &response2.ResponseOpenPlatform{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.HashMap{
 		"component_appid": config.GetString("app_id", ""),
@@ -104,7 +104,7 @@ func (comp *Client) GetAuthorizers(offset int, count int) (*response2.ResponseOp
 		"count":           count,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/api_get_authorizer_list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_get_authorizer_list", params, nil, nil, result)
 
 	return result, err
 }
@@ -115,13 +115,13 @@ func (comp *Client) CreatePreAuthorizationCode() (*response.ResponseCreatePreAut
 
 	result := &response.ResponseCreatePreAuthorizationCode{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.HashMap{
 		"component_appid": config.GetString("app_id", ""),
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/api_create_preauthcode", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_create_preauthcode", params, nil, nil, result)
 
 	return result, err
 }
@@ -132,13 +132,13 @@ func (comp *Client) ClearQuota() (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 
 	params := &object.HashMap{
 		"component_appid": config.GetString("app_id", ""),
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/component/clear_quota", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/clear_quota", params, nil, nil, result)
 
 	return result, err
 }

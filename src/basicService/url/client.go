@@ -10,7 +10,7 @@ import (
 const DAY int = 86400
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	BaseUri string
 }
@@ -39,7 +39,7 @@ func (comp *Client) ShortGenKey(longData string, expireSecond int) (*response.Re
 		"long_data":      longData,
 		"expire_seconds": int(math.Min(float64(expireSecond), float64(30*DAY))),
 	}
-	_, err := comp.HttpPostJson("cgi-bin/shorten/gen", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/shorten/gen", params, nil, nil, result)
 
 	return result, err
 
@@ -54,7 +54,7 @@ func (comp *Client) FetchShorten(shortKey string) (*response.ResponseFetchShorte
 	params := &object.HashMap{
 		"short_key": shortKey,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/shorten/fetch", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/shorten/fetch", params, nil, nil, result)
 
 	return result, err
 

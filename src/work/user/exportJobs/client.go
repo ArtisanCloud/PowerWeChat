@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -30,7 +30,7 @@ func (comp *Client) SimpleUser(encodingAESKey string, blockSize int64) (*respons
 		"encoding_aeskey": encodingAESKey,
 		"block_size":      blockSize,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/export/simple_user", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/export/simple_user", options, nil, nil, result)
 
 	return result, err
 }
@@ -45,7 +45,7 @@ func (comp *Client) User(encodingAESKey string, blockSize int64) (*response.Resp
 		"encoding_aeskey": encodingAESKey,
 		"block_size":      blockSize,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/export/user", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/export/user", options, nil, nil, result)
 
 	return result, err
 }
@@ -60,7 +60,7 @@ func (comp *Client) Department(encodingAESKey string, blockSize int64) (*respons
 		"encoding_aeskey": encodingAESKey,
 		"block_size":      blockSize,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/export/department", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/export/department", options, nil, nil, result)
 
 	return result, err
 }
@@ -76,7 +76,7 @@ func (comp *Client) TagUser(tagID int, encodingAESKey string, blockSize int64) (
 		"encoding_aeskey": encodingAESKey,
 		"block_size":      blockSize,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/export/taguser", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/export/taguser", options, nil, nil, result)
 
 	return result, err
 }
@@ -90,7 +90,7 @@ func (comp *Client) GetExportResult(jobID string) (*response.ResponseUserExportG
 	options := &object.StringMap{
 		"jobid": jobID,
 	}
-	_, err := comp.HttpGet("cgi-bin/export/get_result", options, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/export/get_result", options, nil, result)
 
 	return result, err
 }

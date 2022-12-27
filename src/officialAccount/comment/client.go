@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 打开已群发文章评论
@@ -22,7 +22,7 @@ func (comp *Client) Open(msgID string, index int) (*response2.ResponseOfficialAc
 		"index":       index,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/open", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/open", params, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) Close(msgID string, index int) (*response2.ResponseOfficialA
 		"index":       index,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/close", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/close", params, nil, nil, result)
 
 	return result, err
 }
@@ -57,7 +57,7 @@ func (comp *Client) List(msgID string, index int, begin int, count int, Type int
 		"type":        Type,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/list", params, nil, nil, result)
 
 	return result, err
 }
@@ -74,7 +74,7 @@ func (comp *Client) MarkElect(msgID string, index int, commentID int) (*response
 		"user_comment_id": commentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/markelect", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/markelect", params, nil, nil, result)
 
 	return result, err
 }
@@ -91,7 +91,7 @@ func (comp *Client) UnmarkElect(msgID string, index int, commentID int) (*respon
 		"user_comment_id": commentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/unmarkelect", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/unmarkelect", params, nil, nil, result)
 
 	return result, err
 }
@@ -108,7 +108,7 @@ func (comp *Client) Delete(msgID string, index int, commentID int) (*response2.R
 		"user_comment_id": commentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/delete", params, nil, nil, result)
 
 	return result, err
 }
@@ -126,7 +126,7 @@ func (comp *Client) Reply(msgID string, index int, commentID int, content string
 		"content":         content,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/reply/add", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/reply/add", params, nil, nil, result)
 
 	return result, err
 }
@@ -143,7 +143,7 @@ func (comp *Client) DeleteReply(msgID string, index int, commentID int) (*respon
 		"user_comment_id": commentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/comment/reply/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/comment/reply/delete", params, nil, nil, result)
 
 	return result, err
 }

@@ -8,7 +8,7 @@ import (
 )
 
 type DeviceClient struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewDeviceClient(app kernel.ApplicationInterface) (*DeviceClient, error) {
@@ -27,7 +27,7 @@ func (comp *DeviceClient) Apply(data *request.RequestDeviceApply) (*response.Res
 
 	result := &response.ResponseDeviceApply{}
 
-	_, err := comp.HttpPostJson("shakearound/device/applyid", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/applyid", data, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *DeviceClient) Status(data *request.RequestDeviceApplyStatus) (*respo
 
 	result := &response.ResponseDeviceApplyStatus{}
 
-	_, err := comp.HttpPostJson("shakearound/device/applystatus", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/applystatus", data, nil, nil, result)
 
 	return result, err
 }
@@ -54,7 +54,7 @@ func (comp *DeviceClient) DeviceUpdate(deviceIdentifier *request.RequestDeviceId
 		"comment":           comment,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/update", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/update", params, nil, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *DeviceClient) BindPoi(deviceIdentifier *request.RequestDeviceIdentif
 		"poi_id":            poiID,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/bindlocation", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/bindlocation", params, nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *DeviceClient) BindThirdPoi(deviceIdentifier *request.RequestDeviceId
 		"poi_appid":         appID,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/bindlocation", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/bindlocation", params, nil, nil, result)
 
 	return result, err
 }
@@ -146,7 +146,7 @@ func (comp *DeviceClient) ListByApplyID(applyID int, lastID int, count int) (*re
 
 func (comp *DeviceClient) search(data *request.RequestDeviceSearch, result *response.ResponseDeviceApplyStatus) error {
 
-	_, err := comp.HttpPostJson("shakearound/device/search", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/search", data, nil, nil, result)
 
 	return err
 }

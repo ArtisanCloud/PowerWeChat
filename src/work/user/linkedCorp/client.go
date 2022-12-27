@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) GetPermList() (*response.ResponseLinkCorpGetPermList, error)
 
 	result := &response.ResponseLinkCorpGetPermList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/agent/get_perm_list", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/linkedcorp/agent/get_perm_list", nil, nil, nil, result)
 
 	return result, err
 }
@@ -41,7 +41,7 @@ func (comp *Client) GetUser(userID string) (*response.ResponseLinkCorpGetUser, e
 		"userid": userID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/user/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/linkedcorp/user/get", options, nil, nil, result)
 
 	return result, err
 }
@@ -57,7 +57,7 @@ func (comp *Client) GetUserSimpleList(departmentID string, fetchChild bool) (*re
 		"fetch_child":   fetchChild,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/user/simplelist", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/linkedcorp/user/simplelist", options, nil, nil, result)
 
 	return result, err
 }
@@ -73,7 +73,7 @@ func (comp *Client) GetUserList(departmentID string, fetchChild bool) (*response
 		"fetch_child":   fetchChild,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/user/list?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/linkedcorp/user/list?", options, nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *Client) GetDepartmentList(departmentID string) (*response.ResponseLi
 		"department_id": departmentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/department/list?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/linkedcorp/department/list?", options, nil, nil, result)
 
 	return result, err
 }
