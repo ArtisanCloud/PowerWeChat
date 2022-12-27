@@ -30,7 +30,7 @@ type BaseClient struct {
 
 	GetMiddlewareOfAccessToken        contract.RequestMiddleware
 	GetMiddlewareOfLog                func(logger *log.Logger) contract.RequestMiddleware
-	GetMiddlewareOfRefreshAccessToken contract.RequestMiddleware
+	GetMiddlewareOfRefreshAccessToken func(retry int) contract.RequestMiddleware
 }
 
 type UploadForm struct {
@@ -260,7 +260,7 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 	client.HttpHelper.WithMiddleware(
 		accessTokenMiddleware,
 		logMiddleware(log.Default()),
-		checkAccessTokenMiddleware,
+		checkAccessTokenMiddleware(3),
 	)
 
 }
@@ -319,38 +319,42 @@ func (client *BaseClient) OverrideGetMiddlewareOfLog() {
 }
 
 func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
-	client.GetMiddlewareOfRefreshAccessToken = func(handle contract.RequestHandle) contract.RequestHandle {
-		return func(request *http.Request) (response *http.Response, err error) {
-			// 前置中间件
-			//fmt.Println("检查微信返回错误，token是否失效，执行前访问")
+	client.GetMiddlewareOfRefreshAccessToken = func(retry int) contract.RequestMiddleware {
+		return contract.RequestMiddleware(func(handle contract.RequestHandle) contract.RequestHandle {
+			return func(request *http.Request) (response *http.Response, err error) {
+				// 前置中间件
+				//fmt.Println("检查微信返回错误，token是否失效，执行前访问")
 
-			response, err = handle(request)
-			// handle 执行之后就可以操作 response 和 err
+				response, err = handle(request)
+				// handle 执行之后就可以操作 response 和 err
 
-			err = client.CheckTokenNeedRefresh(response)
-			if err != nil {
-				return nil, err
+				rs, err := client.CheckTokenNeedRefresh(request, response, retry)
+				if err != nil {
+					return rs, err
+				} else if rs != nil {
+					return rs, nil
+				}
+
+				// 后置中间件
+				//fmt.Println("检查微信返回错误，token是否失效，, 在请求后执行")
+				return
 			}
-
-			//client.HttpHelper.Df()
-
-			// 后置中间件
-			//fmt.Println("检查微信返回错误，token是否失效，, 在请求后执行")
-			return
-		}
+		})
 	}
 }
 
-func (client *BaseClient) CheckTokenNeedRefresh(rs *http.Response) error {
-	data, err := ioutil.ReadAll(rs.Body)
-	rs.Body = ioutil.NopCloser(bytes.NewBuffer(data))
+func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Response, retry int) (*http.Response, error) {
+
+	rsData, err := ioutil.ReadAll(rs.Body)
+	rs.Body = ioutil.NopCloser(bytes.NewBuffer(rsData))
+
 	if err != nil {
-		return err
+		return nil, err
 	}
 	mapResponse := &object.HashMap{}
-	err = json.Unmarshal(data, mapResponse)
+	err = json.Unmarshal(rsData, mapResponse)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	errCode := 0
@@ -369,12 +373,41 @@ func (client *BaseClient) CheckTokenNeedRefresh(rs *http.Response) error {
 		conditions := &object.HashMap{
 			"code": errCode,
 		}
-		if client.RetryDecider(conditions) {
+		if retry > 0 && client.RetryDecider(conditions) {
 			client.Token.Refresh()
+
+			// clone 一个request
+			token, err := client.Token.GetToken(false)
+			q := req.URL.Query()
+			q.Set(client.Token.TokenKey, token.AccessToken)
+			req.URL.RawQuery = q.Encode()
+			req2 := req.Clone(req.Context())
+			if req.Body != nil {
+				// 缓存请求body
+				reqData, err := ioutil.ReadAll(req.Body)
+				if err != nil {
+					return nil, err
+				}
+
+				// 给两个request复制缓存下来的body数据
+				req.Body = ioutil.NopCloser(bytes.NewBuffer(reqData))
+				req2.Body = ioutil.NopCloser(bytes.NewReader(reqData))
+			}
+
+			res2, err := client.HttpHelper.GetClient().DoRequest(req2)
+			if err != nil {
+				return nil, err
+			}
+
+			return res2, err
+			//b, err := ioutil.ReadAll(res2.Body)
+			//rs.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			//content := string(b)
+			//fmt2.Dump(content)
 		}
 	}
 
-	return nil
+	return nil, nil
 }
 
 func (client *BaseClient) RetryDecider(conditions *object.HashMap) bool {
