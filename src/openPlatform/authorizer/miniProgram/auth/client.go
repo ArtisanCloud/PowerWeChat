@@ -43,7 +43,7 @@ func (comp *Client) Session(code string) (*response.ResponseSession, error) {
 		"component_appid":        componentConfig.GetString("app_id", ""),
 		"component_access_token": componentToken.ComponentAccessToken,
 	}
-	_, err = comp.HttpGet("sns/component/jscode2session", query, nil, result)
+	_, err = comp.BaseClient.HttpGet("sns/component/jscode2session", query, nil, result)
 
 	return result, err
 

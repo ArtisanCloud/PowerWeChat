@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 主动发送消息给设备
@@ -17,7 +17,7 @@ func (comp *Client) Message(data *request.RequestDeviceMessage) (*response.Respo
 
 	result := &response.ResponseDeviceMessage{}
 
-	_, err := comp.HttpPostJson("device/transmsg", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/transmsg", data, nil, nil, result)
 
 	return result, err
 }
@@ -33,7 +33,7 @@ func (comp *Client) QRCode(deviceIDs []string) (*response.ResponseDeviceCreateQR
 		"device_id_list": deviceIDs,
 	}
 
-	_, err := comp.HttpPostJson("device/create_qrcode", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/create_qrcode", param, nil, nil, result)
 
 	return result, err
 }
@@ -44,7 +44,7 @@ func (comp *Client) Authorize(data request.RequestDeviceAuthorize) (*response.Re
 
 	result := &response.ResponseDeviceAuthorize{}
 
-	_, err := comp.HttpPostJson("device/authorize_device", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/authorize_device", data, nil, nil, result)
 
 	return result, err
 }
@@ -59,7 +59,7 @@ func (comp *Client) createID(productID string) (*response.ResponseDeviceCreateID
 		"product_id": productID,
 	}
 
-	_, err := comp.HttpPostJson("device/authorize_device", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/authorize_device", params, nil, nil, result)
 
 	return result, err
 }
@@ -76,7 +76,7 @@ func (comp *Client) Bind(openID string, deviceID string, ticket string) (*respon
 		"openid":    openID,
 	}
 
-	_, err := comp.HttpPostJson("device/bind", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/bind", params, nil, nil, result)
 
 	return result, err
 }
@@ -93,7 +93,7 @@ func (comp *Client) Unbind(openID string, deviceID string, ticket string) (*resp
 		"openid":    openID,
 	}
 
-	_, err := comp.HttpPostJson("device/unbind", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/unbind", params, nil, nil, result)
 
 	return result, err
 }
@@ -109,7 +109,7 @@ func (comp *Client) ForceBind(openID string, deviceID string) (*response.Respons
 		"openid":    openID,
 	}
 
-	_, err := comp.HttpPostJson("device/compel_bind", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/compel_bind", params, nil, nil, result)
 
 	return result, err
 }
@@ -125,7 +125,7 @@ func (comp *Client) ForceUnbind(openID string, deviceID string) (*response.Respo
 		"openid":    openID,
 	}
 
-	_, err := comp.HttpPostJson("device/compel_unbind", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("device/compel_unbind", params, nil, nil, result)
 
 	return result, err
 }

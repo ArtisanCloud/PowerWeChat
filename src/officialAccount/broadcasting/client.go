@@ -16,7 +16,7 @@ const BROADCASTING_PREVIEW_BY_OPENID string = "touser"
 const BROADCASTING_PREVIEW_BY_NAME string = "towxname"
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 根据标签进行群发 【订阅号与服务号认证后均可用】
@@ -34,7 +34,7 @@ func (comp *Client) Send(message *power.HashMap) (*response.ResponseBroadcasting
 		api = "cgi-bin/message/mass/send"
 	}
 
-	_, err := comp.HttpPostJson(api, message, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(api, message, nil, nil, result)
 	return result, err
 }
 
@@ -44,7 +44,7 @@ func (comp *Client) Preview(data *object.HashMap) (*response2.ResponseOfficialAc
 
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/mass/preview", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/mass/preview", data, nil, nil, result)
 	return result, err
 }
 
@@ -59,7 +59,7 @@ func (comp *Client) Delete(msgID string, index int) (*response2.ResponseOfficial
 		"article_idx": index,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/mass/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/mass/delete", params, nil, nil, result)
 	return result, err
 }
 
@@ -73,7 +73,7 @@ func (comp *Client) Status(msgID string) (*response.ResponseBroadcastingStatus, 
 		"msg_id": msgID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/mass/get", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/mass/get", params, nil, nil, result)
 	return result, err
 }
 

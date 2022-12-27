@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 查询域名配置
@@ -24,7 +24,7 @@ func (comp *Client) GetDomainInfo(action string) (*response.ResponseOperationGet
 		"action": action,
 	}
 
-	_, err := comp.HttpPostJson("wxa/getwxadevinfo", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/getwxadevinfo", data, nil, nil, result)
 
 	return result, err
 }
@@ -41,7 +41,7 @@ func (comp *Client) GetFeedback(feedbackType int, page int, num int) (*response.
 		"num":  fmt.Sprintf("%d", num),
 	}
 
-	_, err := comp.HttpGet("wxaapi/feedback/list", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/feedback/list", params, nil, result)
 
 	return result, err
 }
@@ -60,7 +60,7 @@ func (comp *Client) GetFeedbackMedia(recordID int, mediaID string) (*http.Respon
 		},
 	}
 
-	rs, err := comp.RequestRaw("cgi-bin/media/getfeedbackmedia", "GET", data, header, &result)
+	rs, err := comp.BaseClient.RequestRaw("cgi-bin/media/getfeedbackmedia", "GET", data, header, &result)
 
 	return rs, err
 }
@@ -71,7 +71,7 @@ func (comp *Client) GetGrayReleasePlan() (*response.ResponseOperationGetGrayRele
 
 	result := &response.ResponseOperationGetGrayReleasePlan{}
 
-	_, err := comp.HttpGet("wxa/getgrayreleaseplan", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/getgrayreleaseplan", nil, nil, result)
 
 	return result, err
 }
@@ -82,7 +82,7 @@ func (comp *Client) GetJsErrDetail(data *power.HashMap) (*response.ResponseOpera
 
 	result := &response.ResponseOperationGetJsErrDetail{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/jserr_detail", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/log/jserr_detail", data, nil, nil, result)
 
 	return result, err
 }
@@ -93,7 +93,7 @@ func (comp *Client) GetJsErrList(data *power.HashMap) (*response.ResponseOperati
 
 	result := &response.ResponseOperationGetJsErrList{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/jserr_list", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/log/jserr_list", data, nil, nil, result)
 
 	return result, err
 }
@@ -104,7 +104,7 @@ func (comp *Client) GetJsErrSearch(data *power.HashMap) (*response.ResponseOpera
 
 	result := &response.ResponseOperationGetJsErrSearch{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/jserr_search", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/log/jserr_search", data, nil, nil, result)
 
 	return result, err
 }
@@ -115,7 +115,7 @@ func (comp *Client) GetPerformance(data *power.HashMap) (*response.ResponseOpera
 
 	result := &response.ResponseOperationGetPerformance{}
 
-	_, err := comp.HttpPostJson("wxaapi/log/get_performance", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/log/get_performance", data, nil, nil, result)
 
 	return result, err
 }
@@ -126,7 +126,7 @@ func (comp *Client) GetSceneList() (*response.ResponseOperationGetSceneList, err
 
 	result := &response.ResponseOperationGetSceneList{}
 
-	_, err := comp.HttpGet("wxa/log/get_scene", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/log/get_scene", nil, nil, result)
 
 	return result, err
 }
@@ -137,7 +137,7 @@ func (comp *Client) GetVersionList() (*response.ResponseOperationGetVersionList,
 
 	result := &response.ResponseOperationGetVersionList{}
 
-	_, err := comp.HttpGet("wxaapi/log/get_client_version", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxaapi/log/get_client_version", nil, nil, result)
 
 	return result, err
 }
@@ -148,7 +148,7 @@ func (comp *Client) RealTimeLogSearch(options *power.HashMap) (*response.Respons
 
 	result := &response.ResponseOperationRealTimeLogSearch{}
 
-	_, err := comp.HttpPostJson("wxaapi/userlog/userlog_search", options.ToHashMap(), nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxaapi/userlog/userlog_search", options.ToHashMap(), nil, nil, result)
 
 	return result, err
 }

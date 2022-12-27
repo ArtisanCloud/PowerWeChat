@@ -30,7 +30,7 @@ func NewClient(app *kernel2.ApplicationInterface) (*Client, error) {
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_4.shtml
 func (comp *Client) BridgeConfig(prepayID string, isJson bool) (interface{}, error) {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	appID := config.GetString("app_id", "")
 
 	options := &object.StringMap{
@@ -42,7 +42,7 @@ func (comp *Client) BridgeConfig(prepayID string, isJson bool) (interface{}, err
 	}
 
 	var err error
-	(*options)["paySign"], err = comp.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
+	(*options)["paySign"], err = comp.BaseClient.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
 		(*options)["appId"],
 		(*options)["timeStamp"],
 		(*options)["nonceStr"],
@@ -73,7 +73,7 @@ func (comp *Client) SDKConfig(prepayID string) (*object.StringMap, error) {
 
 func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	appID := config.GetString("app_id", "")
 	mchID := config.GetString("mch_id", "")
 
@@ -93,7 +93,7 @@ func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 
 func (comp *Client) ShareAddressConfig(request *http.Request, accessToken string, isJson bool) (interface{}, error) {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	appID := config.GetString("app_id", "")
 
 	params := &object.StringMap{
@@ -132,7 +132,7 @@ func (comp *Client) ShareAddressConfig(request *http.Request, accessToken string
 
 func (comp *Client) ContractConfig(params *object.StringMap) (*object.StringMap, error) {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	(*params)["appid"] = config.GetString("app_id", "")
 	(*params)["timestamp"] = fmt.Sprintf("%d", time.Now().Unix())
 	//(*params)["sign"] = support.GenerateSign(params, config.GetString("key", ""), "md5")

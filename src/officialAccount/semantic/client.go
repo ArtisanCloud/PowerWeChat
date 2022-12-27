@@ -7,14 +7,14 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 语义接口
 // https://developers.weixin.qq.com/doc/offiaccount/Intelligent_Interface/Natural_Language_Processing.html
 func (comp *Client) Query(keyword string, categories string, optional *power.HashMap) (interface{}, error) {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	params := &object.HashMap{
 		"query":    keyword,
 		"category": categories,
@@ -27,6 +27,6 @@ func (comp *Client) Query(keyword string, categories string, optional *power.Has
 	}
 	params = object.MergeHashMap(params, objOptional)
 
-	return comp.HttpPostJson("semantic/semproxy/search", params, nil, nil, nil)
+	return comp.BaseClient.HttpPostJson("semantic/semproxy/search", params, nil, nil, nil)
 
 }

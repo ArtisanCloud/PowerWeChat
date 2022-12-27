@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 查询电子发票
@@ -22,7 +22,7 @@ func (comp *Client) GetInvoiceInfo(cardID string, encryptCode string) (*response
 		"card_id":      cardID,
 		"encrypt_code": encryptCode,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/getinvoiceinfo", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/card/invoice/reimburse/getinvoiceinfo", data, nil, nil, result)
 
 	return result, err
 }
@@ -36,7 +36,7 @@ func (comp *Client) GetInvoiceInfoBatch(invoiceList []*request.RequestCardInvoic
 	data := &object.HashMap{
 		"item_list": invoiceList,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/getinvoiceinfobatch", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/card/invoice/reimburse/getinvoiceinfobatch", data, nil, nil, result)
 
 	return result, err
 }
@@ -52,7 +52,7 @@ func (comp *Client) UpdateInvoiceStatus(cardID string, encryptCode string, statu
 		"encrypt_code":     encryptCode,
 		"reimburse_status": status,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/updateinvoicestatus", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/card/invoice/reimburse/updateinvoicestatus", data, nil, nil, result)
 
 	return result, err
 }
@@ -68,7 +68,7 @@ func (comp *Client) UpdateStatusBatch(openid string, status string, invoiceList 
 		"reimburse_status": status,
 		"invoice_list":     invoiceList,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/card/invoice/reimburse/updatestatusbatch", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/card/invoice/reimburse/updatestatusbatch", data, nil, nil, result)
 
 	return result, err
 }

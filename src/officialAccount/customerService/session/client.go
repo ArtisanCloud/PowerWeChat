@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 func (comp *Client) List(account string) (*response.ResponseKFSessionList, error) {
 	result := &response.ResponseKFSessionList{}
 
-	_, err := comp.HttpGet("customservice/kfsession/getsessionlist", &object.StringMap{"kf_account": account}, nil, &result)
+	_, err := comp.BaseClient.HttpGet("customservice/kfsession/getsessionlist", &object.StringMap{"kf_account": account}, nil, &result)
 
 	return result, err
 }
@@ -37,7 +37,7 @@ func (comp *Client) List(account string) (*response.ResponseKFSessionList, error
 func (comp *Client) Waiting() (*response.ResponseKFSessionWaitCaseList, error) {
 	result := &response.ResponseKFSessionWaitCaseList{}
 
-	_, err := comp.HttpGet("customservice/kfsession/getwaitcase", nil, nil, &result)
+	_, err := comp.BaseClient.HttpGet("customservice/kfsession/getwaitcase", nil, nil, &result)
 
 	return result, err
 }
@@ -51,7 +51,7 @@ func (comp *Client) Create(account string, openID string) (*response2.ResponseOf
 		"kf_account": account,
 		"openid":     openID,
 	}
-	_, err := comp.HttpPostJson("customservice/kfsession/create", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("customservice/kfsession/create", params, nil, nil, &result)
 
 	return result, err
 }
@@ -65,7 +65,7 @@ func (comp *Client) Close(account string, openID string) (*response2.ResponseOff
 		"kf_account": account,
 		"openid":     openID,
 	}
-	_, err := comp.HttpPostJson("customservice/kfsession/close", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("customservice/kfsession/close", params, nil, nil, &result)
 
 	return result, err
 }
@@ -75,7 +75,7 @@ func (comp *Client) Close(account string, openID string) (*response2.ResponseOff
 func (comp *Client) Get(openID string) (*response.ResponseKFSessionGet, error) {
 	result := &response.ResponseKFSessionGet{}
 
-	_, err := comp.HttpGet("customservice/kfsession/getsession", &object.StringMap{"openid": openID}, nil, &result)
+	_, err := comp.BaseClient.HttpGet("customservice/kfsession/getsession", &object.StringMap{"openid": openID}, nil, &result)
 
 	return result, err
 }

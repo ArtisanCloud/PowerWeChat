@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 调用服务平台提供的服务
@@ -16,7 +16,7 @@ func (comp *Client) InvokeService(options *request.RequestServiceMarket) (*respo
 
 	result := &response.ResponseServiceMarketInvoceService{}
 
-	_, err := comp.HttpPostJson("wxa/servicemarket", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/servicemarket", options, nil, nil, result)
 
 	return result, err
 }

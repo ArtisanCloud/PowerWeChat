@@ -28,7 +28,7 @@ func (comp *CardClient) Set(data *request.RequestWifiCardSet) (*response2.Respon
 
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err := comp.HttpPostJson("bizwifi/couponput/set", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/couponput/set", data, nil, nil, result)
 
 	return result, err
 
@@ -40,7 +40,7 @@ func (comp *CardClient) Get(shopID int) (*response.ResponseWifiCardGet, error) {
 
 	result := &response.ResponseWifiCardGet{}
 
-	_, err := comp.HttpPostJson("bizwifi/couponput/get", &object.HashMap{"shop_id": shopID}, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/couponput/get", &object.HashMap{"shop_id": shopID}, nil, nil, result)
 
 	return result, err
 

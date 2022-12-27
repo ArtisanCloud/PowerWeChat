@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -29,7 +29,7 @@ func (comp *Client) Create(tagName string, tagID int64) (*response.ResponseTagCr
 
 	result := &response.ResponseTagCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/tag/create", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tag/create", &object.HashMap{
 		"tagname": tagName,
 		"tagid":   tagID,
 	}, nil, nil, result)
@@ -43,7 +43,7 @@ func (comp *Client) Update(tagName string, tagID int64) (*response2.ResponseWork
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/tag/update", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tag/update", &object.HashMap{
 		"tagname": tagName,
 		"tagid":   tagID,
 	}, nil, nil, result)
@@ -57,7 +57,7 @@ func (comp *Client) Delete(tagID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/delete", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/tag/delete", &object.StringMap{
 		"tagid": tagID,
 	}, nil, result)
 
@@ -70,7 +70,7 @@ func (comp *Client) Get(tagID string) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/get", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/tag/get", &object.StringMap{
 		"tagid": tagID,
 	}, nil, result)
 
@@ -93,7 +93,7 @@ func (comp *Client) TagOrUntagUsers(endpoint string, tagID int64, userList []str
 
 	result := &response.ResponseTagCreateUser{}
 
-	_, err := comp.HttpPostJson(endpoint, &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(endpoint, &object.HashMap{
 		"tagid":     tagID,
 		"userlist":  userList,
 		"partylist": partyList,
@@ -108,7 +108,7 @@ func (comp *Client) List() (*response.ResponseTagList, error) {
 
 	result := &response.ResponseTagList{}
 
-	_, err := comp.HttpGet("cgi-bin/tag/list", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/tag/list", nil, nil, result)
 
 	return result, err
 }

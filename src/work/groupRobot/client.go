@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -32,9 +32,9 @@ func (comp *Client) Send(key string, message *power.HashMap) (*response.Response
 
 	result := &response.ResponseGroupRobotSend{}
 
-	comp.Token = nil
+	comp.BaseClient.Token = nil
 
-	_, err := comp.HttpPostJson("cgi-bin/webhook/send", message.ToHashMap(), &object.StringMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/webhook/send", message.ToHashMap(), &object.StringMap{
 		"key": key,
 	}, nil, result)
 

@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取小程序二维码，适用于需要的码数量较少的业务场景
@@ -32,7 +32,7 @@ func (comp *Client) CreateQRCode(path string, width int64) (*http.Response, erro
 		},
 	}
 
-	rs, err := comp.RequestRaw("cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw("cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
 
 	return rs, err
 
@@ -60,7 +60,7 @@ func (comp *Client) Get(path string, width int64,
 		},
 	}
 
-	rs, err := comp.RequestRaw("wxa/getwxacode", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw("wxa/getwxacode", "POST", data, &header, &result)
 
 	return rs, err
 }
@@ -109,7 +109,7 @@ func (comp *Client) GetUnlimited(
 		},
 	}
 
-	rs, err := comp.RequestRaw("wxa/getwxacodeunlimit", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw("wxa/getwxacodeunlimit", "POST", data, &header, &result)
 
 	return rs, err
 }

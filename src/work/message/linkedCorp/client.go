@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -26,7 +26,7 @@ func (comp *Client) Send(messages *power.HashMap) (*response.ResponseLinkCorpMes
 
 	result := &response.ResponseLinkCorpMessageSend{}
 
-	_, err := comp.HttpPostJson("cgi-bin/linkedcorp/message/send", messages, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/linkedcorp/message/send", messages, nil, nil, result)
 
 	return result, err
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Categories() (*response.ResponseStoreCategory, error) {
 
 	result := &response.ResponseStoreCategory{}
 
-	_, err := comp.HttpGet("wxa/get_merchant_category", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/get_merchant_category", nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) Districts() (*response.ResponseStoreDistrict, error) {
 
 	result := &response.ResponseStoreDistrict{}
 
-	_, err := comp.HttpGet("wxa/get_district", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/get_district", nil, nil, result)
 
 	return result, err
 }
@@ -55,7 +55,7 @@ func (comp *Client) SearchFromMap(districtID int, keyword string) (*response.Res
 		"keyword":    keyword,
 	}
 
-	_, err := comp.HttpPostJson("wxa/search_map_poi", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/search_map_poi", params, nil, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) GetStatus() (*response.ResponseStoreGetStatus, error) {
 
 	result := &response.ResponseStoreGetStatus{}
 
-	_, err := comp.HttpGet("wxa/get_merchant_audit_info", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/get_merchant_audit_info", nil, nil, result)
 
 	return result, err
 }
@@ -82,7 +82,7 @@ func (comp *Client) UpdateMerchant(mediaID int, intro string) (*response.Respons
 		"intro":           intro,
 	}
 
-	_, err := comp.HttpPostJson("wxa/modify_merchant", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/modify_merchant", params, nil, nil, result)
 
 	return result, err
 }
@@ -93,7 +93,7 @@ func (comp *Client) CreateFromMap(data *request.BaseInfo) (*response.ResponseSto
 
 	result := &response.ResponseStoreCreateFromMap{}
 
-	_, err := comp.HttpPostJson("wxa/create_map_poi", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/create_map_poi", data, nil, nil, result)
 
 	return result, err
 }
@@ -104,7 +104,7 @@ func (comp *Client) Create(data *request.RequestStoreCreate) (*response.Response
 
 	result := &response.ResponseStoreCreate{}
 
-	_, err := comp.HttpPostJson("wxa/add_store", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/add_store", data, nil, nil, result)
 
 	return result, err
 }
@@ -115,7 +115,7 @@ func (comp *Client) Update(data *request.RequestStoreUpdate) (*response.Response
 
 	result := &response.ResponseStoreUpdate{}
 
-	_, err := comp.HttpPostJson("wxa/update_store", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/update_store", data, nil, nil, result)
 
 	return result, err
 }
@@ -130,7 +130,7 @@ func (comp *Client) Get(poiID int) (*response.ResponseStoreInfo, error) {
 		"poi_id": poiID,
 	}
 
-	_, err := comp.HttpPostJson("wxa/get_store_info", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/get_store_info", params, nil, nil, result)
 
 	return result, err
 }
@@ -146,7 +146,7 @@ func (comp *Client) List(offset int, limit int) (*response.ResponseStoreInfo, er
 		"limit":  limit,
 	}
 
-	_, err := comp.HttpPostJson("wxa/get_store_list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/get_store_list", params, nil, nil, result)
 
 	return result, err
 }
@@ -161,7 +161,7 @@ func (comp *Client) Delete(poiID int) (*response2.ResponseOfficialAccount, error
 		"poi_id": poiID,
 	}
 
-	_, err := comp.HttpPostJson("wxa/del_store", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/del_store", params, nil, nil, result)
 
 	return result, err
 }

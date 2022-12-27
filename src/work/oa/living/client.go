@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Create(options *request.RequestLivingCreate) (*response.Resp
 
 	result := &response.ResponseLivingCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/create", options, nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) Modify(options *request.RequestLivingModify) (*response2.Res
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/modify", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/modify", options, nil, nil, result)
 
 	return result, err
 }
@@ -54,7 +54,7 @@ func (comp *Client) Cancel(livingID string) (*response2.ResponseWork, error) {
 		"livingid": livingID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/cancel", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/cancel", options, nil, nil, result)
 
 	return result, err
 }
@@ -69,7 +69,7 @@ func (comp *Client) DeleteReplayData(livingID string) (*response2.ResponseWork, 
 		"livingid": livingID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/delete_replay_data", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/delete_replay_data", options, nil, nil, result)
 
 	return result, err
 }
@@ -85,7 +85,7 @@ func (comp *Client) GetLivingCode(livingID string, openID string) (*response.Res
 		"openid":   openID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/get_living_code", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/get_living_code", options, nil, nil, result)
 
 	return result, err
 }
@@ -102,7 +102,7 @@ func (comp *Client) GetUserAllLivingID(userID string, cursor string, limit int) 
 		"limit":  limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/get_user_all_livingid", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/get_user_all_livingid", options, nil, nil, result)
 
 	return result, err
 }
@@ -117,7 +117,7 @@ func (comp *Client) GetLivingInfo(livingID string) (*response.ResponseLivingGetL
 		"livingid": livingID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/get_living_info", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/get_living_info", options, nil, nil, result)
 
 	return result, err
 }
@@ -133,7 +133,7 @@ func (comp *Client) GetWatchStat(livingID string, nextKey string) (*response.Res
 		"next_key": nextKey,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/get_watch_stat", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/get_watch_stat", options, nil, nil, result)
 
 	return result, err
 }
@@ -148,7 +148,7 @@ func (comp *Client) GetLivingShareInfo(wwShareCode string) (*response.ResponseLi
 		"ww_share_code": wwShareCode,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/living/get_living_share_info", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/living/get_living_share_info", options, nil, nil, result)
 
 	return result, err
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,8 +27,8 @@ func (comp *Client) Get() (*response.ResponseMenuGet, error) {
 
 	result := &response.ResponseMenuGet{}
 
-	agentID := (*comp.App).GetConfig().GetInt("agent_id", 0)
-	_, err := comp.HttpGet("cgi-bin/menu/get", &object.StringMap{
+	agentID := (*comp.BaseClient.App).GetConfig().GetInt("agent_id", 0)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/menu/get", &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
@@ -40,8 +40,8 @@ func (comp *Client) Create(data *request.RequestMenuSet) (*response.ResponseMenu
 
 	result := &response.ResponseMenuCreate{}
 
-	agentID := (*comp.App).GetConfig().GetInt("agent_id", 0)
-	_, err := comp.HttpPostJson("cgi-bin/menu/create", data, &object.StringMap{
+	agentID := (*comp.BaseClient.App).GetConfig().GetInt("agent_id", 0)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/menu/create", data, &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
@@ -53,7 +53,7 @@ func (comp *Client) Delete(agentID int) (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
-	_, err := comp.HttpGet("cgi-bin/menu/delete", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/menu/delete", &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 

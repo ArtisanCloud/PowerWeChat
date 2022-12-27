@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 下发小程序和公众号统一的服务消息
@@ -16,7 +16,7 @@ func (comp *Client) Send(options *request.RequestUniformMessageSend) (*response2
 
 	result := &response2.ResponseMiniProgram{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/wxopen/template/uniform_send", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/wxopen/template/uniform_send", options, nil, nil, result)
 
 	return result, err
 }

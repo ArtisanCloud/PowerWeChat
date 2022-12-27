@@ -12,7 +12,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) AddMsgTemplate(options *request.RequestAddMsgTemplate) (*res
 
 	result := &response.ResponseAddMessageTemplate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/add_msg_template", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/add_msg_template", options, nil, nil, result)
 
 	return result, err
 }
@@ -44,7 +44,7 @@ func (comp *Client) GetGroupMsgListV2(options *request.RequestGetGroupMsgListV2)
 
 	result := &response.ResponseGetGroupMsgListV2{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_list_v2", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_list_v2", options, nil, nil, result)
 
 	return result, err
 }
@@ -59,7 +59,7 @@ func (comp *Client) GetGroupMsgTask(msgID string, limit int, cursor string) (*re
 		"limit":       limit,
 		"msgcursorid": cursor,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_task", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_task", options, nil, nil, result)
 
 	return result, err
 }
@@ -75,7 +75,7 @@ func (comp *Client) GetGroupMsgSendResult(msgID string, userID string, limit int
 		"limit":       limit,
 		"msgcursorid": cursor,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_send_result", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_send_result", options, nil, nil, result)
 
 	return result, err
 }
@@ -86,7 +86,7 @@ func (comp *Client) SendWelcomeMsg(options *request.RequestSendWelcomeMsg) (*res
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", options, nil, nil, result)
 
 	return result, err
 }

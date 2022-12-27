@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 付款码支付
@@ -17,8 +17,8 @@ func (comp *Client) Pay(params *object.StringMap) *response2.ResponseWork {
 
 	result := &response2.ResponseWork{}
 
-	endpoint := comp.Wrap("/v3/pay/micropay")
-	comp.Request(endpoint, params, "POST", nil, false, nil, result)
+	endpoint := comp.BaseClient.Wrap("/v3/pay/micropay")
+	comp.BaseClient.Request(endpoint, params, "POST", nil, false, nil, result)
 
 	return result
 }
@@ -27,12 +27,12 @@ func (comp *Client) Pay(params *object.StringMap) *response2.ResponseWork {
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9
 func (comp *Client) AuthCodeToOpenID(authCode string) *response2.ResponseWork {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	appID := config.GetString("app_id", "")
 
 	result := &response2.ResponseWork{}
 
-	comp.Request("tools/authcodetoopenid", &object.StringMap{
+	comp.BaseClient.Request("tools/authcodetoopenid", &object.StringMap{
 		"appid":     appID,
 		"auth_code": authCode,
 	}, "POST", nil, false, nil, result)

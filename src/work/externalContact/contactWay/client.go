@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Add(options *request2.RequestAddContactWay) (*response3.Resp
 
 	result := &response3.ResponseAddContactWay{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/add_contact_way", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/add_contact_way", options, nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) Get(configID string) (*response3.ResponseGetContactWay, erro
 
 	result := &response3.ResponseGetContactWay{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/get_contact_way", &object.StringMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_contact_way", &object.StringMap{
 		"config_id": configID,
 	}, nil, nil, result)
 
@@ -52,7 +52,7 @@ func (comp *Client) List(options *request2.RequestListContactWay) (*response3.Re
 
 	result := &response3.ResponseListContactWay{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/list_contact_way", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/list_contact_way", options, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *Client) Update(config *request2.RequestUpdateContactWay) (*response2
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/update_contact_way", config, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/update_contact_way", config, nil, nil, result)
 
 	return result, err
 }
@@ -74,7 +74,7 @@ func (comp *Client) Delete(configID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/del_contact_way", &object.StringMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/del_contact_way", &object.StringMap{
 		"config_id": configID,
 	}, nil, nil, result)
 
@@ -91,7 +91,7 @@ func (comp *Client) CloseTempChat(userID string, externalUserID string) (*respon
 		"userid":          userID,
 		"external_userid": externalUserID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/close_temp_chat", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/close_temp_chat", options, nil, nil, result)
 
 	return result, err
 }

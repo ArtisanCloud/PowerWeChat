@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 向插件开发者发起使用插件的申请
@@ -23,7 +23,7 @@ func (comp *Client) ApplyPlugin(pluginAppID string, reason string) (*response2.R
 		"reason":       reason,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxa/plugin", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxa/plugin", data, nil, nil, result)
 
 	return result, err
 }
@@ -38,7 +38,7 @@ func (comp *Client) GetPluginList() (*response.ResponsePluginGetPluginList, erro
 		"action": "list",
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxa/plugin", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxa/plugin", data, nil, nil, result)
 
 	return result, err
 }
@@ -54,7 +54,7 @@ func (comp *Client) UnbindPlugin(pluginAppID string) (*response2.ResponseMiniPro
 		"plugin_appid": pluginAppID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxa/plugin", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxa/plugin", data, nil, nil, result)
 
 	return result, err
 }
@@ -71,7 +71,7 @@ func (comp *Client) GetPluginDevApplyList(action string, page int, num int) (*re
 		"num":    num,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxa/devplugin", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxa/devplugin", data, nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *Client) SetDevPluginApplyStatus(action string, appID string, reason 
 		"reason": reason,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/wxa/devplugin", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/wxa/devplugin", data, nil, nil, result)
 
 	return result, err
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -31,7 +31,7 @@ func (comp *Client) Add(openKFID string, userIDList []string) (*response.Respons
 		"userid_list": userIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/servicer/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/servicer/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -47,7 +47,7 @@ func (comp *Client) Del(openKFID string, userIDList []string) (*response.Respons
 		"userid_list": userIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/servicer/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/servicer/del", options, nil, nil, result)
 
 	return result, err
 }
@@ -62,7 +62,7 @@ func (comp *Client) List(openKFID string) (*response.ResponseServicerList, error
 		"open_kfid": openKFID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/servicer/list", nil, params, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/servicer/list", nil, params, nil, result)
 
 	return result, err
 }

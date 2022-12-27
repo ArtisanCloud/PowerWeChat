@@ -87,7 +87,7 @@ func (comp *Client) UploadArticle(articles request2.RequestAddArticles) (*respon
 		return nil, err
 	}
 
-	_, err = comp.HttpPostJson("cgi-bin/material/add_news", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("cgi-bin/material/add_news", params, nil, nil, result)
 	return result, err
 }
 
@@ -102,7 +102,7 @@ func (comp *Client) UpdateArticle(mediaID string, articles request2.RequestAddAr
 		"articles": articles,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/update_news", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/material/update_news", params, nil, nil, result)
 	return result, err
 }
 
@@ -120,7 +120,7 @@ func (comp *Client) Get(mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response4.ResponseHeaderMedia{}
-	response, err := comp.RequestRaw("cgi-bin/material/get_material", "POST", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw("cgi-bin/material/get_material", "POST", &object.HashMap{
 		"form_params": &object.HashMap{
 			"media_id": mediaID,
 		},
@@ -139,7 +139,7 @@ func (comp *Client) GetVideo(mediaID string) (*response.ResponseMaterialGetVideo
 		"media_id": mediaID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/get_material", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/material/get_material", options, nil, nil, result)
 
 	return result, err
 }
@@ -154,7 +154,7 @@ func (comp *Client) GetNews(mediaID string) (*response.ResponseMaterialGetNews, 
 		"media_id": mediaID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/get_material", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/material/get_material", options, nil, nil, result)
 
 	return result, err
 }
@@ -169,7 +169,7 @@ func (comp *Client) Delete(mediaID string) (*response2.ResponseOfficialAccount, 
 		"media_id": mediaID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/del_material", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/material/del_material", options, nil, nil, result)
 
 	return result, err
 }
@@ -180,7 +180,7 @@ func (comp *Client) List(options *request2.RequestMaterialBatchGetMaterial) (*re
 
 	result := &response.ResponseMaterialBatchGetMaterial{}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/batchget_material", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/material/batchget_material", options, nil, nil, result)
 
 	return result, err
 }
@@ -191,7 +191,7 @@ func (comp *Client) Stats() (*response.ResponseMaterialGetMaterialCount, error) 
 
 	result := &response.ResponseMaterialGetMaterialCount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/material/get_materialcount", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/material/get_materialcount", nil, nil, nil, result)
 
 	return result, err
 
@@ -217,7 +217,7 @@ func (comp *Client) Upload(Type string, path string, query *object.StringMap, re
 		FileName: filepath.Base(path),
 	}
 
-	return comp.HttpUpload(comp.getApiByType(Type), files, form, query, nil, result)
+	return comp.BaseClient.HttpUpload(comp.getApiByType(Type), files, form, query, nil, result)
 }
 
 func (comp *Client) getApiByType(Type string) string {

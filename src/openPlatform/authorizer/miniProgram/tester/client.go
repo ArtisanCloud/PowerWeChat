@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Bind(wechatID string) (*response.ResponseBind, error) {
 
 	result := &response.ResponseBind{}
 
-	_, err := comp.HttpPostJson("wxa/bind_tester", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("wxa/bind_tester", &object.HashMap{
 		"wechatid": wechatID,
 	}, nil, nil, result)
 
@@ -42,7 +42,7 @@ func (comp *Client) Unbind(params *request.RequestUnbind) (*response2.ResponseOp
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.HttpPostJson("wxa/unbind_tester", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/unbind_tester", params, nil, nil, result)
 
 	return result, err
 
@@ -54,7 +54,7 @@ func (comp *Client) List() (*response.ResponseList, error) {
 
 	result := &response.ResponseList{}
 
-	_, err := comp.HttpPostJson("wxa/memberauth", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("wxa/memberauth", &object.HashMap{
 		"action": "get_experiencer",
 	}, nil, nil, result)
 

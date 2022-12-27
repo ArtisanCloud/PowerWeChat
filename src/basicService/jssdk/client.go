@@ -15,7 +15,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 
 	*kernel.InteractsWithCache
 
@@ -75,7 +75,7 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 
 	mapRSBody := &object.HashMap{}
 	resultBody := ""
-	rs, err := comp.RequestRaw(comp.TicketEndpoint, "GET", &object.HashMap{
+	rs, err := comp.BaseClient.RequestRaw(comp.TicketEndpoint, "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"type": ticketType,
 		}}, nil, &resultBody)
@@ -88,7 +88,7 @@ func (comp *Client) GetTicket(refresh bool, ticketType string) (*object.HashMap,
 		return mapRSBody, errors.New((*mapRSBody)["errmsg"].(string))
 	}
 
-	result, err := comp.CastResponseToType(rs, response2.TYPE_MAP)
+	result, err := comp.BaseClient.CastResponseToType(rs, response2.TYPE_MAP)
 	if err != nil {
 		return nil, err
 	}
@@ -165,11 +165,11 @@ func (comp *Client) GetUrl(externalRequest *http.Request) string {
 }
 
 func (comp *Client) GetAppID() string {
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	return config.GetString("app_id", "")
 }
 
 func (comp *Client) getAgentID() string {
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	return config.GetString("agent_id", "")
 }

@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) List(params *request.RequestGroupChatList) (*response.Respon
 
 	result := &response.ResponseGroupChatList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/list", params, nil, nil, result)
 
 	return result, err
 }
@@ -43,7 +43,7 @@ func (comp *Client) Get(chatID string, needName int) (*response.ResponseGroupCha
 		"need_name": needName,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/groupchat/get?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/get?", options, nil, nil, result)
 
 	return result, err
 }
@@ -58,7 +58,7 @@ func (comp *Client) OpenGIDToChatID(openGID string) (*response.ResponseGroupChat
 		"opengid": openGID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/opengid_to_chatid?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/opengid_to_chatid?", options, nil, nil, result)
 
 	return result, err
 }

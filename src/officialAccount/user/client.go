@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) Get(openID string, lang string) (*response.ResponseGetUserIn
 		"lang":   lang,
 	}
 
-	_, err := comp.HttpGet("cgi-bin/user/info", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/user/info", params, nil, result)
 
 	return result, err
 
@@ -45,7 +45,7 @@ func (comp *Client) BatchGet(data *request.RequestBatchGetUserInfo) (*response.R
 
 	result := &response.ResponseBatchGetUserInfo{}
 
-	_, err := comp.HttpPostJson("cgi-bin/user/info/batchget", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/user/info/batchget", data, nil, nil, result)
 
 	return result, err
 }
@@ -60,7 +60,7 @@ func (comp *Client) List(nextOpenID string) (*response.ResponseGetUserList, erro
 		"next_openid": nextOpenID,
 	}
 
-	_, err := comp.HttpGet("cgi-bin/user/get", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/user/get", params, nil, result)
 
 	return result, err
 
@@ -77,7 +77,7 @@ func (comp *Client) Remark(openID string, remark string) (*response2.ResponseOff
 		"remark": remark,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/user/info/updateremark", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/user/info/updateremark", params, nil, nil, result)
 
 	return result, err
 }
@@ -92,7 +92,7 @@ func (comp *Client) Blacklist(beginOpenID string) (*response.ResponseBlacklist, 
 		"begin_openid": beginOpenID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/tags/members/getblacklist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/getblacklist", params, nil, nil, result)
 
 	return result, err
 }
@@ -107,7 +107,7 @@ func (comp *Client) Block(openIDList []string) (*response2.ResponseOfficialAccou
 		"openid_list": openIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/tags/members/batchblacklist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/batchblacklist", params, nil, nil, result)
 
 	return result, err
 }
@@ -122,7 +122,7 @@ func (comp *Client) Unblock(openIDList []string) (*response2.ResponseOfficialAcc
 		"openid_list": openIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/tags/members/batchunblacklist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/batchunblacklist", params, nil, nil, result)
 
 	return result, err
 }
@@ -138,7 +138,7 @@ func (comp *Client) ChangeOpenID(fromAppID string, openIDList []string) (*respon
 		"openid_list": openIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/changeopenid", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/changeopenid", params, nil, nil, result)
 
 	return result, err
 }

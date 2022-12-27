@@ -45,7 +45,7 @@ func (comp *Client) Categories() {
 func (comp *Client) Create(param *request.RequestCardCreate) (*response.ResponseCardCreate, error) {
 	result := &response.ResponseCardCreate{}
 
-	_, err := comp.HttpPostJson("card/create", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("card/create", param, nil, nil, result)
 
 	return result, err
 
@@ -60,7 +60,7 @@ func (comp *Client) Get(cardID string) (*response.ResponseCardGet, error) {
 		"card_id": cardID,
 	}
 
-	_, err := comp.HttpPostJson("card/get", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("card/get", param, nil, nil, result)
 
 	return result, err
 
@@ -77,7 +77,7 @@ func (comp *Client) List(offset int, count int, statusList string) (*response.Re
 		"status_list": statusList,
 	}
 
-	_, err := comp.HttpPostJson("card/batchget", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("card/batchget", param, nil, nil, result)
 
 	return result, err
 
@@ -93,7 +93,7 @@ func (comp *Client) Update(cardID string, cardType string, card request.CardInte
 		strings.ToLower(cardType): card,
 	}
 
-	_, err := comp.HttpPostJson("card/update", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("card/update", param, nil, nil, result)
 
 	return result, err
 
@@ -108,7 +108,7 @@ func (comp *Client) Delete(cardID string) (*response2.ResponseOfficialAccount, e
 		"card_id": cardID,
 	}
 
-	_, err := comp.HttpPostJson("card/delete", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("card/delete", param, nil, nil, result)
 
 	return result, err
 
@@ -119,7 +119,7 @@ func (comp *Client) Delete(cardID string) (*response2.ResponseOfficialAccount, e
 func (comp *Client) CreateQrCode(param request.RequestCreateQrCode) (*response.ResponseCreateQrCode, error) {
 	result := &response.ResponseCreateQrCode{}
 
-	_, err := comp.HttpPostJson("card/qrcode/create", param, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("card/qrcode/create", param, nil, nil, result)
 
 	return result, err
 

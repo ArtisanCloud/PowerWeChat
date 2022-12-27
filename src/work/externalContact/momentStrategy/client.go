@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) List(cursor string, limit int) (*response.ResponseMomentStra
 		"limit":  limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/moment_strategy/list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/moment_strategy/list", options, nil, nil, result)
 
 	return result, err
 }
@@ -48,7 +48,7 @@ func (comp *Client) Get(strategyID int) (*response.ResponseMomentStrategyGet, er
 		"strategy_id": strategyID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/moment_strategy/list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/moment_strategy/list", options, nil, nil, result)
 
 	return result, err
 }
@@ -65,7 +65,7 @@ func (comp *Client) GetRange(strategyID int, cursor string, limit int) (*respons
 		"limit":       limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/moment_strategy/get_range", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/moment_strategy/get_range", options, nil, nil, result)
 
 	return result, err
 }
@@ -76,7 +76,7 @@ func (comp *Client) Create(options *request.RequestMomentStrategyCreate) (*respo
 
 	result := &response.ResponseMomentStrategyCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/moment_strategy/create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/moment_strategy/create", options, nil, nil, result)
 
 	return result, err
 }
@@ -87,7 +87,7 @@ func (comp *Client) Edit(options *request.RequestMomentStrategyEdit) (*response.
 
 	result := &response.ResponseMomentStrategyCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/moment_strategy/edit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/moment_strategy/edit", options, nil, nil, result)
 
 	return result, err
 }
@@ -102,7 +102,7 @@ func (comp *Client) Del(strategyID int) (*response2.ResponseWork, error) {
 		"strategy_id": strategyID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/moment_strategy/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/moment_strategy/del", options, nil, nil, result)
 
 	return result, err
 }

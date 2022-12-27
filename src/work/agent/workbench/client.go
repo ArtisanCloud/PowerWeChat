@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,7 +27,7 @@ func (comp *Client) SetWorkbenchTemplate(data *request.RequestSetWorkbenchTempla
 
 	result := &response.ResponseAgentSetWorkbenchTemplate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/agent/set_workbench_template", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/agent/set_workbench_template", data, nil, nil, result)
 
 	return result, err
 }
@@ -37,7 +37,7 @@ func (comp Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGet
 
 	result := &response.ResponseAgentGetWorkbenchTemplate{}
 
-	_, err := comp.HttpGet("cgi-bin/agent/get_workbench_template", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/agent/get_workbench_template", &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
@@ -53,7 +53,7 @@ func (comp Client) SetWorkbenchData(data *request.RequestSetWorkBenchData) (*res
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpPost("cgi-bin/agent/set_workbench_data", params, nil, result)
+	_, err = comp.BaseClient.HttpPost("cgi-bin/agent/set_workbench_data", params, nil, result)
 
 	return result, err
 }

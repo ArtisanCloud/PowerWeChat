@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) Add(name string, mediaID string) (*response.ResponseAccountA
 		"media_id": mediaID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/account/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -48,7 +48,7 @@ func (comp *Client) Del(openKFID string) (*response2.ResponseWork, error) {
 		"open_kfid": openKFID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/account/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/del", options, nil, nil, result)
 
 	return result, err
 }
@@ -59,7 +59,7 @@ func (comp *Client) Update(options *request.RequestAccountUpdate) (*response2.Re
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/account/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -70,7 +70,7 @@ func (comp *Client) List() (*response.ResponseAccountList, error) {
 
 	result := &response.ResponseAccountList{}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/account/list", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/list", nil, nil, nil, result)
 
 	return result, err
 }
@@ -86,7 +86,7 @@ func (comp *Client) AddContactWay(openKFID string, scene string) (*response.Resp
 		"scene":     scene,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/kf/add_contact_way", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/add_contact_way", options, nil, nil, result)
 
 	return result, err
 }

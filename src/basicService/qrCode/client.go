@@ -19,7 +19,7 @@ const SCENE_QR_FOREVER string = "QR_LIMIT_SCENE"
 const SCENE_QR_FOREVER_STR string = "QR_LIMIT_STR_SCENE"
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -31,7 +31,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		BaseClient: baseClient,
 	}
 
-	client.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
+	client.BaseClient.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
 	return client, nil
 }
 
@@ -119,7 +119,7 @@ func (comp *Client) Create(data *request.RequestQRCodeCreate, temporary bool, ex
 		(*params)["expire_seconds"] = int(math.Min(float64(expireSecond), float64(30*DAY)))
 	}
 
-	_, err = comp.HttpPostJson("qrcode/create", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson("qrcode/create", params, nil, nil, result)
 
 	return result, err
 

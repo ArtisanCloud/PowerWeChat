@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // code换取用户手机号
@@ -15,7 +15,7 @@ type Client struct {
 func (comp *Client) GetUserPhoneNumber(code string) (*response.ResponseGetUserPhoneNumber, error) {
 
 	result := &response.ResponseGetUserPhoneNumber{}
-	_, err := comp.HttpPostJson("wxa/business/getuserphonenumber", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/getuserphonenumber", &object.HashMap{
 		"code": code,
 	}, nil, nil, result)
 

@@ -8,7 +8,7 @@ import (
 )
 
 type GroupClient struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewGroupClient(app kernel.ApplicationInterface) (*GroupClient, error) {
@@ -31,7 +31,7 @@ func (comp *GroupClient) Create(name string) (*response.ResponseGroup, error) {
 		"group_name": name,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/add", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/add", params, nil, nil, result)
 
 	return result, err
 }
@@ -47,7 +47,7 @@ func (comp *GroupClient) Update(groupID string, name string) (*response.Response
 		"group_name": name,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/update", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/update", params, nil, nil, result)
 
 	return result, err
 }
@@ -62,7 +62,7 @@ func (comp *GroupClient) Delete(groupID string) (*response.ResponseGroup, error)
 		"group_id": groupID,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/delete", params, nil, nil, result)
 
 	return result, err
 }
@@ -78,7 +78,7 @@ func (comp *GroupClient) List(begin int, count int) (*response.ResponseGroupList
 		"count": count,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/getlist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/getlist", params, nil, nil, result)
 
 	return result, err
 }
@@ -95,7 +95,7 @@ func (comp *GroupClient) Get(groupID int, begin int, count int) (*response.Respo
 		"count":    count,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/getdetail", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/getdetail", params, nil, nil, result)
 
 	return result, err
 }
@@ -111,7 +111,7 @@ func (comp *GroupClient) AddDevice(groupID int, deviceIdentifiers []*request.Req
 		"device_identifiers": deviceIdentifiers,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/adddevice", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/adddevice", params, nil, nil, result)
 
 	return result, err
 }
@@ -127,7 +127,7 @@ func (comp *GroupClient) RemoveDevices(groupID int, deviceIdentifiers []*request
 		"device_identifiers": deviceIdentifiers,
 	}
 
-	_, err := comp.HttpPostJson("shakearound/device/group/deletedevice", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("shakearound/device/group/deletedevice", params, nil, nil, result)
 
 	return result, err
 }

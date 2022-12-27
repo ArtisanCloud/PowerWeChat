@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -29,7 +29,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 func (comp *Client) GetCorpCheckInOption() (*response.ResponseCorpCheckInRules, error) {
 	result := &response.ResponseCorpCheckInRules{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcorpcheckinoption", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/getcorpcheckinoption", nil, nil, nil, result)
 
 	return result, err
 
@@ -40,7 +40,7 @@ func (comp *Client) GetCorpCheckInOption() (*response.ResponseCorpCheckInRules, 
 func (comp *Client) GetCheckInOption(datetime int, userList []string) (*response.ResponseCheckInRules, error) {
 	result := &response.ResponseCheckInRules{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckinoption", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/getcheckinoption", &object.HashMap{
 		"datetime":   fmt.Sprintf("%d", datetime),
 		"userIDlist": userList,
 	}, nil, nil, result)
@@ -53,7 +53,7 @@ func (comp *Client) GetCheckInOption(datetime int, userList []string) (*response
 func (comp *Client) GetCheckinData(recordType int, startTime int, endTime int, userList []string) (*response.ResponseCheckInRecords, error) {
 	result := &response.ResponseCheckInRecords{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckindata", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/getcheckindata", &object.HashMap{
 		"opencheckindatatype": fmt.Sprintf("%d", recordType),
 		"starttime":           fmt.Sprintf("%d", startTime),
 		"endtime":             fmt.Sprintf("%d", endTime),
@@ -69,7 +69,7 @@ func (comp *Client) GetCheckinDayData(startTime int, endTime int, userIDs []stri
 
 	result := &response.ResponseCheckInDatas{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckin_daydata", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/getcheckin_daydata", &object.HashMap{
 		"starttime":  fmt.Sprintf("%d", startTime),
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"userIDlist": userIDs,
@@ -84,7 +84,7 @@ func (comp *Client) GetCheckinDayData(startTime int, endTime int, userIDs []stri
 func (comp *Client) GetCheckInMonthData(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 	result := &response.ResponseCheckInDatas{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckin_monthdata", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/getcheckin_monthdata", &object.HashMap{
 		"starttime":  fmt.Sprintf("%d", startTime),
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"userIDlist": userIDs,
@@ -98,7 +98,7 @@ func (comp *Client) GetCheckInMonthData(startTime int, endTime int, userIDs []st
 func (comp *Client) GetCheckInScheduleList(startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
 	result := &response.ResponseCheckInSchedulist{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/getcheckinschedulist", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/getcheckinschedulist", &object.HashMap{
 		"starttime":  fmt.Sprintf("%d", startTime),
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"userIDlist": userIDs,
@@ -112,7 +112,7 @@ func (comp *Client) GetCheckInScheduleList(startTime int, endTime int, userIDs [
 func (comp *Client) SetCheckInScheduleList(options *request.RequestCheckInSetScheduleList) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/setcheckinschedulist", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/setcheckinschedulist", options, nil, nil, result)
 
 	return result, err
 }
@@ -123,7 +123,7 @@ func (comp *Client) AddCheckInUserFace(userID string, userFace string) (*respons
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/checkin/addcheckinuserface", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/checkin/addcheckinuserface", &object.HashMap{
 		"userID":   userID,
 		"userface": userFace,
 	}, nil, nil, result)
@@ -136,7 +136,7 @@ func (comp *Client) AddCheckInUserFace(userID string, userFace string) (*respons
 func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseApprovalTemplate, error) {
 	result := &response.ResponseApprovalTemplate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/gettemplatedetail", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/gettemplatedetail", &object.HashMap{
 		"template_id": templateID,
 	}, nil, nil, result)
 
@@ -148,7 +148,7 @@ func (comp *Client) ApprovalTemplate(templateID string) (*response.ResponseAppro
 func (comp *Client) CreateApproval(data *power.HashMap) (*response.ResponseApprovalCreate, error) {
 	result := &response.ResponseApprovalCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/applyevent", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/applyevent", data, nil, nil, result)
 
 	return result, err
 }
@@ -171,7 +171,7 @@ func (comp *Client) GetApprovalInfo(startTime int, endTime int, nextCursor int, 
 		"filters":   filters,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/getapprovalinfo", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/getapprovalinfo", options, nil, nil, result)
 
 	return result, err
 }
@@ -181,7 +181,7 @@ func (comp *Client) GetApprovalInfo(startTime int, endTime int, nextCursor int, 
 func (comp *Client) GetApprovalDetail(number int) (*response.ResponseApprovalDetail, error) {
 	result := &response.ResponseApprovalDetail{}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/getapprovaldetail", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/getapprovaldetail", &object.HashMap{
 		"sp_no": fmt.Sprintf("%d", number),
 	}, nil, nil, result)
 
@@ -199,7 +199,7 @@ func (comp *Client) GetApprovalData(startTime int, endTime int, nextNumber int) 
 		"endtime":    fmt.Sprintf("%d", endTime),
 		"next_spnum": fmt.Sprintf("%d", nextNumber),
 	}
-	_, err := comp.HttpPostJson("cgi-bin/corp/getapprovaldata", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corp/getapprovaldata", options, nil, nil, result)
 
 	return result, err
 
@@ -211,7 +211,7 @@ func (comp *Client) GetCorpConfig() (*response.ResponseCorpVacationGetConfig, er
 
 	result := &response.ResponseCorpVacationGetConfig{}
 
-	_, err := comp.HttpGet("cgi-bin/corp/vacation/getcorpconf", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/corp/vacation/getcorpconf", nil, nil, result)
 
 	return result, err
 
@@ -223,7 +223,7 @@ func (comp *Client) GetUserVacationQuota(userID string) (*response.ResponseCorpV
 
 	result := &response.ResponseCorpVacationGetQuota{}
 
-	_, err := comp.HttpPostJson("cgi-bin/corp/vacation/getuservacationquota", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corp/vacation/getuservacationquota", &object.HashMap{
 		"userid": userID,
 	}, nil, nil, result)
 
@@ -237,7 +237,7 @@ func (comp *Client) SetOneUserQuota(data *object.HashMap) (*response2.ResponseWo
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/corp/vacation/setoneuserquota", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corp/vacation/setoneuserquota", data, nil, nil, result)
 
 	return result, err
 

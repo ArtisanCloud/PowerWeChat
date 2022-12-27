@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 本接口提供基于小程序的图片智能裁剪能力
@@ -70,7 +70,7 @@ func (comp *Client) UploadImage(entryPoint string, imgURL string, img *power.Has
 		return nil, errors.New("Please send image url or image form data ")
 	}
 
-	rs, err := comp.HttpUpload(entryPoint, nil, formData, params, nil, result)
+	rs, err := comp.BaseClient.HttpUpload(entryPoint, nil, formData, params, nil, result)
 
 	return rs, err
 }

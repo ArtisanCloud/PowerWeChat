@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取用户encryptKey。
@@ -22,7 +22,7 @@ func (comp *Client) GetUserEncryptKey(openID string, signature string, sigMethod
 		"sig_method": sigMethod,
 	}
 
-	_, err := comp.HttpPostJson("wxa/business/getuserencryptkey", nil, params, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/business/getuserencryptkey", nil, params, nil, result)
 
 	return result, err
 }

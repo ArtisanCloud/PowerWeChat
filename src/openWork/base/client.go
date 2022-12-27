@@ -5,7 +5,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 //// 使用授权码获取授权信息
@@ -25,7 +25,7 @@ type Client struct {
 //		"authorization_code": authCode,
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/api_query_auth", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_query_auth", params, nil, nil, result)
 //
 //	return result, err
 //}
@@ -43,7 +43,7 @@ type Client struct {
 //		"authorizer_appid": appID,
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/api_get_authorizer_info", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_get_authorizer_info", params, nil, nil, result)
 //
 //	return result, err
 //}
@@ -62,7 +62,7 @@ type Client struct {
 //		"option_name":      name,
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/api_get_authorizer_option", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_get_authorizer_option", params, nil, nil, result)
 //
 //	return result, err
 //}
@@ -82,7 +82,7 @@ type Client struct {
 //		"option_value":     value,
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/api_set_authorizer_option", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_set_authorizer_option", params, nil, nil, result)
 //
 //	return result, err
 //}
@@ -101,7 +101,7 @@ type Client struct {
 //		"count":           count,
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/api_get_authorizer_list", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_get_authorizer_list", params, nil, nil, result)
 //
 //	return result, err
 //}
@@ -118,7 +118,7 @@ type Client struct {
 //		"component_appid": config.GetString("app_id", ""),
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/api_create_preauthcode", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/api_create_preauthcode", params, nil, nil, result)
 //
 //	return result, err
 //}
@@ -135,7 +135,7 @@ type Client struct {
 //		"component_appid": config.GetString("app_id", ""),
 //	}
 //
-//	_, err := comp.HttpPostJson("cgi-bin/component/clear_quota", params, nil, nil, result)
+//	_, err := comp.BaseClient.HttpPostJson("cgi-bin/component/clear_quota", params, nil, nil, result)
 //
 //	return result, err
 //}

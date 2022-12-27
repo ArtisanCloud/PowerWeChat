@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Create(options *request.RequestMeetingCreate) (*response.Res
 
 	result := &response.ResponseMeetingCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/meeting/create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/meeting/create", options, nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) Update(options *request.RequestMeetingUpdate) (*response2.Re
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/meeting/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/meeting/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -54,7 +54,7 @@ func (comp *Client) Cancel(meetingID string) (*response2.ResponseWork, error) {
 		"meetingid": meetingID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/meeting/cancel", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/meeting/cancel", options, nil, nil, result)
 
 	return result, err
 }
@@ -73,7 +73,7 @@ func (comp *Client) GetUserMeetingID(userID string, cursor string, beginTime int
 		"limit":      limit,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/meeting/get_user_meetingid", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/meeting/get_user_meetingid", options, nil, nil, result)
 
 	return result, err
 }
@@ -88,7 +88,7 @@ func (comp *Client) GetBookingInfo(meetingID string) (*response.ResponseMeetingG
 		"meetingid": meetingID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/meeting/get_info", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/meeting/get_info", options, nil, nil, result)
 
 	return result, err
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) Modify(params *request.RequestModify) (*response.ResponseMod
 
 	result := &response.ResponseModify{}
 
-	_, err := comp.HttpPostJson("wxa/modify_domain", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/modify_domain", params, nil, nil, result)
 
 	return result, err
 
@@ -44,7 +44,7 @@ func (comp *Client) SetWebviewDomain(domains []string, action string) (*response
 		"action":        action,
 		"webviewdomain": domains,
 	}
-	_, err := comp.HttpPostJson("wxa/setwebviewdomain", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/setwebviewdomain", params, nil, nil, result)
 
 	return result, err
 

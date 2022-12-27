@@ -11,7 +11,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -29,7 +29,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 func (comp *Client) List() (*response.ResponseList, error) {
 	result := &response.ResponseList{}
 
-	_, err := comp.HttpGet("cgi-bin/customservice/getkflist", nil, nil, &result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/customservice/getkflist", nil, nil, &result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) List() (*response.ResponseList, error) {
 func (comp *Client) Online() (*response.ResponseKFOnlineList, error) {
 	result := &response.ResponseKFOnlineList{}
 
-	_, err := comp.HttpGet("cgi-bin/customservice/getonlinekflist", nil, nil, &result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/customservice/getonlinekflist", nil, nil, &result)
 
 	return result, err
 }
@@ -54,7 +54,7 @@ func (comp *Client) Create(account string, nickname string) (*response2.Response
 		"nickname":   nickname,
 	}
 
-	_, err := comp.HttpPostJson("customservice/kfaccount/add", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("customservice/kfaccount/add", params, nil, nil, &result)
 
 	return result, err
 }
@@ -69,7 +69,7 @@ func (comp *Client) Update(account string, nickname string) (*response2.Response
 		"nickname":   nickname,
 	}
 
-	_, err := comp.HttpPostJson("customservice/kfaccount/update", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("customservice/kfaccount/update", params, nil, nil, &result)
 
 	return result, err
 }
@@ -83,7 +83,7 @@ func (comp *Client) Delete(account string) (*response2.ResponseOfficialAccount, 
 		"kf_account": account,
 	}
 
-	_, err := comp.HttpGet("customservice/kfaccount/delete", query, nil, &result)
+	_, err := comp.BaseClient.HttpGet("customservice/kfaccount/delete", query, nil, &result)
 
 	return result, err
 }
@@ -98,7 +98,7 @@ func (comp *Client) Invite(account string, wechatID string) (*response2.Response
 		"invite_wx":  wechatID,
 	}
 
-	_, err := comp.HttpPostJson("customservice/kfaccount/inviteworker", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("customservice/kfaccount/inviteworker", params, nil, nil, &result)
 
 	return result, err
 }
@@ -120,7 +120,7 @@ func (comp *Client) SetAvatar(account string, path string) (*response2.ResponseO
 	params := &object.StringMap{
 		"kf_account": account,
 	}
-	_, err := comp.HttpUpload("customservice/kfaccount/uploadheadimg", files, nil, params, nil, &result)
+	_, err := comp.BaseClient.HttpUpload("customservice/kfaccount/uploadheadimg", files, nil, params, nil, &result)
 
 	return result, err
 }
@@ -135,7 +135,7 @@ func (comp *Client) Message(message contract.MessageInterface) *Messenger {
 func (comp *Client) Send(message interface{}) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/send", message, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/custom/send", message, nil, nil, result)
 
 	return result, err
 }
@@ -150,7 +150,7 @@ func (comp *Client) ShowTypingStatusToUser(openID string) (*response2.ResponseOf
 		"command": "Typing",
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/typing", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/custom/typing", params, nil, nil, &result)
 
 	return result, err
 }
@@ -165,7 +165,7 @@ func (comp *Client) HideTypingStatusToUser(openID string) (*response2.ResponseOf
 		"command": "CancelTyping",
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/message/custom/typing", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/custom/typing", params, nil, nil, &result)
 
 	return result, err
 }
@@ -180,7 +180,7 @@ func (comp *Client) Messages(data *request.RequestMessages) (*response.ResponseM
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.HttpPostJson("customservice/msgrecord/getmsglist", params, nil, nil, &result)
+	_, err = comp.BaseClient.HttpPostJson("customservice/msgrecord/getmsglist", params, nil, nil, &result)
 
 	return result, err
 }

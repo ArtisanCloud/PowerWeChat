@@ -29,7 +29,7 @@ func (comp *Account) GetDrafts() (*response.ResponseGetDrafts, error) {
 
 	result := &response.ResponseGetDrafts{}
 
-	_, err := comp.HttpGet("wxa/gettemplatedraftlist", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/gettemplatedraftlist", nil, nil, result)
 
 	return result, err
 
@@ -46,7 +46,7 @@ func (comp *Account) CreateFromDraft(draftID int, templateType int) (*response2.
 		"template_type": templateType,
 	}
 
-	_, err := comp.HttpPostJson("wxa/addtotemplate", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/addtotemplate", params, nil, nil, result)
 
 	return result, err
 
@@ -58,7 +58,7 @@ func (comp *Account) List() (*response.ResponseList, error) {
 
 	result := &response.ResponseList{}
 
-	_, err := comp.HttpGet("wxa/gettemplatelist", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/gettemplatelist", nil, nil, result)
 
 	return result, err
 
@@ -74,7 +74,7 @@ func (comp *Account) Delete(templateID string) (*response2.ResponseOpenPlatform,
 		"template_id": templateID,
 	}
 
-	_, err := comp.HttpPostJson("wxa/deletetemplate", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/deletetemplate", params, nil, nil, result)
 
 	return result, err
 

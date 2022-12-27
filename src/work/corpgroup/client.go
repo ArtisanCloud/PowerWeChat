@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取应用共享信息
@@ -20,7 +20,7 @@ func (comp *Client) GetAppShareInfo(agentID int) (*response.ResponseCorpGroupLis
 	params := &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}
-	_, err := comp.HttpPostJson("cgi-bin/corpgroup/corp/list_app_share_info", nil, params, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corpgroup/corp/list_app_share_info", nil, params, nil, result)
 
 	return result, err
 }
@@ -36,7 +36,7 @@ func (comp *Client) GetToken(corpID string, agentID string) (*response.ResponseC
 		"agentid": agentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/corpgroup/corp/gettoken", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corpgroup/corp/gettoken", params, nil, nil, result)
 
 	return result, err
 }
@@ -52,7 +52,7 @@ func (comp *Client) GetMiniProgramTransferSession(userID string, sessionKey stri
 		"session_key": sessionKey,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/corpgroup/miniprogram/transfer_session?", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corpgroup/miniprogram/transfer_session?", params, nil, nil, result)
 
 	return result, err
 }

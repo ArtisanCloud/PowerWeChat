@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 添加地点
@@ -19,7 +19,7 @@ func (comp *Client) Add(data *power.HashMap) (*response.ResponseNearbyPoiAdd, er
 
 	result := &response.ResponseNearbyPoiAdd{}
 
-	_, err := comp.HttpPostJson("wxa/addnearbypoi", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/addnearbypoi", data, nil, nil, result)
 
 	return result, err
 }
@@ -34,7 +34,7 @@ func (comp *Client) Delete(poiID string) (*response2.ResponseMiniProgram, error)
 		"poi_id": poiID,
 	}
 
-	_, err := comp.HttpPostJson("wxa/delnearbypoi", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/delnearbypoi", data, nil, nil, result)
 
 	return result, err
 }
@@ -50,7 +50,7 @@ func (comp *Client) GetList(page int, pageRows int) (*response.ResponseNearbyPoi
 		"page_rows": fmt.Sprintf("%d", pageRows),
 	}
 
-	_, err := comp.HttpGet("wxa/getnearbypoilist", params, nil, result)
+	_, err := comp.BaseClient.HttpGet("wxa/getnearbypoilist", params, nil, result)
 
 	return result, err
 }
@@ -66,7 +66,7 @@ func (comp *Client) SetShowStatus(poiID string, status int) (*response2.Response
 		"status": status,
 	}
 
-	_, err := comp.HttpPostJson("wxa/delnearbypoi", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/delnearbypoi", data, nil, nil, result)
 
 	return result, err
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -33,7 +33,7 @@ func (comp *Client) Add(schedule *power.HashMap, agentID int) (*response.Respons
 		"agentid":  agentID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/schedule/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -48,7 +48,7 @@ func (comp *Client) Update(schedule *power.HashMap) (*response2.ResponseWork, er
 		"schedule": schedule,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/schedule/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/update", options, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *Client) Get(scheduleIDList []string) (*response.ResponseScheduleGet,
 		"schedule_id_list": scheduleIDList,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/schedule/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/get", options, nil, nil, result)
 
 	return result, err
 }
@@ -78,7 +78,7 @@ func (comp *Client) Del(scheduleID string) (*response2.ResponseWork, error) {
 		"schedule_id": scheduleID,
 	}
 
-	_, err := comp.HttpPostJson("cgi-bin/oa/schedule/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/del", options, nil, nil, result)
 
 	return result, err
 }

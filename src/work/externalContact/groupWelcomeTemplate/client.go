@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -28,7 +28,7 @@ func (comp *Client) AddGroupWelcomeTemplate(options *request.RequestGroupWelcome
 
 	result := &response.ResponseAddGroupWelcomeTemplate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/add", options, nil, nil, result)
 
 	return result, err
 }
@@ -39,7 +39,7 @@ func (comp *Client) EditGroupWelcomeTemplate(options *request.RequestGroupWelcom
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/edit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/edit", options, nil, nil, result)
 
 	return result, err
 }
@@ -53,7 +53,7 @@ func (comp *Client) GetGroupWelcomeTemplate(templateID string) (*response.Respon
 	options := &object.HashMap{
 		"template_id": templateID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/get", options, nil, nil, result)
 
 	return result, err
 }
@@ -68,7 +68,7 @@ func (comp *Client) DelGroupWelcomeTemplate(templateID string, agentID int64) (*
 		"template_id": templateID,
 		"agentid":     agentID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/del", options, nil, nil, result)
 
 	return result, err
 }

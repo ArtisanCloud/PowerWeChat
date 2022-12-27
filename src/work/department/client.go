@@ -9,7 +9,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 创建部门
@@ -18,7 +18,7 @@ func (comp *Client) Create(params *request.RequestDepartmentInsert) (*response.R
 
 	result := &response.ResponseDepartmentCreate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/department/create", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/department/create", params, nil, nil, result)
 
 	return result, err
 }
@@ -29,7 +29,7 @@ func (comp *Client) Update(params *request.RequestDepartmentUpdate) (*response.R
 
 	result := &response.ResponseDepartmentUpdate{}
 
-	_, err := comp.HttpPostJson("cgi-bin/department/update", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/department/update", params, nil, nil, result)
 
 	return result, err
 }
@@ -40,7 +40,7 @@ func (comp *Client) Delete(id int) (*response.ResponseDepartmentDelete, error) {
 
 	result := &response.ResponseDepartmentDelete{}
 
-	_, err := comp.HttpGet("cgi-bin/department/delete", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/department/delete", &object.StringMap{
 		"id": fmt.Sprintf("%d", id),
 	}, nil, result)
 
@@ -53,7 +53,7 @@ func (comp *Client) List(id int) (*response.ResponseDepartmentList, error) {
 
 	result := &response.ResponseDepartmentList{}
 
-	_, err := comp.HttpGet("cgi-bin/department/list", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/department/list", &object.StringMap{
 		"id": fmt.Sprintf("%d", id),
 	}, nil, result)
 
@@ -66,7 +66,7 @@ func (comp *Client) SimpleList(id int) (*response.ResponseDepartmentIDList, erro
 
 	result := &response.ResponseDepartmentIDList{}
 
-	_, err := comp.HttpGet("cgi-bin/department/simplelist", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/department/simplelist", &object.StringMap{
 		"id": fmt.Sprintf("%d", id),
 	}, nil, result)
 
@@ -79,7 +79,7 @@ func (comp *Client) Get(id int) (*response.ResponseDepartmentGet, error) {
 
 	result := &response.ResponseDepartmentGet{}
 
-	_, err := comp.HttpGet("cgi-bin/department/get", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet("cgi-bin/department/get", &object.StringMap{
 		"id": fmt.Sprintf("%d", id),
 	}, nil, result)
 

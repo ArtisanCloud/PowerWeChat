@@ -31,7 +31,7 @@ func (comp *ShopClient) Get(shopID int) (*response.ResponseWifiShopGet, error) {
 		"shop_id": shopID,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/shop/get", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/shop/get", params, nil, nil, result)
 
 	return result, err
 
@@ -48,7 +48,7 @@ func (comp *ShopClient) List(page int, size int) (*response.ResponseWifiShopList
 		"pagesize":  size,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/shop/List", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/shop/List", params, nil, nil, result)
 
 	return result, err
 
@@ -65,7 +65,7 @@ func (comp *ShopClient) Update(shopID int, oldSSID string, ssid string) (*respon
 		"old_ssid": oldSSID,
 		"ssid":     ssid,
 	}
-	_, err := comp.HttpPostJson("bizwifi/shop/update", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/shop/update", params, nil, nil, result)
 
 	return result, err
 }
@@ -84,7 +84,7 @@ func (comp *ShopClient) ClearDevice(shopID int, ssid string) (*response2.Respons
 		(*params)["ssid"] = ssid
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/shop/clean", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/shop/clean", params, nil, nil, result)
 
 	return result, err
 }

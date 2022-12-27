@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取小程序 URL Link，适用于短信、邮件、网页、微信内等拉起小程序的业务场景
@@ -16,7 +16,7 @@ func (comp *Client) Generate(options *request.URLLinkGenerate) (*response.Respon
 
 	result := &response.ResponseURLLinkGenerate{}
 
-	_, err := comp.HttpPostJson("wxa/generate_urllink", options, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/generate_urllink", options, nil, nil, &result)
 
 	return result, err
 }

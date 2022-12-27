@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -27,11 +27,11 @@ func (comp *Client) Create() (*response.ResponseCreate, error) {
 
 	result := &response.ResponseCreate{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	params := &object.HashMap{
 		"appid": config.GetString("app_id", ""),
 	}
-	_, err := comp.HttpPostJson("cgi-bin/open/create", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/open/create", params, nil, nil, result)
 
 	return result, err
 
@@ -43,12 +43,12 @@ func (comp *Client) BindTo(openAppID string) (*response2.ResponseOpenPlatform, e
 
 	result := &response2.ResponseOpenPlatform{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	params := &object.HashMap{
 		"appid":      config.GetString("app_id", ""),
 		"open_appid": openAppID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/open/bind", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/open/bind", params, nil, nil, result)
 
 	return result, err
 
@@ -60,12 +60,12 @@ func (comp *Client) UnbindFrom(openAppID string) (*response2.ResponseOpenPlatfor
 
 	result := &response2.ResponseOpenPlatform{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	params := &object.HashMap{
 		"appid":      config.GetString("app_id", ""),
 		"open_appid": openAppID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/open/unbind", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/open/unbind", params, nil, nil, result)
 
 	return result, err
 
@@ -77,11 +77,11 @@ func (comp *Client) GetBinding() (*response.ResponseGetBinding, error) {
 
 	result := &response.ResponseGetBinding{}
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	params := &object.HashMap{
 		"appid": config.GetString("app_id", ""),
 	}
-	_, err := comp.HttpPostJson("cgi-bin/open/get", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/open/get", params, nil, nil, result)
 
 	return result, err
 

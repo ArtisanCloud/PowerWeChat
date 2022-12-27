@@ -33,7 +33,7 @@ func (comp *DeviceClient) AddPasswordDevice(shopID int, ssid string, password st
 		"password": password,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/device/add", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/device/add", params, nil, nil, result)
 
 	return result, err
 
@@ -51,7 +51,7 @@ func (comp *DeviceClient) AddPortalDevice(shopID int, ssid string, reset string)
 		"reset":   reset,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/apportal/register", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/apportal/register", params, nil, nil, result)
 
 	return result, err
 
@@ -67,7 +67,7 @@ func (comp *DeviceClient) Delete(macAddress string) (*response2.ResponseOfficial
 		"bssid": macAddress,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/device/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/device/delete", params, nil, nil, result)
 
 	return result, err
 
@@ -84,7 +84,7 @@ func (comp *DeviceClient) List(page int, size int) (*response.ResponseWifiDevice
 		"pagesize":  size,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/device/List", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/device/List", params, nil, nil, result)
 
 	return result, err
 
@@ -102,7 +102,7 @@ func (comp *DeviceClient) listByShopID(shopID int, page int, size int) (*respons
 		"pagesize":  size,
 	}
 
-	_, err := comp.HttpPostJson("bizwifi/device/List", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("bizwifi/device/List", params, nil, nil, result)
 
 	return result, err
 

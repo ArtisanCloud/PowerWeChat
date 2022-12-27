@@ -29,7 +29,7 @@ func NewClient(app kernel.ApplicationInterface, component kernel.ApplicationInte
 // 从第三方平台跳转至微信公众平台授权注册页面, 授权注册小程序.
 func (comp *Client) GetFastRegistrationUrl(callbackUrl string, copyWxVerify bool) string {
 
-	config := (*comp.App).GetConfig()
+	config := (*comp.BaseClient.App).GetConfig()
 	componentConfig := comp.component.GetConfig()
 
 	queries := &object.StringMap{
@@ -49,7 +49,7 @@ func (comp *Client) Register(ticket string) (*response.ResponseRegister, error) 
 
 	result := &response.ResponseRegister{}
 
-	_, err := comp.HttpPostJson("cgi-bin/account/fastregister", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/fastregister", &object.HashMap{
 		"ticket": ticket,
 	}, nil, nil, result)
 

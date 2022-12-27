@@ -7,7 +7,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 // 获取小程序 Short Link
@@ -22,7 +22,7 @@ func (comp *Client) Generate(pageUrl string, pageTitle string, isPermanent bool)
 		"is_permanent": isPermanent,
 	}
 
-	_, err := comp.HttpPostJson("wxa/genwxashortlink", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("wxa/genwxashortlink", data, nil, nil, result)
 
 	return result, err
 }

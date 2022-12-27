@@ -8,7 +8,7 @@ import (
 )
 
 type Client struct {
-	*kernel.BaseClient
+	BaseClient *kernel.BaseClient
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
@@ -31,7 +31,7 @@ func (comp *Client) Create(name string) (*response.ResponseTagGet, error) {
 			"name": name,
 		},
 	}
-	_, err := comp.HttpPostJson("cgi-bin/tags/create", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/create", params, nil, nil, result)
 
 	return result, err
 }
@@ -42,7 +42,7 @@ func (comp *Client) List() (*response.ResponseTagGetList, error) {
 
 	result := &response.ResponseTagGetList{}
 
-	_, err := comp.HttpGet("cgi-bin/tags/get", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet("cgi-bin/tags/get", nil, nil, result)
 
 	return result, err
 
@@ -59,7 +59,7 @@ func (comp *Client) Update(tagID string, name string) (*response2.ResponseOffici
 			"name": name,
 		},
 	}
-	_, err := comp.HttpPostJson("cgi-bin/tags/update", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/update", params, nil, nil, result)
 
 	return result, err
 }
@@ -74,7 +74,7 @@ func (comp *Client) Delete(tagID string) (*response2.ResponseOfficialAccount, er
 			"id": tagID,
 		},
 	}
-	_, err := comp.HttpPostJson("cgi-bin/tags/delete", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/delete", params, nil, nil, result)
 
 	return result, err
 }
@@ -87,7 +87,7 @@ func (comp *Client) UserTags(openID string) (*response.ResponseUserTags, error) 
 	params := &object.HashMap{
 		"openid": openID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/tags/getidlist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/getidlist", params, nil, nil, result)
 
 	return result, err
 }
@@ -101,7 +101,7 @@ func (comp *Client) UsersOfTag(tagID string, nextOpenID string) (*response.Respo
 		"tagid":       tagID,
 		"next_openid": nextOpenID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/user/tag/get", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/user/tag/get", params, nil, nil, result)
 
 	return result, err
 }
@@ -115,7 +115,7 @@ func (comp *Client) TagUsers(openIDs []string, tagID string) (*response.Response
 		"openid_list": openIDs,
 		"tagid":       tagID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/tags/members/batchtagging", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/batchtagging", params, nil, nil, result)
 
 	return result, err
 }
@@ -129,7 +129,7 @@ func (comp *Client) UntagUsers(openIDs []string, tagID string) (*response.Respon
 		"openid_list": openIDs,
 		"tagid":       tagID,
 	}
-	_, err := comp.HttpPostJson("cgi-bin/tags/members/batchuntagging", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/batchuntagging", params, nil, nil, result)
 
 	return result, err
 }
