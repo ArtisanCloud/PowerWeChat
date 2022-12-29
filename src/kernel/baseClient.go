@@ -2,7 +2,6 @@ package kernel
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
@@ -345,14 +344,8 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 
 func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Response, retry int) (*http.Response, error) {
 
-	rsData, err := ioutil.ReadAll(rs.Body)
-	rs.Body = ioutil.NopCloser(bytes.NewBuffer(rsData))
-
-	if err != nil {
-		return nil, err
-	}
 	mapResponse := &object.HashMap{}
-	err = json.Unmarshal(rsData, mapResponse)
+	err := client.HttpHelper.ParseResponseBodyToMap(rs, mapResponse)
 	if err != nil {
 		return nil, err
 	}
