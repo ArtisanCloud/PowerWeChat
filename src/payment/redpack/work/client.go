@@ -24,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Send Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90275
-func (comp *Client) SendWorkWX(ctx *context.Context, data *request.RequestSendWorkWX) (*response.ResponseSendWorkWX, error) {
+func (comp *Client) SendWorkWX(ctx context.Context, data *request.RequestSendWorkWX) (*response.ResponseSendWorkWX, error) {
 	result := &response.ResponseSendWorkWX{}
 	if data.WXAppID == "" {
 		config := (*comp.App).GetConfig()
@@ -42,7 +42,7 @@ func (comp *Client) SendWorkWX(ctx *context.Context, data *request.RequestSendWo
 
 // Query Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90276
-func (comp *Client) QueryWorkWX(ctx *context.Context, data *request.RequestQueryWorkWX) (*response.ResponseQueryWorkWX, error) {
+func (comp *Client) QueryWorkWX(ctx context.Context, data *request.RequestQueryWorkWX) (*response.ResponseQueryWorkWX, error) {
 	result := &response.ResponseQueryWorkWX{}
 
 	if data.Appid == "" {

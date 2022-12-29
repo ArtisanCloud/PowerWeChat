@@ -24,7 +24,7 @@ func NewGroupClient(app kernel.ApplicationInterface) (*GroupClient, error) {
 
 // 新建设备分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/New_groups.html
-func (comp *GroupClient) Create(ctx *context.Context, name string) (*response.ResponseGroup, error) {
+func (comp *GroupClient) Create(ctx context.Context, name string) (*response.ResponseGroup, error) {
 
 	result := &response.ResponseGroup{}
 
@@ -39,7 +39,7 @@ func (comp *GroupClient) Create(ctx *context.Context, name string) (*response.Re
 
 // 更新设备分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/New_groups.html
-func (comp *GroupClient) Update(ctx *context.Context, groupID string, name string) (*response.ResponseGroup, error) {
+func (comp *GroupClient) Update(ctx context.Context, groupID string, name string) (*response.ResponseGroup, error) {
 
 	result := &response.ResponseGroup{}
 
@@ -55,7 +55,7 @@ func (comp *GroupClient) Update(ctx *context.Context, groupID string, name strin
 
 // 删除设备分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/New_groups.html
-func (comp *GroupClient) Delete(ctx *context.Context, groupID string) (*response.ResponseGroup, error) {
+func (comp *GroupClient) Delete(ctx context.Context, groupID string) (*response.ResponseGroup, error) {
 
 	result := &response.ResponseGroup{}
 
@@ -70,7 +70,7 @@ func (comp *GroupClient) Delete(ctx *context.Context, groupID string) (*response
 
 // 更新设备分组
 // https://developers.weixin.qq.com/doc/offiaccount/en/Shake_Nearby/Active_from_Html5/Search_groups_list.html
-func (comp *GroupClient) List(ctx *context.Context, begin int, count int) (*response.ResponseGroupList, error) {
+func (comp *GroupClient) List(ctx context.Context, begin int, count int) (*response.ResponseGroupList, error) {
 
 	result := &response.ResponseGroupList{}
 
@@ -86,7 +86,7 @@ func (comp *GroupClient) List(ctx *context.Context, begin int, count int) (*resp
 
 // 查询分组详情
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/Search_grouping_details.html
-func (comp *GroupClient) Get(ctx *context.Context, groupID int, begin int, count int) (*response.ResponseGroupDetail, error) {
+func (comp *GroupClient) Get(ctx context.Context, groupID int, begin int, count int) (*response.ResponseGroupDetail, error) {
 
 	result := &response.ResponseGroupDetail{}
 
@@ -103,7 +103,7 @@ func (comp *GroupClient) Get(ctx *context.Context, groupID int, begin int, count
 
 // 添加设备到分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/Add_device_to_group.html
-func (comp *GroupClient) AddDevice(ctx *context.Context, groupID int, deviceIdentifiers []*request.RequestDeviceIdentifier) (*response.ResponseGroup, error) {
+func (comp *GroupClient) AddDevice(ctx context.Context, groupID int, deviceIdentifiers []*request.RequestDeviceIdentifier) (*response.ResponseGroup, error) {
 
 	result := &response.ResponseGroup{}
 
@@ -119,7 +119,7 @@ func (comp *GroupClient) AddDevice(ctx *context.Context, groupID int, deviceIden
 
 // 从分组中移除设备
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Active_from_Html5/Remove_device_from_group.html
-func (comp *GroupClient) RemoveDevices(ctx *context.Context, groupID int, deviceIdentifiers []*request.RequestDeviceIdentifier) (*response.ResponseGroup, error) {
+func (comp *GroupClient) RemoveDevices(ctx context.Context, groupID int, deviceIdentifiers []*request.RequestDeviceIdentifier) (*response.ResponseGroup, error) {
 
 	result := &response.ResponseGroup{}
 

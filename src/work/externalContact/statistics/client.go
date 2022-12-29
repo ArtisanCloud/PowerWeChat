@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取「联系客户统计」数据
 // https://developer.work.weixin.qq.com/document/path/92132
-func (comp *Client) GetUserBehaviorData(ctx *context.Context, options *request.RequestGetUserBehaviorData) (*response.ResponseGetUserBehaviorData, error) {
+func (comp *Client) GetUserBehaviorData(ctx context.Context, options *request.RequestGetUserBehaviorData) (*response.ResponseGetUserBehaviorData, error) {
 
 	result := &response.ResponseGetUserBehaviorData{}
 
@@ -34,7 +34,7 @@ func (comp *Client) GetUserBehaviorData(ctx *context.Context, options *request.R
 
 // 获取「群聊数据统计」数据
 // https://developer.work.weixin.qq.com/document/path/92133
-func (comp *Client) Statistic(ctx *context.Context, options *request.RequestStatistic) (*response.ResponseStatistic, error) {
+func (comp *Client) Statistic(ctx context.Context, options *request.RequestStatistic) (*response.ResponseStatistic, error) {
 
 	result := &response.ResponseStatistic{}
 

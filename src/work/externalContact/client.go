@@ -28,7 +28,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取配置了客户联系功能的成员列表.
 // https://developer.work.weixin.qq.com/document/path/92571
-func (comp *Client) GetFollowUsers(ctx *context.Context) (*response.ResponseGetFollowUserList, error) {
+func (comp *Client) GetFollowUsers(ctx context.Context) (*response.ResponseGetFollowUserList, error) {
 
 	result := &response.ResponseGetFollowUserList{}
 
@@ -39,7 +39,7 @@ func (comp *Client) GetFollowUsers(ctx *context.Context) (*response.ResponseGetF
 
 // 获取外部联系人列表.
 // https://developer.work.weixin.qq.com/document/path/92113
-func (comp *Client) List(ctx *context.Context, userID string) (*response.ResponseGetList, error) {
+func (comp *Client) List(ctx context.Context, userID string) (*response.ResponseGetList, error) {
 
 	result := &response.ResponseGetList{}
 
@@ -52,7 +52,7 @@ func (comp *Client) List(ctx *context.Context, userID string) (*response.Respons
 
 // 获取外部联系人详情.
 // https://developer.work.weixin.qq.com/document/path/92114
-func (comp *Client) Get(ctx *context.Context, externalUserID string, cursor string) (*weCom.ResponseGetExternalContact, error) {
+func (comp *Client) Get(ctx context.Context, externalUserID string, cursor string) (*weCom.ResponseGetExternalContact, error) {
 
 	result := &weCom.ResponseGetExternalContact{}
 
@@ -66,7 +66,7 @@ func (comp *Client) Get(ctx *context.Context, externalUserID string, cursor stri
 
 // 批量获取客户详情.
 // https://developer.work.weixin.qq.com/document/path/92994
-func (comp *Client) BatchGet(ctx *context.Context, userID []string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
+func (comp *Client) BatchGet(ctx context.Context, userID []string, cursor string, limit int) (*response.ResponseBatchGetByUser, error) {
 
 	result := &response.ResponseBatchGetByUser{}
 
@@ -83,7 +83,7 @@ func (comp *Client) BatchGet(ctx *context.Context, userID []string, cursor strin
 
 // 修改客户备注信息.
 // https://developer.work.weixin.qq.com/document/path/92115
-func (comp *Client) Remark(ctx *context.Context, data *request.RequestExternalContactRemark) (*response2.ResponseWork, error) {
+func (comp *Client) Remark(ctx context.Context, data *request.RequestExternalContactRemark) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -94,7 +94,7 @@ func (comp *Client) Remark(ctx *context.Context, data *request.RequestExternalCo
 
 // 获取待分配的离职成员列表
 // https://developer.work.weixin.qq.com/document/path/92124
-func (comp *Client) GetUnassigned(ctx *context.Context, pageID int, pageSize int) (*response.ResponseGetUnassignedList, error) {
+func (comp *Client) GetUnassigned(ctx context.Context, pageID int, pageSize int) (*response.ResponseGetUnassignedList, error) {
 
 	result := &response.ResponseGetUnassignedList{}
 
@@ -108,7 +108,7 @@ func (comp *Client) GetUnassigned(ctx *context.Context, pageID int, pageSize int
 
 // 分配离职成员的客户
 // https://developer.work.weixin.qq.com/document/path/94081
-func (comp *Client) Transfer(ctx *context.Context, externalUserID []string, handoverUserID string, takeoverUserID string) (*response.ResponseGetTransferedCustomerList, error) {
+func (comp *Client) Transfer(ctx context.Context, externalUserID []string, handoverUserID string, takeoverUserID string) (*response.ResponseGetTransferedCustomerList, error) {
 
 	result := &response.ResponseGetTransferedCustomerList{}
 
@@ -123,7 +123,7 @@ func (comp *Client) Transfer(ctx *context.Context, externalUserID []string, hand
 
 // 分配离职成员的客户群
 // https://developer.work.weixin.qq.com/document/path/92127
-func (comp *Client) TransferGroupChat(ctx *context.Context, chatIDs []string, newOwner string) (*response3.ResponseGroupChatTransfer, error) {
+func (comp *Client) TransferGroupChat(ctx context.Context, chatIDs []string, newOwner string) (*response3.ResponseGroupChatTransfer, error) {
 
 	result := &response3.ResponseGroupChatTransfer{}
 
@@ -137,7 +137,7 @@ func (comp *Client) TransferGroupChat(ctx *context.Context, chatIDs []string, ne
 
 // 查询客户接替结果.
 // https://developer.work.weixin.qq.com/document/path/94082
-func (comp *Client) GetResignedTransferResult(ctx *context.Context, handoverUserID string, takeoverUserID string, cursor string) (*response.ResponseGetTransferedCustomerList, error) {
+func (comp *Client) GetResignedTransferResult(ctx context.Context, handoverUserID string, takeoverUserID string, cursor string) (*response.ResponseGetTransferedCustomerList, error) {
 
 	result := &response.ResponseGetTransferedCustomerList{}
 

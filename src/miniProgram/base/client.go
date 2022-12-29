@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
-func (comp *Client) GetPaidUnionID(ctx *context.Context, data *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
+func (comp *Client) GetPaidUnionID(ctx context.Context, data *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
 
 	result := &response.ResponseAuthGetPaidUnionID{}
 
@@ -28,7 +28,7 @@ func (comp *Client) GetPaidUnionID(ctx *context.Context, data *request.RequestGe
 
 // 检查加密信息是否由微信生成（当前只支持手机号加密数据），只能检测最近3天生成的加密数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.checkEncryptedData.html
-func (comp *Client) CheckEncryptedData(ctx *context.Context, encryptedMsgHash string) (*response.ResponseAuthCheckEncryptedData, error) {
+func (comp *Client) CheckEncryptedData(ctx context.Context, encryptedMsgHash string) (*response.ResponseAuthCheckEncryptedData, error) {
 
 	result := &response.ResponseAuthCheckEncryptedData{}
 

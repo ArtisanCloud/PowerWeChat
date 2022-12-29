@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取公费电话拨打记录
 // https://developer.work.weixin.qq.com/document/path/93662
-func (comp *Client) GetDialRecord(ctx *context.Context, options *request.RequestDialGetDialRecord) (*response.ResponseDialGetDialRecord, error) {
+func (comp *Client) GetDialRecord(ctx context.Context, options *request.RequestDialGetDialRecord) (*response.ResponseDialGetDialRecord, error) {
 
 	result := &response.ResponseDialGetDialRecord{}
 

@@ -14,7 +14,7 @@ type Client struct {
 
 // 打开已群发文章评论
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) Open(ctx *context.Context, msgID string, index int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Open(ctx context.Context, msgID string, index int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -30,7 +30,7 @@ func (comp *Client) Open(ctx *context.Context, msgID string, index int) (*respon
 
 // 关闭已群发文章评论
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) Close(ctx *context.Context, msgID string, index int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Close(ctx context.Context, msgID string, index int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -46,7 +46,7 @@ func (comp *Client) Close(ctx *context.Context, msgID string, index int) (*respo
 
 // 查看指定文章的评论数据
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) List(ctx *context.Context, msgID string, index int, begin int, count int, Type int) (*response.ResponseCommentList, error) {
+func (comp *Client) List(ctx context.Context, msgID string, index int, begin int, count int, Type int) (*response.ResponseCommentList, error) {
 
 	result := &response.ResponseCommentList{}
 
@@ -65,7 +65,7 @@ func (comp *Client) List(ctx *context.Context, msgID string, index int, begin in
 
 // 将评论标记精选（新增接口）
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) MarkElect(ctx *context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) MarkElect(ctx context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -82,7 +82,7 @@ func (comp *Client) MarkElect(ctx *context.Context, msgID string, index int, com
 
 // 将评论取消精选（新增接口）
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) UnmarkElect(ctx *context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) UnmarkElect(ctx context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -99,7 +99,7 @@ func (comp *Client) UnmarkElect(ctx *context.Context, msgID string, index int, c
 
 // 删除评论（新增接口）
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) Delete(ctx *context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Delete(ctx context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -116,7 +116,7 @@ func (comp *Client) Delete(ctx *context.Context, msgID string, index int, commen
 
 // 回复评论（新增接口）
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) Reply(ctx *context.Context, msgID string, index int, commentID int, content string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Reply(ctx context.Context, msgID string, index int, commentID int, content string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -134,7 +134,7 @@ func (comp *Client) Reply(ctx *context.Context, msgID string, index int, comment
 
 // 删除回复（新增接口）
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) DeleteReply(ctx *context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteReply(ctx context.Context, msgID string, index int, commentID int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 

@@ -13,7 +13,7 @@ type Client struct {
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/API_Call_Limits.html
-func (comp *Client) ClearQuota(ctx *context.Context) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) ClearQuota(ctx context.Context) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -27,7 +27,7 @@ func (comp *Client) ClearQuota(ctx *context.Context) (*response2.ResponseOfficia
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_the_WeChat_server_IP_address.html#2.%20%E8%8E%B7%E5%8F%96%E5%BE%AE%E4%BF%A1callback%20IP%E5%9C%B0%E5%9D%80
-func (comp *Client) GetCallbackIP(ctx *context.Context) (*response.ResponseGetCallBackIP, error) {
+func (comp *Client) GetCallbackIP(ctx context.Context) (*response.ResponseGetCallBackIP, error) {
 
 	result := &response.ResponseGetCallBackIP{}
 
@@ -37,7 +37,7 @@ func (comp *Client) GetCallbackIP(ctx *context.Context) (*response.ResponseGetCa
 }
 
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Network_Detection.html
-func (comp *Client) CheckCallbackURL(ctx *context.Context, action string, checkOperator string) (*response.ResponseGetAPIDomainIP, error) {
+func (comp *Client) CheckCallbackURL(ctx context.Context, action string, checkOperator string) (*response.ResponseGetAPIDomainIP, error) {
 
 	result := &response.ResponseGetAPIDomainIP{}
 

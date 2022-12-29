@@ -16,7 +16,7 @@ type Client struct {
 
 // 为服务号添加顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.addGuideAcct.html
-func (comp *Client) CreateAdviser(ctx *context.Context, guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateAdviser(ctx context.Context, guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -39,7 +39,7 @@ func (comp *Client) CreateAdviser(ctx *context.Context, guideAccount string, gui
 
 // 获取顾问信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideAcct.html
-func (comp *Client) GetAdviser(ctx *context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdviser, error) {
+func (comp *Client) GetAdviser(ctx context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdviser, error) {
 
 	result := &response.ResponseGuideGetAdviser{}
 
@@ -55,7 +55,7 @@ func (comp *Client) GetAdviser(ctx *context.Context, guideAccount string, guideO
 
 // 修改顾问的昵称或头像
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.updateGuideAcct.html
-func (comp *Client) UpdateAdviser(ctx *context.Context, guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) UpdateAdviser(ctx context.Context, guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -78,7 +78,7 @@ func (comp *Client) UpdateAdviser(ctx *context.Context, guideAccount string, gui
 
 // 删除顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideAcct.html
-func (comp *Client) DeleteAdviser(ctx *context.Context, guideAccount string, guideOpenID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteAdviser(ctx context.Context, guideAccount string, guideOpenID string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -94,7 +94,7 @@ func (comp *Client) DeleteAdviser(ctx *context.Context, guideAccount string, gui
 
 // 获取服务号顾问列表
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideAcct.html
-func (comp *Client) GetAdvisers(ctx *context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdvisers, error) {
+func (comp *Client) GetAdvisers(ctx context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdvisers, error) {
 
 	result := &response.ResponseGuideGetAdvisers{}
 
@@ -110,7 +110,7 @@ func (comp *Client) GetAdvisers(ctx *context.Context, guideAccount string, guide
 
 // 生成顾问二维码
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideAcct.html
-func (comp *Client) CreateQrCode(ctx *context.Context, guideAccount string, guideOpenID string, qrCodeInfo string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateQrCode(ctx context.Context, guideAccount string, guideOpenID string, qrCodeInfo string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -129,7 +129,7 @@ func (comp *Client) CreateQrCode(ctx *context.Context, guideAccount string, guid
 
 // 获取顾问聊天记录
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideBuyerChatRecord.html
-func (comp *Client) GetBuyerChatRecords(ctx *context.Context, guideAccount string, guideOpenID string, openID string, beginTime string, endTime string) (*response.ResponseGuideGetChatRecords, error) {
+func (comp *Client) GetBuyerChatRecords(ctx context.Context, guideAccount string, guideOpenID string, openID string, beginTime string, endTime string) (*response.ResponseGuideGetChatRecords, error) {
 
 	result := &response.ResponseGuideGetChatRecords{}
 
@@ -154,7 +154,7 @@ func (comp *Client) GetBuyerChatRecords(ctx *context.Context, guideAccount strin
 
 // 设置快捷回复与关注自动回复
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.setGuideConfig.html
-func (comp *Client) SetConfig(ctx *context.Context, guideAccount string, guideOpenID string, isDelete bool,
+func (comp *Client) SetConfig(ctx context.Context, guideAccount string, guideOpenID string, isDelete bool,
 	fastReplyListArray *request.FastReplyList, guideAutoReply *request.AutoReply, guideAutoReplyPlus *request.AutoReply) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
@@ -182,7 +182,7 @@ func (comp *Client) SetConfig(ctx *context.Context, guideAccount string, guideOp
 
 // 获取快捷回复与关注自动回复
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideConfig.html
-func (comp *Client) GetConfig(ctx *context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetConfig, error) {
+func (comp *Client) GetConfig(ctx context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetConfig, error) {
 
 	result := &response.ResponseGuideGetConfig{}
 
@@ -198,7 +198,7 @@ func (comp *Client) GetConfig(ctx *context.Context, guideAccount string, guideOp
 
 // 设置离线自动回复与敏感词
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.setGuideConfig.html
-func (comp *Client) SetAdviserConfig(ctx *context.Context, guideAccount string, guideOpenID string, isDelete bool,
+func (comp *Client) SetAdviserConfig(ctx context.Context, guideAccount string, guideOpenID string, isDelete bool,
 	blackKeyword *request.BlackKeyword, guideAutoReply *request.AutoReply) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
@@ -224,7 +224,7 @@ func (comp *Client) SetAdviserConfig(ctx *context.Context, guideAccount string, 
 
 // 获取离线自动回复与敏感词
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideAcctConfig.html
-func (comp *Client) GetAdviserConfig(ctx *context.Context) (*response.ResponseGuideGetAdviserConfig, error) {
+func (comp *Client) GetAdviserConfig(ctx context.Context) (*response.ResponseGuideGetAdviserConfig, error) {
 
 	result := &response.ResponseGuideGetAdviserConfig{}
 
@@ -235,7 +235,7 @@ func (comp *Client) GetAdviserConfig(ctx *context.Context) (*response.ResponseGu
 
 // 允许微信用户复制小程序页面路径
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.pushShowWxaPathMenu.html
-func (comp *Client) AllowCopyMiniAppPath(ctx *context.Context, wxaAppID string, wxUsername string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) AllowCopyMiniAppPath(ctx context.Context, wxaAppID string, wxUsername string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -248,7 +248,7 @@ func (comp *Client) AllowCopyMiniAppPath(ctx *context.Context, wxaAppID string, 
 	return result, err
 }
 
-func (comp *Client) SelectAccountAndOpenID(ctx *context.Context, params *object.HashMap, guideAccount string, guideOpenID string) (*object.HashMap, error) {
+func (comp *Client) SelectAccountAndOpenID(ctx context.Context, params *object.HashMap, guideAccount string, guideOpenID string) (*object.HashMap, error) {
 
 	if params == nil {
 		params = &object.HashMap{}
@@ -270,7 +270,7 @@ func (comp *Client) SelectAccountAndOpenID(ctx *context.Context, params *object.
 
 // 新建顾问分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.newGuideGroup.html
-func (comp *Client) CreateGroup(ctx *context.Context, groupName string) (*response.ResponseGuideCreateGroup, error) {
+func (comp *Client) CreateGroup(ctx context.Context, groupName string) (*response.ResponseGuideCreateGroup, error) {
 
 	result := &response.ResponseGuideCreateGroup{}
 
@@ -284,7 +284,7 @@ func (comp *Client) CreateGroup(ctx *context.Context, groupName string) (*respon
 
 // 获取服务号下所有顾问分组的列表
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideGroupList.html
-func (comp *Client) GetGuideGroups(ctx *context.Context) (*response.ResponseGuideGetGroupList, error) {
+func (comp *Client) GetGuideGroups(ctx context.Context) (*response.ResponseGuideGetGroupList, error) {
 
 	result := &response.ResponseGuideGetGroupList{}
 
@@ -295,7 +295,7 @@ func (comp *Client) GetGuideGroups(ctx *context.Context) (*response.ResponseGuid
 
 // 获取指定顾问分组信息，以及分组内顾问信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGroupInfo.html
-func (comp *Client) GetGroups(ctx *context.Context, groupName string) (*response.ResponseGuideGetGroups, error) {
+func (comp *Client) GetGroups(ctx context.Context, groupName string) (*response.ResponseGuideGetGroups, error) {
 
 	result := &response.ResponseGuideGetGroups{}
 
@@ -309,7 +309,7 @@ func (comp *Client) GetGroups(ctx *context.Context, groupName string) (*response
 
 // 分组内添加顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.addGuide2GuideGroup.html
-func (comp *Client) AddGroupGuide(ctx *context.Context, groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) AddGroupGuide(ctx context.Context, groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -324,7 +324,7 @@ func (comp *Client) AddGroupGuide(ctx *context.Context, groupID int, guideAccoun
 
 // 分组内删除顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuide2GuideGroup.html
-func (comp *Client) DeleteGroupGuide(ctx *context.Context, groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteGroupGuide(ctx context.Context, groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -339,7 +339,7 @@ func (comp *Client) DeleteGroupGuide(ctx *context.Context, groupID int, guideAcc
 
 // 获取顾问所在分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGroupByGuide.html
-func (comp *Client) GetGuideGroup(ctx *context.Context, guideAccount string) (*response.ResponseGuideGetGuideGroup, error) {
+func (comp *Client) GetGuideGroup(ctx context.Context, guideAccount string) (*response.ResponseGuideGetGuideGroup, error) {
 
 	result := &response.ResponseGuideGetGuideGroup{}
 
@@ -353,7 +353,7 @@ func (comp *Client) GetGuideGroup(ctx *context.Context, guideAccount string) (*r
 
 // 删除指定顾问分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideGroup.html
-func (comp *Client) DeleteGroup(ctx *context.Context, groupID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteGroup(ctx context.Context, groupID int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -367,7 +367,7 @@ func (comp *Client) DeleteGroup(ctx *context.Context, groupID int) (*response2.R
 
 // 为顾问分配客户
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.addGuideBuyerRelation.html
-func (comp *Client) CreateBuyerRelation(ctx *context.Context, guideAccount string, guideOpenID string, buyerList *request.BuyerList) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) CreateBuyerRelation(ctx context.Context, guideAccount string, guideOpenID string, buyerList *request.BuyerList) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -387,7 +387,7 @@ func (comp *Client) CreateBuyerRelation(ctx *context.Context, guideAccount strin
 
 // 为顾问移除客户
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.delGuideBuyerRelation.html
-func (comp *Client) DeleteBuyerRelation(ctx *context.Context, guideAccount string, guideOpenID string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) DeleteBuyerRelation(ctx context.Context, guideAccount string, guideOpenID string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -407,7 +407,7 @@ func (comp *Client) DeleteBuyerRelation(ctx *context.Context, guideAccount strin
 
 // 获取顾问的客户列表
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.getGuideBuyerRelationList.html
-func (comp *Client) GetBuyerRelations(ctx *context.Context, guideAccount string, guideOpenID string, page int, num int) (*response.ResponseGuideBuyerRelationList, error) {
+func (comp *Client) GetBuyerRelations(ctx context.Context, guideAccount string, guideOpenID string, page int, num int) (*response.ResponseGuideBuyerRelationList, error) {
 
 	result := &response.ResponseGuideBuyerRelationList{}
 
@@ -428,7 +428,7 @@ func (comp *Client) GetBuyerRelations(ctx *context.Context, guideAccount string,
 
 // 为客户更换顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.rebindGuideAcctForBuyer.html
-func (comp *Client) RebindBuyerGuide(ctx *context.Context, oldGuideTarget string, newGuideTarget string, openidList []string, useTargetOpenID bool) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) RebindBuyerGuide(ctx context.Context, oldGuideTarget string, newGuideTarget string, openidList []string, useTargetOpenID bool) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -451,7 +451,7 @@ func (comp *Client) RebindBuyerGuide(ctx *context.Context, oldGuideTarget string
 
 // 修改客户昵称
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.updateGuideBuyerRelation.html
-func (comp *Client) UpdateBuyerRelation(ctx *context.Context, guideAccount string, guideOpenID string, openID string, nickName string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) UpdateBuyerRelation(ctx context.Context, guideAccount string, guideOpenID string, openID string, nickName string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -472,7 +472,7 @@ func (comp *Client) UpdateBuyerRelation(ctx *context.Context, guideAccount strin
 
 // 查询客户所属顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.getGuideBuyerRelationByBuyer.html
-func (comp *Client) GetBuyerRelation(ctx *context.Context, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
+func (comp *Client) GetBuyerRelation(ctx context.Context, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
 
 	result := &response.ResponseGuideGetBuyerRelation{}
 
@@ -487,7 +487,7 @@ func (comp *Client) GetBuyerRelation(ctx *context.Context, openID string) (*resp
 
 // 查询指定顾问和客户的关系
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.getGuideBuyerRelation.html
-func (comp *Client) GetBuyerRelationByGuide(ctx *context.Context, guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
+func (comp *Client) GetBuyerRelationByGuide(ctx context.Context, guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
 
 	result := &response.ResponseGuideGetBuyerRelation{}
 
@@ -507,7 +507,7 @@ func (comp *Client) GetBuyerRelationByGuide(ctx *context.Context, guideAccount s
 
 // 新建可查询的标签类型
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.newGuideTagOption.html
-func (comp *Client) NewTagOption(ctx *context.Context, tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) NewTagOption(ctx context.Context, tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -523,7 +523,7 @@ func (comp *Client) NewTagOption(ctx *context.Context, tagName string, tagValues
 
 // 删除指定标签类型
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.delguidetagoption.html
-func (comp *Client) DeleteTagOption(ctx *context.Context, tagName string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteTagOption(ctx context.Context, tagName string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -538,7 +538,7 @@ func (comp *Client) DeleteTagOption(ctx *context.Context, tagName string) (*resp
 
 // 为标签添加可选值
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.addGuideTagOption.html
-func (comp *Client) CreateTagOption(ctx *context.Context, tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateTagOption(ctx context.Context, tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -554,7 +554,7 @@ func (comp *Client) CreateTagOption(ctx *context.Context, tagName string, tagVal
 
 // 获取标签和可选值
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.getGuideTagOption.html
-func (comp *Client) GetTagOption(ctx *context.Context, tagName string, tagValues []string) (*response.ResponseGuideTagOption, error) {
+func (comp *Client) GetTagOption(ctx context.Context, tagName string, tagValues []string) (*response.ResponseGuideTagOption, error) {
 
 	result := &response.ResponseGuideTagOption{}
 
@@ -565,7 +565,7 @@ func (comp *Client) GetTagOption(ctx *context.Context, tagName string, tagValues
 
 // 为客户设置标签
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.addGuideBuyerTag.html
-func (comp *Client) SetBuyersTag(ctx *context.Context, guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) SetBuyersTag(ctx context.Context, guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -586,7 +586,7 @@ func (comp *Client) SetBuyersTag(ctx *context.Context, guideAccount string, guid
 
 // 查询客户标签
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.getGuideBuyerTag.html
-func (comp *Client) GetBuyerTags(ctx *context.Context, guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideGetBuyerTags, error) {
+func (comp *Client) GetBuyerTags(ctx context.Context, guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideGetBuyerTags, error) {
 
 	result := &response.ResponseGuideGetBuyerTags{}
 
@@ -607,7 +607,7 @@ func (comp *Client) GetBuyerTags(ctx *context.Context, guideAccount string, guid
 
 // 根据标签值筛选客户
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.queryGuideBuyerByTag.html
-func (comp *Client) GetBuyerByTag(ctx *context.Context, guideAccount string, guideOpenID string, pushCount int, tagValues []string) (*response.ResponseGuideGetBuyerByTag, error) {
+func (comp *Client) GetBuyerByTag(ctx context.Context, guideAccount string, guideOpenID string, pushCount int, tagValues []string) (*response.ResponseGuideGetBuyerByTag, error) {
 
 	result := &response.ResponseGuideGetBuyerByTag{}
 
@@ -632,7 +632,7 @@ func (comp *Client) GetBuyerByTag(ctx *context.Context, guideAccount string, gui
 
 // 删除客户标签
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.delGuideBuyerTag.html
-func (comp *Client) DeleteBuyerTag(ctx *context.Context, guideAccount string, guideOpenID string, tagValue string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) DeleteBuyerTag(ctx context.Context, guideAccount string, guideOpenID string, tagValue string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -656,7 +656,7 @@ func (comp *Client) DeleteBuyerTag(ctx *context.Context, guideAccount string, gu
 
 // 设置自定义客户信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.addGuideBuyerDisplayTag.html
-func (comp *Client) SetBuyerDisplayTags(ctx *context.Context, guideAccount string, guideOpenID string, openID string, displayTagList []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) SetBuyerDisplayTags(ctx context.Context, guideAccount string, guideOpenID string, openID string, displayTagList []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -677,7 +677,7 @@ func (comp *Client) SetBuyerDisplayTags(ctx *context.Context, guideAccount strin
 
 // 获取自定义客户信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.getGuideBuyerDisplayTag.html
-func (comp *Client) GetBuyerDisplayTags(ctx *context.Context, guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerDisplayTags, error) {
+func (comp *Client) GetBuyerDisplayTags(ctx context.Context, guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerDisplayTags, error) {
 
 	result := &response.ResponseGuideGetBuyerDisplayTags{}
 
@@ -697,7 +697,7 @@ func (comp *Client) GetBuyerDisplayTags(ctx *context.Context, guideAccount strin
 
 // 添加小程序卡片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.setGuideCardMaterial.html
-func (comp *Client) CreateCardMaterial(ctx *context.Context, mediaID string, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateCardMaterial(ctx context.Context, mediaID string, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -716,7 +716,7 @@ func (comp *Client) CreateCardMaterial(ctx *context.Context, mediaID string, tit
 
 // 查询小程序卡片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.getGuideCardMaterial.html
-func (comp *Client) GetCardMaterial(ctx *context.Context, mType int) (*response.ResponseGuideGetCardMaterial, error) {
+func (comp *Client) GetCardMaterial(ctx context.Context, mType int) (*response.ResponseGuideGetCardMaterial, error) {
 
 	result := &response.ResponseGuideGetCardMaterial{}
 
@@ -731,7 +731,7 @@ func (comp *Client) GetCardMaterial(ctx *context.Context, mType int) (*response.
 
 // 删除小程序卡片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.delGuideCardMaterial.html
-func (comp *Client) DeleteCardMaterial(ctx *context.Context, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteCardMaterial(ctx context.Context, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -749,7 +749,7 @@ func (comp *Client) DeleteCardMaterial(ctx *context.Context, title string, path 
 
 // 添加图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.setGuideImageMaterial.html
-func (comp *Client) CreateImageMaterial(ctx *context.Context, mediaID string, mType int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateImageMaterial(ctx context.Context, mediaID string, mType int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -765,7 +765,7 @@ func (comp *Client) CreateImageMaterial(ctx *context.Context, mediaID string, mT
 
 // 查询图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.getGuideImageMaterial.html
-func (comp *Client) GetImageMaterial(ctx *context.Context, mType int) (*response.ResponseGuideGetImageMaterial, error) {
+func (comp *Client) GetImageMaterial(ctx context.Context, mType int) (*response.ResponseGuideGetImageMaterial, error) {
 
 	result := &response.ResponseGuideGetImageMaterial{}
 
@@ -780,7 +780,7 @@ func (comp *Client) GetImageMaterial(ctx *context.Context, mType int) (*response
 
 // 删除图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.delGuideImageMaterial.html
-func (comp *Client) DeleteImageMaterial(ctx *context.Context, mType int, picURL string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteImageMaterial(ctx context.Context, mType int, picURL string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -796,7 +796,7 @@ func (comp *Client) DeleteImageMaterial(ctx *context.Context, mType int, picURL 
 
 // 添加文字素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.setGuideWordMaterial.html
-func (comp *Client) CreateWordMaterial(ctx *context.Context, mType int, word string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateWordMaterial(ctx context.Context, mType int, word string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -812,7 +812,7 @@ func (comp *Client) CreateWordMaterial(ctx *context.Context, mType int, word str
 
 // 查询文字素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.getGuideWordMaterial.html
-func (comp *Client) GetWordMaterial(ctx *context.Context, mType int, start int, num int) (*response.ResponseGuideGetWordMaterial, error) {
+func (comp *Client) GetWordMaterial(ctx context.Context, mType int, start int, num int) (*response.ResponseGuideGetWordMaterial, error) {
 
 	result := &response.ResponseGuideGetWordMaterial{}
 
@@ -829,7 +829,7 @@ func (comp *Client) GetWordMaterial(ctx *context.Context, mType int, start int, 
 
 // 删除文字素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.delGuideWordMaterial.html
-func (comp *Client) DeleteWordMaterial(ctx *context.Context, mType int, word string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteWordMaterial(ctx context.Context, mType int, word string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 

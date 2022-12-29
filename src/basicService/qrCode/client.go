@@ -38,7 +38,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 生成永久二维码请求
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html
-func (comp *Client) Forever(ctx *context.Context, sceneValue interface{}) (*response.ResponseQRCodeCreate, error) {
+func (comp *Client) Forever(ctx context.Context, sceneValue interface{}) (*response.ResponseQRCodeCreate, error) {
 
 	data := &request.RequestQRCodeCreate{
 		ActionInfo: &request.ActionInfo{},
@@ -69,7 +69,7 @@ func (comp *Client) Forever(ctx *context.Context, sceneValue interface{}) (*resp
 
 // 生成临时二维码请求
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html
-func (comp *Client) Temporary(ctx *context.Context, sceneValue interface{}, expireSeconds int) (*response.ResponseQRCodeCreate, error) {
+func (comp *Client) Temporary(ctx context.Context, sceneValue interface{}, expireSeconds int) (*response.ResponseQRCodeCreate, error) {
 
 	data := &request.RequestQRCodeCreate{
 		ActionInfo: &request.ActionInfo{},
@@ -106,7 +106,7 @@ func (comp *Client) URL(ticket string) string {
 
 // 生成带参数的二维码
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html
-func (comp *Client) Create(ctx *context.Context, data *request.RequestQRCodeCreate, temporary bool, expireSecond int) (*response.ResponseQRCodeCreate, error) {
+func (comp *Client) Create(ctx context.Context, data *request.RequestQRCodeCreate, temporary bool, expireSecond int) (*response.ResponseQRCodeCreate, error) {
 
 	result := &response.ResponseQRCodeCreate{}
 

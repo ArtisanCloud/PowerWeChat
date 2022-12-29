@@ -13,7 +13,7 @@ type Client struct {
 
 // 获取小程序 Short Link
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/short-link/shortlink.generate.html
-func (comp *Client) Generate(ctx *context.Context, pageUrl string, pageTitle string, isPermanent bool) (*response.ResponseShortLinkGenerate, error) {
+func (comp *Client) Generate(ctx context.Context, pageUrl string, pageTitle string, isPermanent bool) (*response.ResponseShortLinkGenerate, error) {
 
 	result := &response.ResponseShortLinkGenerate{}
 

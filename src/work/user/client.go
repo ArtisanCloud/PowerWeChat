@@ -28,7 +28,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建成员
 // https://developer.work.weixin.qq.com/document/path/90195
-func (comp *Client) Create(ctx *context.Context, data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
+func (comp *Client) Create(ctx context.Context, data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -39,7 +39,7 @@ func (comp *Client) Create(ctx *context.Context, data *response3.RequestUserDeta
 
 // 更新成员
 // https://developer.work.weixin.qq.com/document/path/90197
-func (comp *Client) Update(ctx *context.Context, data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx context.Context, data *response3.RequestUserDetail) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -50,7 +50,7 @@ func (comp *Client) Update(ctx *context.Context, data *response3.RequestUserDeta
 
 // 删除成员
 // https://developer.work.weixin.qq.com/document/path/90198
-func (comp *Client) Delete(ctx *context.Context, userID string) (*response2.ResponseWork, error) {
+func (comp *Client) Delete(ctx context.Context, userID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -63,7 +63,7 @@ func (comp *Client) Delete(ctx *context.Context, userID string) (*response2.Resp
 
 // 批量删除成员
 // https://developer.work.weixin.qq.com/document/path/90335
-func (comp *Client) BatchDelete(ctx *context.Context, userIDs []string) (*response2.ResponseWork, error) {
+func (comp *Client) BatchDelete(ctx context.Context, userIDs []string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -76,7 +76,7 @@ func (comp *Client) BatchDelete(ctx *context.Context, userIDs []string) (*respon
 
 // 获取成员
 // https://developer.work.weixin.qq.com/document/path/90196
-func (comp *Client) Get(ctx *context.Context, userID string) (*response.ResponseGetUserDetail, error) {
+func (comp *Client) Get(ctx context.Context, userID string) (*response.ResponseGetUserDetail, error) {
 
 	result := &response.ResponseGetUserDetail{}
 
@@ -89,7 +89,7 @@ func (comp *Client) Get(ctx *context.Context, userID string) (*response.Response
 
 // 获取部门的成员
 // https://developer.work.weixin.qq.com/document/path/90200
-func (comp *Client) GetDepartmentUsers(ctx *context.Context, departmentID int, fetchChild int) (*response.ResponseGetSimpleUserList, error) {
+func (comp *Client) GetDepartmentUsers(ctx context.Context, departmentID int, fetchChild int) (*response.ResponseGetSimpleUserList, error) {
 
 	result := &response.ResponseGetSimpleUserList{}
 
@@ -103,7 +103,7 @@ func (comp *Client) GetDepartmentUsers(ctx *context.Context, departmentID int, f
 
 // 获取部门成员详情
 // https://developer.work.weixin.qq.com/document/path/90201
-func (comp *Client) GetDetailedDepartmentUsers(ctx *context.Context, departmentID int, fetchChild int) (*response.ResponseGetUserList, error) {
+func (comp *Client) GetDetailedDepartmentUsers(ctx context.Context, departmentID int, fetchChild int) (*response.ResponseGetUserList, error) {
 
 	result := &response.ResponseGetUserList{}
 
@@ -117,7 +117,7 @@ func (comp *Client) GetDetailedDepartmentUsers(ctx *context.Context, departmentI
 
 // userid与openid互换
 // https://developer.work.weixin.qq.com/document/path/90202
-func (comp *Client) UserIdToOpenID(ctx *context.Context, userID string) (*response.ResponseUserIDToOpenID, error) {
+func (comp *Client) UserIdToOpenID(ctx context.Context, userID string) (*response.ResponseUserIDToOpenID, error) {
 
 	result := &response.ResponseUserIDToOpenID{}
 
@@ -130,7 +130,7 @@ func (comp *Client) UserIdToOpenID(ctx *context.Context, userID string) (*respon
 
 // 获取成员ID列表
 // https://developer.work.weixin.qq.com/document/path/96067
-func (comp *Client) ListID(ctx *context.Context, cursor string, limit int) (*response.ResponseListID, error) {
+func (comp *Client) ListID(ctx context.Context, cursor string, limit int) (*response.ResponseListID, error) {
 
 	result := &response.ResponseListID{}
 
@@ -144,7 +144,7 @@ func (comp *Client) ListID(ctx *context.Context, cursor string, limit int) (*res
 
 // openid转userid
 // https://developer.work.weixin.qq.com/document/path/90202
-func (comp *Client) OpenIDToUserID(ctx *context.Context, openID string) (*response.ResponseOpenIDToUserID, error) {
+func (comp *Client) OpenIDToUserID(ctx context.Context, openID string) (*response.ResponseOpenIDToUserID, error) {
 
 	result := &response.ResponseOpenIDToUserID{}
 
@@ -157,7 +157,7 @@ func (comp *Client) OpenIDToUserID(ctx *context.Context, openID string) (*respon
 
 // 手机号获取userid
 // https://developer.work.weixin.qq.com/document/path/95402
-func (comp *Client) MobileToUserID(ctx *context.Context, mobile string) (*response.ResponseMobileToUserID, error) {
+func (comp *Client) MobileToUserID(ctx context.Context, mobile string) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
 
@@ -170,7 +170,7 @@ func (comp *Client) MobileToUserID(ctx *context.Context, mobile string) (*respon
 
 // 邮箱获取userid
 // https://developer.work.weixin.qq.com/document/path/95895
-func (comp *Client) EmailToUserID(ctx *context.Context, email string, emailType int) (*response.ResponseConvertToUserID, error) {
+func (comp *Client) EmailToUserID(ctx context.Context, email string, emailType int) (*response.ResponseConvertToUserID, error) {
 
 	result := &response.ResponseConvertToUserID{}
 
@@ -184,7 +184,7 @@ func (comp *Client) EmailToUserID(ctx *context.Context, email string, emailType 
 
 // 二次验证
 // https://developer.work.weixin.qq.com/document/path/90203
-func (comp *Client) Accept(ctx *context.Context, userID string) (*response2.ResponseWork, error) {
+func (comp *Client) Accept(ctx context.Context, userID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -197,7 +197,7 @@ func (comp *Client) Accept(ctx *context.Context, userID string) (*response2.Resp
 
 // 邀请成员
 // https://developer.work.weixin.qq.com/document/path/90975
-func (comp *Client) Invite(ctx *context.Context, params *power.HashMap) (*response.ResponseMobileToUserID, error) {
+func (comp *Client) Invite(ctx context.Context, params *power.HashMap) (*response.ResponseMobileToUserID, error) {
 
 	result := &response.ResponseMobileToUserID{}
 
@@ -208,7 +208,7 @@ func (comp *Client) Invite(ctx *context.Context, params *power.HashMap) (*respon
 
 // 获取加入企业二维码
 // https://developer.work.weixin.qq.com/document/path/91714
-func (comp *Client) GetJoinQrCode(ctx *context.Context, sizeType int) (*response.ResponseJoinCode, error) {
+func (comp *Client) GetJoinQrCode(ctx context.Context, sizeType int) (*response.ResponseJoinCode, error) {
 
 	if sizeType < 1 || sizeType > 4 {
 		return nil, errors.New("The sizeType must be 1, 2, 3, 4.")
@@ -225,7 +225,7 @@ func (comp *Client) GetJoinQrCode(ctx *context.Context, sizeType int) (*response
 
 // 获取企业活跃成员数
 // https://developer.work.weixin.qq.com/document/path/92714
-func (comp *Client) GetActiveStat(ctx *context.Context, date string) (*response.ResponseUserActiveCount, error) {
+func (comp *Client) GetActiveStat(ctx context.Context, date string) (*response.ResponseUserActiveCount, error) {
 
 	result := &response.ResponseUserActiveCount{}
 

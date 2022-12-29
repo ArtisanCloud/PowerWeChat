@@ -14,7 +14,7 @@ type Client struct {
 
 // 主动发送消息给设备
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-3
-func (comp *Client) Message(ctx *context.Context, data *request.RequestDeviceMessage) (*response.ResponseDeviceMessage, error) {
+func (comp *Client) Message(ctx context.Context, data *request.RequestDeviceMessage) (*response.ResponseDeviceMessage, error) {
 
 	result := &response.ResponseDeviceMessage{}
 
@@ -25,7 +25,7 @@ func (comp *Client) Message(ctx *context.Context, data *request.RequestDeviceMes
 
 // 获取设备二维码
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-4
-func (comp *Client) QRCode(ctx *context.Context, deviceIDs []string) (*response.ResponseDeviceCreateQRCode, error) {
+func (comp *Client) QRCode(ctx context.Context, deviceIDs []string) (*response.ResponseDeviceCreateQRCode, error) {
 
 	result := &response.ResponseDeviceCreateQRCode{}
 
@@ -41,7 +41,7 @@ func (comp *Client) QRCode(ctx *context.Context, deviceIDs []string) (*response.
 
 // 设备授权
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-5
-func (comp *Client) Authorize(ctx *context.Context, data request.RequestDeviceAuthorize) (*response.ResponseDeviceAuthorize, error) {
+func (comp *Client) Authorize(ctx context.Context, data request.RequestDeviceAuthorize) (*response.ResponseDeviceAuthorize, error) {
 
 	result := &response.ResponseDeviceAuthorize{}
 
@@ -52,7 +52,7 @@ func (comp *Client) Authorize(ctx *context.Context, data request.RequestDeviceAu
 
 // 获取deviceid和二维码
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-6
-func (comp *Client) createID(ctx *context.Context, productID string) (*response.ResponseDeviceCreateID, error) {
+func (comp *Client) createID(ctx context.Context, productID string) (*response.ResponseDeviceCreateID, error) {
 
 	result := &response.ResponseDeviceCreateID{}
 
@@ -67,7 +67,7 @@ func (comp *Client) createID(ctx *context.Context, productID string) (*response.
 
 // 设备绑定
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7
-func (comp *Client) Bind(ctx *context.Context, openID string, deviceID string, ticket string) (*response.ResponseDeviceBind, error) {
+func (comp *Client) Bind(ctx context.Context, openID string, deviceID string, ticket string) (*response.ResponseDeviceBind, error) {
 
 	result := &response.ResponseDeviceBind{}
 
@@ -84,7 +84,7 @@ func (comp *Client) Bind(ctx *context.Context, openID string, deviceID string, t
 
 // 设备解绑
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7
-func (comp *Client) Unbind(ctx *context.Context, openID string, deviceID string, ticket string) (*response.ResponseDeviceBind, error) {
+func (comp *Client) Unbind(ctx context.Context, openID string, deviceID string, ticket string) (*response.ResponseDeviceBind, error) {
 
 	result := &response.ResponseDeviceBind{}
 
@@ -101,7 +101,7 @@ func (comp *Client) Unbind(ctx *context.Context, openID string, deviceID string,
 
 // 设备绑定
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7
-func (comp *Client) ForceBind(ctx *context.Context, openID string, deviceID string) (*response.ResponseDeviceBind, error) {
+func (comp *Client) ForceBind(ctx context.Context, openID string, deviceID string) (*response.ResponseDeviceBind, error) {
 
 	result := &response.ResponseDeviceBind{}
 
@@ -117,7 +117,7 @@ func (comp *Client) ForceBind(ctx *context.Context, openID string, deviceID stri
 
 // 设备解绑
 // https://iot.weixin.qq.com/wiki/new/index.html?page=3-4-7
-func (comp *Client) ForceUnbind(ctx *context.Context, openID string, deviceID string) (*response.ResponseDeviceBind, error) {
+func (comp *Client) ForceUnbind(ctx context.Context, openID string, deviceID string) (*response.ResponseDeviceBind, error) {
 
 	result := &response.ResponseDeviceBind{}
 

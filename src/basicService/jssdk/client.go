@@ -39,7 +39,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 	return client, nil
 }
 
-func (comp *Client) BuildConfig(ctx *context.Context, jsApiList []string, debug bool, beta bool, openTagList []string, url string) (interface{}, error) {
+func (comp *Client) BuildConfig(ctx context.Context, jsApiList []string, debug bool, beta bool, openTagList []string, url string) (interface{}, error) {
 
 	signature, err := comp.ConfigSignature(ctx, url, "", 0)
 	if err != nil {
@@ -57,14 +57,14 @@ func (comp *Client) BuildConfig(ctx *context.Context, jsApiList []string, debug 
 
 }
 
-func (comp *Client) GetConfigArray(ctx *context.Context, apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
+func (comp *Client) GetConfigArray(ctx context.Context, apis []string, debug bool, beta bool, openTagList []string, url string) (string, error) {
 
 	result, err := comp.BuildConfig(ctx, apis, debug, beta, openTagList, url)
 
 	return result.(string), err
 }
 
-func (comp *Client) GetTicket(ctx *context.Context, refresh bool, ticketType string) (*object.HashMap, error) {
+func (comp *Client) GetTicket(ctx context.Context, refresh bool, ticketType string) (*object.HashMap, error) {
 
 	cacheKey := fmt.Sprintf("powerwechat.basic_service.jssdk.ticket.%s.%s", ticketType, comp.GetAppID())
 
@@ -107,7 +107,7 @@ func (comp *Client) GetTicket(ctx *context.Context, refresh bool, ticketType str
 	return resultData, nil
 }
 
-func (comp *Client) ConfigSignature(ctx *context.Context, url string, nonce string, timestamp int64) (*object.HashMap, error) {
+func (comp *Client) ConfigSignature(ctx context.Context, url string, nonce string, timestamp int64) (*object.HashMap, error) {
 
 	if nonce == "" {
 		nonce = object.QuickRandom(10)

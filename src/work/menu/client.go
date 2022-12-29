@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // https://developer.work.weixin.qq.com/document/path/90232
-func (comp *Client) Get(ctx *context.Context) (*response.ResponseMenuGet, error) {
+func (comp *Client) Get(ctx context.Context) (*response.ResponseMenuGet, error) {
 
 	result := &response.ResponseMenuGet{}
 
@@ -37,7 +37,7 @@ func (comp *Client) Get(ctx *context.Context) (*response.ResponseMenuGet, error)
 }
 
 // https://developer.work.weixin.qq.com/document/path/90231
-func (comp *Client) Create(ctx *context.Context, data *request.RequestMenuSet) (*response.ResponseMenuCreate, error) {
+func (comp *Client) Create(ctx context.Context, data *request.RequestMenuSet) (*response.ResponseMenuCreate, error) {
 
 	result := &response.ResponseMenuCreate{}
 
@@ -50,7 +50,7 @@ func (comp *Client) Create(ctx *context.Context, data *request.RequestMenuSet) (
 }
 
 // https://developer.work.weixin.qq.com/document/path/90233
-func (comp *Client) Delete(ctx *context.Context, agentID int) (*response.ResponseMenuDelete, error) {
+func (comp *Client) Delete(ctx context.Context, agentID int) (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 

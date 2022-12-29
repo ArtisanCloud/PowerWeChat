@@ -13,7 +13,7 @@ type Client struct {
 
 // 下发小程序和公众号统一的服务消息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/uniform-message/uniformMessage.send.html
-func (comp *Client) Send(ctx *context.Context, options *request.RequestUniformMessageSend) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) Send(ctx context.Context, options *request.RequestUniformMessageSend) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 

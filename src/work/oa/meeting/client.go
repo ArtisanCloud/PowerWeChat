@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建预约会议
 // https://developer.work.weixin.qq.com/document/path/93627
-func (comp *Client) Create(ctx *context.Context, options *request.RequestMeetingCreate) (*response.ResponseMeetingCreate, error) {
+func (comp *Client) Create(ctx context.Context, options *request.RequestMeetingCreate) (*response.ResponseMeetingCreate, error) {
 
 	result := &response.ResponseMeetingCreate{}
 
@@ -36,7 +36,7 @@ func (comp *Client) Create(ctx *context.Context, options *request.RequestMeeting
 
 // 修改预约会议
 // https://developer.work.weixin.qq.com/document/path/93631
-func (comp *Client) Update(ctx *context.Context, options *request.RequestMeetingUpdate) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx context.Context, options *request.RequestMeetingUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -47,7 +47,7 @@ func (comp *Client) Update(ctx *context.Context, options *request.RequestMeeting
 
 // 取消预约会议
 // https://developer.work.weixin.qq.com/document/path/93630
-func (comp *Client) Cancel(ctx *context.Context, meetingID string) (*response2.ResponseWork, error) {
+func (comp *Client) Cancel(ctx context.Context, meetingID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -62,7 +62,7 @@ func (comp *Client) Cancel(ctx *context.Context, meetingID string) (*response2.R
 
 // 获取成员会议ID列表
 // https://developer.work.weixin.qq.com/document/path/93628
-func (comp *Client) GetUserMeetingID(ctx *context.Context, userID string, cursor string, beginTime int64, endTime int64, limit int) (*response.ResponseMeetingGetUserMeetingID, error) {
+func (comp *Client) GetUserMeetingID(ctx context.Context, userID string, cursor string, beginTime int64, endTime int64, limit int) (*response.ResponseMeetingGetUserMeetingID, error) {
 
 	result := &response.ResponseMeetingGetUserMeetingID{}
 
@@ -81,7 +81,7 @@ func (comp *Client) GetUserMeetingID(ctx *context.Context, userID string, cursor
 
 // 获取会议详情
 // https://developer.work.weixin.qq.com/document/path/93629
-func (comp *Client) GetBookingInfo(ctx *context.Context, meetingID string) (*response.ResponseMeetingGetBookingInfo, error) {
+func (comp *Client) GetBookingInfo(ctx context.Context, meetingID string) (*response.ResponseMeetingGetBookingInfo, error) {
 
 	result := &response.ResponseMeetingGetBookingInfo{}
 

@@ -13,7 +13,7 @@ type Client struct {
 
 // 获取用户encryptKey。
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/internet/internet.getUserEncryptKey.html
-func (comp *Client) GetUserEncryptKey(ctx *context.Context, openID string, signature string, sigMethod string) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) GetUserEncryptKey(ctx context.Context, openID string, signature string, sigMethod string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 

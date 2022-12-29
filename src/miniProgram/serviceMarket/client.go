@@ -13,7 +13,7 @@ type Client struct {
 
 // 调用服务平台提供的服务
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/service-market/serviceMarket.invokeService.html
-func (comp *Client) InvokeService(ctx *context.Context, options *request.RequestServiceMarket) (*response.ResponseServiceMarketInvoceService, error) {
+func (comp *Client) InvokeService(ctx context.Context, options *request.RequestServiceMarket) (*response.ResponseServiceMarketInvoceService, error) {
 
 	result := &response.ResponseServiceMarketInvoceService{}
 

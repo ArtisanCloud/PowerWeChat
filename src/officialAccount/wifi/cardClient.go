@@ -25,7 +25,7 @@ func NewCardClient(app kernel.ApplicationInterface) (*CardClient, error) {
 
 // 调用设置门店卡劵投放信息接口
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Cards/Set_store_card_and_coupon_delivery_information.html
-func (comp *CardClient) Set(ctx *context.Context, data *request.RequestWifiCardSet) (*response2.ResponseOfficialAccount, error) {
+func (comp *CardClient) Set(ctx context.Context, data *request.RequestWifiCardSet) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -37,7 +37,7 @@ func (comp *CardClient) Set(ctx *context.Context, data *request.RequestWifiCardS
 
 // 通过此接口查询某一门店的详细卡券投放信息
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Cards/Query_the_store_card_and_coupon_delivery_information.html
-func (comp *CardClient) Get(ctx *context.Context, shopID int) (*response.ResponseWifiCardGet, error) {
+func (comp *CardClient) Get(ctx context.Context, shopID int) (*response.ResponseWifiCardGet, error) {
 
 	result := &response.ResponseWifiCardGet{}
 

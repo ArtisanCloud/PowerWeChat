@@ -13,7 +13,7 @@ type Client struct {
 
 // SOTER 生物认证秘钥签名验证
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/soter/soter.verifySignature.html
-func (comp *Client) VerifySignature(ctx *context.Context, options *request.RequestSoter) (*response.ResponseSoterVerifySignature, error) {
+func (comp *Client) VerifySignature(ctx context.Context, options *request.RequestSoter) (*response.ResponseSoterVerifySignature, error) {
 
 	result := &response.ResponseSoterVerifySignature{}
 

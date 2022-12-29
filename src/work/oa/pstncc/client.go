@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 发起语音电话
 // https://developer.work.weixin.qq.com/document/path/91627
-func (comp *Client) Call(ctx *context.Context, calleeUserID []string) (*response.ResponsePSTNCCCall, error) {
+func (comp *Client) Call(ctx context.Context, calleeUserID []string) (*response.ResponsePSTNCCCall, error) {
 
 	result := &response.ResponsePSTNCCCall{}
 
@@ -38,7 +38,7 @@ func (comp *Client) Call(ctx *context.Context, calleeUserID []string) (*response
 
 // 获取接听状态
 // https://developer.work.weixin.qq.com/document/path/91628
-func (comp *Client) GetStates(ctx *context.Context, calleeUserID string, callID string) (*response.ResponsePSTNCCGetStates, error) {
+func (comp *Client) GetStates(ctx context.Context, calleeUserID string, callID string) (*response.ResponsePSTNCCGetStates, error) {
 
 	result := &response.ResponsePSTNCCGetStates{}
 

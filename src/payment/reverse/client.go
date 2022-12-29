@@ -23,7 +23,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Reverse order.
 // https://pay.weixin.qq.com/wiki/doc/api/micropa
-func (comp *Client) Reverse(ctx *context.Context, number string, reverseType string) (*response.ResponseReserve, error) {
+func (comp *Client) Reverse(ctx context.Context, number string, reverseType string) (*response.ResponseReserve, error) {
 
 	result := &response.ResponseReserve{}
 
@@ -42,14 +42,14 @@ func (comp *Client) Reverse(ctx *context.Context, number string, reverseType str
 
 // Reverse order by out trade number.
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
-func (comp *Client) ByOutTradeNumber(ctx *context.Context, outTradeNumber string) (*response.ResponseReserve, error) {
+func (comp *Client) ByOutTradeNumber(ctx context.Context, outTradeNumber string) (*response.ResponseReserve, error) {
 
 	return comp.Reverse(ctx, outTradeNumber, "out_trade_no")
 }
 
 // Reverse order by transaction_id.
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
-func (comp *Client) ByTransactionId(ctx *context.Context, transactionID string) (*response.ResponseReserve, error) {
+func (comp *Client) ByTransactionId(ctx context.Context, transactionID string) (*response.ResponseReserve, error) {
 
 	return comp.Reverse(ctx, transactionID, "transaction_id")
 }

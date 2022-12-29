@@ -26,7 +26,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 读取消息
 // https://developer.work.weixin.qq.com/document/path/94670
-func (comp *Client) BatchGet(ctx *context.Context, externalUserIDList []string) (*response.ResponseCustomerBatchGet, error) {
+func (comp *Client) BatchGet(ctx context.Context, externalUserIDList []string) (*response.ResponseCustomerBatchGet, error) {
 
 	result := &response.ResponseCustomerBatchGet{}
 
@@ -41,7 +41,7 @@ func (comp *Client) BatchGet(ctx *context.Context, externalUserIDList []string) 
 
 // 获取配置的专员与客户群
 // https://developer.work.weixin.qq.com/document/path/94674
-func (comp *Client) GetUpgradeServiceConfig(ctx *context.Context) (*response.ResponseCustomerGetUpgradeServiceConfig, error) {
+func (comp *Client) GetUpgradeServiceConfig(ctx context.Context) (*response.ResponseCustomerGetUpgradeServiceConfig, error) {
 
 	result := &response.ResponseCustomerGetUpgradeServiceConfig{}
 
@@ -52,7 +52,7 @@ func (comp *Client) GetUpgradeServiceConfig(ctx *context.Context) (*response.Res
 
 // 为客户升级为专员或客户群服务
 // https://developer.work.weixin.qq.com/document/path/94674
-func (comp *Client) UpgradeService(ctx *context.Context, options *request.RequestUpgradeService) (*response2.ResponseWork, error) {
+func (comp *Client) UpgradeService(ctx context.Context, options *request.RequestUpgradeService) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -63,7 +63,7 @@ func (comp *Client) UpgradeService(ctx *context.Context, options *request.Reques
 
 // 为客户取消推荐
 // https://developer.work.weixin.qq.com/document/path/94674
-func (comp *Client) CancelUpgradeService(ctx *context.Context, openKFID, externalUserID string) (*response2.ResponseWork, error) {
+func (comp *Client) CancelUpgradeService(ctx context.Context, openKFID, externalUserID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 	options := &power.StringMap{

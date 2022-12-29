@@ -14,7 +14,7 @@ type Client struct {
 // 付款码支付
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1
 
-func (comp *Client) Pay(ctx *context.Context, params *object.StringMap) *response2.ResponseWork {
+func (comp *Client) Pay(ctx context.Context, params *object.StringMap) *response2.ResponseWork {
 
 	result := &response2.ResponseWork{}
 
@@ -26,7 +26,7 @@ func (comp *Client) Pay(ctx *context.Context, params *object.StringMap) *respons
 
 // 付款码查询openid
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9
-func (comp *Client) AuthCodeToOpenID(ctx *context.Context, authCode string) *response2.ResponseWork {
+func (comp *Client) AuthCodeToOpenID(ctx context.Context, authCode string) *response2.ResponseWork {
 
 	config := (*comp.BaseClient.App).GetConfig()
 	appID := config.GetString("app_id", "")

@@ -24,7 +24,7 @@ func NewRelationClient(app kernel.ApplicationInterface) (*RelationClient, error)
 
 // 新增摇一摇出来的页面信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Page_management.html
-func (comp *RelationClient) BindPages(ctx *context.Context, data *request.RequestDeviceIdentifier, pageIDs []int) (*response.ResponsePage, error) {
+func (comp *RelationClient) BindPages(ctx context.Context, data *request.RequestDeviceIdentifier, pageIDs []int) (*response.ResponsePage, error) {
 
 	result := &response.ResponsePage{}
 
@@ -39,7 +39,7 @@ func (comp *RelationClient) BindPages(ctx *context.Context, data *request.Reques
 
 // 查询设备与页面的关联关系
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Relationship_between_pages_and_devices/Querying_Device_and_Page_Associations.html
-func (comp *RelationClient) ListByDeviceID(ctx *context.Context, data *request.RequestDeviceIdentifier) (*response.ResponseRelationSearch, error) {
+func (comp *RelationClient) ListByDeviceID(ctx context.Context, data *request.RequestDeviceIdentifier) (*response.ResponseRelationSearch, error) {
 
 	result := &response.ResponseRelationSearch{}
 
@@ -54,7 +54,7 @@ func (comp *RelationClient) ListByDeviceID(ctx *context.Context, data *request.R
 
 // 查询设备与页面的关联关系
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Relationship_between_pages_and_devices/Querying_Device_and_Page_Associations.html
-func (comp *RelationClient) ListByPageId(ctx *context.Context, pageID int, begin int, count int) (*response.ResponseRelationSearch, error) {
+func (comp *RelationClient) ListByPageId(ctx context.Context, pageID int, begin int, count int) (*response.ResponseRelationSearch, error) {
 
 	result := &response.ResponseRelationSearch{}
 

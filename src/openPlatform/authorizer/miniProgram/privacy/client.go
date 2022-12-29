@@ -25,7 +25,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 查询小程序用户隐私保护指引
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/privacy_config/get_privacy_setting.html#请求地址
-func (comp *Client) Get(ctx *context.Context) (*response.ResponseGet, error) {
+func (comp *Client) Get(ctx context.Context) (*response.ResponseGet, error) {
 
 	result := &response.ResponseGet{}
 
@@ -37,7 +37,7 @@ func (comp *Client) Get(ctx *context.Context) (*response.ResponseGet, error) {
 
 // 配置小程序用户隐私保护指引
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/privacy_config/set_privacy_setting.html
-func (comp *Client) Set(ctx *context.Context, params *request.RequestSet) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) Set(ctx context.Context, params *request.RequestSet) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -49,7 +49,7 @@ func (comp *Client) Set(ctx *context.Context, params *request.RequestSet) (*resp
 
 // 上传小程序用户隐私保护指引
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/privacy_config/upload_privacy_exfile.html#请求地址
-func (comp *Client) Upload(ctx *context.Context, path string) (*response.ResponseUpload, error) {
+func (comp *Client) Upload(ctx context.Context, path string) (*response.ResponseUpload, error) {
 
 	result := &response.ResponseUpload{}
 

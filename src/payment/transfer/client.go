@@ -27,7 +27,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Query MerchantPay to balance.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
-func (comp *Client) QueryBalanceOrder(ctx *context.Context, partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
+func (comp *Client) QueryBalanceOrder(ctx context.Context, partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseGetTransferInfo{}
@@ -46,7 +46,7 @@ func (comp *Client) QueryBalanceOrder(ctx *context.Context, partnerTradeNo strin
 
 // Send MerchantPay to balance.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
-func (comp *Client) ToBalance(ctx *context.Context, data *request.RequestTransferToBalance) (*response.ResponseTransferToBalance, error) {
+func (comp *Client) ToBalance(ctx context.Context, data *request.RequestTransferToBalance) (*response.ResponseTransferToBalance, error) {
 
 	result := &response.ResponseTransferToBalance{}
 
@@ -70,7 +70,7 @@ func (comp *Client) ToBalance(ctx *context.Context, data *request.RequestTransfe
 
 // Query MerchantPay order to BankCard.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
-func (comp *Client) QueryBankCardOrder(ctx *context.Context, partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
+func (comp *Client) QueryBankCardOrder(ctx context.Context, partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseGetTransferInfo{}
@@ -88,7 +88,7 @@ func (comp *Client) QueryBankCardOrder(ctx *context.Context, partnerTradeNo stri
 
 // Send MerchantPay to BankCard.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_2
-func (comp *Client) ToBankCard(ctx *context.Context, data *request.RequestToBankCard) (*response2.ResponsePayment, error) {
+func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankCard) (*response2.ResponsePayment, error) {
 
 	result := &response2.ResponsePayment{}
 

@@ -34,25 +34,25 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 新增临时素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
-func (comp *Client) UploadImage(ctx *context.Context, path string) (*response.ResponseUploadMedia, error) {
+func (comp *Client) UploadImage(ctx context.Context, path string) (*response.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "image", path)
 }
 
-func (comp *Client) UploadVoice(ctx *context.Context, path string) (*response.ResponseUploadMedia, error) {
+func (comp *Client) UploadVoice(ctx context.Context, path string) (*response.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "voice", path)
 }
 
-func (comp *Client) UploadVideo(ctx *context.Context, path string) (*response.ResponseUploadMedia, error) {
+func (comp *Client) UploadVideo(ctx context.Context, path string) (*response.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "video", path)
 }
 
-func (comp *Client) UploadThumb(ctx *context.Context, path string) (*response.ResponseUploadMedia, error) {
+func (comp *Client) UploadThumb(ctx context.Context, path string) (*response.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "thumb", path)
 }
 
 // 上传临时素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html
-func (comp *Client) Upload(ctx *context.Context, mediaType string, path string) (*response.ResponseUploadMedia, error) {
+func (comp *Client) Upload(ctx context.Context, mediaType string, path string) (*response.ResponseUploadMedia, error) {
 
 	_, err := os.Stat(path)
 	if (err != nil && os.IsExist(err)) && (err != nil && os.IsPermission(err)) {
@@ -82,7 +82,7 @@ func (comp *Client) Upload(ctx *context.Context, mediaType string, path string) 
 
 // 获取临时素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90254
-func (comp *Client) Get(ctx *context.Context, mediaID string) (*http.Response, error) {
+func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}
@@ -98,7 +98,7 @@ func (comp *Client) Get(ctx *context.Context, mediaID string) (*http.Response, e
 
 // 获取高清语音素材
 // https://work.weixin.qq.com/api/doc/90000/90135/90255
-func (comp *Client) GetJSSDK(ctx *context.Context, mediaID string) (*http.Response, error) {
+func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response.ResponseHeaderMedia{}

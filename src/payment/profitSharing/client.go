@@ -25,7 +25,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Share Orders.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
-func (comp *Client) Share(ctx *context.Context, param *request.RequestShare) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) Share(ctx context.Context, param *request.RequestShare) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
@@ -44,7 +44,7 @@ func (comp *Client) Share(ctx *context.Context, param *request.RequestShare) (*r
 
 // Query Profit Sharing Result.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
-func (comp *Client) Query(ctx *context.Context, transactionID string, outOrderNO string) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) Query(ctx context.Context, transactionID string, outOrderNO string) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
@@ -60,7 +60,7 @@ func (comp *Client) Query(ctx *context.Context, transactionID string, outOrderNO
 
 // Share Return.
 // https://pay.weixin.qq.com/wiki/doc/api/allocation.php?chapter=27_7&index=8
-func (comp *Client) Return(ctx *context.Context, data *request.RequestShareReturn) (*response.ResponseProfitSharingReturn, error) {
+func (comp *Client) Return(ctx context.Context, data *request.RequestShareReturn) (*response.ResponseProfitSharingReturn, error) {
 
 	result := &response.ResponseProfitSharingReturn{}
 
@@ -86,7 +86,7 @@ func (comp *Client) Return(ctx *context.Context, data *request.RequestShareRetur
 // Query Return Orders Result.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
 
-func (comp *Client) QueryReturn(ctx *context.Context, outOrderNO string, outReturnNO string) (*response.ResponseProfitSharingReturnOrder, error) {
+func (comp *Client) QueryReturn(ctx context.Context, outOrderNO string, outReturnNO string) (*response.ResponseProfitSharingReturnOrder, error) {
 
 	result := &response.ResponseProfitSharingReturnOrder{}
 
@@ -103,7 +103,7 @@ func (comp *Client) QueryReturn(ctx *context.Context, outOrderNO string, outRetu
 // UnFreeze Orders.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_5.shtml
 
-func (comp *Client) UnfreezeOrders(ctx *context.Context, transactionID string, outOrderNO string, description string) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) UnfreezeOrders(ctx context.Context, transactionID string, outOrderNO string, description string) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
@@ -122,7 +122,7 @@ func (comp *Client) UnfreezeOrders(ctx *context.Context, transactionID string, o
 // Query Transaction Amounts.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_6.shtml
 
-func (comp *Client) QueryTransactions(ctx *context.Context, transactionID string) (*response.ResponseProfitSharingTransaction, error) {
+func (comp *Client) QueryTransactions(ctx context.Context, transactionID string) (*response.ResponseProfitSharingTransaction, error) {
 
 	result := &response.ResponseProfitSharingTransaction{}
 
@@ -136,7 +136,7 @@ func (comp *Client) QueryTransactions(ctx *context.Context, transactionID string
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
 
 func (comp *Client) AddReceiver(
-	ctx *context.Context,
+	ctx context.Context,
 	receiverType string, account string, name string,
 	relationType string, customRelation string) (*response.ResponseProfitSharingAddReceiver, error) {
 
@@ -159,7 +159,7 @@ func (comp *Client) AddReceiver(
 // Delete Receiver.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml
 
-func (comp *Client) DeleteReceiver(ctx *context.Context, receiverType string, account string) (*response.ResponseProfitSharingDeleteReceiver, error) {
+func (comp *Client) DeleteReceiver(ctx context.Context, receiverType string, account string) (*response.ResponseProfitSharingDeleteReceiver, error) {
 
 	result := &response.ResponseProfitSharingDeleteReceiver{}
 
@@ -179,7 +179,7 @@ func (comp *Client) DeleteReceiver(ctx *context.Context, receiverType string, ac
 // Get Bills.
 // https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_11.shtml
 
-func (comp *Client) GetBills(ctx *context.Context, subMchID string, billDate string, tarType string) (*response.ResponseProfitSharingGetBills, error) {
+func (comp *Client) GetBills(ctx context.Context, subMchID string, billDate string, tarType string) (*response.ResponseProfitSharingGetBills, error) {
 
 	result := &response.ResponseProfitSharingGetBills{}
 

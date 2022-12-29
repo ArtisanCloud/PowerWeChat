@@ -24,7 +24,7 @@ func NewPageClient(app kernel.ApplicationInterface) (*PageClient, error) {
 
 // 新增摇一摇出来的页面信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Page_management.html
-func (comp *PageClient) Create(ctx *context.Context, data *request.RequestPageInfo) (*response.ResponsePage, error) {
+func (comp *PageClient) Create(ctx context.Context, data *request.RequestPageInfo) (*response.ResponsePage, error) {
 
 	result := &response.ResponsePage{}
 
@@ -35,7 +35,7 @@ func (comp *PageClient) Create(ctx *context.Context, data *request.RequestPageIn
 
 // 编辑摇一摇出来的页面信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Edit_page_information.html
-func (comp *PageClient) Update(ctx *context.Context, data request.RequestPageUpdate) (*response.ResponsePage, error) {
+func (comp *PageClient) Update(ctx context.Context, data request.RequestPageUpdate) (*response.ResponsePage, error) {
 
 	result := &response.ResponsePage{}
 
@@ -46,7 +46,7 @@ func (comp *PageClient) Update(ctx *context.Context, data request.RequestPageUpd
 
 // 更新设备分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Query_page_list.html
-func (comp *PageClient) List(ctx *context.Context, begin int, count int) (*response.ResponsePageList, error) {
+func (comp *PageClient) List(ctx context.Context, begin int, count int) (*response.ResponsePageList, error) {
 
 	result := &response.ResponsePageList{}
 
@@ -63,7 +63,7 @@ func (comp *PageClient) List(ctx *context.Context, begin int, count int) (*respo
 
 // 删除已有的页面
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Pages_management/Delete_page.html
-func (comp *PageClient) Delete(ctx *context.Context, pageID string) (*response.ResponsePage, error) {
+func (comp *PageClient) Delete(ctx context.Context, pageID string) (*response.ResponsePage, error) {
 
 	result := &response.ResponsePage{}
 

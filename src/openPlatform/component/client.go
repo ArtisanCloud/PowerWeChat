@@ -24,7 +24,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 快速注册企业小程序
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/Fast_Registration_Interface_document.html#接口详情
-func (comp *Client) RegisterMiniProgram(ctx *context.Context, params *request.RequestRegisterMiniProgram) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) RegisterMiniProgram(ctx context.Context, params *request.RequestRegisterMiniProgram) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -36,7 +36,7 @@ func (comp *Client) RegisterMiniProgram(ctx *context.Context, params *request.Re
 
 // 查询创建任务状态
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/Fast_Registration_Interface_document.html#接口详情
-func (comp *Client) GetRegistrationStatus(ctx *context.Context, companyName string, legalPersonaWechat string, legalPersonaName string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) GetRegistrationStatus(ctx context.Context, companyName string, legalPersonaWechat string, legalPersonaName string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 

@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取企业标签库
 // https://developer.work.weixin.qq.com/document/path/92117
-func (comp *Client) GetCorpTagList(ctx *context.Context, tagID []string, groupID []string) (*response.ResponseTagGetCorpTagList, error) {
+func (comp *Client) GetCorpTagList(ctx context.Context, tagID []string, groupID []string) (*response.ResponseTagGetCorpTagList, error) {
 
 	result := &response.ResponseTagGetCorpTagList{}
 
@@ -41,7 +41,7 @@ func (comp *Client) GetCorpTagList(ctx *context.Context, tagID []string, groupID
 
 // 添加企业客户标签
 // https://developer.work.weixin.qq.com/document/path/92117
-func (comp *Client) AddCorpTag(ctx *context.Context, options *request.RequestTagAddCorpTag) (*response.ResponseTagAddCorpTag, error) {
+func (comp *Client) AddCorpTag(ctx context.Context, options *request.RequestTagAddCorpTag) (*response.ResponseTagAddCorpTag, error) {
 
 	result := &response.ResponseTagAddCorpTag{}
 
@@ -52,7 +52,7 @@ func (comp *Client) AddCorpTag(ctx *context.Context, options *request.RequestTag
 
 // 编辑企业客户标签
 // https://developer.work.weixin.qq.com/document/path/92117
-func (comp *Client) EditCorpTag(ctx *context.Context, options *request.RequestTagEditCorpTag) (*response2.ResponseWork, error) {
+func (comp *Client) EditCorpTag(ctx context.Context, options *request.RequestTagEditCorpTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -63,7 +63,7 @@ func (comp *Client) EditCorpTag(ctx *context.Context, options *request.RequestTa
 
 // 删除企业客户标签
 // https://developer.work.weixin.qq.com/document/path/92117
-func (comp *Client) DelCorpTag(ctx *context.Context, options *request.RequestTagDelCorpTag) (*response2.ResponseWork, error) {
+func (comp *Client) DelCorpTag(ctx context.Context, options *request.RequestTagDelCorpTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -74,7 +74,7 @@ func (comp *Client) DelCorpTag(ctx *context.Context, options *request.RequestTag
 
 // 获取指定规则组下的企业客户标签
 // https://developer.work.weixin.qq.com/document/path/94882
-func (comp *Client) GetStrategyTagList(ctx *context.Context, options *request.RequestTagGetStrategyTagList) (*response.ResponseTagGetStrategyTagList, error) {
+func (comp *Client) GetStrategyTagList(ctx context.Context, options *request.RequestTagGetStrategyTagList) (*response.ResponseTagGetStrategyTagList, error) {
 
 	result := &response.ResponseTagGetStrategyTagList{}
 
@@ -85,7 +85,7 @@ func (comp *Client) GetStrategyTagList(ctx *context.Context, options *request.Re
 
 // 为指定规则组创建企业客户标签
 // https://developer.work.weixin.qq.com/document/path/94882
-func (comp *Client) AddStrategyTag(ctx *context.Context, options *request.RequestTagAddStrategyTag) (*response.ResponseTagAddStrategyTag, error) {
+func (comp *Client) AddStrategyTag(ctx context.Context, options *request.RequestTagAddStrategyTag) (*response.ResponseTagAddStrategyTag, error) {
 
 	result := &response.ResponseTagAddStrategyTag{}
 
@@ -96,7 +96,7 @@ func (comp *Client) AddStrategyTag(ctx *context.Context, options *request.Reques
 
 // 编辑指定规则组下的企业客户标签
 // https://developer.work.weixin.qq.com/document/path/94882
-func (comp *Client) EditStrategyTag(ctx *context.Context, options *request.RequestTagEditStrategyTag) (*response2.ResponseWork, error) {
+func (comp *Client) EditStrategyTag(ctx context.Context, options *request.RequestTagEditStrategyTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -107,7 +107,7 @@ func (comp *Client) EditStrategyTag(ctx *context.Context, options *request.Reque
 
 // 删除指定规则组下的企业客户标签
 // https://developer.work.weixin.qq.com/document/path/94882
-func (comp *Client) DelStrategyTag(ctx *context.Context, options *request.RequestTagDelStrategyTag) (*response2.ResponseWork, error) {
+func (comp *Client) DelStrategyTag(ctx context.Context, options *request.RequestTagDelStrategyTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -118,7 +118,7 @@ func (comp *Client) DelStrategyTag(ctx *context.Context, options *request.Reques
 
 // 编辑客户企业标签
 // https://developer.work.weixin.qq.com/document/path/92118
-func (comp *Client) MarkTag(ctx *context.Context, options *request.RequestTagMarkTag) (*response2.ResponseWork, error) {
+func (comp *Client) MarkTag(ctx context.Context, options *request.RequestTagMarkTag) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

@@ -22,7 +22,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取公众号的自动回复规则
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Getting_Rules_for_Auto_Replies.html
-func (comp *Client) Current(ctx *context.Context) (*response.ResponseGettingRulesForAutoReplies, error) {
+func (comp *Client) Current(ctx context.Context) (*response.ResponseGettingRulesForAutoReplies, error) {
 
 	result := &response.ResponseGettingRulesForAutoReplies{}
 

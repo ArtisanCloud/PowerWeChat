@@ -14,7 +14,7 @@ type Client struct {
 
 // 使用授权码获取授权信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/authorization_info.html
-func (comp *Client) HandleAuthorize(ctx *context.Context, authCode string) (*response.ResponseHandleAuthorize, error) {
+func (comp *Client) HandleAuthorize(ctx context.Context, authCode string) (*response.ResponseHandleAuthorize, error) {
 
 	result := &response.ResponseHandleAuthorize{}
 
@@ -36,7 +36,7 @@ func (comp *Client) HandleAuthorize(ctx *context.Context, authCode string) (*res
 
 // 获取授权帐号详情
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/api_get_authorizer_info.html
-func (comp *Client) GetAuthorizer(ctx *context.Context, appID string) (*response.ResponseGetAuthorizer, error) {
+func (comp *Client) GetAuthorizer(ctx context.Context, appID string) (*response.ResponseGetAuthorizer, error) {
 
 	result := &response.ResponseGetAuthorizer{}
 
@@ -54,7 +54,7 @@ func (comp *Client) GetAuthorizer(ctx *context.Context, appID string) (*response
 
 // 获取授权方选项信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/Account_Authorization/api_get_authorizer_option.html
-func (comp *Client) GetAuthorizerOption(ctx *context.Context, appID string, name string) (*response.ResponseGetAuthorizerOption, error) {
+func (comp *Client) GetAuthorizerOption(ctx context.Context, appID string, name string) (*response.ResponseGetAuthorizerOption, error) {
 
 	result := &response.ResponseGetAuthorizerOption{}
 
@@ -73,7 +73,7 @@ func (comp *Client) GetAuthorizerOption(ctx *context.Context, appID string, name
 
 // 设置授权方选项信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/Account_Authorization/api_set_authorizer_option.html
-func (comp *Client) SetAuthorizerOption(ctx *context.Context, appID string, name string, value string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) SetAuthorizerOption(ctx context.Context, appID string, name string, value string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -93,7 +93,7 @@ func (comp *Client) SetAuthorizerOption(ctx *context.Context, appID string, name
 
 // 拉取所有已授权的帐号信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/Account_Authorization/api_get_authorizer_list.html
-func (comp *Client) GetAuthorizers(ctx *context.Context, offset int, count int) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) GetAuthorizers(ctx context.Context, offset int, count int) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -112,7 +112,7 @@ func (comp *Client) GetAuthorizers(ctx *context.Context, offset int, count int) 
 
 // 预授权码
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/pre_auth_code.html
-func (comp *Client) CreatePreAuthorizationCode(ctx *context.Context) (*response.ResponseCreatePreAuthorizationCode, error) {
+func (comp *Client) CreatePreAuthorizationCode(ctx context.Context) (*response.ResponseCreatePreAuthorizationCode, error) {
 
 	result := &response.ResponseCreatePreAuthorizationCode{}
 
@@ -129,7 +129,7 @@ func (comp *Client) CreatePreAuthorizationCode(ctx *context.Context) (*response.
 
 // 清空 api 的调用quota
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/openApi/clear_quota.html
-func (comp *Client) ClearQuota(ctx *context.Context) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) ClearQuota(ctx context.Context) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 

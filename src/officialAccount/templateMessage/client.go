@@ -21,7 +21,7 @@ type Client struct {
 
 // 设置所属行业
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
-func (comp *Client) SetIndustry(ctx *context.Context, industryOne string, industryTwo string, optional *power.HashMap) (*response.ResponseTemplateIndustry, error) {
+func (comp *Client) SetIndustry(ctx context.Context, industryOne string, industryTwo string, optional *power.HashMap) (*response.ResponseTemplateIndustry, error) {
 
 	result := &response.ResponseTemplateIndustry{}
 	params := &object.HashMap{
@@ -36,7 +36,7 @@ func (comp *Client) SetIndustry(ctx *context.Context, industryOne string, indust
 
 // 获取设置的行业信息
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
-func (comp *Client) GetIndustry(ctx *context.Context) (*response.ResponseTemplateIndustry, error) {
+func (comp *Client) GetIndustry(ctx context.Context) (*response.ResponseTemplateIndustry, error) {
 
 	result := &response.ResponseTemplateIndustry{}
 
@@ -48,7 +48,7 @@ func (comp *Client) GetIndustry(ctx *context.Context) (*response.ResponseTemplat
 
 // 获得模板ID
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
-func (comp *Client) AddTemplate(ctx *context.Context, industryOne string) (*response.ResponseTemplate, error) {
+func (comp *Client) AddTemplate(ctx context.Context, industryOne string) (*response.ResponseTemplate, error) {
 
 	result := &response.ResponseTemplate{}
 
@@ -63,7 +63,7 @@ func (comp *Client) AddTemplate(ctx *context.Context, industryOne string) (*resp
 
 // 获取模板列表
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
-func (comp *Client) GetPrivateTemplates(ctx *context.Context) (*response.ResponseTemplateGetPrivate, error) {
+func (comp *Client) GetPrivateTemplates(ctx context.Context) (*response.ResponseTemplateGetPrivate, error) {
 
 	result := &response.ResponseTemplateGetPrivate{}
 
@@ -75,7 +75,7 @@ func (comp *Client) GetPrivateTemplates(ctx *context.Context) (*response.Respons
 
 // 删除模板
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
-func (comp *Client) DeletePrivateTemplate(ctx *context.Context, templateID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeletePrivateTemplate(ctx context.Context, templateID string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -88,7 +88,7 @@ func (comp *Client) DeletePrivateTemplate(ctx *context.Context, templateID strin
 
 }
 
-func (comp *Client) Send(ctx *context.Context, message *request.RequestTemlateMessage) (*response.ResponseTemplateSend, error) {
+func (comp *Client) Send(ctx context.Context, message *request.RequestTemlateMessage) (*response.ResponseTemplateSend, error) {
 
 	result := &response.ResponseTemplateSend{}
 
@@ -97,7 +97,7 @@ func (comp *Client) Send(ctx *context.Context, message *request.RequestTemlateMe
 	return result, err
 }
 
-func (comp *Client) SendSubscription(ctx *context.Context, message *request.RequestTemlateMessageSubscribe) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) SendSubscription(ctx context.Context, message *request.RequestTemlateMessageSubscribe) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 

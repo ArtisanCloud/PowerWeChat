@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取规则组列表
 // https://developer.work.weixin.qq.com/document/path/94890
-func (comp *Client) List(ctx *context.Context, cursor string, limit int) (*response.ResponseMomentStrategyList, error) {
+func (comp *Client) List(ctx context.Context, cursor string, limit int) (*response.ResponseMomentStrategyList, error) {
 
 	result := &response.ResponseMomentStrategyList{}
 
@@ -41,7 +41,7 @@ func (comp *Client) List(ctx *context.Context, cursor string, limit int) (*respo
 
 // 获取规则组详情
 // https://developer.work.weixin.qq.com/document/path/94890
-func (comp *Client) Get(ctx *context.Context, strategyID int) (*response.ResponseMomentStrategyGet, error) {
+func (comp *Client) Get(ctx context.Context, strategyID int) (*response.ResponseMomentStrategyGet, error) {
 
 	result := &response.ResponseMomentStrategyGet{}
 
@@ -56,7 +56,7 @@ func (comp *Client) Get(ctx *context.Context, strategyID int) (*response.Respons
 
 // 获取规则组管理范围
 // https://developer.work.weixin.qq.com/document/path/94890
-func (comp *Client) GetRange(ctx *context.Context, strategyID int, cursor string, limit int) (*response.ResponseMomentStrategyGetRange, error) {
+func (comp *Client) GetRange(ctx context.Context, strategyID int, cursor string, limit int) (*response.ResponseMomentStrategyGetRange, error) {
 
 	result := &response.ResponseMomentStrategyGetRange{}
 
@@ -73,7 +73,7 @@ func (comp *Client) GetRange(ctx *context.Context, strategyID int, cursor string
 
 // 创建新的规则组
 // https://developer.work.weixin.qq.com/document/path/94890
-func (comp *Client) Create(ctx *context.Context, options *request.RequestMomentStrategyCreate) (*response.ResponseMomentStrategyCreate, error) {
+func (comp *Client) Create(ctx context.Context, options *request.RequestMomentStrategyCreate) (*response.ResponseMomentStrategyCreate, error) {
 
 	result := &response.ResponseMomentStrategyCreate{}
 
@@ -84,7 +84,7 @@ func (comp *Client) Create(ctx *context.Context, options *request.RequestMomentS
 
 // 编辑规则组及其管理范围
 // https://developer.work.weixin.qq.com/document/path/94890
-func (comp *Client) Edit(ctx *context.Context, options *request.RequestMomentStrategyEdit) (*response.ResponseMomentStrategyCreate, error) {
+func (comp *Client) Edit(ctx context.Context, options *request.RequestMomentStrategyEdit) (*response.ResponseMomentStrategyCreate, error) {
 
 	result := &response.ResponseMomentStrategyCreate{}
 
@@ -95,7 +95,7 @@ func (comp *Client) Edit(ctx *context.Context, options *request.RequestMomentStr
 
 // 删除规则组
 // https://developer.work.weixin.qq.com/document/path/94890
-func (comp *Client) Del(ctx *context.Context, strategyID int) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx context.Context, strategyID int) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

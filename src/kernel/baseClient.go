@@ -81,7 +81,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 
 }
 
-func (client *BaseClient) HttpGet(ctx *context.Context, url string, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpGet(ctx context.Context, url string, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		ctx,
 		url,
@@ -95,7 +95,7 @@ func (client *BaseClient) HttpGet(ctx *context.Context, url string, query *objec
 	)
 }
 
-func (client *BaseClient) HttpPost(ctx *context.Context, url string, data interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpPost(ctx context.Context, url string, data interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		ctx,
 		url,
@@ -109,7 +109,7 @@ func (client *BaseClient) HttpPost(ctx *context.Context, url string, data interf
 	)
 }
 
-func (client *BaseClient) HttpPostJson(ctx *context.Context, url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpPostJson(ctx context.Context, url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
 		ctx,
 		url,
@@ -124,7 +124,7 @@ func (client *BaseClient) HttpPostJson(ctx *context.Context, url string, data in
 	)
 }
 
-func (client *BaseClient) HttpUpload(ctx *context.Context, url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpUpload(ctx context.Context, url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
 	multipart := []*object.HashMap{}
 	headers := &object.HashMap{}
@@ -178,12 +178,12 @@ func (client *BaseClient) HttpUpload(ctx *context.Context, url string, files *ob
 	}, false, nil, outBody)
 }
 
-func (client *BaseClient) Request(ctx *context.Context, url string, method string, options *object.HashMap,
+func (client *BaseClient) Request(ctx context.Context, url string, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (*http.Response, error) {
 
 	// http client request
-	df := client.HttpHelper.Df().WithContext(*ctx).Uri(url).Method(method)
+	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(method)
 
 	// 检查是否需要有请求参数配置
 	if options != nil {
@@ -246,7 +246,7 @@ func (client *BaseClient) Request(ctx *context.Context, url string, method strin
 	//}
 }
 
-func (client *BaseClient) RequestRaw(ctx *context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*http.Response, error) {
+func (client *BaseClient) RequestRaw(ctx context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*http.Response, error) {
 	return client.Request(ctx, url, method, options, true, outHeader, outBody)
 }
 

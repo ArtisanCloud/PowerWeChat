@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建日程
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Add(ctx *context.Context, schedule *power.HashMap, agentID int) (*response.ResponseScheduleAdd, error) {
+func (comp *Client) Add(ctx context.Context, schedule *power.HashMap, agentID int) (*response.ResponseScheduleAdd, error) {
 
 	result := &response.ResponseScheduleAdd{}
 
@@ -41,7 +41,7 @@ func (comp *Client) Add(ctx *context.Context, schedule *power.HashMap, agentID i
 
 // 更新日程
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Update(ctx *context.Context, schedule *power.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx context.Context, schedule *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -56,7 +56,7 @@ func (comp *Client) Update(ctx *context.Context, schedule *power.HashMap) (*resp
 
 // 获取日程详情
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Get(ctx *context.Context, scheduleIDList []string) (*response.ResponseScheduleGet, error) {
+func (comp *Client) Get(ctx context.Context, scheduleIDList []string) (*response.ResponseScheduleGet, error) {
 
 	result := &response.ResponseScheduleGet{}
 
@@ -71,7 +71,7 @@ func (comp *Client) Get(ctx *context.Context, scheduleIDList []string) (*respons
 
 // 删除日程
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Del(ctx *context.Context, scheduleID string) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx context.Context, scheduleID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

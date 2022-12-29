@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取自定义菜单配置
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Getting_Custom_Menu_Configurations.html
-func (comp *Client) Get(ctx *context.Context) (*response.ResponseMenuGet, error) {
+func (comp *Client) Get(ctx context.Context) (*response.ResponseMenuGet, error) {
 
 	result := &response.ResponseMenuGet{}
 
@@ -35,7 +35,7 @@ func (comp *Client) Get(ctx *context.Context) (*response.ResponseMenuGet, error)
 
 // 查询接口
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Querying_Custom_Menus.html
-func (comp *Client) CurrentSelfMenu(ctx *context.Context) (*response.ResponseCurrentSelfMenu, error) {
+func (comp *Client) CurrentSelfMenu(ctx context.Context) (*response.ResponseCurrentSelfMenu, error) {
 
 	result := &response.ResponseCurrentSelfMenu{}
 
@@ -46,7 +46,7 @@ func (comp *Client) CurrentSelfMenu(ctx *context.Context) (*response.ResponseCur
 
 // 创建接口
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Creating_Custom-Defined_Menu.html
-func (comp *Client) Create(ctx *context.Context, buttons []*request.Button) (*response.ResponseMenuCreate, error) {
+func (comp *Client) Create(ctx context.Context, buttons []*request.Button) (*response.ResponseMenuCreate, error) {
 
 	result := &response.ResponseMenuCreate{}
 
@@ -59,7 +59,7 @@ func (comp *Client) Create(ctx *context.Context, buttons []*request.Button) (*re
 
 // 创建个性化菜单
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html
-func (comp *Client) CreateConditional(ctx *context.Context, buttons []*request.Button, rules *request.RequestMatchRule) (*response.ResponseMenuCreateConditional, error) {
+func (comp *Client) CreateConditional(ctx context.Context, buttons []*request.Button, rules *request.RequestMatchRule) (*response.ResponseMenuCreateConditional, error) {
 
 	result := &response.ResponseMenuCreateConditional{}
 
@@ -74,7 +74,7 @@ func (comp *Client) CreateConditional(ctx *context.Context, buttons []*request.B
 
 // 删除接口
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Deleting_Custom-Defined_Menu.html
-func (comp *Client) Delete(ctx *context.Context) (*response.ResponseMenuDelete, error) {
+func (comp *Client) Delete(ctx context.Context) (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
@@ -85,7 +85,7 @@ func (comp *Client) Delete(ctx *context.Context) (*response.ResponseMenuDelete, 
 
 // 删除个性化菜单
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html
-func (comp *Client) DeleteConditional(ctx *context.Context, menuID int) (*response.ResponseMenuDelete, error) {
+func (comp *Client) DeleteConditional(ctx context.Context, menuID int) (*response.ResponseMenuDelete, error) {
 
 	result := &response.ResponseMenuDelete{}
 
@@ -98,7 +98,7 @@ func (comp *Client) DeleteConditional(ctx *context.Context, menuID int) (*respon
 
 // 测试个性化菜单匹配结果
 // https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Personalized_menu_interface.html#1
-func (comp *Client) TryMatch(ctx *context.Context, userID string) (*response.ResponseMenuTryMatch, error) {
+func (comp *Client) TryMatch(ctx context.Context, userID string) (*response.ResponseMenuTryMatch, error) {
 
 	result := &response.ResponseMenuTryMatch{}
 

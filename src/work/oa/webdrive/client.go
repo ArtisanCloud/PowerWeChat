@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 新建空间
 // https://developer.work.weixin.qq.com/document/path/93655#新建空间
-func (comp *Client) SpaceCreate(ctx *context.Context, options *request.RequestWebDriveSpaceCreate) (*response.ResponseWebDriveSpaceCreate, error) {
+func (comp *Client) SpaceCreate(ctx context.Context, options *request.RequestWebDriveSpaceCreate) (*response.ResponseWebDriveSpaceCreate, error) {
 
 	result := &response.ResponseWebDriveSpaceCreate{}
 
@@ -35,7 +35,7 @@ func (comp *Client) SpaceCreate(ctx *context.Context, options *request.RequestWe
 
 // 重命名空间
 // https://developer.work.weixin.qq.com/document/path/93655#重命名空间
-func (comp *Client) SpaceRename(ctx *context.Context, options *request.RequestWebDriveSpaceRename) (*response2.ResponseWork, error) {
+func (comp *Client) SpaceRename(ctx context.Context, options *request.RequestWebDriveSpaceRename) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -46,7 +46,7 @@ func (comp *Client) SpaceRename(ctx *context.Context, options *request.RequestWe
 
 // 解散空间
 // https://developer.work.weixin.qq.com/document/path/93655#解散空间
-func (comp *Client) SpaceDismiss(ctx *context.Context, options *request.RequestWebDriveSpaceDismiss) (*response2.ResponseWork, error) {
+func (comp *Client) SpaceDismiss(ctx context.Context, options *request.RequestWebDriveSpaceDismiss) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -57,7 +57,7 @@ func (comp *Client) SpaceDismiss(ctx *context.Context, options *request.RequestW
 
 // 获取空间信息
 // https://developer.work.weixin.qq.com/document/path/93655#获取空间相册信息
-func (comp *Client) SpaceInfo(ctx *context.Context, options *request.RequestWebDriveSpaceInfo) (*response.ResponseWebDriveSpaceInfo, error) {
+func (comp *Client) SpaceInfo(ctx context.Context, options *request.RequestWebDriveSpaceInfo) (*response.ResponseWebDriveSpaceInfo, error) {
 
 	result := &response.ResponseWebDriveSpaceInfo{}
 
@@ -68,7 +68,7 @@ func (comp *Client) SpaceInfo(ctx *context.Context, options *request.RequestWebD
 
 // 添加成员/部门
 // https://developer.work.weixin.qq.com/document/path/93656#添加成员部门
-func (comp *Client) SpaceACLAdd(ctx *context.Context, options *request.RequestWebDriveSpaceACLAdd) (*response2.ResponseWork, error) {
+func (comp *Client) SpaceACLAdd(ctx context.Context, options *request.RequestWebDriveSpaceACLAdd) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -79,7 +79,7 @@ func (comp *Client) SpaceACLAdd(ctx *context.Context, options *request.RequestWe
 
 // 移除成员/部门
 // https://developer.work.weixin.qq.com/document/path/93656#移除成员部门
-func (comp *Client) SpaceACLDel(ctx *context.Context, options *request.RequestWebDriveSpaceACLDel) (*response2.ResponseWork, error) {
+func (comp *Client) SpaceACLDel(ctx context.Context, options *request.RequestWebDriveSpaceACLDel) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -90,7 +90,7 @@ func (comp *Client) SpaceACLDel(ctx *context.Context, options *request.RequestWe
 
 // 安全设置
 // https://developer.work.weixin.qq.com/document/path/93656#安全设置
-func (comp *Client) SpaceSetting(ctx *context.Context, options *request.RequestWebDriveSpaceSetting) (*response2.ResponseWork, error) {
+func (comp *Client) SpaceSetting(ctx context.Context, options *request.RequestWebDriveSpaceSetting) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -101,7 +101,7 @@ func (comp *Client) SpaceSetting(ctx *context.Context, options *request.RequestW
 
 // 获取邀请链接
 // https://developer.work.weixin.qq.com/document/path/93656#获取邀请链接
-func (comp *Client) SpaceShare(ctx *context.Context, options *request.RequestWebDriveSpaceShare) (*response.ResponseWebDriveSpaceShare, error) {
+func (comp *Client) SpaceShare(ctx context.Context, options *request.RequestWebDriveSpaceShare) (*response.ResponseWebDriveSpaceShare, error) {
 
 	result := &response.ResponseWebDriveSpaceShare{}
 
@@ -112,7 +112,7 @@ func (comp *Client) SpaceShare(ctx *context.Context, options *request.RequestWeb
 
 // 获取文件列表
 // https://developer.work.weixin.qq.com/document/path/93657#获取文件列表
-func (comp *Client) FileList(ctx *context.Context, options *request.RequestWebDriveFileList) (*response.ResponseWebDriveFileList, error) {
+func (comp *Client) FileList(ctx context.Context, options *request.RequestWebDriveFileList) (*response.ResponseWebDriveFileList, error) {
 
 	result := &response.ResponseWebDriveFileList{}
 
@@ -123,7 +123,7 @@ func (comp *Client) FileList(ctx *context.Context, options *request.RequestWebDr
 
 // 上传文件
 // https://developer.work.weixin.qq.com/document/path/93657#上传文件
-func (comp *Client) FileUpload(ctx *context.Context, options *request.RequestWebDriveFileUpload) (*response.ResponseWebDriveFileUpload, error) {
+func (comp *Client) FileUpload(ctx context.Context, options *request.RequestWebDriveFileUpload) (*response.ResponseWebDriveFileUpload, error) {
 
 	result := &response.ResponseWebDriveFileUpload{}
 
@@ -134,7 +134,7 @@ func (comp *Client) FileUpload(ctx *context.Context, options *request.RequestWeb
 
 // 下载文件
 // https://developer.work.weixin.qq.com/document/path/93657#下载文件
-func (comp *Client) FileDownload(ctx *context.Context, options *request.RequestWebDriveFileDownload) (*response.ResponseWebDriveFileDownload, error) {
+func (comp *Client) FileDownload(ctx context.Context, options *request.RequestWebDriveFileDownload) (*response.ResponseWebDriveFileDownload, error) {
 
 	result := &response.ResponseWebDriveFileDownload{}
 
@@ -145,7 +145,7 @@ func (comp *Client) FileDownload(ctx *context.Context, options *request.RequestW
 
 // 新建文件/微文档
 // https://developer.work.weixin.qq.com/document/path/93657#新建文件文档
-func (comp *Client) FileCreate(ctx *context.Context, options *request.RequestWebDriveFileCreate) (*response.ResponseWebDriveFileCreate, error) {
+func (comp *Client) FileCreate(ctx context.Context, options *request.RequestWebDriveFileCreate) (*response.ResponseWebDriveFileCreate, error) {
 
 	result := &response.ResponseWebDriveFileCreate{}
 
@@ -156,7 +156,7 @@ func (comp *Client) FileCreate(ctx *context.Context, options *request.RequestWeb
 
 // 重命名文件
 // https://developer.work.weixin.qq.com/document/path/93657#重命名文件
-func (comp *Client) FileRename(ctx *context.Context, options *request.RequestWebDriveFileRename) (*response.ResponseWebDriveFileRename, error) {
+func (comp *Client) FileRename(ctx context.Context, options *request.RequestWebDriveFileRename) (*response.ResponseWebDriveFileRename, error) {
 
 	result := &response.ResponseWebDriveFileRename{}
 
@@ -167,7 +167,7 @@ func (comp *Client) FileRename(ctx *context.Context, options *request.RequestWeb
 
 // 移动文件
 // https://developer.work.weixin.qq.com/document/path/93657#移动文件
-func (comp *Client) FileMove(ctx *context.Context, options *request.RequestWebDriveFileMove) (*response.ResponseWebDriveFileMove, error) {
+func (comp *Client) FileMove(ctx context.Context, options *request.RequestWebDriveFileMove) (*response.ResponseWebDriveFileMove, error) {
 
 	result := &response.ResponseWebDriveFileMove{}
 
@@ -178,7 +178,7 @@ func (comp *Client) FileMove(ctx *context.Context, options *request.RequestWebDr
 
 // 删除文件
 // https://developer.work.weixin.qq.com/document/path/93657#删除文件
-func (comp *Client) FileDelete(ctx *context.Context, options *request.RequestWebDriveFileDelete) (*response2.ResponseWork, error) {
+func (comp *Client) FileDelete(ctx context.Context, options *request.RequestWebDriveFileDelete) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -189,7 +189,7 @@ func (comp *Client) FileDelete(ctx *context.Context, options *request.RequestWeb
 
 // 新增成员
 // https://developer.work.weixin.qq.com/document/path/93658
-func (comp *Client) FileACLAdd(ctx *context.Context, options *request.RequestWebDriveFileACLAdd) (*response2.ResponseWork, error) {
+func (comp *Client) FileACLAdd(ctx context.Context, options *request.RequestWebDriveFileACLAdd) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -200,7 +200,7 @@ func (comp *Client) FileACLAdd(ctx *context.Context, options *request.RequestWeb
 
 // 删除成员
 // https://developer.work.weixin.qq.com/document/path/93658#删除成员
-func (comp *Client) FileACLDel(ctx *context.Context, options *request.RequestWebDriveFileACLDel) (*response2.ResponseWork, error) {
+func (comp *Client) FileACLDel(ctx context.Context, options *request.RequestWebDriveFileACLDel) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -211,7 +211,7 @@ func (comp *Client) FileACLDel(ctx *context.Context, options *request.RequestWeb
 
 // 分享设置
 // https://developer.work.weixin.qq.com/document/path/93658#分享设置
-func (comp *Client) FileSetting(ctx *context.Context, options *request.RequestWebDriveFileSetting) (*response2.ResponseWork, error) {
+func (comp *Client) FileSetting(ctx context.Context, options *request.RequestWebDriveFileSetting) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -222,7 +222,7 @@ func (comp *Client) FileSetting(ctx *context.Context, options *request.RequestWe
 
 // 获取分享链接
 // https://developer.work.weixin.qq.com/document/path/95860#获取分享链接
-func (comp *Client) FileShare(ctx *context.Context, options *request.RequestWebDriveFileShare) (*response.ResponseWebDriveFileShare, error) {
+func (comp *Client) FileShare(ctx context.Context, options *request.RequestWebDriveFileShare) (*response.ResponseWebDriveFileShare, error) {
 
 	result := &response.ResponseWebDriveFileShare{}
 

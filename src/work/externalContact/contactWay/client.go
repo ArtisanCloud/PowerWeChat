@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 配置客户联系「联系我」方式.
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) Add(ctx *context.Context, options *request2.RequestAddContactWay) (*response3.ResponseAddContactWay, error) {
+func (comp *Client) Add(ctx context.Context, options *request2.RequestAddContactWay) (*response3.ResponseAddContactWay, error) {
 
 	result := &response3.ResponseAddContactWay{}
 
@@ -36,7 +36,7 @@ func (comp *Client) Add(ctx *context.Context, options *request2.RequestAddContac
 
 // 获取企业已配置的「联系我」方式
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) Get(ctx *context.Context, configID string) (*response3.ResponseGetContactWay, error) {
+func (comp *Client) Get(ctx context.Context, configID string) (*response3.ResponseGetContactWay, error) {
 
 	result := &response3.ResponseGetContactWay{}
 
@@ -49,7 +49,7 @@ func (comp *Client) Get(ctx *context.Context, configID string) (*response3.Respo
 
 // 获取企业已配置的「联系我」列表
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) List(ctx *context.Context, options *request2.RequestListContactWay) (*response3.ResponseListContactWay, error) {
+func (comp *Client) List(ctx context.Context, options *request2.RequestListContactWay) (*response3.ResponseListContactWay, error) {
 
 	result := &response3.ResponseListContactWay{}
 
@@ -60,7 +60,7 @@ func (comp *Client) List(ctx *context.Context, options *request2.RequestListCont
 
 // 更新企业已配置的「联系我」方式
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) Update(ctx *context.Context, config *request2.RequestUpdateContactWay) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx context.Context, config *request2.RequestUpdateContactWay) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -71,7 +71,7 @@ func (comp *Client) Update(ctx *context.Context, config *request2.RequestUpdateC
 
 // 删除企业已配置的「联系我」方式
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) Delete(ctx *context.Context, configID string) (*response2.ResponseWork, error) {
+func (comp *Client) Delete(ctx context.Context, configID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -84,7 +84,7 @@ func (comp *Client) Delete(ctx *context.Context, configID string) (*response2.Re
 
 // 结束临时会话
 // https://developer.work.weixin.qq.com/document/path/92572
-func (comp *Client) CloseTempChat(ctx *context.Context, userID string, externalUserID string) (*response2.ResponseWork, error) {
+func (comp *Client) CloseTempChat(ctx context.Context, userID string, externalUserID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

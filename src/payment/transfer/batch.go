@@ -28,7 +28,7 @@ func NewBatchClient(app *payment.ApplicationPaymentInterface) (*BatchClient, err
 
 // 发起商家转账API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_1.shtml
-func (comp *BatchClient) Batch(ctx *context.Context, param *request.RequestTransferBatch) (*response.ResponseTrasferBatch, error) {
+func (comp *BatchClient) Batch(ctx context.Context, param *request.RequestTransferBatch) (*response.ResponseTrasferBatch, error) {
 
 	result := &response.ResponseTrasferBatch{}
 
@@ -44,7 +44,7 @@ func (comp *BatchClient) Batch(ctx *context.Context, param *request.RequestTrans
 
 // 微信批次单号查询批次单AP
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_2.shtml
-func (comp *BatchClient) QueryBatch(ctx *context.Context, batchID string, needQueryDetail bool, offset int, limit int, detailStatus string) (*response.ResponseTrasferQueryBatch, error) {
+func (comp *BatchClient) QueryBatch(ctx context.Context, batchID string, needQueryDetail bool, offset int, limit int, detailStatus string) (*response.ResponseTrasferQueryBatch, error) {
 
 	result := &response.ResponseTrasferQueryBatch{}
 
@@ -62,7 +62,7 @@ func (comp *BatchClient) QueryBatch(ctx *context.Context, batchID string, needQu
 
 // 微信明细单号查询明细单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_3.shtml
-func (comp *BatchClient) QueryBatchDetail(ctx *context.Context, batchID string, detailID string) (*response.TransferBatch, error) {
+func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, detailID string) (*response.TransferBatch, error) {
 
 	result := &response.TransferBatch{}
 
@@ -73,7 +73,7 @@ func (comp *BatchClient) QueryBatchDetail(ctx *context.Context, batchID string, 
 
 // 商家批次单号查询批次单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_5.shtml
-func (comp *BatchClient) QueryOutBatchNO(ctx *context.Context, outBatchNO string, needQueryDetail bool, offset int, limit int, detailStatus string) (*response.ResponseTrasferQueryOutBatchNO, error) {
+func (comp *BatchClient) QueryOutBatchNO(ctx context.Context, outBatchNO string, needQueryDetail bool, offset int, limit int, detailStatus string) (*response.ResponseTrasferQueryOutBatchNO, error) {
 
 	result := &response.ResponseTrasferQueryOutBatchNO{}
 
@@ -91,7 +91,7 @@ func (comp *BatchClient) QueryOutBatchNO(ctx *context.Context, outBatchNO string
 
 // 商家明细单号查询明细单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_6.shtml
-func (comp *BatchClient) QueryOutBatchNoDetail(ctx *context.Context, outBatchNO string, outDetailNO string) (*response.ResponseOutBatchNODetail, error) {
+func (comp *BatchClient) QueryOutBatchNoDetail(ctx context.Context, outBatchNO string, outDetailNO string) (*response.ResponseOutBatchNODetail, error) {
 
 	result := &response.ResponseOutBatchNODetail{}
 
@@ -102,7 +102,7 @@ func (comp *BatchClient) QueryOutBatchNoDetail(ctx *context.Context, outBatchNO 
 
 // 转账电子回单申请受理API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_7.shtml
-func (comp *BatchClient) BillReceipt(ctx *context.Context, outBatchNO string) (*response.ResponseTrasferBillReceipt, error) {
+func (comp *BatchClient) BillReceipt(ctx context.Context, outBatchNO string) (*response.ResponseTrasferBillReceipt, error) {
 
 	result := &response.ResponseTrasferBillReceipt{}
 
@@ -117,7 +117,7 @@ func (comp *BatchClient) BillReceipt(ctx *context.Context, outBatchNO string) (*
 
 // 查询转账电子回单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_8.shtml
-func (comp *BatchClient) QueryBillReceipt(ctx *context.Context, outBatchNO string) (*response.ResponseTrasferBillReceipt, error) {
+func (comp *BatchClient) QueryBillReceipt(ctx context.Context, outBatchNO string) (*response.ResponseTrasferBillReceipt, error) {
 
 	result := &response.ResponseTrasferBillReceipt{}
 
@@ -128,7 +128,7 @@ func (comp *BatchClient) QueryBillReceipt(ctx *context.Context, outBatchNO strin
 
 // 转账明细电子回单受理API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_9.shtml
-func (comp *BatchClient) ElectronicReceipts(ctx *context.Context, acceptType string, outBatchNO string, outDetailNO string) (*response.ResponseTrasferElectronicReceipts, error) {
+func (comp *BatchClient) ElectronicReceipts(ctx context.Context, acceptType string, outBatchNO string, outDetailNO string) (*response.ResponseTrasferElectronicReceipts, error) {
 
 	result := &response.ResponseTrasferElectronicReceipts{}
 
@@ -145,7 +145,7 @@ func (comp *BatchClient) ElectronicReceipts(ctx *context.Context, acceptType str
 
 // 查询转账明细电子回单受理结果API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_10.shtml
-func (comp *BatchClient) QueryElectronicReceipts(ctx *context.Context, acceptType string, outBatchNO string, outDetailNO string) (*response.ResponseTrasferElectronicReceipts, error) {
+func (comp *BatchClient) QueryElectronicReceipts(ctx context.Context, acceptType string, outBatchNO string, outDetailNO string) (*response.ResponseTrasferElectronicReceipts, error) {
 
 	result := &response.ResponseTrasferElectronicReceipts{}
 
