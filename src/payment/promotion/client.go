@@ -24,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // 向员工付款
 // https://work.weixin.qq.com/api/doc/90000/90135/90278
-func (comp *Client) PayTransferToPocket(ctx *context.Context, data *request.RequestPayTransferToPocket) (*response.ResponsePayTransferToPocket, error) {
+func (comp *Client) PayTransferToPocket(ctx context.Context, data *request.RequestPayTransferToPocket) (*response.ResponsePayTransferToPocket, error) {
 	result := &response.ResponsePayTransferToPocket{}
 
 	//params, err := object.StructToHashMapWithTag(data, "json")
@@ -41,7 +41,7 @@ func (comp *Client) PayTransferToPocket(ctx *context.Context, data *request.Requ
 
 // 查询付款记录
 // https://work.weixin.qq.com/api/doc/90000/90135/90279
-func (comp *Client) QueryTransferToPocket(ctx *context.Context, data *request.RequestQueryTransferToPocket) (*response.ResponseQueryTransferToPocket, error) {
+func (comp *Client) QueryTransferToPocket(ctx context.Context, data *request.RequestQueryTransferToPocket) (*response.ResponseQueryTransferToPocket, error) {
 
 	result := &response.ResponseQueryTransferToPocket{}
 

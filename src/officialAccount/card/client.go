@@ -43,7 +43,7 @@ func (comp *Client) Categories() {
 
 // 创建卡券
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Create_a_Coupon_Voucher_or_Card.html
-func (comp *Client) Create(ctx *context.Context, param *request.RequestCardCreate) (*response.ResponseCardCreate, error) {
+func (comp *Client) Create(ctx context.Context, param *request.RequestCardCreate) (*response.ResponseCardCreate, error) {
 	result := &response.ResponseCardCreate{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "card/create", param, nil, nil, result)
@@ -54,7 +54,7 @@ func (comp *Client) Create(ctx *context.Context, param *request.RequestCardCreat
 
 // 查看卡券详情
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#2
-func (comp *Client) Get(ctx *context.Context, cardID string) (*response.ResponseCardGet, error) {
+func (comp *Client) Get(ctx context.Context, cardID string) (*response.ResponseCardGet, error) {
 	result := &response.ResponseCardGet{}
 
 	param := object.HashMap{
@@ -69,7 +69,7 @@ func (comp *Client) Get(ctx *context.Context, cardID string) (*response.Response
 
 // 批量查询卡券列表
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#2
-func (comp *Client) List(ctx *context.Context, offset int, count int, statusList string) (*response.ResponseCardList, error) {
+func (comp *Client) List(ctx context.Context, offset int, count int, statusList string) (*response.ResponseCardList, error) {
 	result := &response.ResponseCardList{}
 
 	param := object.HashMap{
@@ -86,7 +86,7 @@ func (comp *Client) List(ctx *context.Context, offset int, count int, statusList
 
 // 更改卡券信息接口
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#2
-func (comp *Client) Update(ctx *context.Context, cardID string, cardType string, card request.CardInterface) (*response.ResponseCardUpdate, error) {
+func (comp *Client) Update(ctx context.Context, cardID string, cardType string, card request.CardInterface) (*response.ResponseCardUpdate, error) {
 	result := &response.ResponseCardUpdate{}
 
 	param := object.HashMap{
@@ -102,7 +102,7 @@ func (comp *Client) Update(ctx *context.Context, cardID string, cardType string,
 
 // 删除卡券接口
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#2
-func (comp *Client) Delete(ctx *context.Context, cardID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Delete(ctx context.Context, cardID string) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
 	param := object.HashMap{
@@ -117,7 +117,7 @@ func (comp *Client) Delete(ctx *context.Context, cardID string) (*response2.Resp
 
 // 创建二维码接口
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Distributing_Coupons_Vouchers_and_Cards.html#0
-func (comp *Client) CreateQrCode(ctx *context.Context, param request.RequestCreateQrCode) (*response.ResponseCreateQrCode, error) {
+func (comp *Client) CreateQrCode(ctx context.Context, param request.RequestCreateQrCode) (*response.ResponseCreateQrCode, error) {
 	result := &response.ResponseCreateQrCode{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "card/qrcode/create", param, nil, nil, result)

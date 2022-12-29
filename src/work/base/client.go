@@ -11,7 +11,7 @@ type Client struct {
 }
 
 // https://developer.work.weixin.qq.com/document/path/90930
-func (comp *Client) GetCallbackIP(ctx *context.Context) (*response.ResponseGetCallBackIP, error) {
+func (comp *Client) GetCallbackIP(ctx context.Context) (*response.ResponseGetCallBackIP, error) {
 
 	result := &response.ResponseGetCallBackIP{}
 
@@ -21,7 +21,7 @@ func (comp *Client) GetCallbackIP(ctx *context.Context) (*response.ResponseGetCa
 }
 
 // https://developer.work.weixin.qq.com/document/path/92520
-func (comp *Client) GetAPIDomainIP(ctx *context.Context) (*response.ResponseGetAPIDomainIP, error) {
+func (comp *Client) GetAPIDomainIP(ctx context.Context) (*response.ResponseGetAPIDomainIP, error) {
 
 	result := &response.ResponseGetAPIDomainIP{}
 

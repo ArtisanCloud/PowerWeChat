@@ -15,7 +15,7 @@ type Client struct {
 
 // 创建部门
 // https://developer.work.weixin.qq.com/document/path/90205
-func (comp *Client) Create(ctx *context.Context, params *request.RequestDepartmentInsert) (*response.ResponseDepartmentCreate, error) {
+func (comp *Client) Create(ctx context.Context, params *request.RequestDepartmentInsert) (*response.ResponseDepartmentCreate, error) {
 
 	result := &response.ResponseDepartmentCreate{}
 
@@ -26,7 +26,7 @@ func (comp *Client) Create(ctx *context.Context, params *request.RequestDepartme
 
 // 更新部门
 // https://developer.work.weixin.qq.com/document/path/90206
-func (comp *Client) Update(ctx *context.Context, params *request.RequestDepartmentUpdate) (*response.ResponseDepartmentUpdate, error) {
+func (comp *Client) Update(ctx context.Context, params *request.RequestDepartmentUpdate) (*response.ResponseDepartmentUpdate, error) {
 
 	result := &response.ResponseDepartmentUpdate{}
 
@@ -37,7 +37,7 @@ func (comp *Client) Update(ctx *context.Context, params *request.RequestDepartme
 
 // 删除部门
 // https://developer.work.weixin.qq.com/document/path/90207
-func (comp *Client) Delete(ctx *context.Context, id int) (*response.ResponseDepartmentDelete, error) {
+func (comp *Client) Delete(ctx context.Context, id int) (*response.ResponseDepartmentDelete, error) {
 
 	result := &response.ResponseDepartmentDelete{}
 
@@ -50,7 +50,7 @@ func (comp *Client) Delete(ctx *context.Context, id int) (*response.ResponseDepa
 
 // 获取部门列表
 // https://developer.work.weixin.qq.com/document/path/90208
-func (comp *Client) List(ctx *context.Context, id int) (*response.ResponseDepartmentList, error) {
+func (comp *Client) List(ctx context.Context, id int) (*response.ResponseDepartmentList, error) {
 
 	result := &response.ResponseDepartmentList{}
 
@@ -63,7 +63,7 @@ func (comp *Client) List(ctx *context.Context, id int) (*response.ResponseDepart
 
 // 获取子部门ID列表
 // https://developer.work.weixin.qq.com/document/path/95350
-func (comp *Client) SimpleList(ctx *context.Context, id int) (*response.ResponseDepartmentIDList, error) {
+func (comp *Client) SimpleList(ctx context.Context, id int) (*response.ResponseDepartmentIDList, error) {
 
 	result := &response.ResponseDepartmentIDList{}
 
@@ -76,7 +76,7 @@ func (comp *Client) SimpleList(ctx *context.Context, id int) (*response.Response
 
 // 获取单个部门详情
 // https://developer.work.weixin.qq.com/document/path/95351
-func (comp *Client) Get(ctx *context.Context, id int) (*response.ResponseDepartmentGet, error) {
+func (comp *Client) Get(ctx context.Context, id int) (*response.ResponseDepartmentGet, error) {
 
 	result := &response.ResponseDepartmentGet{}
 

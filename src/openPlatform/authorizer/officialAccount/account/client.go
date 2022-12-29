@@ -46,7 +46,7 @@ func (comp *Client) GetFastRegistrationUrl(callbackUrl string, copyWxVerify bool
 
 // 复用公众号主体快速注册小程序
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/fast_registration_of_mini_program.html
-func (comp *Client) Register(ctx *context.Context, ticket string) (*response.ResponseRegister, error) {
+func (comp *Client) Register(ctx context.Context, ticket string) (*response.ResponseRegister, error) {
 
 	result := &response.ResponseRegister{}
 

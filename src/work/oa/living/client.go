@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建预约直播
 // https://developer.work.weixin.qq.com/document/path/93637
-func (comp *Client) Create(ctx *context.Context, options *request.RequestLivingCreate) (*response.ResponseLivingCreate, error) {
+func (comp *Client) Create(ctx context.Context, options *request.RequestLivingCreate) (*response.ResponseLivingCreate, error) {
 
 	result := &response.ResponseLivingCreate{}
 
@@ -36,7 +36,7 @@ func (comp *Client) Create(ctx *context.Context, options *request.RequestLivingC
 
 // 修改预约直播
 // https://developer.work.weixin.qq.com/document/path/93640
-func (comp *Client) Modify(ctx *context.Context, options *request.RequestLivingModify) (*response2.ResponseWork, error) {
+func (comp *Client) Modify(ctx context.Context, options *request.RequestLivingModify) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -47,7 +47,7 @@ func (comp *Client) Modify(ctx *context.Context, options *request.RequestLivingM
 
 // 取消预约直播
 // https://developer.work.weixin.qq.com/document/path/93638
-func (comp *Client) Cancel(ctx *context.Context, livingID string) (*response2.ResponseWork, error) {
+func (comp *Client) Cancel(ctx context.Context, livingID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -62,7 +62,7 @@ func (comp *Client) Cancel(ctx *context.Context, livingID string) (*response2.Re
 
 // 删除直播回放
 // https://developer.work.weixin.qq.com/document/path/93874
-func (comp *Client) DeleteReplayData(ctx *context.Context, livingID string) (*response2.ResponseWork, error) {
+func (comp *Client) DeleteReplayData(ctx context.Context, livingID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -77,7 +77,7 @@ func (comp *Client) DeleteReplayData(ctx *context.Context, livingID string) (*re
 
 // 在微信中观看直播或直播回放
 // https://developer.work.weixin.qq.com/document/path/93641
-func (comp *Client) GetLivingCode(ctx *context.Context, livingID string, openID string) (*response.ResponseLivingGetLivingCode, error) {
+func (comp *Client) GetLivingCode(ctx context.Context, livingID string, openID string) (*response.ResponseLivingGetLivingCode, error) {
 
 	result := &response.ResponseLivingGetLivingCode{}
 
@@ -93,7 +93,7 @@ func (comp *Client) GetLivingCode(ctx *context.Context, livingID string, openID 
 
 // 获取成员直播ID列表
 // https://developer.work.weixin.qq.com/document/path/93634
-func (comp *Client) GetUserAllLivingID(ctx *context.Context, userID string, cursor string, limit int) (*response.ResponseLivingGetUserAllLivingID, error) {
+func (comp *Client) GetUserAllLivingID(ctx context.Context, userID string, cursor string, limit int) (*response.ResponseLivingGetUserAllLivingID, error) {
 
 	result := &response.ResponseLivingGetUserAllLivingID{}
 
@@ -110,7 +110,7 @@ func (comp *Client) GetUserAllLivingID(ctx *context.Context, userID string, curs
 
 // 获取直播详情
 // https://developer.work.weixin.qq.com/document/path/93635
-func (comp *Client) GetLivingInfo(ctx *context.Context, livingID string) (*response.ResponseLivingGetLivingInfo, error) {
+func (comp *Client) GetLivingInfo(ctx context.Context, livingID string) (*response.ResponseLivingGetLivingInfo, error) {
 
 	result := &response.ResponseLivingGetLivingInfo{}
 
@@ -125,7 +125,7 @@ func (comp *Client) GetLivingInfo(ctx *context.Context, livingID string) (*respo
 
 // 获取直播观看明细
 // https://developer.work.weixin.qq.com/document/path/93636
-func (comp *Client) GetWatchStat(ctx *context.Context, livingID string, nextKey string) (*response.ResponseLivingGetWatchStat, error) {
+func (comp *Client) GetWatchStat(ctx context.Context, livingID string, nextKey string) (*response.ResponseLivingGetWatchStat, error) {
 
 	result := &response.ResponseLivingGetWatchStat{}
 
@@ -141,7 +141,7 @@ func (comp *Client) GetWatchStat(ctx *context.Context, livingID string, nextKey 
 
 // 获取跳转小程序商城的直播观众信息
 // https://developer.work.weixin.qq.com/document/path/94442
-func (comp *Client) GetLivingShareInfo(ctx *context.Context, wwShareCode string) (*response.ResponseLivingGetLivingShareInfo, error) {
+func (comp *Client) GetLivingShareInfo(ctx context.Context, wwShareCode string) (*response.ResponseLivingGetLivingShareInfo, error) {
 
 	result := &response.ResponseLivingGetLivingShareInfo{}
 

@@ -15,7 +15,7 @@ type Client struct {
 
 // 生成运单
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.addOrder.html
-func (comp *Client) AddOrder(ctx *context.Context, data *power.HashMap) (*response.ResponseExpressAddOrder, error) {
+func (comp *Client) AddOrder(ctx context.Context, data *power.HashMap) (*response.ResponseExpressAddOrder, error) {
 
 	result := &response.ResponseExpressAddOrder{}
 
@@ -26,7 +26,7 @@ func (comp *Client) AddOrder(ctx *context.Context, data *power.HashMap) (*respon
 
 // 批量获取运单数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.batchGetOrder.html
-func (comp *Client) BatchGetOrder(ctx *context.Context, orderList []*power.HashMap) (*response.ResponseExpressBatchOrderList, error) {
+func (comp *Client) BatchGetOrder(ctx context.Context, orderList []*power.HashMap) (*response.ResponseExpressBatchOrderList, error) {
 
 	result := &response.ResponseExpressBatchOrderList{}
 
@@ -41,7 +41,7 @@ func (comp *Client) BatchGetOrder(ctx *context.Context, orderList []*power.HashM
 
 // 绑定、解绑物流账号
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.bindAccount.html
-func (comp *Client) BindAccount(ctx *context.Context, actionType string, bizID string, deliveryID string, password string) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) BindAccount(ctx context.Context, actionType string, bizID string, deliveryID string, password string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -59,7 +59,7 @@ func (comp *Client) BindAccount(ctx *context.Context, actionType string, bizID s
 
 // 取消运单
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.cancelOrder.html
-func (comp *Client) CancelOrder(ctx *context.Context, orderID string, openID string, deliveryID string, waybillID string) (*response.ResponseExpressCancelOrder, error) {
+func (comp *Client) CancelOrder(ctx context.Context, orderID string, openID string, deliveryID string, waybillID string) (*response.ResponseExpressCancelOrder, error) {
 
 	result := &response.ResponseExpressCancelOrder{}
 
@@ -77,7 +77,7 @@ func (comp *Client) CancelOrder(ctx *context.Context, orderID string, openID str
 
 // 获取所有绑定的物流账号
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllAccount.html
-func (comp *Client) GetAllAccount(ctx *context.Context) (*response.ResponseExpressAccountGetAll, error) {
+func (comp *Client) GetAllAccount(ctx context.Context) (*response.ResponseExpressAccountGetAll, error) {
 
 	result := &response.ResponseExpressAccountGetAll{}
 
@@ -88,7 +88,7 @@ func (comp *Client) GetAllAccount(ctx *context.Context) (*response.ResponseExpre
 
 // 获取支持的快递公司列表
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getAllDelivery.html
-func (comp *Client) GetAllDelivery(ctx *context.Context) (*response.ResponseExpressDeliveryGetAll, error) {
+func (comp *Client) GetAllDelivery(ctx context.Context) (*response.ResponseExpressDeliveryGetAll, error) {
 
 	result := &response.ResponseExpressDeliveryGetAll{}
 
@@ -99,7 +99,7 @@ func (comp *Client) GetAllDelivery(ctx *context.Context) (*response.ResponseExpr
 
 // 获取运单数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getOrder.html
-func (comp *Client) GetOrder(ctx *context.Context, orderID string, openID string, deliveryID string, waybillID string, printType int) (*response.ResponseExpressGetOrder, error) {
+func (comp *Client) GetOrder(ctx context.Context, orderID string, openID string, deliveryID string, waybillID string, printType int) (*response.ResponseExpressGetOrder, error) {
 
 	result := &response.ResponseExpressGetOrder{}
 
@@ -118,7 +118,7 @@ func (comp *Client) GetOrder(ctx *context.Context, orderID string, openID string
 
 // 查询运单轨迹
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getPath.html
-func (comp *Client) GetPath(ctx *context.Context, orderID string, openID string, deliveryID string, waybillID string) (*response.ResponseExpressGetPath, error) {
+func (comp *Client) GetPath(ctx context.Context, orderID string, openID string, deliveryID string, waybillID string) (*response.ResponseExpressGetPath, error) {
 
 	result := &response.ResponseExpressGetPath{}
 
@@ -136,7 +136,7 @@ func (comp *Client) GetPath(ctx *context.Context, orderID string, openID string,
 
 // 获取打印员
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getPrinter.html
-func (comp *Client) GetPrinter(ctx *context.Context) (*response.ResponseExpressGetPrinter, error) {
+func (comp *Client) GetPrinter(ctx context.Context) (*response.ResponseExpressGetPrinter, error) {
 
 	result := &response.ResponseExpressGetPrinter{}
 
@@ -147,7 +147,7 @@ func (comp *Client) GetPrinter(ctx *context.Context) (*response.ResponseExpressG
 
 // 获取电子面单余额
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.getQuota.html
-func (comp *Client) GetQuota(ctx *context.Context, deliveryID string, bizID string) (*response.ResponseExpressGetQuota, error) {
+func (comp *Client) GetQuota(ctx context.Context, deliveryID string, bizID string) (*response.ResponseExpressGetQuota, error) {
 
 	result := &response.ResponseExpressGetQuota{}
 
@@ -164,7 +164,7 @@ func (comp *Client) GetQuota(ctx *context.Context, deliveryID string, bizID stri
 // 模拟快递公司更新订单状态, 该接口只能用户测试
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.testUpdateOrder.html
 func (comp *Client) TestUpdateOrder(
-	ctx *context.Context,
+	ctx context.Context,
 	BizID string, OrderID string,
 	DeliveryID string, WaybillID string,
 	ActionTime int64, ActionType int, ActionMsg string,
@@ -189,7 +189,7 @@ func (comp *Client) TestUpdateOrder(
 
 // 配置面单打印员
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-business/logistics.updatePrinter.html
-func (comp *Client) UpdatePrinter(ctx *context.Context, openID string, updateType string, tagidList string) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) UpdatePrinter(ctx context.Context, openID string, updateType string, tagidList string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -206,7 +206,7 @@ func (comp *Client) UpdatePrinter(ctx *context.Context, openID string, updateTyp
 
 // 获取面单联系人信息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.getContact.html
-func (comp *Client) GetContact(ctx *context.Context, token string, waybillID string) (*response.ResponseExpressGetContact, error) {
+func (comp *Client) GetContact(ctx context.Context, token string, waybillID string) (*response.ResponseExpressGetContact, error) {
 
 	result := &response.ResponseExpressGetContact{}
 
@@ -222,7 +222,7 @@ func (comp *Client) GetContact(ctx *context.Context, token string, waybillID str
 
 // 预览面单模板
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.previewTemplate.html
-func (comp *Client) PreviewTemplate(ctx *context.Context, options *power.HashMap) (*response.ResponseExpressPreviewTemplate, error) {
+func (comp *Client) PreviewTemplate(ctx context.Context, options *power.HashMap) (*response.ResponseExpressPreviewTemplate, error) {
 
 	result := &response.ResponseExpressPreviewTemplate{}
 
@@ -233,7 +233,7 @@ func (comp *Client) PreviewTemplate(ctx *context.Context, options *power.HashMap
 
 // 更新商户审核结果
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updateBusiness.html
-func (comp *Client) UpdateBusiness(ctx *context.Context, options *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) UpdateBusiness(ctx context.Context, options *power.HashMap) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -244,7 +244,7 @@ func (comp *Client) UpdateBusiness(ctx *context.Context, options *power.HashMap)
 
 // 更新运单轨迹
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/express/by-provider/logistics.updatePath.html
-func (comp *Client) UpdatePath(ctx *context.Context, options *power.HashMap) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) UpdatePath(ctx context.Context, options *power.HashMap) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 

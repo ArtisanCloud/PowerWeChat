@@ -24,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Get Trade Bill.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_6.shtml
-func (comp *Client) GetTradeBill(ctx *context.Context, date string, billType string, tarType string) (*response.ResponseBillGet, error) {
+func (comp *Client) GetTradeBill(ctx context.Context, date string, billType string, tarType string) (*response.ResponseBillGet, error) {
 
 	result := &response.ResponseBillGet{}
 
@@ -42,7 +42,7 @@ func (comp *Client) GetTradeBill(ctx *context.Context, date string, billType str
 
 // Get Flow Bill.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_7.shtml
-func (comp *Client) GetFlowBill(ctx *context.Context, date string, accountType string, tarType string) (*response.ResponseBillGet, error) {
+func (comp *Client) GetFlowBill(ctx context.Context, date string, accountType string, tarType string) (*response.ResponseBillGet, error) {
 
 	result := &response.ResponseBillGet{}
 

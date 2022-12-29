@@ -16,7 +16,7 @@ type Client struct {
 
 // 组合模板并添加至帐号下的个人模板库
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html
-func (comp *Client) AddTemplate(ctx *context.Context, tid string, kidList []int, sceneDesc string) (*response3.ResponseSubscribeMessageAddTemplate, error) {
+func (comp *Client) AddTemplate(ctx context.Context, tid string, kidList []int, sceneDesc string) (*response3.ResponseSubscribeMessageAddTemplate, error) {
 
 	result := &response3.ResponseSubscribeMessageAddTemplate{}
 
@@ -33,7 +33,7 @@ func (comp *Client) AddTemplate(ctx *context.Context, tid string, kidList []int,
 
 // 删除帐号下的个人模板
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.deleteTemplate.html
-func (comp *Client) DeleteTemplate(ctx *context.Context, priTmplID string) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) DeleteTemplate(ctx context.Context, priTmplID string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -48,7 +48,7 @@ func (comp *Client) DeleteTemplate(ctx *context.Context, priTmplID string) (*res
 
 // 获取小程序账号的类目
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getCategory.html
-func (comp *Client) GetCategory(ctx *context.Context) (*response3.ResponseSubscribeMessageGetCategory, error) {
+func (comp *Client) GetCategory(ctx context.Context) (*response3.ResponseSubscribeMessageGetCategory, error) {
 
 	result := &response3.ResponseSubscribeMessageGetCategory{}
 
@@ -59,7 +59,7 @@ func (comp *Client) GetCategory(ctx *context.Context) (*response3.ResponseSubscr
 
 // 获取模板标题下的关键词列表
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateKeyWordsById.html
-func (comp *Client) GetPubTemplateKeyWordsByID(ctx *context.Context, tid string) (*response3.ResponseSubscribeMessageGetPubTemplateKeyWordsByID, error) {
+func (comp *Client) GetPubTemplateKeyWordsByID(ctx context.Context, tid string) (*response3.ResponseSubscribeMessageGetPubTemplateKeyWordsByID, error) {
 
 	result := &response3.ResponseSubscribeMessageGetPubTemplateKeyWordsByID{}
 
@@ -73,7 +73,7 @@ func (comp *Client) GetPubTemplateKeyWordsByID(ctx *context.Context, tid string)
 
 // 获取帐号所属类目下的公共模板标题
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateTitleList.html
-func (comp *Client) GetPubTemplateTitleList(ctx *context.Context, ids string, start int, limit int) (*response3.ResponseSubscribeMessageGetPubTemplateTitleList, error) {
+func (comp *Client) GetPubTemplateTitleList(ctx context.Context, ids string, start int, limit int) (*response3.ResponseSubscribeMessageGetPubTemplateTitleList, error) {
 
 	result := &response3.ResponseSubscribeMessageGetPubTemplateTitleList{}
 
@@ -89,7 +89,7 @@ func (comp *Client) GetPubTemplateTitleList(ctx *context.Context, ids string, st
 
 // 获取当前帐号下的个人模板列表
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html
-func (comp *Client) GetTemplateList(ctx *context.Context) (*response3.ResponseSubscribeMessageGetTemplateList, error) {
+func (comp *Client) GetTemplateList(ctx context.Context) (*response3.ResponseSubscribeMessageGetTemplateList, error) {
 
 	result := &response3.ResponseSubscribeMessageGetTemplateList{}
 
@@ -100,7 +100,7 @@ func (comp *Client) GetTemplateList(ctx *context.Context) (*response3.ResponseSu
 
 // 发送订阅消息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html
-func (comp *Client) Send(ctx *context.Context, data *request.RequestSubscribeMessageSend) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) Send(ctx context.Context, data *request.RequestSubscribeMessageSend) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 

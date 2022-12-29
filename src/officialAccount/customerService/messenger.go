@@ -46,7 +46,7 @@ func (comp *Messenger) SetTo(openID string) *Messenger {
 	return comp
 }
 
-func (comp *Messenger) Send(ctx *context.Context) (result interface{}, err error) {
+func (comp *Messenger) Send(ctx context.Context) (result interface{}, err error) {
 
 	if comp.Message == nil {
 		return result, errors.New("no message to send")

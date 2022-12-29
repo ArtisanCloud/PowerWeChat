@@ -32,7 +32,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 短key托管
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
-func (comp *Client) ShortGenKey(ctx *context.Context, longData string, expireSecond int) (*response.ResponseShortGenKey, error) {
+func (comp *Client) ShortGenKey(ctx context.Context, longData string, expireSecond int) (*response.ResponseShortGenKey, error) {
 
 	result := &response.ResponseShortGenKey{}
 
@@ -48,7 +48,7 @@ func (comp *Client) ShortGenKey(ctx *context.Context, longData string, expireSec
 
 // 获取端链接
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
-func (comp *Client) FetchShorten(ctx *context.Context, shortKey string) (*response.ResponseFetchShorten, error) {
+func (comp *Client) FetchShorten(ctx context.Context, shortKey string) (*response.ResponseFetchShorten, error) {
 
 	result := &response.ResponseFetchShorten{}
 

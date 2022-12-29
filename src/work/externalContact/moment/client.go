@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取企业全部的发表列表
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentList(ctx *context.Context, params *request.RequestGetMomentList) (*response.ResponseGetMomentList, error) {
+func (comp *Client) GetMomentList(ctx context.Context, params *request.RequestGetMomentList) (*response.ResponseGetMomentList, error) {
 
 	result := &response.ResponseGetMomentList{}
 
@@ -35,7 +35,7 @@ func (comp *Client) GetMomentList(ctx *context.Context, params *request.RequestG
 
 // 获取客户朋友圈企业发表的列表
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentTask(ctx *context.Context, momentID string, cursor string, limit int) (*response.ResponseMomentGetMomentTask, error) {
+func (comp *Client) GetMomentTask(ctx context.Context, momentID string, cursor string, limit int) (*response.ResponseMomentGetMomentTask, error) {
 
 	result := &response.ResponseMomentGetMomentTask{}
 
@@ -52,7 +52,7 @@ func (comp *Client) GetMomentTask(ctx *context.Context, momentID string, cursor 
 
 // 获取客户朋友圈发表时选择的可见范围
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentCustomerList(ctx *context.Context, momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentCustomerList, error) {
+func (comp *Client) GetMomentCustomerList(ctx context.Context, momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentCustomerList, error) {
 
 	result := &response.ResponseMomentGetMomentCustomerList{}
 
@@ -70,7 +70,7 @@ func (comp *Client) GetMomentCustomerList(ctx *context.Context, momentID string,
 
 // 获取客户朋友圈发表后的可见客户列表
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentSendResult(ctx *context.Context, momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentSendResult, error) {
+func (comp *Client) GetMomentSendResult(ctx context.Context, momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentSendResult, error) {
 
 	result := &response.ResponseMomentGetMomentSendResult{}
 
@@ -88,7 +88,7 @@ func (comp *Client) GetMomentSendResult(ctx *context.Context, momentID string, u
 
 // 获取客户朋友圈的互动数据
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentComments(ctx *context.Context, momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
+func (comp *Client) GetMomentComments(ctx context.Context, momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
 
 	result := &response.ResponseMomentGetMomentComments{}
 

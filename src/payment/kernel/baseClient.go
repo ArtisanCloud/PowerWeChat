@@ -135,7 +135,7 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 
 }
 
-func (client *BaseClient) RequestV2(ctx *context.Context, endpoint string, params *object.HashMap, method string, option *object.HashMap,
+func (client *BaseClient) RequestV2(ctx context.Context, endpoint string, params *object.HashMap, method string, option *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response *http.Response, err error) {
 
@@ -159,7 +159,7 @@ func (client *BaseClient) RequestV2(ctx *context.Context, endpoint string, param
 
 	// http client request
 	df := client.HttpHelper.Df().
-		WithContext(*ctx).
+		WithContext(ctx).
 		Uri(endpoint).Method(method)
 
 	// 检查是否需要有请求参数配置
@@ -208,7 +208,7 @@ func (client *BaseClient) RequestV2(ctx *context.Context, endpoint string, param
 
 }
 
-func (client *BaseClient) Request(ctx *context.Context, endpoint string, params *object.StringMap, method string, options *object.HashMap,
+func (client *BaseClient) Request(ctx context.Context, endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response interface{}, err error) {
 
@@ -225,7 +225,7 @@ func (client *BaseClient) Request(ctx *context.Context, endpoint string, params 
 
 	// http client request
 	returnResponse, err := client.HttpHelper.Df().
-		WithContext(*ctx).
+		WithContext(ctx).
 		Url(endpoint).Method(method).Json(options).Request()
 
 	// decode response body to outBody
@@ -255,7 +255,7 @@ func (client *BaseClient) Request(ctx *context.Context, endpoint string, params 
 
 }
 
-func (client *BaseClient) RequestRaw(ctx *context.Context, url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) RequestRaw(ctx context.Context, url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(ctx, url, params, method, options, true, outHeader, outBody)
 }
 
@@ -311,7 +311,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 	return totalSize, err
 }
 
-func (client *BaseClient) RequestArray(ctx *context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*object.HashMap, error) {
+func (client *BaseClient) RequestArray(ctx context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*object.HashMap, error) {
 	returnResponse, err := client.RequestRaw(ctx, url, nil, method, options, outHeader, outBody)
 	if err != nil {
 		return nil, err
@@ -321,7 +321,7 @@ func (client *BaseClient) RequestArray(ctx *context.Context, url string, method 
 	return result.(*object.HashMap), err
 }
 
-func (client *BaseClient) SafeRequest(ctx *context.Context, url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) SafeRequest(ctx context.Context, url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	config := (*client.App).GetConfig()
 
 	httpConfig := client.HttpHelper.GetClient().GetConfig()

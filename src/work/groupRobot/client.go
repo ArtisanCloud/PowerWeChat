@@ -29,7 +29,7 @@ func (comp *Client) Message(message interface{}) (*Messager, error) {
 
 // 群机器人配置说明
 // https://developer.work.weixin.qq.com/document/path/91770#文本类型
-func (comp *Client) Send(ctx *context.Context, key string, message *power.HashMap) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) Send(ctx context.Context, key string, message *power.HashMap) (*response.ResponseGroupRobotSend, error) {
 
 	result := &response.ResponseGroupRobotSend{}
 
@@ -42,21 +42,21 @@ func (comp *Client) Send(ctx *context.Context, key string, message *power.HashMa
 	return result, err
 }
 
-func (comp *Client) SendText(ctx *context.Context, key string, message *request.GroupRobotMsgText) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) SendText(ctx context.Context, key string, message *request.GroupRobotMsgText) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "text",
 		"text":    message,
 	}
 	return comp.Send(ctx, key, options)
 }
-func (comp *Client) SendMarkdown(ctx *context.Context, key string, message *request.GroupRobotMsgMarkdown) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) SendMarkdown(ctx context.Context, key string, message *request.GroupRobotMsgMarkdown) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype":  "markdown",
 		"markdown": message,
 	}
 	return comp.Send(ctx, key, options)
 }
-func (comp *Client) SendImage(ctx *context.Context, key string, message *request.GroupRobotMsgImage) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) SendImage(ctx context.Context, key string, message *request.GroupRobotMsgImage) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "image",
 		"image":   message,
@@ -65,7 +65,7 @@ func (comp *Client) SendImage(ctx *context.Context, key string, message *request
 }
 
 // SendNewsArticles 图文类型
-func (comp *Client) SendNewsArticles(ctx *context.Context, key string, message []*request.GroupRobotMsgNewsArticles) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) SendNewsArticles(ctx context.Context, key string, message []*request.GroupRobotMsgNewsArticles) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "news",
 		"news": power.HashMap{
@@ -74,7 +74,7 @@ func (comp *Client) SendNewsArticles(ctx *context.Context, key string, message [
 	}
 	return comp.Send(ctx, key, options)
 }
-func (comp *Client) SendFile(ctx *context.Context, key string, message *request.GroupRobotMsgFile) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) SendFile(ctx context.Context, key string, message *request.GroupRobotMsgFile) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype": "file",
 		"file":    message,
@@ -82,7 +82,7 @@ func (comp *Client) SendFile(ctx *context.Context, key string, message *request.
 	return comp.Send(ctx, key, options)
 }
 
-func (comp *Client) SendTemplateCard(ctx *context.Context, key string, message *request.GroupRobotMsgTemplateCard) (*response.ResponseGroupRobotSend, error) {
+func (comp *Client) SendTemplateCard(ctx context.Context, key string, message *request.GroupRobotMsgTemplateCard) (*response.ResponseGroupRobotSend, error) {
 	options := &power.HashMap{
 		"msgtype":       "template_card",
 		"template_card": message,

@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建日历
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Add(ctx *context.Context, calendar *power.HashMap, agentID int) (*response.ResponseCalendarAdd, error) {
+func (comp *Client) Add(ctx context.Context, calendar *power.HashMap, agentID int) (*response.ResponseCalendarAdd, error) {
 
 	result := &response.ResponseCalendarAdd{}
 
@@ -41,7 +41,7 @@ func (comp *Client) Add(ctx *context.Context, calendar *power.HashMap, agentID i
 
 // 更新日历
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Update(ctx *context.Context, calendar *power.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx context.Context, calendar *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -56,7 +56,7 @@ func (comp *Client) Update(ctx *context.Context, calendar *power.HashMap) (*resp
 
 // 获取日历详情
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Get(ctx *context.Context, calIDList []string) (*response.ResponseCalendarGet, error) {
+func (comp *Client) Get(ctx context.Context, calIDList []string) (*response.ResponseCalendarGet, error) {
 
 	result := &response.ResponseCalendarGet{}
 
@@ -71,7 +71,7 @@ func (comp *Client) Get(ctx *context.Context, calIDList []string) (*response.Res
 
 // 删除日历
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Del(ctx *context.Context, calID string) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx context.Context, calID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

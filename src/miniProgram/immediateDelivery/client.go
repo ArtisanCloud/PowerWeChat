@@ -15,7 +15,7 @@ type Client struct {
 
 // 异常件退回商家商家确认收货接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.abnormalConfirm.html
-func (comp *Client) AbnormalConfirm(ctx *context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AbnormalConfirm(ctx context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -26,7 +26,7 @@ func (comp *Client) AbnormalConfirm(ctx *context.Context, options *power.HashMap
 
 // 订单增加小费
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addOrder.html
-func (comp *Client) AddOrder(ctx *context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AddOrder(ctx context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -37,7 +37,7 @@ func (comp *Client) AddOrder(ctx *context.Context, options *power.HashMap) (*res
 
 // 订单增加小费
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.addTip.html
-func (comp *Client) AddTips(ctx *context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AddTips(ctx context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -48,7 +48,7 @@ func (comp *Client) AddTips(ctx *context.Context, options *power.HashMap) (*resp
 
 // 第三方代商户发起绑定配送公司帐号的请求
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.bindAccount.html
-func (comp *Client) BindAccount(ctx *context.Context, deliveryID string) (*response.ResponseMiniProgram, error) {
+func (comp *Client) BindAccount(ctx context.Context, deliveryID string) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -63,7 +63,7 @@ func (comp *Client) BindAccount(ctx *context.Context, deliveryID string) (*respo
 
 // 第三方代商户发起绑定配送公司帐号的请求
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.bindAccount.html
-func (comp *Client) AddShops(ctx *context.Context, deliveryID string) (*response.ResponseMiniProgram, error) {
+func (comp *Client) AddShops(ctx context.Context, deliveryID string) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -78,7 +78,7 @@ func (comp *Client) AddShops(ctx *context.Context, deliveryID string) (*response
 
 // 取消配送单接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.cancelOrder.html
-func (comp *Client) CancelOrder(ctx *context.Context, options *power.HashMap) (*response2.ResponseImmediateDeliveryCancelOrder, error) {
+func (comp *Client) CancelOrder(ctx context.Context, options *power.HashMap) (*response2.ResponseImmediateDeliveryCancelOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryCancelOrder{}
 
@@ -89,7 +89,7 @@ func (comp *Client) CancelOrder(ctx *context.Context, options *power.HashMap) (*
 
 // 获取已支持的配送公司列表接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getAllImmeDelivery.html
-func (comp *Client) GetAllImmeDelivery(ctx *context.Context) (*response2.ResponseImmediateDeliveryDelivery, error) {
+func (comp *Client) GetAllImmeDelivery(ctx context.Context) (*response2.ResponseImmediateDeliveryDelivery, error) {
 
 	result := &response2.ResponseImmediateDeliveryDelivery{}
 
@@ -100,7 +100,7 @@ func (comp *Client) GetAllImmeDelivery(ctx *context.Context) (*response2.Respons
 
 // 拉取已绑定账号
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getBindAccount.html
-func (comp *Client) GetBindAccount(ctx *context.Context) (*response2.ResponseImmediateDeliveryBindAccount, error) {
+func (comp *Client) GetBindAccount(ctx context.Context) (*response2.ResponseImmediateDeliveryBindAccount, error) {
 
 	result := &response2.ResponseImmediateDeliveryBindAccount{}
 
@@ -111,7 +111,7 @@ func (comp *Client) GetBindAccount(ctx *context.Context) (*response2.ResponseImm
 
 // 拉取配送单信息
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.getOrder.html
-func (comp *Client) GetOrder(ctx *context.Context, shopID string, shopOrderID string, shopNO string, deliverySign string) (*response2.ResponseImmediateDeliveryGetOrder, error) {
+func (comp *Client) GetOrder(ctx context.Context, shopID string, shopOrderID string, shopNO string, deliverySign string) (*response2.ResponseImmediateDeliveryGetOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryGetOrder{}
 
@@ -129,7 +129,7 @@ func (comp *Client) GetOrder(ctx *context.Context, shopID string, shopOrderID st
 
 // 模拟配送公司更新配送单状态
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.mockUpdateOrder.html
-func (comp *Client) MockUpdateOrder(ctx *context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) MockUpdateOrder(ctx context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -140,7 +140,7 @@ func (comp *Client) MockUpdateOrder(ctx *context.Context, options *power.HashMap
 
 // 第三方代商户发起开通即时配送权限
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.openDelivery.html
-func (comp *Client) OpenDelivery(ctx *context.Context) (*response.ResponseMiniProgram, error) {
+func (comp *Client) OpenDelivery(ctx context.Context) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -151,7 +151,7 @@ func (comp *Client) OpenDelivery(ctx *context.Context) (*response.ResponseMiniPr
 
 // 预下配送单接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preAddOrder.html
-func (comp *Client) PreAddOrder(ctx *context.Context, data *power.HashMap) (*response2.ResponseImmediateDeliveryPreAddOrder, error) {
+func (comp *Client) PreAddOrder(ctx context.Context, data *power.HashMap) (*response2.ResponseImmediateDeliveryPreAddOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryPreAddOrder{}
 
@@ -162,7 +162,7 @@ func (comp *Client) PreAddOrder(ctx *context.Context, data *power.HashMap) (*res
 
 // 预取消配送单接口
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.preCancelOrder.html
-func (comp *Client) PreCancelOrder(ctx *context.Context, data *power.HashMap) (*response2.ResponseImmediateDeliveryPreCancelOrder, error) {
+func (comp *Client) PreCancelOrder(ctx context.Context, data *power.HashMap) (*response2.ResponseImmediateDeliveryPreCancelOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryPreCancelOrder{}
 
@@ -173,7 +173,7 @@ func (comp *Client) PreCancelOrder(ctx *context.Context, data *power.HashMap) (*
 
 // 模拟配送公司更新配送单状态
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.realMockUpdateOrder.html
-func (comp *Client) RealMockUpdateOrder(ctx *context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
+func (comp *Client) RealMockUpdateOrder(ctx context.Context, options *power.HashMap) (*response.ResponseMiniProgram, error) {
 
 	result := &response.ResponseMiniProgram{}
 
@@ -184,7 +184,7 @@ func (comp *Client) RealMockUpdateOrder(ctx *context.Context, options *power.Has
 
 // 重新下单
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/immediate-delivery/by-business/immediateDelivery.reOrder.html
-func (comp *Client) ReOrder(ctx *context.Context, data *power.HashMap) (*response2.ResponseImmediateDeliveryReOrder, error) {
+func (comp *Client) ReOrder(ctx context.Context, data *power.HashMap) (*response2.ResponseImmediateDeliveryReOrder, error) {
 
 	result := &response2.ResponseImmediateDeliveryReOrder{}
 

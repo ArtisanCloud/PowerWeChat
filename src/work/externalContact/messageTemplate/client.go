@@ -30,7 +30,7 @@ var required = []string{"content", "title", "url", "pic_media_id", "appid", "pag
 
 // 创建企业群发
 // https://developer.work.weixin.qq.com/document/path/92135
-func (comp *Client) AddMsgTemplate(ctx *context.Context, options *request.RequestAddMsgTemplate) (*response.ResponseAddMessageTemplate, error) {
+func (comp *Client) AddMsgTemplate(ctx context.Context, options *request.RequestAddMsgTemplate) (*response.ResponseAddMessageTemplate, error) {
 
 	result := &response.ResponseAddMessageTemplate{}
 
@@ -41,7 +41,7 @@ func (comp *Client) AddMsgTemplate(ctx *context.Context, options *request.Reques
 
 // 获取群发记录列表
 // https://developer.work.weixin.qq.com/document/path/93338#获取群发记录列表
-func (comp *Client) GetGroupMsgListV2(ctx *context.Context, options *request.RequestGetGroupMsgListV2) (*response.ResponseGetGroupMsgListV2, error) {
+func (comp *Client) GetGroupMsgListV2(ctx context.Context, options *request.RequestGetGroupMsgListV2) (*response.ResponseGetGroupMsgListV2, error) {
 
 	result := &response.ResponseGetGroupMsgListV2{}
 
@@ -52,7 +52,7 @@ func (comp *Client) GetGroupMsgListV2(ctx *context.Context, options *request.Req
 
 // 获取群发成员发送任务列表
 // https://developer.work.weixin.qq.com/document/path/93338#获取群发成员发送任务列表
-func (comp *Client) GetGroupMsgTask(ctx *context.Context, msgID string, limit int, cursor string) (*response.ResponseGetGroupMsgTask, error) {
+func (comp *Client) GetGroupMsgTask(ctx context.Context, msgID string, limit int, cursor string) (*response.ResponseGetGroupMsgTask, error) {
 
 	result := &response.ResponseGetGroupMsgTask{}
 	options := &object.HashMap{
@@ -67,7 +67,7 @@ func (comp *Client) GetGroupMsgTask(ctx *context.Context, msgID string, limit in
 
 // 获取企业群发成员执行结果
 // https://developer.work.weixin.qq.com/document/path/93338#获取企业群发成员执行结果
-func (comp *Client) GetGroupMsgSendResult(ctx *context.Context, msgID string, userID string, limit int, cursor string) (*response.ResponseGetGroupMsgSendResult, error) {
+func (comp *Client) GetGroupMsgSendResult(ctx context.Context, msgID string, userID string, limit int, cursor string) (*response.ResponseGetGroupMsgSendResult, error) {
 
 	result := &response.ResponseGetGroupMsgSendResult{}
 	options := &object.HashMap{
@@ -83,7 +83,7 @@ func (comp *Client) GetGroupMsgSendResult(ctx *context.Context, msgID string, us
 
 // 发送新客户欢迎语
 // https://developer.work.weixin.qq.com/document/path/92599
-func (comp *Client) SendWelcomeMsg(ctx *context.Context, options *request.RequestSendWelcomeMsg) (*response2.ResponseWork, error) {
+func (comp *Client) SendWelcomeMsg(ctx context.Context, options *request.RequestSendWelcomeMsg) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -92,7 +92,7 @@ func (comp *Client) SendWelcomeMsg(ctx *context.Context, options *request.Reques
 	return result, err
 }
 
-func (comp *Client) formatMessage(ctx *context.Context, data *object.HashMap) (*object.HashMap, error) {
+func (comp *Client) formatMessage(ctx context.Context, data *object.HashMap) (*object.HashMap, error) {
 	params := *data
 
 	if params["text"] != nil {

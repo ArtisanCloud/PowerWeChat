@@ -18,7 +18,7 @@ type Client struct {
 
 // 获取客服消息内的临时素材
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.getTempMedia.html
-func (comp *Client) GetTempMedia(ctx *context.Context, mediaID string) (*http.Response, error) {
+func (comp *Client) GetTempMedia(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	var result string
 	var header = &response4.ResponseHeaderMedia{}
@@ -36,7 +36,7 @@ func (comp *Client) GetTempMedia(ctx *context.Context, mediaID string) (*http.Re
 
 // 发送客服消息给用户
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.send.html
-func (comp *Client) Send(ctx *context.Context, toUser string, msgType string, msg interface{}) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) Send(ctx context.Context, toUser string, msgType string, msg interface{}) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -50,22 +50,22 @@ func (comp *Client) Send(ctx *context.Context, toUser string, msgType string, ms
 
 	return result, err
 }
-func (comp *Client) SendText(ctx *context.Context, toUser string, msg *request.CustomerServiceMsgText) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SendText(ctx context.Context, toUser string, msg *request.CustomerServiceMsgText) (*response2.ResponseMiniProgram, error) {
 	return comp.Send(ctx, toUser, "text", msg)
 }
-func (comp *Client) SendImage(ctx *context.Context, toUser string, msg *request.CustomerServiceMsgImage) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SendImage(ctx context.Context, toUser string, msg *request.CustomerServiceMsgImage) (*response2.ResponseMiniProgram, error) {
 	return comp.Send(ctx, toUser, "image", msg)
 }
-func (comp *Client) SendLink(ctx *context.Context, toUser string, msg *request.CustomerServiceMsgLink) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SendLink(ctx context.Context, toUser string, msg *request.CustomerServiceMsgLink) (*response2.ResponseMiniProgram, error) {
 	return comp.Send(ctx, toUser, "link", msg)
 }
-func (comp *Client) SendMiniProgramPage(ctx *context.Context, toUser string, msg *request.CustomerServiceMsgMpPage) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SendMiniProgramPage(ctx context.Context, toUser string, msg *request.CustomerServiceMsgMpPage) (*response2.ResponseMiniProgram, error) {
 	return comp.Send(ctx, toUser, "miniprogrampage", msg)
 }
 
 // 下发客服当前输入状态给用户
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.setTyping.html
-func (comp *Client) SetTyping(ctx *context.Context, toUser string, command string) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SetTyping(ctx context.Context, toUser string, command string) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 
@@ -81,7 +81,7 @@ func (comp *Client) SetTyping(ctx *context.Context, toUser string, command strin
 
 // 把媒体文件上传到微信服务器
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.uploadTempMedia.html
-func (comp *Client) UploadTempMedia(ctx *context.Context, mediaType string, path string, form *power.HashMap) (*response.ResponseCustomerServiceMessageUploadTempMedia, error) {
+func (comp *Client) UploadTempMedia(ctx context.Context, mediaType string, path string, form *power.HashMap) (*response.ResponseCustomerServiceMessageUploadTempMedia, error) {
 
 	result := &response.ResponseCustomerServiceMessageUploadTempMedia{}
 

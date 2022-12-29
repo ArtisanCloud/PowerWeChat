@@ -25,7 +25,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 绑定微信用户为体验者
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_AdminManagement/Admin.html
-func (comp *Client) Bind(ctx *context.Context, wechatID string) (*response.ResponseBind, error) {
+func (comp *Client) Bind(ctx context.Context, wechatID string) (*response.ResponseBind, error) {
 
 	result := &response.ResponseBind{}
 
@@ -39,7 +39,7 @@ func (comp *Client) Bind(ctx *context.Context, wechatID string) (*response.Respo
 
 // 解除绑定体验者
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_AdminManagement/unbind_tester.html
-func (comp *Client) Unbind(ctx *context.Context, params *request.RequestUnbind) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) Unbind(ctx context.Context, params *request.RequestUnbind) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -51,7 +51,7 @@ func (comp *Client) Unbind(ctx *context.Context, params *request.RequestUnbind) 
 
 // 获取体验者列表
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_AdminManagement/memberauth.html
-func (comp *Client) List(ctx *context.Context) (*response.ResponseList, error) {
+func (comp *Client) List(ctx context.Context) (*response.ResponseList, error) {
 
 	result := &response.ResponseList{}
 

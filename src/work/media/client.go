@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取临时素材
 // https://developer.work.weixin.qq.com/document/path/90254
-func (comp *Client) Get(ctx *context.Context, mediaID string) (*http.Response, error) {
+func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
@@ -41,7 +41,7 @@ func (comp *Client) Get(ctx *context.Context, mediaID string) (*http.Response, e
 
 // 获取高清语音素材
 // https://developer.work.weixin.qq.com/document/path/90255
-func (comp *Client) GetJSSDK(ctx *context.Context, mediaID string) (*http.Response, error) {
+func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response2.ResponseHeaderMedia{}
@@ -57,7 +57,7 @@ func (comp *Client) GetJSSDK(ctx *context.Context, mediaID string) (*http.Respon
 
 // 上传图片
 // https://developer.work.weixin.qq.com/document/path/90256
-func (comp *Client) UploadImage(ctx *context.Context, path string, form *power.HashMap) (*response2.ResponseUploadImage, error) {
+func (comp *Client) UploadImage(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadImage, error) {
 	result := &response2.ResponseUploadImage{}
 
 	var files *object.HashMap
@@ -83,25 +83,25 @@ func (comp *Client) UploadImage(ctx *context.Context, path string, form *power.H
 	return result, err
 }
 
-func (comp *Client) UploadTempImage(ctx *context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempImage(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "image", path, form)
 }
 
-func (comp *Client) UploadTempVoice(ctx *context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempVoice(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "voice", path, form)
 }
 
-func (comp *Client) UploadTempVideo(ctx *context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempVideo(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "video", path, form)
 }
 
-func (comp *Client) UploadTempFile(ctx *context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+func (comp *Client) UploadTempFile(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "file", path, form)
 }
 
 // 上传临时素材
 // https://developer.work.weixin.qq.com/document/path/90253
-func (comp *Client) Upload(ctx *context.Context, mediaType string, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+func (comp *Client) Upload(ctx context.Context, mediaType string, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	outResponse := &response2.ResponseUploadMedia{}
 
 	var files *object.HashMap

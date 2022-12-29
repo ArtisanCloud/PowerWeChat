@@ -22,7 +22,7 @@ type Client struct {
 
 // 根据标签进行群发 【订阅号与服务号认证后均可用】
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Batch_Sends_and_Originality_Checks.html
-func (comp *Client) Send(ctx *context.Context, message *power.HashMap) (*response.ResponseBroadcastingSend, error) {
+func (comp *Client) Send(ctx context.Context, message *power.HashMap) (*response.ResponseBroadcastingSend, error) {
 
 	if (*message)["filter"] == nil && (*message)["touser"] == nil {
 		return nil, errors.New("the message reception object is not specified")
@@ -41,7 +41,7 @@ func (comp *Client) Send(ctx *context.Context, message *power.HashMap) (*respons
 
 // 预览接口【订阅号与服务号认证后均可用】
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Batch_Sends_and_Originality_Checks.html
-func (comp *Client) Preview(ctx *context.Context, data *object.HashMap) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Preview(ctx context.Context, data *object.HashMap) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -51,7 +51,7 @@ func (comp *Client) Preview(ctx *context.Context, data *object.HashMap) (*respon
 
 // 删除群发【订阅号与服务号认证后均可用】
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Batch_Sends_and_Originality_Checks.html
-func (comp *Client) Delete(ctx *context.Context, msgID string, index int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Delete(ctx context.Context, msgID string, index int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -66,7 +66,7 @@ func (comp *Client) Delete(ctx *context.Context, msgID string, index int) (*resp
 
 // 查询群发消息发送状态【订阅号与服务号认证后均可用】
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Batch_Sends_and_Originality_Checks.html
-func (comp *Client) Status(ctx *context.Context, msgID string) (*response.ResponseBroadcastingStatus, error) {
+func (comp *Client) Status(ctx context.Context, msgID string) (*response.ResponseBroadcastingStatus, error) {
 
 	result := &response.ResponseBroadcastingStatus{}
 
@@ -78,42 +78,42 @@ func (comp *Client) Status(ctx *context.Context, msgID string) (*response.Respon
 	return result, err
 }
 
-func (comp *Client) SendText(ctx *context.Context, message string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
+func (comp *Client) SendText(ctx context.Context, message string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
 
 	return comp.SendMessage(ctx, messages.NewText(message), reception, attributes)
 }
 
-func (comp *Client) SendNews(ctx *context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
+func (comp *Client) SendNews(ctx context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
 
 	return comp.SendMessage(ctx, messages.NewMedia(mediaID, "mpnews", &power.HashMap{}), reception, attributes)
 }
 
-func (comp *Client) SendVoice(ctx *context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
+func (comp *Client) SendVoice(ctx context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
 
 	return comp.SendMessage(ctx, messages.NewMedia(mediaID, "voice", &power.HashMap{}), reception, attributes)
 }
 
-func (comp *Client) SendImage(ctx *context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
+func (comp *Client) SendImage(ctx context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
 
 	return comp.SendMessage(ctx, messages.NewImage(mediaID, &power.HashMap{}), reception, attributes)
 }
 
-func (comp *Client) SendVideo(ctx *context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
+func (comp *Client) SendVideo(ctx context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
 
 	return comp.SendMessage(ctx, messages.NewMedia(mediaID, "mpvideo", &power.HashMap{}), reception, attributes)
 }
 
-func (comp *Client) SendCard(ctx *context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
+func (comp *Client) SendCard(ctx context.Context, mediaID string, reception *request.Reception, attributes *power.HashMap) (interface{}, error) {
 
 	return comp.SendMessage(ctx, messages.NewCard(mediaID), reception, attributes)
 }
 
-func (comp *Client) PreviewText(ctx *context.Context, message string, reception *request.Reception, method string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) PreviewText(ctx context.Context, message string, reception *request.Reception, method string) (*response2.ResponseOfficialAccount, error) {
 
 	return comp.PreviewMessage(ctx, messages.NewText(message), reception, method)
 }
 
-func (comp *Client) PreviewMessage(ctx *context.Context, message contract.MessageInterface, reception *request.Reception, method string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) PreviewMessage(ctx context.Context, message contract.MessageInterface, reception *request.Reception, method string) (*response2.ResponseOfficialAccount, error) {
 
 	previewMessage, err := NewMessengerBuilder().SetMessage(message).BuildForPreview(method, reception)
 	if err != nil {
@@ -122,7 +122,7 @@ func (comp *Client) PreviewMessage(ctx *context.Context, message contract.Messag
 	return comp.Preview(ctx, previewMessage)
 }
 
-func (comp *Client) SendMessage(ctx *context.Context, message contract.MessageInterface, reception *request.Reception, attribute *power.HashMap) (interface{}, error) {
+func (comp *Client) SendMessage(ctx context.Context, message contract.MessageInterface, reception *request.Reception, attribute *power.HashMap) (interface{}, error) {
 
 	messageBuilder, err := NewMessengerBuilder().SetMessage(message).With(attribute)
 	if err != nil {

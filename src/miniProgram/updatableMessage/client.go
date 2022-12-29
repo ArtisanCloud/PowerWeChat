@@ -15,7 +15,7 @@ type Client struct {
 
 // 创建被分享动态消息或私密消息的 activity_id
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.createActivityId.html
-func (comp *Client) CreateActivityID(ctx *context.Context, unionID string, openID string) (*response.ResponseActiveMessageCreateActiveID, error) {
+func (comp *Client) CreateActivityID(ctx context.Context, unionID string, openID string) (*response.ResponseActiveMessageCreateActiveID, error) {
 
 	result := &response.ResponseActiveMessageCreateActiveID{}
 
@@ -31,7 +31,7 @@ func (comp *Client) CreateActivityID(ctx *context.Context, unionID string, openI
 
 // 修改被分享的动态消息。
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/updatable-message/updatableMessage.setUpdatableMsg.html
-func (comp *Client) SetUpdatableMsg(ctx *context.Context, options *request.RequestSetUpdatableMsg) (*response2.ResponseMiniProgram, error) {
+func (comp *Client) SetUpdatableMsg(ctx context.Context, options *request.RequestSetUpdatableMsg) (*response2.ResponseMiniProgram, error) {
 
 	result := &response2.ResponseMiniProgram{}
 

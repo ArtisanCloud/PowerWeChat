@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取应用的可见范围
 // https://developer.work.weixin.qq.com/document/path/93172
-func (comp *Client) GetPermList(ctx *context.Context) (*response.ResponseLinkCorpGetPermList, error) {
+func (comp *Client) GetPermList(ctx context.Context) (*response.ResponseLinkCorpGetPermList, error) {
 
 	result := &response.ResponseLinkCorpGetPermList{}
 
@@ -34,7 +34,7 @@ func (comp *Client) GetPermList(ctx *context.Context) (*response.ResponseLinkCor
 
 // 获取互联企业成员详细信息
 // https://developer.work.weixin.qq.com/document/path/93171
-func (comp *Client) GetUser(ctx *context.Context, userID string) (*response.ResponseLinkCorpGetUser, error) {
+func (comp *Client) GetUser(ctx context.Context, userID string) (*response.ResponseLinkCorpGetUser, error) {
 
 	result := &response.ResponseLinkCorpGetUser{}
 
@@ -49,7 +49,7 @@ func (comp *Client) GetUser(ctx *context.Context, userID string) (*response.Resp
 
 // 获取互联企业部门成员
 // https://developer.work.weixin.qq.com/document/path/93168
-func (comp *Client) GetUserSimpleList(ctx *context.Context, departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserSimpleList, error) {
+func (comp *Client) GetUserSimpleList(ctx context.Context, departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserSimpleList, error) {
 
 	result := &response.ResponseLinkCorpGetUserSimpleList{}
 
@@ -65,7 +65,7 @@ func (comp *Client) GetUserSimpleList(ctx *context.Context, departmentID string,
 
 // 获取互联企业部门成员详情
 // https://developer.work.weixin.qq.com/document/path/93169
-func (comp *Client) GetUserList(ctx *context.Context, departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserList, error) {
+func (comp *Client) GetUserList(ctx context.Context, departmentID string, fetchChild bool) (*response.ResponseLinkCorpGetUserList, error) {
 
 	result := &response.ResponseLinkCorpGetUserList{}
 
@@ -81,7 +81,7 @@ func (comp *Client) GetUserList(ctx *context.Context, departmentID string, fetch
 
 // 获取互联企业部门列表
 // https://developer.work.weixin.qq.com/document/path/93170
-func (comp *Client) GetDepartmentList(ctx *context.Context, departmentID string) (*response.ResponseLinkCorpGetDepartmentList, error) {
+func (comp *Client) GetDepartmentList(ctx context.Context, departmentID string) (*response.ResponseLinkCorpGetDepartmentList, error) {
 
 	result := &response.ResponseLinkCorpGetDepartmentList{}
 

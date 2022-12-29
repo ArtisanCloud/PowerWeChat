@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 应用推送消息
 // https://developer.work.weixin.qq.com/document/path/90250
-func (comp *Client) Send(ctx *context.Context, messages *power.HashMap) (*response.ResponseLinkCorpMessageSend, error) {
+func (comp *Client) Send(ctx context.Context, messages *power.HashMap) (*response.ResponseLinkCorpMessageSend, error) {
 
 	result := &response.ResponseLinkCorpMessageSend{}
 

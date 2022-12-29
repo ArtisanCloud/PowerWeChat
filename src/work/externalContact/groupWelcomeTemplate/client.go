@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 发送新客户欢迎语
 // https://developer.work.weixin.qq.com/document/path/92366
-func (comp *Client) AddGroupWelcomeTemplate(ctx *context.Context, options *request.RequestGroupWelcomeTemplateAdd) (*response.ResponseAddGroupWelcomeTemplate, error) {
+func (comp *Client) AddGroupWelcomeTemplate(ctx context.Context, options *request.RequestGroupWelcomeTemplateAdd) (*response.ResponseAddGroupWelcomeTemplate, error) {
 
 	result := &response.ResponseAddGroupWelcomeTemplate{}
 
@@ -36,7 +36,7 @@ func (comp *Client) AddGroupWelcomeTemplate(ctx *context.Context, options *reque
 
 // 编辑入群欢迎语素材
 // https://developer.work.weixin.qq.com/document/path/92366#编辑入群欢迎语素材
-func (comp *Client) EditGroupWelcomeTemplate(ctx *context.Context, options *request.RequestGroupWelcomeTemplateEdit) (*response2.ResponseWork, error) {
+func (comp *Client) EditGroupWelcomeTemplate(ctx context.Context, options *request.RequestGroupWelcomeTemplateEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -47,7 +47,7 @@ func (comp *Client) EditGroupWelcomeTemplate(ctx *context.Context, options *requ
 
 // 获取入群欢迎语素材
 // https://developer.work.weixin.qq.com/document/path/92366#获取入群欢迎语素材
-func (comp *Client) GetGroupWelcomeTemplate(ctx *context.Context, templateID string) (*response.ResponseGetGroupWelcomeTemplate, error) {
+func (comp *Client) GetGroupWelcomeTemplate(ctx context.Context, templateID string) (*response.ResponseGetGroupWelcomeTemplate, error) {
 
 	result := &response.ResponseGetGroupWelcomeTemplate{}
 
@@ -61,7 +61,7 @@ func (comp *Client) GetGroupWelcomeTemplate(ctx *context.Context, templateID str
 
 // 删除入群欢迎语素材
 // https://developer.work.weixin.qq.com/document/path/92366#删除入群欢迎语素材
-func (comp *Client) DelGroupWelcomeTemplate(ctx *context.Context, templateID string, agentID int64) (*response2.ResponseWork, error) {
+func (comp *Client) DelGroupWelcomeTemplate(ctx context.Context, templateID string, agentID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

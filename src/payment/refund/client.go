@@ -45,7 +45,7 @@ func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRe
 // Query Refund.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_10.shtml
 
-func (comp *Client) Query(ctx *context.Context, refundOutNO string) (*response.ResponseRefund, error) {
+func (comp *Client) Query(ctx context.Context, refundOutNO string) (*response.ResponseRefund, error) {
 
 	result := &response.ResponseRefund{}
 

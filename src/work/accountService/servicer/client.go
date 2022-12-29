@@ -23,7 +23,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 添加接待人员
 // https://developer.work.weixin.qq.com/document/path/94646
-func (comp *Client) Add(ctx *context.Context, openKFID string, userIDList []string) (*response.ResponseServicerAdd, error) {
+func (comp *Client) Add(ctx context.Context, openKFID string, userIDList []string) (*response.ResponseServicerAdd, error) {
 
 	result := &response.ResponseServicerAdd{}
 
@@ -39,7 +39,7 @@ func (comp *Client) Add(ctx *context.Context, openKFID string, userIDList []stri
 
 // 删除接待人员
 // https://developer.work.weixin.qq.com/document/path/94647
-func (comp *Client) Del(ctx *context.Context, openKFID string, userIDList []string) (*response.ResponseServicerDel, error) {
+func (comp *Client) Del(ctx context.Context, openKFID string, userIDList []string) (*response.ResponseServicerDel, error) {
 
 	result := &response.ResponseServicerDel{}
 
@@ -55,7 +55,7 @@ func (comp *Client) Del(ctx *context.Context, openKFID string, userIDList []stri
 
 // 获取接待人员列表
 // https://developer.work.weixin.qq.com/document/path/94645
-func (comp *Client) List(ctx *context.Context, openKFID string) (*response.ResponseServicerList, error) {
+func (comp *Client) List(ctx context.Context, openKFID string) (*response.ResponseServicerList, error) {
 
 	result := &response.ResponseServicerList{}
 

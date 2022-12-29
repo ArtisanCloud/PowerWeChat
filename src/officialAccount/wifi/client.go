@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 查询一定时间范围内的 WiFi 连接总人数、微信方式连 Wi-Fi 人数、商家主页访问人数、连网后消息发送人数、新增公众号关注人数和累计公众号关注人数。
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Wi-Fi_data_statistics.html
-func (comp *Client) Summary(ctx *context.Context, beginDate string, endDate string, shopID int) (*response.ResponseWifiSummary, error) {
+func (comp *Client) Summary(ctx context.Context, beginDate string, endDate string, shopID int) (*response.ResponseWifiSummary, error) {
 
 	result := &response.ResponseWifiSummary{}
 
@@ -43,7 +43,7 @@ func (comp *Client) Summary(ctx *context.Context, beginDate string, endDate stri
 
 // 添加设备后，通过此接口可以获取物料。
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Connecting/Get_materials_QR_Code.html
-func (comp *Client) GetQrCodeUrl(ctx *context.Context, bShopID int, ssid string, ImageID int) (*response.ResponseWifiQrCodeURL, error) {
+func (comp *Client) GetQrCodeUrl(ctx context.Context, bShopID int, ssid string, ImageID int) (*response.ResponseWifiQrCodeURL, error) {
 
 	result := &response.ResponseWifiQrCodeURL{}
 
@@ -61,7 +61,7 @@ func (comp *Client) GetQrCodeUrl(ctx *context.Context, bShopID int, ssid string,
 
 // 当顾客使用微信连 Wi-Fi 方式连网成功时，点击页面右上角“完成”按钮，即可进入已设置的连网完成页。
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Home_Page_management/Set_up_the_Wi-Fi_Connection_Completion_page.html
-func (comp *Client) SetFinishPage(ctx *context.Context, bShopID int, finishPageURL string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) SetFinishPage(ctx context.Context, bShopID int, finishPageURL string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -78,7 +78,7 @@ func (comp *Client) SetFinishPage(ctx *context.Context, bShopID int, finishPageU
 
 // 设置商户主页后，点击微信聊首页欢迎语，即可进入设置的商户主页。
 // https://developers.weixin.qq.com/doc/offiaccount/WiFi_via_WeChat/Home_Page_management/Set_up_a_merchant_home_page.html
-func (comp *Client) SetHomePage(ctx *context.Context, data *request.RequestWifiSetHomePage) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) SetHomePage(ctx context.Context, data *request.RequestWifiSetHomePage) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 

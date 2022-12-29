@@ -14,7 +14,7 @@ type Client struct {
 
 // 导入商品接口
 // https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2
-func (comp *Client) Add(ctx *context.Context, data *request.RequestProduct) (*response.ResponseProductAdd, error) {
+func (comp *Client) Add(ctx context.Context, data *request.RequestProduct) (*response.ResponseProductAdd, error) {
 
 	result := &response.ResponseProductAdd{}
 
@@ -25,7 +25,7 @@ func (comp *Client) Add(ctx *context.Context, data *request.RequestProduct) (*re
 
 // 更新商品接口
 // https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2
-func (comp *Client) Update(ctx *context.Context, data *request.RequestProduct) (*response.ResponseProductAdd, error) {
+func (comp *Client) Update(ctx context.Context, data *request.RequestProduct) (*response.ResponseProductAdd, error) {
 
 	result := &response.ResponseProductAdd{}
 
@@ -36,7 +36,7 @@ func (comp *Client) Update(ctx *context.Context, data *request.RequestProduct) (
 
 // 导入或更新结果查询接口
 // https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2
-func (comp *Client) Status(ctx *context.Context, ticket string) (*response.ResponseProductStatus, error) {
+func (comp *Client) Status(ctx context.Context, ticket string) (*response.ResponseProductStatus, error) {
 
 	result := &response.ResponseProductStatus{}
 
@@ -47,7 +47,7 @@ func (comp *Client) Status(ctx *context.Context, ticket string) (*response.Respo
 
 // 单个商品信息查询接口
 // https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2
-func (comp *Client) Get(ctx *context.Context, data *request.RequestProductGet) (*response.ResponseProductGet, error) {
+func (comp *Client) Get(ctx context.Context, data *request.RequestProductGet) (*response.ResponseProductGet, error) {
 
 	result := &response.ResponseProductGet{}
 
@@ -58,7 +58,7 @@ func (comp *Client) Get(ctx *context.Context, data *request.RequestProductGet) (
 
 // 全量商品信息查询接口
 // https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11533749572M9ODP&version=1&lang=zh_CN&platform=2
-func (comp *Client) List(ctx *context.Context, context string, page int, size int) (*response.ResponseProductGet, error) {
+func (comp *Client) List(ctx context.Context, context string, page int, size int) (*response.ResponseProductGet, error) {
 
 	result := &response.ResponseProductGet{}
 

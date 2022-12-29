@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // https://developer.work.weixin.qq.com/document/path/90205
-func (comp *Client) SetWorkbenchTemplate(ctx *context.Context, data *request.RequestSetWorkbenchTemplate) (*response.ResponseAgentSetWorkbenchTemplate, error) {
+func (comp *Client) SetWorkbenchTemplate(ctx context.Context, data *request.RequestSetWorkbenchTemplate) (*response.ResponseAgentSetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentSetWorkbenchTemplate{}
 
@@ -34,7 +34,7 @@ func (comp *Client) SetWorkbenchTemplate(ctx *context.Context, data *request.Req
 }
 
 // https://developer.work.weixin.qq.com/document/path/90206
-func (comp Client) GetWorkbenchTemplate(ctx *context.Context, agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
+func (comp Client) GetWorkbenchTemplate(ctx context.Context, agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentGetWorkbenchTemplate{}
 
@@ -46,7 +46,7 @@ func (comp Client) GetWorkbenchTemplate(ctx *context.Context, agentID int) (*res
 }
 
 // https://developer.work.weixin.qq.com/document/path/92535
-func (comp Client) SetWorkbenchData(ctx *context.Context, data *request.RequestSetWorkBenchData) (*response.ResponseAgentSetWorkbenchData, error) {
+func (comp Client) SetWorkbenchData(ctx context.Context, data *request.RequestSetWorkBenchData) (*response.ResponseAgentSetWorkbenchData, error) {
 
 	result := &response.ResponseAgentSetWorkbenchData{}
 

@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 申请开通摇一摇周边功能
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Apply/Application_for_opening_function.html
-func (comp *Client) Register(ctx *context.Context, data *request.RequestShakeAroundAccountRegister) (*response.ResponseShakeAroundAccountRegister, error) {
+func (comp *Client) Register(ctx context.Context, data *request.RequestShakeAroundAccountRegister) (*response.ResponseShakeAroundAccountRegister, error) {
 
 	result := &response.ResponseShakeAroundAccountRegister{}
 
@@ -35,7 +35,7 @@ func (comp *Client) Register(ctx *context.Context, data *request.RequestShakeAro
 
 // 查询审核状态
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Apply/Application_for_opening_function.html
-func (comp *Client) Status(ctx *context.Context) (*response.ResponseShakeAroundAccountRegister, error) {
+func (comp *Client) Status(ctx context.Context) (*response.ResponseShakeAroundAccountRegister, error) {
 
 	result := &response.ResponseShakeAroundAccountRegister{}
 
@@ -46,7 +46,7 @@ func (comp *Client) Status(ctx *context.Context) (*response.ResponseShakeAroundA
 
 // 获取设备信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Getting_Device_and_User_Information.html
-func (comp *Client) User(ctx *context.Context, data *request.RequestShakeAroundUser) (*response.ResponseShakeAroundUser, error) {
+func (comp *Client) User(ctx context.Context, data *request.RequestShakeAroundUser) (*response.ResponseShakeAroundUser, error) {
 
 	result := &response.ResponseShakeAroundUser{}
 
@@ -55,7 +55,7 @@ func (comp *Client) User(ctx *context.Context, data *request.RequestShakeAroundU
 	return result, err
 }
 
-func (comp *Client) UserWithPoi(ctx *context.Context, ticket string) (*response.ResponseShakeAroundUser, error) {
+func (comp *Client) UserWithPoi(ctx context.Context, ticket string) (*response.ResponseShakeAroundUser, error) {
 
 	data := &request.RequestShakeAroundUser{
 		Ticket:  ticket,

@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取客户群列表
 // https://developer.work.weixin.qq.com/document/path/92120
-func (comp *Client) List(ctx *context.Context, params *request.RequestGroupChatList) (*response.ResponseGroupChatList, error) {
+func (comp *Client) List(ctx context.Context, params *request.RequestGroupChatList) (*response.ResponseGroupChatList, error) {
 
 	result := &response.ResponseGroupChatList{}
 
@@ -35,7 +35,7 @@ func (comp *Client) List(ctx *context.Context, params *request.RequestGroupChatL
 
 // 获取客户群详情
 // https://developer.work.weixin.qq.com/document/path/92122
-func (comp *Client) Get(ctx *context.Context, chatID string, needName int) (*response.ResponseGroupChatGet, error) {
+func (comp *Client) Get(ctx context.Context, chatID string, needName int) (*response.ResponseGroupChatGet, error) {
 
 	result := &response.ResponseGroupChatGet{}
 
@@ -51,7 +51,7 @@ func (comp *Client) Get(ctx *context.Context, chatID string, needName int) (*res
 
 // 客户群opengid转换
 // https://developer.work.weixin.qq.com/document/path/94822
-func (comp *Client) OpenGIDToChatID(ctx *context.Context, openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
+func (comp *Client) OpenGIDToChatID(ctx context.Context, openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
 
 	result := &response.ResponseGroupChatOpenGIDToChatID{}
 

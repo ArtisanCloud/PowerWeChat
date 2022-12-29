@@ -23,7 +23,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 获取接口列表
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/apply_api/get_privacy_interface.html#请求地址
-func (comp *Client) Get(ctx *context.Context) (*response.ResponseGet, error) {
+func (comp *Client) Get(ctx context.Context) (*response.ResponseGet, error) {
 
 	result := &response.ResponseGet{}
 
@@ -35,7 +35,7 @@ func (comp *Client) Get(ctx *context.Context) (*response.ResponseGet, error) {
 
 // 申请接口
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/apply_api/apply_privacy_interface.html
-func (comp *Client) Set(ctx *context.Context, params *request.RequestSet) (*response.ResponseSet, error) {
+func (comp *Client) Set(ctx context.Context, params *request.RequestSet) (*response.ResponseSet, error) {
 
 	result := &response.ResponseSet{}
 

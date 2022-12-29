@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 查询门店信息
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html
-func (comp *Client) Get(ctx *context.Context, poiID int) (*response.ResponsePOIGet, error) {
+func (comp *Client) Get(ctx context.Context, poiID int) (*response.ResponsePOIGet, error) {
 
 	result := &response.ResponsePOIGet{}
 
@@ -36,7 +36,7 @@ func (comp *Client) Get(ctx *context.Context, poiID int) (*response.ResponsePOIG
 
 // 查询门店列表
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html
-func (comp *Client) List(ctx *context.Context, offset int, limit int) (*response.ResponsePOIList, error) {
+func (comp *Client) List(ctx context.Context, offset int, limit int) (*response.ResponsePOIList, error) {
 
 	result := &response.ResponsePOIList{}
 
@@ -52,7 +52,7 @@ func (comp *Client) List(ctx *context.Context, offset int, limit int) (*response
 
 // 查询门店列表
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html
-func (comp *Client) Create(ctx *context.Context, data *request.BusinessInfo) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Create(ctx context.Context, data *request.BusinessInfo) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -69,7 +69,7 @@ func (comp *Client) Create(ctx *context.Context, data *request.BusinessInfo) (*r
 
 // 查询门店列表并获取POI ID
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html
-func (comp *Client) CreateAndGetID(ctx *context.Context, data *request.BusinessInfo) (int, error) {
+func (comp *Client) CreateAndGetID(ctx context.Context, data *request.BusinessInfo) (int, error) {
 
 	result, err := comp.Create(ctx, data)
 
@@ -86,7 +86,7 @@ func (comp *Client) CreateAndGetID(ctx *context.Context, data *request.BusinessI
 
 // 修改门店服务信息
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html
-func (comp *Client) Update(ctx *context.Context, data *request.BusinessInfo) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Update(ctx context.Context, data *request.BusinessInfo) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -103,7 +103,7 @@ func (comp *Client) Update(ctx *context.Context, data *request.BusinessInfo) (*r
 
 // 删除门店
 // https://developers.weixin.qq.com/doc/offiaccount/WeChat_Stores/WeChat_Store_Interface.html
-func (comp *Client) Delete(ctx *context.Context, poiID int) (*response.ResponsePOIGet, error) {
+func (comp *Client) Delete(ctx context.Context, poiID int) (*response.ResponsePOIGet, error) {
 
 	result := &response.ResponsePOIGet{}
 

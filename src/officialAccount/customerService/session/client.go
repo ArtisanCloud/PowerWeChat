@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取客服会话列表
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
-func (comp *Client) List(ctx *context.Context, account string) (*response.ResponseKFSessionList, error) {
+func (comp *Client) List(ctx context.Context, account string) (*response.ResponseKFSessionList, error) {
 	result := &response.ResponseKFSessionList{}
 
 	_, err := comp.BaseClient.HttpGet(ctx, "customservice/kfsession/getsessionlist", &object.StringMap{"kf_account": account}, nil, &result)
@@ -35,7 +35,7 @@ func (comp *Client) List(ctx *context.Context, account string) (*response.Respon
 
 // 获取未接入会话列表
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
-func (comp *Client) Waiting(ctx *context.Context) (*response.ResponseKFSessionWaitCaseList, error) {
+func (comp *Client) Waiting(ctx context.Context) (*response.ResponseKFSessionWaitCaseList, error) {
 	result := &response.ResponseKFSessionWaitCaseList{}
 
 	_, err := comp.BaseClient.HttpGet(ctx, "customservice/kfsession/getwaitcase", nil, nil, &result)
@@ -45,7 +45,7 @@ func (comp *Client) Waiting(ctx *context.Context) (*response.ResponseKFSessionWa
 
 // 创建会话
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
-func (comp *Client) Create(ctx *context.Context, account string, openID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Create(ctx context.Context, account string, openID string) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &power.HashMap{
@@ -59,7 +59,7 @@ func (comp *Client) Create(ctx *context.Context, account string, openID string) 
 
 // 关闭会话
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
-func (comp *Client) Close(ctx *context.Context, account string, openID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Close(ctx context.Context, account string, openID string) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &power.HashMap{
@@ -73,7 +73,7 @@ func (comp *Client) Close(ctx *context.Context, account string, openID string) (
 
 // 获取客户会话状态
 // https://developers.weixin.qq.com/doc/offiaccount/Customer_Service/Session_control.html
-func (comp *Client) Get(ctx *context.Context, openID string) (*response.ResponseKFSessionGet, error) {
+func (comp *Client) Get(ctx context.Context, openID string) (*response.ResponseKFSessionGet, error) {
 	result := &response.ResponseKFSessionGet{}
 
 	_, err := comp.BaseClient.HttpGet(ctx, "customservice/kfsession/getsession", &object.StringMap{"openid": openID}, nil, &result)

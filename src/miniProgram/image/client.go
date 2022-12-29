@@ -15,7 +15,7 @@ type Client struct {
 
 // 本接口提供基于小程序的图片智能裁剪能力
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/img/img.aiCrop.html
-func (comp *Client) AICrop(ctx *context.Context, imgURL string, img *power.HashMap) (*response.ResponseIMGAICrop, error) {
+func (comp *Client) AICrop(ctx context.Context, imgURL string, img *power.HashMap) (*response.ResponseIMGAICrop, error) {
 
 	result := &response.ResponseIMGAICrop{}
 
@@ -27,7 +27,7 @@ func (comp *Client) AICrop(ctx *context.Context, imgURL string, img *power.HashM
 
 // 本接口提供基于小程序的条码/二维码识别的API
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/img/img.scanQRCode.html
-func (comp *Client) ScanQRCode(ctx *context.Context, imgURL string, img *power.HashMap) (*response.ResponseIMGScanQRCode, error) {
+func (comp *Client) ScanQRCode(ctx context.Context, imgURL string, img *power.HashMap) (*response.ResponseIMGScanQRCode, error) {
 
 	result := &response.ResponseIMGScanQRCode{}
 
@@ -39,7 +39,7 @@ func (comp *Client) ScanQRCode(ctx *context.Context, imgURL string, img *power.H
 
 // 本接口提供基于小程序的图片高清化能力
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/img/img.superresolution.html
-func (comp *Client) SuperResolution(ctx *context.Context, imgURL string, img *power.HashMap) (*response.ResponseIMGSuperResolution, error) {
+func (comp *Client) SuperResolution(ctx context.Context, imgURL string, img *power.HashMap) (*response.ResponseIMGSuperResolution, error) {
 
 	result := &response.ResponseIMGSuperResolution{}
 
@@ -49,7 +49,7 @@ func (comp *Client) SuperResolution(ctx *context.Context, imgURL string, img *po
 
 }
 
-func (comp *Client) UploadImage(ctx *context.Context, entryPoint string, imgURL string, img *power.HashMap, result interface{}) (interface{}, error) {
+func (comp *Client) UploadImage(ctx context.Context, entryPoint string, imgURL string, img *power.HashMap, result interface{}) (interface{}, error) {
 
 	params := &object.StringMap{}
 	var formData *kernel.UploadForm

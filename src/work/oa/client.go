@@ -27,7 +27,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取企业所有打卡规则
 // https://developer.work.weixin.qq.com/document/path/93384
-func (comp *Client) GetCorpCheckInOption(ctx *context.Context) (*response.ResponseCorpCheckInRules, error) {
+func (comp *Client) GetCorpCheckInOption(ctx context.Context) (*response.ResponseCorpCheckInRules, error) {
 	result := &response.ResponseCorpCheckInRules{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/getcorpcheckinoption", nil, nil, nil, result)
@@ -38,7 +38,7 @@ func (comp *Client) GetCorpCheckInOption(ctx *context.Context) (*response.Respon
 
 // 获取员工打卡规则
 // https://developer.work.weixin.qq.com/document/path/90263
-func (comp *Client) GetCheckInOption(ctx *context.Context, datetime int, userList []string) (*response.ResponseCheckInRules, error) {
+func (comp *Client) GetCheckInOption(ctx context.Context, datetime int, userList []string) (*response.ResponseCheckInRules, error) {
 	result := &response.ResponseCheckInRules{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/getcheckinoption", &object.HashMap{
@@ -51,7 +51,7 @@ func (comp *Client) GetCheckInOption(ctx *context.Context, datetime int, userLis
 
 // 获取打卡记录数据
 // https://developer.work.weixin.qq.com/document/path/90262
-func (comp *Client) GetCheckinData(ctx *context.Context, recordType int, startTime int, endTime int, userList []string) (*response.ResponseCheckInRecords, error) {
+func (comp *Client) GetCheckinData(ctx context.Context, recordType int, startTime int, endTime int, userList []string) (*response.ResponseCheckInRecords, error) {
 	result := &response.ResponseCheckInRecords{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/getcheckindata", &object.HashMap{
@@ -66,7 +66,7 @@ func (comp *Client) GetCheckinData(ctx *context.Context, recordType int, startTi
 
 // 获取打卡日报数据
 // https://developer.work.weixin.qq.com/document/path/93374
-func (comp *Client) GetCheckinDayData(ctx *context.Context, startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
+func (comp *Client) GetCheckinDayData(ctx context.Context, startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 
 	result := &response.ResponseCheckInDatas{}
 
@@ -82,7 +82,7 @@ func (comp *Client) GetCheckinDayData(ctx *context.Context, startTime int, endTi
 
 // 获取打卡月报数据
 // https://developer.work.weixin.qq.com/document/path/93387
-func (comp *Client) GetCheckInMonthData(ctx *context.Context, startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
+func (comp *Client) GetCheckInMonthData(ctx context.Context, startTime int, endTime int, userIDs []string) (*response.ResponseCheckInDatas, error) {
 	result := &response.ResponseCheckInDatas{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/getcheckin_monthdata", &object.HashMap{
@@ -96,7 +96,7 @@ func (comp *Client) GetCheckInMonthData(ctx *context.Context, startTime int, end
 
 // 获取打卡人员排班信息
 // https://developer.work.weixin.qq.com/document/path/93380
-func (comp *Client) GetCheckInScheduleList(ctx *context.Context, startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
+func (comp *Client) GetCheckInScheduleList(ctx context.Context, startTime int, endTime int, userIDs []string) (*response.ResponseCheckInSchedulist, error) {
 	result := &response.ResponseCheckInSchedulist{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/getcheckinschedulist", &object.HashMap{
@@ -110,7 +110,7 @@ func (comp *Client) GetCheckInScheduleList(ctx *context.Context, startTime int, 
 
 // 为打卡人员排班
 // https://developer.work.weixin.qq.com/document/path/93385
-func (comp *Client) SetCheckInScheduleList(ctx *context.Context, options *request.RequestCheckInSetScheduleList) (*response2.ResponseWork, error) {
+func (comp *Client) SetCheckInScheduleList(ctx context.Context, options *request.RequestCheckInSetScheduleList) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/setcheckinschedulist", options, nil, nil, result)
@@ -120,7 +120,7 @@ func (comp *Client) SetCheckInScheduleList(ctx *context.Context, options *reques
 
 // 录入打卡人员人脸信息
 // https://developer.work.weixin.qq.com/document/path/93378
-func (comp *Client) AddCheckInUserFace(ctx *context.Context, userID string, userFace string) (*response2.ResponseWork, error) {
+func (comp *Client) AddCheckInUserFace(ctx context.Context, userID string, userFace string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -134,7 +134,7 @@ func (comp *Client) AddCheckInUserFace(ctx *context.Context, userID string, user
 
 // 获取审批模板详情
 // https://developer.work.weixin.qq.com/document/path/91982
-func (comp *Client) ApprovalTemplate(ctx *context.Context, templateID string) (*response.ResponseApprovalTemplate, error) {
+func (comp *Client) ApprovalTemplate(ctx context.Context, templateID string) (*response.ResponseApprovalTemplate, error) {
 	result := &response.ResponseApprovalTemplate{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/gettemplatedetail", &object.HashMap{
@@ -146,7 +146,7 @@ func (comp *Client) ApprovalTemplate(ctx *context.Context, templateID string) (*
 
 // 提交审批申请
 // https://developer.work.weixin.qq.com/document/path/91853
-func (comp *Client) CreateApproval(ctx *context.Context, data *power.HashMap) (*response.ResponseApprovalCreate, error) {
+func (comp *Client) CreateApproval(ctx context.Context, data *power.HashMap) (*response.ResponseApprovalCreate, error) {
 	result := &response.ResponseApprovalCreate{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/applyevent", data, nil, nil, result)
@@ -156,7 +156,7 @@ func (comp *Client) CreateApproval(ctx *context.Context, data *power.HashMap) (*
 
 // 批量获取审批单号
 // https://developer.work.weixin.qq.com/document/path/91816
-func (comp *Client) GetApprovalInfo(ctx *context.Context, startTime int, endTime int, nextCursor int, size int, filters *object.HashMap) (*response.ResponseApprovalNoList, error) {
+func (comp *Client) GetApprovalInfo(ctx context.Context, startTime int, endTime int, nextCursor int, size int, filters *object.HashMap) (*response.ResponseApprovalNoList, error) {
 
 	result := &response.ResponseApprovalNoList{}
 
@@ -179,7 +179,7 @@ func (comp *Client) GetApprovalInfo(ctx *context.Context, startTime int, endTime
 
 // 获取审批申请详情
 // https://developer.work.weixin.qq.com/document/path/91983
-func (comp *Client) GetApprovalDetail(ctx *context.Context, number int) (*response.ResponseApprovalDetail, error) {
+func (comp *Client) GetApprovalDetail(ctx context.Context, number int) (*response.ResponseApprovalDetail, error) {
 	result := &response.ResponseApprovalDetail{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/getapprovaldetail", &object.HashMap{
@@ -191,7 +191,7 @@ func (comp *Client) GetApprovalDetail(ctx *context.Context, number int) (*respon
 
 // 获取审批数据（旧）
 // https://developer.work.weixin.qq.com/document/path/91530
-func (comp *Client) GetApprovalData(ctx *context.Context, startTime int, endTime int, nextNumber int) (*response.ResponseApprovalGetData, error) {
+func (comp *Client) GetApprovalData(ctx context.Context, startTime int, endTime int, nextNumber int) (*response.ResponseApprovalGetData, error) {
 
 	result := &response.ResponseApprovalGetData{}
 
@@ -208,7 +208,7 @@ func (comp *Client) GetApprovalData(ctx *context.Context, startTime int, endTime
 
 // 获取企业假期管理配置
 // https://developer.work.weixin.qq.com/document/path/93375
-func (comp *Client) GetCorpConfig(ctx *context.Context) (*response.ResponseCorpVacationGetConfig, error) {
+func (comp *Client) GetCorpConfig(ctx context.Context) (*response.ResponseCorpVacationGetConfig, error) {
 
 	result := &response.ResponseCorpVacationGetConfig{}
 
@@ -220,7 +220,7 @@ func (comp *Client) GetCorpConfig(ctx *context.Context) (*response.ResponseCorpV
 
 // 获取成员假期余额
 // https://developer.work.weixin.qq.com/document/path/93376
-func (comp *Client) GetUserVacationQuota(ctx *context.Context, userID string) (*response.ResponseCorpVacationGetQuota, error) {
+func (comp *Client) GetUserVacationQuota(ctx context.Context, userID string) (*response.ResponseCorpVacationGetQuota, error) {
 
 	result := &response.ResponseCorpVacationGetQuota{}
 
@@ -234,7 +234,7 @@ func (comp *Client) GetUserVacationQuota(ctx *context.Context, userID string) (*
 
 // 修改成员假期余额
 // https://developer.work.weixin.qq.com/document/path/94213
-func (comp *Client) SetOneUserQuota(ctx *context.Context, data *object.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) SetOneUserQuota(ctx context.Context, data *object.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

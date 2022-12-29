@@ -28,7 +28,7 @@ func NewClient(app kernel.ApplicationInterface, component kernel.ApplicationInte
 
 // 小程序登录
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/others/WeChat_login.html
-func (comp *Client) Session(ctx *context.Context, code string) (*response.ResponseSession, error) {
+func (comp *Client) Session(ctx context.Context, code string) (*response.ResponseSession, error) {
 
 	result := &response.ResponseSession{}
 

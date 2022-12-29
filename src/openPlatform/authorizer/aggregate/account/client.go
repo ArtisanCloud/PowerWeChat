@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建开放平台帐号并绑定公众号/小程序
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/account/create.html
-func (comp *Client) Create(ctx *context.Context) (*response.ResponseCreate, error) {
+func (comp *Client) Create(ctx context.Context) (*response.ResponseCreate, error) {
 
 	result := &response.ResponseCreate{}
 
@@ -40,7 +40,7 @@ func (comp *Client) Create(ctx *context.Context) (*response.ResponseCreate, erro
 
 // 将公众号/小程序绑定到开放平台帐号下
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/account/bind.html
-func (comp *Client) BindTo(ctx *context.Context, openAppID string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) BindTo(ctx context.Context, openAppID string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -57,7 +57,7 @@ func (comp *Client) BindTo(ctx *context.Context, openAppID string) (*response2.R
 
 // 将公众号/小程序绑定到开放平台帐号下
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/account/unbind.html
-func (comp *Client) UnbindFrom(ctx *context.Context, openAppID string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) UnbindFrom(ctx context.Context, openAppID string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -74,7 +74,7 @@ func (comp *Client) UnbindFrom(ctx *context.Context, openAppID string) (*respons
 
 // 获取公众号/小程序所绑定的开放平台帐号
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/account/get.html
-func (comp *Client) GetBinding(ctx *context.Context) (*response.ResponseGetBinding, error) {
+func (comp *Client) GetBinding(ctx context.Context) (*response.ResponseGetBinding, error) {
 
 	result := &response.ResponseGetBinding{}
 

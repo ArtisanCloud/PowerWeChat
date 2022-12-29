@@ -15,7 +15,7 @@ type Client struct {
 
 // 查询电子发票
 // https://developer.work.weixin.qq.com/document/path/90284
-func (comp *Client) GetInvoiceInfo(ctx *context.Context, cardID string, encryptCode string) (*response.ResponseInvoiceGetInfo, error) {
+func (comp *Client) GetInvoiceInfo(ctx context.Context, cardID string, encryptCode string) (*response.ResponseInvoiceGetInfo, error) {
 
 	result := &response.ResponseInvoiceGetInfo{}
 
@@ -30,7 +30,7 @@ func (comp *Client) GetInvoiceInfo(ctx *context.Context, cardID string, encryptC
 
 // 批量查询电子发票
 // https://developer.work.weixin.qq.com/document/path/90287
-func (comp *Client) GetInvoiceInfoBatch(ctx *context.Context, invoiceList []*request.RequestCardInvoice) (*response.ResponseInvoiceGetInfoBatch, error) {
+func (comp *Client) GetInvoiceInfoBatch(ctx context.Context, invoiceList []*request.RequestCardInvoice) (*response.ResponseInvoiceGetInfoBatch, error) {
 
 	result := &response.ResponseInvoiceGetInfoBatch{}
 
@@ -44,7 +44,7 @@ func (comp *Client) GetInvoiceInfoBatch(ctx *context.Context, invoiceList []*req
 
 // 更新发票状态
 // https://developer.work.weixin.qq.com/document/path/90285
-func (comp *Client) UpdateInvoiceStatus(ctx *context.Context, cardID string, encryptCode string, status string) (*response2.ResponseWork, error) {
+func (comp *Client) UpdateInvoiceStatus(ctx context.Context, cardID string, encryptCode string, status string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -60,7 +60,7 @@ func (comp *Client) UpdateInvoiceStatus(ctx *context.Context, cardID string, enc
 
 // 批量更新发票状态
 // https://developer.work.weixin.qq.com/document/path/90286
-func (comp *Client) UpdateStatusBatch(ctx *context.Context, openid string, status string, invoiceList []*request.RequestCardInvoice) (*response2.ResponseWork, error) {
+func (comp *Client) UpdateStatusBatch(ctx context.Context, openid string, status string, invoiceList []*request.RequestCardInvoice) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

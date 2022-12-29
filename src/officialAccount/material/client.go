@@ -32,7 +32,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 上传永久图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadImage(ctx *context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
+func (comp *Client) UploadImage(ctx context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
 	result := &response.ResponseMaterialAddMaterial{}
 	_, err := comp.Upload(ctx, "image", path, &object.StringMap{}, result)
 	return result, err
@@ -40,7 +40,7 @@ func (comp *Client) UploadImage(ctx *context.Context, path string) (*response.Re
 
 // 上传永久语音素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadVoice(ctx *context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
+func (comp *Client) UploadVoice(ctx context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
 	result := &response.ResponseMaterialAddMaterial{}
 	_, err := comp.Upload(ctx, "voice", path, &object.StringMap{}, result)
 	return result, err
@@ -48,7 +48,7 @@ func (comp *Client) UploadVoice(ctx *context.Context, path string) (*response.Re
 
 // 上传永久缩略图素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadThumb(ctx *context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
+func (comp *Client) UploadThumb(ctx context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
 	result := &response.ResponseMaterialAddMaterial{}
 	_, err := comp.Upload(ctx, "thumb", path, &object.StringMap{}, result)
 	return result, err
@@ -56,7 +56,7 @@ func (comp *Client) UploadThumb(ctx *context.Context, path string) (*response.Re
 
 // 上传永久视频素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadVideo(ctx *context.Context, path string, title string, description string) (*response.ResponseMaterialAddMaterial, error) {
+func (comp *Client) UploadVideo(ctx context.Context, path string, title string, description string) (*response.ResponseMaterialAddMaterial, error) {
 
 	result := &response.ResponseMaterialAddMaterial{}
 
@@ -78,7 +78,7 @@ func (comp *Client) UploadVideo(ctx *context.Context, path string, title string,
 
 // 新增永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) UploadArticle(ctx *context.Context, articles request2.RequestAddArticles) (*response.ResponseMaterialAddNews, error) {
+func (comp *Client) UploadArticle(ctx context.Context, articles request2.RequestAddArticles) (*response.ResponseMaterialAddNews, error) {
 
 	result := &response.ResponseMaterialAddNews{}
 
@@ -94,7 +94,7 @@ func (comp *Client) UploadArticle(ctx *context.Context, articles request2.Reques
 
 // 上传永久视频素材
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
-func (comp *Client) UpdateArticle(ctx *context.Context, mediaID string, articles request2.RequestAddArticles, index int) (response.ResponseMaterialAddNews, error) {
+func (comp *Client) UpdateArticle(ctx context.Context, mediaID string, articles request2.RequestAddArticles, index int) (response.ResponseMaterialAddNews, error) {
 	result := response.ResponseMaterialAddNews{}
 
 	params := &object.HashMap{
@@ -109,7 +109,7 @@ func (comp *Client) UpdateArticle(ctx *context.Context, mediaID string, articles
 
 // 上传图文消息内的图片获取URL
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
-func (comp *Client) UploadArticleImage(ctx *context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
+func (comp *Client) UploadArticleImage(ctx context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
 	result := &response.ResponseMaterialAddMaterial{}
 	_, err := comp.Upload(ctx, "news_image", path, &object.StringMap{}, result)
 	return result, err
@@ -117,7 +117,7 @@ func (comp *Client) UploadArticleImage(ctx *context.Context, path string) (*resp
 
 // 获取永久素材图片
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
-func (comp *Client) Get(ctx *context.Context, mediaID string) (*http.Response, error) {
+func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	result := ""
 	header := &response4.ResponseHeaderMedia{}
@@ -132,7 +132,7 @@ func (comp *Client) Get(ctx *context.Context, mediaID string) (*http.Response, e
 
 // 获取永久视频消息素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
-func (comp *Client) GetVideo(ctx *context.Context, mediaID string) (*response.ResponseMaterialGetVideo, error) {
+func (comp *Client) GetVideo(ctx context.Context, mediaID string) (*response.ResponseMaterialGetVideo, error) {
 
 	result := &response.ResponseMaterialGetVideo{}
 
@@ -147,7 +147,7 @@ func (comp *Client) GetVideo(ctx *context.Context, mediaID string) (*response.Re
 
 // 获取永久图文素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
-func (comp *Client) GetNews(ctx *context.Context, mediaID string) (*response.ResponseMaterialGetNews, error) {
+func (comp *Client) GetNews(ctx context.Context, mediaID string) (*response.ResponseMaterialGetNews, error) {
 
 	result := &response.ResponseMaterialGetNews{}
 
@@ -162,7 +162,7 @@ func (comp *Client) GetNews(ctx *context.Context, mediaID string) (*response.Res
 
 // 删除永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Deleting_Permanent_Assets.html
-func (comp *Client) Delete(ctx *context.Context, mediaID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Delete(ctx context.Context, mediaID string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -177,7 +177,7 @@ func (comp *Client) Delete(ctx *context.Context, mediaID string) (*response2.Res
 
 // 获取素材列表
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_materials_list.html
-func (comp *Client) List(ctx *context.Context, options *request2.RequestMaterialBatchGetMaterial) (*response.ResponseMaterialBatchGetMaterial, error) {
+func (comp *Client) List(ctx context.Context, options *request2.RequestMaterialBatchGetMaterial) (*response.ResponseMaterialBatchGetMaterial, error) {
 
 	result := &response.ResponseMaterialBatchGetMaterial{}
 
@@ -188,7 +188,7 @@ func (comp *Client) List(ctx *context.Context, options *request2.RequestMaterial
 
 // 获取素材总数
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_the_total_of_all_materials.html
-func (comp *Client) Stats(ctx *context.Context) (*response.ResponseMaterialGetMaterialCount, error) {
+func (comp *Client) Stats(ctx context.Context) (*response.ResponseMaterialGetMaterialCount, error) {
 
 	result := &response.ResponseMaterialGetMaterialCount{}
 
@@ -198,7 +198,7 @@ func (comp *Client) Stats(ctx *context.Context) (*response.ResponseMaterialGetMa
 
 }
 
-func (comp *Client) Upload(ctx *context.Context, Type string, path string, query *object.StringMap, result interface{}) (interface{}, error) {
+func (comp *Client) Upload(ctx context.Context, Type string, path string, query *object.StringMap, result interface{}) (interface{}, error) {
 
 	_, err := os.Stat(path)
 	if (err != nil && os.IsExist(err)) && (err != nil && os.IsPermission(err)) {

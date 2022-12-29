@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 增量更新成员
 // https://developer.work.weixin.qq.com/document/path/90980
-func (comp *Client) SyncUser(ctx *context.Context, mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
+func (comp *Client) SyncUser(ctx context.Context, mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
 
 	result := &response.ResponseUserBatchJobs{}
 
@@ -40,7 +40,7 @@ func (comp *Client) SyncUser(ctx *context.Context, mediaID string, toInvite bool
 
 // 全量覆盖成员
 // https://developer.work.weixin.qq.com/document/path/90981
-func (comp *Client) ReplaceUser(ctx *context.Context, mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
+func (comp *Client) ReplaceUser(ctx context.Context, mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
 
 	result := &response.ResponseUserBatchJobs{}
 
@@ -56,7 +56,7 @@ func (comp *Client) ReplaceUser(ctx *context.Context, mediaID string, toInvite b
 
 // 全量覆盖部门
 // https://developer.work.weixin.qq.com/document/path/90982
-func (comp *Client) ReplaceParty(ctx *context.Context, mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
+func (comp *Client) ReplaceParty(ctx context.Context, mediaID string, toInvite bool, callback *power.StringMap) (*response.ResponseUserBatchJobs, error) {
 
 	result := &response.ResponseUserBatchJobs{}
 
@@ -72,7 +72,7 @@ func (comp *Client) ReplaceParty(ctx *context.Context, mediaID string, toInvite 
 
 // 获取异步任务结果
 // https://developer.work.weixin.qq.com/document/path/90983
-func (comp *Client) GetBatchResult(ctx *context.Context, jobID string) (*response.ResponseUserBatchGetResult, error) {
+func (comp *Client) GetBatchResult(ctx context.Context, jobID string) (*response.ResponseUserBatchGetResult, error) {
 
 	result := &response.ResponseUserBatchGetResult{}
 

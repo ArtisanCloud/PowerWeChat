@@ -77,7 +77,7 @@ func (msg *Messager) SetRecipients(ids interface{}, key string) *Messager {
 	return msg
 }
 
-func (msg *Messager) Send(ctx *context.Context, message *messages.Message) (*response.ResponseMessageSend, error) {
+func (msg *Messager) Send(ctx context.Context, message *messages.Message) (*response.ResponseMessageSend, error) {
 	if message != nil {
 		msg.Message(message)
 	}

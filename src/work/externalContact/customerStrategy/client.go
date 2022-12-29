@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取规则组列表
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) List(ctx *context.Context, cursor string, limit int64) (*response.ResponseCustomerStrategyList, error) {
+func (comp *Client) List(ctx context.Context, cursor string, limit int64) (*response.ResponseCustomerStrategyList, error) {
 
 	result := &response.ResponseCustomerStrategyList{}
 
@@ -41,7 +41,7 @@ func (comp *Client) List(ctx *context.Context, cursor string, limit int64) (*res
 
 // 获取规则组详情
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Get(ctx *context.Context, strategyID int64) (*response.ResponseCustomerStrategyGet, error) {
+func (comp *Client) Get(ctx context.Context, strategyID int64) (*response.ResponseCustomerStrategyGet, error) {
 
 	result := &response.ResponseCustomerStrategyGet{}
 
@@ -56,7 +56,7 @@ func (comp *Client) Get(ctx *context.Context, strategyID int64) (*response.Respo
 
 // 获取规则组管理范围
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) GetRange(ctx *context.Context, strategyID int64, cursor string, limit int64) (*response.ResponseCustomerStrategyGetRange, error) {
+func (comp *Client) GetRange(ctx context.Context, strategyID int64, cursor string, limit int64) (*response.ResponseCustomerStrategyGetRange, error) {
 
 	result := &response.ResponseCustomerStrategyGetRange{}
 
@@ -73,7 +73,7 @@ func (comp *Client) GetRange(ctx *context.Context, strategyID int64, cursor stri
 
 // 创建新的规则组
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Create(ctx *context.Context, options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
+func (comp *Client) Create(ctx context.Context, options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
 
 	result := &response.ResponseCustomerStrategyCreate{}
 
@@ -84,7 +84,7 @@ func (comp *Client) Create(ctx *context.Context, options *request.RequestCustome
 
 // 编辑规则组及其管理范围
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Edit(ctx *context.Context, options *request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
+func (comp *Client) Edit(ctx context.Context, options *request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -95,7 +95,7 @@ func (comp *Client) Edit(ctx *context.Context, options *request.RequestCustomerS
 
 // 删除规则组
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Del(ctx *context.Context, strategyID int64) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx context.Context, strategyID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 

@@ -23,7 +23,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 登录凭证校验。
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
-func (comp *Client) Session(ctx *context.Context, code string) (*response.ResponseCode2Session, error) {
+func (comp *Client) Session(ctx context.Context, code string) (*response.ResponseCode2Session, error) {
 
 	result := &response.ResponseCode2Session{}
 

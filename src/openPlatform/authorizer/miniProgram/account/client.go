@@ -26,7 +26,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取基本信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/Mini_Program_Information_Settings.html
-func (comp *Client) GetBasicInfo(ctx *context.Context) (*response.ResponseGetBasicInfo, error) {
+func (comp *Client) GetBasicInfo(ctx context.Context) (*response.ResponseGetBasicInfo, error) {
 
 	result := &response.ResponseGetBasicInfo{}
 
@@ -39,7 +39,7 @@ func (comp *Client) GetBasicInfo(ctx *context.Context) (*response.ResponseGetBas
 // 修改头像
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/modifyheadimage.html
 func (comp *Client) UpdateAvatar(
-	ctx *context.Context,
+	ctx context.Context,
 	mediaID string,
 	left float32,
 	top float32,
@@ -64,7 +64,7 @@ func (comp *Client) UpdateAvatar(
 
 // 修改功能介绍
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/modifysignature.html
-func (comp *Client) UpdateSignature(ctx *context.Context, signature string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) UpdateSignature(ctx context.Context, signature string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 

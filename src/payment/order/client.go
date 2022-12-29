@@ -27,7 +27,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // JSAPI pay transaction. 小程序支付
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_1.shtml
-func (comp *Client) JSAPITransaction(ctx *context.Context, params *request.RequestJSAPIPrepay) (*response.ResponseUnitfy, error) {
+func (comp *Client) JSAPITransaction(ctx context.Context, params *request.RequestJSAPIPrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -38,7 +38,7 @@ func (comp *Client) JSAPITransaction(ctx *context.Context, params *request.Reque
 
 // App pay transaction.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_2_1.shtml
-func (comp *Client) TransactionApp(ctx *context.Context, params *request.RequestAppPrepay) (*response.ResponseUnitfy, error) {
+func (comp *Client) TransactionApp(ctx context.Context, params *request.RequestAppPrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -50,7 +50,7 @@ func (comp *Client) TransactionApp(ctx *context.Context, params *request.Request
 
 // H5 pay transaction.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_3_1.shtml
-func (comp *Client) TransactionH5(ctx *context.Context, params *request.RequestH5Prepay) (*response.ResponseH5URL, error) {
+func (comp *Client) TransactionH5(ctx context.Context, params *request.RequestH5Prepay) (*response.ResponseH5URL, error) {
 
 	result := &response.ResponseH5URL{}
 
@@ -61,7 +61,7 @@ func (comp *Client) TransactionH5(ctx *context.Context, params *request.RequestH
 
 // Native pay transaction.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
-func (comp *Client) TransactionNative(ctx *context.Context, params *request.RequestNativePrepay) (*response.ResponseCodeURL, error) {
+func (comp *Client) TransactionNative(ctx context.Context, params *request.RequestNativePrepay) (*response.ResponseCodeURL, error) {
 
 	result := &response.ResponseCodeURL{}
 
@@ -73,7 +73,7 @@ func (comp *Client) TransactionNative(ctx *context.Context, params *request.Requ
 
 // 合单APP下单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_1.shtml
-func (comp *Client) TransactionAppCombine(ctx *context.Context, params *request.RequestCombinePrepay) (*response.ResponseUnitfy, error) {
+func (comp *Client) TransactionAppCombine(ctx context.Context, params *request.RequestCombinePrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
 
@@ -83,7 +83,7 @@ func (comp *Client) TransactionAppCombine(ctx *context.Context, params *request.
 	return result, err
 }
 
-func (comp *Client) PayTransaction(ctx *context.Context, entryPoint string, params request.Prepay, result interface{}) (interface{}, error) {
+func (comp *Client) PayTransaction(ctx context.Context, entryPoint string, params request.Prepay, result interface{}) (interface{}, error) {
 	config := (*comp.App).GetConfig()
 
 	if params.GetAppID() == "" {
@@ -109,21 +109,21 @@ func (comp *Client) PayTransaction(ctx *context.Context, entryPoint string, para
 	return rs, err
 }
 
-func (comp *Client) QueryByTransactionId(ctx *context.Context, number string) (*response.ResponseOrder, error) {
+func (comp *Client) QueryByTransactionId(ctx context.Context, number string) (*response.ResponseOrder, error) {
 	endpoint := fmt.Sprintf("/v3/pay/transactions/id/%s", number)
 	return comp.Query(ctx, &object.HashMap{
 		"endpoint": endpoint,
 	})
 }
 
-func (comp *Client) QueryByOutTradeNumber(ctx *context.Context, transactionID string) (*response.ResponseOrder, error) {
+func (comp *Client) QueryByOutTradeNumber(ctx context.Context, transactionID string) (*response.ResponseOrder, error) {
 	endpoint := fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s", transactionID)
 	return comp.Query(ctx, &object.HashMap{
 		"endpoint": endpoint,
 	})
 }
 
-func (comp *Client) Query(ctx *context.Context, params *object.HashMap) (*response.ResponseOrder, error) {
+func (comp *Client) Query(ctx context.Context, params *object.HashMap) (*response.ResponseOrder, error) {
 
 	result := &response.ResponseOrder{}
 
@@ -142,7 +142,7 @@ func (comp *Client) Query(ctx *context.Context, params *object.HashMap) (*respon
 }
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
-func (comp *Client) Close(ctx *context.Context, tradeNo string) (*http.Response, error) {
+func (comp *Client) Close(ctx context.Context, tradeNo string) (*http.Response, error) {
 
 	config := (*comp.App).GetConfig()
 

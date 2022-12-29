@@ -14,7 +14,7 @@ type Client struct {
 
 // 获取会话内容存档开启成员列表
 // https://developer.work.weixin.qq.com/document/path/91614
-func (comp *Client) GetPermitUsersList(ctx *context.Context, msgType string) (*response.ResponseMsgAuditGetPermitUsers, error) {
+func (comp *Client) GetPermitUsersList(ctx context.Context, msgType string) (*response.ResponseMsgAuditGetPermitUsers, error) {
 
 	result := &response.ResponseMsgAuditGetPermitUsers{}
 
@@ -29,7 +29,7 @@ func (comp *Client) GetPermitUsersList(ctx *context.Context, msgType string) (*r
 
 // 获取会话同意情况
 // https://developer.work.weixin.qq.com/document/path/91782
-func (comp *Client) CheckSingleAgree(ctx *context.Context, info []*power.StringMap) (*response.ResponseMsgAuditGetAgreeInfo, error) {
+func (comp *Client) CheckSingleAgree(ctx context.Context, info []*power.StringMap) (*response.ResponseMsgAuditGetAgreeInfo, error) {
 
 	result := &response.ResponseMsgAuditGetAgreeInfo{}
 
@@ -44,7 +44,7 @@ func (comp *Client) CheckSingleAgree(ctx *context.Context, info []*power.StringM
 
 // 获取会话同意情况
 // https://developer.work.weixin.qq.com/document/path/91782
-func (comp *Client) CheckRoomAgree(ctx *context.Context, roomID string) (*response.ResponseMsgAuditGetAgreeInfo, error) {
+func (comp *Client) CheckRoomAgree(ctx context.Context, roomID string) (*response.ResponseMsgAuditGetAgreeInfo, error) {
 
 	result := &response.ResponseMsgAuditGetAgreeInfo{}
 
@@ -59,7 +59,7 @@ func (comp *Client) CheckRoomAgree(ctx *context.Context, roomID string) (*respon
 
 // 获取会话内容存档内部群信息
 // https://developer.work.weixin.qq.com/document/path/92951
-func (comp *Client) GroupChatGet(ctx *context.Context, roomID string) (*response.ResponseMsgAuditGetRoom, error) {
+func (comp *Client) GroupChatGet(ctx context.Context, roomID string) (*response.ResponseMsgAuditGetRoom, error) {
 
 	result := &response.ResponseMsgAuditGetRoom{}
 
@@ -74,7 +74,7 @@ func (comp *Client) GroupChatGet(ctx *context.Context, roomID string) (*response
 
 // 获取机器人信息
 // https://developer.work.weixin.qq.com/document/path/91774
-func (comp *Client) GetRobotInfo(ctx *context.Context, robotID string) (*response.ResponseMsgAuditGetRobotInfo, error) {
+func (comp *Client) GetRobotInfo(ctx context.Context, robotID string) (*response.ResponseMsgAuditGetRobotInfo, error) {
 
 	result := &response.ResponseMsgAuditGetRobotInfo{}
 

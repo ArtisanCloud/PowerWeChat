@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 添加客服帐号
 // https://developer.work.weixin.qq.com/document/path/94648
-func (comp *Client) Add(ctx *context.Context, name string, mediaID string) (*response.ResponseAccountAdd, error) {
+func (comp *Client) Add(ctx context.Context, name string, mediaID string) (*response.ResponseAccountAdd, error) {
 
 	result := &response.ResponseAccountAdd{}
 
@@ -41,7 +41,7 @@ func (comp *Client) Add(ctx *context.Context, name string, mediaID string) (*res
 
 // 删除客服帐号
 // https://developer.work.weixin.qq.com/document/path/94663
-func (comp *Client) Del(ctx *context.Context, openKFID string) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx context.Context, openKFID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -56,7 +56,7 @@ func (comp *Client) Del(ctx *context.Context, openKFID string) (*response2.Respo
 
 // 修改客服帐号
 // https://developer.work.weixin.qq.com/document/path/94664
-func (comp *Client) Update(ctx *context.Context, options *request.RequestAccountUpdate) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx context.Context, options *request.RequestAccountUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -67,7 +67,7 @@ func (comp *Client) Update(ctx *context.Context, options *request.RequestAccount
 
 // 获取客服帐号列表
 // https://developer.work.weixin.qq.com/document/path/94661
-func (comp *Client) List(ctx *context.Context) (*response.ResponseAccountList, error) {
+func (comp *Client) List(ctx context.Context) (*response.ResponseAccountList, error) {
 
 	result := &response.ResponseAccountList{}
 
@@ -78,7 +78,7 @@ func (comp *Client) List(ctx *context.Context) (*response.ResponseAccountList, e
 
 // 获取客服帐号链接
 // https://developer.work.weixin.qq.com/document/path/94665
-func (comp *Client) AddContactWay(ctx *context.Context, openKFID string, scene string) (*response.ResponseAccountServiceAddContactWay, error) {
+func (comp *Client) AddContactWay(ctx context.Context, openKFID string, scene string) (*response.ResponseAccountServiceAddContactWay, error) {
 
 	result := &response.ResponseAccountServiceAddContactWay{}
 

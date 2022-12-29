@@ -14,7 +14,7 @@ type Client struct {
 
 // 获取应用共享信息
 // https://developer.work.weixin.qq.com/document/path/93403
-func (comp *Client) GetAppShareInfo(ctx *context.Context, agentID int) (*response.ResponseCorpGroupListAPPShareInfo, error) {
+func (comp *Client) GetAppShareInfo(ctx context.Context, agentID int) (*response.ResponseCorpGroupListAPPShareInfo, error) {
 
 	result := &response.ResponseCorpGroupListAPPShareInfo{}
 
@@ -28,7 +28,7 @@ func (comp *Client) GetAppShareInfo(ctx *context.Context, agentID int) (*respons
 
 // 获取下级企业的access_token
 // https://developer.work.weixin.qq.com/document/path/93359
-func (comp *Client) GetToken(ctx *context.Context, corpID string, agentID string) (*response.ResponseCorpGroupGetToken, error) {
+func (comp *Client) GetToken(ctx context.Context, corpID string, agentID string) (*response.ResponseCorpGroupGetToken, error) {
 
 	result := &response.ResponseCorpGroupGetToken{}
 
@@ -44,7 +44,7 @@ func (comp *Client) GetToken(ctx *context.Context, corpID string, agentID string
 
 // 获取下级企业的小程序session
 // https://developer.work.weixin.qq.com/document/path/93355
-func (comp *Client) GetMiniProgramTransferSession(ctx *context.Context, userID string, sessionKey string) (*response.ResponseCorpGroupTransferSession, error) {
+func (comp *Client) GetMiniProgramTransferSession(ctx context.Context, userID string, sessionKey string) (*response.ResponseCorpGroupTransferSession, error) {
 
 	result := &response.ResponseCorpGroupTransferSession{}
 

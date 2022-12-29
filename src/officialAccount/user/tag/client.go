@@ -24,7 +24,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) Create(ctx *context.Context, name string) (*response.ResponseTagGet, error) {
+func (comp *Client) Create(ctx context.Context, name string) (*response.ResponseTagGet, error) {
 	result := &response.ResponseTagGet{}
 
 	params := &object.HashMap{
@@ -39,7 +39,7 @@ func (comp *Client) Create(ctx *context.Context, name string) (*response.Respons
 
 // 获取公众号已创建的标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) List(ctx *context.Context) (*response.ResponseTagGetList, error) {
+func (comp *Client) List(ctx context.Context) (*response.ResponseTagGetList, error) {
 
 	result := &response.ResponseTagGetList{}
 
@@ -51,7 +51,7 @@ func (comp *Client) List(ctx *context.Context) (*response.ResponseTagGetList, er
 
 // 用户标签管理
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) Update(ctx *context.Context, tagID string, name string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Update(ctx context.Context, tagID string, name string) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{
@@ -67,7 +67,7 @@ func (comp *Client) Update(ctx *context.Context, tagID string, name string) (*re
 
 // 删除标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) Delete(ctx *context.Context, tagID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Delete(ctx context.Context, tagID string) (*response2.ResponseOfficialAccount, error) {
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{
@@ -82,7 +82,7 @@ func (comp *Client) Delete(ctx *context.Context, tagID string) (*response2.Respo
 
 // 获取用户身上的标签列表
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) UserTags(ctx *context.Context, openID string) (*response.ResponseUserTags, error) {
+func (comp *Client) UserTags(ctx context.Context, openID string) (*response.ResponseUserTags, error) {
 	result := &response.ResponseUserTags{}
 
 	params := &object.HashMap{
@@ -95,7 +95,7 @@ func (comp *Client) UserTags(ctx *context.Context, openID string) (*response.Res
 
 // 获取标签下粉丝列表
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) UsersOfTag(ctx *context.Context, tagID string, nextOpenID string) (*response.ResponseUserOfTag, error) {
+func (comp *Client) UsersOfTag(ctx context.Context, tagID string, nextOpenID string) (*response.ResponseUserOfTag, error) {
 	result := &response.ResponseUserOfTag{}
 
 	params := &object.HashMap{
@@ -109,7 +109,7 @@ func (comp *Client) UsersOfTag(ctx *context.Context, tagID string, nextOpenID st
 
 // 批量为用户打标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) TagUsers(ctx *context.Context, openIDs []string, tagID string) (*response.ResponseTagUsers, error) {
+func (comp *Client) TagUsers(ctx context.Context, openIDs []string, tagID string) (*response.ResponseTagUsers, error) {
 	result := &response.ResponseTagUsers{}
 
 	params := &object.HashMap{
@@ -123,7 +123,7 @@ func (comp *Client) TagUsers(ctx *context.Context, openIDs []string, tagID strin
 
 // 批量为用户取消标签
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html
-func (comp *Client) UntagUsers(ctx *context.Context, openIDs []string, tagID string) (*response.ResponseUntagUsers, error) {
+func (comp *Client) UntagUsers(ctx context.Context, openIDs []string, tagID string) (*response.ResponseUntagUsers, error) {
 	result := &response.ResponseUntagUsers{}
 
 	params := &object.HashMap{

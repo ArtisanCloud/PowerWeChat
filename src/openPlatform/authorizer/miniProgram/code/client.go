@@ -25,7 +25,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 上传小程序代码并生成体验版
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/commit.html
-func (comp *Client) Commit(ctx *context.Context, templateID string, extJson string, version string, description string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) Commit(ctx context.Context, templateID string, extJson string, version string, description string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -43,7 +43,7 @@ func (comp *Client) Commit(ctx *context.Context, templateID string, extJson stri
 
 // 获取体验版二维码
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_qrcode.html
-func (comp *Client) GetQrCode(ctx *context.Context, path string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) GetQrCode(ctx context.Context, path string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -58,7 +58,7 @@ func (comp *Client) GetQrCode(ctx *context.Context, path string) (*response2.Res
 
 // 获取审核时可填写的类目信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/category/get_category.html#请求地址
-func (comp *Client) GetCategory(ctx *context.Context) (*response.ResponseGetCategory, error) {
+func (comp *Client) GetCategory(ctx context.Context) (*response.ResponseGetCategory, error) {
 
 	result := &response.ResponseGetCategory{}
 
@@ -70,7 +70,7 @@ func (comp *Client) GetCategory(ctx *context.Context) (*response.ResponseGetCate
 
 // 获取已上传的代码的页面列表
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_page.html#请求地址
-func (comp *Client) GetPage(ctx *context.Context) (*response.ResponseGetPage, error) {
+func (comp *Client) GetPage(ctx context.Context) (*response.ResponseGetPage, error) {
 
 	result := &response.ResponseGetPage{}
 
@@ -82,7 +82,7 @@ func (comp *Client) GetPage(ctx *context.Context) (*response.ResponseGetPage, er
 
 // 提交审核
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/submit_audit.html
-func (comp *Client) SubmitAudit(ctx *context.Context, params *request.RequestSubmitAudit) (*response.ResponseSubmitAudit, error) {
+func (comp *Client) SubmitAudit(ctx context.Context, params *request.RequestSubmitAudit) (*response.ResponseSubmitAudit, error) {
 
 	result := &response.ResponseSubmitAudit{}
 
@@ -94,7 +94,7 @@ func (comp *Client) SubmitAudit(ctx *context.Context, params *request.RequestSub
 
 // 查询指定发布审核单的审核状态
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_auditstatus.html#请求地址
-func (comp *Client) GetAuditStatus(ctx *context.Context, auditID int) (*response.ResponseGetAuditStatus, error) {
+func (comp *Client) GetAuditStatus(ctx context.Context, auditID int) (*response.ResponseGetAuditStatus, error) {
 
 	result := &response.ResponseGetAuditStatus{}
 
@@ -110,7 +110,7 @@ func (comp *Client) GetAuditStatus(ctx *context.Context, auditID int) (*response
 
 // 查询最新一次提交的审核状态
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_latest_auditstatus.html#请求地址
-func (comp *Client) GetLatestAuditStatus(ctx *context.Context) (*response.ResponseGetLatestAuditStatus, error) {
+func (comp *Client) GetLatestAuditStatus(ctx context.Context) (*response.ResponseGetLatestAuditStatus, error) {
 
 	result := &response.ResponseGetLatestAuditStatus{}
 
@@ -122,7 +122,7 @@ func (comp *Client) GetLatestAuditStatus(ctx *context.Context) (*response.Respon
 
 // 发布已通过审核的小程序
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/release.html#请求地址
-func (comp *Client) Release(ctx *context.Context) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) Release(ctx context.Context) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -134,7 +134,7 @@ func (comp *Client) Release(ctx *context.Context) (*response2.ResponseOpenPlatfo
 
 // 小程序审核撤回
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/undocodeaudit.html#请求地址
-func (comp *Client) WithdrawAudit(ctx *context.Context) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) WithdrawAudit(ctx context.Context) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -146,7 +146,7 @@ func (comp *Client) WithdrawAudit(ctx *context.Context) (*response2.ResponseOpen
 
 // 获取可回退的小程序版本
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_history_version.html#请求地址
-func (comp *Client) RollbackRelease(ctx *context.Context) (*response.ResponseRollbackRelease, error) {
+func (comp *Client) RollbackRelease(ctx context.Context) (*response.ResponseRollbackRelease, error) {
 
 	result := &response.ResponseRollbackRelease{}
 
@@ -158,7 +158,7 @@ func (comp *Client) RollbackRelease(ctx *context.Context) (*response.ResponseRol
 
 // 修改小程序服务状态
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/change_visitstatus.html#请求地址
-func (comp *Client) ChangeVisitStatus(ctx *context.Context, action string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) ChangeVisitStatus(ctx context.Context, action string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -174,7 +174,7 @@ func (comp *Client) ChangeVisitStatus(ctx *context.Context, action string) (*res
 
 // 分阶段发布
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/grayrelease.html#请求地址
-func (comp *Client) GrayRelease(ctx *context.Context, grayPercentage int) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) GrayRelease(ctx context.Context, grayPercentage int) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -190,7 +190,7 @@ func (comp *Client) GrayRelease(ctx *context.Context, grayPercentage int) (*resp
 
 // 取消分阶段发布
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/revertgrayrelease.html#请求地址
-func (comp *Client) RevertGrayRelease(ctx *context.Context) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) RevertGrayRelease(ctx context.Context) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -202,7 +202,7 @@ func (comp *Client) RevertGrayRelease(ctx *context.Context) (*response2.Response
 
 // 查询当前分阶段发布详情
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/getgrayreleaseplan.html#请求地址
-func (comp *Client) GetGrayRelease(ctx *context.Context) (*response.ResponseGetGrayRelease, error) {
+func (comp *Client) GetGrayRelease(ctx context.Context) (*response.ResponseGetGrayRelease, error) {
 
 	result := &response.ResponseGetGrayRelease{}
 
@@ -214,7 +214,7 @@ func (comp *Client) GetGrayRelease(ctx *context.Context) (*response.ResponseGetG
 
 // 查询当前设置的最低基础库版本及各版本用户占比
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/getweappsupportversion.html#请求地址
-func (comp *Client) GetSupportVersion(ctx *context.Context) (*response.ResponseGetSupportVersion, error) {
+func (comp *Client) GetSupportVersion(ctx context.Context) (*response.ResponseGetSupportVersion, error) {
 
 	result := &response.ResponseGetSupportVersion{}
 
@@ -226,7 +226,7 @@ func (comp *Client) GetSupportVersion(ctx *context.Context) (*response.ResponseG
 
 // 设置最低基础库版本
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/setweappsupportversion.html#请求地址
-func (comp *Client) SetSupportVersion(ctx *context.Context, version string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) SetSupportVersion(ctx context.Context, version string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -240,7 +240,7 @@ func (comp *Client) SetSupportVersion(ctx *context.Context, version string) (*re
 
 // 查询服务商的当月提审限额（quota）和加急次数
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/query_quota.html#请求地址
-func (comp *Client) QueryQuota(ctx *context.Context) (*response.ResponseQueryQuota, error) {
+func (comp *Client) QueryQuota(ctx context.Context) (*response.ResponseQueryQuota, error) {
 
 	result := &response.ResponseQueryQuota{}
 
@@ -252,7 +252,7 @@ func (comp *Client) QueryQuota(ctx *context.Context) (*response.ResponseQueryQuo
 
 // 加急审核申请
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/speedup_audit.html#请求地址
-func (comp *Client) SpeedupAudit(ctx *context.Context, auditID int) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) SpeedupAudit(ctx context.Context, auditID int) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
