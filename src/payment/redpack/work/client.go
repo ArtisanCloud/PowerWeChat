@@ -1,6 +1,7 @@
 package work
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack/request"
@@ -23,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Send Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90275
-func (comp *Client) SendWorkWX(data *request.RequestSendWorkWX) (*response.ResponseSendWorkWX, error) {
+func (comp *Client) SendWorkWX(ctx *context.Context, data *request.RequestSendWorkWX) (*response.ResponseSendWorkWX, error) {
 	result := &response.ResponseSendWorkWX{}
 	if data.WXAppID == "" {
 		config := (*comp.App).GetConfig()
@@ -34,14 +35,14 @@ func (comp *Client) SendWorkWX(data *request.RequestSendWorkWX) (*response.Respo
 	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Query Work WX redpack.
 // https://work.weixin.qq.com/api/doc/90000/90135/90276
-func (comp *Client) QueryWorkWX(data *request.RequestQueryWorkWX) (*response.ResponseQueryWorkWX, error) {
+func (comp *Client) QueryWorkWX(ctx *context.Context, data *request.RequestQueryWorkWX) (*response.ResponseQueryWorkWX, error) {
 	result := &response.ResponseQueryWorkWX{}
 
 	if data.Appid == "" {
@@ -53,7 +54,7 @@ func (comp *Client) QueryWorkWX(data *request.RequestQueryWorkWX) (*response.Res
 	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }

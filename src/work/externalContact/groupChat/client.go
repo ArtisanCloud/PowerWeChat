@@ -1,6 +1,7 @@
 package groupChat
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/groupChat/request"
@@ -23,18 +24,18 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取客户群列表
 // https://developer.work.weixin.qq.com/document/path/92120
-func (comp *Client) List(params *request.RequestGroupChatList) (*response.ResponseGroupChatList, error) {
+func (comp *Client) List(ctx *context.Context, params *request.RequestGroupChatList) (*response.ResponseGroupChatList, error) {
 
 	result := &response.ResponseGroupChatList{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/groupchat/list", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客户群详情
 // https://developer.work.weixin.qq.com/document/path/92122
-func (comp *Client) Get(chatID string, needName int) (*response.ResponseGroupChatGet, error) {
+func (comp *Client) Get(ctx *context.Context, chatID string, needName int) (*response.ResponseGroupChatGet, error) {
 
 	result := &response.ResponseGroupChatGet{}
 
@@ -43,14 +44,14 @@ func (comp *Client) Get(chatID string, needName int) (*response.ResponseGroupCha
 		"need_name": needName,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/groupchat/get?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/groupchat/get?", options, nil, nil, result)
 
 	return result, err
 }
 
 // 客户群opengid转换
 // https://developer.work.weixin.qq.com/document/path/94822
-func (comp *Client) OpenGIDToChatID(openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
+func (comp *Client) OpenGIDToChatID(ctx *context.Context, openGID string) (*response.ResponseGroupChatOpenGIDToChatID, error) {
 
 	result := &response.ResponseGroupChatOpenGIDToChatID{}
 
@@ -58,7 +59,7 @@ func (comp *Client) OpenGIDToChatID(openGID string) (*response.ResponseGroupChat
 		"opengid": openGID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/opengid_to_chatid?", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/opengid_to_chatid?", options, nil, nil, result)
 
 	return result, err
 }

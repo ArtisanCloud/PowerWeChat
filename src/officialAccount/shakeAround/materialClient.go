@@ -1,6 +1,7 @@
 package shakeAround
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -26,7 +27,7 @@ func NewMaterialClient(app kernel.ApplicationInterface) (*MaterialClient, error)
 
 // 上传在摇一摇功能中需使用到的图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shake_Nearby/Uploading_Image_Assets.html
-func (comp *MaterialClient) UploadImage(path string, Type string) (*response.ResponseMaterialUpload, error) {
+func (comp *MaterialClient) UploadImage(ctx *context.Context, path string, Type string) (*response.ResponseMaterialUpload, error) {
 
 	result := &response.ResponseMaterialUpload{}
 
@@ -45,6 +46,6 @@ func (comp *MaterialClient) UploadImage(path string, Type string) (*response.Res
 
 	}
 
-	_, err = comp.BaseClient.HttpUpload("shakearound/material/add", files, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)
+	_, err = comp.BaseClient.HttpUpload(ctx, "shakearound/material/add", files, nil, &object.StringMap{"type": strings.ToLower(Type)}, nil, result)
 	return result, err
 }

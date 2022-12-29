@@ -1,6 +1,7 @@
 package user
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -24,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取用户基本信息
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId
-func (comp *Client) Get(openID string, lang string) (*response.ResponseGetUserInfo, error) {
+func (comp *Client) Get(ctx *context.Context, openID string, lang string) (*response.ResponseGetUserInfo, error) {
 
 	result := &response.ResponseGetUserInfo{}
 
@@ -33,7 +34,7 @@ func (comp *Client) Get(openID string, lang string) (*response.ResponseGetUserIn
 		"lang":   lang,
 	}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/user/info", params, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/user/info", params, nil, result)
 
 	return result, err
 
@@ -41,18 +42,18 @@ func (comp *Client) Get(openID string, lang string) (*response.ResponseGetUserIn
 
 // 批量获取用户基本信息
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId
-func (comp *Client) BatchGet(data *request.RequestBatchGetUserInfo) (*response.ResponseBatchGetUserInfo, error) {
+func (comp *Client) BatchGet(ctx *context.Context, data *request.RequestBatchGetUserInfo) (*response.ResponseBatchGetUserInfo, error) {
 
 	result := &response.ResponseBatchGetUserInfo{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/user/info/batchget", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/user/info/batchget", data, nil, nil, result)
 
 	return result, err
 }
 
 // 获取用户列表
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Getting_a_User_List.html
-func (comp *Client) List(nextOpenID string) (*response.ResponseGetUserList, error) {
+func (comp *Client) List(ctx *context.Context, nextOpenID string) (*response.ResponseGetUserList, error) {
 
 	result := &response.ResponseGetUserList{}
 
@@ -60,7 +61,7 @@ func (comp *Client) List(nextOpenID string) (*response.ResponseGetUserList, erro
 		"next_openid": nextOpenID,
 	}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/user/get", params, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/user/get", params, nil, result)
 
 	return result, err
 
@@ -68,7 +69,7 @@ func (comp *Client) List(nextOpenID string) (*response.ResponseGetUserList, erro
 
 // 设置用户备注名
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Configuring_user_notes.html
-func (comp *Client) Remark(openID string, remark string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Remark(ctx *context.Context, openID string, remark string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -77,14 +78,14 @@ func (comp *Client) Remark(openID string, remark string) (*response2.ResponseOff
 		"remark": remark,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/user/info/updateremark", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/user/info/updateremark", params, nil, nil, result)
 
 	return result, err
 }
 
 // 黑名单管理
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Manage_blacklist.html
-func (comp *Client) Blacklist(beginOpenID string) (*response.ResponseBlacklist, error) {
+func (comp *Client) Blacklist(ctx *context.Context, beginOpenID string) (*response.ResponseBlacklist, error) {
 
 	result := &response.ResponseBlacklist{}
 
@@ -92,14 +93,14 @@ func (comp *Client) Blacklist(beginOpenID string) (*response.ResponseBlacklist, 
 		"begin_openid": beginOpenID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/getblacklist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/tags/members/getblacklist", params, nil, nil, result)
 
 	return result, err
 }
 
 // 拉黑用户
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Manage_blacklist.html
-func (comp *Client) Block(openIDList []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Block(ctx *context.Context, openIDList []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -107,14 +108,14 @@ func (comp *Client) Block(openIDList []string) (*response2.ResponseOfficialAccou
 		"openid_list": openIDList,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/batchblacklist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/tags/members/batchblacklist", params, nil, nil, result)
 
 	return result, err
 }
 
 // 取消拉黑用户
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Manage_blacklist.html
-func (comp *Client) Unblock(openIDList []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) Unblock(ctx *context.Context, openIDList []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -122,14 +123,14 @@ func (comp *Client) Unblock(openIDList []string) (*response2.ResponseOfficialAcc
 		"openid_list": openIDList,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tags/members/batchunblacklist", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/tags/members/batchunblacklist", params, nil, nil, result)
 
 	return result, err
 }
 
 // 帐号迁移 转换 openid
 // https://developers.weixin.qq.com/doc/offiaccount/User_Management/Getting_a_User_List.html
-func (comp *Client) ChangeOpenID(fromAppID string, openIDList []string) (*response.ResponseChangeOpenID, error) {
+func (comp *Client) ChangeOpenID(ctx *context.Context, fromAppID string, openIDList []string) (*response.ResponseChangeOpenID, error) {
 
 	result := &response.ResponseChangeOpenID{}
 
@@ -138,7 +139,7 @@ func (comp *Client) ChangeOpenID(fromAppID string, openIDList []string) (*respon
 		"openid_list": openIDList,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/changeopenid", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/changeopenid", params, nil, nil, result)
 
 	return result, err
 }

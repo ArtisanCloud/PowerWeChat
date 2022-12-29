@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/auth/response"
@@ -22,7 +23,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 登录凭证校验。
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
-func (comp *Client) Session(code string) (*response.ResponseCode2Session, error) {
+func (comp *Client) Session(ctx *context.Context, code string) (*response.ResponseCode2Session, error) {
 
 	result := &response.ResponseCode2Session{}
 
@@ -35,7 +36,7 @@ func (comp *Client) Session(code string) (*response.ResponseCode2Session, error)
 		"grant_type": "authorization_code",
 	}
 
-	_, err := comp.BaseClient.HttpGet("sns/jscode2session", params, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "sns/jscode2session", params, nil, result)
 
 	return result, err
 }

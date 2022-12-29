@@ -1,6 +1,7 @@
 package codeTemplate
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -23,11 +24,11 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 获取代码草稿列表
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/gettemplatedraftlist.html
-func (comp *Client) GetDrafts() (*response.ResponseGetDrafts, error) {
+func (comp *Client) GetDrafts(ctx *context.Context) (*response.ResponseGetDrafts, error) {
 
 	result := &response.ResponseGetDrafts{}
 
-	_, err := comp.BaseClient.HttpGet("wxa/gettemplatedraftlist", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "wxa/gettemplatedraftlist", nil, nil, result)
 
 	return result, err
 
@@ -35,7 +36,7 @@ func (comp *Client) GetDrafts() (*response.ResponseGetDrafts, error) {
 
 // 将草稿添加到代码模板库
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/addtotemplate.html#请求地址
-func (comp *Client) CreateFromDraft(draftID int, templateType int) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) CreateFromDraft(ctx *context.Context, draftID int, templateType int) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -44,7 +45,7 @@ func (comp *Client) CreateFromDraft(draftID int, templateType int) (*response2.R
 		"template_type": templateType,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("wxa/addtotemplate", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "wxa/addtotemplate", params, nil, nil, result)
 
 	return result, err
 
@@ -52,11 +53,11 @@ func (comp *Client) CreateFromDraft(draftID int, templateType int) (*response2.R
 
 // 获取代码模板列表
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/gettemplatelist.html#请求地址
-func (comp *Client) List() (*response.ResponseList, error) {
+func (comp *Client) List(ctx *context.Context) (*response.ResponseList, error) {
 
 	result := &response.ResponseList{}
 
-	_, err := comp.BaseClient.HttpGet("wxa/gettemplatelist", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "wxa/gettemplatelist", nil, nil, result)
 
 	return result, err
 
@@ -64,7 +65,7 @@ func (comp *Client) List() (*response.ResponseList, error) {
 
 // 删除指定代码模板
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/deletetemplate.html#请求地址
-func (comp *Client) Delete(templateID string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) Delete(ctx *context.Context, templateID string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -72,7 +73,7 @@ func (comp *Client) Delete(templateID string) (*response2.ResponseOpenPlatform, 
 		"template_id": templateID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("wxa/deletetemplate", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "wxa/deletetemplate", params, nil, nil, result)
 
 	return result, err
 

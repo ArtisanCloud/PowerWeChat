@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/auth"
@@ -27,7 +28,7 @@ func NewClient(app kernel.ApplicationInterface, component kernel.ApplicationInte
 
 // 小程序登录
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/others/WeChat_login.html
-func (comp *Client) Session(code string) (*response.ResponseSession, error) {
+func (comp *Client) Session(ctx *context.Context, code string) (*response.ResponseSession, error) {
 
 	result := &response.ResponseSession{}
 
@@ -43,7 +44,7 @@ func (comp *Client) Session(code string) (*response.ResponseSession, error) {
 		"component_appid":        componentConfig.GetString("app_id", ""),
 		"component_access_token": componentToken.ComponentAccessToken,
 	}
-	_, err = comp.BaseClient.HttpGet("sns/component/jscode2session", query, nil, result)
+	_, err = comp.BaseClient.HttpGet(ctx, "sns/component/jscode2session", query, nil, result)
 
 	return result, err
 

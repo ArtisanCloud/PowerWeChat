@@ -1,6 +1,7 @@
 package accountService
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -24,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 添加客服帐号
 // https://developer.work.weixin.qq.com/document/path/94648
-func (comp *Client) Add(name string, mediaID string) (*response.ResponseAccountAdd, error) {
+func (comp *Client) Add(ctx *context.Context, name string, mediaID string) (*response.ResponseAccountAdd, error) {
 
 	result := &response.ResponseAccountAdd{}
 
@@ -33,14 +34,14 @@ func (comp *Client) Add(name string, mediaID string) (*response.ResponseAccountA
 		"media_id": mediaID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/account/add", options, nil, nil, result)
 
 	return result, err
 }
 
 // 删除客服帐号
 // https://developer.work.weixin.qq.com/document/path/94663
-func (comp *Client) Del(openKFID string) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx *context.Context, openKFID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -48,36 +49,36 @@ func (comp *Client) Del(openKFID string) (*response2.ResponseWork, error) {
 		"open_kfid": openKFID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/account/del", options, nil, nil, result)
 
 	return result, err
 }
 
 // 修改客服帐号
 // https://developer.work.weixin.qq.com/document/path/94664
-func (comp *Client) Update(options *request.RequestAccountUpdate) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx *context.Context, options *request.RequestAccountUpdate) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/account/update", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客服帐号列表
 // https://developer.work.weixin.qq.com/document/path/94661
-func (comp *Client) List() (*response.ResponseAccountList, error) {
+func (comp *Client) List(ctx *context.Context) (*response.ResponseAccountList, error) {
 
 	result := &response.ResponseAccountList{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/account/list", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/account/list", nil, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客服帐号链接
 // https://developer.work.weixin.qq.com/document/path/94665
-func (comp *Client) AddContactWay(openKFID string, scene string) (*response.ResponseAccountServiceAddContactWay, error) {
+func (comp *Client) AddContactWay(ctx *context.Context, openKFID string, scene string) (*response.ResponseAccountServiceAddContactWay, error) {
 
 	result := &response.ResponseAccountServiceAddContactWay{}
 
@@ -86,7 +87,7 @@ func (comp *Client) AddContactWay(openKFID string, scene string) (*response.Resp
 		"scene":     scene,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/kf/add_contact_way", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/add_contact_way", options, nil, nil, result)
 
 	return result, err
 }

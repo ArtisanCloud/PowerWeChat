@@ -40,7 +40,7 @@ func (comp *Client) GetKey() (string, error) {
 		return strCacheKey, nil
 	}
 
-	response, err := comp.RequestArray("sandboxnew/pay/getsignkey", "POST", nil, nil, nil)
+	response, err := comp.RequestArray(nil, "sandboxnew/pay/getsignkey", "POST", nil, nil, nil)
 	if err != nil {
 		return "", err
 	}

@@ -1,6 +1,7 @@
 package qrCode
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/qrCode/request"
@@ -37,7 +38,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 生成永久二维码请求
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html
-func (comp *Client) Forever(sceneValue interface{}) (*response.ResponseQRCodeCreate, error) {
+func (comp *Client) Forever(ctx *context.Context, sceneValue interface{}) (*response.ResponseQRCodeCreate, error) {
 
 	data := &request.RequestQRCodeCreate{
 		ActionInfo: &request.ActionInfo{},
@@ -62,13 +63,13 @@ func (comp *Client) Forever(sceneValue interface{}) (*response.ResponseQRCodeCre
 	default:
 	}
 
-	return comp.Create(data, false, 9999000)
+	return comp.Create(ctx, data, false, 9999000)
 
 }
 
 // 生成临时二维码请求
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html
-func (comp *Client) Temporary(sceneValue interface{}, expireSeconds int) (*response.ResponseQRCodeCreate, error) {
+func (comp *Client) Temporary(ctx *context.Context, sceneValue interface{}, expireSeconds int) (*response.ResponseQRCodeCreate, error) {
 
 	data := &request.RequestQRCodeCreate{
 		ActionInfo: &request.ActionInfo{},
@@ -93,7 +94,7 @@ func (comp *Client) Temporary(sceneValue interface{}, expireSeconds int) (*respo
 	default:
 	}
 
-	return comp.Create(data, true, expireSeconds)
+	return comp.Create(ctx, data, true, expireSeconds)
 
 }
 
@@ -105,7 +106,7 @@ func (comp *Client) URL(ticket string) string {
 
 // 生成带参数的二维码
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html
-func (comp *Client) Create(data *request.RequestQRCodeCreate, temporary bool, expireSecond int) (*response.ResponseQRCodeCreate, error) {
+func (comp *Client) Create(ctx *context.Context, data *request.RequestQRCodeCreate, temporary bool, expireSecond int) (*response.ResponseQRCodeCreate, error) {
 
 	result := &response.ResponseQRCodeCreate{}
 
@@ -119,7 +120,7 @@ func (comp *Client) Create(data *request.RequestQRCodeCreate, temporary bool, ex
 		(*params)["expire_seconds"] = int(math.Min(float64(expireSecond), float64(30*DAY)))
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("qrcode/create", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "qrcode/create", params, nil, nil, result)
 
 	return result, err
 

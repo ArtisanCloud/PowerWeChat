@@ -1,6 +1,7 @@
 package redpack
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack/request"
@@ -23,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Query Red Pack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_6&index=5
-func (comp *Client) Info(mchBillNO string) (*response.ResponseSendNormal, error) {
+func (comp *Client) Info(ctx *context.Context, mchBillNO string) (*response.ResponseSendNormal, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseSendNormal{}
@@ -37,14 +38,14 @@ func (comp *Client) Info(mchBillNO string) (*response.ResponseSendNormal, error)
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Send Miniprogram Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=18_2&index=2
-func (comp *Client) SendMiniProgramNormal(data *request.RequestSendMiniProgramNormal) (*response.ResponseSendMiniProgramNormal, error) {
+func (comp *Client) SendMiniProgramNormal(ctx *context.Context, data *request.RequestSendMiniProgramNormal) (*response.ResponseSendMiniProgramNormal, error) {
 
 	result := &response.ResponseSendMiniProgramNormal{}
 
@@ -63,14 +64,14 @@ func (comp *Client) SendMiniProgramNormal(data *request.RequestSendMiniProgramNo
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Send Normal redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
-func (comp *Client) SendNormal(data *request.RequestSendRedPack) (*response.ResponseSendNormal, error) {
+func (comp *Client) SendNormal(ctx *context.Context, data *request.RequestSendRedPack) (*response.ResponseSendNormal, error) {
 
 	result := &response.ResponseSendNormal{}
 
@@ -88,14 +89,14 @@ func (comp *Client) SendNormal(data *request.RequestSendRedPack) (*response.Resp
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Send Group redpack.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
-func (comp *Client) SendGroup(data *request.RequestSendGroupRedPack) (*response.ResponseSendGroupRedPack, error) {
+func (comp *Client) SendGroup(ctx *context.Context, data *request.RequestSendGroupRedPack) (*response.ResponseSendGroupRedPack, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseSendGroupRedPack{}
@@ -113,7 +114,7 @@ func (comp *Client) SendGroup(data *request.RequestSendGroupRedPack) (*response.
 	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }

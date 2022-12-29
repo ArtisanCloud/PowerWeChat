@@ -1,6 +1,7 @@
 package customerStrategy
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -24,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取规则组列表
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) List(cursor string, limit int64) (*response.ResponseCustomerStrategyList, error) {
+func (comp *Client) List(ctx *context.Context, cursor string, limit int64) (*response.ResponseCustomerStrategyList, error) {
 
 	result := &response.ResponseCustomerStrategyList{}
 
@@ -33,14 +34,14 @@ func (comp *Client) List(cursor string, limit int64) (*response.ResponseCustomer
 		"limit":  limit,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/customer_strategy/list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/customer_strategy/list", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取规则组详情
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Get(strategyID int64) (*response.ResponseCustomerStrategyGet, error) {
+func (comp *Client) Get(ctx *context.Context, strategyID int64) (*response.ResponseCustomerStrategyGet, error) {
 
 	result := &response.ResponseCustomerStrategyGet{}
 
@@ -48,14 +49,14 @@ func (comp *Client) Get(strategyID int64) (*response.ResponseCustomerStrategyGet
 		"strategy_id": strategyID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/customer_strategy/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/customer_strategy/get", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取规则组管理范围
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) GetRange(strategyID int64, cursor string, limit int64) (*response.ResponseCustomerStrategyGetRange, error) {
+func (comp *Client) GetRange(ctx *context.Context, strategyID int64, cursor string, limit int64) (*response.ResponseCustomerStrategyGetRange, error) {
 
 	result := &response.ResponseCustomerStrategyGetRange{}
 
@@ -65,36 +66,36 @@ func (comp *Client) GetRange(strategyID int64, cursor string, limit int64) (*res
 		"limit":       limit,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/customer_strategy/get_range", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/customer_strategy/get_range", options, nil, nil, result)
 
 	return result, err
 }
 
 // 创建新的规则组
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Create(options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
+func (comp *Client) Create(ctx *context.Context, options *request.RequestCustomerStrategyCreate) (*response.ResponseCustomerStrategyCreate, error) {
 
 	result := &response.ResponseCustomerStrategyCreate{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/customer_strategy/create", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/customer_strategy/create", options, nil, nil, result)
 
 	return result, err
 }
 
 // 编辑规则组及其管理范围
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Edit(options *request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
+func (comp *Client) Edit(ctx *context.Context, options *request.RequestCustomerStrategyEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/customer_strategy/edit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/customer_strategy/edit", options, nil, nil, result)
 
 	return result, err
 }
 
 // 删除规则组
 // https://developer.work.weixin.qq.com/document/path/94883
-func (comp *Client) Del(strategyID int64) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx *context.Context, strategyID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -102,7 +103,7 @@ func (comp *Client) Del(strategyID int64) (*response2.ResponseWork, error) {
 		"strategy_id": strategyID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/customer_strategy/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/customer_strategy/del", options, nil, nil, result)
 
 	return result, err
 }

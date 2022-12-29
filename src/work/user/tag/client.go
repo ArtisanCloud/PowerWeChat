@@ -1,6 +1,7 @@
 package tag
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -24,11 +25,11 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建标签
 // https://developer.work.weixin.qq.com/document/path/90210
-func (comp *Client) Create(tagName string, tagID int64) (*response.ResponseTagCreate, error) {
+func (comp *Client) Create(ctx *context.Context, tagName string, tagID int64) (*response.ResponseTagCreate, error) {
 
 	result := &response.ResponseTagCreate{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tag/create", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/tag/create", &object.HashMap{
 		"tagname": tagName,
 		"tagid":   tagID,
 	}, nil, nil, result)
@@ -38,11 +39,11 @@ func (comp *Client) Create(tagName string, tagID int64) (*response.ResponseTagCr
 
 // 更新标签名字
 // https://developer.work.weixin.qq.com/document/path/90211
-func (comp *Client) Update(tagName string, tagID int64) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx *context.Context, tagName string, tagID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/tag/update", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/tag/update", &object.HashMap{
 		"tagname": tagName,
 		"tagid":   tagID,
 	}, nil, nil, result)
@@ -52,11 +53,11 @@ func (comp *Client) Update(tagName string, tagID int64) (*response2.ResponseWork
 
 // 删除标签
 // https://developer.work.weixin.qq.com/document/path/90212
-func (comp *Client) Delete(tagID int64) (*response2.ResponseWork, error) {
+func (comp *Client) Delete(ctx *context.Context, tagID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/tag/delete", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/tag/delete", &object.StringMap{
 		"tagid": fmt.Sprintf("%d", tagID),
 	}, nil, result)
 
@@ -65,11 +66,11 @@ func (comp *Client) Delete(tagID int64) (*response2.ResponseWork, error) {
 
 // 获取标签成员
 // https://developer.work.weixin.qq.com/document/path/90832
-func (comp *Client) Get(tagID int64) (*response.ResponseTagDetail, error) {
+func (comp *Client) Get(ctx *context.Context, tagID int64) (*response.ResponseTagDetail, error) {
 
 	result := &response.ResponseTagDetail{}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/tag/get", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/tag/get", &object.StringMap{
 		"tagid": fmt.Sprintf("%d", tagID),
 	}, nil, result)
 
@@ -78,21 +79,21 @@ func (comp *Client) Get(tagID int64) (*response.ResponseTagDetail, error) {
 
 // 获取标签成员
 // https://developer.work.weixin.qq.com/document/path/90833
-func (comp *Client) TagUsers(tagID int64, userList []string) (*response.ResponseTagCreateUser, error) {
-	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, userList, []string{})
+func (comp *Client) TagUsers(ctx *context.Context, tagID int64, userList []string) (*response.ResponseTagCreateUser, error) {
+	return comp.TagOrUntagUsers(ctx, "cgi-bin/tag/addtagusers", tagID, userList, []string{})
 }
 
 // 增加标签成员
 // https://developer.work.weixin.qq.com/document/path/90833
-func (comp *Client) TagDepartments(tagID int64, partyList []string) (*response.ResponseTagCreateUser, error) {
-	return comp.TagOrUntagUsers("cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
+func (comp *Client) TagDepartments(ctx *context.Context, tagID int64, partyList []string) (*response.ResponseTagCreateUser, error) {
+	return comp.TagOrUntagUsers(ctx, "cgi-bin/tag/addtagusers", tagID, []string{}, partyList)
 }
 
-func (comp *Client) TagOrUntagUsers(endpoint string, tagID int64, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
+func (comp *Client) TagOrUntagUsers(ctx *context.Context, endpoint string, tagID int64, userList []string, partyList []string) (*response.ResponseTagCreateUser, error) {
 
 	result := &response.ResponseTagCreateUser{}
 
-	_, err := comp.BaseClient.HttpPostJson(endpoint, &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, endpoint, &object.HashMap{
 		"tagid":     tagID,
 		"userlist":  userList,
 		"partylist": partyList,
@@ -103,11 +104,11 @@ func (comp *Client) TagOrUntagUsers(endpoint string, tagID int64, userList []str
 
 // 获取标签列表
 // https://developer.work.weixin.qq.com/document/path/90216
-func (comp *Client) List() (*response.ResponseTagList, error) {
+func (comp *Client) List(ctx *context.Context) (*response.ResponseTagList, error) {
 
 	result := &response.ResponseTagList{}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/tag/list", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/tag/list", nil, nil, result)
 
 	return result, err
 }

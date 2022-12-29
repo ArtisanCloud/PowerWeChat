@@ -1,6 +1,7 @@
 package groupWelcomeTemplate
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -24,43 +25,43 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 发送新客户欢迎语
 // https://developer.work.weixin.qq.com/document/path/92366
-func (comp *Client) AddGroupWelcomeTemplate(options *request.RequestGroupWelcomeTemplateAdd) (*response.ResponseAddGroupWelcomeTemplate, error) {
+func (comp *Client) AddGroupWelcomeTemplate(ctx *context.Context, options *request.RequestGroupWelcomeTemplateAdd) (*response.ResponseAddGroupWelcomeTemplate, error) {
 
 	result := &response.ResponseAddGroupWelcomeTemplate{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/group_welcome_template/add", options, nil, nil, result)
 
 	return result, err
 }
 
 // 编辑入群欢迎语素材
 // https://developer.work.weixin.qq.com/document/path/92366#编辑入群欢迎语素材
-func (comp *Client) EditGroupWelcomeTemplate(options *request.RequestGroupWelcomeTemplateEdit) (*response2.ResponseWork, error) {
+func (comp *Client) EditGroupWelcomeTemplate(ctx *context.Context, options *request.RequestGroupWelcomeTemplateEdit) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/edit", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/group_welcome_template/edit", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取入群欢迎语素材
 // https://developer.work.weixin.qq.com/document/path/92366#获取入群欢迎语素材
-func (comp *Client) GetGroupWelcomeTemplate(templateID string) (*response.ResponseGetGroupWelcomeTemplate, error) {
+func (comp *Client) GetGroupWelcomeTemplate(ctx *context.Context, templateID string) (*response.ResponseGetGroupWelcomeTemplate, error) {
 
 	result := &response.ResponseGetGroupWelcomeTemplate{}
 
 	options := &object.HashMap{
 		"template_id": templateID,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/group_welcome_template/get", options, nil, nil, result)
 
 	return result, err
 }
 
 // 删除入群欢迎语素材
 // https://developer.work.weixin.qq.com/document/path/92366#删除入群欢迎语素材
-func (comp *Client) DelGroupWelcomeTemplate(templateID string, agentID int64) (*response2.ResponseWork, error) {
+func (comp *Client) DelGroupWelcomeTemplate(ctx *context.Context, templateID string, agentID int64) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -68,7 +69,7 @@ func (comp *Client) DelGroupWelcomeTemplate(templateID string, agentID int64) (*
 		"template_id": templateID,
 		"agentid":     agentID,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/group_welcome_template/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/group_welcome_template/del", options, nil, nil, result)
 
 	return result, err
 }

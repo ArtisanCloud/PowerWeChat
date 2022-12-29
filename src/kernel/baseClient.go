@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
@@ -80,8 +81,9 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 
 }
 
-func (client *BaseClient) HttpGet(url string, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpGet(ctx *context.Context, url string, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
+		ctx,
 		url,
 		"GET",
 		&object.HashMap{
@@ -93,8 +95,9 @@ func (client *BaseClient) HttpGet(url string, query *object.StringMap, outHeader
 	)
 }
 
-func (client *BaseClient) HttpPost(url string, data interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpPost(ctx *context.Context, url string, data interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
+		ctx,
 		url,
 		"POST",
 		&object.HashMap{
@@ -106,8 +109,9 @@ func (client *BaseClient) HttpPost(url string, data interface{}, outHeader inter
 	)
 }
 
-func (client *BaseClient) HttpPostJson(url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpPostJson(ctx *context.Context, url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	return client.Request(
+		ctx,
 		url,
 		"POST",
 		&object.HashMap{
@@ -120,7 +124,7 @@ func (client *BaseClient) HttpPostJson(url string, data interface{}, query *obje
 	)
 }
 
-func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) HttpUpload(ctx *context.Context, url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
 	multipart := []*object.HashMap{}
 	headers := &object.HashMap{}
@@ -165,7 +169,7 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *Up
 		}
 	}
 
-	return client.Request(url, "POST", &object.HashMap{
+	return client.Request(ctx, url, "POST", &object.HashMap{
 		"query":           query,
 		"multipart":       multipart,
 		"connect_timeout": 30,
@@ -174,12 +178,12 @@ func (client *BaseClient) HttpUpload(url string, files *object.HashMap, form *Up
 	}, false, nil, outBody)
 }
 
-func (client *BaseClient) Request(url string, method string, options *object.HashMap,
+func (client *BaseClient) Request(ctx *context.Context, url string, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (*http.Response, error) {
 
 	// http client request
-	df := client.HttpHelper.Df().Uri(url).Method(method)
+	df := client.HttpHelper.Df().WithContext(*ctx).Uri(url).Method(method)
 
 	// 检查是否需要有请求参数配置
 	if options != nil {
@@ -242,8 +246,8 @@ func (client *BaseClient) Request(url string, method string, options *object.Has
 	//}
 }
 
-func (client *BaseClient) RequestRaw(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*http.Response, error) {
-	return client.Request(url, method, options, true, outHeader, outBody)
+func (client *BaseClient) RequestRaw(ctx *context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*http.Response, error) {
+	return client.Request(ctx, url, method, options, true, outHeader, outBody)
 }
 
 func (client *BaseClient) RegisterHttpMiddlewares() {
