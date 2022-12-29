@@ -1,6 +1,7 @@
 package transfer
 
 import (
+	"context"
 	"crypto"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
@@ -26,7 +27,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Query MerchantPay to balance.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
-func (comp *Client) QueryBalanceOrder(partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
+func (comp *Client) QueryBalanceOrder(ctx *context.Context, partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseGetTransferInfo{}
@@ -38,14 +39,14 @@ func (comp *Client) QueryBalanceOrder(partnerTradeNo string) (*response.Response
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/gettransferinfo")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Send MerchantPay to balance.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
-func (comp *Client) ToBalance(data *request.RequestTransferToBalance) (*response.ResponseTransferToBalance, error) {
+func (comp *Client) ToBalance(ctx *context.Context, data *request.RequestTransferToBalance) (*response.ResponseTransferToBalance, error) {
 
 	result := &response.ResponseTransferToBalance{}
 
@@ -62,14 +63,14 @@ func (comp *Client) ToBalance(data *request.RequestTransferToBalance) (*response
 
 	params = object.MergeHashMap(params, base)
 	endpoint := comp.Wrap("mmpaymkttransfers/promotion/transfers")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Query MerchantPay order to BankCard.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
-func (comp *Client) QueryBankCardOrder(partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
+func (comp *Client) QueryBankCardOrder(ctx *context.Context, partnerTradeNo string) (*response.ResponseGetTransferInfo, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseGetTransferInfo{}
@@ -80,14 +81,14 @@ func (comp *Client) QueryBankCardOrder(partnerTradeNo string) (*response.Respons
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/query_bank")
-	_, err := comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // Send MerchantPay to BankCard.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_2
-func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response2.ResponsePayment, error) {
+func (comp *Client) ToBankCard(ctx *context.Context, data *request.RequestToBankCard) (*response2.ResponsePayment, error) {
 
 	result := &response2.ResponsePayment{}
 
@@ -128,7 +129,7 @@ func (comp *Client) ToBankCard(data *request.RequestToBankCard) (*response2.Resp
 	}
 
 	endpoint := comp.Wrap("mmpaysptrans/pay_bank")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }

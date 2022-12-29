@@ -1,6 +1,7 @@
 package promotion
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/promotion/request"
@@ -23,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // 向员工付款
 // https://work.weixin.qq.com/api/doc/90000/90135/90278
-func (comp *Client) PayTransferToPocket(data *request.RequestPayTransferToPocket) (*response.ResponsePayTransferToPocket, error) {
+func (comp *Client) PayTransferToPocket(ctx *context.Context, data *request.RequestPayTransferToPocket) (*response.ResponsePayTransferToPocket, error) {
 	result := &response.ResponsePayTransferToPocket{}
 
 	//params, err := object.StructToHashMapWithTag(data, "json")
@@ -33,14 +34,14 @@ func (comp *Client) PayTransferToPocket(data *request.RequestPayTransferToPocket
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/promotion/paywwsptrans2pocket")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
 
 // 查询付款记录
 // https://work.weixin.qq.com/api/doc/90000/90135/90279
-func (comp *Client) QueryTransferToPocket(data *request.RequestQueryTransferToPocket) (*response.ResponseQueryTransferToPocket, error) {
+func (comp *Client) QueryTransferToPocket(ctx *context.Context, data *request.RequestQueryTransferToPocket) (*response.ResponseQueryTransferToPocket, error) {
 
 	result := &response.ResponseQueryTransferToPocket{}
 
@@ -51,7 +52,7 @@ func (comp *Client) QueryTransferToPocket(data *request.RequestQueryTransferToPo
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/promotion/querywwsptrans2pocket")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }

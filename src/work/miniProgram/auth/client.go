@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/miniProgram/response"
@@ -22,11 +23,11 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 第三方登录凭证校验
 // https://developers.weixin.qq.com/miniprogram/dev/dev_wxwork/dev-doc/qywx-api/login/code2session.html
-func (comp *Client) Session(code string) (*response.ResponseSession, error) {
+func (comp *Client) Session(ctx *context.Context, code string) (*response.ResponseSession, error) {
 
 	result := &response.ResponseSession{}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/miniprogram/jscode2session", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/miniprogram/jscode2session", &object.StringMap{
 		"js_code":    code,
 		"grant_type": "authorization_code",
 	}, nil, result)

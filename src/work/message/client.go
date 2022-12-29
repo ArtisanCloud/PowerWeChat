@@ -1,6 +1,7 @@
 package message
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/messages"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -35,73 +36,73 @@ func (comp *Client) Message(message *messages.Message) *Messager {
 
 // 发送应用消息
 // https://developer.work.weixin.qq.com/document/path/90236
-func (comp *Client) Send(messages interface{}) (*response.ResponseMessageSend, error) {
+func (comp *Client) Send(ctx *context.Context, messages interface{}) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/send", messages, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/message/send", messages, nil, nil, result)
 
 	return result, err
 }
 
 // SendText 文本消息
-func (comp *Client) SendText(messages *request.RequestMessageSendText) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendText(ctx *context.Context, messages *request.RequestMessageSendText) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendImage 图片消息
-func (comp *Client) SendImage(messages *request.RequestMessageSendImage) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendImage(ctx *context.Context, messages *request.RequestMessageSendImage) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendVoice 语音消息
-func (comp *Client) SendVoice(messages *request.RequestMessageSendVoice) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendVoice(ctx *context.Context, messages *request.RequestMessageSendVoice) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendVideo 视频消息
-func (comp *Client) SendVideo(messages *request.RequestMessageSendVideo) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendVideo(ctx *context.Context, messages *request.RequestMessageSendVideo) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendFile 文件消息
-func (comp *Client) SendFile(messages *request.RequestMessageSendFile) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendFile(ctx *context.Context, messages *request.RequestMessageSendFile) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendTextCard 文本卡片消息
-func (comp *Client) SendTextCard(messages *request.RequestMessageSendTextCard) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendTextCard(ctx *context.Context, messages *request.RequestMessageSendTextCard) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendNews 图文消息
-func (comp *Client) SendNews(messages *request.RequestMessageSendNews) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendNews(ctx *context.Context, messages *request.RequestMessageSendNews) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendMpNews 图文消息（mpnews）
-func (comp *Client) SendMpNews(messages *request.RequestMessageSendMPNews) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendMpNews(ctx *context.Context, messages *request.RequestMessageSendMPNews) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendMarkdown markdown消息
-func (comp *Client) SendMarkdown(messages *request.RequestMessageSendMarkdown) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendMarkdown(ctx *context.Context, messages *request.RequestMessageSendMarkdown) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendMiniProgramNotice 小程序通知消息
-func (comp *Client) SendMiniProgramNotice(messages *request.RequestMessageSendMiniProgramNotice) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendMiniProgramNotice(ctx *context.Context, messages *request.RequestMessageSendMiniProgramNotice) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // SendTemplateCard 发送卡片模版
-func (comp *Client) SendTemplateCard(messages *request.RequestMessageSendTemplateCard) (*response.ResponseMessageSend, error) {
-	return comp.Send(messages)
+func (comp *Client) SendTemplateCard(ctx *context.Context, messages *request.RequestMessageSendTemplateCard) (*response.ResponseMessageSend, error) {
+	return comp.Send(ctx, messages)
 }
 
 // 更新模版卡片消息
 // https://developer.work.weixin.qq.com/document/path/94888
-func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseMessageSend, error) {
+func (comp *Client) UpdateTemplateCard(ctx *context.Context, card *power.HashMap) (*response.ResponseMessageSend, error) {
 
 	result := &response.ResponseMessageSend{}
 
@@ -109,17 +110,17 @@ func (comp *Client) UpdateTemplateCard(card *power.HashMap) (*response.ResponseM
 		config := (*comp.BaseClient.App).GetConfig()
 		(*card)["agentid"] = config.GetInt("agent_id", 0)
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/update_template_card", card, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/message/update_template_card", card, nil, nil, result)
 
 	return result, err
 }
 
 // Recall 撤回应用消息
 // https://developer.work.weixin.qq.com/document/path/94867
-func (comp *Client) Recall(msgID string) (*response2.ResponseWork, error) {
+func (comp *Client) Recall(ctx *context.Context, msgID string) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/message/recall", power.StringMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/message/recall", power.StringMap{
 		"msgid": msgID,
 	}, nil, nil, result)
 

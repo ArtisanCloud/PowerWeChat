@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha1"
 	"errors"
 	"fmt"
@@ -134,7 +135,7 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 
 }
 
-func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, method string, option *object.HashMap,
+func (client *BaseClient) RequestV2(ctx *context.Context, endpoint string, params *object.HashMap, method string, option *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response *http.Response, err error) {
 
@@ -158,6 +159,7 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 
 	// http client request
 	df := client.HttpHelper.Df().
+		WithContext(*ctx).
 		Uri(endpoint).Method(method)
 
 	// 检查是否需要有请求参数配置
@@ -206,7 +208,7 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 
 }
 
-func (client *BaseClient) Request(endpoint string, params *object.StringMap, method string, options *object.HashMap,
+func (client *BaseClient) Request(ctx *context.Context, endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response interface{}, err error) {
 
@@ -223,6 +225,7 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 	// http client request
 	returnResponse, err := client.HttpHelper.Df().
+		WithContext(*ctx).
 		Url(endpoint).Method(method).Json(options).Request()
 
 	// decode response body to outBody
@@ -252,8 +255,8 @@ func (client *BaseClient) Request(endpoint string, params *object.StringMap, met
 
 }
 
-func (client *BaseClient) RequestRaw(url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
-	return client.Request(url, params, method, options, true, outHeader, outBody)
+func (client *BaseClient) RequestRaw(ctx *context.Context, url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+	return client.Request(ctx, url, params, method, options, true, outHeader, outBody)
 }
 
 func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload, filePath string) (int64, error) {
@@ -308,8 +311,8 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 	return totalSize, err
 }
 
-func (client *BaseClient) RequestArray(url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*object.HashMap, error) {
-	returnResponse, err := client.RequestRaw(url, nil, method, options, outHeader, outBody)
+func (client *BaseClient) RequestArray(ctx *context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*object.HashMap, error) {
+	returnResponse, err := client.RequestRaw(ctx, url, nil, method, options, outHeader, outBody)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +321,7 @@ func (client *BaseClient) RequestArray(url string, method string, options *objec
 	return result.(*object.HashMap), err
 }
 
-func (client *BaseClient) SafeRequest(url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+func (client *BaseClient) SafeRequest(ctx *context.Context, url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
 	config := (*client.App).GetConfig()
 
 	httpConfig := client.HttpHelper.GetClient().GetConfig()
@@ -329,6 +332,7 @@ func (client *BaseClient) SafeRequest(url string, params *object.HashMap, method
 	strOutBody := ""
 	// get xml string result from return raw as true
 	rs, err := client.RequestV2(
+		ctx,
 		url,
 		params,
 		method,

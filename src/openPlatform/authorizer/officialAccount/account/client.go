@@ -1,6 +1,7 @@
 package account
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -45,11 +46,11 @@ func (comp *Client) GetFastRegistrationUrl(callbackUrl string, copyWxVerify bool
 
 // 复用公众号主体快速注册小程序
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Register_Mini_Programs/fast_registration_of_mini_program.html
-func (comp *Client) Register(ticket string) (*response.ResponseRegister, error) {
+func (comp *Client) Register(ctx *context.Context, ticket string) (*response.ResponseRegister, error) {
 
 	result := &response.ResponseRegister{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/fastregister", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/account/fastregister", &object.HashMap{
 		"ticket": ticket,
 	}, nil, nil, result)
 

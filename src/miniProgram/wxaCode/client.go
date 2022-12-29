@@ -1,6 +1,7 @@
 package wxaCode
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -16,7 +17,7 @@ type Client struct {
 
 // 获取小程序二维码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html
-func (comp *Client) CreateQRCode(path string, width int64) (*http.Response, error) {
+func (comp *Client) CreateQRCode(ctx *context.Context, path string, width int64) (*http.Response, error) {
 
 	var result string
 	var header = &response4.ResponseHeaderMedia{}
@@ -32,7 +33,7 @@ func (comp *Client) CreateQRCode(path string, width int64) (*http.Response, erro
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw("cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
 
 	return rs, err
 
@@ -40,7 +41,7 @@ func (comp *Client) CreateQRCode(path string, width int64) (*http.Response, erro
 
 // 获取小程序码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
-func (comp *Client) Get(path string, width int64,
+func (comp *Client) Get(ctx *context.Context, path string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
 
 	var result string
@@ -60,18 +61,18 @@ func (comp *Client) Get(path string, width int64,
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw("wxa/getwxacode", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacode", "POST", data, &header, &result)
 
 	return rs, err
 }
 
 // 获取小程序码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
-func (comp *Client) SaveAs(savedPath string, perm fs.FileMode,
+func (comp *Client) SaveAs(ctx *context.Context, savedPath string, perm fs.FileMode,
 	path string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) error {
 
-	rs, err := comp.Get(path, width, autoColor, lineColor, isHyaline)
+	rs, err := comp.Get(ctx, path, width, autoColor, lineColor, isHyaline)
 	if err != nil {
 		return err
 	}
@@ -85,6 +86,7 @@ func (comp *Client) SaveAs(savedPath string, perm fs.FileMode,
 // 获取小程序码，适用于需要的码数量极多的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html
 func (comp *Client) GetUnlimited(
+	ctx *context.Context,
 	scene string, page string,
 	checkPath bool, envVersion string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
@@ -109,7 +111,7 @@ func (comp *Client) GetUnlimited(
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw("wxa/getwxacodeunlimit", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacodeunlimit", "POST", data, &header, &result)
 
 	return rs, err
 }

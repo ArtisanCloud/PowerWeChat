@@ -1,6 +1,7 @@
 package semantic
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -12,7 +13,7 @@ type Client struct {
 
 // 语义接口
 // https://developers.weixin.qq.com/doc/offiaccount/Intelligent_Interface/Natural_Language_Processing.html
-func (comp *Client) Query(keyword string, categories string, optional *power.HashMap) (interface{}, error) {
+func (comp *Client) Query(ctx *context.Context, keyword string, categories string, optional *power.HashMap) (interface{}, error) {
 
 	config := (*comp.BaseClient.App).GetConfig()
 	params := &object.HashMap{
@@ -27,6 +28,6 @@ func (comp *Client) Query(keyword string, categories string, optional *power.Has
 	}
 	params = object.MergeHashMap(params, objOptional)
 
-	return comp.BaseClient.HttpPostJson("semantic/semproxy/search", params, nil, nil, nil)
+	return comp.BaseClient.HttpPostJson(ctx, "semantic/semproxy/search", params, nil, nil, nil)
 
 }

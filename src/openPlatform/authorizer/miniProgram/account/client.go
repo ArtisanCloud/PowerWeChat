@@ -1,6 +1,7 @@
 package account
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -25,11 +26,11 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取基本信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/Mini_Program_Information_Settings.html
-func (comp *Client) GetBasicInfo() (*response.ResponseGetBasicInfo, error) {
+func (comp *Client) GetBasicInfo(ctx *context.Context) (*response.ResponseGetBasicInfo, error) {
 
 	result := &response.ResponseGetBasicInfo{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/getaccountbasicinfo", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/account/getaccountbasicinfo", nil, nil, nil, result)
 
 	return result, err
 
@@ -38,6 +39,7 @@ func (comp *Client) GetBasicInfo() (*response.ResponseGetBasicInfo, error) {
 // 修改头像
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/modifyheadimage.html
 func (comp *Client) UpdateAvatar(
+	ctx *context.Context,
 	mediaID string,
 	left float32,
 	top float32,
@@ -54,7 +56,7 @@ func (comp *Client) UpdateAvatar(
 		"x2":                fmt.Sprintf("%f", right),
 		"y2":                fmt.Sprintf("%f", bottom),
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/modifyheadimage", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/account/modifyheadimage", params, nil, nil, result)
 
 	return result, err
 
@@ -62,14 +64,14 @@ func (comp *Client) UpdateAvatar(
 
 // 修改功能介绍
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/modifysignature.html
-func (comp *Client) UpdateSignature(signature string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) UpdateSignature(ctx *context.Context, signature string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
 	params := &object.HashMap{
 		"signature": signature,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/account/modifysignature", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/account/modifysignature", params, nil, nil, result)
 
 	return result, err
 

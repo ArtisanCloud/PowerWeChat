@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -24,11 +25,11 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 设置服务器域名
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/Server_Address_Configuration.html#请求地址
-func (comp *Client) Modify(params *request.RequestModify) (*response.ResponseModify, error) {
+func (comp *Client) Modify(ctx *context.Context, params *request.RequestModify) (*response.ResponseModify, error) {
 
 	result := &response.ResponseModify{}
 
-	_, err := comp.BaseClient.HttpPostJson("wxa/modify_domain", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "wxa/modify_domain", params, nil, nil, result)
 
 	return result, err
 
@@ -36,7 +37,7 @@ func (comp *Client) Modify(params *request.RequestModify) (*response.ResponseMod
 
 // 设置业务域名
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/setwebviewdomain.html#请求地址
-func (comp *Client) SetWebviewDomain(domains []string, action string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) SetWebviewDomain(ctx *context.Context, domains []string, action string) (*response2.ResponseOpenPlatform, error) {
 
 	result := &response2.ResponseOpenPlatform{}
 
@@ -44,7 +45,7 @@ func (comp *Client) SetWebviewDomain(domains []string, action string) (*response
 		"action":        action,
 		"webviewdomain": domains,
 	}
-	_, err := comp.BaseClient.HttpPostJson("wxa/setwebviewdomain", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "wxa/setwebviewdomain", params, nil, nil, result)
 
 	return result, err
 

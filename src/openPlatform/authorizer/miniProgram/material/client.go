@@ -29,7 +29,7 @@ func (comp *Client) Get(mediaID string) (*http.response, error) {
 
 	result := ""
 	header := &response4.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw("cgi-bin/material/get_material", "POST", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/material/get_material", "POST", &object.HashMap{
 		"form_params": &object.HashMap{
 			"media_id": mediaID,
 		},

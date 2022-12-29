@@ -1,6 +1,7 @@
 package url
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/url/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -31,7 +32,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 
 // 短key托管
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
-func (comp *Client) ShortGenKey(longData string, expireSecond int) (*response.ResponseShortGenKey, error) {
+func (comp *Client) ShortGenKey(ctx *context.Context, longData string, expireSecond int) (*response.ResponseShortGenKey, error) {
 
 	result := &response.ResponseShortGenKey{}
 
@@ -39,7 +40,7 @@ func (comp *Client) ShortGenKey(longData string, expireSecond int) (*response.Re
 		"long_data":      longData,
 		"expire_seconds": int(math.Min(float64(expireSecond), float64(30*DAY))),
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/shorten/gen", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/shorten/gen", params, nil, nil, result)
 
 	return result, err
 
@@ -47,14 +48,14 @@ func (comp *Client) ShortGenKey(longData string, expireSecond int) (*response.Re
 
 // 获取端链接
 // https://developers.weixin.qq.com/doc/offiaccount/Account_Management/KEY_Shortener.html
-func (comp *Client) FetchShorten(shortKey string) (*response.ResponseFetchShorten, error) {
+func (comp *Client) FetchShorten(ctx *context.Context, shortKey string) (*response.ResponseFetchShorten, error) {
 
 	result := &response.ResponseFetchShorten{}
 
 	params := &object.HashMap{
 		"short_key": shortKey,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/shorten/fetch", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/shorten/fetch", params, nil, nil, result)
 
 	return result, err
 

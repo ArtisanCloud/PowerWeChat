@@ -1,6 +1,7 @@
 package corpgroup
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -13,21 +14,21 @@ type Client struct {
 
 // 获取应用共享信息
 // https://developer.work.weixin.qq.com/document/path/93403
-func (comp *Client) GetAppShareInfo(agentID int) (*response.ResponseCorpGroupListAPPShareInfo, error) {
+func (comp *Client) GetAppShareInfo(ctx *context.Context, agentID int) (*response.ResponseCorpGroupListAPPShareInfo, error) {
 
 	result := &response.ResponseCorpGroupListAPPShareInfo{}
 
 	params := &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corpgroup/corp/list_app_share_info", nil, params, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corpgroup/corp/list_app_share_info", nil, params, nil, result)
 
 	return result, err
 }
 
 // 获取下级企业的access_token
 // https://developer.work.weixin.qq.com/document/path/93359
-func (comp *Client) GetToken(corpID string, agentID string) (*response.ResponseCorpGroupGetToken, error) {
+func (comp *Client) GetToken(ctx *context.Context, corpID string, agentID string) (*response.ResponseCorpGroupGetToken, error) {
 
 	result := &response.ResponseCorpGroupGetToken{}
 
@@ -36,14 +37,14 @@ func (comp *Client) GetToken(corpID string, agentID string) (*response.ResponseC
 		"agentid": agentID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corpgroup/corp/gettoken", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corpgroup/corp/gettoken", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取下级企业的小程序session
 // https://developer.work.weixin.qq.com/document/path/93355
-func (comp *Client) GetMiniProgramTransferSession(userID string, sessionKey string) (*response.ResponseCorpGroupTransferSession, error) {
+func (comp *Client) GetMiniProgramTransferSession(ctx *context.Context, userID string, sessionKey string) (*response.ResponseCorpGroupTransferSession, error) {
 
 	result := &response.ResponseCorpGroupTransferSession{}
 
@@ -52,7 +53,7 @@ func (comp *Client) GetMiniProgramTransferSession(userID string, sessionKey stri
 		"session_key": sessionKey,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/corpgroup/miniprogram/transfer_session?", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corpgroup/miniprogram/transfer_session?", params, nil, nil, result)
 
 	return result, err
 }

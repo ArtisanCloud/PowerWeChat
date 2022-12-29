@@ -1,6 +1,7 @@
 package message
 
 import (
+	"context"
 	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
@@ -76,7 +77,7 @@ func (msg *Messager) SetRecipients(ids interface{}, key string) *Messager {
 	return msg
 }
 
-func (msg *Messager) Send(message *messages.Message) (*response.ResponseMessageSend, error) {
+func (msg *Messager) Send(ctx *context.Context, message *messages.Message) (*response.ResponseMessageSend, error) {
 	if message != nil {
 		msg.Message(message)
 	}
@@ -103,5 +104,5 @@ func (msg *Messager) Send(message *messages.Message) (*response.ResponseMessageS
 	if err != nil {
 		return nil, err
 	}
-	return msg.Client.Send(powerMessages)
+	return msg.Client.Send(ctx, powerMessages)
 }

@@ -1,6 +1,7 @@
 package customerService
 
 import (
+	"context"
 	"errors"
 
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -45,7 +46,7 @@ func (comp *Messenger) SetTo(openID string) *Messenger {
 	return comp
 }
 
-func (comp *Messenger) Send() (result interface{}, err error) {
+func (comp *Messenger) Send(ctx *context.Context) (result interface{}, err error) {
 
 	if comp.Message == nil {
 		return result, errors.New("no message to send")
@@ -55,7 +56,7 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 	case *messages.Raw:
 		content := (*comp.Message).(*messages.Raw).GetString("content", "")
 
-		result, err = comp.Client.Send(content)
+		result, err = comp.Client.Send(ctx, content)
 	default:
 
 		prepends := &object.HashMap{
@@ -72,7 +73,7 @@ func (comp *Messenger) Send() (result interface{}, err error) {
 		if err != nil {
 			return
 		}
-		result, err = comp.Client.Send(json)
+		result, err = comp.Client.Send(ctx, json)
 	}
 
 	return result, err

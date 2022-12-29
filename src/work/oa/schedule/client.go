@@ -1,6 +1,7 @@
 package schedule
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -24,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建日程
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Add(schedule *power.HashMap, agentID int) (*response.ResponseScheduleAdd, error) {
+func (comp *Client) Add(ctx *context.Context, schedule *power.HashMap, agentID int) (*response.ResponseScheduleAdd, error) {
 
 	result := &response.ResponseScheduleAdd{}
 
@@ -33,14 +34,14 @@ func (comp *Client) Add(schedule *power.HashMap, agentID int) (*response.Respons
 		"agentid":  agentID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/schedule/add", options, nil, nil, result)
 
 	return result, err
 }
 
 // 更新日程
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Update(schedule *power.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx *context.Context, schedule *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -48,14 +49,14 @@ func (comp *Client) Update(schedule *power.HashMap) (*response2.ResponseWork, er
 		"schedule": schedule,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/schedule/update", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取日程详情
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Get(scheduleIDList []string) (*response.ResponseScheduleGet, error) {
+func (comp *Client) Get(ctx *context.Context, scheduleIDList []string) (*response.ResponseScheduleGet, error) {
 
 	result := &response.ResponseScheduleGet{}
 
@@ -63,14 +64,14 @@ func (comp *Client) Get(scheduleIDList []string) (*response.ResponseScheduleGet,
 		"schedule_id_list": scheduleIDList,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/schedule/get", options, nil, nil, result)
 
 	return result, err
 }
 
 // 删除日程
 // https://developer.work.weixin.qq.com/document/path/93648
-func (comp *Client) Del(scheduleID string) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx *context.Context, scheduleID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -78,7 +79,7 @@ func (comp *Client) Del(scheduleID string) (*response2.ResponseWork, error) {
 		"schedule_id": scheduleID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/schedule/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/schedule/del", options, nil, nil, result)
 
 	return result, err
 }

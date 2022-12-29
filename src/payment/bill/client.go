@@ -1,6 +1,7 @@
 package bill
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill/response"
@@ -23,7 +24,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Get Trade Bill.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_6.shtml
-func (comp *Client) GetTradeBill(date string, billType string, tarType string) (*response.ResponseBillGet, error) {
+func (comp *Client) GetTradeBill(ctx *context.Context, date string, billType string, tarType string) (*response.ResponseBillGet, error) {
 
 	result := &response.ResponseBillGet{}
 
@@ -34,14 +35,14 @@ func (comp *Client) GetTradeBill(date string, billType string, tarType string) (
 	}
 
 	endpoint := comp.Wrap("/v3/bill/tradebill")
-	_, err := comp.Request(endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
 
 	return result, err
 }
 
 // Get Flow Bill.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_7.shtml
-func (comp *Client) GetFlowBill(date string, accountType string, tarType string) (*response.ResponseBillGet, error) {
+func (comp *Client) GetFlowBill(ctx *context.Context, date string, accountType string, tarType string) (*response.ResponseBillGet, error) {
 
 	result := &response.ResponseBillGet{}
 
@@ -52,7 +53,7 @@ func (comp *Client) GetFlowBill(date string, accountType string, tarType string)
 	}
 
 	endpoint := comp.Wrap("/v3/bill/fundflowbill")
-	_, err := comp.Request(endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
 
 	return result, err
 }

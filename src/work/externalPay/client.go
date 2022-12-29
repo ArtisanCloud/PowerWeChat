@@ -33,7 +33,7 @@ func (comp *Client) AddMerchant(mchID string, merchantName string) (*response2.R
 		"merchant_name": merchantName,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalpay/addmerchant", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalpay/addmerchant", options, nil, nil, result)
 
 	return result, err
 }
@@ -48,7 +48,7 @@ func (comp *Client) GetMerchant(mchID string) (*response.ResponseExternalPayGetM
 		"mch_id": mchID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalpay/getmerchant", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalpay/getmerchant", options, nil, nil, result)
 
 	return result, err
 }
@@ -63,7 +63,7 @@ func (comp *Client) DelMerchant(mchID string) (*response2.ResponseWork, error) {
 		"mch_id": mchID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalpay/delmerchant", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalpay/delmerchant", options, nil, nil, result)
 
 	return result, err
 }
@@ -74,7 +74,7 @@ func (comp *Client) SetMchUseScope(options *request.RequestExternalPaySetMchUseS
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalpay/set_mch_use_scope", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalpay/set_mch_use_scope", options, nil, nil, result)
 
 	return result, err
 }
@@ -85,7 +85,7 @@ func (comp *Client) GetBillList(options *request.RequestExternalPayGetBillList) 
 
 	result := &response.ResponseExternalPayGetBillList{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalpay/get_bill_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalpay/get_bill_list", options, nil, nil, result)
 
 	return result, err
 }

@@ -26,7 +26,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 //
 //	result := &response.ResponseGetDrafts{}
 //
-//	_, err := comp.BaseClient.HttpGet("wxa/gettemplatedraftlist", nil, nil, result)
+//	_, err := comp.BaseClient.HttpGet(ctx,"wxa/gettemplatedraftlist", nil, nil, result)
 //
 //	return result, err
 //

@@ -1,6 +1,7 @@
 package openPlatform
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -333,11 +334,11 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 
 // Return the pre-authorization login page url.
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Authorization_Process_Technical_Description.html
-func (app *OpenPlatform) GetFastRegistrationURL(callbackUrl string, optional *object.StringMap) string {
+func (app *OpenPlatform) GetFastRegistrationURL(ctx *context.Context, callbackUrl string, optional *object.StringMap) string {
 
 	config := app.GetConfig()
 
-	code, _ := app.Base.CreatePreAuthorizationCode()
+	code, _ := app.Base.CreatePreAuthorizationCode(ctx)
 	(*optional)["pre_auth_code"] = code.PreAuthCode
 	queries := object.MergeStringMap(optional, &object.StringMap{
 		"component_appid": config.GetString("app_id", ""),
@@ -349,11 +350,11 @@ func (app *OpenPlatform) GetFastRegistrationURL(callbackUrl string, optional *ob
 }
 
 // Return the pre-authorization login page url (mobile).
-func (app *OpenPlatform) GetMobilePreAuthorizationURL(callbackUrl string, optional *object.StringMap) string {
+func (app *OpenPlatform) GetMobilePreAuthorizationURL(ctx *context.Context, callbackUrl string, optional *object.StringMap) string {
 
 	config := app.GetConfig()
 
-	code, _ := app.Base.CreatePreAuthorizationCode()
+	code, _ := app.Base.CreatePreAuthorizationCode(ctx)
 	(*optional)["pre_auth_code"] = code.PreAuthCode
 	queries := object.MergeStringMap(
 		&object.StringMap{

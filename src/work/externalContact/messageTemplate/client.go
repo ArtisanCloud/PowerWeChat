@@ -1,6 +1,7 @@
 package messageTemplate
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -29,29 +30,29 @@ var required = []string{"content", "title", "url", "pic_media_id", "appid", "pag
 
 // 创建企业群发
 // https://developer.work.weixin.qq.com/document/path/92135
-func (comp *Client) AddMsgTemplate(options *request.RequestAddMsgTemplate) (*response.ResponseAddMessageTemplate, error) {
+func (comp *Client) AddMsgTemplate(ctx *context.Context, options *request.RequestAddMsgTemplate) (*response.ResponseAddMessageTemplate, error) {
 
 	result := &response.ResponseAddMessageTemplate{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/add_msg_template", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/add_msg_template", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取群发记录列表
 // https://developer.work.weixin.qq.com/document/path/93338#获取群发记录列表
-func (comp *Client) GetGroupMsgListV2(options *request.RequestGetGroupMsgListV2) (*response.ResponseGetGroupMsgListV2, error) {
+func (comp *Client) GetGroupMsgListV2(ctx *context.Context, options *request.RequestGetGroupMsgListV2) (*response.ResponseGetGroupMsgListV2, error) {
 
 	result := &response.ResponseGetGroupMsgListV2{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_list_v2", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_groupmsg_list_v2", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取群发成员发送任务列表
 // https://developer.work.weixin.qq.com/document/path/93338#获取群发成员发送任务列表
-func (comp *Client) GetGroupMsgTask(msgID string, limit int, cursor string) (*response.ResponseGetGroupMsgTask, error) {
+func (comp *Client) GetGroupMsgTask(ctx *context.Context, msgID string, limit int, cursor string) (*response.ResponseGetGroupMsgTask, error) {
 
 	result := &response.ResponseGetGroupMsgTask{}
 	options := &object.HashMap{
@@ -59,14 +60,14 @@ func (comp *Client) GetGroupMsgTask(msgID string, limit int, cursor string) (*re
 		"limit":       limit,
 		"msgcursorid": cursor,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_task", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_groupmsg_task", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取企业群发成员执行结果
 // https://developer.work.weixin.qq.com/document/path/93338#获取企业群发成员执行结果
-func (comp *Client) GetGroupMsgSendResult(msgID string, userID string, limit int, cursor string) (*response.ResponseGetGroupMsgSendResult, error) {
+func (comp *Client) GetGroupMsgSendResult(ctx *context.Context, msgID string, userID string, limit int, cursor string) (*response.ResponseGetGroupMsgSendResult, error) {
 
 	result := &response.ResponseGetGroupMsgSendResult{}
 	options := &object.HashMap{
@@ -75,23 +76,23 @@ func (comp *Client) GetGroupMsgSendResult(msgID string, userID string, limit int
 		"limit":       limit,
 		"msgcursorid": cursor,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_groupmsg_send_result", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_groupmsg_send_result", options, nil, nil, result)
 
 	return result, err
 }
 
 // 发送新客户欢迎语
 // https://developer.work.weixin.qq.com/document/path/92599
-func (comp *Client) SendWelcomeMsg(options *request.RequestSendWelcomeMsg) (*response2.ResponseWork, error) {
+func (comp *Client) SendWelcomeMsg(ctx *context.Context, options *request.RequestSendWelcomeMsg) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/send_welcome_msg", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/send_welcome_msg", options, nil, nil, result)
 
 	return result, err
 }
 
-func (comp *Client) formatMessage(data *object.HashMap) (*object.HashMap, error) {
+func (comp *Client) formatMessage(ctx *context.Context, data *object.HashMap) (*object.HashMap, error) {
 	params := *data
 
 	if params["text"] != nil {

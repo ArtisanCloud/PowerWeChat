@@ -1,6 +1,7 @@
 package moment
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/moment/request"
@@ -23,18 +24,18 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取企业全部的发表列表
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentList(params *request.RequestGetMomentList) (*response.ResponseGetMomentList, error) {
+func (comp *Client) GetMomentList(ctx *context.Context, params *request.RequestGetMomentList) (*response.ResponseGetMomentList, error) {
 
 	result := &response.ResponseGetMomentList{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_list", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_moment_list", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客户朋友圈企业发表的列表
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentTask(momentID string, cursor string, limit int) (*response.ResponseMomentGetMomentTask, error) {
+func (comp *Client) GetMomentTask(ctx *context.Context, momentID string, cursor string, limit int) (*response.ResponseMomentGetMomentTask, error) {
 
 	result := &response.ResponseMomentGetMomentTask{}
 
@@ -44,14 +45,14 @@ func (comp *Client) GetMomentTask(momentID string, cursor string, limit int) (*r
 		"limit":     limit,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_task", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_moment_task", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客户朋友圈发表时选择的可见范围
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentCustomerList(momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentCustomerList, error) {
+func (comp *Client) GetMomentCustomerList(ctx *context.Context, momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentCustomerList, error) {
 
 	result := &response.ResponseMomentGetMomentCustomerList{}
 
@@ -62,14 +63,14 @@ func (comp *Client) GetMomentCustomerList(momentID string, userID string, cursor
 		"limit":     limit,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_customer_list", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_moment_customer_list", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客户朋友圈发表后的可见客户列表
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentSendResult(momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentSendResult, error) {
+func (comp *Client) GetMomentSendResult(ctx *context.Context, momentID string, userID string, cursor string, limit int) (*response.ResponseMomentGetMomentSendResult, error) {
 
 	result := &response.ResponseMomentGetMomentSendResult{}
 
@@ -80,14 +81,14 @@ func (comp *Client) GetMomentSendResult(momentID string, userID string, cursor s
 		"limit":     limit,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_send_result", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_moment_send_result", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取客户朋友圈的互动数据
 // https://developer.work.weixin.qq.com/document/path/93333
-func (comp *Client) GetMomentComments(momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
+func (comp *Client) GetMomentComments(ctx *context.Context, momentID string, userID string) (*response.ResponseMomentGetMomentComments, error) {
 
 	result := &response.ResponseMomentGetMomentComments{}
 
@@ -96,7 +97,7 @@ func (comp *Client) GetMomentComments(momentID string, userID string) (*response
 		"userid":    userID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/externalcontact/get_moment_comments", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_moment_comments", options, nil, nil, result)
 
 	return result, err
 }

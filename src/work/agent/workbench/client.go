@@ -1,6 +1,7 @@
 package workbench
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -23,21 +24,21 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 }
 
 // https://developer.work.weixin.qq.com/document/path/90205
-func (comp *Client) SetWorkbenchTemplate(data *request.RequestSetWorkbenchTemplate) (*response.ResponseAgentSetWorkbenchTemplate, error) {
+func (comp *Client) SetWorkbenchTemplate(ctx *context.Context, data *request.RequestSetWorkbenchTemplate) (*response.ResponseAgentSetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentSetWorkbenchTemplate{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/agent/set_workbench_template", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/agent/set_workbench_template", data, nil, nil, result)
 
 	return result, err
 }
 
 // https://developer.work.weixin.qq.com/document/path/90206
-func (comp Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
+func (comp Client) GetWorkbenchTemplate(ctx *context.Context, agentID int) (*response.ResponseAgentGetWorkbenchTemplate, error) {
 
 	result := &response.ResponseAgentGetWorkbenchTemplate{}
 
-	_, err := comp.BaseClient.HttpGet("cgi-bin/agent/get_workbench_template", &object.StringMap{
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/agent/get_workbench_template", &object.StringMap{
 		"agentid": fmt.Sprintf("%d", agentID),
 	}, nil, result)
 
@@ -45,7 +46,7 @@ func (comp Client) GetWorkbenchTemplate(agentID int) (*response.ResponseAgentGet
 }
 
 // https://developer.work.weixin.qq.com/document/path/92535
-func (comp Client) SetWorkbenchData(data *request.RequestSetWorkBenchData) (*response.ResponseAgentSetWorkbenchData, error) {
+func (comp Client) SetWorkbenchData(ctx *context.Context, data *request.RequestSetWorkBenchData) (*response.ResponseAgentSetWorkbenchData, error) {
 
 	result := &response.ResponseAgentSetWorkbenchData{}
 
@@ -53,7 +54,7 @@ func (comp Client) SetWorkbenchData(data *request.RequestSetWorkBenchData) (*res
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.BaseClient.HttpPost("cgi-bin/agent/set_workbench_data", params, nil, result)
+	_, err = comp.BaseClient.HttpPost(ctx, "cgi-bin/agent/set_workbench_data", params, nil, result)
 
 	return result, err
 }

@@ -1,6 +1,7 @@
 package guide
 
 import (
+	"context"
 	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -15,12 +16,12 @@ type Client struct {
 
 // 为服务号添加顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.addGuideAcct.html
-func (comp *Client) CreateAdviser(guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateAdviser(ctx *context.Context, guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -31,35 +32,35 @@ func (comp *Client) CreateAdviser(guideAccount string, guideOpenID string, guide
 	if guideNickname != "" {
 		(*params)["guide_nickname"] = guideNickname
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguideacct", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取顾问信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideAcct.html
-func (comp *Client) GetAdviser(guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdviser, error) {
+func (comp *Client) GetAdviser(ctx *context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdviser, error) {
 
 	result := &response.ResponseGuideGetAdviser{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguideacct", params, nil, nil, result)
 
 	return result, err
 }
 
 // 修改顾问的昵称或头像
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.updateGuideAcct.html
-func (comp *Client) UpdateAdviser(guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) UpdateAdviser(ctx *context.Context, guideAccount string, guideOpenID string, guideHeadImgURL string, guideNickname string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -70,70 +71,70 @@ func (comp *Client) UpdateAdviser(guideAccount string, guideOpenID string, guide
 	if guideNickname != "" {
 		(*params)["guide_nickname"] = guideNickname
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/updateguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/updateguideacct", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideAcct.html
-func (comp *Client) DeleteAdviser(guideAccount string, guideOpenID string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteAdviser(ctx *context.Context, guideAccount string, guideOpenID string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/delguideacct", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguideacct", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取服务号顾问列表
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideAcct.html
-func (comp *Client) GetAdvisers(guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdvisers, error) {
+func (comp *Client) GetAdvisers(ctx *context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetAdvisers, error) {
 
 	result := &response.ResponseGuideGetAdvisers{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideacctlist", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguideacctlist", params, nil, nil, result)
 
 	return result, err
 }
 
 // 生成顾问二维码
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideAcct.html
-func (comp *Client) CreateQrCode(guideAccount string, guideOpenID string, qrCodeInfo string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateQrCode(ctx *context.Context, guideAccount string, guideOpenID string, qrCodeInfo string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 	if qrCodeInfo != "" {
 		(*params)["qrcode_info"] = qrCodeInfo
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/guidecreateqrcode", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/guidecreateqrcode", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取顾问聊天记录
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideBuyerChatRecord.html
-func (comp *Client) GetBuyerChatRecords(guideAccount string, guideOpenID string, openID string, beginTime string, endTime string) (*response.ResponseGuideGetChatRecords, error) {
+func (comp *Client) GetBuyerChatRecords(ctx *context.Context, guideAccount string, guideOpenID string, openID string, beginTime string, endTime string) (*response.ResponseGuideGetChatRecords, error) {
 
 	result := &response.ResponseGuideGetChatRecords{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -146,14 +147,14 @@ func (comp *Client) GetBuyerChatRecords(guideAccount string, guideOpenID string,
 	if endTime != "" {
 		(*params)["end_time"] = endTime
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerchatrecord", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidebuyerchatrecord", params, nil, nil, result)
 
 	return result, err
 }
 
 // 设置快捷回复与关注自动回复
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.setGuideConfig.html
-func (comp *Client) SetConfig(guideAccount string, guideOpenID string, isDelete bool,
+func (comp *Client) SetConfig(ctx *context.Context, guideAccount string, guideOpenID string, isDelete bool,
 	fastReplyListArray *request.FastReplyList, guideAutoReply *request.AutoReply, guideAutoReplyPlus *request.AutoReply) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
@@ -161,7 +162,7 @@ func (comp *Client) SetConfig(guideAccount string, guideOpenID string, isDelete 
 	params := &object.HashMap{
 		"is_delete": isDelete,
 	}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -174,30 +175,30 @@ func (comp *Client) SetConfig(guideAccount string, guideOpenID string, isDelete 
 	if guideAutoReplyPlus != nil {
 		(*params)["guide_auto_reply_plus"] = guideAutoReplyPlus
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/setguideconfig", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/setguideconfig", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取快捷回复与关注自动回复
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideConfig.html
-func (comp *Client) GetConfig(guideAccount string, guideOpenID string) (*response.ResponseGuideGetConfig, error) {
+func (comp *Client) GetConfig(ctx *context.Context, guideAccount string, guideOpenID string) (*response.ResponseGuideGetConfig, error) {
 
 	result := &response.ResponseGuideGetConfig{}
 
 	params := &object.HashMap{}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideconfig", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguideconfig", params, nil, nil, result)
 
 	return result, err
 }
 
 // 设置离线自动回复与敏感词
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.setGuideConfig.html
-func (comp *Client) SetAdviserConfig(guideAccount string, guideOpenID string, isDelete bool,
+func (comp *Client) SetAdviserConfig(ctx *context.Context, guideAccount string, guideOpenID string, isDelete bool,
 	blackKeyword *request.BlackKeyword, guideAutoReply *request.AutoReply) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
@@ -205,7 +206,7 @@ func (comp *Client) SetAdviserConfig(guideAccount string, guideOpenID string, is
 	params := &object.HashMap{
 		"is_delete": isDelete,
 	}
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -216,25 +217,25 @@ func (comp *Client) SetAdviserConfig(guideAccount string, guideOpenID string, is
 		(*params)["guide_auto_reply"] = guideAutoReply
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/setguideacctconfig", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/setguideacctconfig", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取离线自动回复与敏感词
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideAcctConfig.html
-func (comp *Client) GetAdviserConfig() (*response.ResponseGuideGetAdviserConfig, error) {
+func (comp *Client) GetAdviserConfig(ctx *context.Context) (*response.ResponseGuideGetAdviserConfig, error) {
 
 	result := &response.ResponseGuideGetAdviserConfig{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideacctconfig", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguideacctconfig", nil, nil, nil, result)
 
 	return result, err
 }
 
 // 允许微信用户复制小程序页面路径
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.pushShowWxaPathMenu.html
-func (comp *Client) AllowCopyMiniAppPath(wxaAppID string, wxUsername string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) AllowCopyMiniAppPath(ctx *context.Context, wxaAppID string, wxUsername string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -242,12 +243,12 @@ func (comp *Client) AllowCopyMiniAppPath(wxaAppID string, wxUsername string) (*r
 		"wxa_appid":   wxaAppID,
 		"wx_username": wxUsername,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/pushshowwxapathmenu", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/pushshowwxapathmenu", params, nil, nil, result)
 
 	return result, err
 }
 
-func (comp *Client) SelectAccountAndOpenID(params *object.HashMap, guideAccount string, guideOpenID string) (*object.HashMap, error) {
+func (comp *Client) SelectAccountAndOpenID(ctx *context.Context, params *object.HashMap, guideAccount string, guideOpenID string) (*object.HashMap, error) {
 
 	if params == nil {
 		params = &object.HashMap{}
@@ -269,46 +270,46 @@ func (comp *Client) SelectAccountAndOpenID(params *object.HashMap, guideAccount 
 
 // 新建顾问分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.newGuideGroup.html
-func (comp *Client) CreateGroup(groupName string) (*response.ResponseGuideCreateGroup, error) {
+func (comp *Client) CreateGroup(ctx *context.Context, groupName string) (*response.ResponseGuideCreateGroup, error) {
 
 	result := &response.ResponseGuideCreateGroup{}
 
 	params := &object.HashMap{
 		"group_name": groupName,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/newguidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/newguidegroup", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取服务号下所有顾问分组的列表
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGuideGroupList.html
-func (comp *Client) GetGuideGroups() (*response.ResponseGuideGetGroupList, error) {
+func (comp *Client) GetGuideGroups(ctx *context.Context) (*response.ResponseGuideGetGroupList, error) {
 
 	result := &response.ResponseGuideGetGroupList{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidegrouplist", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidegrouplist", nil, nil, nil, result)
 
 	return result, err
 }
 
 // 获取指定顾问分组信息，以及分组内顾问信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGroupInfo.html
-func (comp *Client) GetGroups(groupName string) (*response.ResponseGuideGetGroups, error) {
+func (comp *Client) GetGroups(ctx *context.Context, groupName string) (*response.ResponseGuideGetGroups, error) {
 
 	result := &response.ResponseGuideGetGroups{}
 
 	params := &object.HashMap{
 		"group_name": groupName,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getgroupinfo", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getgroupinfo", params, nil, nil, result)
 
 	return result, err
 }
 
 // 分组内添加顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.addGuide2GuideGroup.html
-func (comp *Client) AddGroupGuide(groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) AddGroupGuide(ctx *context.Context, groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -316,14 +317,14 @@ func (comp *Client) AddGroupGuide(groupID int, guideAccount string) (*response2.
 		"group_id":      groupID,
 		"guide_account": guideAccount,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/addguide2guidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguide2guidegroup", params, nil, nil, result)
 
 	return result, err
 }
 
 // 分组内删除顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuide2GuideGroup.html
-func (comp *Client) DeleteGroupGuide(groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteGroupGuide(ctx *context.Context, groupID int, guideAccount string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -331,42 +332,42 @@ func (comp *Client) DeleteGroupGuide(groupID int, guideAccount string) (*respons
 		"group_id":      groupID,
 		"guide_account": guideAccount,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguide2guidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguide2guidegroup", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取顾问所在分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.getGroupByGuide.html
-func (comp *Client) GetGuideGroup(guideAccount string) (*response.ResponseGuideGetGuideGroup, error) {
+func (comp *Client) GetGuideGroup(ctx *context.Context, guideAccount string) (*response.ResponseGuideGetGuideGroup, error) {
 
 	result := &response.ResponseGuideGetGuideGroup{}
 
 	params := &object.HashMap{
 		"guide_account": guideAccount,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getgroupbyguide", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getgroupbyguide", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除指定顾问分组
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/guide-account/shopping-guide.delGuideGroup.html
-func (comp *Client) DeleteGroup(groupID int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteGroup(ctx *context.Context, groupID int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
 	params := &object.HashMap{
 		"group_id": groupID,
 	}
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidegroup", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguidegroup", params, nil, nil, result)
 
 	return result, err
 }
 
 // 为顾问分配客户
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.addGuideBuyerRelation.html
-func (comp *Client) CreateBuyerRelation(guideAccount string, guideOpenID string, buyerList *request.BuyerList) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) CreateBuyerRelation(ctx *context.Context, guideAccount string, guideOpenID string, buyerList *request.BuyerList) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -374,19 +375,19 @@ func (comp *Client) CreateBuyerRelation(guideAccount string, guideOpenID string,
 		"buyer_list": buyerList,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
 
 // 为顾问移除客户
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.delGuideBuyerRelation.html
-func (comp *Client) DeleteBuyerRelation(guideAccount string, guideOpenID string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) DeleteBuyerRelation(ctx *context.Context, guideAccount string, guideOpenID string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -394,19 +395,19 @@ func (comp *Client) DeleteBuyerRelation(guideAccount string, guideOpenID string,
 		"openid_list": openIDList,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取顾问的客户列表
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.getGuideBuyerRelationList.html
-func (comp *Client) GetBuyerRelations(guideAccount string, guideOpenID string, page int, num int) (*response.ResponseGuideBuyerRelationList, error) {
+func (comp *Client) GetBuyerRelations(ctx *context.Context, guideAccount string, guideOpenID string, page int, num int) (*response.ResponseGuideBuyerRelationList, error) {
 
 	result := &response.ResponseGuideBuyerRelationList{}
 
@@ -415,19 +416,19 @@ func (comp *Client) GetBuyerRelations(guideAccount string, guideOpenID string, p
 		"num":  num,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerrelationlist", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidebuyerrelationlist", params, nil, nil, result)
 
 	return result, err
 }
 
 // 为客户更换顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.rebindGuideAcctForBuyer.html
-func (comp *Client) RebindBuyerGuide(oldGuideTarget string, newGuideTarget string, openidList []string, useTargetOpenID bool) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) RebindBuyerGuide(ctx *context.Context, oldGuideTarget string, newGuideTarget string, openidList []string, useTargetOpenID bool) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -443,14 +444,14 @@ func (comp *Client) RebindBuyerGuide(oldGuideTarget string, newGuideTarget strin
 		(*params)["new_guide_account"] = newGuideTarget
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/rebindguideacctforbuyer", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/rebindguideacctforbuyer", params, nil, nil, result)
 
 	return result, err
 }
 
 // 修改客户昵称
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.updateGuideBuyerRelation.html
-func (comp *Client) UpdateBuyerRelation(guideAccount string, guideOpenID string, openID string, nickName string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) UpdateBuyerRelation(ctx *context.Context, guideAccount string, guideOpenID string, openID string, nickName string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -459,19 +460,19 @@ func (comp *Client) UpdateBuyerRelation(guideAccount string, guideOpenID string,
 		"buyer_nickname": nickName,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/updateguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/updateguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
 
 // 查询客户所属顾问
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.getGuideBuyerRelationByBuyer.html
-func (comp *Client) GetBuyerRelation(openID string) (*response.ResponseGuideGetBuyerRelation, error) {
+func (comp *Client) GetBuyerRelation(ctx *context.Context, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
 
 	result := &response.ResponseGuideGetBuyerRelation{}
 
@@ -479,14 +480,14 @@ func (comp *Client) GetBuyerRelation(openID string) (*response.ResponseGuideGetB
 		"openid": openID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerrelationbybuyer", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidebuyerrelationbybuyer", params, nil, nil, result)
 
 	return result, err
 }
 
 // 查询指定顾问和客户的关系
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/buyer-account/shopping-guide.getGuideBuyerRelation.html
-func (comp *Client) GetBuyerRelationByGuide(guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
+func (comp *Client) GetBuyerRelationByGuide(ctx *context.Context, guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerRelation, error) {
 
 	result := &response.ResponseGuideGetBuyerRelation{}
 
@@ -494,19 +495,19 @@ func (comp *Client) GetBuyerRelationByGuide(guideAccount string, guideOpenID str
 		"openid": openID,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerrelation", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidebuyerrelation", params, nil, nil, result)
 
 	return result, err
 }
 
 // 新建可查询的标签类型
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.newGuideTagOption.html
-func (comp *Client) NewTagOption(tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) NewTagOption(ctx *context.Context, tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -515,14 +516,14 @@ func (comp *Client) NewTagOption(tagName string, tagValues []string) (*response2
 		"tag_values": tagValues,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/newguidetagoption", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/newguidetagoption", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除指定标签类型
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.delguidetagoption.html
-func (comp *Client) DeleteTagOption(tagName string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteTagOption(ctx *context.Context, tagName string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -530,14 +531,14 @@ func (comp *Client) DeleteTagOption(tagName string) (*response2.ResponseOfficial
 		"tag_name": tagName,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidetagoption", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguidetagoption", params, nil, nil, result)
 
 	return result, err
 }
 
 // 为标签添加可选值
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.addGuideTagOption.html
-func (comp *Client) CreateTagOption(tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateTagOption(ctx *context.Context, tagName string, tagValues []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -546,25 +547,25 @@ func (comp *Client) CreateTagOption(tagName string, tagValues []string) (*respon
 		"tag_values": tagValues,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidetagoption", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguidetagoption", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取标签和可选值
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.getGuideTagOption.html
-func (comp *Client) GetTagOption(tagName string, tagValues []string) (*response.ResponseGuideTagOption, error) {
+func (comp *Client) GetTagOption(ctx *context.Context, tagName string, tagValues []string) (*response.ResponseGuideTagOption, error) {
 
 	result := &response.ResponseGuideTagOption{}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidetagoption", nil, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidetagoption", nil, nil, nil, result)
 
 	return result, err
 }
 
 // 为客户设置标签
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.addGuideBuyerTag.html
-func (comp *Client) SetBuyersTag(guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) SetBuyersTag(ctx *context.Context, guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -573,19 +574,19 @@ func (comp *Client) SetBuyersTag(guideAccount string, guideOpenID string, openID
 		"openid_list": openIDList,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
 
 	return result, err
 }
 
 // 查询客户标签
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.getGuideBuyerTag.html
-func (comp *Client) GetBuyerTags(guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideGetBuyerTags, error) {
+func (comp *Client) GetBuyerTags(ctx *context.Context, guideAccount string, guideOpenID string, openIDList []string, tagValue string) (*response.ResponseGuideGetBuyerTags, error) {
 
 	result := &response.ResponseGuideGetBuyerTags{}
 
@@ -594,25 +595,25 @@ func (comp *Client) GetBuyerTags(guideAccount string, guideOpenID string, openID
 		"openid_list": openIDList,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguidebuyertag", params, nil, nil, result)
 
 	return result, err
 }
 
 // 根据标签值筛选客户
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.queryGuideBuyerByTag.html
-func (comp *Client) GetBuyerByTag(guideAccount string, guideOpenID string, pushCount int, tagValues []string) (*response.ResponseGuideGetBuyerByTag, error) {
+func (comp *Client) GetBuyerByTag(ctx *context.Context, guideAccount string, guideOpenID string, pushCount int, tagValues []string) (*response.ResponseGuideGetBuyerByTag, error) {
 
 	result := &response.ResponseGuideGetBuyerByTag{}
 
 	params := &object.HashMap{}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -624,14 +625,14 @@ func (comp *Client) GetBuyerByTag(guideAccount string, guideOpenID string, pushC
 		(*params)["tag_values"] = tagValues
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/queryguidebuyerbytag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/queryguidebuyerbytag", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除客户标签
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.delGuideBuyerTag.html
-func (comp *Client) DeleteBuyerTag(guideAccount string, guideOpenID string, tagValue string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
+func (comp *Client) DeleteBuyerTag(ctx *context.Context, guideAccount string, guideOpenID string, tagValue string, openIDList []string) (*response.ResponseGuideBuyerRelation, error) {
 
 	result := &response.ResponseGuideBuyerRelation{}
 
@@ -639,7 +640,7 @@ func (comp *Client) DeleteBuyerTag(guideAccount string, guideOpenID string, tagV
 		"tag_value": tagValue,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
@@ -648,14 +649,14 @@ func (comp *Client) DeleteBuyerTag(guideAccount string, guideOpenID string, tagV
 		(*params)["openid_list"] = openIDList
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidebuyertag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguidebuyertag", params, nil, nil, result)
 
 	return result, err
 }
 
 // 设置自定义客户信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.addGuideBuyerDisplayTag.html
-func (comp *Client) SetBuyerDisplayTags(guideAccount string, guideOpenID string, openID string, displayTagList []string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) SetBuyerDisplayTags(ctx *context.Context, guideAccount string, guideOpenID string, openID string, displayTagList []string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -664,19 +665,19 @@ func (comp *Client) SetBuyerDisplayTags(guideAccount string, guideOpenID string,
 		"display_tag_list": displayTagList,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/addguidebuyerdisplaytag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/addguidebuyerdisplaytag", params, nil, nil, result)
 
 	return result, err
 }
 
 // 获取自定义客户信息
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/tag-account/shopping-guide.getGuideBuyerDisplayTag.html
-func (comp *Client) GetBuyerDisplayTags(guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerDisplayTags, error) {
+func (comp *Client) GetBuyerDisplayTags(ctx *context.Context, guideAccount string, guideOpenID string, openID string) (*response.ResponseGuideGetBuyerDisplayTags, error) {
 
 	result := &response.ResponseGuideGetBuyerDisplayTags{}
 
@@ -684,19 +685,19 @@ func (comp *Client) GetBuyerDisplayTags(guideAccount string, guideOpenID string,
 		"openid": openID,
 	}
 
-	params, err := comp.SelectAccountAndOpenID(params, guideAccount, guideOpenID)
+	params, err := comp.SelectAccountAndOpenID(ctx, params, guideAccount, guideOpenID)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidebuyerdisplaytag", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidebuyerdisplaytag", params, nil, nil, result)
 
 	return result, err
 }
 
 // 添加小程序卡片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.setGuideCardMaterial.html
-func (comp *Client) CreateCardMaterial(mediaID string, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateCardMaterial(ctx *context.Context, mediaID string, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -708,14 +709,14 @@ func (comp *Client) CreateCardMaterial(mediaID string, title string, path string
 		"appid":    appID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/setguidecardmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/setguidecardmaterial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 查询小程序卡片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.getGuideCardMaterial.html
-func (comp *Client) GetCardMaterial(mType int) (*response.ResponseGuideGetCardMaterial, error) {
+func (comp *Client) GetCardMaterial(ctx *context.Context, mType int) (*response.ResponseGuideGetCardMaterial, error) {
 
 	result := &response.ResponseGuideGetCardMaterial{}
 
@@ -723,14 +724,14 @@ func (comp *Client) GetCardMaterial(mType int) (*response.ResponseGuideGetCardMa
 		"type": mType,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguidecardmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguidecardmaterial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除小程序卡片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.delGuideCardMaterial.html
-func (comp *Client) DeleteCardMaterial(title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteCardMaterial(ctx *context.Context, title string, path string, appID string, mType int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -741,14 +742,14 @@ func (comp *Client) DeleteCardMaterial(title string, path string, appID string, 
 		"appid": appID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidecardmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguidecardmaterial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 添加图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.setGuideImageMaterial.html
-func (comp *Client) CreateImageMaterial(mediaID string, mType int) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateImageMaterial(ctx *context.Context, mediaID string, mType int) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -757,14 +758,14 @@ func (comp *Client) CreateImageMaterial(mediaID string, mType int) (*response2.R
 		"type":     mType,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/setguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/setguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 查询图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.getGuideImageMaterial.html
-func (comp *Client) GetImageMaterial(mType int) (*response.ResponseGuideGetImageMaterial, error) {
+func (comp *Client) GetImageMaterial(ctx *context.Context, mType int) (*response.ResponseGuideGetImageMaterial, error) {
 
 	result := &response.ResponseGuideGetImageMaterial{}
 
@@ -772,14 +773,14 @@ func (comp *Client) GetImageMaterial(mType int) (*response.ResponseGuideGetImage
 		"type": mType,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除图片素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.delGuideImageMaterial.html
-func (comp *Client) DeleteImageMaterial(mType int, picURL string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteImageMaterial(ctx *context.Context, mType int, picURL string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -788,14 +789,14 @@ func (comp *Client) DeleteImageMaterial(mType int, picURL string) (*response2.Re
 		"picurl": picURL,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 添加文字素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.setGuideWordMaterial.html
-func (comp *Client) CreateWordMaterial(mType int, word string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) CreateWordMaterial(ctx *context.Context, mType int, word string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -804,14 +805,14 @@ func (comp *Client) CreateWordMaterial(mType int, word string) (*response2.Respo
 		"word": word,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/setguidewordmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/setguidewordmaterial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 查询文字素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.getGuideWordMaterial.html
-func (comp *Client) GetWordMaterial(mType int, start int, num int) (*response.ResponseGuideGetWordMaterial, error) {
+func (comp *Client) GetWordMaterial(ctx *context.Context, mType int, start int, num int) (*response.ResponseGuideGetWordMaterial, error) {
 
 	result := &response.ResponseGuideGetWordMaterial{}
 
@@ -821,14 +822,14 @@ func (comp *Client) GetWordMaterial(mType int, start int, num int) (*response.Re
 		"num":   num,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/getguideimagematerial", params, nil, nil, result)
 
 	return result, err
 }
 
 // 删除文字素材
 // https://developers.weixin.qq.com/doc/offiaccount/Shopping_Guide/model-account/shopping-guide.delGuideWordMaterial.html
-func (comp *Client) DeleteWordMaterial(mType int, word string) (*response2.ResponseOfficialAccount, error) {
+func (comp *Client) DeleteWordMaterial(ctx *context.Context, mType int, word string) (*response2.ResponseOfficialAccount, error) {
 
 	result := &response2.ResponseOfficialAccount{}
 
@@ -837,7 +838,7 @@ func (comp *Client) DeleteWordMaterial(mType int, word string) (*response2.Respo
 		"word": word,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/guide/delguidewordmaterial", params, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/guide/delguidewordmaterial", params, nil, nil, result)
 
 	return result, err
 }

@@ -1,6 +1,7 @@
 package profitSharing
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
@@ -24,7 +25,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Share Orders.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
-func (comp *Client) Share(param *request.RequestShare) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) Share(ctx *context.Context, param *request.RequestShare) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
@@ -36,14 +37,14 @@ func (comp *Client) Share(param *request.RequestShare) (*response.ResponseProfit
 	options, err := object.StructToHashMap(param)
 
 	endpoint := comp.Wrap("/v3/profitsharing/orders")
-	_, err = comp.Request(endpoint, nil, "POST", options, false, nil, result)
+	_, err = comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
 
 	return result, err
 }
 
 // Query Profit Sharing Result.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
-func (comp *Client) Query(transactionID string, outOrderNO string) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) Query(ctx *context.Context, transactionID string, outOrderNO string) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
@@ -52,14 +53,14 @@ func (comp *Client) Query(transactionID string, outOrderNO string) (*response.Re
 	}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/orders/%s", outOrderNO))
-	_, err := comp.Request(endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
 
 	return result, err
 }
 
 // Share Return.
 // https://pay.weixin.qq.com/wiki/doc/api/allocation.php?chapter=27_7&index=8
-func (comp *Client) Return(data *request.RequestShareReturn) (*response.ResponseProfitSharingReturn, error) {
+func (comp *Client) Return(ctx *context.Context, data *request.RequestShareReturn) (*response.ResponseProfitSharingReturn, error) {
 
 	result := &response.ResponseProfitSharingReturn{}
 
@@ -77,7 +78,7 @@ func (comp *Client) Return(data *request.RequestShareReturn) (*response.Response
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/secapi/pay/profitsharingreturn")
-	_, err = comp.SafeRequest(endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -85,7 +86,7 @@ func (comp *Client) Return(data *request.RequestShareReturn) (*response.Response
 // Query Return Orders Result.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
 
-func (comp *Client) QueryReturn(outOrderNO string, outReturnNO string) (*response.ResponseProfitSharingReturnOrder, error) {
+func (comp *Client) QueryReturn(ctx *context.Context, outOrderNO string, outReturnNO string) (*response.ResponseProfitSharingReturnOrder, error) {
 
 	result := &response.ResponseProfitSharingReturnOrder{}
 
@@ -94,7 +95,7 @@ func (comp *Client) QueryReturn(outOrderNO string, outReturnNO string) (*respons
 	}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/return-orders/%s", outReturnNO))
-	_, err := comp.Request(endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
 
 	return result, err
 }
@@ -102,7 +103,7 @@ func (comp *Client) QueryReturn(outOrderNO string, outReturnNO string) (*respons
 // UnFreeze Orders.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_5.shtml
 
-func (comp *Client) UnfreezeOrders(transactionID string, outOrderNO string, description string) (*response.ResponseProfitSharingOrder, error) {
+func (comp *Client) UnfreezeOrders(ctx *context.Context, transactionID string, outOrderNO string, description string) (*response.ResponseProfitSharingOrder, error) {
 
 	result := &response.ResponseProfitSharingOrder{}
 
@@ -113,7 +114,7 @@ func (comp *Client) UnfreezeOrders(transactionID string, outOrderNO string, desc
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/orders/unfreeze")
-	_, err := comp.Request(endpoint, nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
 
 	return result, err
 }
@@ -121,12 +122,12 @@ func (comp *Client) UnfreezeOrders(transactionID string, outOrderNO string, desc
 // Query Transaction Amounts.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_6.shtml
 
-func (comp *Client) QueryTransactions(transactionID string) (*response.ResponseProfitSharingTransaction, error) {
+func (comp *Client) QueryTransactions(ctx *context.Context, transactionID string) (*response.ResponseProfitSharingTransaction, error) {
 
 	result := &response.ResponseProfitSharingTransaction{}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/transactions/%s/amounts", transactionID))
-	_, err := comp.Request(endpoint, nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, "GET", nil, false, nil, result)
 
 	return result, err
 }
@@ -135,6 +136,7 @@ func (comp *Client) QueryTransactions(transactionID string) (*response.ResponseP
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
 
 func (comp *Client) AddReceiver(
+	ctx *context.Context,
 	receiverType string, account string, name string,
 	relationType string, customRelation string) (*response.ResponseProfitSharingAddReceiver, error) {
 
@@ -149,7 +151,7 @@ func (comp *Client) AddReceiver(
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/receivers/add")
-	_, err := comp.Request(endpoint, nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
 
 	return result, err
 }
@@ -157,7 +159,7 @@ func (comp *Client) AddReceiver(
 // Delete Receiver.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml
 
-func (comp *Client) DeleteReceiver(receiverType string, account string) (*response.ResponseProfitSharingDeleteReceiver, error) {
+func (comp *Client) DeleteReceiver(ctx *context.Context, receiverType string, account string) (*response.ResponseProfitSharingDeleteReceiver, error) {
 
 	result := &response.ResponseProfitSharingDeleteReceiver{}
 
@@ -169,7 +171,7 @@ func (comp *Client) DeleteReceiver(receiverType string, account string) (*respon
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/receivers/delete")
-	_, err := comp.Request(endpoint, nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
 
 	return result, err
 }
@@ -177,7 +179,7 @@ func (comp *Client) DeleteReceiver(receiverType string, account string) (*respon
 // Get Bills.
 // https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_11.shtml
 
-func (comp *Client) GetBills(subMchID string, billDate string, tarType string) (*response.ResponseProfitSharingGetBills, error) {
+func (comp *Client) GetBills(ctx *context.Context, subMchID string, billDate string, tarType string) (*response.ResponseProfitSharingGetBills, error) {
 
 	result := &response.ResponseProfitSharingGetBills{}
 
@@ -188,7 +190,7 @@ func (comp *Client) GetBills(subMchID string, billDate string, tarType string) (
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/bills")
-	_, err := comp.Request(endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
 
 	return result, err
 }

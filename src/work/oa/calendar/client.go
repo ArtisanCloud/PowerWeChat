@@ -1,6 +1,7 @@
 package calendar
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -24,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 创建日历
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Add(calendar *power.HashMap, agentID int) (*response.ResponseCalendarAdd, error) {
+func (comp *Client) Add(ctx *context.Context, calendar *power.HashMap, agentID int) (*response.ResponseCalendarAdd, error) {
 
 	result := &response.ResponseCalendarAdd{}
 
@@ -33,14 +34,14 @@ func (comp *Client) Add(calendar *power.HashMap, agentID int) (*response.Respons
 		"agentid":  agentID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/add", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/calendar/add", options, nil, nil, result)
 
 	return result, err
 }
 
 // 更新日历
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Update(calendar *power.HashMap) (*response2.ResponseWork, error) {
+func (comp *Client) Update(ctx *context.Context, calendar *power.HashMap) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -48,14 +49,14 @@ func (comp *Client) Update(calendar *power.HashMap) (*response2.ResponseWork, er
 		"calendar": calendar,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/update", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/calendar/update", options, nil, nil, result)
 
 	return result, err
 }
 
 // 获取日历详情
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Get(calIDList []string) (*response.ResponseCalendarGet, error) {
+func (comp *Client) Get(ctx *context.Context, calIDList []string) (*response.ResponseCalendarGet, error) {
 
 	result := &response.ResponseCalendarGet{}
 
@@ -63,14 +64,14 @@ func (comp *Client) Get(calIDList []string) (*response.ResponseCalendarGet, erro
 		"cal_id_list": calIDList,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/get", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/calendar/get", options, nil, nil, result)
 
 	return result, err
 }
 
 // 删除日历
 // https://developer.work.weixin.qq.com/document/path/93647
-func (comp *Client) Del(calID string) (*response2.ResponseWork, error) {
+func (comp *Client) Del(ctx *context.Context, calID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -78,7 +79,7 @@ func (comp *Client) Del(calID string) (*response2.ResponseWork, error) {
 		"cal_id": calID,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("cgi-bin/oa/calendar/del", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/calendar/del", options, nil, nil, result)
 
 	return result, err
 }

@@ -1,6 +1,7 @@
 package refund
 
 import (
+	"context"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
@@ -44,13 +45,13 @@ func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRe
 // Query Refund.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_10.shtml
 
-func (comp *Client) Query(refundOutNO string) (*response.ResponseRefund, error) {
+func (comp *Client) Query(ctx *context.Context, refundOutNO string) (*response.ResponseRefund, error) {
 
 	result := &response.ResponseRefund{}
 
 	endpoint := fmt.Sprintf("/v3/refund/domestic/refunds/%s", refundOutNO)
 	endpoint = comp.Wrap(endpoint)
-	_, err := comp.Request(endpoint, nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, "GET", nil, false, nil, result)
 
 	return result, err
 }

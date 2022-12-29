@@ -1,6 +1,7 @@
 package base
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/base/request"
@@ -12,7 +13,7 @@ type Client struct {
 }
 
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.getPaidUnionId.html
-func (comp *Client) GetPaidUnionID(data *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
+func (comp *Client) GetPaidUnionID(ctx *context.Context, data *request.RequestGetPaidUnionID) (*response.ResponseAuthGetPaidUnionID, error) {
 
 	result := &response.ResponseAuthGetPaidUnionID{}
 
@@ -20,14 +21,14 @@ func (comp *Client) GetPaidUnionID(data *request.RequestGetPaidUnionID) (*respon
 	if err != nil {
 		return nil, err
 	}
-	_, err = comp.BaseClient.HttpGet("wxa/getpaidunionid", params, nil, result)
+	_, err = comp.BaseClient.HttpGet(ctx, "wxa/getpaidunionid", params, nil, result)
 
 	return result, err
 }
 
 // 检查加密信息是否由微信生成（当前只支持手机号加密数据），只能检测最近3天生成的加密数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.checkEncryptedData.html
-func (comp *Client) CheckEncryptedData(encryptedMsgHash string) (*response.ResponseAuthCheckEncryptedData, error) {
+func (comp *Client) CheckEncryptedData(ctx *context.Context, encryptedMsgHash string) (*response.ResponseAuthCheckEncryptedData, error) {
 
 	result := &response.ResponseAuthCheckEncryptedData{}
 
@@ -35,7 +36,7 @@ func (comp *Client) CheckEncryptedData(encryptedMsgHash string) (*response.Respo
 		"encrypted_msg_hash": encryptedMsgHash,
 	}
 
-	_, err := comp.BaseClient.HttpPostJson("wxa/business/checkencryptedmsg", options, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "wxa/business/checkencryptedmsg", options, nil, nil, result)
 
 	return result, err
 }

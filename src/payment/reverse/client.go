@@ -1,6 +1,7 @@
 package reverse
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/reverse/response"
@@ -22,7 +23,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // Reverse order.
 // https://pay.weixin.qq.com/wiki/doc/api/micropa
-func (comp *Client) Reverse(number string, reverseType string) (*response.ResponseReserve, error) {
+func (comp *Client) Reverse(ctx *context.Context, number string, reverseType string) (*response.ResponseReserve, error) {
 
 	result := &response.ResponseReserve{}
 
@@ -34,21 +35,21 @@ func (comp *Client) Reverse(number string, reverseType string) (*response.Respon
 	}
 
 	endpoint := comp.Wrap("secapi/pay/reverse")
-	_, err := comp.Request(endpoint, nil, "POST", params, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, "POST", params, false, nil, result)
 
 	return result, err
 }
 
 // Reverse order by out trade number.
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
-func (comp *Client) ByOutTradeNumber(outTradeNumber string) (*response.ResponseReserve, error) {
+func (comp *Client) ByOutTradeNumber(ctx *context.Context, outTradeNumber string) (*response.ResponseReserve, error) {
 
-	return comp.Reverse(outTradeNumber, "out_trade_no")
+	return comp.Reverse(ctx, outTradeNumber, "out_trade_no")
 }
 
 // Reverse order by transaction_id.
 // https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
-func (comp *Client) ByTransactionId(transactionID string) (*response.ResponseReserve, error) {
+func (comp *Client) ByTransactionId(ctx *context.Context, transactionID string) (*response.ResponseReserve, error) {
 
-	return comp.Reverse(transactionID, "transaction_id")
+	return comp.Reverse(ctx, transactionID, "transaction_id")
 }
