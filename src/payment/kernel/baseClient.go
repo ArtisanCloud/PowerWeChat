@@ -1,8 +1,8 @@
 package kernel
 
 import (
+	"bytes"
 	"crypto/sha1"
-	"encoding/xml"
 	"errors"
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
@@ -136,7 +136,7 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 
 func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, method string, option *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) (response interface{}, err error) {
+) (response *http.Response, err error) {
 
 	//config := (*client.App).GetConfig()
 
@@ -150,6 +150,7 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 	params = object.MergeHashMap(params, base)
 	params = object.FilterEmptyHashMap(params)
 
+	//options, err := client.AuthSignRequestV2(endpoint, method, params, option)
 	options, err := client.AuthSignRequestV2(endpoint, method, params, option)
 	if err != nil {
 		return nil, err
@@ -179,22 +180,15 @@ func (client *BaseClient) RequestV2(endpoint string, params *object.HashMap, met
 
 		// set body json
 		if (*options)["body"] != nil {
-			df.Json((*options)["body"])
+			r := bytes.NewBufferString((*options)["body"].(string))
+			df.Body(r)
 		}
 	}
 
 	returnResponse, err := df.Request()
-
-	// decode response body to outBody
-	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
-
 	if err != nil {
-		return nil, err
+		return returnResponse, err
 	}
-	// decode response header to outHeader
-	//headerData, _ := ioutil.ReadAll(response.Header)
-	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
-	//err = object.JsonDecode(headerData, outHeader)
 
 	return returnResponse, err
 
@@ -334,7 +328,7 @@ func (client *BaseClient) SafeRequest(url string, params *object.HashMap, method
 
 	strOutBody := ""
 	// get xml string result from return raw as true
-	_, err := client.RequestV2(
+	rs, err := client.RequestV2(
 		url,
 		params,
 		method,
@@ -349,7 +343,7 @@ func (client *BaseClient) SafeRequest(url string, params *object.HashMap, method
 	}
 
 	// get out result
-	err = xml.Unmarshal([]byte(strOutBody), outBody)
+	client.HttpHelper.ParseResponseBodyContent(rs, outBody)
 
 	return outBody, err
 }
@@ -411,6 +405,48 @@ func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string
 			"Authorization":    authorization,
 			"Wechatpay-Serial": config.GetString("serial_no", ""),
 		},
+		"body": signBody,
+	}, options)
+
+	return options, err
+}
+
+func (client *BaseClient) AuthSignRequestV2_(endpoint string, method string, params *object.HashMap, options *object.HashMap) (*object.HashMap, error) {
+
+	var err error
+
+	secretKey, err := (*client.App).GetKey(endpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	strMapParams, err := object.HashMapToStringMap(params)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert StringMap to Power StringMap
+	powerStrMapParams, err := power.StringMapToPower(strMapParams)
+	if err != nil {
+		return nil, err
+	}
+
+	// generate md5 signature with power StringMap
+	(*powerStrMapParams)["sign"] = support.GenerateSignMD5(powerStrMapParams, secretKey)
+
+	// convert signature to xml content
+	var signBody = ""
+	if "get" != object.Lower(method) {
+		// check need sign body or not
+		objPara, err := power.PowerStringMapToObjectStringMap(powerStrMapParams)
+		if err != nil {
+			return nil, err
+		}
+		signBody = object.StringMap2Xml(objPara)
+	}
+
+	// set body content
+	options = object.MergeHashMap(&object.HashMap{
 		"body": signBody,
 	}, options)
 
