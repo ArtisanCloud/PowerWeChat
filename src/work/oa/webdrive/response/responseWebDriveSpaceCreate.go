@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseWebDriveSpaceCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	SpaceID string `json:"spaceid"`
 }

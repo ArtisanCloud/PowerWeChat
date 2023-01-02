@@ -6,10 +6,10 @@ import (
 	"fmt"
 	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io/ioutil"
-	"log"
 	http "net/http"
 	"os"
 	"path/filepath"
@@ -29,7 +29,7 @@ type BaseClient struct {
 	Token *AccessToken
 
 	GetMiddlewareOfAccessToken        contract.RequestMiddleware
-	GetMiddlewareOfLog                func(logger *log.Logger) contract.RequestMiddleware
+	GetMiddlewareOfLog                func(logger contract2.LoggerInterface) contract.RequestMiddleware
 	GetMiddlewareOfRefreshAccessToken func(retry int) contract.RequestMiddleware
 }
 
@@ -260,12 +260,14 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 	// check invalid access token
 	checkAccessTokenMiddleware := client.GetMiddlewareOfRefreshAccessToken
 
+	config := (*client.App).GetConfig()
+	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
 	client.HttpHelper.WithMiddleware(
 		accessTokenMiddleware,
-		logMiddleware(log.Default()),
+		logMiddleware(logger),
+		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 		checkAccessTokenMiddleware(3),
 	)
-
 }
 
 // ----------------------------------------------------------------------
@@ -294,8 +296,11 @@ func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
 			}
 
 			response, err = handle(request)
-			// handle 执行之后就可以操作 response 和 err
+			if err != nil {
+				return response, err
+			}
 
+			// handle 执行之后就可以操作 response 和 err
 			// 后置中间件
 			//fmt.Println("获取access token, 在请求后执行")
 			return
@@ -304,17 +309,19 @@ func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
 }
 
 func (client *BaseClient) OverrideGetMiddlewareOfLog() {
-	client.GetMiddlewareOfLog = func(logger *log.Logger) contract.RequestMiddleware {
+	client.GetMiddlewareOfLog = func(logger contract2.LoggerInterface) contract.RequestMiddleware {
 		return contract.RequestMiddleware(func(handle contract.RequestHandle) contract.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
 				// 前置中间件
 				//logger.Println("这里是前置中间件log, 在请求前执行")
 
 				response, err = handle(request)
-				// handle 执行之后就可以操作 response 和 err
+				if err != nil {
+					return response, err
+				}
 
-				// 后置中间件
-				//logger.Println("这里是后置置中间件log, 在请求后执行")
+				//// 后置中间件
+				////logger.Println("这里是后置置中间件log, 在请求后执行")
 				return
 			}
 		})
@@ -330,6 +337,10 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 
 				response, err = handle(request)
 				// handle 执行之后就可以操作 response 和 err
+
+				if err != nil {
+					return response, err
+				}
 
 				rs, err := client.CheckTokenNeedRefresh(request, response, retry)
 				if err != nil {

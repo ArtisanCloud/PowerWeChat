@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseLivingGetWatchStat struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextKey  string         `json:"next_key"`
 	StatInfo *power.HashMap `json:"stat_info"`

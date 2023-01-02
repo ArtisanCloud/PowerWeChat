@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMeetingGetUserMeetingID struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor    string   `json:"next_cursor"`
 	MeetingidList []string `json:"meetingid_list"`

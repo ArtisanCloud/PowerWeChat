@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAppChatCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ChatID string `json:"chatid"`
 }

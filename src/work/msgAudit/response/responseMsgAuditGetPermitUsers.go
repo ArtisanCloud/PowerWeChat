@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseMsgAuditGetPermitUsers struct {
-	*response.ResponseWork
+	response.ResponseWork
 	IDs []string `json:"ids"`
 }

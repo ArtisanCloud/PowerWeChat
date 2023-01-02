@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAgentGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 	AgentID            int                         `json:"agentid"`         // "agentid": 1000005,
 	Name               string                      `json:"name"`            // "name": "HR助手",
 	SquareLogoURL      string                      `json:"square_logo_url"` // "square_logo_url":  "https://p.qlogo.cn/bizmail/FicwmI50icF8GH9ib7rUAYR5kicLTgP265naVFQKnleqSlRhiaBx7QA9u7Q/0",
@@ -21,19 +21,19 @@ type ResponseAgentGet struct {
 }
 
 type ResponseAgentAllowUserInfos struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	User []*ResponseAgentAllowUser `json:"user"`
 }
 
 type ResponseAgentAllowUser struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	UserID string `json:"userid"`
 }
 
 type ResponseAgentAllowParty struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	PartyID []int `json:"partyid"`
 }

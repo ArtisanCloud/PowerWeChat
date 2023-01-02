@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseLinkCorpMessageSend struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	InvalidUser  []string `json:"invaliduser"`
 	InvalidParty []string `json:"invalidparty"`

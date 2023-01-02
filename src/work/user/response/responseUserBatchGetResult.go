@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseUserBatchGetResult struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Status     int               `json:"status"`
 	Type       string            `json:"type"`

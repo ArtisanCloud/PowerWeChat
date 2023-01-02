@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseWebDriveFileRename struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	File *power.HashMap `json:"file"`
 }

@@ -10,7 +10,7 @@ type CompactGroupChat struct {
 }
 
 type ResponseGroupChatList struct {
-	*response.ResponseWork
+	response.ResponseWork
 	GroupChatList []*CompactGroupChat `json:"group_chat_list"`
 	NextCursor    string              `json:"next_cursor"`
 }

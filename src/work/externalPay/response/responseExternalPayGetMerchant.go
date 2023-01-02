@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExternalPayGetMerchant struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	BindStatus    string           `json:"bind_status"`
 	MchID         string           `json:"mch_id"`

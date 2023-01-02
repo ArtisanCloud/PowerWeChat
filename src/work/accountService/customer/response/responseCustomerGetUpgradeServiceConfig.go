@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseCustomerGetUpgradeServiceConfig struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MemberRange    *power.HashMap `json:"member_range"`
 	GroupChatRange *power.HashMap `json:"groupchat_range"`

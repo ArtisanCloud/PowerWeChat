@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAccountServiceSendMsg struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MsgID string `json:"msgid"`
 }

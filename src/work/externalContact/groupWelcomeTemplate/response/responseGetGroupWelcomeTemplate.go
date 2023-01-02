@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseGetGroupWelcomeTemplate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Text        *power.HashMap `json:"text"`
 	Image       *power.HashMap `json:"image"`

@@ -11,7 +11,7 @@ type Task struct {
 }
 
 type ResponseGetGroupMsgTask struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor string `json:"next_cursor"`
 

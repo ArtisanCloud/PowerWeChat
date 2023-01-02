@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseCorpGroupTransferSession struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Userid     string `json:"userid"`
 	SessionKey string `json:"session_key"`
 }

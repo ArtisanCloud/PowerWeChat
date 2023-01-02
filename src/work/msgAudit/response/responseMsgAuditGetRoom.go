@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMsgAuditGetRoom struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Roomname       string           `json:"roomname"`
 	Creator        string           `json:"creator"`

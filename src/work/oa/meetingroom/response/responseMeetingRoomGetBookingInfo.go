@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMeetingRoomGetBookingInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	BookingList []*power.HashMap `json:"booking_list"`
 }

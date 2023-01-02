@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseUserExportGetResult struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Status   int               `json:"status"`
 	DataList []*object.HashMap `json:"data_list"`

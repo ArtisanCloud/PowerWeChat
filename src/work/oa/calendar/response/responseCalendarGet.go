@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseCalendarGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CalendarList []*power.HashMap `json:"calendar_list"`
 }

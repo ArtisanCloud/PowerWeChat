@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAccountServiceAddContactWay struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	URL string `json:"url"`
 }

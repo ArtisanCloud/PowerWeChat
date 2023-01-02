@@ -6,7 +6,7 @@ import (
 )
 
 type ResponsePSTNCCCall struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	States []*power.HashMap `json:"states"`
 }

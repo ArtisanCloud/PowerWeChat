@@ -11,7 +11,7 @@ type RobotData struct {
 }
 
 type ResponseMsgAuditGetRobotInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Data *RobotData `json:"data"`
 }

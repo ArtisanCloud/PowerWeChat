@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseUserExportJobs struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	JobID string `json:"jobid"`
 }

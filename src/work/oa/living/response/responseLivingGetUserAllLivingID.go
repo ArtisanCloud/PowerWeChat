@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseLivingGetUserAllLivingID struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor   string   `json:"next_cursor"`
 	LivingIDList []string `json:"livingid_list"`

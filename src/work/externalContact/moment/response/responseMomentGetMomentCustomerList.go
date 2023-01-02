@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMomentGetMomentCustomerList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CustomerList []*power.HashMap `json:"customer_list"`
 	NextCursor   string           `json:"next_cursor"`

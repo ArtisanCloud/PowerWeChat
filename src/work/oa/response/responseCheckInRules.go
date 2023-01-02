@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseCheckInRules struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Info []*power.HashMap `json:"info"`
 }

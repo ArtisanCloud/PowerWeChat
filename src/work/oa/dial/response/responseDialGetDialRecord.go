@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseDialGetDialRecord struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MeetingidList []*power.HashMap `json:"record"`
 }

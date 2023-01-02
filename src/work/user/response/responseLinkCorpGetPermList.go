@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseLinkCorpGetPermList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	UserIDs       []string `json:"userids"`
 	DepartmentIDs []string `json:"department_ids"`

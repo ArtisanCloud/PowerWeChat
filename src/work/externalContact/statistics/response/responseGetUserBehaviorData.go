@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseGetUserBehaviorData struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MomentList []*power.HashMap `json:"behavior_data"`
 }

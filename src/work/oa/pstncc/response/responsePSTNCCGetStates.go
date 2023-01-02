@@ -5,7 +5,7 @@ import (
 )
 
 type ResponsePSTNCCGetStates struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	IsTalked int `json:"istalked"`
 	CallTime int `json:"calltime"`

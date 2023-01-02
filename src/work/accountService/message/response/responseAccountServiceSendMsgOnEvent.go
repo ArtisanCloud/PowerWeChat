@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAccountServiceSendMsgOnEvent struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MsgID string `json:"msgid"`
 }

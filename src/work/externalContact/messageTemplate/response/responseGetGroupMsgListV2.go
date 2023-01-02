@@ -15,7 +15,7 @@ type GroupMsg struct {
 }
 
 type ResponseGetGroupMsgListV2 struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor   string      `json:"next_cursor"`
 	GroupMsgList []*GroupMsg `json:"group_msg_list"`

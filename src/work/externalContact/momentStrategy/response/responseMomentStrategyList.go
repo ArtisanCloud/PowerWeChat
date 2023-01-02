@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMomentStrategyList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	StrategyID int64 `json:"strategy_id"`
 }

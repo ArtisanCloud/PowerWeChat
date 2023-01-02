@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMomentStrategyGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Strategy *power.HashMap `json:"strategy"`
 }

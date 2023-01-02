@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMessageSyncMsg struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor string            `json:"next_cursor"`
 	HasMore    int               `json:"has_more"`

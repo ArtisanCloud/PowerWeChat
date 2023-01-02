@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseInvoiceGetInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CardID    string         `json:"card_id"`
 	BeginTime string         `json:"begin_time"`

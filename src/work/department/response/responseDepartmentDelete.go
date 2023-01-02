@@ -5,5 +5,5 @@ import (
 )
 
 type ResponseDepartmentDelete struct {
-	*response.ResponseWork
+	response.ResponseWork
 }

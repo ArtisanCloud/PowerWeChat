@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseAgentList struct {
-	*response.ResponseWork
+	response.ResponseWork
 	AgentList []ResponseAgentGet `json:"agentlist"`
 }

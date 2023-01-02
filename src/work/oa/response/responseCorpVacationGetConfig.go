@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseCorpVacationGetConfig struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Lists []*power.HashMap `json:"lists"`
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseLinkCorpGetUserSimpleList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	UserList []*power.HashMap `json:"userlist"`
 }

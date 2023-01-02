@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseScheduleGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ScheduleList []*power.HashMap `json:"schedule_list"`
 }

@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseCorpGroupListAPPShareInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 	CorpList []*power.HashMap `json:"corp_list"`
 }

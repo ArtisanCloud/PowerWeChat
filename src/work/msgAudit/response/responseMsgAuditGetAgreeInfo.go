@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseMsgAuditGetAgreeInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 	AgreeInfo []*power.HashMap `json:"agreeinfo"`
 }

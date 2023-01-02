@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAccountAdd struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	OpenKFID string `json:"open_kfid"`
 }

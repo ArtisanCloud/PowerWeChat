@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMeetingCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MeetingID int `json:"meetingid"`
 }

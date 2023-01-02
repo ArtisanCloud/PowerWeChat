@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGetSimpleUserList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	UserList []*UserSimpleDetail `json:"userlist"`
 }

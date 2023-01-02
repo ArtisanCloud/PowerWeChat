@@ -6,5 +6,5 @@ import (
 
 type ResponseGetAPIDomainIP struct {
 	IPList []string `json:"ip_list"`
-	*response.ResponseWork
+	response.ResponseWork
 }

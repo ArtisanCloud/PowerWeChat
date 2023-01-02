@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseCustomerStrategyCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	StrategyID *power.HashMap `json:"strategy_id"`
 }

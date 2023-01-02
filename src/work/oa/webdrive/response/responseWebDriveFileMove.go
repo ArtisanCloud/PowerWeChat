@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseWebDriveFileMove struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	FileList *power.HashMap `json:"file_list"`
 }

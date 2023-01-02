@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseBatchGetByUser struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ExternalContactList []*ResponseExternalContact `json:"external_contact_list"`
 	NextCursor          string                     `json:"next_cursor"`

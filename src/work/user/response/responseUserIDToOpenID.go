@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseUserIDToOpenID struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	OpenID string `json:"openid"`
 }

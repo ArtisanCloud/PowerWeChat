@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseStatistic struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Total      int `json:"total"`
 	NextOffset int `json:"next_offset"`

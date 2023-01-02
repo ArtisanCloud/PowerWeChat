@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseTransferResult struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Customer   []*power.HashMap `json:"customer"`
 	NextCursor string           `json:"next_cursor"`

@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseCheckInDatas struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Datas []*power.HashMap `json:"datas"`
 }
