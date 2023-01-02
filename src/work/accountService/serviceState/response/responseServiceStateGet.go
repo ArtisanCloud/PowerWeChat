@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseServiceStateGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ServiceState   int    `json:"service_state"`
 	ServicerUserID string `json:"servicer_userid"`

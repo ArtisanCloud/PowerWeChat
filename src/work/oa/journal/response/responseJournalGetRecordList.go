@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseJournalGetRecordList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	JournalUUIDList []string `json:"journaluuid_list"`
 	NextCursor      int      `json:"next_cursor"`

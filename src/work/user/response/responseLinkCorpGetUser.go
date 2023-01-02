@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseLinkCorpGetUser struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	UserInfo *power.HashMap `json:"user_info"`
 }

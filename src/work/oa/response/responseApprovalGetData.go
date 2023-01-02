@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseApprovalGetData struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Count     int            `json:"count"`
 	Total     int            `json:"total"`
 	NextSPNum int            `json:"next_spnum"`

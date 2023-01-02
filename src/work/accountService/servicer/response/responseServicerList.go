@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseServicerList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ServicerList []*power.HashMap `json:"servicer_list"`
 }

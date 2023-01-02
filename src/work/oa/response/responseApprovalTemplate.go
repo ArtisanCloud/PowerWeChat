@@ -49,7 +49,7 @@ type TemplateName struct {
 }
 
 type ResponseApprovalTemplate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	TemplateNames   []*TemplateName  `json:"template_names"`
 	TemplateContent *TemplateContent `json:"template_content"`

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseCalendarAdd struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CalID string `json:"cal_id"`
 }

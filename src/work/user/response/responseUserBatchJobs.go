@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseUserBatchJobs struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	JobID string `json:"jobid"`
 }

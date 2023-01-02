@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMomentStrategyGetRange struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Range      []*power.HashMap `json:"range"`
 	NextCursor string           `json:"next_cursor"`

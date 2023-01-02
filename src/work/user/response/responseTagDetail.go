@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseTagDetail struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	TagName   string              `json:"tagname"`
 	UserList  []*UserSimpleDetail `json:"userlist"`

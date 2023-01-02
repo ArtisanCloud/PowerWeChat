@@ -99,6 +99,15 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register auth --------------
 	app.SuiteTicket, app.SuiteAccessToken, err = suit.RegisterProvider(app)
 	if err != nil {
@@ -154,15 +163,6 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 
 	//-------------- register Device --------------
 	app.Device, err = device.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
-		"env":        app.Config.GetString("env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
-	})
 	if err != nil {
 		return nil, err
 	}

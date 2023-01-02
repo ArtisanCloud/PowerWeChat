@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseGroupChatOpenGIDToChatID struct {
-	*response.ResponseWork
+	response.ResponseWork
 	ChatID *power.HashMap `json:"chat_id"`
 }

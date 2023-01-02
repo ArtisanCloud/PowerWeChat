@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseLivingGetLivingInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	LivingInfo *power.HashMap `json:"living_info"`
 }

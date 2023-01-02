@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseCustomerStrategyGetRange struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Range []*power.HashMap `json:"range"`
 }

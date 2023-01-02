@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseLivingGetLivingShareInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	LivingID              string `json:"livingid"`
 	ViewerUserID          string `json:"viewer_userid"`

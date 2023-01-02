@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseWebDriveFileDownload struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	DownloadURL string `json:"download_url"`
 	CookieName  string `json:"cookie_name"`

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGetUserDetail struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	*UserDetail
 }

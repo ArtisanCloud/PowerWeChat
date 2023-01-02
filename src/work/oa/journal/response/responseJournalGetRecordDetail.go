@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseJournalGetRecordDetail struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Info *power.HashMap `json:"info"`
 }

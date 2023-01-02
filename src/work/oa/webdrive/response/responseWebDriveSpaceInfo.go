@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseWebDriveSpaceInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	SpaceInfo *power.HashMap `json:"space_info"`
 }

@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseDepartmentGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Department *models.Department `json:"department"`
 }

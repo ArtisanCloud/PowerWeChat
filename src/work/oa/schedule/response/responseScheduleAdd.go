@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseScheduleAdd struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ScheduleID string `json:"schedule_id"`
 }

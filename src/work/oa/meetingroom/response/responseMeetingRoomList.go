@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMeetingRoomList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MeetingRoomList []*power.HashMap `json:"meetingroom_list"`
 }

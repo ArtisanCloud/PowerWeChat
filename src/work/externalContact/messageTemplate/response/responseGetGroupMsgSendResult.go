@@ -13,7 +13,7 @@ type SendResult struct {
 }
 
 type ResponseGetGroupMsgSendResult struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor string `json:"next_cursor"`
 

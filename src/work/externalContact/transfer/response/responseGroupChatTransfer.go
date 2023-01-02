@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseGroupChatTransfer struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Customer []*power.HashMap `json:"failed_chat_list"`
 }

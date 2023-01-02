@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseInvoiceGetInfoBatch struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ItemList []*power.HashMap `json:"item_list"`
 }

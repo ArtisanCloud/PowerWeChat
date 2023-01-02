@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMomentGetMomentComments struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CommentList []*power.HashMap `json:"comment_list"`
 	LikeList    []*power.HashMap `json:"like_list"`

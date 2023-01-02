@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseResignedTransferCustomer struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Customer []*power.HashMap `json:"customer"`
 }

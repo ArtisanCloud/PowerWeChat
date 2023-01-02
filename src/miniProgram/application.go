@@ -153,6 +153,15 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("log.env", "develop"),
+		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register auth,AccessToken --------------
 	app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
@@ -326,15 +335,6 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 
 	//-------------- register RiskControl --------------
 	app.RiskControl, err = riskControl.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
-		"env":        app.Config.GetString("log.env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
-	})
 	if err != nil {
 		return nil, err
 	}

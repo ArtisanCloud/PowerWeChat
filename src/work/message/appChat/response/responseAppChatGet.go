@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseAppChatGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	ChatInfo *power.HashMap `json:"chat_info"`
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMeetingRoomGetBook struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MeetingID  int `json:"meeting_id"`
 	ScheduleID int `json:"schedule_id"`

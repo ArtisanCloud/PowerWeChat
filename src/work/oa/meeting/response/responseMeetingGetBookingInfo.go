@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseMeetingGetBookingInfo struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CreatorUserID          string         `json:"creator_userid"`
 	Title                  string         `json:"title"`

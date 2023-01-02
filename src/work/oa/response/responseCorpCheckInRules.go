@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseCorpCheckInRules struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Group []*power.HashMap `json:"group"`
 }

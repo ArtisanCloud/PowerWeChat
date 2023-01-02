@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseMenuCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Button []*power.HashMap `json:"button"`
 }

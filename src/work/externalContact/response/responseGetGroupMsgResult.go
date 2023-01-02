@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseGetGroupMesResult struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	CheckStatus int             `json:"check_status"`
 	DetailList  []*ResultDetail `json:"detail_list"`

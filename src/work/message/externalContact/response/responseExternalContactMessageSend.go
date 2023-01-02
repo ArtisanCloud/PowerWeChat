@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseExternalContactMessageSend struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	InvalidExternalUser  []string `json:"invalid_external_user"`
 	InvalidParentUserID  []string `json:"invalid_parent_userid"`

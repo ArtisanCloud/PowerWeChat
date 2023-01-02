@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMeetingRoomAdd struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	MeetingRoomID int `json:"meetingroom_id"`
 }

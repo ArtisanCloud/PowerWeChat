@@ -34,6 +34,6 @@ type GroupChat struct {
 }
 
 type ResponseGroupChatGet struct {
-	*response.ResponseWork
+	response.ResponseWork
 	GroupChat *GroupChat `json:"group_chat"`
 }

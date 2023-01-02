@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseWebDriveSpaceShare struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	SpaceShareURL string `json:"space_share_url"`
 }

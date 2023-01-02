@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseResignedGetUnassignedList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	Info       []*power.HashMap `json:"info"`
 	IsLast     bool             `json:"is_last"`

@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseDepartmentCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 	ID int `json:"id"`
 }

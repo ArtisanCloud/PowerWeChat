@@ -145,6 +145,15 @@ func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*O
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register auth --------------
 	app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
@@ -304,15 +313,6 @@ func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*O
 
 	//-------------- register Guide --------------
 	app.Guide, err = guide.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
-		"env":        app.Config.GetString("env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
-	})
 	if err != nil {
 		return nil, err
 	}

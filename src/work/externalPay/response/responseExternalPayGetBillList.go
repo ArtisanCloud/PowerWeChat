@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExternalPayGetBillList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	NextCursor string           `json:"next_cursor"`
 	BillList   []*power.HashMap `json:"bill_list"`

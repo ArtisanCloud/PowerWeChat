@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseJournalGetStatList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	StatList *power.HashMap `json:"stat_list"`
 }

@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseCorpVacationGetQuota struct {
-	*response.ResponseWork
+	response.ResponseWork
 	Lists []*power.HashMap `json:"lists"`
 }

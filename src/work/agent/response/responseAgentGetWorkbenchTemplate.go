@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseAgentGetWorkbenchTemplate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	TemplateType    string                 `json:"type"`
 	Image           request.WorkBenchImage `json:"image"`

@@ -112,6 +112,17 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	//-------------- global app config --------------
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
+
+	app.Logger, err = logger.NewLogger("", &object.HashMap{
+		"env":        app.Config.GetString("env", "develop"),
+		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
+		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -164,14 +175,6 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	}
 	//-------------- ProfitSharing --------------
 	app.ProfitSharing, err = profitSharing.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
-		"env":        app.Config.GetString("env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
-	})
 	if err != nil {
 		return nil, err
 	}

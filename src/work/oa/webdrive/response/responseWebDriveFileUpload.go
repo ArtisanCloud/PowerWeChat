@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseWebDriveFileUpload struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	FileID string `json:"fileid"`
 }

@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseApprovalNoList struct {
-	*response.ResponseWork
+	response.ResponseWork
 	SpNoList []string `json:"sp_no_list"`
 }

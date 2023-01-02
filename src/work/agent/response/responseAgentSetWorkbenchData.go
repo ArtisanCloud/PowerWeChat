@@ -5,5 +5,5 @@ import (
 )
 
 type ResponseAgentSetWorkbenchData struct {
-	*response.ResponseWork
+	response.ResponseWork
 }

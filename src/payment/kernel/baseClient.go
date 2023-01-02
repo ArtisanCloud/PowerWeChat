@@ -9,6 +9,7 @@ import (
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -226,8 +227,11 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 	// http client request
 	returnResponse, err := client.HttpHelper.Df().
 		WithContext(ctx).
-		Url(endpoint).Method(method).Json(options).Request()
+		Uri(endpoint).Method(method).Json(options).Request()
 
+	if err != nil {
+		return returnResponse, err
+	}
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
 
@@ -500,6 +504,24 @@ func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, para
 }
 
 // ----------------------------------------------------------------------
+func (client *BaseClient) RegisterHttpMiddlewares() {
+
+	// access token
+	accessTokenMiddleware := client.GetMiddlewareOfAccessToken
+	// log
+	logMiddleware := client.GetMiddlewareOfLog
+
+	// check invalid access token
+	checkAccessTokenMiddleware := client.GetMiddlewareOfRefreshAccessToken
+
+	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
+	client.HttpHelper.WithMiddleware(
+		accessTokenMiddleware,
+		logMiddleware(logger),
+		checkAccessTokenMiddleware(3),
+	)
+}
+
 func (client *BaseClient) OverrideGetMiddlewares() {
 	client.OverrideGetMiddlewareOfAccessToken()
 	client.OverrideGetMiddlewareOfLog()

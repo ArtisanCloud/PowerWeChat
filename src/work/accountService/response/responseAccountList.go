@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseAccountList struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	AccountList []*power.HashMap `json:"account_list"`
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseLivingCreate struct {
-	*response.ResponseWork
+	response.ResponseWork
 
 	LivingID int `json:"livingid"`
 }
