@@ -20,7 +20,6 @@ type Client struct {
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/customer-message/customerServiceMessage.getTempMedia.html
 func (comp *Client) GetTempMedia(ctx context.Context, mediaID string) (*http.Response, error) {
 
-	var result string
 	var header = &response4.ResponseHeaderMedia{}
 
 	params := &object.HashMap{
@@ -29,7 +28,7 @@ func (comp *Client) GetTempMedia(ctx context.Context, mediaID string) (*http.Res
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", "GET", params, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", "GET", params, &header, nil)
 
 	return rs, err
 }

@@ -3,6 +3,7 @@ package kernel
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
@@ -263,9 +264,9 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 	config := (*client.App).GetConfig()
 	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
 	client.HttpHelper.WithMiddleware(
+		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 		accessTokenMiddleware,
 		logMiddleware(logger),
-		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 		checkAccessTokenMiddleware(3),
 	)
 }
@@ -273,8 +274,8 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 // ----------------------------------------------------------------------
 
 func (client *BaseClient) OverrideGetMiddlewares() {
-	client.OverrideGetMiddlewareOfAccessToken()
 	client.OverrideGetMiddlewareOfLog()
+	client.OverrideGetMiddlewareOfAccessToken()
 	client.OverrideGetMiddlewareOfRefreshAccessToken()
 }
 
@@ -340,6 +341,10 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 
 				if err != nil {
 					return response, err
+				}
+
+				if response.StatusCode != http.StatusOK {
+					return response, errors.New(fmt.Sprintf("http response code:%d", response.StatusCode))
 				}
 
 				rs, err := client.CheckTokenNeedRefresh(request, response, retry)
@@ -415,7 +420,7 @@ func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Resp
 		}
 	}
 
-	return nil, nil
+	return rs, nil
 }
 
 func (client *BaseClient) RetryDecider(conditions *object.HashMap) bool {

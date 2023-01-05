@@ -75,16 +75,15 @@ func (comp *Client) GetTicket(ctx context.Context, refresh bool, ticketType stri
 	}
 
 	mapRSBody := &object.HashMap{}
-	resultBody := ""
 	rs, err := comp.BaseClient.RequestRaw(ctx, comp.TicketEndpoint, "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"type": ticketType,
-		}}, nil, &resultBody)
+		}}, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	err = object.JsonDecode([]byte(resultBody), mapRSBody)
+	err = comp.BaseClient.HttpHelper.ParseResponseBodyToMap(rs, mapRSBody)
 	if (*mapRSBody)["errcode"].(float64) != 0 {
 		return mapRSBody, errors.New((*mapRSBody)["errmsg"].(string))
 	}
