@@ -119,13 +119,12 @@ func (comp *Client) UploadArticleImage(ctx context.Context, path string) (*respo
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
-	result := ""
 	header := &response4.ResponseHeaderMedia{}
 	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/material/get_material", "POST", &object.HashMap{
 		"form_params": &object.HashMap{
 			"media_id": mediaID,
 		},
-	}, header, &result)
+	}, header, nil)
 
 	return response, err
 }

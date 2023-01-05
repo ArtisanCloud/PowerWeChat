@@ -523,8 +523,8 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 }
 
 func (client *BaseClient) OverrideGetMiddlewares() {
-	client.OverrideGetMiddlewareOfAccessToken()
 	client.OverrideGetMiddlewareOfLog()
+	client.OverrideGetMiddlewareOfAccessToken()
 	client.OverrideGetMiddlewareOfRefreshAccessToken()
 }
 

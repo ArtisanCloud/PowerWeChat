@@ -19,7 +19,6 @@ type Client struct {
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.createQRCode.html
 func (comp *Client) CreateQRCode(ctx context.Context, path string, width int64) (*http.Response, error) {
 
-	var result string
 	var header = &response4.ResponseHeaderMedia{}
 
 	if width <= 0 {
@@ -33,7 +32,7 @@ func (comp *Client) CreateQRCode(ctx context.Context, path string, width int64) 
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, nil)
 
 	return rs, err
 
@@ -44,7 +43,6 @@ func (comp *Client) CreateQRCode(ctx context.Context, path string, width int64) 
 func (comp *Client) Get(ctx context.Context, path string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
 
-	var result string
 	var header = &response4.ResponseHeaderMedia{}
 
 	if width <= 0 {
@@ -61,7 +59,7 @@ func (comp *Client) Get(ctx context.Context, path string, width int64,
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacode", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacode", "POST", data, &header, nil)
 
 	return rs, err
 }
@@ -91,7 +89,6 @@ func (comp *Client) GetUnlimited(
 	checkPath bool, envVersion string, width int64,
 	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
 
-	var result string
 	var header = &response4.ResponseHeaderMedia{}
 
 	if width <= 0 {
@@ -111,7 +108,7 @@ func (comp *Client) GetUnlimited(
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacodeunlimit", "POST", data, &header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacodeunlimit", "POST", data, &header, nil)
 
 	return rs, err
 }

@@ -84,13 +84,12 @@ func (comp *Client) Upload(ctx context.Context, mediaType string, path string) (
 // https://work.weixin.qq.com/api/doc/90000/90135/90254
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
-	result := ""
 	header := &response.ResponseHeaderMedia{}
 	response, err := comp.BaseClient.RequestRaw(ctx, "media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
-	}, header, &result)
+	}, header, nil)
 
 	return response, err
 
@@ -100,13 +99,12 @@ func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, er
 // https://work.weixin.qq.com/api/doc/90000/90135/90255
 func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
-	result := ""
 	header := &response.ResponseHeaderMedia{}
 	response, err := comp.BaseClient.RequestRaw(ctx, "media/get/jssdk", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
-	}, header, &result)
+	}, header, nil)
 
 	return response, err
 

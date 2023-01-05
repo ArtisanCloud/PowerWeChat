@@ -27,13 +27,12 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 // https://developer.work.weixin.qq.com/document/path/90254
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
-	result := ""
 	header := &response2.ResponseHeaderMedia{}
 	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
-	}, header, &result)
+	}, header, nil)
 
 	return response, err
 
@@ -43,13 +42,12 @@ func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, er
 // https://developer.work.weixin.qq.com/document/path/90255
 func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
-	result := ""
 	header := &response2.ResponseHeaderMedia{}
 	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get/jssdk", "GET", &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
-	}, header, &result)
+	}, header, nil)
 
 	return response, err
 
