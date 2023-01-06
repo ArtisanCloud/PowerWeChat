@@ -20,7 +20,8 @@ import (
 type BaseClient struct {
 	HttpHelper *helper.RequestHelper
 
-	BaseURI string
+	BaseURI  string
+	QueryRaw bool
 
 	*support.ResponseCastable
 
@@ -184,6 +185,7 @@ func (client *BaseClient) Request(ctx context.Context, url string, method string
 ) (*http.Response, error) {
 
 	// http client request
+	client.QueryRaw = returnRaw
 	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(method)
 
 	// 检查是否需要有请求参数配置
@@ -347,11 +349,13 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 					return response, errors.New(fmt.Sprintf("http response code:%d", response.StatusCode))
 				}
 
-				rs, err := client.CheckTokenNeedRefresh(request, response, retry)
-				if err != nil {
-					return rs, err
-				} else if rs != nil {
-					return rs, nil
+				if !client.QueryRaw {
+					rs, err := client.CheckTokenNeedRefresh(request, response, retry)
+					if err != nil {
+						return rs, err
+					} else if rs != nil {
+						return rs, nil
+					}
 				}
 
 				// 后置中间件
