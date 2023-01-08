@@ -75,7 +75,7 @@ func (comp *Client) GetTicket(ctx context.Context, refresh bool, ticketType stri
 	}
 
 	mapRSBody := &object.HashMap{}
-	rs, err := comp.BaseClient.RequestRaw(ctx, comp.TicketEndpoint, "GET", &object.HashMap{
+	rs, err := comp.BaseClient.RequestRaw(ctx, comp.TicketEndpoint, http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"type": ticketType,
 		}}, nil, nil)

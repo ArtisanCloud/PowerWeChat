@@ -17,7 +17,7 @@ import (
 //	signBody := "{\"amount\":{\"total\":1},\"appid\":\"ww16143ea0101327c7\",\"attach\":\"自定义数据说明\",\"description\":\"Image形象店-深圳腾大-QQ公仔\",\"mchid\":\"1611854986\",\"notify_url\":\"https://pay.wangchaoyi.com/power/notify\",\"out_trade_no\":\"5519778939773395659222199361\",\"payer\":{\"openid\":\"oAuaP0TRUMwP169nQfg7XCEAw3HQ\"}}"
 //
 //	authorization, err := GenerateSign(signer, GenerateSigner{
-//		Method:       "POST",
+//		Method:       http.MethodPost,
 //		CanonicalURL: "/v3/pay/transactions/jsapi",
 //		SignBody:     signBody,
 //		timestamp:    1626747079,

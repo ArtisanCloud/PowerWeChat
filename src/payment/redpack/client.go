@@ -6,6 +6,7 @@ import (
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack/response"
+	"net/http"
 )
 
 type Client struct {
@@ -38,7 +39,7 @@ func (comp *Client) Info(ctx context.Context, mchBillNO string) (*response.Respo
 	}
 
 	endpoint := comp.Wrap("mmpaymkttransfers/gethbinfo")
-	_, err := comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -64,7 +65,7 @@ func (comp *Client) SendMiniProgramNormal(ctx context.Context, data *request.Req
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendminiprogramhb")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -89,7 +90,7 @@ func (comp *Client) SendNormal(ctx context.Context, data *request.RequestSendRed
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendredpack")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -114,7 +115,7 @@ func (comp *Client) SendGroup(ctx context.Context, data *request.RequestSendGrou
 	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendgroupredpack")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }

@@ -34,7 +34,7 @@ func (comp *Client) PayTransferToPocket(ctx context.Context, data *request.Reque
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/promotion/paywwsptrans2pocket")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -52,7 +52,7 @@ func (comp *Client) QueryTransferToPocket(ctx context.Context, data *request.Req
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/promotion/querywwsptrans2pocket")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }

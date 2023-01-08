@@ -32,7 +32,7 @@ func (comp *Client) CreateQRCode(ctx context.Context, path string, width int64) 
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/wxaapp/createwxaqrcode", "POST", data, &header, nil)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/wxaapp/createwxaqrcode", http.MethodPost, data, &header, nil)
 
 	return rs, err
 
@@ -59,7 +59,7 @@ func (comp *Client) Get(ctx context.Context, path string, width int64,
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacode", "POST", data, &header, nil)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacode", http.MethodPost, data, &header, nil)
 
 	return rs, err
 }
@@ -108,7 +108,7 @@ func (comp *Client) GetUnlimited(
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacodeunlimit", "POST", data, &header, nil)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacodeunlimit", http.MethodPost, data, &header, nil)
 
 	return rs, err
 }

@@ -39,7 +39,7 @@ type SignatureResult struct {
 }
 
 type RequestSignChain struct {
-	Method       string // 接口提交方法。"GET", "POST"等
+	Method       string // 接口提交方法。http.MethodPost, http.MethodPost等
 	CanonicalURL string // 微信支付接口路径。 例如： /v3/pay/transactions/jsapi
 	SignBody     string // 提交的body字符串。 例如； {"amount":{"total":1},"appid":"ww16143ea0101327c7","attach":"自定义数据说明","description":"Image形象店-深圳腾大-QQ公仔","mchid":"1611854986","notify_url":"https://pay.wangchaoyi.com/wx/notify","out_trade_no":"5519778939773395659222199361","payer":{"openid":"oAuaP0TRUMwP169nQfg7XCEAw3HQ"}}
 	timestamp    int64  // 单元测试传入的固定时间戳

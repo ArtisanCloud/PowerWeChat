@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/auth"
+	"net/http"
 )
 
 type AccessToken struct {
@@ -19,7 +20,7 @@ type AccessToken struct {
 func NewAccessToken(app kernel.ApplicationInterface, component kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(&app)
 
-	kernelToken.RequestMethod = "POST"
+	kernelToken.RequestMethod = http.MethodPost
 	kernelToken.QueryName = "access_token"
 	kernelToken.TokenKey = "authorizer_access_token"
 

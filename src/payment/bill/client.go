@@ -6,6 +6,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill/response"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"net/http"
 )
 
 type Client struct {
@@ -35,7 +36,7 @@ func (comp *Client) GetTradeBill(ctx context.Context, date string, billType stri
 	}
 
 	endpoint := comp.Wrap("/v3/bill/tradebill")
-	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }
@@ -53,7 +54,7 @@ func (comp *Client) GetFlowBill(ctx context.Context, date string, accountType st
 	}
 
 	endpoint := comp.Wrap("/v3/bill/fundflowbill")
-	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }

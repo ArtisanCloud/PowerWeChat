@@ -8,6 +8,7 @@ import (
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/response"
+	"net/http"
 )
 
 type BatchClient struct {
@@ -38,7 +39,7 @@ func (comp *BatchClient) Batch(ctx context.Context, param *request.RequestTransf
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches", comp.Version)
-	_, err = comp.Request(ctx, comp.Wrap(endpoint), nil, "POST", options, false, nil, result)
+	_, err = comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, options, false, nil, result)
 	return result, err
 }
 
@@ -56,7 +57,7 @@ func (comp *BatchClient) QueryBatch(ctx context.Context, batchID string, needQue
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s", comp.Version, batchID)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, nil, false, nil, result)
 	return result, err
 }
 
@@ -67,7 +68,7 @@ func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, d
 	result := &response.TransferBatch{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s/details/detail-id/%s", comp.Version, batchID, detailID)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, nil, false, nil, result)
 	return result, err
 }
 
@@ -85,7 +86,7 @@ func (comp *BatchClient) QueryOutBatchNO(ctx context.Context, outBatchNO string,
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/out_batch_no/%s", comp.Version, outBatchNO)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, nil, false, nil, result)
 	return result, err
 }
 
@@ -96,7 +97,7 @@ func (comp *BatchClient) QueryOutBatchNoDetail(ctx context.Context, outBatchNO s
 	result := &response.ResponseOutBatchNODetail{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/out-batch-no/%s/details/out-detail-no/%s", comp.Version, outBatchNO, outDetailNO)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, nil, false, nil, result)
 	return result, err
 }
 
@@ -111,7 +112,7 @@ func (comp *BatchClient) BillReceipt(ctx context.Context, outBatchNO string) (*r
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer/bill-receipt", comp.Version)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, options, false, nil, result)
 	return result, err
 }
 
@@ -122,7 +123,7 @@ func (comp *BatchClient) QueryBillReceipt(ctx context.Context, outBatchNO string
 	result := &response.ResponseTrasferBillReceipt{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/bill-receipt/%s", comp.Version, outBatchNO)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, nil, false, nil, result)
 	return result, err
 }
 
@@ -139,7 +140,7 @@ func (comp *BatchClient) ElectronicReceipts(ctx context.Context, acceptType stri
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer-detail/electronic-receipts", comp.Version)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, options, false, nil, result)
 	return result, err
 }
 
@@ -156,7 +157,7 @@ func (comp *BatchClient) QueryElectronicReceipts(ctx context.Context, acceptType
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer-detail/electronic-receipts", comp.Version)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, nil, false, nil, result)
 	return result, err
 }
 

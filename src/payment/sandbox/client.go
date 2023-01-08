@@ -6,6 +6,7 @@ import (
 	"errors"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"net/http"
 	"time"
 )
 
@@ -40,7 +41,7 @@ func (comp *Client) GetKey() (string, error) {
 		return strCacheKey, nil
 	}
 
-	response, err := comp.RequestArray(nil, "sandboxnew/pay/getsignkey", "POST", nil, nil, nil)
+	response, err := comp.RequestArray(nil, "sandboxnew/pay/getsignkey", http.MethodPost, nil, nil, nil)
 	if err != nil {
 		return "", err
 	}

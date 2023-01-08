@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/reverse/response"
+	"net/http"
 )
 
 type Client struct {
@@ -35,7 +36,7 @@ func (comp *Client) Reverse(ctx context.Context, number string, reverseType stri
 	}
 
 	endpoint := comp.Wrap("secapi/pay/reverse")
-	_, err := comp.Request(ctx, endpoint, nil, "POST", params, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, params, false, nil, result)
 
 	return result, err
 }

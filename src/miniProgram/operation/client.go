@@ -61,7 +61,7 @@ func (comp *Client) GetFeedbackMedia(ctx context.Context, recordID int, mediaID 
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/getfeedbackmedia", "GET", data, header, &result)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/getfeedbackmedia", http.MethodPost, data, header, &result)
 
 	return rs, err
 }

@@ -28,7 +28,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response2.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", "GET", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
@@ -43,7 +43,7 @@ func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, er
 func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response2.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get/jssdk", "GET", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get/jssdk", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},

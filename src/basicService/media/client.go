@@ -85,7 +85,7 @@ func (comp *Client) Upload(ctx context.Context, mediaType string, path string) (
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "media/get", "GET", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "media/get", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
@@ -100,7 +100,7 @@ func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, er
 func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "media/get/jssdk", "GET", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "media/get/jssdk", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
