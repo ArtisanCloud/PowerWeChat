@@ -52,7 +52,7 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 		App:        app,
 		HttpHelper: h,
 
-		RequestMethod:      "GET",
+		RequestMethod:      http.MethodPost,
 		EndpointToGetToken: "",
 		QueryName:          "",
 		Token:              nil,
@@ -183,7 +183,7 @@ func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOpt
 func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*response2.ResponseGetToken, error) {
 
 	key := "json"
-	if accessToken.RequestMethod == "GET" {
+	if accessToken.RequestMethod == http.MethodPost {
 		key = "query"
 	}
 	options := &object.HashMap{

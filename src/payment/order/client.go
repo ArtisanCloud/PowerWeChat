@@ -105,7 +105,7 @@ func (comp *Client) PayTransaction(ctx context.Context, entryPoint string, param
 	}
 
 	transactionEndpoint := comp.Wrap(entryPoint)
-	rs, err := comp.Request(ctx, transactionEndpoint, nil, "POST", options, false, nil, result)
+	rs, err := comp.Request(ctx, transactionEndpoint, nil, http.MethodPost, options, false, nil, result)
 	return rs, err
 }
 
@@ -136,7 +136,7 @@ func (comp *Client) Query(ctx context.Context, params *object.HashMap) (*respons
 	endpoint = comp.Wrap(endpoint)
 	_, err := comp.Request(ctx, endpoint, &object.StringMap{
 		"mchid": config.GetString("mch_id", ""),
-	}, "GET", nil, false, nil, result)
+	}, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }
@@ -147,7 +147,7 @@ func (comp *Client) Close(ctx context.Context, tradeNo string) (*http.Response, 
 	config := (*comp.App).GetConfig()
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s/close", tradeNo))
-	rs, err := comp.PlainRequest(endpoint, nil, "POST", &object.HashMap{
+	rs, err := comp.PlainRequest(endpoint, nil, http.MethodPost, &object.HashMap{
 		"mchid": config.GetString("mch_id", ""),
 	}, false, nil, nil)
 

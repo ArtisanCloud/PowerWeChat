@@ -18,4 +18,5 @@ type RequestTransferBatch struct {
 	TotalAmount        int               `json:"total_amount"`
 	TotalNum           int               `json:"total_num"`
 	TransferDetailList []*TransferDetail `json:"transfer_detail_list"`
+	TransferSceneID    string            `json:"transfer_scene_id,omitempty"`
 }

@@ -7,6 +7,7 @@ import (
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing/response"
+	"net/http"
 )
 
 type Client struct {
@@ -37,7 +38,7 @@ func (comp *Client) Share(ctx context.Context, param *request.RequestShare) (*re
 	options, err := object.StructToHashMap(param)
 
 	endpoint := comp.Wrap("/v3/profitsharing/orders")
-	_, err = comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
+	_, err = comp.Request(ctx, endpoint, nil, http.MethodPost, options, false, nil, result)
 
 	return result, err
 }
@@ -53,7 +54,7 @@ func (comp *Client) Query(ctx context.Context, transactionID string, outOrderNO 
 	}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/orders/%s", outOrderNO))
-	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }
@@ -78,7 +79,7 @@ func (comp *Client) Return(ctx context.Context, data *request.RequestShareReturn
 	params = object.MergeHashMap(params, base)
 
 	endpoint := comp.Wrap("/secapi/pay/profitsharingreturn")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -95,7 +96,7 @@ func (comp *Client) QueryReturn(ctx context.Context, outOrderNO string, outRetur
 	}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/return-orders/%s", outReturnNO))
-	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }
@@ -114,7 +115,7 @@ func (comp *Client) UnfreezeOrders(ctx context.Context, transactionID string, ou
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/orders/unfreeze")
-	_, err := comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, options, false, nil, result)
 
 	return result, err
 }
@@ -127,7 +128,7 @@ func (comp *Client) QueryTransactions(ctx context.Context, transactionID string)
 	result := &response.ResponseProfitSharingTransaction{}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/transactions/%s/amounts", transactionID))
-	_, err := comp.Request(ctx, endpoint, nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }
@@ -151,7 +152,7 @@ func (comp *Client) AddReceiver(
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/receivers/add")
-	_, err := comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, options, false, nil, result)
 
 	return result, err
 }
@@ -171,7 +172,7 @@ func (comp *Client) DeleteReceiver(ctx context.Context, receiverType string, acc
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/receivers/delete")
-	_, err := comp.Request(ctx, endpoint, nil, "POST", options, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, options, false, nil, result)
 
 	return result, err
 }
@@ -190,7 +191,7 @@ func (comp *Client) GetBills(ctx context.Context, subMchID string, billDate stri
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/bills")
-	_, err := comp.Request(ctx, endpoint, params, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }

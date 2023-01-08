@@ -35,7 +35,7 @@ func (comp *Client) SendWorkWX(ctx context.Context, data *request.RequestSendWor
 	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/sendworkwxredpack")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -54,7 +54,7 @@ func (comp *Client) QueryWorkWX(ctx context.Context, data *request.RequestQueryW
 	params, err := object.StructToHashMap(data)
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/queryworkwxredpack")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }

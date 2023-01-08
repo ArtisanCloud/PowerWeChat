@@ -272,7 +272,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 
 	config := (*client.App).GetConfig()
 
-	method := "GET"
+	method := http.MethodPost
 	options, err := client.AuthSignRequest(config, requestDownload.DownloadURL, method, nil, nil)
 	if err != nil {
 		return 0, err

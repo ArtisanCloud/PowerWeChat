@@ -9,6 +9,7 @@ import (
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/response"
+	"net/http"
 )
 
 type Client struct {
@@ -39,7 +40,7 @@ func (comp *Client) QueryBalanceOrder(ctx context.Context, partnerTradeNo string
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/gettransferinfo")
-	_, err := comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -63,7 +64,7 @@ func (comp *Client) ToBalance(ctx context.Context, data *request.RequestTransfer
 
 	params = object.MergeHashMap(params, base)
 	endpoint := comp.Wrap("mmpaymkttransfers/promotion/transfers")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -81,7 +82,7 @@ func (comp *Client) QueryBankCardOrder(ctx context.Context, partnerTradeNo strin
 	}
 
 	endpoint := comp.Wrap("/mmpaymkttransfers/query_bank")
-	_, err := comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }
@@ -129,7 +130,7 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 	}
 
 	endpoint := comp.Wrap("mmpaysptrans/pay_bank")
-	_, err = comp.SafeRequest(ctx, endpoint, params, "POST", &object.HashMap{}, nil, result)
+	_, err = comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }

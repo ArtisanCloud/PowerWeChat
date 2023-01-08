@@ -7,6 +7,7 @@ import (
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund/response"
+	"net/http"
 )
 
 type Client struct {
@@ -37,7 +38,7 @@ func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRe
 	}
 
 	endpoint := comp.Wrap("/v3/refund/domestic/refunds")
-	_, err = comp.PlainRequest(endpoint, nil, "POST", body, false, nil, result)
+	_, err = comp.PlainRequest(endpoint, nil, http.MethodPost, body, false, nil, result)
 
 	return result, err
 }
@@ -51,7 +52,7 @@ func (comp *Client) Query(ctx context.Context, refundOutNO string) (*response.Re
 
 	endpoint := fmt.Sprintf("/v3/refund/domestic/refunds/%s", refundOutNO)
 	endpoint = comp.Wrap(endpoint)
-	_, err := comp.Request(ctx, endpoint, nil, "GET", nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, nil, false, nil, result)
 
 	return result, err
 }

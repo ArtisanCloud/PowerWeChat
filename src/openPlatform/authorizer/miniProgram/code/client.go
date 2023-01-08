@@ -7,6 +7,7 @@ import (
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/miniProgram/code/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/miniProgram/code/response"
+	"net/http"
 )
 
 type Client struct {
@@ -47,7 +48,7 @@ func (comp *Client) GetQrCode(ctx context.Context, path string) (*response2.Resp
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.BaseClient.RequestRaw(ctx, "wxa/get_qrcode", "GET", &object.HashMap{
+	_, err := comp.BaseClient.RequestRaw(ctx, "wxa/get_qrcode", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"path": path,
 		}}, nil, result)

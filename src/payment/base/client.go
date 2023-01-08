@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"net/http"
 )
 
 type Client struct {
@@ -19,7 +20,7 @@ func (comp *Client) Pay(ctx context.Context, params *object.StringMap) *response
 	result := &response2.ResponseWork{}
 
 	endpoint := comp.BaseClient.Wrap("/v3/pay/micropay")
-	comp.BaseClient.Request(ctx, endpoint, params, "POST", nil, false, nil, result)
+	comp.BaseClient.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
 
 	return result
 }
@@ -36,7 +37,7 @@ func (comp *Client) AuthCodeToOpenID(ctx context.Context, authCode string) *resp
 	comp.BaseClient.Request(ctx, "tools/authcodetoopenid", &object.StringMap{
 		"appid":     appID,
 		"auth_code": authCode,
-	}, "POST", nil, false, nil, result)
+	}, http.MethodPost, nil, false, nil, result)
 
 	return result
 }

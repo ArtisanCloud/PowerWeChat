@@ -15,7 +15,7 @@ type AccessToken struct {
 func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
-	kernelToken.RequestMethod = "POST"
+	kernelToken.RequestMethod = http.MethodPost
 	kernelToken.TokenKey = "suite_access_token"
 	kernelToken.EndpointToGetToken = "cgi-bin/service/get_suite_token"
 	kernelToken.CachePrefix = "powerwechat.kernel.suite_access_token."

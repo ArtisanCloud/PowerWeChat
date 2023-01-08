@@ -28,7 +28,7 @@ func (comp *Client) GetTempMedia(ctx context.Context, mediaID string) (*http.Res
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", "GET", params, &header, nil)
+	rs, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", http.MethodPost, params, &header, nil)
 
 	return rs, err
 }

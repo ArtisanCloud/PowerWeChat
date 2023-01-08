@@ -30,7 +30,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response4.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/material/get_material", "POST", &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/material/get_material", http.MethodPost, &object.HashMap{
 		"form_params": &object.HashMap{
 			"media_id": mediaID,
 		},

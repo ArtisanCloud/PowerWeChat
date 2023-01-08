@@ -9,11 +9,11 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/os"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
+	"io"
 	"io/ioutil"
 	http "net/http"
-	"os"
-	"path/filepath"
 	"strconv"
 )
 
@@ -87,7 +87,7 @@ func (client *BaseClient) HttpGet(ctx context.Context, url string, query *object
 	return client.Request(
 		ctx,
 		url,
-		"GET",
+		http.MethodPost,
 		&object.HashMap{
 			"query": query,
 		},
@@ -101,7 +101,7 @@ func (client *BaseClient) HttpPost(ctx context.Context, url string, data interfa
 	return client.Request(
 		ctx,
 		url,
-		"POST",
+		http.MethodPost,
 		&object.HashMap{
 			"form_params": data,
 		},
@@ -115,7 +115,7 @@ func (client *BaseClient) HttpPostJson(ctx context.Context, url string, data int
 	return client.Request(
 		ctx,
 		url,
-		"POST",
+		http.MethodPost,
 		&object.HashMap{
 			"query":       query,
 			"form_params": data,
@@ -128,56 +128,69 @@ func (client *BaseClient) HttpPostJson(ctx context.Context, url string, data int
 
 func (client *BaseClient) HttpUpload(ctx context.Context, url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
-	multipart := []*object.HashMap{}
-	headers := &object.HashMap{}
+	// http client request
+	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(http.MethodPost)
 
-	// 如果设置了filename，则初始化一个header，在每一个multipart里注入
+	var mems map[string]io.Reader
+	// 遍历表单的数据
 	if form != nil {
-		if form.FileName != "" {
-			fileName := form.FileName
-			(*headers)["Content-Disposition"] = fmt.Sprintf("form-data; name=\"media\"; filename=\"%s\"", fileName)
-		}
-	}
-
-	// 遍历文件目录
-	if files != nil {
-		for name, path := range *files {
-
-			_, err := os.Open(path.(string))
+		mems = make(map[string]io.Reader)
+		for _, content := range form.Contents {
+			value, err := os.ConvertFileHandleToReader(content.Value)
 			if err != nil {
 				return nil, err
 			}
-			if (*headers)["filename"] == nil {
-				(*headers)["filename"] = filepath.Base(path.(string))
-			}
-
-			multipart = append(multipart, &object.HashMap{
-				"name":    name,
-				"value":   path,
-				"headers": headers,
-			})
+			mems[content.Name] = value
 		}
 	}
 
-	// 遍历表单的数据
-	if form != nil {
-		for _, content := range form.Contents {
-			part := &object.HashMap{
-				"name": content.Name,
-				//"value": object.EncodeToBytes(content.Value),
-				"value": content.Value,
+	df.Multipart(func(multipart contract.MultipartDfInterface) {
+		// 遍历文件目录
+		if files != nil {
+			for name, path := range *files {
+				multipart.FileByPath(name, path.(string))
 			}
-			multipart = append(multipart, part)
+		}
+
+		for k, v := range mems {
+			multipart.FileMem(form.FileName, k, v)
+		}
+
+	})
+
+	// set query params
+	if query != nil {
+		queries := query.(*object.StringMap)
+		if queries != nil {
+			for k, v := range *queries {
+				df.Query(k, v)
+			}
 		}
 	}
 
-	return client.Request(ctx, url, "POST", &object.HashMap{
-		"query":           query,
-		"multipart":       multipart,
-		"connect_timeout": 30,
-		"timeout":         30,
-		"read_timeout":    30,
-	}, false, nil, outBody)
+	// set debug mode
+	config := (*client.App).GetConfig()
+	// 微信如果需要传debug模式
+	debug := config.GetBool("debug", false)
+	if debug {
+		df.Query("debug", "1")
+	}
+
+	response, err := df.Request()
+	if err != nil {
+		return response, err
+	}
+
+	// decode response body to outBody
+	if outBody != nil {
+		err = client.HttpHelper.ParseResponseBodyContent(response, outBody)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return response, err
+
 }
 
 func (client *BaseClient) Request(ctx context.Context, url string, method string, options *object.HashMap,
@@ -240,13 +253,6 @@ func (client *BaseClient) Request(ctx context.Context, url string, method string
 
 	return response, err
 
-	//if returnRaw {
-	//	return response, err
-	//} else {
-	//	// tbf
-	//	returnResponse, err := client.CastResponseToType(response, response2.TYPE_MAP)
-	//	return returnResponse, err
-	//}
 }
 
 func (client *BaseClient) RequestRaw(ctx context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*http.Response, error) {
