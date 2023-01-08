@@ -55,7 +55,8 @@ printf(rs.OpenID)
 * [使用示例](https://github.com/ArtisanCloud/power-wechat-tutorial) ：您可以通过Tutorial来了解到PowerWeChat的配置和使用
 
 
-### 版本升级(V2->V3)
+### 版本升级(V2->V3) 
+#### [稳定版本v2.0.40](https://github.com/ArtisanCloud/PowerWeChat/tree/v2.0.40)
 * 接口添加context参数
 * 解决v2的自动refresh token问题
 
