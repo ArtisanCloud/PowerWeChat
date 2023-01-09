@@ -2,6 +2,7 @@ package groupRobot
 
 import (
 	"context"
+	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -28,6 +29,31 @@ func (comp *Client) Message(message interface{}) (*Messager, error) {
 }
 
 // 群机器人配置说明
+
+// https://developer.work.weixin.qq.com/document/path/91770#文本类型
+func (comp *Client) UploadMedia(ctx context.Context, key string, path string) (*response.ResponseGroupRobotUploadMedia, error) {
+
+	result := &response.ResponseGroupRobotUploadMedia{}
+
+	comp.BaseClient.Token = nil
+
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
+	} else {
+		return nil, errors.New("path is empty")
+	}
+
+	_, err := comp.BaseClient.HttpUpload(ctx, "cgi-bin/webhook/upload_media", files, nil, &object.StringMap{
+		"key":  key,
+		"type": "file",
+	}, nil, result)
+
+	return result, err
+}
+
 // https://developer.work.weixin.qq.com/document/path/91770#文本类型
 func (comp *Client) Send(ctx context.Context, key string, message *power.HashMap) (*response.ResponseGroupRobotSend, error) {
 
