@@ -11,3 +11,11 @@ type ResponseGroupRobotSend struct {
 	MediaID   string `json:"media_id"`
 	CreatedAt string `json:"created_at"`
 }
+
+type ResponseGroupRobotUploadMedia struct {
+	response.ResponseWork
+
+	Type      string `json:"type"`
+	MediaId   string `json:"media_id"`
+	CreatedAt string `json:"created_at"`
+}
