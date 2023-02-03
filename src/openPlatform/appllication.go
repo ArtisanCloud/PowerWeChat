@@ -325,7 +325,7 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 
 		HttpDebug: config.GetBool("http_debug", false),
 		Debug:     config.GetBool("debug", false),
-		NotifyURL: config.GetString("secret", ""),
+		NotifyURL: config.GetString("notify_url", ""),
 		Sandbox:   config.GetBool("sandbox", false),
 	}
 

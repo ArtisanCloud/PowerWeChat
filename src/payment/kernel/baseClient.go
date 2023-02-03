@@ -108,7 +108,7 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 
 	// http client request
 	returnResponse, err := client.HttpHelper.Df().
-		Url(endpoint).Method(method).Json(options).Request()
+		Uri(endpoint).Method(method).Json(options).Request()
 
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
