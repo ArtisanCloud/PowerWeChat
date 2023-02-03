@@ -10,3 +10,16 @@ type RequestSubscribeMessageSend struct {
 	Lang             string         `json:"lang,omitempty"`
 	Data             *power.HashMap `json:"data"`
 }
+
+type MiniProgram struct {
+	Appid    string `json:"appid"`
+	Pagepath string `json:"pagepath"`
+}
+
+type RequestSubscribeMessageBizSend struct {
+	ToUser      string         `json:"touser"`
+	TemplateId  string         `json:"template_id"`
+	Page        string         `json:"page"`
+	MiniProgram *MiniProgram   `json:"miniprogram"`
+	Data        *power.HashMap `json:"data"`
+}

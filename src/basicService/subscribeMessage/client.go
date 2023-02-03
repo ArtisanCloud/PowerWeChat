@@ -8,6 +8,7 @@ import (
 	response3 "github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/subscribeMessage/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/device/response"
 )
 
 type Client struct {
@@ -105,6 +106,17 @@ func (comp *Client) Send(ctx context.Context, data *request.RequestSubscribeMess
 	result := &response2.ResponseMiniProgram{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/message/subscribe/send", data, nil, nil, result)
+
+	return result, err
+}
+
+// send发送订阅通知
+// https://developers.weixin.qq.com/doc/offiaccount/Subscription_Messages/api.html#send发送订阅通知
+func (comp *Client) BizSend(ctx context.Context, data *request.RequestSubscribeMessageBizSend) (*response.BaseResp, error) {
+
+	result := &response.BaseResp{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/message/subscribe/bizsend", data, nil, nil, result)
 
 	return result, err
 }
