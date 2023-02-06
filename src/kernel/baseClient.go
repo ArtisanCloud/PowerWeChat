@@ -272,10 +272,10 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 	config := (*client.App).GetConfig()
 	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
 	client.HttpHelper.WithMiddleware(
-		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 		accessTokenMiddleware,
 		logMiddleware(logger),
 		checkAccessTokenMiddleware(3),
+		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 	)
 }
 

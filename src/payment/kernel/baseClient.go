@@ -227,7 +227,10 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 	// http client request
 	returnResponse, err := client.HttpHelper.Df().
 		WithContext(ctx).
-		Uri(endpoint).Method(method).Json(options).Request()
+		//Header("Accept", "application/json").
+		Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string)).
+		Header("Wechatpay-Serial", (*(*options)["headers"].(*object.HashMap))["Wechatpay-Serial"].(string)).
+		Uri(endpoint).Method(method).Json((*options)["body"]).Request()
 
 	if err != nil {
 		return returnResponse, err
@@ -514,11 +517,13 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 	// check invalid access token
 	checkAccessTokenMiddleware := client.GetMiddlewareOfRefreshAccessToken
 
+	config := (*client.App).GetConfig()
 	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
 	client.HttpHelper.WithMiddleware(
 		accessTokenMiddleware,
 		logMiddleware(logger),
 		checkAccessTokenMiddleware(3),
+		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 	)
 }
 

@@ -7,7 +7,7 @@ go 1.17
 
 require (
 	github.com/ArtisanCloud/PowerLibs/v3 v3.0.1
-	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.1
+	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.2
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/stretchr/testify v1.8.0
 )
