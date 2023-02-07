@@ -544,27 +544,26 @@ func (client *BaseClient) AuthSignRequestV2(endpoint string, method string, para
 func (client *BaseClient) RegisterHttpMiddlewares() {
 
 	// access token
-	accessTokenMiddleware := client.GetMiddlewareOfAccessToken
+	//accessTokenMiddleware := client.GetMiddlewareOfAccessToken
+	// check invalid access token
+	//checkAccessTokenMiddleware := client.GetMiddlewareOfRefreshAccessToken
 	// log
 	logMiddleware := client.GetMiddlewareOfLog
-
-	// check invalid access token
-	checkAccessTokenMiddleware := client.GetMiddlewareOfRefreshAccessToken
 
 	config := (*client.App).GetConfig()
 	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
 	client.HttpHelper.WithMiddleware(
-		accessTokenMiddleware,
+		//accessTokenMiddleware,
 		logMiddleware(logger),
-		checkAccessTokenMiddleware(3),
+		//checkAccessTokenMiddleware(3),
 		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 	)
 }
 
 func (client *BaseClient) OverrideGetMiddlewares() {
 	client.OverrideGetMiddlewareOfLog()
-	client.OverrideGetMiddlewareOfAccessToken()
-	client.OverrideGetMiddlewareOfRefreshAccessToken()
+	//client.OverrideGetMiddlewareOfAccessToken()
+	//client.OverrideGetMiddlewareOfRefreshAccessToken()
 }
 
 func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
