@@ -250,11 +250,12 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 		// set body json
 		if (*options)["body"] != nil {
 			r := bytes.NewBufferString((*options)["body"].(string))
-			df.Json(r)
+			df.Body(r)
 		}
 
 		// set header
 		df.
+			Header("content-type", "application/json").
 			Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string)).
 			Header("Wechatpay-Serial", (*(*options)["headers"].(*object.HashMap))["Wechatpay-Serial"].(string))
 
