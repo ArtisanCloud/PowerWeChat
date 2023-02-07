@@ -225,12 +225,45 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 	//client.PushMiddleware(client.logMiddleware(), "access_token")
 
 	// http client request
-	returnResponse, err := client.HttpHelper.Df().
+	df := client.HttpHelper.Df().
 		WithContext(ctx).
-		//Header("Accept", "application/json").
-		Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string)).
-		Header("Wechatpay-Serial", (*(*options)["headers"].(*object.HashMap))["Wechatpay-Serial"].(string)).
-		Uri(endpoint).Method(method).Json((*options)["body"]).Request()
+		Uri(endpoint).Method(method)
+
+	// 检查是否需要有请求参数配置
+	if options != nil {
+		// set query key values
+		if (*options)["query"] != nil {
+			queries := (*options)["query"].(*object.StringMap)
+			if queries != nil {
+				for k, v := range *queries {
+					df.Query(k, v)
+				}
+			}
+		}
+		config := (*client.App).GetConfig()
+		// 微信如果需要传debug模式
+		debug := config.GetBool("debug", false)
+		if debug {
+			df.Query("debug", "1")
+		}
+
+		// set body json
+		if (*options)["body"] != nil {
+			r := bytes.NewBufferString((*options)["body"].(string))
+			df.Json(r)
+		}
+
+		// set header
+		df.
+			Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string)).
+			Header("Wechatpay-Serial", (*(*options)["headers"].(*object.HashMap))["Wechatpay-Serial"].(string))
+
+	}
+
+	returnResponse, err := df.Request()
+	if err != nil {
+		return returnResponse, err
+	}
 
 	if err != nil {
 		return returnResponse, err
