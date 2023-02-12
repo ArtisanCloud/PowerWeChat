@@ -297,7 +297,7 @@ func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
 
 			if accessToken != nil {
 				config := (*client.App).GetContainer().Config
-				_, err = accessToken.ApplyToRequest(request, config)
+				request, err = accessToken.ApplyToRequest(request, config)
 			}
 
 			if err != nil {

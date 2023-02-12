@@ -2,6 +2,7 @@ package openPlatform
 
 import (
 	"context"
+	"errors"
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -214,11 +215,13 @@ func (app *OpenPlatform) OfficialAccount(appID string, refreshToken string, acce
 	if err != nil {
 		return nil, err
 	}
+	// 先初始化一个OfficialAccount的账号
 	application, err = officialAccount.NewApplication(userConfig)
 	if err != nil {
 		return nil, err
 	}
 
+	// 重塑一个AccessToken
 	if accessToken == nil {
 		accessToken, err = auth2.NewAccessToken(application.OfficialAccount, app)
 		if err != nil {
@@ -272,15 +275,15 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 	log := config.Get("log", nil).(*object.HashMap)
 
 	userConfig = &officialAccount2.UserConfig{
+		ComponentAppID:    config.GetString("app_id", ""),
+		ComponentAppToken: token.ComponentAccessToken,
 		AppID:             appID,
+		RefreshToken:      refreshToken,
 		Secret:            config.GetString("secret", ""),
 		Token:             config.GetString("token", ""),
 		AESKey:            config.GetString("aes_key", ""),
-		RefreshToken:      refreshToken,
-		ComponentAppID:    config.GetString("app_id", ""),
-		ComponentAppToken: token.ComponentAccessToken,
 
-		ResponseType: config.GetString("secret", ""),
+		ResponseType: config.GetString("response_type", ""),
 		Log: officialAccount2.Log{
 			Level: (*log)["level"].(string),
 			File:  (*log)["file"].(string),
@@ -291,7 +294,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 
 		HttpDebug: config.GetBool("http_debug", false),
 		Debug:     config.GetBool("debug", false),
-		NotifyURL: config.GetString("secret", ""),
+		NotifyURL: config.GetString("notify_url", ""),
 		Sandbox:   config.GetBool("sandbox", false),
 	}
 
@@ -334,27 +337,39 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 
 // Return the pre-authorization login page url.
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Before_Develop/Authorization_Process_Technical_Description.html
-func (app *OpenPlatform) GetFastRegistrationURL(ctx context.Context, callbackUrl string, optional *object.StringMap) string {
+func (app *OpenPlatform) GetFastRegistrationURL(ctx context.Context, callbackUrl string, optional *object.StringMap) (url string, err error) {
 
 	config := app.GetConfig()
 
-	code, _ := app.Base.CreatePreAuthorizationCode(ctx)
+	code, err := app.Base.CreatePreAuthorizationCode(ctx)
+	if err != nil {
+		return url, err
+	}
+	if code.ErrCode != 0 {
+		return url, errors.New(code.ErrMSG)
+	}
 	(*optional)["pre_auth_code"] = code.PreAuthCode
 	queries := object.MergeStringMap(optional, &object.StringMap{
 		"component_appid": config.GetString("app_id", ""),
 		"redirect_uri":    callbackUrl,
 	})
 
-	return "https://mp.weixin.qq.com/cgi-bin/componentloginpage?" + object.GetJoinedWithKSort(queries)
+	return "https://mp.weixin.qq.com/cgi-bin/componentloginpage?" + object.GetJoinedWithKSort(queries), err
 
 }
 
 // Return the pre-authorization login page url (mobile).
-func (app *OpenPlatform) GetMobilePreAuthorizationURL(ctx context.Context, callbackUrl string, optional *object.StringMap) string {
+func (app *OpenPlatform) GetMobilePreAuthorizationURL(ctx context.Context, callbackUrl string, optional *object.StringMap) (url string, err error) {
 
 	config := app.GetConfig()
 
-	code, _ := app.Base.CreatePreAuthorizationCode(ctx)
+	code, err := app.Base.CreatePreAuthorizationCode(ctx)
+	if err != nil {
+		return url, err
+	}
+	if code.ErrCode != 0 {
+		return url, errors.New(code.ErrMSG)
+	}
 	(*optional)["pre_auth_code"] = code.PreAuthCode
 	queries := object.MergeStringMap(
 		&object.StringMap{
@@ -368,6 +383,6 @@ func (app *OpenPlatform) GetMobilePreAuthorizationURL(ctx context.Context, callb
 			"no_scan":         "1",
 		})
 
-	return "https://mp.weixin.qq.com/safe/bindcomponent?" + object.GetJoinedWithKSort(queries) + "#wechat_redirect"
+	return "https://mp.weixin.qq.com/safe/bindcomponent?" + object.GetJoinedWithKSort(queries) + "#wechat_redirect", err
 
 }

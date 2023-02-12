@@ -112,6 +112,17 @@ type ResponseGetAuthorizer struct {
 	AuthorizationInfo *AuthorizationInfo `json:"authorization_info"`
 }
 
+type Authorization struct {
+	AuthorizerAppID string `json:"authorizer_appid"`
+	RefreshToken    string `json:"refresh_token"`
+	AuthTime        int    `json:"auth_time"`
+}
+
+type ResponseGetAuthorizers struct {
+	TotalCount int              `json:"total_count"`
+	List       []*Authorization `json:"list"`
+}
+
 // ------------------------------------------------------------------------------------------------------------------------
 
 type ResponseGetAuthorizerOption struct {
