@@ -6,7 +6,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
+	contract3 "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
+	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -30,6 +32,8 @@ type AccessToken struct {
 
 	GetCredentials func() *object.StringMap
 	GetEndpoint    func() (string, error)
+
+	GetMiddlewareOfLog func(logger contract2.LoggerInterface) contract3.RequestMiddleware
 }
 
 func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
@@ -62,6 +66,8 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 	}
 
 	token.OverrideGetEndpoint()
+	token.OverrideGetMiddlewares()
+	token.RegisterHttpMiddlewares()
 
 	return token, nil
 }
@@ -116,6 +122,13 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	_, err = accessToken.SetToken(resToken)
 
 	// tbd dispatch an event for AccessTokenRefresh
+	if accessToken.TokenKey == "component_access_token" && resToken.ComponentAccessToken != "" {
+		resToken.AccessToken = resToken.ComponentAccessToken
+	} else if accessToken.TokenKey == "authorizer_access_token" && resToken.AuthorizerAccessToken != "" {
+		resToken.AccessToken = resToken.AuthorizerAccessToken
+	} else if accessToken.TokenKey == "authorizer_refresh_token" && resToken.AuthorizerRefreshToken != "" {
+		resToken.AccessToken = resToken.AuthorizerRefreshToken
+	}
 
 	return resToken, err
 }
@@ -183,7 +196,7 @@ func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOpt
 func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*response2.ResponseGetToken, error) {
 
 	key := "json"
-	if accessToken.RequestMethod == http.MethodPost {
+	if accessToken.RequestMethod == http.MethodGet {
 		key = "query"
 	}
 	options := &object.HashMap{
@@ -213,9 +226,12 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 		}
 
 		// set body json
-		if (*options)["form_params"] != nil {
-			df.Json((*options)["form_params"])
+		if (*options)["json"] != nil {
+			df.Json((*options)["json"])
 		}
+		//if (*options)["form_params"] != nil {
+		//	df.Json((*options)["form_params"])
+		//}
 	}
 
 	rs, err := df.Request()
@@ -265,6 +281,43 @@ func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
 
 	return arrayReturn, err
 
+}
+
+func (accessToken *AccessToken) RegisterHttpMiddlewares() {
+
+	// log
+	logMiddleware := accessToken.GetMiddlewareOfLog
+
+	config := (*accessToken.App).GetConfig()
+	logger := (*accessToken.App).GetComponent("Logger").(contract2.LoggerInterface)
+	accessToken.HttpHelper.WithMiddleware(
+		logMiddleware(logger),
+		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
+	)
+}
+
+func (accessToken *AccessToken) OverrideGetMiddlewares() {
+	accessToken.OverrideGetMiddlewareOfLog()
+}
+
+func (accessToken *AccessToken) OverrideGetMiddlewareOfLog() {
+	accessToken.GetMiddlewareOfLog = func(logger contract2.LoggerInterface) contract3.RequestMiddleware {
+		return contract3.RequestMiddleware(func(handle contract3.RequestHandle) contract3.RequestHandle {
+			return func(request *http.Request) (response *http.Response, err error) {
+				// 前置中间件
+				//logger.Println("这里是前置中间件log, 在请求前执行")
+
+				response, err = handle(request)
+				if err != nil {
+					return response, err
+				}
+
+				//// 后置中间件
+				////logger.Println("这里是后置置中间件log, 在请求后执行")
+				return
+			}
+		})
+	}
 }
 
 func (accessToken *AccessToken) OverrideGetEndpoint() {

@@ -20,10 +20,6 @@ func (comp *Client) HandleAuthorize(ctx context.Context, authCode string) (*resp
 
 	config := (*comp.BaseClient.App).GetConfig()
 
-	if authCode == "" {
-		authCode = config.GetString("app_id", "auth_code")
-	}
-
 	params := &object.HashMap{
 		"component_appid":    config.GetString("app_id", ""),
 		"authorization_code": authCode,
@@ -93,9 +89,9 @@ func (comp *Client) SetAuthorizerOption(ctx context.Context, appID string, name 
 
 // 拉取所有已授权的帐号信息
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/Account_Authorization/api_get_authorizer_list.html
-func (comp *Client) GetAuthorizers(ctx context.Context, offset int, count int) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) GetAuthorizers(ctx context.Context, offset int, count int) (*response.ResponseGetAuthorizers, error) {
 
-	result := &response2.ResponseOpenPlatform{}
+	result := &response.ResponseGetAuthorizers{}
 
 	config := (*comp.BaseClient.App).GetConfig()
 
