@@ -56,7 +56,7 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 		App:        app,
 		HttpHelper: h,
 
-		RequestMethod:      http.MethodPost,
+		RequestMethod:      http.MethodGet,
 		EndpointToGetToken: "",
 		QueryName:          "",
 		Token:              nil,
