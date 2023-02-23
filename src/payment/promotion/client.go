@@ -6,6 +6,7 @@ import (
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/promotion/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/promotion/response"
+	"net/http"
 )
 
 type Client struct {

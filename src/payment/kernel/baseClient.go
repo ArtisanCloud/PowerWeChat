@@ -140,14 +140,14 @@ func (client *BaseClient) RequestV2(ctx context.Context, endpoint string, params
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response *http.Response, err error) {
 
-	//config := (*client.App).GetConfig()
+	config := (*client.App).GetConfig()
 
 	base := &object.HashMap{
 		// 微信的接口如果传入接口以外的参数，签名会失败所以这里需要区分对待参数
-		"nonce_str": object.RandStringBytesMask(32),
-		//"mch_id":     config.GetString("mch_id", ""),
-		//"sub_mch_id": config.GetString("sub_mch_id", ""),
-		//"sub_appid":  config.GetString("sub_appid", ""),
+		"mch_id":     config.GetString("mch_id", ""),
+		"nonce_str":  object.RandStringBytesMask(32),
+		"sub_mch_id": config.GetString("sub_mch_id", ""),
+		"sub_appid":  config.GetString("sub_appid", ""),
 	}
 	params = object.MergeHashMap(params, base)
 	params = object.FilterEmptyHashMap(params)
@@ -305,7 +305,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 	if err != nil {
 		return 0, err
 	}
-	defer fileHandler.Close()
+	//defer fileHandler.Close()
 
 	config := (*client.App).GetConfig()
 
@@ -330,7 +330,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 	if err != nil {
 		return 0, err
 	}
-	defer downloadedHandler.Close()
+	//defer downloadedHandler.Close()
 
 	fileMd5 := sha1.New()
 	totalSize, err := io.Copy(fileMd5, downloadedHandler)
