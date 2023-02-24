@@ -56,7 +56,6 @@ printf(rs.OpenID)
 
 
 ### 版本升级描述(V2->V3) 
-#### [稳定版本v2.0.40](https://github.com/ArtisanCloud/PowerWeChat/tree/v2.0.40)
 * 接口添加context参数
 * 解决v2的自动refresh token问题
 
