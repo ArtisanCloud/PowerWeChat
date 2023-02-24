@@ -14,10 +14,11 @@ type Button struct {
 	Name       string      `json:"name"`
 	Key        string      `json:"key,omitempty"`
 	URL        string      `json:"url,omitempty"`
+	AppID      string      `json:"appid,omitempty"`
+	PagePath   string      `json:"pagepath,omitempty"`
 	SubButtons []SubButton `json:"sub_button,omitempty"`
 }
 
 type RequestMenuCreate struct {
 	Buttons []*Button `json:"button"`
 }
-
