@@ -62,7 +62,7 @@ func (client *BaseClient) prepends() *object.HashMap {
 	return &object.HashMap{}
 }
 
-func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap, method string, options *object.HashMap,
+func (client *BaseClient) PlainRequest(ctx context.Context, endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
 ) (response *http.Response, err error) {
 
@@ -96,19 +96,45 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 		return nil, err
 	}
 
-	options = object.MergeHashMap(&object.HashMap{
-		"headers": &object.HashMap{
-			"Authorization": authorization,
-		},
-		"body": signBody,
-	}, options)
+	df := client.HttpHelper.Df().
+		WithContext(ctx).
+		Uri(endpoint).Method(method)
 
-	// to be setup middleware here
-	//client.PushMiddleware(client.logMiddleware(), "access_token")
+	// 检查是否需要有请求参数配置
+	if options != nil {
+		// set query key values
+		if (*options)["query"] != nil {
+			queries := (*options)["query"].(*object.StringMap)
+			if queries != nil {
+				for k, v := range *queries {
+					df.Query(k, v)
+				}
+			}
+		}
+		config := (*client.App).GetConfig()
+		// 微信如果需要传debug模式
+		debug := config.GetBool("debug", false)
+		if debug {
+			df.Query("debug", "1")
+		}
 
-	// http client request
-	returnResponse, err := client.HttpHelper.Df().
-		Uri(endpoint).Method(method).Json(options).Request()
+		// set body json
+		if signBody != "" {
+			r := bytes.NewBufferString(signBody)
+			df.Body(r)
+		}
+
+		// set header
+		df.
+			Header("content-type", "application/json").
+			Header("Authorization", authorization)
+
+	}
+
+	returnResponse, err := df.Request()
+	if err != nil {
+		return returnResponse, err
+	}
 
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
@@ -116,23 +142,8 @@ func (client *BaseClient) PlainRequest(endpoint string, params *object.StringMap
 	if err != nil {
 		return nil, err
 	}
-	// decode response header to outHeader
-	//headerData, _ := ioutil.ReadAll(response.Header)
-	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
-	//err = object.JsonDecode(headerData, outHeader)
 
 	return returnResponse, err
-	//if returnRaw {
-	//	return returnResponse, nil
-	//} else {
-	//	var rs http.Response = http.Response{
-	//		StatusCode: 200,
-	//		Header:     nil,
-	//	}
-	//	rs.Body = returnResponse.GetBody()
-	//	result, _ := client.CastResponseToType(&rs, response2.TYPE_RAW)
-	//	return result, nil
-	//}
 
 }
 
@@ -266,9 +277,6 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 		return returnResponse, err
 	}
 
-	if err != nil {
-		return returnResponse, err
-	}
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
 

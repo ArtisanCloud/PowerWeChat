@@ -38,7 +38,7 @@ func (comp *Client) Refund(ctx context.Context, options *request.RequestRefund) 
 	}
 
 	endpoint := comp.Wrap("/v3/refund/domestic/refunds")
-	_, err = comp.Request(ctx, endpoint, nil, http.MethodPost, body, false, nil, result)
+	_, err = comp.PlainRequest(ctx, endpoint, nil, http.MethodPost, body, false, nil, result)
 
 	return result, err
 }
