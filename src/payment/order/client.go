@@ -147,7 +147,7 @@ func (comp *Client) Close(ctx context.Context, tradeNo string) (*http.Response, 
 	config := (*comp.App).GetConfig()
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s/close", tradeNo))
-	rs, err := comp.PlainRequest(endpoint, nil, http.MethodPost, &object.HashMap{
+	rs, err := comp.PlainRequest(ctx, endpoint, nil, http.MethodPost, &object.HashMap{
 		"mchid": config.GetString("mch_id", ""),
 	}, false, nil, nil)
 
