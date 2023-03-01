@@ -27,7 +27,7 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 // Refund.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
 
-func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRefund, error) {
+func (comp *Client) Refund(ctx context.Context, options *request.RequestRefund) (*response.ResponseRefund, error) {
 
 	result := &response.ResponseRefund{}
 
@@ -38,7 +38,7 @@ func (comp *Client) Refund(options *request.RequestRefund) (*response.ResponseRe
 	}
 
 	endpoint := comp.Wrap("/v3/refund/domestic/refunds")
-	_, err = comp.PlainRequest(endpoint, nil, http.MethodPost, body, false, nil, result)
+	_, err = comp.Request(ctx, endpoint, nil, http.MethodPost, body, false, nil, result)
 
 	return result, err
 }
