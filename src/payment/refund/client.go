@@ -52,7 +52,7 @@ func (comp *Client) Query(ctx context.Context, refundOutNO string) (*response.Re
 
 	endpoint := fmt.Sprintf("/v3/refund/domestic/refunds/%s", refundOutNO)
 	endpoint = comp.Wrap(endpoint)
-	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodGet, nil, false, nil, result)
 
 	return result, err
 }
