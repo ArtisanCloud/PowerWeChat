@@ -2,13 +2,17 @@ package response
 
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
-type SubButton struct {
+type ButtonItem struct {
 	Type     string `json:"type"`
 	Name     string `json:"name"`
 	URL      string `json:"url,omitempty"`
 	AppID    string `json:"appid,omitempty"`
 	PagePath string `json:"pagepath,omitempty"`
 	Key      string `json:"key,omitempty"`
+}
+
+type SubButton struct {
+	List []*ButtonItem `json:"list"`
 }
 type Button struct {
 	Type       string       `json:"type"`
