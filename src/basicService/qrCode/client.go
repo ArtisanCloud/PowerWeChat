@@ -32,7 +32,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		BaseClient: baseClient,
 	}
 
-	client.BaseClient.BaseURI = "https://api.weixin.qq.com/cgi-bin/"
+	client.BaseClient.BaseURI = "https://api.weixin.qq.com/"
 	return client, nil
 }
 
@@ -120,7 +120,7 @@ func (comp *Client) Create(ctx context.Context, data *request.RequestQRCodeCreat
 		(*params)["expire_seconds"] = int(math.Min(float64(expireSecond), float64(30*DAY)))
 	}
 
-	_, err = comp.BaseClient.HttpPostJson(ctx, "qrcode/create", params, nil, nil, result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "cgi-bin/qrcode/create", params, nil, nil, result)
 
 	return result, err
 
