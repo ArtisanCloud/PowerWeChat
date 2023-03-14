@@ -34,7 +34,7 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		InteractsWithCache: &kernel.InteractsWithCache{},
 	}
 
-	client.TicketEndpoint = "https://api.weixin.qq.com/cgi-bin/ticket/getticket"
+	client.TicketEndpoint = "cgi-bin/ticket/getticket"
 
 	return client, nil
 }

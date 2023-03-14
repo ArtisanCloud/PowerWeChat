@@ -73,7 +73,7 @@ func (comp *Client) Upload(ctx context.Context, mediaType string, path string) (
 		return nil, errors.New("path is empty")
 	}
 
-	_, err = comp.BaseClient.HttpUpload(ctx, "media/upload", files, nil, &object.StringMap{
+	_, err = comp.BaseClient.HttpUpload(ctx, "cgi-bin/media/upload", files, nil, &object.StringMap{
 		"type": mediaType,
 	}, nil, outResponse)
 
@@ -85,7 +85,7 @@ func (comp *Client) Upload(ctx context.Context, mediaType string, path string) (
 func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "media/get", http.MethodPost, &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
@@ -100,7 +100,7 @@ func (comp *Client) Get(ctx context.Context, mediaID string) (*http.Response, er
 func (comp *Client) GetJSSDK(ctx context.Context, mediaID string) (*http.Response, error) {
 
 	header := &response.ResponseHeaderMedia{}
-	response, err := comp.BaseClient.RequestRaw(ctx, "media/get/jssdk", http.MethodPost, &object.HashMap{
+	response, err := comp.BaseClient.RequestRaw(ctx, "cgi-bin/media/get/jssdk", http.MethodPost, &object.HashMap{
 		"query": &object.StringMap{
 			"media_id": mediaID,
 		},
