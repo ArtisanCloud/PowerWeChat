@@ -155,7 +155,7 @@ func (client *BaseClient) RequestV2(ctx context.Context, endpoint string, params
 
 	base := &object.HashMap{
 		// 微信的接口如果传入接口以外的参数，签名会失败所以这里需要区分对待参数
-		"mch_id":     config.GetString("mch_id", ""),
+		"mchid":      config.GetString("mch_id", ""),
 		"nonce_str":  object.RandStringBytesMask(32),
 		"sub_mch_id": config.GetString("sub_mch_id", ""),
 		"sub_appid":  config.GetString("sub_appid", ""),
