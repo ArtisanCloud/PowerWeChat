@@ -1,6 +1,9 @@
 package request
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	"time"
+)
 
 type RequestShare struct {
 	AppID           string      `json:"appid,omitempty"`
@@ -33,4 +36,16 @@ type RequestShareReturn struct {
 	ReturnAccount     string `xml:"return_account"`
 	ReturnAmount      string `xml:"return_amount"`
 	Description       string `xml:"description"`
+}
+
+type ReceiverShareResult struct {
+	Amount      int64     `json:"amount,omitempty"`
+	Description string    `json:"description,omitempty"`
+	Type        string    `json:"type"`
+	Account     string    `json:"account"`
+	Result      string    `json:"result"`
+	FailReason  string    `json:"fail_reason,omitempty"`
+	DetailId    string    `json:"detail_id,omitempty"`
+	CreateTime  time.Time `json:"create_time"`
+	FinishTime  time.Time `json:"finish_time"`
 }

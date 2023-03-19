@@ -8,9 +8,9 @@ import (
 type ResponseProfitSharingOrder struct {
 	response.ResponsePayment
 
-	TransactionID string              `json:"transaction_id"`
-	OutOrderNO    string              `json:"out_order_no"`
-	OrderID       string              `json:"order_id"`
-	State         string              `json:"state"`
-	Receivers     []*request.Receiver `json:"receivers"`
+	TransactionID string                         `json:"transaction_id"`
+	OutOrderNO    string                         `json:"out_order_no"`
+	OrderID       string                         `json:"order_id"`
+	State         string                         `json:"state"`
+	Receivers     []*request.ReceiverShareResult `json:"receivers"`
 }
