@@ -3,6 +3,7 @@ package kernel
 import (
 	"bytes"
 	"context"
+	"crypto"
 	"errors"
 	"fmt"
 	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
@@ -10,6 +11,7 @@ import (
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/os"
+	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
 	"io/ioutil"
@@ -25,7 +27,8 @@ type BaseClient struct {
 
 	*support.ResponseCastable
 
-	Signer *support.SHA256WithRSASigner
+	Signer  *support.SHA256WithRSASigner
+	RsaOAEP *sign.RSASigner
 
 	App   *ApplicationInterface
 	Token *AccessToken
@@ -76,6 +79,19 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 			MchID:               mchID,
 			CertificateSerialNo: serialNO,
 			PrivateKeyPath:      keyPath,
+		}
+	}
+
+	RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
+	if RSAPublicKeyPath != "" {
+		client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA256)
+		if err != nil {
+			return nil, err
+		}
+		client.RsaOAEP.RSAEncryptor.PublicKeyPath = RSAPublicKeyPath
+		_, err = client.RsaOAEP.RSAEncryptor.LoadPublicKeyByPath()
+		if err != nil {
+			return nil, err
 		}
 	}
 
