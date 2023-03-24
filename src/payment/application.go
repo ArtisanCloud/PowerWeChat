@@ -20,6 +20,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/reverse"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/sandbox"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/security"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer"
 	"net/http"
 	"time"
@@ -45,6 +46,8 @@ type Payment struct {
 	ProfitSharing *profitSharing.Client
 
 	Base *base.Client
+
+	Security *security.Client
 
 	Logger *logger.Logger
 }
@@ -179,6 +182,12 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 		return nil, err
 	}
 
+	//-------------- Security --------------
+	app.Security, err = security.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -220,6 +229,9 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.Reverse
 	case "ProfitSharing":
 		return app.ProfitSharing
+
+	case "Security":
+		return app.Security
 
 	case "Logger":
 		return app.Logger

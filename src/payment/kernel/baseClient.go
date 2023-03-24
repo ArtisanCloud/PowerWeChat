@@ -206,18 +206,6 @@ func (client *BaseClient) RequestV2(ctx context.Context, endpoint string, params
 
 	return returnResponse, err
 
-	//if returnRaw {
-	//	return returnResponse, nil
-	//} else {
-	//	var rs http.Response = http.Response{
-	//		StatusCode: 200,
-	//		Header:     nil,
-	//	}
-	//	rs.Body = returnResponse.GetBody()
-	//	result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
-	//	return result, nil
-	//}
-
 }
 
 func (client *BaseClient) Request(ctx context.Context, endpoint string, params *object.StringMap, method string, options *object.HashMap,
@@ -304,8 +292,83 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 
 }
 
-func (client *BaseClient) RequestRaw(ctx context.Context, url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
-	return client.Request(ctx, url, params, method, options, true, outHeader, outBody)
+func (client *BaseClient) RequestRawXML(ctx context.Context, url string, params *object.StringMap, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+
+	config := (*client.App).GetConfig()
+
+	base := &object.StringMap{
+		// 微信的接口如果传入接口以外的参数，签名会失败所以这里需要区分对待参数
+		"mch_id":    config.GetString("mch_id", ""),
+		"nonce_str": object.RandStringBytesMask(32),
+	}
+	params = object.MergeStringMap(params, base)
+	params = object.FilterEmptyStringMap(params)
+
+	// 签名访问的URL，请确保url后面不要跟参数，因为签名的参数，不包含?参数
+	// 比如需要在请求的时候，把debug=false，这样url后面就不会多出 "?debug=true"
+	options, err := client.AuthSignRequestSimple(config, url, method, params, options)
+	if err != nil {
+		return nil, err
+	}
+	// to be setup middleware here
+	//client.PushMiddleware(client.logMiddleware(), "access_token")
+
+	httpConfig := client.HttpHelper.GetClient().GetConfig()
+	httpConfig.Cert.CertFile = config.GetString("cert_path", "")
+	httpConfig.Cert.KeyFile = config.GetString("key_path", "")
+	client.HttpHelper.GetClient().SetConfig(&httpConfig)
+
+	// http client request
+	df := client.HttpHelper.Df().
+		WithContext(ctx).
+		Url(url).Method(method)
+
+	// 检查是否需要有请求参数配置
+	if options != nil {
+		// set query key values
+		if (*options)["query"] != nil {
+			queries := (*options)["query"].(*object.StringMap)
+			if queries != nil {
+				for k, v := range *queries {
+					df.Query(k, v)
+				}
+			}
+		}
+		config := (*client.App).GetConfig()
+		// 微信如果需要传debug模式
+		debug := config.GetBool("debug", false)
+		if debug {
+			df.Query("debug", "1")
+		}
+
+		// set body json
+		if (*options)["body"] != nil {
+			r := bytes.NewBufferString((*options)["body"].(string))
+			df.Body(r)
+		}
+
+		// set header
+		df.
+			Header("content-type", "application/xml").
+			//Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string)).
+			Header("Wechatpay-Serial", (*(*options)["headers"].(*object.HashMap))["Wechatpay-Serial"].(string))
+
+	}
+
+	returnResponse, err := df.Request()
+	if err != nil {
+		return returnResponse, err
+	}
+
+	// decode response body to outBody
+	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return returnResponse, err
+
 }
 
 func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload, filePath string) (int64, error) {
@@ -361,7 +424,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 }
 
 func (client *BaseClient) RequestArray(ctx context.Context, url string, method string, options *object.HashMap, outHeader interface{}, outBody interface{}) (*object.HashMap, error) {
-	returnResponse, err := client.RequestRaw(ctx, url, nil, method, options, outHeader, outBody)
+	returnResponse, err := client.Request(ctx, url, nil, method, options, true, outHeader, outBody)
 	if err != nil {
 		return nil, err
 	}
@@ -464,7 +527,7 @@ func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string
 	return options, err
 }
 
-func (client *BaseClient) AuthSignRequestV2_(endpoint string, method string, params *object.HashMap, options *object.HashMap) (*object.HashMap, error) {
+func (client *BaseClient) AuthSignRequestSimple(config *kernel.Config, endpoint string, method string, params *object.StringMap, options *object.HashMap) (*object.HashMap, error) {
 
 	var err error
 
@@ -473,16 +536,13 @@ func (client *BaseClient) AuthSignRequestV2_(endpoint string, method string, par
 		return nil, err
 	}
 
-	strMapParams, err := object.HashMapToStringMap(params)
+	// convert StringMap to Power StringMap
+	powerStrMapParams, err := power.StringMapToPower(params)
 	if err != nil {
 		return nil, err
 	}
 
-	// convert StringMap to Power StringMap
-	powerStrMapParams, err := power.StringMapToPower(strMapParams)
-	if err != nil {
-		return nil, err
-	}
+	(*powerStrMapParams)["sign_type"] = "MD5"
 
 	// generate md5 signature with power StringMap
 	(*powerStrMapParams)["sign"] = support.GenerateSignMD5(powerStrMapParams, secretKey)
@@ -500,6 +560,10 @@ func (client *BaseClient) AuthSignRequestV2_(endpoint string, method string, par
 
 	// set body content
 	options = object.MergeHashMap(&object.HashMap{
+		"headers": &object.HashMap{
+			//"Authorization":    authorization,
+			"Wechatpay-Serial": config.GetString("serial_no", ""),
+		},
 		"body": signBody,
 	}, options)
 
