@@ -38,8 +38,10 @@ func (comp *Client) Share(ctx context.Context, param *request.RequestShare) (*re
 
 	// 需要对接受者对名字加密
 	if param.Receivers != nil && len(param.Receivers) > 0 {
-		if comp.RsaOAEP == nil {
-			return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的公钥路径")
+		if comp.RsaOAEP == nil ||
+			comp.RsaOAEP.RSAEncryptor.PrivateKey == nil ||
+			comp.RsaOAEP.RSAEncryptor.PublicKey == nil {
+			return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的证书路径")
 		}
 
 		for _, receiver := range param.Receivers {
@@ -165,10 +167,11 @@ func (comp *Client) AddReceiver(
 	relationType string, customRelation string) (*response.ResponseProfitSharingAddReceiver, error) {
 
 	result := &response.ResponseProfitSharingAddReceiver{}
-
 	if name != "" {
-		if comp.RsaOAEP == nil {
-			return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的公钥路径")
+		if comp.RsaOAEP == nil ||
+			comp.RsaOAEP.RSAEncryptor.PrivateKey == nil ||
+			comp.RsaOAEP.RSAEncryptor.PublicKey == nil {
+			return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的证书路径")
 		}
 		buffer, err := comp.RsaOAEP.RSAEncryptor.Encrypt([]byte(name))
 		if err != nil {

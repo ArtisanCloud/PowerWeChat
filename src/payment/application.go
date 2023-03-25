@@ -125,10 +125,6 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	if err != nil {
-		return nil, err
-	}
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
 	if err != nil {
