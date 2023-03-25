@@ -58,8 +58,8 @@ func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 	if err != nil {
 		return nil, err
 	}
-	RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
-	//RSAPublicKeyPath := config.GetString("cert_path", "")
+	//RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
+	RSAPublicKeyPath := config.GetString("cert_path", "")
 	PrivateKeyPath := config.GetString("key_path", "")
 	if PrivateKeyPath != "" && RSAPublicKeyPath != "" {
 		client.RsaOAEP.RSAEncryptor.PrivateKeyPath = PrivateKeyPath
