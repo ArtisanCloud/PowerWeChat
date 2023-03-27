@@ -22,9 +22,21 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 	}, nil
 }
 
-// Get Merchant Public Key.
+// 获取平台证书
+// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/wechatpay5_1.shtml
+func (comp *Client) GetCertificates(ctx context.Context) (*response.ResponseGetCertificates, error) {
+
+	result := &response.ResponseGetCertificates{}
+
+	endpoint := comp.Wrap("/v3/certificates")
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodGet, nil, false, nil, result)
+
+	return result, err
+}
+
+// Get RSA Public Key.
 // https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay_yhk.php?chapter=25_7&index=4
-func (comp *Client) GetPublicKey(ctx context.Context) (*response.ResponseGetPublicKey, error) {
+func (comp *Client) GetRSAPublicKey(ctx context.Context) (*response.ResponseGetPublicKey, error) {
 	config := (*comp.App).GetConfig()
 
 	result := &response.ResponseGetPublicKey{}

@@ -2,7 +2,6 @@ package profitSharing
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
@@ -34,29 +33,6 @@ func (comp *Client) Share(ctx context.Context, param *request.RequestShare) (*re
 	if param.AppID == "" {
 		config := (*comp.App).GetConfig()
 		param.AppID = config.GetString("app_id", "")
-	}
-
-	// 需要对接受者对名字加密
-	if param.Receivers != nil && len(param.Receivers) > 0 {
-		if comp.RsaOAEP == nil ||
-			comp.RsaOAEP.RSAEncryptor.PrivateKey == nil ||
-			comp.RsaOAEP.RSAEncryptor.PublicKey == nil {
-			return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的证书路径")
-		}
-
-		for _, receiver := range param.Receivers {
-			if receiver.Name != "" {
-				buffer, err := comp.RsaOAEP.RSAEncryptor.Encrypt([]byte(receiver.Name))
-				if err != nil {
-					return nil, err
-				}
-				receiver.Name = string(buffer)
-				if err != nil {
-					return nil, err
-				}
-			}
-		}
-
 	}
 
 	//options, err := object.StructToHashMapWithTag(param,"json")
@@ -160,28 +136,12 @@ func (comp *Client) QueryTransactions(ctx context.Context, transactionID string)
 
 // Add Receiver.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
-
 func (comp *Client) AddReceiver(
 	ctx context.Context,
 	receiverType string, account string, name string,
 	relationType string, customRelation string) (*response.ResponseProfitSharingAddReceiver, error) {
 
 	result := &response.ResponseProfitSharingAddReceiver{}
-	if name != "" {
-		if comp.RsaOAEP == nil ||
-			comp.RsaOAEP.RSAEncryptor.PrivateKey == nil ||
-			comp.RsaOAEP.RSAEncryptor.PublicKey == nil {
-			return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的证书路径")
-		}
-		buffer, err := comp.RsaOAEP.RSAEncryptor.Encrypt([]byte(name))
-		if err != nil {
-			return nil, err
-		}
-		name = string(buffer)
-		if err != nil {
-			return nil, err
-		}
-	}
 
 	options := &object.HashMap{
 		"type":            receiverType,

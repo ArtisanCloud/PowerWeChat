@@ -2,8 +2,9 @@ package transfer
 
 import (
 	"context"
-	"errors"
+	"crypto"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer/request"
@@ -92,21 +93,16 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 
 	result := &response2.ResponsePayment{}
 
-	//config := (*comp.App).GetConfig()
-	//
-	//rsaSigner, err := sign.NewRSASigner(crypto.SHA256)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//rsaSigner.RSAEncryptor.PublicKeyPath = config.GetString("rsa_public_key_path", "")
-	//_, err = rsaSigner.RSAEncryptor.LoadPublicKeyByPath()
-	if comp.RsaOAEP == nil ||
-		comp.RsaOAEP.RSAEncryptor.PrivateKey == nil ||
-		comp.RsaOAEP.RSAEncryptor.PublicKey == nil {
-		return nil, errors.New("支付模块的RsaOAEP配置有误，要加密敏感信息，请确保正确配置EncryptOAEP的证书路径")
-	}
+	config := (*comp.App).GetConfig()
 
-	buffer, err := comp.RsaOAEP.RSAEncryptor.Encrypt([]byte(data.EncBankNO))
+	rsaSigner, err := sign.NewRSASigner(crypto.SHA256)
+	if err != nil {
+		return nil, err
+	}
+	rsaSigner.RSAEncryptor.PublicKeyPath = config.GetString("rsa_public_key_path", "")
+	_, err = rsaSigner.RSAEncryptor.LoadPublicKeyByPath()
+
+	buffer, err := rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncBankNO))
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +111,7 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 		return nil, err
 	}
 
-	buffer, err = comp.RsaOAEP.RSAEncryptor.Encrypt([]byte(data.EncTrueName))
+	buffer, err = rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncTrueName))
 	if err != nil {
 		return nil, err
 	}

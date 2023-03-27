@@ -3,7 +3,6 @@ package kernel
 import (
 	"bytes"
 	"context"
-	"crypto"
 	"crypto/sha1"
 	"errors"
 	"fmt"
@@ -54,25 +53,25 @@ func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 		App: app,
 	}
 
-	client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA256)
-	if err != nil {
-		return nil, err
-	}
-	//RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
-	RSAPublicKeyPath := config.GetString("cert_path", "")
-	PrivateKeyPath := config.GetString("key_path", "")
-	if PrivateKeyPath != "" && RSAPublicKeyPath != "" {
-		client.RsaOAEP.RSAEncryptor.PrivateKeyPath = PrivateKeyPath
-		_, err = client.RsaOAEP.RSAEncryptor.LoadPrivateKeyByPath()
-		if err != nil {
-			return nil, err
-		}
-		client.RsaOAEP.RSAEncryptor.PublicKeyPath = RSAPublicKeyPath
-		_, err = client.RsaOAEP.RSAEncryptor.LoadPublicKeyByPath()
-		if err != nil {
-			return nil, err
-		}
-	}
+	//client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA256)
+	//if err != nil {
+	//	return nil, err
+	//}
+	////RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
+	//RSAPublicKeyPath := config.GetString("cert_path", "")
+	//PrivateKeyPath := config.GetString("key_path", "")
+	//if PrivateKeyPath != "" && RSAPublicKeyPath != "" {
+	//	client.RsaOAEP.RSAEncryptor.PrivateKeyPath = PrivateKeyPath
+	//	_, err = client.RsaOAEP.RSAEncryptor.LoadPrivateKeyByPath()
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//	client.RsaOAEP.RSAEncryptor.PublicKeyPath = RSAPublicKeyPath
+	//	_, err = client.RsaOAEP.RSAEncryptor.LoadPublicKeyByPath()
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//}
 
 	// to be setup middleware here
 	client.OverrideGetMiddlewares()
