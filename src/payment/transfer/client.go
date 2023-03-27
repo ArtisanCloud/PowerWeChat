@@ -101,6 +101,9 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 	}
 	rsaSigner.RSAEncryptor.PublicKeyPath = config.GetString("rsa_public_key_path", "")
 	_, err = rsaSigner.RSAEncryptor.LoadPublicKeyByPath()
+	if err != nil {
+		return nil, err
+	}
 
 	buffer, err := rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncBankNO))
 	if err != nil {
