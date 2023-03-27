@@ -34,6 +34,7 @@ func (comp *Client) Share(ctx context.Context, param *request.RequestShare) (*re
 		config := (*comp.App).GetConfig()
 		param.AppID = config.GetString("app_id", "")
 	}
+
 	//options, err := object.StructToHashMapWithTag(param,"json")
 	options, err := object.StructToHashMap(param)
 
@@ -135,7 +136,6 @@ func (comp *Client) QueryTransactions(ctx context.Context, transactionID string)
 
 // Add Receiver.
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
-
 func (comp *Client) AddReceiver(
 	ctx context.Context,
 	receiverType string, account string, name string,
