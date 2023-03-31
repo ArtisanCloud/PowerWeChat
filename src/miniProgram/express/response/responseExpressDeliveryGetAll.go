@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExpressDeliveryGetAll struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Count int              `json:"count"`
 	Data  []*power.HashMap `json:"data"`

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseOperationGetPerformance struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	DefaultTimeData string `json:"default_time_data"`
 	CompareTimeData string `json:"compare_time_data"`
 }

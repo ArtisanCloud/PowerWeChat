@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseNearbyPoiGetList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Data *power.HashMap `json:"data"`
 }

@@ -38,7 +38,7 @@ type Business struct {
 }
 
 type ResponsePOIGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Business *Business `json:"business"`
 }

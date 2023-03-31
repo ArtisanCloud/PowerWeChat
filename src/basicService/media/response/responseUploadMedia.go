@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseUploadMedia struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Item         []*power.HashMap `json:"item"`
 	Type         string           `json:"type"`

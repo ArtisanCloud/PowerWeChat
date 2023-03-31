@@ -8,7 +8,7 @@ type GroupData struct {
 }
 
 type ResponseGroup struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *GroupData `json:"data"`
 }
@@ -21,7 +21,7 @@ type GroupList struct {
 // ----------------------------------------------
 
 type ResponseGroupList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *GroupList `json:"data"`
 }
@@ -36,7 +36,7 @@ type GroupDetail struct {
 }
 
 type ResponseGroupDetail struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *GroupDetail `json:"data"`
 }
@@ -51,7 +51,7 @@ type DataGroupAddDevice struct {
 }
 
 type ResponseGroupAddDevices struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DataGroupAddDevice `json:"data"`
 }

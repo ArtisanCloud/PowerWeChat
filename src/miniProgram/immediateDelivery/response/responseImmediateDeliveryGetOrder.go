@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseImmediateDeliveryGetOrder struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	OrderStatus int     `json:"order_status"` //	配送状态，枚举值
 	WaybillID   string  `json:"waybill_id"`   //	配送单号

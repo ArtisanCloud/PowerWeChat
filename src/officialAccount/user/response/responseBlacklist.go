@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseBlacklist struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Total int `json:"total"`
 	Count int `json:"count"`

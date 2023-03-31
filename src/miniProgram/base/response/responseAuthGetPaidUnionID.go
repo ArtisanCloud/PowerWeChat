@@ -7,5 +7,5 @@ import (
 type ResponseAuthGetPaidUnionID struct {
 	UnionID string `json:"unionid"`
 
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 }

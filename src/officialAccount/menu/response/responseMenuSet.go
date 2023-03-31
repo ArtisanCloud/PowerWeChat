@@ -5,11 +5,11 @@ import (
 )
 
 type ResponseMenuCreate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 }
 
 type ResponseMenuCreateConditional struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	MenuID string `json:"menuid"`
 }

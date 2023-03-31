@@ -9,5 +9,5 @@ type ResponseCode2Session struct {
 	SessionKey string `json:"session_key"`
 	UnionID    string `json:"unionid"`
 
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 }

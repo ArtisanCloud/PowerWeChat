@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExpressGetPath struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	OpenID       string             `json:"openid"`        //   "openid",
 	DeliveryID   string             `json:"delivery_id"`   //  "",

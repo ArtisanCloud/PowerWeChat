@@ -8,5 +8,5 @@ import (
 type ResponseDataCubeGetPerformanceData struct {
 	Data *power.HashMap `json:"data"`
 
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 }

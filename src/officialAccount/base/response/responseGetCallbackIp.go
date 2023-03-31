@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGetCallBackIP struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	IPList []string `json:"ip_list"`
 }

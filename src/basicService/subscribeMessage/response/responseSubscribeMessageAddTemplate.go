@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseSubscribeMessageAddTemplate struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	PriTmplID string `json:"priTmplId"`
 }

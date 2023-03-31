@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseSoterVerifySignature struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	IsOK bool `json:"is_ok"`
 }

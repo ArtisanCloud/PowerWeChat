@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseIMGSuperResolution struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	MediaID string `json:"media_id"`
 }

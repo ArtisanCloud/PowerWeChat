@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseBroadcastGetRoleList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Total int              `json:"total,omitempty"`
 	List  []*power.HashMap `json:"list,omitempty"`

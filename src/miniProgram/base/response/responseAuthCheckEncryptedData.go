@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseAuthCheckEncryptedData struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Valid      bool    `json:"vaild"`
 	CreateTime float64 `json:"create_time"`

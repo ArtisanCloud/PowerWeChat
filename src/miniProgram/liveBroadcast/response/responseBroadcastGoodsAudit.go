@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseBroadcastGoodsAudit struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	AuditID int `json:"auditId"`
 }

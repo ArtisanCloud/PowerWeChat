@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseOCRBusinessLicense struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	RegNum              string         `json:"reg_num"`              //注册号
 	Serial              string         `json:"serial"`               //编号
 	LegalRepresentative string         `json:"legal_representative"` //法定代表人姓名

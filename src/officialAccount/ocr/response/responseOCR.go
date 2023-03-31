@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseOCRIDCard struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Type        string `json:"type"`
 	Name        string `json:"name"`
@@ -16,7 +16,7 @@ type ResponseOCRIDCard struct {
 // ----------------------------------------
 
 type ResponseOCRBankCard struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Number string `json:"number"`
 }
@@ -24,7 +24,7 @@ type ResponseOCRBankCard struct {
 // ----------------------------------------
 
 type ResponseOCRVehicleLicense struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	IDNum        string `json:"id_num"`
 	Name         string `json:"name"`
@@ -42,7 +42,7 @@ type ResponseOCRVehicleLicense struct {
 // ----------------------------------------
 
 type ResponseOCRDriving struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	IDNum        string `json:"id_num"`
 	Name         string `json:"name"`
@@ -81,7 +81,7 @@ type ImgSize struct {
 }
 
 type ResponseOCRBizLicense struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	RegNum              string        `json:"reg_num"`
 	Serial              string        `json:"serial"`
@@ -107,7 +107,7 @@ type Item struct {
 }
 
 type ResponseOCRCommon struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Items   []Item  `json:"items"`
 	ImgSize ImgSize `json:"img_size"`
@@ -116,7 +116,7 @@ type ResponseOCRCommon struct {
 // ----------------------------------------
 
 type ResponseOCRPlateNumber struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Number string `json:"number"`
 }

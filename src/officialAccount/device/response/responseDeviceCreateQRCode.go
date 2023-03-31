@@ -8,7 +8,7 @@ type Code struct {
 }
 
 type ResponseDeviceCreateQRCode struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	DeviceNum int     `json:"device_num"`
 	CodeList  []*Code `json:"code_list"`

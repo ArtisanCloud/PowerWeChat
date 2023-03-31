@@ -14,7 +14,7 @@ type Wifi struct {
 }
 
 type ResponseWifiSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data []*Wifi `json:"data"`
 }
@@ -26,7 +26,7 @@ type QRCode struct {
 }
 
 type ResponseWifiQrCodeURL struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *QRCode `json:"data"`
 }
@@ -43,7 +43,7 @@ type Device struct {
 }
 
 type ResponseWifiCardGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *Device `json:"data"`
 }
@@ -69,7 +69,7 @@ type DeviceList struct {
 }
 
 type ResponseWifiDeviceList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DeviceList `json:"data"`
 }
@@ -103,7 +103,7 @@ type Shop struct {
 }
 
 type ResponseWifiShopGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *Shop `json:"data"`
 }
@@ -118,7 +118,7 @@ type ShopList struct {
 }
 
 type ResponseWifiShopList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *ShopList `json:"data"`
 }

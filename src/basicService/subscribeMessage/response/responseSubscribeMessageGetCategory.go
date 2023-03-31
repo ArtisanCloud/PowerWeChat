@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseSubscribeMessageGetCategory struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Data []*power.HashMap `json:"data"`
 }

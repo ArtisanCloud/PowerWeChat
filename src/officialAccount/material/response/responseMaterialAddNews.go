@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMaterialAddNews struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	MediaID string `json:"media_id"`
 }

@@ -49,13 +49,14 @@ func GetPaymentConfig() *payment.UserConfig {
 	return &payment.UserConfig{
 		//"corp_id":        os.Getenv("corp_id"),
 		//"secret":         os.Getenv("secret"),
-		AppID:       os.Getenv("app_id"),
-		MchID:       os.Getenv("mch_id"),
-		MchApiV3Key: os.Getenv("mch_api_v3_key"),
-		Key:         os.Getenv("key"),
-		CertPath:    os.Getenv("wx_cert_path"),
-		KeyPath:     os.Getenv("wx_key_path"),
-		SerialNo:    os.Getenv("serial_no"),
+		AppID:            os.Getenv("app_id"),
+		MchID:            os.Getenv("mch_id"),
+		MchApiV3Key:      os.Getenv("mch_api_v3_key"),
+		Key:              os.Getenv("key"),
+		CertPath:         os.Getenv("wx_cert_path"),
+		KeyPath:          os.Getenv("wx_key_path"),
+		RSAPublicKeyPath: os.Getenv("rsa_public_key_path"),
+		SerialNo:         os.Getenv("serial_no"),
 
 		ResponseType: os.Getenv("array"),
 		Log: payment.Log{

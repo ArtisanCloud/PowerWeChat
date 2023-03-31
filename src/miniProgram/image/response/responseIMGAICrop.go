@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseIMGAICrop struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Results []*power.HashMap `json:"results"`
 }

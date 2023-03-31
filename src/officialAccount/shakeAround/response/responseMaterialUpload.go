@@ -7,7 +7,7 @@ type DataMaterialUpload struct {
 }
 
 type ResponseMaterialUpload struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data DataMaterialUpload `json:"data"`
 }

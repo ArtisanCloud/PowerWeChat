@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseImmediateDeliveryBindAccount struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	ShopList []*power.HashMap `json:"shop_list"`
 }

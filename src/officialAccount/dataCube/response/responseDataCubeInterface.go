@@ -11,7 +11,7 @@ type InterfaceSummary struct {
 }
 
 type ResponseDataCubeInterfaceSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*InterfaceSummary `json:"list"`
 }
@@ -28,7 +28,7 @@ type InterfaceSummaryHourly struct {
 }
 
 type ResponseDataCubeInterfaceSummaryHourly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*InterfaceSummaryHourly `json:"list"`
 }

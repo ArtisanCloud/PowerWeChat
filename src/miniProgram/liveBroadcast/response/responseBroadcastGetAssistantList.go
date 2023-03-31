@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseBroadcastGetAssistantList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	List []struct {
 		Timestamp int    `json:"timestamp"`
 		HeadImg   string `json:"headimg,omitempty"`

@@ -7,7 +7,7 @@ type DataPage struct {
 }
 
 type ResponsePage struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DataPage `json:"data"`
 }
@@ -29,7 +29,7 @@ type DataPageList struct {
 }
 
 type ResponsePageList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DataPageList `json:"data"`
 }

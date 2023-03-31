@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseUserTags struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 	TagIDList []int `json:"tagid_list"`
 }
 
@@ -14,7 +14,7 @@ type Data struct {
 }
 
 type ResponseUserOfTag struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Count      int    `json:"count"`
 	Data       *Data  `json:"data"`

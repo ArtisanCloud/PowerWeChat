@@ -10,7 +10,7 @@ type UserSummary struct {
 }
 
 type ResponseDataCubeUserSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UserSummary `json:"list"`
 }
@@ -23,7 +23,7 @@ type UserCumulate struct {
 }
 
 type ResponseDataCubeUserCumulate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UserCumulate `json:"list"`
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseShortLinkGenerate struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Link string `json:"link"`
 }

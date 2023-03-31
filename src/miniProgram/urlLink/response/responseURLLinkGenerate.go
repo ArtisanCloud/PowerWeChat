@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseURLLinkGenerate struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	URLLink string `json:"url_link"`
 }

@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseOperationGetSceneList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Scene []*power.HashMap `json:"scene"`
 }

@@ -42,7 +42,7 @@ type ConditionalMenu struct {
 }
 
 type ResponseMenuGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Menus            *Menu              `json:"menu"`
 	ConditionalMenus []*ConditionalMenu `json:"conditionalmenu"`
@@ -55,7 +55,7 @@ type SelfMenuInfo struct {
 }
 
 type ResponseCurrentSelfMenu struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	IsMenuOpen   int           `json:"is_menu_open"`
 	SelfMenuInfo *SelfMenuInfo `json:"selfmenu_info"`

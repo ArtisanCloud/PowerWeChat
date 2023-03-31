@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseGetUserInfo struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Subscribe      int    `json:"subscribe"`
 	OpenID         string `json:"openid"`
@@ -21,12 +21,12 @@ type ResponseGetUserInfo struct {
 }
 
 type ResponseBatchGetUserInfo struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 	ResponseGetUserInfo []*ResponseGetUserInfo `json:"user_info_list"`
 }
 
 type ResponseGetUserList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 	Total int `json:"total"`
 	Count int `json:"count"`
 	Data  struct {
@@ -36,7 +36,7 @@ type ResponseGetUserList struct {
 }
 
 type ResponseChangeOpenID struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	ResultList []struct {
 		OriOpenid string `json:"ori_openid"`

@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseBroadcastGoodsInfo struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Total int              `json:"total"`
 	Goods []*power.HashMap `json:"goods"`

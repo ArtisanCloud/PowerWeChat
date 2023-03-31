@@ -10,7 +10,7 @@ type GuideAdviser struct {
 }
 
 type ResponseGuideGetAdviser struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	*GuideAdviser
 }
@@ -18,7 +18,7 @@ type ResponseGuideGetAdviser struct {
 // ------------------------------------------------------------
 
 type ResponseGuideGetAdvisers struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	TotalNum int             `json:"total_num"`
 	List     []*GuideAdviser `json:"list"`
@@ -36,7 +36,7 @@ type Message struct {
 }
 
 type ResponseGuideGetChatRecords struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	TotalNum int        `json:"total_num"`
 	MsgList  []*Message `json:"msg_list"`
@@ -51,7 +51,7 @@ type AutoReply struct {
 }
 
 type ResponseGuideGetConfig struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	GuideFastReplyList []interface{} `json:"guide_fast_reply_list"`
 	GuideAutoReply     *AutoReply    `json:"guide_auto_reply"`
@@ -67,7 +67,7 @@ type BlackKeyword struct {
 }
 
 type ResponseGuideGetAdviserConfig struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	BlackKeyword struct {
 		Values         []*BlackKeyword `json:"black_keyword"`
@@ -78,7 +78,7 @@ type ResponseGuideGetAdviserConfig struct {
 // ------------------------------------------------------------
 
 type ResponseGuideCreateGroup struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	GroupID interface{} `json:"group_id"`
 }
@@ -93,7 +93,7 @@ type Group struct {
 }
 
 type ResponseGuideGetGroupList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	GroupList []*Group `json:"group_list"`
 }
@@ -108,7 +108,7 @@ type Guide struct {
 	GuideOpenid     string `json:"guide_openid"`
 }
 type ResponseGuideGetGroups struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	GuideList []*Guide `json:"guide_list"`
 	TotalNum  int      `json:"total_num"`
@@ -117,7 +117,7 @@ type ResponseGuideGetGroups struct {
 // ------------------------------------------------------------
 
 type ResponseGuideGetGuideGroup struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	GroupIDList []int `json:"group_id_list"`
 }
@@ -125,13 +125,13 @@ type ResponseGuideGetGuideGroup struct {
 // ------------------------------------------------------------
 
 type BuyerResp struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	OpenID string `json:"openid"`
 }
 
 type ResponseGuideBuyerRelation struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	BuyerResp []*BuyerResp `json:"buyer_resp"`
 }
@@ -145,14 +145,14 @@ type BuyerRelation struct {
 }
 
 type ResponseGuideBuyerRelationList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	TotalNum int             `json:"total_num"`
 	List     []BuyerRelation `json:"list"`
 }
 
 type ResponseGuideGetBuyerRelation struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	*BuyerRelation
 }
@@ -165,7 +165,7 @@ type Option struct {
 }
 
 type ResponseGuideTagOption struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Options []*Option `json:"options"`
 }
@@ -173,7 +173,7 @@ type ResponseGuideTagOption struct {
 // ------------------------------------------------------------
 
 type ResponseGuideGetBuyerTags struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	TagValues []string `json:"tag_values"`
 }
@@ -181,7 +181,7 @@ type ResponseGuideGetBuyerTags struct {
 // ------------------------------------------------------------
 
 type ResponseGuideGetBuyerByTag struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	OpenidList []string `json:"openid_list"`
 }
@@ -189,7 +189,7 @@ type ResponseGuideGetBuyerByTag struct {
 // ------------------------------------------------------------
 
 type ResponseGuideGetBuyerDisplayTags struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	DisplayTagList []string `json:"display_tag_list"`
 }
@@ -206,7 +206,7 @@ type Card struct {
 }
 
 type ResponseGuideGetCardMaterial struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	CardList []*Card `json:"card_list"`
 }
@@ -218,7 +218,7 @@ type Model struct {
 }
 
 type ResponseGuideGetImageMaterial struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	ModelList []*Model `json:"model_list"`
 	TotalNum  int      `json:"total_num"`
@@ -232,7 +232,7 @@ type Word struct {
 }
 
 type ResponseGuideGetWordMaterial struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	WordList []*Word `json:"word_list"`
 	TotalNum int     `json:"total_num"`

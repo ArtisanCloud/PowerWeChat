@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseMaterialGetMaterialCount struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	VoiceCount string `json:"voice_count"`
 	VideoCount string `json:"video_count"`

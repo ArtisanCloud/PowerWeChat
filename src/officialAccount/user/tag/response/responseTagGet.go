@@ -9,7 +9,7 @@ type Tag struct {
 }
 
 type ResponseTagGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Tag *Tag `json:"tag"`
 }
@@ -17,6 +17,6 @@ type ResponseTagGet struct {
 //---------------------------------------------
 
 type ResponseTagGetList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 	Tags []*Tag `json:"tags"`
 }

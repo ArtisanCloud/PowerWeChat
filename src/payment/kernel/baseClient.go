@@ -3,6 +3,7 @@ package kernel
 import (
 	"bytes"
 	"context"
+	"crypto"
 	"crypto/sha1"
 	"errors"
 	"fmt"
@@ -53,25 +54,26 @@ func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 		App: app,
 	}
 
-	//client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA256)
-	//if err != nil {
-	//	return nil, err
-	//}
-	////RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
+	client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA256)
+	if err != nil {
+		return nil, err
+	}
+	RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
 	//RSAPublicKeyPath := config.GetString("cert_path", "")
 	//PrivateKeyPath := config.GetString("key_path", "")
 	//if PrivateKeyPath != "" && RSAPublicKeyPath != "" {
-	//	client.RsaOAEP.RSAEncryptor.PrivateKeyPath = PrivateKeyPath
-	//	_, err = client.RsaOAEP.RSAEncryptor.LoadPrivateKeyByPath()
-	//	if err != nil {
-	//		return nil, err
-	//	}
-	//	client.RsaOAEP.RSAEncryptor.PublicKeyPath = RSAPublicKeyPath
-	//	_, err = client.RsaOAEP.RSAEncryptor.LoadPublicKeyByPath()
-	//	if err != nil {
-	//		return nil, err
-	//	}
-	//}
+	if RSAPublicKeyPath != "" {
+		//client.RsaOAEP.RSAEncryptor.PrivateKeyPath = PrivateKeyPath
+		//_, err = client.RsaOAEP.RSAEncryptor.LoadPrivateKeyByPath()
+		//if err != nil {
+		//	return nil, err
+		//}
+		client.RsaOAEP.RSAEncryptor.PublicKeyPath = RSAPublicKeyPath
+		_, err = client.RsaOAEP.RSAEncryptor.LoadPublicKeyByPath()
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	// to be setup middleware here
 	client.OverrideGetMiddlewares()
@@ -233,7 +235,7 @@ func (client *BaseClient) RequestV2(ctx context.Context, endpoint string, params
 
 func (client *BaseClient) Request(ctx context.Context, endpoint string, params *object.StringMap, method string, options *object.HashMap,
 	returnRaw bool, outHeader interface{}, outBody interface{},
-) (response interface{}, err error) {
+) (response *http.Response, err error) {
 
 	config := (*client.App).GetConfig()
 
@@ -300,18 +302,6 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 	//err = object.JsonDecode(headerData, outHeader)
 
 	return returnResponse, err
-
-	//if returnRaw {
-	//	return returnResponse, nil
-	//} else {
-	//	var rs http.Response = http.Response{
-	//		StatusCode: 200,
-	//		Header:     nil,
-	//	}
-	//	rs.Body = returnResponse.GetBody()
-	//	result, _ := client.CastResponseToType(&rs, response2.TYPE_MAP)
-	//	return result, nil
-	//}
 
 }
 
@@ -451,9 +441,39 @@ func (client *BaseClient) RequestArray(ctx context.Context, url string, method s
 	if err != nil {
 		return nil, err
 	}
-	result, err := client.CastResponseToType(returnResponse.(*http.Response), response2.TYPE_RAW)
+	result, err := client.CastResponseToType(returnResponse, response2.TYPE_RAW)
 
 	return result.(*object.HashMap), err
+}
+
+func (client *BaseClient) SafeRequestV3(ctx context.Context, url string, params *object.StringMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+	config := (*client.App).GetConfig()
+
+	httpConfig := client.HttpHelper.GetClient().GetConfig()
+	httpConfig.Cert.CertFile = config.GetString("cert_path", "")
+	httpConfig.Cert.KeyFile = config.GetString("key_path", "")
+	client.HttpHelper.GetClient().SetConfig(&httpConfig)
+
+	// get xml string result from return raw as true
+	rs, err := client.Request(
+		ctx,
+		url,
+		params,
+		method,
+		option,
+		true,
+		outHeader,
+		outBody,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// get out result
+	client.HttpHelper.ParseResponseBodyContent(rs, outBody)
+
+	return outBody, err
 }
 
 func (client *BaseClient) SafeRequest(ctx context.Context, url string, params *object.HashMap, method string, option *object.HashMap, outHeader interface{}, outBody interface{}) (interface{}, error) {

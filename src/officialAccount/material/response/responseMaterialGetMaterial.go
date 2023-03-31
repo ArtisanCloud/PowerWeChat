@@ -16,7 +16,7 @@ type NewsItems struct {
 }
 
 type ResponseMaterialGetNews struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	NewsItem []NewsItems `json:"news_item"`
 }

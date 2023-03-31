@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseImmediateDeliveryPreAddOrder struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Fee              int     `json:"fee"`               // 10,
 	DeliverFee       string  `json:"deliverfee"`        // 10,

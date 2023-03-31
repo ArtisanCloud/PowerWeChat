@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseExpressBatchOrderList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	OrderList []*power.HashMap `json:"order_list"`
 }

@@ -8,14 +8,14 @@ type Industry struct {
 }
 
 type ResponseTemplateIndustry struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	PrimaryIndustry   *Industry `json:"primary_industry"`
 	SecondaryIndustry *Industry `json:"secondary_industry"`
 }
 
 type ResponseTemplate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	TemplateId string `json:"template_id"`
 }
@@ -30,13 +30,13 @@ type Template struct {
 }
 
 type ResponseTemplateGetPrivate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	TemplateList []*Template `json:"template_list"`
 }
 
 type ResponseTemplateSend struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	MsgID int `json:"msgid"`
 }

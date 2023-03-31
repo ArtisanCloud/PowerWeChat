@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseSearchSiteSearch struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Items        []*power.HashMap `json:"items"`
 	HasNextPage  int              `json:"has_next_page"`

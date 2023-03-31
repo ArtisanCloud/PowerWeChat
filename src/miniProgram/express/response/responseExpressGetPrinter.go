@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseExpressGetPrinter struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Count     string   `json:"count"`
 	OpenID    []string `json:"openid"`
