@@ -8,7 +8,7 @@ type RespMsg struct {
 }
 
 type ResponseDeviceCreateID struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	RespMsg *RespMsg `json:"resp_msg"`
 }

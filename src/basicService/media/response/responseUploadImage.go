@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseUploadImage struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	URL string `json:"url"`
 }

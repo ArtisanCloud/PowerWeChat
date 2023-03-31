@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseBroadcastGetSubAnchor struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	UserName string `json:"username"`
 }

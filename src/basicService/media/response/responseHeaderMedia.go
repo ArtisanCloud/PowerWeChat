@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseHeaderMedia struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Connection         []string `header:"Connection" json:"Connection"`                   //: close
 	ContentType        []string `header:"Content-Type" json:"Content-Type"`               //: image/jpeg

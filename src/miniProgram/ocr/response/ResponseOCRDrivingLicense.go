@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseOCRDrivingLicense struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	IdNum        string `json:"id_num"`
 	Name         string `json:"name"`
 	Sex          string `json:"sex"`

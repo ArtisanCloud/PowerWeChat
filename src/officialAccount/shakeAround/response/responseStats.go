@@ -11,7 +11,7 @@ type DataSummary struct {
 }
 
 type ResponseStatsSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data []DataSummary `json:"data"`
 }
@@ -34,7 +34,7 @@ type StatsDeviceList struct {
 }
 
 type ResponseStatsDeviceList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data       *StatsDeviceList `json:"data"`
 	Date       int              `json:"date"`
@@ -46,7 +46,7 @@ type ResponseStatsDeviceList struct {
 // ------------------------------------------------
 
 type ResponseStatsPage struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data []*DataSummary `json:"data"`
 }
@@ -66,7 +66,7 @@ type StatePageList struct {
 }
 
 type ResponseStatsPageList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data       *StatePageList `json:"data"`
 	Date       int            `json:"date"`

@@ -6,26 +6,26 @@ import (
 )
 
 type ResponseCardCreate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	CardID string `json:"card_id"`
 }
 
 type ResponseCardGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Card request.Card `json:"card"`
 }
 
 type ResponseCardList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	CardIDList []string `json:"card_id_list"`
 	TotalNum   int      `json:"total_num"`
 }
 
 type ResponseCardUpdate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	SendCheck bool `json:"send_check"`
 }

@@ -37,7 +37,7 @@ type Store struct {
 }
 
 type ResponseStoreCategory struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data Store `json:"data"`
 }
@@ -59,7 +59,7 @@ type Result struct {
 }
 
 type ResponseStoreDistrict struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Status      int         `json:"status"`
 	Message     string      `json:"message"`
@@ -74,7 +74,7 @@ type DataPIO struct {
 }
 
 type ResponseStoreSearchMapPIO struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DataPIO `json:"data"`
 }
@@ -82,7 +82,7 @@ type ResponseStoreSearchMapPIO struct {
 // -------------------------------------------------------
 
 type ResponseStoreGetStatus struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	FirstCatID        int    `json:"first_catid"`
 	SecondCatID       int    `json:"second_catid"`
@@ -102,7 +102,7 @@ type CreateStoreFromMap struct {
 }
 
 type ResponseStoreCreateFromMap struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Error interface{}        `json:"error"`
 	Data  CreateStoreFromMap `json:"data"`
@@ -115,7 +115,7 @@ type CreateStore struct {
 }
 
 type ResponseStoreCreate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data CreateStore `json:"data"`
 }
@@ -128,7 +128,7 @@ type UpdateStore struct {
 }
 
 type ResponseStoreUpdate struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data UpdateStore `json:"data"`
 }
@@ -136,7 +136,7 @@ type ResponseStoreUpdate struct {
 // -------------------------------------------------------
 
 type ResponseStoreInfo struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Business response2.Business `json:"business"`
 }
@@ -144,7 +144,7 @@ type ResponseStoreInfo struct {
 // -------------------------------------------------------
 
 type ResponseStoreList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	BusinessList []*response2.Business `json:"business_list"`
 	TotalCount   int                   `json:"total_count"`

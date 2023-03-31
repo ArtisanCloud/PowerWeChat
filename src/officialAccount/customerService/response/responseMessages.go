@@ -11,7 +11,7 @@ type Record struct {
 }
 
 type ResponseMessages struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	RecordList []*Record `json:"recordlist"`
 	Number     int       `json:"number"`

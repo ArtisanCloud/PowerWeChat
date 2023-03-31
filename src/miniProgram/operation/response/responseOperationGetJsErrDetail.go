@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseOperationGetJsErrDetail struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Success bool             `json:"success"`
 	OpenID  string           `json:"openid"`
 	Data    []*power.HashMap `json:"data"`

@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseOCRVehicleLicense struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	VhicleType     string `json:"vhicle_type"`     // "小型普通客⻋",
 	Owner          string `json:"owner"`           // "东莞市xxxxx机械厂",

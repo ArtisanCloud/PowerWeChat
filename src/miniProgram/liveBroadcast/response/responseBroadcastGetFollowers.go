@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseBroadcastGetFollowers struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Followers []*power.HashMap `json:"followers"`
 	PageBreak string           `json:"page_break,omitempty"`

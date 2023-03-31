@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseBroadcastGoodsVideo struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	URL int `json:"url"`
 }

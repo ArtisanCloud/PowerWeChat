@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseBroadcastGetLiveInfo struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Total    int              `json:"total"`
 	RoomInfo []*power.HashMap `json:"room_info"`

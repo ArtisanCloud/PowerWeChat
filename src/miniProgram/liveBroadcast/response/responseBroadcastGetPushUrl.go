@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseBroadcastGetPushUrl struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	PushAddr string `json:"pushAddr"`
 }

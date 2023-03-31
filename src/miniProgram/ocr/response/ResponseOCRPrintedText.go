@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseOCRPrintedText struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Items   []*power.HashMap `json:"items"`
 	ImgSize []*power.HashMap `json:"img_size"`
 }

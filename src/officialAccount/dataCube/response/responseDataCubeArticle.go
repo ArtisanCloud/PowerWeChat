@@ -17,7 +17,7 @@ type ArticleSummary struct {
 }
 
 type ResponseDataCubeArticleSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*ArticleSummary `json:"list"`
 }
@@ -61,7 +61,7 @@ type ArticleTotal struct {
 }
 
 type ResponseDataCubeArticleTotal struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*ArticleTotal `json:"list"`
 }
@@ -82,7 +82,7 @@ type UserReadSummary struct {
 }
 
 type ResponseDataCubeUserReadSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UserReadSummary `json:"list"`
 }
@@ -97,7 +97,7 @@ type UserShareSummary struct {
 }
 
 type ResponseDataCubeUserShareSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UserShareSummary `json:"list"`
 }
@@ -113,7 +113,7 @@ type UserShareHourly struct {
 }
 
 type ResponseDataCubeUserShareHourly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UserShareHourly `json:"list"`
 }

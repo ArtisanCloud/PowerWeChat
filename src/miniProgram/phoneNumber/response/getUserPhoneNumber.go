@@ -15,7 +15,7 @@ type PhoneInfo struct {
 }
 
 type ResponseGetUserPhoneNumber struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	ErrCode   int        `json:"errcode"`
 	ErrMsg    string     `json:"errmsg"`

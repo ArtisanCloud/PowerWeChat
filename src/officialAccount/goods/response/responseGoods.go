@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseProductAdd struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	StatusTicket string `json:"status_ticket"`
 }
@@ -14,7 +14,7 @@ type ResponseProductAdd struct {
 // ----------------------------------------
 
 type ResponseProductStatus struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Result struct {
 		SuccCnt  int    `json:"succ_cnt"`
@@ -33,7 +33,7 @@ type ResponseProductStatus struct {
 // ----------------------------------------
 
 type ResponseProductGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Product *request.Product `json:"product"`
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseOCRIDCard struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Type        string `json:"type"`
 	Name        string `json:"name"`
 	ID          string `json:"id"`

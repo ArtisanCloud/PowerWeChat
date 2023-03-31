@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseOperationGetFeedback struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	List     []string `json:"list"`
 	TotalNum int64    `json:"total_num"`
 }

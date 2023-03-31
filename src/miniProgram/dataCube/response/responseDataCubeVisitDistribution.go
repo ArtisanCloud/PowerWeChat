@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseDataCubeVisit struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	RefDate string           `json:"ref_date"`
 	List    []*power.HashMap `json:"list"`

@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseSecurityMediaCheckASync struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	TraceID string `json:"trace_id"`
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseSecurityMsgCheckASync struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	TraceID string `json:"trace_id"`
 	Detail  []struct {
 		Strategy string `json:"momentStrategy"`

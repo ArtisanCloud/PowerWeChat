@@ -6,6 +6,6 @@ import (
 )
 
 type ResponsePluginGetPluginList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	PluginList []*power.HashMap `json:"plugin_list"`
 }

@@ -10,7 +10,7 @@ type UpstreamMessageSummary struct {
 }
 
 type ResponseDataCubeUpstreamMessageSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageSummary `json:"list"`
 }
@@ -26,7 +26,7 @@ type UpstreamMessageHourly struct {
 }
 
 type ResponseDataCubeUpstreamMessageHourly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageHourly `json:"list"`
 }
@@ -41,7 +41,7 @@ type UpstreamMessageWeekly struct {
 }
 
 type ResponseDataCubeUpstreamMessageWeekly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageWeekly `json:"list"`
 }
@@ -56,7 +56,7 @@ type UpstreamMessageMonthly struct {
 }
 
 type ResponseDataCubeUpstreamMessageMonthly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageMonthly `json:"list"`
 }
@@ -70,7 +70,7 @@ type UpstreamMessageDistSummary struct {
 }
 
 type ResponseDataCubeUpstreamMessageDistSummary struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageDistSummary `json:"list"`
 }
@@ -84,7 +84,7 @@ type UpstreamMessageDistWeekly struct {
 }
 
 type ResponseDataCubeUpstreamMessageDistWeekly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageDistWeekly `json:"list"`
 }
@@ -98,7 +98,7 @@ type UpstreamMessageDistMonthly struct {
 }
 
 type ResponseDataCubeUpstreamMessageDistMonthly struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	List []*UpstreamMessageDistMonthly `json:"list"`
 }

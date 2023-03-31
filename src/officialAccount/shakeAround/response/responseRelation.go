@@ -16,7 +16,7 @@ type DataRelationSearch struct {
 }
 
 type ResponseRelationSearch struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DataRelationSearch `json:"data"`
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseSearchImageSearch struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Items []*power.HashMap `json:"items"`
 }

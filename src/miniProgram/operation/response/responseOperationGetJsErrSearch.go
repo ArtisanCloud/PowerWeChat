@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseOperationGetJsErrSearch struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	results *power.HashMap `json:"results"`
 	Total   int64          `json:"total"`
 }

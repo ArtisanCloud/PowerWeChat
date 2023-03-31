@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseRiskControlGetUserRiskRank struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	RiskRank int64 `json:"risk_rank"`
 	UnoinID  int64 `json:"unoin_id"`
 }

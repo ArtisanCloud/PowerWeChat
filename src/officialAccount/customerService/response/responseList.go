@@ -14,7 +14,7 @@ type KF struct {
 }
 
 type ResponseList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	KFList []*KF `json:"kf_list"`
 }
@@ -29,7 +29,7 @@ type KFOnline struct {
 }
 
 type ResponseKFOnlineList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	KfOnlineList []*KFOnline `json:"kf_online_list"`
 }

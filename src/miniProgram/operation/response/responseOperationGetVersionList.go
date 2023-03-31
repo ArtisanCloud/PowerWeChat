@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseOperationGetVersionList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	CVList []*power.HashMap `json:"cvlist"`
 }

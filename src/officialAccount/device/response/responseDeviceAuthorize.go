@@ -14,7 +14,7 @@ type Resp struct {
 }
 
 type ResponseDeviceAuthorize struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Resp []*Resp `json:"resp"`
 }

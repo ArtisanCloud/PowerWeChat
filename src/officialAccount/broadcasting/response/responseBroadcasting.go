@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type ResponseBroadcastingSend struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	MsgID     int `json:"msg_id"`
 	MsgDataID int `json:"msg_data_id"`

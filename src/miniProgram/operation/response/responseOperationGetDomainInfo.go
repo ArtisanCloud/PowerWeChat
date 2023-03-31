@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseOperationGetDomainInfo struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	RequestDomain   []string `json:"requestdomain"`
 	WSRequestDomain []string `json:"wsrequestdomain"`
 	UploadDomain    []string `json:"uploaddomain"`

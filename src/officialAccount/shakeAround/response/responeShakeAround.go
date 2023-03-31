@@ -10,7 +10,7 @@ type AccountRegisgerData struct {
 }
 
 type ResponseShakeAroundAccountRegister struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *AccountRegisgerData `json:"data"`
 }
@@ -32,7 +32,7 @@ type UserData struct {
 }
 
 type ResponseShakeAroundUser struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *UserData `json:"data"`
 }

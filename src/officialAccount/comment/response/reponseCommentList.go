@@ -17,7 +17,7 @@ type Comment struct {
 }
 
 type ResponseCommentList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Total   int        `json:"total"`
 	Comment []*Comment `json:"comment"`

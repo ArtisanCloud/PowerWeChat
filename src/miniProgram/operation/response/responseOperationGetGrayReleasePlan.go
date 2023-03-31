@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseOperationGetGrayReleasePlan struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	GrayReleasePlan *power.HashMap `json:"gray_release_plan"`
 }

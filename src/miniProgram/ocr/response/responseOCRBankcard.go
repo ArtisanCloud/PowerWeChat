@@ -5,6 +5,6 @@ import (
 )
 
 type ResponseOCRBankcard struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Number string `json:"number"`
 }

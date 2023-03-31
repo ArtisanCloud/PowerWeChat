@@ -6,6 +6,6 @@ import (
 )
 
 type ResponsePluginGetDevApplyList struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	ApplyList []*power.HashMap `json:"apply_list"`
 }

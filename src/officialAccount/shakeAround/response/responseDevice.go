@@ -9,7 +9,7 @@ type DeviceApplyData struct {
 }
 
 type ResponseDeviceApply struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DeviceApplyData `json:"data"`
 }
@@ -24,7 +24,7 @@ type DeviceApplyDataStatus struct {
 }
 
 type ResponseDeviceApplyStatus struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *DeviceApplyDataStatus `json:"data"`
 }
@@ -32,7 +32,7 @@ type ResponseDeviceApplyStatus struct {
 // -------------------------------------------------------
 
 type ResponseDeviceBindPoi struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data interface{} `json:"data"`
 }
@@ -61,7 +61,7 @@ type SearchData struct {
 }
 
 type ResponseDeviceSearch struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Data *SearchData `json:"data"`
 }

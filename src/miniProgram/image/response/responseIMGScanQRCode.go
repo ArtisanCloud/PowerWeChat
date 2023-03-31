@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseIMGScanQRCode struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	CodeResults []*power.HashMap `json:"code_results"`
 	ImgSize     power.HashMap    `json:"img_size"`
 }

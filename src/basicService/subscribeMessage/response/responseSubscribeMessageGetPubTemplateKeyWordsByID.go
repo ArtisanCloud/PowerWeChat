@@ -6,6 +6,6 @@ import (
 )
 
 type ResponseSubscribeMessageGetPubTemplateKeyWordsByID struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Data []*power.HashMap `json:"data"`
 }

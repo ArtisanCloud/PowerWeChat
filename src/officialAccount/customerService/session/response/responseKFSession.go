@@ -8,7 +8,7 @@ type Session struct {
 }
 
 type ResponseKFSessionList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Sessionlist []*Session `json:"sessionlist"`
 }
@@ -21,7 +21,7 @@ type WaitCase struct {
 }
 
 type ResponseKFSessionWaitCaseList struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	Count        int         `json:"count"`
 	WaitCaseList []*WaitCase `json:"waitcaselist"`
@@ -30,7 +30,7 @@ type ResponseKFSessionWaitCaseList struct {
 // ---------------------------------------------------
 
 type ResponseKFSessionGet struct {
-	*response.ResponseOfficialAccount
+	response.ResponseOfficialAccount
 
 	CreateTime int    `json:"createtime"`
 	KfAccount  string `json:"kf_account"`

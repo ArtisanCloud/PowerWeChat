@@ -6,7 +6,7 @@ import (
 )
 
 type ResponseOperationRealTimeLogSearch struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 	Data *power.HashMap   `json:"data"`
 	List []*power.HashMap `json:"list"`
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type ResponseServiceMarketInvoceService struct {
-	*response.ResponseMiniProgram
+	response.ResponseMiniProgram
 
 	Data string `json:"data"`
 }
