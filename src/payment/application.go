@@ -61,6 +61,7 @@ type UserConfig struct {
 	KeyPath          string
 	RSAPublicKeyPath string
 	SerialNo         string
+	WechatPaySerial  string
 	Http             Http
 
 	ResponseType string
@@ -315,6 +316,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"key_path":            userConfig.KeyPath,
 		"rsa_public_key_path": userConfig.RSAPublicKeyPath,
 		"serial_no":           userConfig.SerialNo,
+		"wechat_pay_serial":   userConfig.WechatPaySerial,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.HashMap{

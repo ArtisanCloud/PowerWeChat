@@ -3,6 +3,7 @@ package transfer
 import (
 	"context"
 	"crypto"
+	"encoding/base64"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -95,7 +96,7 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 
 	config := (*comp.App).GetConfig()
 
-	rsaSigner, err := sign.NewRSASigner(crypto.SHA256)
+	rsaSigner, err := sign.NewRSASigner(crypto.SHA1)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +106,8 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 		return nil, err
 	}
 
-	buffer, err := rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncBankNO))
+	cipherData, err := rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncBankNO))
+	buffer := base64.StdEncoding.EncodeToString(cipherData)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +116,8 @@ func (comp *Client) ToBankCard(ctx context.Context, data *request.RequestToBankC
 		return nil, err
 	}
 
-	buffer, err = rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncTrueName))
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(data.EncTrueName))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
 	if err != nil {
 		return nil, err
 	}
