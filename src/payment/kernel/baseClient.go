@@ -54,20 +54,12 @@ func NewBaseClient(app *ApplicationPaymentInterface) (*BaseClient, error) {
 		App: app,
 	}
 
-	client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA256)
+	client.RsaOAEP, err = sign.NewRSASigner(crypto.SHA1)
 	if err != nil {
 		return nil, err
 	}
 	RSAPublicKeyPath := config.GetString("rsa_public_key_path", "")
-	//RSAPublicKeyPath := config.GetString("cert_path", "")
-	//PrivateKeyPath := config.GetString("key_path", "")
-	//if PrivateKeyPath != "" && RSAPublicKeyPath != "" {
 	if RSAPublicKeyPath != "" {
-		//client.RsaOAEP.RSAEncryptor.PrivateKeyPath = PrivateKeyPath
-		//_, err = client.RsaOAEP.RSAEncryptor.LoadPrivateKeyByPath()
-		//if err != nil {
-		//	return nil, err
-		//}
 		client.RsaOAEP.RSAEncryptor.PublicKeyPath = RSAPublicKeyPath
 		_, err = client.RsaOAEP.RSAEncryptor.LoadPublicKeyByPath()
 		if err != nil {
@@ -180,12 +172,17 @@ func (client *BaseClient) RequestV2(ctx context.Context, endpoint string, params
 
 	base := &object.HashMap{
 		// 微信的接口如果传入接口以外的参数，签名会失败所以这里需要区分对待参数
-		"mchid":      config.GetString("mch_id", ""),
+		"mch_id":     config.GetString("mch_id", ""),
 		"nonce_str":  object.RandStringBytesMask(32),
 		"sub_mch_id": config.GetString("sub_mch_id", ""),
 		"sub_appid":  config.GetString("sub_appid", ""),
 	}
 	params = object.MergeHashMap(params, base)
+	if (*params)["mchid"] == nil {
+		(*params)["mch_id"] = config.GetString("mch_id", "")
+	} else {
+		(*params)["mch_id"] = nil
+	}
 	params = object.FilterEmptyHashMap(params)
 
 	//options, err := client.AuthSignRequestV2(endpoint, method, params, option)
@@ -280,8 +277,14 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 		// set header
 		df.
 			Header("content-type", "application/json").
-			Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string)).
-			Header("Wechatpay-Serial", (*(*options)["headers"].(*object.HashMap))["Wechatpay-Serial"].(string))
+			Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string))
+
+		// 微信支付时候，需要配置平台证书的序列号
+		// https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay4_1.shtml
+		wechatPaySerial := config.GetString("wechat_pay_serial", "")
+		if wechatPaySerial != "" {
+			df.Header("Wechatpay-Serial", wechatPaySerial)
+		}
 
 	}
 
@@ -561,8 +564,7 @@ func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string
 
 	options = object.MergeHashMap(&object.HashMap{
 		"headers": &object.HashMap{
-			"Authorization":    authorization,
-			"Wechatpay-Serial": config.GetString("serial_no", ""),
+			"Authorization": authorization,
 		},
 		"body": signBody,
 	}, options)
