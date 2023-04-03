@@ -96,7 +96,7 @@ func (msg *Message) TransformToXml(appends *object.HashMap, returnAsArray bool) 
 	if returnAsArray {
 		return data, nil
 	} else {
-		strXML := object.Map2Xml(data)
+		strXML := object.Map2Xml(data, false)
 		return strXML, nil
 		//buffer, err := xml2.Marshal(data)
 		//if err != nil {
