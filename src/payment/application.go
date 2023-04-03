@@ -53,16 +53,17 @@ type Payment struct {
 }
 
 type UserConfig struct {
-	AppID            string
-	MchID            string
-	MchApiV3Key      string
-	Key              string
-	CertPath         string
-	KeyPath          string
-	RSAPublicKeyPath string
-	SerialNo         string
-	WechatPaySerial  string
-	Http             Http
+	AppID              string
+	MchID              string
+	MchApiV3Key        string
+	Key                string
+	CertPath           string
+	KeyPath            string
+	SerialNo           string
+	CertificateKeyPath string
+	WechatPaySerial    string
+	RSAPublicKeyPath   string
+	Http               Http
 
 	ResponseType string
 	Log          Log
@@ -308,15 +309,16 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	config := &object.HashMap{
-		"app_id":              userConfig.AppID,
-		"mch_id":              userConfig.MchID,
-		"mch_api_v3_key":      userConfig.MchApiV3Key,
-		"key":                 userConfig.Key,
-		"cert_path":           userConfig.CertPath,
-		"key_path":            userConfig.KeyPath,
-		"rsa_public_key_path": userConfig.RSAPublicKeyPath,
-		"serial_no":           userConfig.SerialNo,
-		"wechat_pay_serial":   userConfig.WechatPaySerial,
+		"app_id":               userConfig.AppID,
+		"mch_id":               userConfig.MchID,
+		"mch_api_v3_key":       userConfig.MchApiV3Key,
+		"key":                  userConfig.Key,
+		"cert_path":            userConfig.CertPath,
+		"key_path":             userConfig.KeyPath,
+		"certificate_key_path": userConfig.CertificateKeyPath,
+		"serial_no":            userConfig.SerialNo,
+		"rsa_public_key_path":  userConfig.RSAPublicKeyPath,
+		"wechat_pay_serial":    userConfig.WechatPaySerial,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.HashMap{
