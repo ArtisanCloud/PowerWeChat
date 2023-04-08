@@ -11,8 +11,9 @@ const (
 	CALLBACK_EVENT_ENTER_AGENT              = "enter_agent"
 	CALLBACK_EVENT_LOCATION                 = "LOCATION"
 	CALLBACK_EVENT_BATCH_JOB_RESULT         = "batch_job_result"
-	CALLBACK_EVENT_CLICK                    = "click"
-	CALLBACK_EVENT_VIEW                     = "view"
+	CALLBACK_EVENT_CLICK                    = "CLICK"
+	CALLBACK_EVENT_VIEW                     = "VIEW"
+	CALLBACK_EVENT_SCAN                     = "SCAN"
 	CALLBACK_EVENT_SCANCODE_PUSH            = "scancode_push"
 	CALLBACK_EVENT_SCANCODE_WAITMSG         = "scancode_waitmsg"
 	CALLBACK_EVENT_PIC_SYSPHOTO             = "pic_sysphoto"
@@ -22,6 +23,9 @@ const (
 	CALLBACK_EVENT_OPEN_APPROVAL_CHANGE     = "open_approval_change"
 	CALLBACK_EVENT_SHARE_AGENT_CHANGE       = "share_agent_change"
 	CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT = "template_card_menu_event"
+	CALLBACK_EVENT_TEMPLATE_SEND_JOB_FINISH = "TEMPLATESENDJOBFINISH"
+	CALLBACK_EVENT_VIEW_MINIPROGRAM         = "view_miniprogram"
+	CALLBACK_EVENT_MASS_SEND_JOB_FINISH     = "MASSSENDJOBFINISH"
 )
 
 type EventSubscribe struct {
