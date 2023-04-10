@@ -12,7 +12,7 @@ func NewMiniProgramPage(items *power.HashMap) *MiniProgramPage {
 	m := &MiniProgramPage{
 		NewMessage(items),
 	}
-	m.Type = "miniProgram_page"
+	m.Type = "miniprogrampage"
 
 	m.Properties = []string{
 		"title",
