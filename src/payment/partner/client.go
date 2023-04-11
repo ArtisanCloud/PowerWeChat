@@ -32,6 +32,8 @@ func (comp *Client) JSAPITransaction(ctx context.Context, params *request.Reques
 
 	result := &response.ResponseUnitfy{}
 
+	ctx = comp.needPartnerPay(ctx)
+
 	endpoint := "/v3/pay/partner/transactions/jsapi"
 	_, err := comp.PayTransaction(ctx, endpoint, params, result)
 	return result, err
@@ -42,6 +44,8 @@ func (comp *Client) JSAPITransaction(ctx context.Context, params *request.Reques
 func (comp *Client) TransactionApp(ctx context.Context, params *request.RequestAppPrepay) (*response.ResponseUnitfy, error) {
 
 	result := &response.ResponseUnitfy{}
+
+	ctx = comp.needPartnerPay(ctx)
 
 	endpoint := "/v3/pay/partner/transactions/app"
 	_, err := comp.PayTransaction(ctx, endpoint, params, result)
@@ -55,6 +59,8 @@ func (comp *Client) TransactionH5(ctx context.Context, params *request.RequestH5
 
 	result := &response.ResponseH5URL{}
 
+	ctx = comp.needPartnerPay(ctx)
+
 	endpoint := "/v3/pay/partner/transactions/h5"
 	_, err := comp.PayTransaction(ctx, endpoint, params, result)
 	return result, err
@@ -66,10 +72,16 @@ func (comp *Client) TransactionNative(ctx context.Context, params *request.Reque
 
 	result := &response.ResponseCodeURL{}
 
+	ctx = comp.needPartnerPay(ctx)
+
 	endpoint := "/v3/pay/partner/transactions/native"
 	_, err := comp.PayTransaction(ctx, endpoint, params, result)
 
 	return result, err
+}
+
+func (comp *Client) needPartnerPay(ctx context.Context) context.Context {
+	return context.WithValue(ctx, "isPartnerPay", true)
 }
 
 // 合单APP下单API
@@ -99,11 +111,6 @@ func (comp *Client) PayTransaction(ctx context.Context, entryPoint string, param
 	if params.GetNotifyUrl() == "" {
 		url := config.GetString("notify_url", "")
 		params.SetNotifyUrl(url)
-	}
-
-	if params.GetSubAppId() == "" {
-		appID := config.GetString("sub_appid", "")
-		params.SetSubAppId(appID)
 	}
 
 	if params.GetSpMchId() == "" {

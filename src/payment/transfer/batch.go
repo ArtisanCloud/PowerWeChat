@@ -163,6 +163,6 @@ func (comp *BatchClient) QueryElectronicReceipts(ctx context.Context, acceptType
 
 // 下载电子回单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_11.shtml
-func (comp *Client) DownloadSignFile(requestDownload *power.RequestDownload, filePath string) (int64, error) {
-	return comp.StreamDownload(requestDownload, filePath)
+func (comp *Client) DownloadSignFile(ctx context.Context, requestDownload *power.RequestDownload, filePath string) (int64, error) {
+	return comp.StreamDownload(ctx, requestDownload, filePath)
 }

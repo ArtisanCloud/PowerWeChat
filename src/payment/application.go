@@ -332,7 +332,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"serial_no":            userConfig.SerialNo,
 		"rsa_public_key_path":  userConfig.RSAPublicKeyPath,
 		"wechat_pay_serial":    userConfig.WechatPaySerial,
-		"sub_app_id":           userConfig.SubAppID,
+		"sub_appid":            userConfig.SubAppID,
 		"sub_mch_id":           userConfig.SubMchID,
 
 		"response_type": userConfig.ResponseType,

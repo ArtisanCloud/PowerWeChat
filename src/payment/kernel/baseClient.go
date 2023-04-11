@@ -234,7 +234,7 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 
 	// 签名访问的URL，请确保url后面不要跟参数，因为签名的参数，不包含?参数
 	// 比如需要在请求的时候，把debug=false，这样url后面就不会多出 "?debug=true"
-	options, err = client.AuthSignRequest(config, endpoint, method, params, options)
+	options, err = client.AuthSignRequest(ctx, config, endpoint, method, params, options)
 	if err != nil {
 		return nil, err
 	}
@@ -371,7 +371,7 @@ func (client *BaseClient) RequestRawXML(ctx context.Context, url string, params 
 
 }
 
-func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload, filePath string) (int64, error) {
+func (client *BaseClient) StreamDownload(ctx context.Context, requestDownload *power.RequestDownload, filePath string) (int64, error) {
 	fileHandler, err := os.Create(filePath)
 	if err != nil {
 		return 0, err
@@ -381,7 +381,7 @@ func (client *BaseClient) StreamDownload(requestDownload *power.RequestDownload,
 	config := (*client.App).GetConfig()
 
 	method := http.MethodPost
-	options, err := client.AuthSignRequest(config, requestDownload.DownloadURL, method, nil, nil)
+	options, err := client.AuthSignRequest(ctx, config, requestDownload.DownloadURL, method, nil, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -502,13 +502,15 @@ func (client *BaseClient) Wrap(endpoint string) string {
 	}
 }
 
-func (client *BaseClient) AuthSignRequest(config *kernel.Config, endpoint string, method string, params *object.StringMap, options *object.HashMap) (*object.HashMap, error) {
+func (client *BaseClient) AuthSignRequest(context context.Context, config *kernel.Config, endpoint string, method string, params *object.StringMap, options *object.HashMap) (*object.HashMap, error) {
 
 	var err error
 
-	base := &object.HashMap{
-		"appid": config.GetString("app_id", ""),
-		"mchid": config.GetString("mch_id", ""),
+	base := &object.HashMap{}
+	isPartnerPay := context.Value("isPartnerPay")
+	if isPartnerPay == nil {
+		(*base)["appid"] = config.GetString("app_id", "")
+		(*base)["mchid"] = config.GetString("mch_id", "")
 	}
 
 	// init options
