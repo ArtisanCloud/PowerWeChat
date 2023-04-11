@@ -1,4 +1,4 @@
-package merchant
+package partner
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant/request"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant/response"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/partner/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/partner/response"
 
 	"net/http"
 )

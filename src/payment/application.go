@@ -12,10 +12,10 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/partner"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund"
@@ -33,10 +33,10 @@ type Payment struct {
 
 	Config *kernel.Config
 
-	Order    *order.Client
-	Merchant *merchant.Client
-	JSSDK    *jssdk.Client
-	Sandbox  *sandbox.Client
+	Order   *order.Client
+	Partner *partner.Client
+	JSSDK   *jssdk.Client
+	Sandbox *sandbox.Client
 
 	Refund *refund.Client
 	Bill   *bill.Client
@@ -144,8 +144,8 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	if err != nil {
 		return nil, err
 	}
-	//-------------- Merchant --------------
-	app.Merchant, err = merchant.RegisterProvider(app)
+	//-------------- Partner --------------
+	app.Partner, err = partner.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -226,8 +226,8 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.Config
 	case "Order":
 		return app.Order
-	case "Merchant":
-		return app.Merchant
+	case "Partner":
+		return app.Partner
 	case "Refund":
 		return app.Refund
 	case "Bill":
