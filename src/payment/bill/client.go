@@ -60,6 +60,6 @@ func (comp *Client) GetFlowBill(ctx context.Context, date string, accountType st
 }
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_8.shtml
-func (comp *Client) DownloadBill(requestDownload *power.RequestDownload, filePath string) (int64, error) {
-	return comp.StreamDownload(requestDownload, filePath)
+func (comp *Client) DownloadBill(ctx context.Context, requestDownload *power.RequestDownload, filePath string) (int64, error) {
+	return comp.StreamDownload(ctx, requestDownload, filePath)
 }
