@@ -156,10 +156,6 @@ func (client *BaseClient) PlainRequest(ctx context.Context, endpoint string, par
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
 
-	if err != nil {
-		return nil, err
-	}
-
 	return returnResponse, err
 
 }
@@ -296,14 +292,6 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
 
-	if err != nil {
-		return nil, err
-	}
-	// decode response header to outHeader
-	//headerData, _ := ioutil.ReadAll(response.Header)
-	//response.Header = ioutil.NopCloser(bytes.NewBuffer(headerData))
-	//err = object.JsonDecode(headerData, outHeader)
-
 	return returnResponse, err
 
 }
@@ -378,10 +366,6 @@ func (client *BaseClient) RequestRawXML(ctx context.Context, url string, params 
 
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
-
-	if err != nil {
-		return nil, err
-	}
 
 	return returnResponse, err
 

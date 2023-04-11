@@ -12,6 +12,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order"
@@ -32,9 +33,10 @@ type Payment struct {
 
 	Config *kernel.Config
 
-	Order   *order.Client
-	JSSDK   *jssdk.Client
-	Sandbox *sandbox.Client
+	Order    *order.Client
+	Merchant *merchant.Client
+	JSSDK    *jssdk.Client
+	Sandbox  *sandbox.Client
 
 	Refund *refund.Client
 	Bill   *bill.Client
@@ -63,6 +65,10 @@ type UserConfig struct {
 	CertificateKeyPath string
 	WechatPaySerial    string
 	RSAPublicKeyPath   string
+	SpAppID            string
+	SpMchID            string
+	SubAppID           string
+	SubMchID           string
 	Http               Http
 
 	ResponseType string
@@ -135,6 +141,11 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 
 	//-------------- Order --------------
 	app.Order, err = order.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+	//-------------- Merchant --------------
+	app.Merchant, err = merchant.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -215,6 +226,8 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.Config
 	case "Order":
 		return app.Order
+	case "Merchant":
+		return app.Merchant
 	case "Refund":
 		return app.Refund
 	case "Bill":
@@ -319,6 +332,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"serial_no":            userConfig.SerialNo,
 		"rsa_public_key_path":  userConfig.RSAPublicKeyPath,
 		"wechat_pay_serial":    userConfig.WechatPaySerial,
+		"sub_app_id":           userConfig.SubAppID,
+		"sub_mch_id":           userConfig.SubMchID,
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.HashMap{
