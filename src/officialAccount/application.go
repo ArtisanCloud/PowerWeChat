@@ -28,6 +28,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/oauth"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/ocr"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/poi"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/publish"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/semantic"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/server"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/shakeAround"
@@ -70,6 +71,7 @@ type OfficialAccount struct {
 	Device                 *device.Client
 	ShakeAround            *shakeAround.ShakeAround
 	POI                    *poi.Client
+	Publish                *publish.Client
 	Store                  *store.Client
 	Comment                *comment.Client
 	OCR                    *ocr.Client
@@ -280,6 +282,8 @@ func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*O
 	}
 	//-------------- register POI --------------
 	app.POI, err = poi.RegisterProvider(app)
+	//-------------- register Publish --------------
+	app.Publish, err = publish.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -385,6 +389,8 @@ func (app *OfficialAccount) GetComponent(name string) interface{} {
 		return app.ShakeAround
 	case "POI":
 		return app.POI
+	case "Publish":
+		return app.Publish
 	case "Store":
 		return app.Store
 	case "Comment":
