@@ -2,6 +2,7 @@ package kernel
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
+	"github.com/redis/go-redis/v9"
 	"time"
 )
 
@@ -10,7 +11,7 @@ type InteractsWithCache struct {
 }
 
 type CacheInterface cache.CacheInterface
-type RedisOptions cache.RedisOptions
+type RedisOptions redis.Options
 
 func NewRedisClient(options *RedisOptions) CacheInterface {
 	if options == nil {
@@ -21,7 +22,7 @@ func NewRedisClient(options *RedisOptions) CacheInterface {
 		return nil
 	}
 
-	return cache.NewGRedis((*cache.RedisOptions)(options))
+	return cache.NewGRedis((*redis.Options)(options))
 }
 
 func NewInteractsWithCache(client CacheInterface) *InteractsWithCache {
