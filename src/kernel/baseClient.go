@@ -87,7 +87,7 @@ func (client *BaseClient) HttpGet(ctx context.Context, url string, query *object
 	return client.Request(
 		ctx,
 		url,
-		http.MethodPost,
+		http.MethodGet,
 		&object.HashMap{
 			"query": query,
 		},
