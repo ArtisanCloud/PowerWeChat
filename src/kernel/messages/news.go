@@ -42,7 +42,9 @@ func (msg *News) OverrideToXmlArray() {
 			arrayItems := getItem.([]*object.HashMap)
 			for _, item := range arrayItems {
 				//newItems := NewNewsItem(item)
-				items = append(items, item)
+				items = append(items, &object.HashMap{
+					"item": item,
+				})
 			}
 		}
 
