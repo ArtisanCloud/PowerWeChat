@@ -296,10 +296,10 @@ func (serverGuard *ServerGuard) buildResponse(request *http.Request, to string, 
 		return message.(messages.Raw).Get("content", SUCCESS_EMPTY_RESPONSE).(string)
 
 	case object.HashMap:
-		toMessage = messages.NewNews(message.(*object.HashMap))
+		toMessage = messages.NewNews(message.([]*object.HashMap))
 		break
 	case *object.HashMap:
-		toMessage = messages.NewNews(message.(*object.HashMap))
+		toMessage = messages.NewNews(message.([]*object.HashMap))
 		break
 	case contract.MessageInterface:
 		toMessage = message.(contract.MessageInterface)
