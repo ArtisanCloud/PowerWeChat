@@ -9,9 +9,9 @@ type NewsItem struct {
 	*Message
 }
 
-func NewNewsItems(content string) *NewsItem {
+func NewNewsItem(data *object.HashMap) *NewsItem {
 	m := &NewsItem{
-		NewMessage(&power.HashMap{"items": nil}),
+		NewMessage(&power.HashMap{"items": data}),
 	}
 
 	m.Type = "news"
