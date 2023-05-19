@@ -226,6 +226,16 @@ func (client *BaseClient) Request(ctx context.Context, url string, method string
 		}
 	}
 
+	ctxQuery := ctx.Value("query")
+	if ctxQuery != nil {
+		queries := ctxQuery.(*object.StringMap)
+		if queries != nil {
+			for k, v := range *queries {
+				df.Query(k, v)
+			}
+		}
+	}
+
 	response, err := df.Request()
 	if err != nil {
 		return response, err
