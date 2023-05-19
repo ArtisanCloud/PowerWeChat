@@ -18,18 +18,11 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		jssdkClient,
 	}
 
-	config := (*app).GetConfig()
-	baseURI := config.GetString("http.base_uri", "/")
-
-	client.TicketEndpoint = baseURI + "/cgi-bin/get_jsapi_ticket"
+	client.TicketEndpoint = "cgi-bin/get_jsapi_ticket"
 
 	return client, nil
 }
 
-func (comp *Client) GetAppID() string {
-	config := (*comp.BaseClient.App).GetConfig()
-	return config.GetString("corp_id", "")
-}
 
 func (comp *Client) GetAgentConfigArray() {
 

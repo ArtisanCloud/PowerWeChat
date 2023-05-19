@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -25,13 +26,20 @@ type Client struct {
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
+	config := (*app).GetContainer().GetConfig()
+
+	var cacheClient cache.CacheInterface = nil
+	if (*config)["cache"] != nil {
+		cacheClient = (*config)["cache"].(cache.CacheInterface)
+	}
+
 	baseClient, err := kernel.NewBaseClient(app, nil)
 	if err != nil {
 		return nil, err
 	}
 	client := &Client{
 		BaseClient:         baseClient,
-		InteractsWithCache: &kernel.InteractsWithCache{},
+		InteractsWithCache: kernel.NewInteractsWithCache(cacheClient),
 	}
 
 	client.TicketEndpoint = "cgi-bin/ticket/getticket"
@@ -120,9 +128,10 @@ func (comp *Client) ConfigSignature(ctx context.Context, url string, nonce strin
 		return result, err
 	}
 	ticket := (*result)["ticket"].(string)
+	appIDName := comp.GetAppIDName()
 
 	return &object.HashMap{
-		"appId":     comp.GetAppID(),
+		appIDName:   comp.GetAppID(),
 		"nonceStr":  nonce,
 		"timestamp": timestamp,
 		"url":       url,
@@ -164,9 +173,23 @@ func (comp *Client) GetUrl(externalRequest *http.Request) string {
 	return externalRequest.URL.String()
 }
 
+func (comp *Client) GetAppIDName() string {
+	config := (*comp.BaseClient.App).GetConfig()
+	appId := config.GetString("app_id", "")
+	if len(appId) > 0 {
+		return "appId"
+	}
+	return "corpId"
+}
+
 func (comp *Client) GetAppID() string {
 	config := (*comp.BaseClient.App).GetConfig()
-	return config.GetString("app_id", "")
+	appId := config.GetString("app_id", "")
+	corpId := config.GetString("corp_id", "")
+	if len(appId) > 0 {
+		return appId
+	}
+	return corpId
 }
 
 func (comp *Client) getAgentID() string {
