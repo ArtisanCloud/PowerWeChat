@@ -33,6 +33,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/transfer"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/groupRobot"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/invoice"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/jssdk"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/media"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/menu"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/message"
@@ -69,6 +70,8 @@ type Work struct {
 
 	Config     *kernel.Config
 	Department *department.Client
+
+	JSSDK *jssdk.Client
 
 	Agent          *agent.Client
 	AgentWorkbench *workbench.Client
@@ -208,6 +211,12 @@ func NewWork(config *UserConfig) (*Work, error) {
 	}
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
+	//-------------- register JSSDK --------------
+	app.JSSDK, err = jssdk.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}

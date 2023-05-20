@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -22,19 +23,31 @@ type Client struct {
 
 	TicketEndpoint string
 	url            string
+
+	GetAppID func() string
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
+
+	config := (*app).GetContainer().GetConfig()
+
+	var cacheClient cache.CacheInterface = nil
+	if (*config)["cache"] != nil {
+		cacheClient = (*config)["cache"].(cache.CacheInterface)
+	}
+
 	baseClient, err := kernel.NewBaseClient(app, nil)
 	if err != nil {
 		return nil, err
 	}
 	client := &Client{
 		BaseClient:         baseClient,
-		InteractsWithCache: &kernel.InteractsWithCache{},
+		InteractsWithCache: kernel.NewInteractsWithCache(cacheClient),
 	}
 
 	client.TicketEndpoint = "cgi-bin/ticket/getticket"
+
+	client.OverrideGetAppID()
 
 	return client, nil
 }
@@ -164,9 +177,11 @@ func (comp *Client) GetUrl(externalRequest *http.Request) string {
 	return externalRequest.URL.String()
 }
 
-func (comp *Client) GetAppID() string {
-	config := (*comp.BaseClient.App).GetConfig()
-	return config.GetString("app_id", "")
+func (comp *Client) OverrideGetAppID() {
+	comp.GetAppID = func() string {
+		config := (*comp.BaseClient.App).GetConfig()
+		return config.GetString("app_id", "")
+	}
 }
 
 func (comp *Client) getAgentID() string {
