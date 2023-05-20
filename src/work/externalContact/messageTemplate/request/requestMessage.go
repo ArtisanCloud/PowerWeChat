@@ -29,10 +29,10 @@ func (media *LinkOfMessage) GetMsgType() string {
 }
 
 type Link struct {
-	Title  string `json:"title"`   //  "消息标题",
-	PicURL string `json:"pic_url"` //  "https://example.pic.com/path",
-	Desc   string `json:"desc"`    //  "消息描述",
-	URL    string `json:"url"`     //  "https://example.link.com/path"
+	Title  string `json:"title"`  //  "消息标题",
+	PicURL string `json:"picurl"` //  "https://example.pic.com/path",
+	Desc   string `json:"desc"`   //  "消息描述",
+	URL    string `json:"url"`    //  "https://example.link.com/path"
 }
 
 type MiniProgramOfMessage struct {
@@ -56,7 +56,7 @@ type File struct {
 }
 type FileOfMessage struct {
 	MsgType string `json:"msgtype"` // "file"
-	Video   *File  `json:"file"`
+	File    *File  `json:"file"`
 }
 
 func (media *FileOfMessage) GetMsgType() string {
@@ -87,4 +87,8 @@ type Attachment struct {
 	MiniProgram *MiniProgram `json:"miniprogram,omitempty"`
 	Video       *Video       `json:"video,omitempty"`
 	File        *File        `json:"file,omitempty"`
+}
+
+func (attachment *Attachment) GetMsgType() string {
+	return attachment.MsgType
 }
