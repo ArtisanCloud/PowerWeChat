@@ -6,7 +6,8 @@ type JSAPIAmount struct {
 }
 
 type JSAPIPayer struct {
-	OpenID string `json:"openid"` // 用户标识
+	SpOpenId  string `json:"sp_openid,omitempty"`  // 用户服务标识
+	SubOpenId string `json:"sub_openid,omitempty"` // 用户子标识
 }
 
 type JSAPIGoodsDetail struct {
