@@ -88,3 +88,7 @@ type Attachment struct {
 	Video       *Video       `json:"video,omitempty"`
 	File        *File        `json:"file,omitempty"`
 }
+
+func (attachment Attachment) GetMsgType() string {
+	return attachment.MsgType
+}
