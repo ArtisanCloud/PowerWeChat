@@ -28,7 +28,11 @@ func (comp *Client) RegisterMiniProgram(ctx context.Context, params *request.Req
 
 	result := &response2.ResponseOpenPlatform{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/component/fastregisterweapp", params, nil, nil, result)
+	query := &object.StringMap{
+		"action": "create",
+	}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/component/fastregisterweapp", params, query, nil, result)
 
 	return result, err
 
