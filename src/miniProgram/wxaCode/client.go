@@ -108,7 +108,7 @@ func (comp *Client) GetUnlimited(
 		},
 	}
 
-	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/getwxacodeunlimit", http.MethodPost, data, &header, nil)
+	rs, err := comp.BaseClient.RequestByEncodedData(ctx, "wxa/getwxacodeunlimit", http.MethodPost, data, false, &header, nil)
 
 	return rs, err
 }
