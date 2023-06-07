@@ -10,6 +10,7 @@ import (
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/os"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
 	"io/ioutil"
@@ -125,6 +126,20 @@ func (client *BaseClient) HttpPostJson(ctx context.Context, url string, data int
 		outBody,
 	)
 }
+func (client *BaseClient) HttpPostJsonByEncode(ctx context.Context, url string, data interface{}, query *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+	return client.RequestByEncodedData(
+		ctx,
+		url,
+		http.MethodPost,
+		&object.HashMap{
+			"query":       query,
+			"form_params": data,
+		},
+		false,
+		outHeader,
+		outBody,
+	)
+}
 
 func (client *BaseClient) HttpUpload(ctx context.Context, url string, files *object.HashMap, form *UploadForm, query interface{}, outHeader interface{}, outBody interface{}) (interface{}, error) {
 
@@ -223,6 +238,81 @@ func (client *BaseClient) Request(ctx context.Context, url string, method string
 		// set body json
 		if (*options)["form_params"] != nil {
 			df.Json((*options)["form_params"])
+		}
+	}
+
+	ctxQuery := ctx.Value("query")
+	if ctxQuery != nil {
+		queries := ctxQuery.(*object.StringMap)
+		if queries != nil {
+			for k, v := range *queries {
+				df.Query(k, v)
+			}
+		}
+	}
+
+	response, err := df.Request()
+	if err != nil {
+		return response, err
+	}
+
+	// decode response body to outBody
+	if outBody != nil {
+		err = client.HttpHelper.ParseResponseBodyContent(response, outBody)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// decode response header to outHeader
+	if outHeader != nil {
+		strHeader, err := object.JsonEncode(response.Header)
+		if err != nil {
+			return nil, err
+		}
+		err = object.JsonDecode([]byte(strHeader), outHeader)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return response, err
+
+}
+
+func (client *BaseClient) RequestByEncodedData(ctx context.Context, url string, method string, options *object.HashMap,
+	returnRaw bool, outHeader interface{}, outBody interface{},
+) (*http.Response, error) {
+
+	// http client request
+	client.QueryRaw = returnRaw
+	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(method)
+
+	// 检查是否需要有请求参数配置
+	if options != nil {
+		// set query key values
+		if (*options)["query"] != nil {
+			queries := (*options)["query"].(*object.StringMap)
+			if queries != nil {
+				for k, v := range *queries {
+					df.Query(k, v)
+				}
+			}
+		}
+
+		config := (*client.App).GetConfig()
+		// 微信如果需要传debug模式
+		debug := config.GetBool("debug", false)
+		if debug {
+			df.Query("debug", "1")
+		}
+
+		// set body json
+		if (*options)["form_params"] != nil {
+			body := &power.JsonEncoder{
+				Data: (*options)["form_params"],
+			}
+			df.Any(body)
 		}
 	}
 

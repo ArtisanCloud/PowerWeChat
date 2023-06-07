@@ -13,6 +13,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/express"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/image"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/immediateDelivery"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/industry/miniDrama/vod"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/internet"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/liveBroadcast"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/nearbyPoi"
@@ -87,6 +88,8 @@ type MiniProgram struct {
 	UpdatableMessage *updatableMessage.Client
 
 	RiskControl *riskControl.Client
+
+	MiniDramaVOD *vod.Client
 
 	Config *kernel.Config
 
@@ -339,6 +342,12 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 		return nil, err
 	}
 
+	//-------------- miniDrama Vod --------------
+	app.MiniDramaVOD, err = vod.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -432,6 +441,9 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 		return app.UpdatableMessage
 	case "RiskControl":
 		return app.RiskControl
+
+	case "MiniDramaVDO":
+		return app.MiniDramaVOD
 
 	case "Logger":
 		return app.Logger

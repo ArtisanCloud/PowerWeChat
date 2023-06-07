@@ -50,7 +50,7 @@ func (comp *Client) Create(ctx context.Context, buttons []*request.Button) (*res
 
 	result := &response.ResponseMenuCreate{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/menu/create", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJsonByEncode(ctx, "cgi-bin/menu/create", &object.HashMap{
 		"button": buttons,
 	}, nil, nil, result)
 
