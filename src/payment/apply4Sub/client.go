@@ -28,10 +28,11 @@ func NewClient(app *payment.ApplicationPaymentInterface) (*Client, error) {
 
 // 特约商户进件
 // https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_1.shtml
-func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.RequestApply) (*response.ResponseApply, error) {
+func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.RequestApplyForBusiness) (*response.ResponseApplyForBusiness, error) {
 
-	result := &response.ResponseApply{}
+	result := &response.ResponseApplyForBusiness{}
 
+	// 获取RSA签名器
 	config := (*comp.App).GetConfig()
 
 	rsaSigner, err := sign.NewRSASigner(crypto.SHA1)
@@ -44,6 +45,7 @@ func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.Reques
 		return nil, err
 	}
 
+	// 加密params.ContactInfo.ContactEmail
 	cipherData, err := rsaSigner.RSAEncryptor.Encrypt([]byte(params.ContactInfo.ContactEmail))
 	buffer := base64.StdEncoding.EncodeToString(cipherData)
 	if err != nil {
@@ -54,6 +56,7 @@ func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.Reques
 		return nil, err
 	}
 
+	// 结构体转化
 	options, err := object.StructToHashMap(params)
 	if err != nil {
 		return nil, err

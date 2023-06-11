@@ -1,5 +1,5 @@
 package response
 
-type ResponseApply struct {
+type ResponseApplyForBusiness struct {
 	ApplymentId int64 `json:"applyment_id"`
 }

@@ -1,6 +1,6 @@
 package request
 
-type RequestApply struct {
+type RequestApplyForBusiness struct {
 	BusinessCode string `json:"business_code"`
 	ContactInfo  struct {
 		BusinessAuthorizationLetter string `json:"business_authorization_letter"`
