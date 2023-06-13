@@ -34,5 +34,5 @@ func LogRequest(logger contract2.LoggerInterface, request *http.Request) {
 		output.Write(body)
 	}
 
-	logger.InfoF(output.String())
+	logger.Info(output.String())
 }
