@@ -5,16 +5,18 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	contract "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
+	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/os"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
 	"io/ioutil"
-	http "net/http"
+	"net/http"
 	"strconv"
 )
 
@@ -421,8 +423,8 @@ func (client *BaseClient) OverrideGetMiddlewareOfLog() {
 	client.GetMiddlewareOfLog = func(logger contract2.LoggerInterface) contract.RequestMiddleware {
 		return contract.RequestMiddleware(func(handle contract.RequestHandle) contract.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
-				// 前置中间件
-				//logger.Println("这里是前置中间件log, 在请求前执行")
+
+				request2.LogRequest(logger, request)
 
 				response, err = handle(request)
 				if err != nil {
@@ -430,7 +432,8 @@ func (client *BaseClient) OverrideGetMiddlewareOfLog() {
 				}
 
 				//// 后置中间件
-				////logger.Println("这里是后置置中间件log, 在请求后执行")
+				response2.LogResponse(logger, response)
+
 				return
 			}
 		})

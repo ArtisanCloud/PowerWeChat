@@ -12,6 +12,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	os2 "github.com/ArtisanCloud/PowerLibs/v3/os"
 	"github.com/ArtisanCloud/PowerLibs/v3/security/sign"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
@@ -19,7 +20,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
 	"log"
-	http "net/http"
+	"net/http"
 	"os"
 )
 
@@ -368,6 +369,89 @@ func (client *BaseClient) RequestRawXML(ctx context.Context, url string, params 
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
 
 	return returnResponse, err
+
+}
+
+func (client *BaseClient) HttpUploadJson(ctx context.Context, url string, files *object.HashMap, form *kernel.UploadForm, options *object.HashMap, queries *object.StringMap, outHeader interface{}, outBody interface{}) (interface{}, error) {
+
+	config := (*client.App).GetConfig()
+
+	// 签名访问的URL，请确保url后面不要跟参数，因为签名的参数，不包含?参数
+	// 比如需要在请求的时候，把debug=false，这样url后面就不会多出 "?debug=true"
+	options, err := client.AuthSignRequest(ctx, config, url, http.MethodPost, queries, options)
+	if err != nil {
+		return nil, err
+	}
+
+	// http client request
+	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(http.MethodPost)
+
+	var mems map[string]io.Reader
+	// 遍历表单的数据
+	if form != nil {
+		mems = make(map[string]io.Reader)
+		for _, content := range form.Contents {
+			value, err := os2.ConvertFileHandleToReader(content.Value)
+			if err != nil {
+				return nil, err
+			}
+			mems[content.Name] = value
+		}
+	}
+
+	// set query key values
+	if queries != nil {
+		if queries != nil {
+			for k, v := range *queries {
+				df.Query(k, v)
+			}
+		}
+	}
+
+	// 微信如果需要传debug模式
+	debug := config.GetBool("debug", false)
+	if debug {
+		df.Query("debug", "1")
+	}
+
+	// set body json
+	if options != nil {
+		df.Json(options)
+
+		// set header
+		df.
+			Header("content-type", "application/json").
+			Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string))
+	}
+
+	df.Multipart(func(multipart contract.MultipartDfInterface) {
+		// 遍历文件目录
+		if files != nil {
+			for name, path := range *files {
+				multipart.FileByPath(name, path.(string))
+			}
+		}
+
+		for k, v := range mems {
+			multipart.FileMem(form.FileName, k, v)
+		}
+
+	})
+
+	response, err := df.Request()
+	if err != nil {
+		return response, err
+	}
+
+	// decode response body to outBody
+	if outBody != nil {
+		err = client.HttpHelper.ParseResponseBodyContent(response, outBody)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return response, err
 
 }
 
