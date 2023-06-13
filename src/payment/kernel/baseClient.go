@@ -378,13 +378,26 @@ func (client *BaseClient) HttpUploadJson(ctx context.Context, url string, files 
 
 	// 签名访问的URL，请确保url后面不要跟参数，因为签名的参数，不包含?参数
 	// 比如需要在请求的时候，把debug=false，这样url后面就不会多出 "?debug=true"
-	options, err := client.AuthSignRequest(ctx, config, url, http.MethodPost, queries, options)
+	method := http.MethodPost
+	signBody, err := object.JsonEncode(options)
+	authorization, err := client.Signer.GenerateRequestSign(&support.RequestSignChain{
+		Method:       method,
+		CanonicalURL: url,
+		SignBody:     signBody,
+	})
 	if err != nil {
 		return nil, err
 	}
 
+	options = object.MergeHashMap(&object.HashMap{
+		"headers": &object.HashMap{
+			"Authorization": authorization,
+		},
+		"body": signBody,
+	}, options)
+
 	// http client request
-	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(http.MethodPost)
+	df := client.HttpHelper.Df().WithContext(ctx).Uri(url).Method(method)
 
 	var mems map[string]io.Reader
 	// 遍历表单的数据
