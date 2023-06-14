@@ -3,6 +3,7 @@ package merchant
 import (
 	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant/response"
@@ -35,22 +36,19 @@ func (comp *Client) UploadImg(ctx context.Context, params *request.RequestMediaU
 		}
 	}
 
-	//var formData *kernel.UploadForm
-	//if params.Media != nil {
-	//	formData = &kernel.UploadForm{
-	//		Contents: []*kernel.UploadContent{
-	//			&kernel.UploadContent{
-	//				Name:  params.Media.Filename,
-	//				Value: params.Media.Sha256,
-	//			},
-	//		},
-	//	}
-	//}
-
-	options := &object.HashMap{
-		"form_params": params,
+	var formData *kernel.UploadForm
+	if params.Meta != nil {
+		formData = &kernel.UploadForm{
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  "file",
+					Value: params.Meta.Filename,
+				},
+			},
+		}
 	}
+	options, _ := object.StructToHashMap(params.Meta)
 
-	_, err := comp.BaseClient.HttpUploadJson(ctx, "v3/merchant/media/upload", files, nil, options, nil, nil, &result)
+	_, err := comp.BaseClient.HttpUploadJson(ctx, "/v3/merchant/media/upload", files, formData, options, nil, nil, &result)
 	return result, err
 }

@@ -376,9 +376,9 @@ func (client *BaseClient) HttpUploadJson(ctx context.Context, url string, files 
 
 	config := (*client.App).GetConfig()
 
+	method := http.MethodPost
 	// 签名访问的URL，请确保url后面不要跟参数，因为签名的参数，不包含?参数
 	// 比如需要在请求的时候，把debug=false，这样url后面就不会多出 "?debug=true"
-	method := http.MethodPost
 	signBody, err := object.JsonEncode(options)
 	authorization, err := client.Signer.GenerateRequestSign(&support.RequestSignChain{
 		Method:       method,
@@ -429,15 +429,24 @@ func (client *BaseClient) HttpUploadJson(ctx context.Context, url string, files 
 
 	// set body json
 	if options != nil {
-		df.Json(options)
 
 		// set header
 		df.
 			Header("content-type", "application/json").
 			Header("Authorization", (*(*options)["headers"].(*object.HashMap))["Authorization"].(string))
+		//body := &power.JsonEncoder{
+		//	Data: (*options)["body"],
+		//}
+		//df.Any(body)
+		//df.Json((*options)["body"])
 	}
 
+	//df.Multipart(func(multipart contract.MultipartDfInterface) {
+	//	multipart.FieldValue((*options)["body"].(string))
+	//})
 	df.Multipart(func(multipart contract.MultipartDfInterface) {
+		multipart.FieldValue("meta", (*options)["body"].(string))
+
 		// 遍历文件目录
 		if files != nil {
 			for name, path := range *files {

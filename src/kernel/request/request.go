@@ -15,13 +15,13 @@ func LogRequest(logger contract2.LoggerInterface, request *http.Request) {
 	output.WriteString(fmt.Sprintf("%s %s ", request.Method, request.URL.String()))
 
 	// print out request header
-	output.Write([]byte("\r\nrequest header: { \r\n"))
+	output.Write([]byte("request header: { "))
 	for k, vals := range request.Header {
 		for _, v := range vals {
-			output.Write([]byte(fmt.Sprintf("\t%s:%s\r\n", k, v)))
+			output.Write([]byte(fmt.Sprintf("%s:%s", k, v)))
 		}
 	}
-	output.Write([]byte("} \r\n"))
+	output.Write([]byte("} "))
 
 	// print out request body
 	if request.Body != nil {

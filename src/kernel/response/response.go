@@ -9,8 +9,8 @@ import (
 
 func LogResponse(logger contract2.LoggerInterface, response *http.Response) {
 	var output bytes.Buffer
-	output.Write([]byte("\r\n------------------\r\n"))
-	output.Write([]byte("response content:\r\n"))
+	output.Write([]byte("------------------"))
+	output.Write([]byte("response content:"))
 	dumpRes, _ := httputil.DumpResponse(response, true)
 	output.Write(dumpRes)
 	logger.Info(output.String())
