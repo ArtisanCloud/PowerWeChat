@@ -424,6 +424,7 @@ func (client *BaseClient) OverrideGetMiddlewareOfLog() {
 		return contract.RequestMiddleware(func(handle contract.RequestHandle) contract.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
 
+				// 前置中间件
 				request2.LogRequest(logger, request)
 
 				response, err = handle(request)
@@ -431,7 +432,7 @@ func (client *BaseClient) OverrideGetMiddlewareOfLog() {
 					return response, err
 				}
 
-				//// 后置中间件
+				// 后置中间件
 				response2.LogResponse(logger, response)
 
 				return

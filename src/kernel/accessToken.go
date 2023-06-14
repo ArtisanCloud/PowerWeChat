@@ -11,6 +11,7 @@ import (
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"net/http"
 	"time"
@@ -304,16 +305,17 @@ func (accessToken *AccessToken) OverrideGetMiddlewareOfLog() {
 	accessToken.GetMiddlewareOfLog = func(logger contract2.LoggerInterface) contract3.RequestMiddleware {
 		return contract3.RequestMiddleware(func(handle contract3.RequestHandle) contract3.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
+
 				// 前置中间件
-				//logger.Println("这里是前置中间件log, 在请求前执行")
+				request2.LogRequest(logger, request)
 
 				response, err = handle(request)
 				if err != nil {
 					return response, err
 				}
 
-				//// 后置中间件
-				////logger.Println("这里是后置置中间件log, 在请求后执行")
+				// 后置中间件
+				response2.LogResponse(logger, response)
 				return
 			}
 		})
