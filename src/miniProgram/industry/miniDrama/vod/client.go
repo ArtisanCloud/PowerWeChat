@@ -2,7 +2,6 @@ package vod
 
 import (
 	"context"
-	"errors"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/industry/miniDrama/request"
@@ -26,11 +25,6 @@ func (comp *Client) VideoMediaUploadByURL(ctx context.Context, in *request.Video
 	}
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/pullupload", params, nil, nil, &result)
 
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
-
 	return
 }
 
@@ -44,11 +38,6 @@ func (comp *Client) SearchMediaByTaskId(ctx context.Context, taskId string) (res
 	}
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/gettask", params, nil, nil, &result)
-
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
 
 	return
 
@@ -77,11 +66,6 @@ func (comp *Client) GetMediaList(ctx context.Context, in *request.MediaListReque
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/listmedia", params, nil, nil, &result)
 
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
-
 	return
 
 }
@@ -97,11 +81,6 @@ func (comp *Client) GetMediaInfo(ctx context.Context, mediaId string) (result *r
 	}
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getmedia", params, nil, nil, &result)
-
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
 
 	return
 
@@ -123,11 +102,6 @@ func (comp *Client) GetMediaLink(ctx context.Context, in *request.GetMediaLinkRe
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getmedialink", params, nil, nil, &result)
 
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
-
 	return
 
 }
@@ -143,11 +117,6 @@ func (comp *Client) DeleteMedia(ctx context.Context, mediaId int64) (result *res
 	}
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/deletemedia", params, nil, nil, &result)
-
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
 
 	return
 }
@@ -168,11 +137,6 @@ func (comp *Client) SubmitAudit(ctx context.Context, in *request.SubmitAuditRequ
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/submitaudit", params, nil, nil, &result)
 
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
-
 	return
 }
 
@@ -191,11 +155,6 @@ func (comp *Client) GetDramaList(ctx context.Context, in *request.GetDramaListRe
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getdramalist", params, nil, nil, &result)
 
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
-
 	return
 }
 
@@ -211,11 +170,6 @@ func (comp *Client) GetDramaInfo(ctx context.Context, dramaId string) (result *r
 	}
 
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getdramainfo", params, nil, nil, &result)
-
-	if result.Errcode != 0 {
-
-		return nil, errors.New(result.Errmsg)
-	}
 
 	return
 }
