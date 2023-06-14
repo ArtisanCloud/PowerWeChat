@@ -8,10 +8,12 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/apply4Sub"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/base"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/bill"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/jssdk"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/merchant"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order"
@@ -46,6 +48,9 @@ type Payment struct {
 	TransferBatch *transfer.BatchClient
 	Reverse       *reverse.Client
 	ProfitSharing *profitSharing.Client
+
+	Apply4Sub *apply4Sub.Client
+	Merchant  *merchant.Client
 
 	Base *base.Client
 
@@ -191,6 +196,17 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 		return nil, err
 	}
 
+	//-------------- 	Apply4Sub --------------
+	app.Apply4Sub, err = apply4Sub.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+	//-------------- 	Merchant --------------
+	app.Merchant, err = merchant.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- Security --------------
 	app.Security, err = security.RegisterProvider(app)
 	if err != nil {
@@ -240,6 +256,10 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.Reverse
 	case "ProfitSharing":
 		return app.ProfitSharing
+	case "Apply4Sub":
+		return app.Apply4Sub
+	case "Merchant":
+		return app.Merchant
 
 	case "Security":
 		return app.Security

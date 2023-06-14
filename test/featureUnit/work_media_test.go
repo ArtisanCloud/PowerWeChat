@@ -6,7 +6,6 @@ import (
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"image/jpeg"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"testing"
 )
@@ -15,7 +14,7 @@ func Test_Media_Upload_Image(t *testing.T) {
 
 	var wxResponse response2.ResponseUploadImage
 	homePath, _ := os.UserHomeDir()
-	response, _ := Work.Media.UploadImage(homePath+"/Desktop/123.jpg", nil)
+	response, _ := Work.Media.UploadImage(nil, homePath+"/Desktop/123.jpg", nil)
 
 	if response == nil {
 		t.Error("response nil")
@@ -31,7 +30,7 @@ func Test_Media_Upload_Temp_Image(t *testing.T) {
 
 	var wxResponse *response2.ResponseUploadMedia
 	homePath, _ := os.UserHomeDir()
-	response, _ := Work.Media.UploadTempImage(homePath+"/Desktop/123.jpg", nil)
+	response, _ := Work.Media.UploadTempImage(nil, homePath+"/Desktop/123.jpg", nil)
 
 	if response == nil {
 		t.Error("response nil")
@@ -45,12 +44,12 @@ func Test_Media_Upload_Temp_Image(t *testing.T) {
 
 func Test_Media_Get(t *testing.T) {
 	//respContract, _ := Work.Media.Get("3i12vSikgRGsE9Xbs3e1CZH4b_X6cREZtuHe2nh8VZ4w")
-	respContract, _ := Work.Media.Get("3w91f_bN-iVUv1dbR4pLSBzFyhrVaF_G8lYEq-dk02ffr8F2lbYKeWuMVs1VeDTVB")
+	respContract, _ := Work.Media.Get(nil, "3w91f_bN-iVUv1dbR4pLSBzFyhrVaF_G8lYEq-dk02ffr8F2lbYKeWuMVs1VeDTVB")
 
 	//if response == nil {
 	//	t.Error("response nil")
 	//}
-	resp := respContract.(*http.Response)
+	resp := respContract
 	defer resp.Body.Close()
 
 	imageBuffer, err := ioutil.ReadAll(resp.GetBody())
