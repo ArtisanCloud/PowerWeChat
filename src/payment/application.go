@@ -345,6 +345,10 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	if userConfig.Http.BaseURI != "" {
 		baseURI = userConfig.Http.BaseURI
 	}
+	timeout := 5.0
+	if userConfig.Http.Timeout > 0 {
+		timeout = userConfig.Http.Timeout
+	}
 
 	config := &object.HashMap{
 		"app_id":               userConfig.AppID,
@@ -367,7 +371,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"env":   userConfig.Log.ENV,
 		},
 		"http": &object.HashMap{
-			"timeout":  userConfig.Http.Timeout,
+			"timeout":  timeout,
 			"base_uri": baseURI,
 		},
 		"oauth.callbacks": userConfig.OAuth.Callback,
