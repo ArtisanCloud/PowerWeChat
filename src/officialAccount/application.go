@@ -101,10 +101,17 @@ type UserConfig struct {
 	OAuth        OAuth
 	Cache        kernel.CacheInterface
 
+	Http Http
+
 	HttpDebug bool
 	Debug     bool
 	NotifyURL string
 	Sandbox   bool
+}
+
+type Http struct {
+	Timeout float64
+	BaseURI string
 }
 
 type Log struct {
@@ -435,6 +442,10 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"component_app_token": userConfig.ComponentAppToken,
 
 		"response_type": userConfig.ResponseType,
+		"http": &object.HashMap{
+			"timeout":  userConfig.Http.Timeout,
+			"base_uri": userConfig.Http.BaseURI,
+		},
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
