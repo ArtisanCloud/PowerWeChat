@@ -23,4 +23,5 @@ type ResponseOrder struct {
 	TradeStateDesc  string            `json:"trade_state_desc"`
 	TradeType       string            `json:"trade_type"`
 	TransactionID   string            `json:"transaction_id"`
+	SceneInfo       *object.HashMap   `json:"scene_info"`
 }
