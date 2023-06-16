@@ -1,6 +1,7 @@
 package jssdk
 
 import (
+	"context"
 	"crypto/sha1"
 	"encoding/json"
 	"fmt"
@@ -24,6 +25,35 @@ func NewClient(app *kernel2.ApplicationInterface) (*Client, error) {
 	return &Client{
 		jssdkClient,
 	}, nil
+}
+
+func (comp *Client) BridgeConfigForPartner(ctx context.Context, prepayID string, isJson bool) (interface{}, error) {
+	config := (*comp.BaseClient.App).GetConfig()
+	appID := config.GetString("sub_appid", "")
+
+	options := &object.StringMap{
+		"appId":     appID,
+		"timeStamp": fmt.Sprintf("%d", time.Now().Unix()),
+		"nonceStr":  object.QuickRandom(32),
+		"package":   fmt.Sprintf("prepay_id=%s", prepayID),
+		"signType":  "RSA",
+	}
+
+	var err error
+	(*options)["paySign"], err = comp.BaseClient.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
+		(*options)["appId"],
+		(*options)["timeStamp"],
+		(*options)["nonceStr"],
+		(*options)["package"],
+	))
+	if err != nil {
+		return nil, err
+	}
+	if !isJson {
+		return json.Marshal(options)
+	} else {
+		return options, nil
+	}
 }
 
 // JSAPI调起支付API
