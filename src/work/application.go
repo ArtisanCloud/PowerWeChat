@@ -480,6 +480,10 @@ func (app *Work) GetComponent(name string) interface{} {
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
+	baseURI := "https://qyapi.weixin.qq.com/"
+	if userConfig.Http.BaseURI != "" {
+		baseURI = userConfig.Http.BaseURI
+	}
 	config := &object.HashMap{
 		"corp_id":      userConfig.CorpID,
 		"agent_id":     userConfig.AgentID,
@@ -491,7 +495,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
 			"timeout":  userConfig.Http.Timeout,
-			"base_uri": userConfig.Http.BaseURI,
+			"base_uri": baseURI,
 		},
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,

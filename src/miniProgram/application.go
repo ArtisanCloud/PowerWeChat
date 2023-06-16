@@ -464,6 +464,11 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
+	baseURI := "https://api.weixin.qq.com/"
+	if userConfig.Http.BaseURI != "" {
+		baseURI = userConfig.Http.BaseURI
+	}
+
 	config := &object.HashMap{
 
 		"app_id": userConfig.AppID,
@@ -478,7 +483,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
 			"timeout":  userConfig.Http.Timeout,
-			"base_uri": userConfig.Http.BaseURI,
+			"base_uri": baseURI,
 		},
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
