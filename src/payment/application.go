@@ -341,6 +341,15 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
+	baseURI := "https://api.mch.weixin.qq.com"
+	if userConfig.Http.BaseURI != "" {
+		baseURI = userConfig.Http.BaseURI
+	}
+	timeout := 5.0
+	if userConfig.Http.Timeout > 0 {
+		timeout = userConfig.Http.Timeout
+	}
+
 	config := &object.HashMap{
 		"app_id":               userConfig.AppID,
 		"mch_id":               userConfig.MchID,
@@ -362,8 +371,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"env":   userConfig.Log.ENV,
 		},
 		"http": &object.HashMap{
-			"timeout":  userConfig.Http.Timeout,
-			"base_uri": userConfig.Http.BaseURI,
+			"timeout":  timeout,
+			"base_uri": baseURI,
 		},
 		"oauth.callbacks": userConfig.OAuth.Callback,
 		"oauth.scopes":    userConfig.OAuth.Scopes,
