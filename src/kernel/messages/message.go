@@ -40,7 +40,8 @@ type Message struct {
 	Properties  []string
 	JsonAliases *object.HashMap
 
-	ToXmlArray func() *object.HashMap
+	PropertiesToArray func(data *object.HashMap, aliases *object.HashMap) (*object.HashMap, error)
+	ToXmlArray        func() *object.HashMap
 }
 
 func NewMessage(attributes *power.HashMap) *Message {
@@ -52,6 +53,27 @@ func NewMessage(attributes *power.HashMap) *Message {
 	m.SetAttributes(objAttribute)
 	m.ToXmlArray = func() *object.HashMap {
 		return m.toXmlArray()
+	}
+
+	m.PropertiesToArray = func(data *object.HashMap, aliases *object.HashMap) (*object.HashMap, error) {
+		err := m.CheckRequiredAttributes()
+		if err != nil {
+			return nil, err
+		}
+
+		for property, value := range m.Attributes {
+			if value == nil && !m.IsRequired(property) {
+				continue
+			}
+			has, alias := object.InHash(property, aliases)
+			if has {
+				(*data)[alias] = m.Get(property, nil)
+			} else {
+				(*data)[property] = m.Get(property, nil)
+			}
+		}
+
+		return data, nil
 	}
 
 	return m
@@ -104,27 +126,6 @@ func (msg *Message) TransformToXml(appends *object.HashMap, returnAsArray bool) 
 		//}
 		//return string(buffer), nil
 	}
-}
-
-func (msg *Message) PropertiesToArray(data *object.HashMap, aliases *object.HashMap) (*object.HashMap, error) {
-	err := msg.CheckRequiredAttributes()
-	if err != nil {
-		return nil, err
-	}
-
-	for property, value := range msg.Attributes {
-		if value == nil && !msg.IsRequired(property) {
-			continue
-		}
-		has, alias := object.InHash(property, aliases)
-		if has {
-			(*data)[alias] = msg.Get(property, nil)
-		} else {
-			(*data)[property] = msg.Get(property, nil)
-		}
-	}
-
-	return data, nil
 }
 
 func (msg *Message) toXmlArray() *object.HashMap {
