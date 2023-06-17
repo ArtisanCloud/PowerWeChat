@@ -113,5 +113,5 @@ type GetDramaListResponse struct {
 // 获取剧目信息
 type GetDramaInfoResponse struct {
 	BaseResponse
-	DramaInfoList *DramaInfo `json:"drama_info_list"`
+	DramaInfo *DramaInfo `json:"drama_info"`
 }
