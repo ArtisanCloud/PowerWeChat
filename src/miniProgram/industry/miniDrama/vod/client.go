@@ -74,7 +74,7 @@ func (comp *Client) GetMediaList(ctx context.Context, in *request.MediaListReque
 // 该接口用于获取已上传到平台的指定媒资信息，用于开发者后台管理使用。用于给用户客户端播放的链接应该使用getmedialink接口获取
 // https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/mini-drama/mini_drama.html#_2-2-%E8%8E%B7%E5%8F%96%E5%AA%92%E8%B5%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF
 
-func (comp *Client) GetMediaInfo(ctx context.Context, mediaId string) (result *response.MediaInfoResponse, err error) {
+func (comp *Client) GetMediaInfo(ctx context.Context, mediaId int64) (result *response.MediaInfoResponse, err error) {
 
 	params := &power.HashMap{
 		"media_id": mediaId,
@@ -171,7 +171,7 @@ func (comp *Client) GetDramaList(ctx context.Context, in *request.GetDramaListRe
 // 本接口返回的图片链接均为临时链接，不应将其保存下来。
 // https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/mini-drama/mini_drama.html#_3-3-%E8%8E%B7%E5%8F%96%E5%89%A7%E7%9B%AE%E4%BF%A1%E6%81%AF
 
-func (comp *Client) GetDramaInfo(ctx context.Context, dramaId string) (result *response.GetDramaInfoResponse, err error) {
+func (comp *Client) GetDramaInfo(ctx context.Context, dramaId int64) (result *response.GetDramaInfoResponse, err error) {
 
 	params := &power.HashMap{
 		"drama_id": dramaId,
