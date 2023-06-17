@@ -31,7 +31,7 @@ func (comp *Client) VideoMediaUploadByURL(ctx context.Context, in *request.Video
 // 查询任务 通过上传接口获得的taskid 进行查询
 // https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/mini-drama/mini_drama.html#_1-2-%E6%8B%89%E5%8F%96%E4%B8%8A%E4%BC%A0
 
-func (comp *Client) SearchMediaByTaskId(ctx context.Context, taskId string) (result *response.VideoMediaSearchTaskResponse, err error) {
+func (comp *Client) SearchMediaByTaskId(ctx context.Context, taskId int64) (result *response.VideoMediaSearchTaskResponse, err error) {
 
 	params := &power.HashMap{
 		"task_id": taskId,
@@ -135,7 +135,7 @@ func (comp *Client) SubmitAudit(ctx context.Context, in *request.SubmitAuditRequ
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/submitaudit", params, nil, nil, &result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/auditdrama", params, nil, nil, &result)
 
 	return
 }
@@ -146,6 +146,14 @@ func (comp *Client) SubmitAudit(ctx context.Context, in *request.SubmitAuditRequ
 
 func (comp *Client) GetDramaList(ctx context.Context, in *request.GetDramaListRequest) (result *response.GetDramaListResponse, err error) {
 
+	if in.Limit > 100 {
+		in.Limit = 100
+	}
+
+	if in.Offset < 0 {
+		in.Offset = 0
+	}
+
 	params, err := power.StructToHashMap(in)
 
 	if err != nil {
@@ -153,7 +161,7 @@ func (comp *Client) GetDramaList(ctx context.Context, in *request.GetDramaListRe
 		return nil, err
 	}
 
-	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getdramalist", params, nil, nil, &result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/listdramas", params, nil, nil, &result)
 
 	return
 }
@@ -169,7 +177,7 @@ func (comp *Client) GetDramaInfo(ctx context.Context, dramaId string) (result *r
 		"drama_id": dramaId,
 	}
 
-	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getdramainfo", params, nil, nil, &result)
+	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/getdrama", params, nil, nil, &result)
 
 	return
 }
