@@ -24,6 +24,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/reverse"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/sandbox"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/security"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/tax"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer"
 	"net/http"
 	"time"
@@ -51,6 +52,8 @@ type Payment struct {
 
 	Apply4Sub *apply4Sub.Client
 	Merchant  *merchant.Client
+
+	Tax *tax.Client
 
 	Base *base.Client
 
@@ -207,6 +210,12 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 		return nil, err
 	}
 
+	//-------------- 	Tax --------------
+	app.Tax, err = tax.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- Security --------------
 	app.Security, err = security.RegisterProvider(app)
 	if err != nil {
@@ -258,6 +267,8 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.ProfitSharing
 	case "Apply4Sub":
 		return app.Apply4Sub
+	case "Tax":
+		return app.Tax
 	case "Merchant":
 		return app.Merchant
 
