@@ -74,14 +74,12 @@ type AdvancedInfo struct {
 // ------------------------------------------------------------
 
 type GroupOn struct {
-	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	DealDetail   string        `json:"deal_detail"`
 }
 
 type Cash struct {
-	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	LeastCost    int           `json:"least_cost"`
@@ -89,28 +87,24 @@ type Cash struct {
 }
 
 type Discount struct {
-	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	Discount     int           `json:"discount"`
 }
 
 type Gift struct {
-	CardInterface
 	BaseInfo     *BaseInfo     `json:"base_info"`
 	AdvancedInfo *AdvancedInfo `json:"advanced_info"`
 	Gift         string        `json:"gift"`
 }
 
 type GeneralCoupon struct {
-	CardInterface
 	BaseInfo      *BaseInfo     `json:"base_info"`
 	AdvancedInfo  *AdvancedInfo `json:"advanced_info"`
 	DefaultDetail string        `json:"default_detail"`
 }
 
 type MemberCard struct {
-	CardInterface
 	BaseInfo     *BaseInfo `json:"base_info"`
 	BonusCleared string    `json:"bonus_cleared"`
 	BonusRules   string    `json:"bonus_rules"`
@@ -118,26 +112,21 @@ type MemberCard struct {
 }
 
 type ScenicTicket struct {
-	CardInterface
 	BaseInfo *BaseInfo `json:"base_info"`
 }
 type MovieTicket struct {
-	CardInterface
 	BaseInfo *BaseInfo `json:"base_info"`
 }
 
 type BoardingPass struct {
-	CardInterface
 	BaseInfo *BaseInfo `json:"base_info"`
 }
 
 type MeetingTicket struct {
-	CardInterface
 	BaseInfo *BaseInfo `json:"base_info"`
 }
 
 type BusTicket struct {
-	CardInterface
 	BaseInfo *BaseInfo `json:"base_info"`
 }
 
