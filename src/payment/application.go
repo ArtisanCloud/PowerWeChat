@@ -24,6 +24,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/reverse"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/sandbox"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/security"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/tax"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/transfer"
 	"net/http"
 	"time"
@@ -51,6 +52,8 @@ type Payment struct {
 
 	Apply4Sub *apply4Sub.Client
 	Merchant  *merchant.Client
+
+	Tax *tax.Client
 
 	Base *base.Client
 
@@ -207,6 +210,12 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 		return nil, err
 	}
 
+	//-------------- 	Tax --------------
+	app.Tax, err = tax.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- Security --------------
 	app.Security, err = security.RegisterProvider(app)
 	if err != nil {
@@ -258,6 +267,8 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.ProfitSharing
 	case "Apply4Sub":
 		return app.Apply4Sub
+	case "Tax":
+		return app.Tax
 	case "Merchant":
 		return app.Merchant
 
@@ -341,6 +352,15 @@ func (app *Payment) GetKey(endpoint string) (string, error) {
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
+	baseURI := "https://api.mch.weixin.qq.com"
+	if userConfig.Http.BaseURI != "" {
+		baseURI = userConfig.Http.BaseURI
+	}
+	timeout := 5.0
+	if userConfig.Http.Timeout > 0 {
+		timeout = userConfig.Http.Timeout
+	}
+
 	config := &object.HashMap{
 		"app_id":               userConfig.AppID,
 		"mch_id":               userConfig.MchID,
@@ -362,8 +382,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"env":   userConfig.Log.ENV,
 		},
 		"http": &object.HashMap{
-			"timeout":  userConfig.Http.Timeout,
-			"base_uri": userConfig.Http.BaseURI,
+			"timeout":  timeout,
+			"base_uri": baseURI,
 		},
 		"oauth.callbacks": userConfig.OAuth.Callback,
 		"oauth.scopes":    userConfig.OAuth.Scopes,

@@ -62,7 +62,7 @@ func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.Reques
 		return nil, err
 	}
 
-	endpoint := "/v3/applyment4sub/applyment/"
+	endpoint := "/v3/applyment4sub/applyment"
 	_, err = comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, options, false, nil, result)
 	return result, err
 }

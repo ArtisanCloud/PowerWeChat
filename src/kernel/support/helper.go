@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	"reflect"
 	"sort"
 	"strings"
 )
@@ -75,4 +76,23 @@ func GenerateSignHmacSHA256(params *power.StringMap, key string) string {
 
 	sign := hex.EncodeToString(h.Sum(nil))
 	return strings.ToUpper(sign)
+}
+
+func DeepCopy(src interface{}) (interface{}, error) {
+	// 获取源对象的反射值
+	v := reflect.ValueOf(src)
+
+	// 如果源对象不可修改或者是空指针，则直接返回源对象
+	if v.Kind() != reflect.Ptr || v.IsNil() {
+		return src, nil
+	}
+
+	// 创建目标对象的反射指针
+	vp := reflect.New(v.Elem().Type())
+
+	// 深拷贝源对象的值到目标对象中
+	vp.Elem().Set(v.Elem())
+
+	// 返回目标对象的值
+	return vp.Elem().Interface(), nil
 }

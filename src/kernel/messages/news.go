@@ -15,21 +15,25 @@ func NewNews(items []*object.HashMap) *News {
 	}
 	m.Type = "news"
 	m.OverrideToXmlArray()
+	m.OverridePropertiesToArray()
 
 	return m
 }
 
-func (msg *News) PropertiesToArray(data power.HashMap, aliases power.HashMap) *power.HashMap {
+func (msg *News) OverridePropertiesToArray() {
 
-	arrayItems := msg.Get("items", nil).([]*NewsItem)
-	arrayMapItems := []*object.HashMap{}
-	for _, item := range arrayItems {
-		arrayMapItems = append(arrayMapItems, item.ToJsonArray())
+	msg.PropertiesToArray = func(data *object.HashMap, aliases *object.HashMap) (*object.HashMap, error) {
+		arrayItems := msg.Get("items", nil).([]*object.HashMap)
+		arrayMapItems := []*object.HashMap{}
+		for _, item := range arrayItems {
+			arrayMapItems = append(arrayMapItems, item)
+		}
+
+		return &object.HashMap{
+			"articles": arrayMapItems,
+		}, nil
 	}
 
-	return &power.HashMap{
-		"articles": arrayMapItems,
-	}
 }
 
 // Override ToXmlArray
