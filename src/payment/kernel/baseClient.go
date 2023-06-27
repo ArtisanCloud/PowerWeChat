@@ -18,6 +18,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
+	"github.com/mitchellh/copystructure"
 	"io"
 	"log"
 	"net/http"
@@ -267,8 +268,9 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 
 		// set body json
 		if (*options)["body"] != nil {
-			r := bytes.NewBufferString((*options)["body"].(string))
-			df.Body(r)
+			//r := bytes.NewBufferString((*options)["body"].(string))
+			//df.Body(r)
+			df.Json((*options)["body"])
 		}
 
 		// set header
@@ -486,7 +488,7 @@ func (client *BaseClient) StreamDownload(ctx context.Context, requestDownload *p
 
 	config := (*client.App).GetConfig()
 
-	method := http.MethodPost
+	method := http.MethodGet
 	options, err := client.AuthSignRequest(ctx, config, requestDownload.DownloadURL, method, nil, nil)
 	if err != nil {
 		return 0, err
@@ -612,6 +614,11 @@ func (client *BaseClient) AuthSignRequest(context context.Context, config *kerne
 
 	var err error
 
+	originOptions, err := copystructure.Copy(options)
+	if err != nil {
+		return nil, err
+	}
+
 	base := &object.HashMap{}
 	isPartnerPay := context.Value("isPartnerPay")
 	if isPartnerPay == nil {
@@ -658,7 +665,8 @@ func (client *BaseClient) AuthSignRequest(context context.Context, config *kerne
 		"headers": &object.HashMap{
 			"Authorization": authorization,
 		},
-		"body": signBody,
+		"body":     originOptions,
+		"signBody": signBody,
 	}, options)
 
 	return options, err
