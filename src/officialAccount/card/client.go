@@ -86,7 +86,7 @@ func (comp *Client) List(ctx context.Context, offset int, count int, statusList 
 
 // 更改卡券信息接口
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#2
-func (comp *Client) Update(ctx context.Context, cardID string, cardType string, card request.CardInterface) (*response.ResponseCardUpdate, error) {
+func (comp *Client) Update(ctx context.Context, cardID string, cardType string, card interface{}) (*response.ResponseCardUpdate, error) {
 	result := &response.ResponseCardUpdate{}
 
 	param := object.HashMap{
