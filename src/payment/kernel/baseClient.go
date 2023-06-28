@@ -268,9 +268,17 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 
 		// set body json
 		if (*options)["body"] != nil {
-			//r := bytes.NewBufferString((*options)["body"].(string))
-			//df.Body(r)
-			df.Json((*options)["body"])
+			// signBody是合成了，业务参数和签名参数的参数集合
+			//r := bytes.NewBufferString((*options)["signBody"].(string))
+
+			// body是纯业务参数
+			signBody, err := object.JsonEncode((*options)["body"])
+			if err != nil {
+				return nil, err
+			}
+			r := bytes.NewBufferString(signBody)
+			df.Body(r)
+			//df.Json((*options)["body"])
 		}
 
 		// set header
