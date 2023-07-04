@@ -221,7 +221,7 @@ func (comp *Client) MemberCardSummary(ctx context.Context, from string, to strin
 
 // 拉取单张会员卡数据接口.
 // https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html
-func (comp *Client) memberCardSummaryByID(ctx context.Context, from string, to string, cardID string) (*response.ResponseDataCubeMemberCardSummaryByID, error) {
+func (comp *Client) MemberCardSummaryByID(ctx context.Context, from string, to string, cardID string) (*response.ResponseDataCubeMemberCardSummaryByID, error) {
 
 	result := &response.ResponseDataCubeMemberCardSummaryByID{}
 
