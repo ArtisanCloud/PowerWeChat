@@ -5,7 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/media"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"image/jpeg"
-	"io/ioutil"
+	"io"
 	"os"
 	"testing"
 )
@@ -52,7 +52,7 @@ func Test_Media_Get(t *testing.T) {
 	resp := respContract
 	defer resp.Body.Close()
 
-	imageBuffer, err := ioutil.ReadAll(resp.GetBody())
+	imageBuffer, err := io.ReadAll(resp.Body)
 
 	homePath, _ := os.UserHomeDir()
 	imgPath := homePath + "/Desktop/getMediaImage.jpg"
@@ -62,5 +62,5 @@ func Test_Media_Get(t *testing.T) {
 
 	media.SaveImage(imageBuffer, imgPath, opts)
 
-	fmt.Dump("Test:", resp.GetBody(), err)
+	fmt.Dump("Test:", resp.Body, err)
 }

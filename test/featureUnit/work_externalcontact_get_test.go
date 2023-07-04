@@ -1,6 +1,7 @@
 package featureUnit
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"testing"
 )
@@ -11,7 +12,7 @@ func Test_ExternalContact_Get_Batch_ByUser(t *testing.T) {
 	cursor := ""
 	limit := 100
 
-	response, _ := Work.ExternalContact.BatchGet(userID, cursor, limit)
+	response, _ := Work.ExternalContact.BatchGet(context.Background(), userID, cursor, limit)
 
 	if response == nil {
 		t.Error("response nil")
@@ -28,7 +29,7 @@ func Test_ExternalContact_Get_Unassigned(t *testing.T) {
 	pageID := 1
 	pageSize := 50
 
-	response, _ := Work.ExternalContact.GetUnassigned(pageID, pageSize)
+	response, _ := Work.ExternalContact.GetUnassigned(context.Background(), pageID, pageSize)
 
 	if response == nil {
 		t.Error("response nil")
@@ -46,7 +47,7 @@ func Test_ExternalContact_Transfer(t *testing.T) {
 	takeoverUserID := ""
 	externalUserID := []string{""}
 
-	response, _ := Work.ExternalContact.Transfer(externalUserID, handoverUserID, takeoverUserID)
+	response, _ := Work.ExternalContact.Transfer(context.Background(), externalUserID, handoverUserID, takeoverUserID)
 
 	if response == nil {
 		t.Error("response nil")
