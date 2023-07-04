@@ -8,8 +8,6 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/jssdk"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"net/http"
 	"net/url"
 	"time"
@@ -118,8 +116,18 @@ func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 		"package":   "Sign=WXPay",
 	}
 
-	parSign, _ := power.StringMapToPower(params)
-	(*params)["sign"] = support.GenerateSignMD5(parSign, config.GetString("key", ""))
+	var err error
+	(*params)["paySign"], err = comp.BaseClient.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
+		(*params)["appid"],
+		(*params)["partnerid"],
+		(*params)["prepayid"],
+		(*params)["noncestr"],
+		(*params)["timestamp"],
+		(*params)["package"],
+	))
+	if err != nil {
+		return nil, err
+	}
 
 	return params, nil
 }
