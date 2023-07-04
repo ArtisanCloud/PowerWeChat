@@ -119,7 +119,7 @@ func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 	}
 
 	parSign, _ := power.StringMapToPower(params)
-	(*params)["sign"] = support.GenerateSignHmacSHA256(parSign, config.GetString("key", ""))
+	(*params)["sign"] = support.GenerateSignMD5(parSign, config.GetString("key", ""))
 
 	return params, nil
 }
