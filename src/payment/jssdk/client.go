@@ -117,13 +117,11 @@ func (comp *Client) AppConfig(prepayID string) (*object.StringMap, error) {
 	}
 
 	var err error
-	(*params)["paySign"], err = comp.BaseClient.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
+	(*params)["sign"], err = comp.BaseClient.Signer.GenerateSign(fmt.Sprintf("%s\n%s\n%s\n%s\n",
 		(*params)["appid"],
-		(*params)["partnerid"],
-		(*params)["prepayid"],
-		(*params)["noncestr"],
 		(*params)["timestamp"],
-		(*params)["package"],
+		(*params)["noncestr"],
+		(*params)["prepayid"],
 	))
 	if err != nil {
 		return nil, err
