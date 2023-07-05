@@ -54,6 +54,8 @@ printf(rs.OpenID)
 * [官网文档](https://powerwechat.artisan-cloud.com/zh/start/) ：全面的接口文档，方便用户查找，使用我们开发的sdk功能
 * [使用示例](https://github.com/ArtisanCloud/power-wechat-tutorial) ：您可以通过Tutorial来了解到PowerWeChat的配置和使用
 
+  ps: 我们单独写了一个项目 [PowerWechatTutorial](https://github.com/ArtisanCloud/power-wechat-tutorial) ，基本上覆盖了所有的API使用，希望能够帮助大家更快的上手Golang WeChat开发。
+
 
 ### 版本升级描述(V2->V3) 
 * 接口添加context参数
