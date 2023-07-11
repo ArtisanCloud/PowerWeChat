@@ -24,7 +24,7 @@ type ResponseList struct {
 type KFOnline struct {
 	KFAccount    string `json:"kf_account"`
 	Status       int    `json:"status"`
-	KFID         string `json:"kf_id"`
+	KFID         int    `json:"kf_id"`
 	AcceptedCase int    `json:"accepted_case"`
 }
 
