@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"io/ioutil"
+	"os"
 	"strings"
 	"time"
 )
@@ -49,6 +50,8 @@ type RequestSignChain struct {
 func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (authorization string, err error) {
 	timestamp := time.Now().Unix()
 	nonce := object.QuickRandom(32)
+	//timestamp := int64(1689057609)
+	//nonce := "YXkkuNGrgWVS1ucj4KHmayKSUHFkTfzO"
 
 	// Under ci mode, go fixed value
 	// 在ci模式下面，走固定值
@@ -63,7 +66,9 @@ func (s *SHA256WithRSASigner) GenerateRequestSign(signChain *RequestSignChain) (
 	message := strings.Join(arrayParams, "\n") + "\n"
 
 	// sign the uniformMessage
+	//fmt2.Dump(message, len(message))
 	signatureResult, err := s.Sign(context.TODO(), message)
+	//fmt2.Dump(signatureResult)
 	if err != nil {
 		return "", err
 	}
@@ -119,27 +124,40 @@ func (s *SHA256WithRSASigner) Sign(_ context.Context, message string) (*Signatur
 	}
 	return &SignatureResult{MchID: s.MchID, CertificateSerialNo: s.CertificateSerialNo, Signature: signature}, nil
 }
-
 func (s *SHA256WithRSASigner) getPrivateKey() (*rsa.PrivateKey, error) {
-	keyStr, err := ioutil.ReadFile(s.PrivateKeyPath)
+	var keyBytes []byte
+	var err error
 
+	if fileInfo, err := os.Stat(s.PrivateKeyPath); err == nil && !fileInfo.IsDir() {
+		// 读取私钥文件
+		keyBytes, err = ioutil.ReadFile(s.PrivateKeyPath)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		// 使用私钥内容字符串
+		keyBytes = []byte(s.PrivateKeyPath)
+	}
+
+	// 解码私钥
+	privPem, _ := pem.Decode(keyBytes)
+	if privPem == nil {
+		return nil, fmt.Errorf("failed to decode private key")
+	}
+
+	// 解析私钥
+	parsedKey, err := x509.ParsePKCS8PrivateKey(privPem.Bytes)
 	if err != nil {
 		return nil, err
 	}
 
-	privPem, _ := pem.Decode(keyStr)
-	privPemBytes := privPem.Bytes
-
-	var parsedKey interface{}
-	if parsedKey, err = x509.ParsePKCS8PrivateKey(privPemBytes); err != nil { // note this returns type `interface{}`
-		return nil, err
-	}
-
+	// 转换为 *rsa.PrivateKey 类型
 	privateKey, ok := parsedKey.(*rsa.PrivateKey)
 	if !ok {
-		return nil, fmt.Errorf("%s is not rsa private key", s.PrivateKeyPath)
+		return nil, fmt.Errorf("%s is not an RSA private key", s.PrivateKeyPath)
 	}
-	return privateKey, err
+
+	return privateKey, nil
 }
 
 // Algorithm 返回使用的签名算法：SHA256-RSA2048
