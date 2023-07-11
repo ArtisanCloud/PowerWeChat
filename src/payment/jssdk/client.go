@@ -5,12 +5,13 @@ import (
 	"crypto/sha1"
 	"encoding/json"
 	"fmt"
-	"github.com/ArtisanCloud/PowerLibs/v3/object"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/jssdk"
-	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/jssdk"
+	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 )
 
 type Client struct {
@@ -49,7 +50,7 @@ func (comp *Client) BridgeConfigForPartner(ctx context.Context, prepayID string,
 	if err != nil {
 		return nil, err
 	}
-	if !isJson {
+	if isJson {
 		return json.Marshal(options)
 	} else {
 		return options, nil
@@ -81,7 +82,7 @@ func (comp *Client) BridgeConfig(prepayID string, isJson bool) (interface{}, err
 	if err != nil {
 		return nil, err
 	}
-	if !isJson {
+	if isJson {
 		return json.Marshal(options)
 	} else {
 		return options, nil
