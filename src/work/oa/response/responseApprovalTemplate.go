@@ -1,7 +1,6 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
@@ -24,6 +23,11 @@ type Property struct {
 	UnPrint     int            `json:"un_print"`
 }
 
+type Config struct {
+	Type    string    `json:"type"`
+	Options []*Option `json:"options"`
+}
+
 type Value struct {
 	Text string `json:"text"`
 	Lang string `json:"lang"`
@@ -35,8 +39,8 @@ type Option struct {
 }
 
 type Control struct {
-	Property *Property      `json:"property"`
-	Config   *power.HashMap `json:"config"`
+	Property *Property `json:"property"`
+	Config   *Config   `json:"config"`
 }
 
 type TemplateContent struct {
