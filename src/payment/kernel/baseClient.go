@@ -614,6 +614,8 @@ func (client *BaseClient) AuthSignRequest(context context.Context, config *kerne
 
 	var err error
 
+	base := &object.HashMap{}
+
 	// init query parameters into body
 	if params != nil {
 		endpoint += "?" + object.GetJoinedWithKSort(params)
@@ -622,6 +624,7 @@ func (client *BaseClient) AuthSignRequest(context context.Context, config *kerne
 		(*options)["query"] = nil
 	}
 
+	options = object.MergeHashMap(base, client.prepends(), options)
 	options = object.FilterEmptyHashMap(options)
 
 	// check need sign body or not

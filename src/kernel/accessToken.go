@@ -27,6 +27,7 @@ type AccessToken struct {
 	QueryName          string
 	Token              *object.HashMap
 	TokenKey           string
+	CacheTokenKey      string
 	CachePrefix        string
 
 	*InteractsWithCache
@@ -246,11 +247,27 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 	return res, err
 }
 
+func (accessToken *AccessToken) SetCacheKey(key string) {
+	accessToken.CacheTokenKey = key
+}
+
 // GetCacheKey 缓存唯一key算法说明：
 // 1. 使用appid和secret进行字符串拼接。例如: appid=testappid secret=testsecret, 那么结果为: testappidtestsecret
 // 2. 计算字符串的md5。"testappidtestsecret"的md5值为"edc5f6181730baffc0b88cf96658aeff"
 // 3. 加上PowerWeChat前缀命名空间："powerwechat.access_token."，最终结果为："powerwechat.access_token.edc5f6181730baffc0b88cf96658aeff"
 func (accessToken *AccessToken) GetCacheKey() string {
+
+	cacheKey := ""
+	if accessToken.CacheTokenKey != "" {
+		cacheKey = accessToken.CacheTokenKey
+	} else {
+		cacheKey = accessToken.GetDefaultCacheKey()
+	}
+
+	return cacheKey
+}
+
+func (accessToken *AccessToken) GetDefaultCacheKey() string {
 	credentials := *accessToken.GetCredentials()
 	data := fmt.Sprintf("%s%s%s", credentials["appid"], credentials["secret"], credentials["neededText"])
 	buffer := md5.Sum([]byte(data))
