@@ -18,7 +18,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
-	"github.com/mitchellh/copystructure"
 	"io"
 	"log"
 	"net/http"
@@ -269,16 +268,9 @@ func (client *BaseClient) Request(ctx context.Context, endpoint string, params *
 		// set body json
 		if (*options)["body"] != nil {
 			// signBody是合成了，业务参数和签名参数的参数集合
-			//r := bytes.NewBufferString((*options)["signBody"].(string))
-
-			// body是纯业务参数
-			signBody, err := object.JsonEncode((*options)["body"])
-			if err != nil {
-				return nil, err
-			}
-			r := bytes.NewBufferString(signBody)
+			r := bytes.NewBufferString((*options)["body"].(string))
 			df.Body(r)
-			//df.Json((*options)["body"])
+
 		}
 
 		// set header
@@ -622,22 +614,7 @@ func (client *BaseClient) AuthSignRequest(context context.Context, config *kerne
 
 	var err error
 
-	originOptions, err := copystructure.Copy(options)
-	if err != nil {
-		return nil, err
-	}
-
 	base := &object.HashMap{}
-	isPartnerPay := context.Value("isPartnerPay")
-	if isPartnerPay == nil {
-		(*base)["appid"] = config.GetString("app_id", "")
-		(*base)["mchid"] = config.GetString("mch_id", "")
-	}
-
-	// init options
-	if options == nil {
-		options = &object.HashMap{}
-	}
 
 	// init query parameters into body
 	if params != nil {
@@ -673,8 +650,7 @@ func (client *BaseClient) AuthSignRequest(context context.Context, config *kerne
 		"headers": &object.HashMap{
 			"Authorization": authorization,
 		},
-		"body":     originOptions,
-		"signBody": signBody,
+		"body": signBody,
 	}, options)
 
 	return options, err

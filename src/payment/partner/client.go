@@ -161,7 +161,7 @@ func (comp *Client) Query(ctx context.Context, params *object.HashMap) (*respons
 	_, err := comp.Request(ctx, endpoint, &object.StringMap{
 		"sp_mchid":  config.GetString("mch_id", ""),
 		"sub_mchid": config.GetString("sub_mch_id", ""),
-	}, http.MethodGet, nil, false, nil, result)
+	}, http.MethodGet, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }

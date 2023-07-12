@@ -1,7 +1,6 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
@@ -40,8 +39,8 @@ type Option struct {
 }
 
 type Control struct {
-	Property *Property      `json:"property"`
-	Config   *Config        `json:"config"`
+	Property *Property `json:"property"`
+	Config   *Config   `json:"config"`
 }
 
 type TemplateContent struct {

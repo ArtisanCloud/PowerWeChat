@@ -135,8 +135,8 @@ func (comp *Client) Query(ctx context.Context, params *object.HashMap) (*respons
 	endpoint := (*params)["endpoint"].(string)
 	endpoint = comp.Wrap(endpoint)
 	_, err := comp.Request(ctx, endpoint, &object.StringMap{
-		"mchid": config.GetString("mch_id", ""),
-	}, http.MethodGet, nil, false, nil, result)
+		"appid": config.GetString("app_id", ""),
+	}, http.MethodGet, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }
