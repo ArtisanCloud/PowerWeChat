@@ -35,6 +35,9 @@ type AccessToken struct {
 	GetCredentials func() *object.StringMap
 	GetEndpoint    func() (string, error)
 
+	SetCustomToken func(token *response2.ResponseGetToken) interface{}
+	GetCustomToken func(token interface{}) object.HashMap
+
 	GetMiddlewareOfLog func(logger contract2.LoggerInterface) contract3.RequestMiddleware
 }
 
@@ -67,6 +70,8 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 		InteractsWithCache: NewInteractsWithCache(cacheClient),
 	}
 
+	token.SetCustomToken = nil
+	token.GetCustomToken = nil
 	token.OverrideGetEndpoint()
 	token.OverrideGetMiddlewares()
 	token.RegisterHttpMiddlewares()
@@ -87,7 +92,12 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 		value, err := cache.Get(cacheKey, nil)
 		if err == nil && value != nil {
 
-			token := (object.HashMap)(value.(map[string]interface{}))
+			var token object.HashMap
+			if accessToken.SetCustomToken != nil && accessToken.GetCustomToken != nil {
+				token = accessToken.GetCustomToken(value)
+			} else {
+				token = (object.HashMap)(value.(map[string]interface{}))
+			}
 
 			resToken = &response2.ResponseGetToken{
 				ExpiresIn: token["expires_in"].(float64),
@@ -142,7 +152,12 @@ func (accessToken *AccessToken) SetToken(token *response2.ResponseGetToken) (tok
 
 	// set token into cache
 	cache := accessToken.GetCache()
-	err = cache.Set(accessToken.GetCacheKey(), token, time.Duration(token.ExpiresIn)*time.Second)
+	if accessToken.SetCustomToken != nil && accessToken.GetCustomToken != nil {
+		customToken := accessToken.SetCustomToken(token)
+		err = cache.Set(accessToken.GetCacheKey(), customToken, time.Duration(token.ExpiresIn)*time.Second)
+	} else {
+		err = cache.Set(accessToken.GetCacheKey(), token, time.Duration(token.ExpiresIn)*time.Second)
+	}
 
 	if err != nil {
 		return nil, err
