@@ -146,6 +146,13 @@ printf(rs.OpenID)
 团队也是很多同学一样，从 PHP 转向 Golang，具体为什么，有什么好处，就不用我这里多介绍了吧。 但是现在因为微信的生态做私域化管理是得天独厚，所以我们公司也开发了蛮多企业微信的功能。只是在转型 golang 的过程中，没有找到像 （[easywechat](https://easywechat.com)）这样好用的 sdk。所以我们就自己想为 golang 的同学们做一点贡献。产品会长期维护，迭代，希望同学们有兴趣在使用的过程中，多给意见。
 
 
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ArtisanCloud/PowerWeChat&type=Date)](https://star-history.com/#ArtisanCloud/PowerWeChat&Date)
+
+
+
 <!-- CONTRIBUTORS -->
 ## Contributors
 
