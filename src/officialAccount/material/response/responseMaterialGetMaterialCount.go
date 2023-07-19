@@ -7,9 +7,9 @@ import (
 type ResponseMaterialGetMaterialCount struct {
 	response.ResponseOfficialAccount
 
-	VoiceCount string `json:"voice_count"`
-	VideoCount string `json:"video_count"`
-	ImageCount string `json:"image_count"`
-	NewsCount  string `json:"news_count"`
+	VoiceCount int `json:"voice_count"`
+	VideoCount int `json:"video_count"`
+	ImageCount int `json:"image_count"`
+	NewsCount  int `json:"news_count"`
 	MediaID    string `json:"media_id"`
 }
