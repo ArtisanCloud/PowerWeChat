@@ -8,7 +8,7 @@ package request
 type VideoMediaUploadByURLRequest struct {
 	MediaUrl      string `json:"media_url"`                // 视频 URL，示例值："https://developers.weixin.qq.com/test.mp4"。
 	CoverUrl      string `json:"cover_url"`                // 封面图片 URL，示例值："https://developers.weixin.qq.com/test.jpg"
-	MediaName     string `json:"media_name"`               // 文件名，需按照“剧目名 - 对应剧集数”格式命名文件，示例值："我的中国梦 - 第1集"。
+	MediaName     string `json:"media_name"`               // 文件名，需按照“剧目名 - 对应剧集数”格式命名文件，示例值："我的中国梦 - 第1集"。 经测试 可以不用严格按照此格式
 	SourceContext string `json:"source_context,omitempty"` // 来源上下文，会在上传完成事件中透传给开发者。
 }
 
@@ -26,7 +26,7 @@ type MediaListRequest struct {
 
 // 获取媒资播放连接
 type GetMediaLinkRequest struct {
-	MediaId string `json:"media_id"`         // 媒资id。
+	MediaId int64  `json:"media_id"`         // 媒资id。
 	T       int64  `json:"t"`                // 播放地址的过期时间戳。有效的时间最长不能超过2小时后。
 	Us      string `json:"us,omitempty"`     // 链接标识。平台默认会生成一个仅包含小写字母和数字的字符串用于增强链接的唯一性(如us=647488c4792c15185b8fd2a6)。如开发者需要增加自己的标识，比如区分播放的渠道，可使用该参数，该参数最终的值是"开发者标识-平台标识"（如开发者传入abcd，则最终的临时链接中us=abcd-647488c4792c15185b8fd2a6）
 	Expr    int64  `json:"expr,omitempty"`   // 试看时长，单位：秒，最大值不能超过视频长度
@@ -37,7 +37,7 @@ type GetMediaLinkRequest struct {
 
 // 剧目提审
 type SubmitAuditRequest struct {
-	MediaId                  string  `json:"media_id,omitempty"`                    // 剧目id，首次提审不需要填该参数，重新提审时必填
+	DramaId                  int64   `json:"drama_id,omitempty"`                    // 剧目id，首次提审不需要填该参数，重新提审时必填
 	Name                     string  `json:"name,omitempty"`                        // 剧名，首次提审时必填，重新提审时根据是否需要修改选填。第一次必须填写！
 	MediaCount               int64   `json:"media_count,omitempty"`                 // 剧集数目。首次提审时必填， 重新提审时可不填，如要填写也要和第一次提审时一样。
 	MediaIdList              []int64 `json:"media_id_list,omitempty"`               // 剧集媒资media_id列表。首次提审时必填，而且元素个数必须与media_count一致。重新提审时，如果剧集有内容有变化，则需要填写，而且元素个数也必须与 media_count一致。

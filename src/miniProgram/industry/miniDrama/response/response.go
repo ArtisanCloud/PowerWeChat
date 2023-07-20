@@ -66,25 +66,26 @@ type MediaInfoResponse struct {
 }
 
 // 获取媒资播放链接
+type MediaLinkInfo struct {
+	CoverUrl    string `json:"cover_url"`   // 封面图临时链接。
+	Description string `json:"description"` // 描述。
+	Duration    int    `json:"duration"`    // 播放时长，单位：秒。
+	HlsUrl      string `json:"hls_url"`     // hls格式临时链接。
+	Mp4Url      string `json:"mp4_url"`     // mp4格式临时链接 。
+	Name        string `json:"name"`        // 媒资文件名。
+	OriginalUrl string `json:"original_url"`
+}
 
 type MediaLinkResponse struct {
 	BaseResponse
-	MediaInfo struct { // 媒体播放信息。
-		MediaId     int64  `json:"media_id"`    // 媒资文件id。
-		Duration    int64  `json:"duration"`    // 播放时长，单位：秒。
-		Name        string `json:"name"`        // 媒资文件名。
-		Description string `json:"description"` // 描述。
-		CoverUrl    string `json:"cover_url"`   // 封面图临时链接。
-		Mp4Url      string `json:"mp4_url"`     // mp4格式临时链接 。
-		HlsUrl      string `json:"hls_url"`     // hls格式临时链接。
-	} `json:"media_info"`
+	MediaInfo MediaLinkInfo `json:"media_info"`
 }
 
 // 剧目提审
 
 type SubmitAuditResponse struct {
 	BaseResponse
-	DramaId int64 `json:"drama_id"`
+	DramaId int64 `json:"drama_id"` // // 剧目id。
 }
 
 type DramaInfo struct {
