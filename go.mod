@@ -3,10 +3,11 @@ module github.com/ArtisanCloud/PowerWeChat/v3
 go 1.17
 
 //replace github.com/ArtisanCloud/PowerLibs/v3 => ../PowerLibs
+
 //replace github.com/ArtisanCloud/PowerSocialite/v3 => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs/v3 v3.0.10
+	github.com/ArtisanCloud/PowerLibs/v3 v3.0.11
 	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.6
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/redis/go-redis/v9 v9.0.3

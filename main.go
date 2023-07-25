@@ -22,7 +22,8 @@ func GetWorkConfig() *work.UserConfig {
 		ResponseType: os.Getenv("array"),
 		Log: work.Log{
 			Level: "debug",
-			File:  "./wechat.log",
+			File:  "./wechat/info.log",
+			Error: "./wechat/error.log",
 			ENV:   os.Getenv("work.env"),
 		},
 
@@ -63,7 +64,8 @@ func GetPaymentConfig() *payment.UserConfig {
 		ResponseType: os.Getenv("array"),
 		Log: payment.Log{
 			Level: "debug",
-			File:  "./wechat.log",
+			File:  "./wechat/info.log",
+			Error: "./wechat/error.log",
 		},
 		Http: payment.Http{
 			Timeout: 30.0,
@@ -96,7 +98,8 @@ func GetMiniProgramConfig() *miniProgram.UserConfig {
 		ResponseType: os.Getenv("array"),
 		Log: miniProgram.Log{
 			Level: "debug",
-			File:  "./wechat.log",
+			File:  "./wechat/info.log",
+			Error: "./wechat/error.log",
 		},
 		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
 			Addr:     "127.0.0.1:6379",
@@ -120,7 +123,8 @@ func GetOpenPlatformConfig() *openPlatform.UserConfig {
 		ResponseType: os.Getenv("array"),
 		Log: openPlatform.Log{
 			Level: "debug",
-			File:  "./wechat.log",
+			File:  "./wechat/info.log",
+			Error: "./wechat/error.log",
 		},
 		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
 			Addr:     "127.0.0.1:6379",

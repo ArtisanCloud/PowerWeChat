@@ -127,6 +127,7 @@ type Http struct {
 type Log struct {
 	Level string
 	File  string
+	Error string
 	ENV   string
 }
 
@@ -166,8 +167,8 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("log.env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+		"outputPath": app.Config.GetString("log.info", "./wechat/info.log"),
+		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
 	})
 	if err != nil {
 		return nil, err
@@ -488,6 +489,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"error": userConfig.Log.Error,
 			"env":   userConfig.Log.ENV,
 		},
 		"cache": userConfig.Cache,

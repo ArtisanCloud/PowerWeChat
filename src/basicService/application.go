@@ -43,6 +43,7 @@ type UserConfig struct {
 type Log struct {
 	Level string
 	File  string
+	Error string
 	ENV   string
 }
 
