@@ -167,7 +167,7 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("log.env", "develop"),
-		"outputPath": app.Config.GetString("log.info", "./wechat/info.log"),
+		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
 	})
 	if err != nil {
