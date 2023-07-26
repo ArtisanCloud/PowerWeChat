@@ -23,9 +23,13 @@ type Property struct {
 	UnPrint     int            `json:"un_print"`
 }
 
-type Config struct {
+type Selector struct {
 	Type    string    `json:"type"`
 	Options []*Option `json:"options"`
+}
+
+type Config struct {
+	Selector *Selector `json:"selector"`
 }
 
 type Value struct {
