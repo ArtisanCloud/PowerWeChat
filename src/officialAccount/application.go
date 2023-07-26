@@ -117,6 +117,7 @@ type Http struct {
 type Log struct {
 	Level string
 	File  string
+	Error string
 	ENV   string
 }
 
@@ -156,8 +157,8 @@ func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*O
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
+		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
 	})
 	if err != nil {
 		return nil, err

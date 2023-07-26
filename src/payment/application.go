@@ -92,6 +92,7 @@ type UserConfig struct {
 type Log struct {
 	Level string
 	File  string
+	Error string
 	ENV   string
 }
 
@@ -134,8 +135,8 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 
 	app.Logger, err = logger.NewLogger("", &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
-		"outputPath": app.Config.GetString("log.file", "./wechat.log"),
-		"errorPath":  app.Config.GetString("log.file", "./wechat.log"),
+		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
+		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
 	})
 
 	if err != nil {
@@ -379,6 +380,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"error": userConfig.Log.Error,
 			"env":   userConfig.Log.ENV,
 		},
 		"http": &object.HashMap{

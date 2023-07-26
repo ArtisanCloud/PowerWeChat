@@ -84,7 +84,7 @@ func (comp *Client) Delete(ctx context.Context, account string) (*response2.Resp
 		"kf_account": account,
 	}
 
-	_, err := comp.BaseClient.HttpGet(ctx, "customservice/kfaccount/delete", query, nil, &result)
+	_, err := comp.BaseClient.HttpGet(ctx, "customservice/kfaccount/del", query, nil, &result)
 
 	return result, err
 }

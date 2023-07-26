@@ -15,10 +15,10 @@ type SubButton struct {
 	List []*ButtonItem `json:"list"`
 }
 type Button struct {
-	Type       string       `json:"type"`
-	Name       string       `json:"name"`
-	Key        string       `json:"key"`
-	SubButtons []*SubButton `json:"sub_button"`
+	Type       string     `json:"type"`
+	Name       string     `json:"name"`
+	Key        string     `json:"key"`
+	SubButtons *SubButton `json:"sub_button"`
 }
 
 type Menu struct {

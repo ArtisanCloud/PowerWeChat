@@ -36,7 +36,8 @@ func GetWorkConfig() *work.UserConfig {
 		ResponseType: os.Getenv("array"),
 		Log: work.Log{
 			"debug",
-			"./wechat.log",
+			"./wechat/info.log",
+			"./wechat/error.log",
 			"develop",
 		},
 
@@ -68,7 +69,8 @@ func GetPaymentConfig() *payment.UserConfig {
 		ResponseType: os.Getenv("array"),
 		Log: payment.Log{
 			Level: "debug",
-			File:  "./wechat.log",
+			File:  "./wechat/info.log",
+			Error: "./wechat/error.log",
 		},
 		Http: payment.Http{
 			Timeout: 30.0,
