@@ -3,7 +3,7 @@ package response
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type Button struct {
-	Type       string    `json:"type"`
+	Type       string    `json:"type,omitempty"`
 	Name       string    `json:"name"`
 	Key        string    `json:"key"`
 	URL        string    `json:"url,omitempty"`
