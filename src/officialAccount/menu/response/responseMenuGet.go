@@ -6,6 +6,9 @@ type Button struct {
 	Type       string    `json:"type"`
 	Name       string    `json:"name"`
 	Key        string    `json:"key"`
+	URL        string    `json:"url,omitempty"`
+	AppID      string    `json:"appid,omitempty"`
+	PagePath   string    `json:"pagepath,omitempty"`
 	SubButtons []*Button `json:"sub_button"`
 }
 
