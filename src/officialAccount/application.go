@@ -2,6 +2,7 @@ package officialAccount
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	providers2 "github.com/ArtisanCloud/PowerSocialite/v3/src/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/jssdk"
@@ -115,10 +116,11 @@ type Http struct {
 }
 
 type Log struct {
-	Level string
-	File  string
-	Error string
-	ENV   string
+	Driver contract.LoggerInterface
+	Level  string
+	File   string
+	Error  string
+	ENV    string
 }
 
 type OAuth struct {
@@ -155,7 +157,7 @@ func NewOfficialAccount(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*O
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
+	app.Logger, err = logger.NewLogger(app.Config.Get("log.driver", nil), &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
@@ -456,9 +458,11 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"base_uri": baseURI,
 		},
 		"log": &object.HashMap{
-			"level": userConfig.Log.Level,
-			"file":  userConfig.Log.File,
-			"env":   userConfig.Log.ENV,
+			"driver": userConfig.Log.Driver,
+			"level":  userConfig.Log.Level,
+			"file":   userConfig.Log.File,
+			"error":  userConfig.Log.Error,
+			"env":    userConfig.Log.ENV,
 		},
 		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,
