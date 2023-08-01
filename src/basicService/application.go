@@ -1,6 +1,7 @@
 package basicService
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/contentSecurity"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/jssdk"
@@ -41,10 +42,11 @@ type UserConfig struct {
 }
 
 type Log struct {
-	Level string
-	File  string
-	Error string
-	ENV   string
+	Driver contract.LoggerInterface
+	Level  string
+	File   string
+	Error  string
+	ENV    string
 }
 
 type OAuth struct {
@@ -151,6 +153,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"error": userConfig.Log.Error,
+			"env":   userConfig.Log.ENV,
 		},
 		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,

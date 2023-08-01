@@ -2,6 +2,7 @@ package miniProgram
 
 import (
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/basicService/subscribeMessage"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -125,10 +126,11 @@ type Http struct {
 }
 
 type Log struct {
-	Level string
-	File  string
-	Error string
-	ENV   string
+	Driver contract.LoggerInterface
+	Level  string
+	File   string
+	Error  string
+	ENV    string
 }
 
 type OAuth struct {
@@ -165,7 +167,7 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
+	app.Logger, err = logger.NewLogger(app.Config.Get("log.driver", nil), &object.HashMap{
 		"env":        app.Config.GetString("log.env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),

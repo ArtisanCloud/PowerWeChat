@@ -5,12 +5,40 @@ import (
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work"
+	"github.com/ArtisanCloud/PowerWeChat/v3/test/testLogDriver"
 	"os"
 	"strconv"
 )
+
+func GetOfficialConfig() *officialAccount.UserConfig {
+	return &officialAccount.UserConfig{
+
+		AppID:  os.Getenv("official_app_id"), // 小程序、公众号或者企业微信的appid
+		Secret: os.Getenv("official_secret"), // 商户号 appID
+
+		ResponseType: os.Getenv("array"),
+		Log: officialAccount.Log{
+			Driver: &testLogDriver.SimpleLogger{},
+			Level:  "debug",
+			File:   "./wechat/info.log",
+			Error:  "./wechat/error.log",
+		},
+		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
+			Addr:     "127.0.0.1:6379",
+			Password: "",
+			DB:       1,
+		}),
+		HttpDebug: true,
+		//Debug: true,
+		//"sandbox": true,
+
+	}
+
+}
 
 func GetWorkConfig() *work.UserConfig {
 	agentID, _ := strconv.Atoi(os.Getenv("wecom_agent_id"))
@@ -142,6 +170,17 @@ func GetOpenPlatformConfig() *openPlatform.UserConfig {
 func main() {
 
 	fmt.Printf("hello Wechat! \n")
+
+	// init officialAccount app
+	configOfficialAccount := GetOfficialConfig()
+	officialAccountApp, err := officialAccount.NewOfficialAccount(configOfficialAccount)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	officialAccountApp.Logger.Driver.Info("custom info log")
+	officialAccountApp.Logger.Driver.Error("custom error log")
+	officialAccountApp.Logger.Driver.Warn("custom warn log")
+	fmt2.Dump("officialAccount config:", officialAccountApp.GetConfig().All())
 
 	// init wecom app
 	configWecom := GetWorkConfig()

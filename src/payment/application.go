@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
@@ -90,10 +91,11 @@ type UserConfig struct {
 	Sandbox   bool
 }
 type Log struct {
-	Level string
-	File  string
-	Error string
-	ENV   string
+	Driver contract.LoggerInterface
+	Level  string
+	File   string
+	Error  string
+	ENV    string
 }
 
 type OAuth struct {
@@ -133,7 +135,7 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
+	app.Logger, err = logger.NewLogger(app.Config.Get("log.driver", nil), &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
@@ -378,10 +380,11 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.HashMap{
-			"level": userConfig.Log.Level,
-			"file":  userConfig.Log.File,
-			"error": userConfig.Log.Error,
-			"env":   userConfig.Log.ENV,
+			"driver": userConfig.Log.Driver,
+			"level":  userConfig.Log.Level,
+			"file":   userConfig.Log.File,
+			"error":  userConfig.Log.Error,
+			"env":    userConfig.Log.ENV,
 		},
 		"http": &object.HashMap{
 			"timeout":  timeout,

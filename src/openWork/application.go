@@ -107,7 +107,7 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
 
-	app.Logger, err = logger.NewLogger("", &object.HashMap{
+	app.Logger, err = logger.NewLogger(app.Config.Get("log.driver", nil), &object.HashMap{
 		"env":        app.Config.GetString("env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
@@ -248,6 +248,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 		"log": &object.HashMap{
 			"level": userConfig.Log.Level,
 			"file":  userConfig.Log.File,
+			"error": userConfig.Log.Error,
 			"env":   userConfig.Log.ENV,
 		},
 		"cache":      userConfig.Cache,
