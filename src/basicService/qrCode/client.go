@@ -78,7 +78,7 @@ func (comp *Client) Temporary(ctx context.Context, sceneValue interface{}, expir
 	switch sceneValue.(type) {
 	case int:
 		value := sceneValue.(int)
-		if value > 0 && value < SCENE_MAX_VALUE {
+		if value > 0 {
 			data.ActionName = SCENE_QR_TEMPORARY
 			data.ActionInfo.Scene = &object.HashMap{
 				"scene_id": sceneValue,
