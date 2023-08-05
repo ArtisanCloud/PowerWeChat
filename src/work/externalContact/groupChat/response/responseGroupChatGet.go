@@ -13,6 +13,7 @@ type Member struct {
 	Type          int      `json:"type"`
 	JoinTime      int      `json:"join_time"`
 	JoinScene     int      `json:"join_scene"`
+	State         string   `json:"state"`
 	Invitor       *Invitor `json:"invitor,omitempty"`
 	GroupNickname string   `json:"group_nickname"`
 	Name          string   `json:"name"`
