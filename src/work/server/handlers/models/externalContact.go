@@ -73,6 +73,29 @@ type EventExternalUserDelFollowUser struct {
 	ExternalUserID string `xml:"ExternalUserID"`
 }
 
+type EventExternalChatCreate struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	ChatID string `xml:"ChatId"`
+}
+
+type EventExternalChatUpdate struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	ChatID       string `xml:"ChatId"`
+	UpdateDetail string `xml:"UpdateDetail"`
+	JoinScene    string `xml:"JoinScene"`
+	QuitScene    string `xml:"QuitScene"`
+	MemChangeCnt string `xml:"MemChangeCnt"`
+}
+
+type EventExternalChatDismiss struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	ChatID string `xml:"ChatId"`
+}
+
+// Deprecated: Use EventExternalChatUpdate instead.
 type EventExternalUserUpdateAddMember struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
@@ -84,6 +107,7 @@ type EventExternalUserUpdateAddMember struct {
 	MemChangeCnt string `xml:"MemChangeCnt"`
 }
 
+// Deprecated: Use EventExternalChatDismiss instead.
 type EventExternalUserDismiss struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
