@@ -369,7 +369,7 @@ func (app *OpenPlatform) GetFastRegistrationURL(ctx context.Context, callbackUrl
 		return url, err
 	}
 	if code.ErrCode != 0 {
-		return url, errors.New(code.ErrMSG)
+		return url, errors.New(code.ErrMsg)
 	}
 	(*optional)["pre_auth_code"] = code.PreAuthCode
 	queries := object.MergeStringMap(optional, &object.StringMap{
@@ -391,7 +391,7 @@ func (app *OpenPlatform) GetMobilePreAuthorizationURL(ctx context.Context, callb
 		return url, err
 	}
 	if code.ErrCode != 0 {
-		return url, errors.New(code.ErrMSG)
+		return url, errors.New(code.ErrMsg)
 	}
 	(*optional)["pre_auth_code"] = code.PreAuthCode
 	queries := object.MergeStringMap(
