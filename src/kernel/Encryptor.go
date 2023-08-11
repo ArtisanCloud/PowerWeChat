@@ -8,7 +8,6 @@ import (
 	"encoding/binary"
 	"encoding/xml"
 	"fmt"
-	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"math/rand"
@@ -64,9 +63,9 @@ func NewEncryptor(appID, token, aesKey string) (*Encryptor, error) {
 
 	var aesKeyByte []byte
 	var err error
-	if aesKey == "" {
-		fmt2.Dump("AES Key is empty, this may occur errors when decode callbacks message")
-	}
+	//if aesKey == "" {
+	//	fmt2.Dump("AES Key is empty, this may occur errors when decode callbacks message")
+	//}
 	aesKeyByte, err = base64.StdEncoding.DecodeString(aesKey)
 	if err != nil {
 		aesKeyByte, err = base64.RawStdEncoding.DecodeString(aesKey)
