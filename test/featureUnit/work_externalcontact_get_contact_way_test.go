@@ -12,7 +12,7 @@ func Test_ExternalContact_Get_Contact_Way(t *testing.T) {
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMsg)
 	}
 
 	fmt.Dump(response)

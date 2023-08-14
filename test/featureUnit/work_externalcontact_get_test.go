@@ -17,7 +17,7 @@ func Test_ExternalContact_Get_Batch_ByUser(t *testing.T) {
 	if response == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMsg)
 	}
 
 	fmt.Dump(response)
@@ -34,7 +34,7 @@ func Test_ExternalContact_Get_Unassigned(t *testing.T) {
 	if response == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMsg)
 	}
 
 	fmt.Dump(response)
@@ -52,7 +52,7 @@ func Test_ExternalContact_Transfer(t *testing.T) {
 	if response == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMsg)
 	}
 
 	fmt.Dump(response)

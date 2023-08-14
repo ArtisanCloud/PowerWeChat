@@ -44,7 +44,7 @@ func Test_Message_Send_Text(t *testing.T) {
 	if response == nil || response.ResponseWork == nil {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMsg)
 	}
 
 }
