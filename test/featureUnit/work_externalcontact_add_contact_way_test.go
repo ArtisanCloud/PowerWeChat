@@ -1,8 +1,8 @@
 package featureUnit
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/fmt"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/contactWay/request"
 	"testing"
 )
@@ -22,19 +22,15 @@ func Test_ExternalContact_Add_Contact_Way(t *testing.T) {
 		ExpiresIn:     86400,
 		ChatExpiresIn: 86400,
 		UnionID:       "",
-		Conclusions: &power.HashMap{
-			"text": &power.StringMap{
-				"content": "bye bye",
-			},
-		},
+		Conclusions:   nil,
 	}
 
-	response, _ := Work.ExternalContactContactWay.Add(para)
+	response, _ := Work.ExternalContactContactWay.Add(context.Background(), para)
 
-	if response == nil || response.ResponseWork == nil {
+	if response == nil || response.ResponseWork.ErrCode != 0 {
 		t.Error("response nil")
 	} else if response.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", response.ErrMSG)
+		t.Error("response error uniformMessage as :", response.ErrMsg)
 	}
 
 	fmt.Dump(response)

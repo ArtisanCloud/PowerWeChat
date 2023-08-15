@@ -19,7 +19,7 @@ func Test_Media_Upload_Image(t *testing.T) {
 	if response == nil {
 		t.Error("response nil")
 	} else if wxResponse.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", wxResponse.ErrMSG)
+		t.Error("response error uniformMessage as :", wxResponse.ErrMsg)
 	}
 
 	fmt.Dump(wxResponse, response)
@@ -35,7 +35,7 @@ func Test_Media_Upload_Temp_Image(t *testing.T) {
 	if response == nil {
 		t.Error("response nil")
 	} else if wxResponse.ErrCode != 0 {
-		t.Error("response error uniformMessage as :", wxResponse.ErrMSG)
+		t.Error("response error uniformMessage as :", wxResponse.ErrMsg)
 	}
 
 	fmt.Dump(wxResponse, response)

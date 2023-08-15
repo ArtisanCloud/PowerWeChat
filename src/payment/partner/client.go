@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	payment "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/partner/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/partner/response"
@@ -167,15 +168,16 @@ func (comp *Client) Query(ctx context.Context, params *object.HashMap) (*respons
 }
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
-func (comp *Client) Close(ctx context.Context, tradeNo string) (*http.Response, error) {
+func (comp *Client) Close(ctx context.Context, tradeNo string) (*response2.ResponsePayment, error) {
+
+	result := &response2.ResponsePayment{}
 
 	config := (*comp.App).GetConfig()
 
-	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/partner/transactions/out-trade-no/%s/close", tradeNo))
-	rs, err := comp.PlainRequest(ctx, endpoint, nil, http.MethodPost, &object.HashMap{
-		"sp_mchid":  config.GetString("mch_id", ""),
-		"sub_mchid": config.GetString("sub_mch_id", ""),
-	}, false, nil, nil)
+	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s/close", tradeNo))
+	_, err := comp.PlainRequest(ctx, endpoint, nil, http.MethodPost, &object.HashMap{
+		"mchid": config.GetString("mch_id", ""),
+	}, false, nil, result)
 
-	return rs, err
+	return result, err
 }
