@@ -174,10 +174,9 @@ func (comp *Client) Close(ctx context.Context, tradeNo string) (*response2.Respo
 
 	config := (*comp.App).GetConfig()
 
-	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/partner/transactions/out-trade-no/%s/close", tradeNo))
+	endpoint := comp.Wrap(fmt.Sprintf("/v3/pay/transactions/out-trade-no/%s/close", tradeNo))
 	_, err := comp.PlainRequest(ctx, endpoint, nil, http.MethodPost, &object.HashMap{
-		"sp_mchid":  config.GetString("mch_id", ""),
-		"sub_mchid": config.GetString("sub_mch_id", ""),
+		"mchid": config.GetString("mch_id", ""),
 	}, false, nil, result)
 
 	return result, err

@@ -154,6 +154,11 @@ func (client *BaseClient) PlainRequest(ctx context.Context, endpoint string, par
 		return returnResponse, err
 	}
 
+	//  微信返回204或者其他状态，直接抛给用户处理
+	if returnResponse.StatusCode == http.StatusNoContent {
+		return returnResponse, err
+	}
+
 	// decode response body to outBody
 	err = client.HttpHelper.ParseResponseBodyContent(returnResponse, outBody)
 

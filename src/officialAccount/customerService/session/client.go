@@ -66,7 +66,7 @@ func (comp *Client) Close(ctx context.Context, account string, openID string) (*
 		"kf_account": account,
 		"openid":     openID,
 	}
-	_, err := comp.BaseClient.HttpPostJson(ctx, "customservice/kfsession/close", params, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "customservice/kfsession/close", params, nil, nil, result)
 
 	return result, err
 }
