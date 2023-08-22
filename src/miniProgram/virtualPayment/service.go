@@ -40,6 +40,7 @@ func (client *Client) TransactionVirtual(ctx context.Context, in *request.Virtua
 	paySign := kernel.CalcPaySig(uri, postBody, client.appKey)
 	signature := kernel.CalcSignature(postBody, in.SessionKey)
 
+	// todo 是否要变为强类型
 	return &object.StringMap{
 		"post_body": postBody,
 		"pay_sign":  paySign,
