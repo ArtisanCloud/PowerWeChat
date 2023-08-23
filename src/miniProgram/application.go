@@ -33,6 +33,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/updatableMessage"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/urlLink"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/urlScheme"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/virtualPayment"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/wxaCode"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/server"
 )
@@ -40,9 +41,10 @@ import (
 type MiniProgram struct {
 	*kernel.ServiceContainer
 
-	Base        *base.Client
-	AccessToken *auth.AccessToken
-	Auth        *auth.Client
+	Base           *base.Client
+	VirtualPayment *virtualPayment.Client
+	AccessToken    *auth.AccessToken
+	Auth           *auth.Client
 
 	Server *server.Guard
 
@@ -106,6 +108,10 @@ type UserConfig struct {
 	ComponentAppToken string
 	Token             string
 	AESKey            string
+
+	// 小程序虚拟支付新增配置
+	AppKey  string // 现网AppKey
+	OfferID string // OfferID(支付应用ID) 等同于商户号
 
 	ResponseType string
 	Log          Log
@@ -359,6 +365,12 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 		return nil, err
 	}
 
+	//-------------- Virtual Pay --------------
+	app.VirtualPayment, err = virtualPayment.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -456,6 +468,9 @@ func (app *MiniProgram) GetComponent(name string) interface{} {
 	case "MiniDramaVDO":
 		return app.MiniDramaVOD
 
+	case "VirtualPayment":
+		return app.VirtualPayment
+
 	case "Logger":
 		return app.Logger
 
@@ -476,6 +491,9 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"app_id": userConfig.AppID,
 		"secret": userConfig.Secret,
+
+		"app_key":  userConfig.AppKey,  // 现网AppKey
+		"offer_id": userConfig.OfferID, // OfferID(支付应用ID) 等同于商户号
 
 		"token":               userConfig.Token,
 		"aes_key":             userConfig.AESKey,

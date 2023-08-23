@@ -29,7 +29,7 @@ func (comp *Client) GetCertificates(ctx context.Context) (*response.ResponseGetC
 	result := &response.ResponseGetCertificates{}
 
 	endpoint := comp.Wrap("/v3/certificates")
-	_, err := comp.Request(ctx, endpoint, nil, http.MethodGet, nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodGet, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }

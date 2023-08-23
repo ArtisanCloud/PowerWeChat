@@ -63,8 +63,8 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	}
 
 	// read body content
-	requestXML, _ := ioutil.ReadAll(request.Body)
-	request.Body = ioutil.NopCloser(bytes.NewBuffer(requestXML))
+	requestXML, _ := io.ReadAll(request.Body)
+	request.Body = io.NopCloser(bytes.NewBuffer(requestXML))
 	println(string(requestXML))
 
 	// convert to openplatform event
@@ -86,14 +86,21 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	result := closure(callbackEvent, bufDecrypted, msg.InfoType)
 
 	// convert the result to http response
-	strResult, err := object.JsonEncode(result)
-	if err != nil {
-		return nil, err
+	var buffResult []byte
+	// 如果是字符串， "success", "failed"
+	if str, ok := result.(string); ok {
+		buffResult = []byte(str)
+	} else {
+		strResult, err := object.JsonEncode(result)
+		if err != nil {
+			return nil, err
+		}
+		buffResult = []byte(strResult)
 	}
 
 	httpRS = &http.Response{
 		StatusCode: http.StatusOK,
-		Body:       ioutil.NopCloser(bytes.NewBuffer([]byte(strResult))),
+		Body:       ioutil.NopCloser(bytes.NewBuffer(buffResult)),
 	}
 
 	return httpRS, err

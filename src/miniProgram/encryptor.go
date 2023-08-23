@@ -25,8 +25,15 @@ func NewEncryptor(appID, token, aesKey string) (*Encryptor, error) {
 
 func (encryptor Encryptor) DecryptData(encrypted string, sessionKey string, iv string) ([]byte, *support.CryptError) {
 	encryptData := encrypted
-	_key, _ := base64.StdEncoding.DecodeString(sessionKey)
-	_iv, _ := base64.StdEncoding.DecodeString(iv)
+	_key, errDecode := base64.StdEncoding.DecodeString(sessionKey)
+	if errDecode != nil {
+		return nil, support.NewCryptError(-1, errDecode.Error())
+	}
+
+	_iv, errDecode := base64.StdEncoding.DecodeString(iv)
+	if errDecode != nil {
+		return nil, support.NewCryptError(-1, errDecode.Error())
+	}
 
 	aes := support.AES{}
 	data, err := aes.Decrypt(encryptData, _key, _iv)
