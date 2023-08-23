@@ -85,14 +85,25 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	err = xml.Unmarshal(bufDecrypted, msg)
 	result := closure(callbackEvent, bufDecrypted, msg.InfoType)
 
+	var buffResult []byte
+	// 如果是字符串， "success", "failed"
+	if str, ok := result.(string); ok {
+		buffResult = []byte(str)
+	} else {
+		strResult, err := object.JsonEncode(result)
+		if err != nil {
+			return nil, err
+		}
+		buffResult = []byte(strResult)
+	}
+
 	// convert the result to http response
-	strResult, err := object.JsonEncode(result)
 	if err != nil {
 		return nil, err
 	}
 	httpRS = &http.Response{
 		StatusCode: http.StatusOK,
-		Body:       ioutil.NopCloser(bytes.NewBuffer([]byte(strResult))),
+		Body:       io.NopCloser(bytes.NewBuffer(buffResult)),
 	}
 
 	return httpRS, err

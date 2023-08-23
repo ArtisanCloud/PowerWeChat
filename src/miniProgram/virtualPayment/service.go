@@ -52,7 +52,7 @@ func (client *Client) TransactionVirtual(ctx context.Context, in *request.Virtua
 // 商品上传
 // https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/virtual-payment.html#_2-3-%E6%9C%8D%E5%8A%A1%E5%99%A8API
 
-func (client *Client) StartUploadGoods(ctx context.Context, in *request.UploadProductsRequest) (result *response.BaseResp, err error) {
+func (client *Client) StartUploadGoods(ctx context.Context, params *request.UploadProductsRequest) (result *response.BaseResp, err error) {
 
 	fmt.Printf("appid: %s, app_key: %s, offer_id: %s \n", (*client.App).GetConfig().GetString("app_id", ""), client.appKey, client.offerId)
 
@@ -61,7 +61,7 @@ func (client *Client) StartUploadGoods(ctx context.Context, in *request.UploadPr
 		return nil, err
 	}
 
-	postBody, err := json.Marshal(in)
+	postBody, err := json.Marshal(params)
 
 	if err != nil {
 
@@ -71,11 +71,12 @@ func (client *Client) StartUploadGoods(ctx context.Context, in *request.UploadPr
 	signPost := string(postBody)
 
 	// paySign
-	paySign := kernel.CalcPaySig("/xpay/start_upload_goods", signPost, client.appKey)
+	endpoint := "/xpay/start_upload_goods"
+	paySign := kernel.CalcPaySig(endpoint, signPost, client.appKey)
 
-	uri := fmt.Sprintf("%s?&pay_sig=%s", "/xpay/start_upload_goods", paySign)
+	uri := fmt.Sprintf("%s?pay_sig=%s", endpoint, paySign)
 
-	_, err = client.HttpPostJson(ctx, uri, in, nil, nil, &result)
+	_, err = client.HttpPostJson(ctx, uri, params, nil, nil, &result)
 
 	return result, err
 }
