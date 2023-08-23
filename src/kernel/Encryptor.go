@@ -3,9 +3,12 @@ package kernel
 import (
 	"bytes"
 	"crypto/aes"
+	"crypto/hmac"
 	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/base64"
 	"encoding/binary"
+	"encoding/hex"
 	"encoding/xml"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -234,5 +237,22 @@ func (encryptor *Encryptor) Signature(token, timestamp, nonce, data string) stri
 	sha := sha1.New()
 	sha.Write(buffer.Bytes())
 	signature := fmt.Sprintf("%x", sha.Sum(nil))
+	return signature
+}
+
+func CalcPaySig(uri, postBody, appkey string) string {
+	needSignMsg := uri + "&" + postBody
+	fmt.Println("need sign str => ", needSignMsg)
+	h := hmac.New(sha256.New, []byte(appkey))
+	h.Write([]byte(needSignMsg))
+	paySig := hex.EncodeToString(h.Sum(nil))
+	return paySig
+}
+
+func CalcSignature(postBody, sessionKey string) string {
+	needSignMsg := postBody
+	h := hmac.New(sha256.New, []byte(sessionKey))
+	h.Write([]byte(needSignMsg))
+	signature := hex.EncodeToString(h.Sum(nil))
 	return signature
 }
