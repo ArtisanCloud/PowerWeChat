@@ -63,8 +63,8 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 	}
 
 	// read body content
-	requestXML, _ := ioutil.ReadAll(request.Body)
-	request.Body = ioutil.NopCloser(bytes.NewBuffer(requestXML))
+	requestXML, _ := io.ReadAll(request.Body)
+	request.Body = io.NopCloser(bytes.NewBuffer(requestXML))
 	println(string(requestXML))
 
 	// convert to openplatform event
