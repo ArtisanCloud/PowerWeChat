@@ -239,7 +239,12 @@ func (client *BaseClient) Request(ctx context.Context, url string, method string
 
 		// set body json
 		if (*options)["form_params"] != nil {
-			df.Json((*options)["form_params"])
+			if str, ok := (*options)["form_params"].(string); ok {
+				r := bytes.NewBufferString(str)
+				df.Body(r)
+			} else {
+				df.Json((*options)["form_params"])
+			}
 		}
 	}
 

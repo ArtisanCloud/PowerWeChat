@@ -76,7 +76,7 @@ func (client *Client) StartUploadGoods(ctx context.Context, params *request.Uplo
 
 	uri := fmt.Sprintf("%s?pay_sig=%s", endpoint, paySign)
 
-	_, err = client.HttpPostJson(ctx, uri, params, nil, nil, &result)
+	_, err = client.HttpPostJson(ctx, uri, signPost, nil, nil, &result)
 
 	return result, err
 }
