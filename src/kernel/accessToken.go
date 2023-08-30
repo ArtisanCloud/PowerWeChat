@@ -36,7 +36,7 @@ type AccessToken struct {
 	GetEndpoint    func() (string, error)
 
 	SetCustomToken func(token *response2.ResponseGetToken) interface{}
-	GetCustomToken func(token interface{}) object.HashMap
+	GetCustomToken func(key string, refresh bool) object.HashMap
 
 	GetMiddlewareOfLog func(logger contract2.LoggerInterface) contract3.RequestMiddleware
 }
@@ -84,44 +84,22 @@ func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken
 }
 
 func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.ResponseGetToken, err error) {
+
 	cacheKey := accessToken.GetCacheKey()
 	cache := accessToken.GetCache()
+
+	// 如果客户有中控的场景，可以由客户自己提供token的方法
+	if accessToken.GetCustomToken != nil {
+		token := accessToken.GetCustomToken(cacheKey, refresh)
+		return accessToken.getFormatToken(token)
+	}
 
 	// get token from cache
 	if !refresh && cache.Has(cacheKey) {
 		value, err := cache.Get(cacheKey, nil)
 		if err == nil && value != nil {
-
-			var token object.HashMap
-			if accessToken.SetCustomToken != nil && accessToken.GetCustomToken != nil {
-				token = accessToken.GetCustomToken(value)
-			} else {
-				token = (object.HashMap)(value.(map[string]interface{}))
-			}
-
-			resToken = &response2.ResponseGetToken{
-				ExpiresIn: token["expires_in"].(float64),
-			}
-
-			if accessToken.TokenKey == "access_token" && token["access_token"] != nil {
-				resToken.AccessToken = token[accessToken.TokenKey].(string)
-
-			} else if accessToken.TokenKey == "component_access_token" && token["component_access_token"] != nil {
-				resToken.AccessToken = token[accessToken.TokenKey].(string)
-				resToken.ComponentAccessToken = token[accessToken.TokenKey].(string)
-
-			} else if accessToken.TokenKey == "authorizer_access_token" && token["authorizer_access_token"] != nil {
-				resToken.AccessToken = token[accessToken.TokenKey].(string)
-				resToken.AuthorizerAccessToken = token[accessToken.TokenKey].(string)
-
-			} else if accessToken.TokenKey == "authorizer_refresh_token" && token["authorizer_refresh_token"] != nil {
-				resToken.AccessToken = token[accessToken.TokenKey].(string)
-				resToken.AuthorizerRefreshToken = token[accessToken.TokenKey].(string)
-
-			} else {
-				return nil, errors.New("no token found in cache")
-			}
-
+			token := (object.HashMap)(value.(map[string]interface{}))
+			resToken, err = accessToken.getFormatToken(token)
 			return resToken, err
 		}
 	}
@@ -152,7 +130,7 @@ func (accessToken *AccessToken) SetToken(token *response2.ResponseGetToken) (tok
 
 	// set token into cache
 	cache := accessToken.GetCache()
-	if accessToken.SetCustomToken != nil && accessToken.GetCustomToken != nil {
+	if accessToken.SetCustomToken != nil {
 		customToken := accessToken.SetCustomToken(token)
 		err = cache.Set(accessToken.GetCacheKey(), customToken, time.Duration(token.ExpiresIn)*time.Second)
 	} else {
@@ -168,6 +146,32 @@ func (accessToken *AccessToken) SetToken(token *response2.ResponseGetToken) (tok
 	}
 	return accessToken, err
 
+}
+
+func (accessToken *AccessToken) getFormatToken(token object.HashMap) (*response2.ResponseGetToken, error) {
+	resToken := &response2.ResponseGetToken{
+		ExpiresIn: token["expires_in"].(float64),
+	}
+
+	if accessToken.TokenKey == "access_token" && token["access_token"] != nil {
+		resToken.AccessToken = token[accessToken.TokenKey].(string)
+
+	} else if accessToken.TokenKey == "component_access_token" && token["component_access_token"] != nil {
+		resToken.AccessToken = token[accessToken.TokenKey].(string)
+		resToken.ComponentAccessToken = token[accessToken.TokenKey].(string)
+
+	} else if accessToken.TokenKey == "authorizer_access_token" && token["authorizer_access_token"] != nil {
+		resToken.AccessToken = token[accessToken.TokenKey].(string)
+		resToken.AuthorizerAccessToken = token[accessToken.TokenKey].(string)
+
+	} else if accessToken.TokenKey == "authorizer_refresh_token" && token["authorizer_refresh_token"] != nil {
+		resToken.AccessToken = token[accessToken.TokenKey].(string)
+		resToken.AuthorizerRefreshToken = token[accessToken.TokenKey].(string)
+
+	} else {
+		return nil, errors.New("no token found in cache")
+	}
+	return resToken, nil
 }
 
 func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
