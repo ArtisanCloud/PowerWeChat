@@ -16,7 +16,7 @@ type Scanned struct {
 func NewScannedNotify(app kernel.ApplicationPaymentInterface, request *http.Request) *Scanned {
 
 	scanned := &Scanned{
-		NewHandler(&app, request),
+		NewHandler(app, request),
 		"",
 	}
 
@@ -46,7 +46,7 @@ func (comp *Scanned) Handle(closure func(message *request.RequestNotify, fail fu
 	}
 
 	if comp.alert == "" && reflect.TypeOf(result).Name() == "string" {
-		config := (*comp.App).GetConfig()
+		config := (comp.App).GetConfig()
 		(*attributes)["appid"] = config.GetString("app_id", "")
 		(*attributes)["mch_id"] = config.GetString("mch_id", "")
 		(*attributes)["nonce_str"] = object.UniqueID("")

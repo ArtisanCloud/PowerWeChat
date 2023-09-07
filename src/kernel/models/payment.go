@@ -21,19 +21,29 @@ const WX_TRADE_STATE_PAYERROR = "PAYERROR"     // 支付失败(其他原因，�
 
 // Transaction
 type Transaction struct {
-	Amount          *TransactionAmount `json:"amount,omitempty"`
-	AppID           string             `json:"appid,omitempty"`
-	Attach          string             `json:"attach,omitempty"`
-	BankType        string             `json:"bank_type,omitempty"`
-	MchID           string             `json:"mchid,omitempty"`
-	OutTradeNo      string             `json:"out_trade_no,omitempty"`
-	Payer           *TransactionPayer  `json:"payer,omitempty"`
-	PromotionDetail []PromotionDetail  `json:"promotion_detail,omitempty"`
-	SuccessTime     string             `json:"success_time,omitempty"`
-	TradeState      string             `json:"trade_state,omitempty"`
-	TradeStateDesc  string             `json:"trade_state_desc,omitempty"`
-	TradeType       string             `json:"trade_type,omitempty"`
-	TransactionID   string             `json:"transaction_id,omitempty"`
+	Amount          *TransactionAmount    `json:"amount,omitempty"`
+	AppID           string                `json:"appid,omitempty"`
+	SpAppid         string                `json:"sp_appid,omitempty"`
+	SpMchid         string                `json:"sp_mchid,omitempty"`
+	SubAppid        string                `json:"sub_appid,omitempty"`
+	SubMchid        string                `json:"sub_mchid,omitempty"`
+	Attach          string                `json:"attach,omitempty"`
+	BankType        string                `json:"bank_type,omitempty"`
+	MchID           string                `json:"mchid,omitempty"`
+	OutTradeNo      string                `json:"out_trade_no,omitempty"`
+	Payer           *TransactionPayer     `json:"payer,omitempty"`
+	PromotionDetail []PromotionDetail     `json:"promotion_detail,omitempty"`
+	SuccessTime     string                `json:"success_time,omitempty"`
+	TradeState      string                `json:"trade_state,omitempty"`
+	TradeStateDesc  string                `json:"trade_state_desc,omitempty"`
+	TradeType       string                `json:"trade_type,omitempty"`
+	TransactionID   string                `json:"transaction_id,omitempty"`
+	SceneInfo       *TransactionSceneInfo `json:"scene_info,omitempty"`
+}
+
+// TransactionSceneInfo
+type TransactionSceneInfo struct {
+	DeviceId string `json:"device_id,omitempty"`
 }
 
 // TransactionAmount
@@ -46,7 +56,9 @@ type TransactionAmount struct {
 
 // TransactionPayer
 type TransactionPayer struct {
-	OpenID string `json:"openid,omitempty"`
+	OpenID    string `json:"openid,omitempty"`
+	SubOpenid string `json:"sub_openid,omitempty"`
+	SpOpenid  string `json:"sp_openid,omitempty"`
 }
 
 // PromotionDetail
@@ -91,6 +103,10 @@ type PromotionGoodsDetail struct {
 // --- Refund models ----
 // Refund
 type Refund struct {
+	//服务商户号
+	SpMchid string `json:"sp_mchid,omitempty"`
+	//子商户号
+	SubMchid string `json:"sub_mchid,omitempty"`
 	// 原支付交易对应的商户订单号
 	MchID string `json:"mchid"`
 	// 微信支付交易订单号
