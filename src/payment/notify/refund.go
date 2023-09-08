@@ -15,7 +15,7 @@ type Refund struct {
 func NewRefundNotify(app kernel.ApplicationPaymentInterface, request *http.Request) *Refund {
 
 	paid := &Refund{
-		NewHandler(&app, request),
+		NewHandler(app, request),
 	}
 
 	return paid

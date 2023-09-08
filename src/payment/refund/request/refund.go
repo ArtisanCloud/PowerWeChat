@@ -1,6 +1,7 @@
 package request
 
 type RequestRefund struct {
+	SubMchid      string              `json:"sub_mchid,omitempty"`
 	TransactionID string              `json:"transaction_id,omitempty"`
 	OutTradeNo    string              `json:"out_trade_no,omitempty"` // OutTradeNo 和 TransactionID 二选一
 	OutRefundNo   string              `json:"out_refund_no,omitempty"`

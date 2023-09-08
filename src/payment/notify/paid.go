@@ -15,7 +15,7 @@ type Paid struct {
 func NewPaidNotify(app kernel.ApplicationPaymentInterface, request *http.Request) *Paid {
 
 	paid := &Paid{
-		NewHandler(&app, request),
+		NewHandler(app, request),
 	}
 
 	return paid

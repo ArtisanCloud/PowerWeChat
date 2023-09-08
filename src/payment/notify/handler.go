@@ -15,7 +15,7 @@ import (
 )
 
 type Handler struct {
-	App        *kernel.ApplicationPaymentInterface
+	App        kernel.ApplicationPaymentInterface
 	Message    *request.RequestNotify
 	fail       string
 	Attributes *object.StringMap
@@ -30,7 +30,7 @@ type Handler struct {
 const SUCCESS = "SUCCESS"
 const FAIL = "FAIL"
 
-func NewHandler(app *kernel.ApplicationPaymentInterface, r *http.Request) *Handler {
+func NewHandler(app kernel.ApplicationPaymentInterface, r *http.Request) *Handler {
 
 	//-------------- external request --------------
 	request := &http.Request{}
@@ -72,7 +72,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	}
 
 	attributes := object.MergeStringMap(base, handler.Attributes)
-	baseClient := (*handler.App).GetComponent("Base").(*base2.Client)
+	baseClient := (handler.App).GetComponent("Base").(*base2.Client)
 	if handler.Sign {
 		(*attributes)["sign"], err = baseClient.BaseClient.Signer.GenerateSign("")
 		if err != nil {
@@ -120,7 +120,7 @@ func (handler *Handler) DecryptMessage() (string, error) {
 		return "", errors.New("uniformMessage doesn't have the key value")
 	}
 
-	config := (*handler.App).GetConfig()
+	config := (handler.App).GetConfig()
 	wxKey := config.GetString("mch_api_v3_key", "")
 	nonce := message.Resource.Nonce
 	associatedData := message.Resource.AssociatedData

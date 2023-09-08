@@ -20,6 +20,10 @@ type Payer struct {
 	SubOpenid string `json:"sub_openid"`
 }
 
+type SceneInfo struct {
+	DeviceId string `json:"device_id,omitempty"`
+}
+
 type ResponseOrder struct {
 	response.ResponsePayment
 
@@ -38,4 +42,5 @@ type ResponseOrder struct {
 	TradeStateDesc  string            `json:"trade_state_desc"`
 	TradeType       string            `json:"trade_type"`
 	TransactionId   string            `json:"transaction_id"`
+	SceneInfo       *SceneInfo        `json:"scene_info,omitempty"`
 }
