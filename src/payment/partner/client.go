@@ -153,9 +153,8 @@ func (comp *Client) QueryByOutRefundNO(ctx context.Context, OutRefundNO string) 
 	result := &response.ResponseQueryByOutRefundNO{}
 	config := (*comp.App).GetConfig()
 
-	endpoint := fmt.Sprintf("v3/refund/domestic/refunds/%s", OutRefundNO)
+	endpoint := fmt.Sprintf("/v3/refund/domestic/refunds/%s", OutRefundNO)
 	_, err := comp.Request(ctx, endpoint, &object.StringMap{
-		"sp_mchid":  config.GetString("mch_id", ""),
 		"sub_mchid": config.GetString("sub_mch_id", ""),
 	}, http.MethodGet, &object.HashMap{}, false, nil, result)
 
