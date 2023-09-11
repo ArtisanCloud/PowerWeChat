@@ -148,6 +148,13 @@ func (comp *Client) QueryByOutTradeNumber(ctx context.Context, transactionID str
 	})
 }
 
+func (comp *Client) QueryByOutRefundNO(ctx context.Context, OutRefundNO string) (*response.ResponseOrder, error) {
+	endpoint := fmt.Sprintf("v3/refund/domestic/refunds/%s", OutRefundNO)
+	return comp.Query(ctx, &object.HashMap{
+		"endpoint": endpoint,
+	})
+}
+
 func (comp *Client) Query(ctx context.Context, params *object.HashMap) (*response.ResponseOrder, error) {
 
 	result := &response.ResponseOrder{}
