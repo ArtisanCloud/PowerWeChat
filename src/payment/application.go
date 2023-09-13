@@ -19,6 +19,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/order"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/partner"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/payScore"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/profitSharing"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/redpack"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/refund"
@@ -53,6 +54,8 @@ type Payment struct {
 
 	Apply4Sub *apply4Sub.Client
 	Merchant  *merchant.Client
+
+	PayScore *payScore.Client
 
 	Tax *tax.Client
 
@@ -213,6 +216,12 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 		return nil, err
 	}
 
+	//-------------- 	Pay Score --------------
+	app.PayScore, err = payScore.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- 	Tax --------------
 	app.Tax, err = tax.RegisterProvider(app)
 	if err != nil {
@@ -274,6 +283,8 @@ func (app *Payment) GetComponent(name string) interface{} {
 		return app.Tax
 	case "Merchant":
 		return app.Merchant
+	case "PayScore":
+		return app.PayScore
 
 	case "Security":
 		return app.Security
