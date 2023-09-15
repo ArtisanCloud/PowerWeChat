@@ -1,5 +1,7 @@
 package response
 
+import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+
 import "time"
 
 type Form struct {
@@ -39,6 +41,7 @@ type PromptDetail struct {
 
 // https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_10.shtml
 type ResponseQueryByOutRefundNO struct {
+	response.ResponsePayment
 	RefundId            string         `json:"refund_id"`
 	OutRefundNo         string         `json:"out_refund_no"`
 	TransactionId       string         `json:"transaction_id"`
