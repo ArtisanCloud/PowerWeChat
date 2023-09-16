@@ -68,7 +68,7 @@ func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, d
 	result := &response.TransferBatch{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s/details/detail-id/%s", comp.Version, batchID, detailID)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
@@ -97,7 +97,7 @@ func (comp *BatchClient) QueryOutBatchNoDetail(ctx context.Context, outBatchNO s
 	result := &response.ResponseOutBatchNODetail{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/out-batch-no/%s/details/out-detail-no/%s", comp.Version, outBatchNO, outDetailNO)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
@@ -123,7 +123,7 @@ func (comp *BatchClient) QueryBillReceipt(ctx context.Context, outBatchNO string
 	result := &response.ResponseTrasferBillReceipt{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/bill-receipt/%s", comp.Version, outBatchNO)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
