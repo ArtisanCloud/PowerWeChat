@@ -2,6 +2,7 @@ package vod
 
 import (
 	"context"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram/industry/miniDrama/request"
@@ -26,6 +27,32 @@ func (comp *Client) VideoMediaUploadByURL(ctx context.Context, in *request.Video
 	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/pullupload", params, nil, nil, &result)
 
 	return
+}
+
+func (comp *Client) VideoMediaUploadByFile(ctx context.Context, in *request.VideoMediaUploadByURLRequest) (result *response.VideoMediaUploadByURLResponse, err error) {
+
+	coverPath := "/Users/michaelhu/Desktop/641.png"
+	videoPath := "/Users/michaelhu/Desktop/123.mp4"
+	var files *object.HashMap
+	if videoPath != "" {
+		files = &object.HashMap{
+			"media_data": videoPath,
+			"cover_data": coverPath,
+		}
+	}
+
+	headerKV := &object.StringMap{
+		"cover_type": "JPEG",
+		"media_name": "test",
+	}
+	ctx = context.WithValue(ctx, "headerKV", headerKV)
+
+	if err != nil {
+		return nil, err
+	}
+	_, err = comp.BaseClient.HttpUpload(ctx, "wxa/sec/vod/singlefileupload", files, nil, nil, nil, &result)
+
+	return result, err
 }
 
 // 查询任务 通过上传接口获得的taskid 进行查询

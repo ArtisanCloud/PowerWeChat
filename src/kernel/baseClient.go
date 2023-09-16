@@ -161,12 +161,21 @@ func (client *BaseClient) HttpUpload(ctx context.Context, url string, files *obj
 		}
 	}
 
+	headerValue := ctx.Value("headerKV")
+	headerKV := &object.StringMap{}
+	if headerValue != nil {
+		headerKV = headerValue.(*object.StringMap)
+	}
+
 	df.Multipart(func(multipart contract.MultipartDfInterface) {
 		// 遍历文件目录
 		if files != nil {
 			for name, path := range *files {
 				multipart.FileByPath(name, path.(string))
 			}
+		}
+		for k, v := range *headerKV {
+			multipart.FieldValue(k, v)
 		}
 
 		for k, v := range mems {
