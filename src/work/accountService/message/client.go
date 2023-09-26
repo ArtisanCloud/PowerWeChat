@@ -24,14 +24,16 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 读取消息
 // https://developer.work.weixin.qq.com/document/path/94670
-func (comp *Client) SyncMsg(ctx context.Context, cursor string, token string, limit int) (*response.ResponseMessageSyncMsg, error) {
+func (comp *Client) SyncMsg(ctx context.Context, cursor string, token string, limit int, voiceFormat int, openKFId string) (*response.ResponseMessageSyncMsg, error) {
 
 	result := &response.ResponseMessageSyncMsg{}
 
 	options := &object.HashMap{
-		"cursor": cursor,
-		"token":  token,
-		"limit":  limit,
+		"cursor":       cursor,
+		"token":        token,
+		"limit":        limit,
+		"voice_format": voiceFormat,
+		"open_kfid":    openKFId,
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/sync_msg", options, nil, nil, result)
