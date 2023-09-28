@@ -24,6 +24,7 @@ const (
 	CALLBACK_EVENT_SHARE_AGENT_CHANGE       = "share_agent_change"
 	CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT = "template_card_menu_event"
 	CALLBACK_EVENT_SYS_APPROVAL_CHANGE      = "sys_approval_change"
+	CALLBACK_EVENT_KF_MSG_OR_EVENT          = "kf_msg_or_event"
 )
 
 type EventSubscribe struct {

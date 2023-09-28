@@ -34,7 +34,7 @@ func (comp *Client) Get(ctx context.Context) (*response.ResponseMenuGet, error) 
 }
 
 // 查询接口
-// https://developers.weixin.qq.com/doc/offiaccount/Custom_Menus/Querying_Custom_Menus.html
+// https://developers.weixin/crm.qq.com/doc/offiaccount/Custom_Menus/Querying_Custom_Menus.html
 func (comp *Client) CurrentSelfMenu(ctx context.Context) (*response.ResponseCurrentSelfMenu, error) {
 
 	result := &response.ResponseCurrentSelfMenu{}

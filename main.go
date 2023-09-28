@@ -30,7 +30,8 @@ func GetOfficialConfig() *officialAccount.UserConfig {
 		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
 			Addr:     "127.0.0.1:6379",
 			Password: "",
-			DB:       1,
+			//Username: "username",
+			DB: 1,
 		}),
 		HttpDebug: true,
 		//Debug: true,
