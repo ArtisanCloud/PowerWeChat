@@ -14,7 +14,7 @@ type Button struct {
 	Type       string      `json:"type,omitempty"`
 	Name       string      `json:"name"`
 	Key        string      `json:"key,omitempty"`
-	MediaId    string      `json:"media_id"`
+	MediaId    string      `json:"media_id,omitempty"`
 	URL        string      `json:"url,omitempty"`
 	AppID      string      `json:"appid,omitempty"`
 	PagePath   string      `json:"pagepath,omitempty"`

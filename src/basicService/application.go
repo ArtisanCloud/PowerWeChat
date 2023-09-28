@@ -151,10 +151,11 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"response_type": userConfig.ResponseType,
 		"log": &object.HashMap{
-			"level": userConfig.Log.Level,
-			"file":  userConfig.Log.File,
-			"error": userConfig.Log.Error,
-			"env":   userConfig.Log.ENV,
+			"driver": userConfig.Log.Driver,
+			"level":  userConfig.Log.Level,
+			"file":   userConfig.Log.File,
+			"error":  userConfig.Log.Error,
+			"env":    userConfig.Log.ENV,
 		},
 		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,
