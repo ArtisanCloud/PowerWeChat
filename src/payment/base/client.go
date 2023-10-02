@@ -20,7 +20,7 @@ func (comp *Client) Pay(ctx context.Context, params *object.StringMap) *response
 	result := &response2.ResponseWork{}
 
 	endpoint := comp.BaseClient.Wrap("/v3/pay/micropay")
-	comp.BaseClient.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
+	comp.BaseClient.Request(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, false, nil, result)
 
 	return result
 }
@@ -37,7 +37,7 @@ func (comp *Client) AuthCodeToOpenID(ctx context.Context, authCode string) *resp
 	comp.BaseClient.Request(ctx, "tools/authcodetoopenid", &object.StringMap{
 		"appid":     appID,
 		"auth_code": authCode,
-	}, http.MethodPost, nil, false, nil, result)
+	}, http.MethodPost, &object.HashMap{}, false, nil, result)
 
 	return result
 }

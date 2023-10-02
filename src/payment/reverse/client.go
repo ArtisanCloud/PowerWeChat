@@ -36,7 +36,7 @@ func (comp *Client) Reverse(ctx context.Context, number string, reverseType stri
 	}
 
 	endpoint := comp.Wrap("secapi/pay/reverse")
-	_, err := comp.SafeRequest(ctx, endpoint, params, http.MethodPost, nil, nil, result)
+	_, err := comp.SafeRequest(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, nil, result)
 
 	return result, err
 }

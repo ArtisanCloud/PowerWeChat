@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"errors"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	kernel2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"net/http"
@@ -41,7 +42,7 @@ func (comp *Client) GetKey() (string, error) {
 		return strCacheKey, nil
 	}
 
-	response, err := comp.RequestArray(nil, "sandboxnew/pay/getsignkey", http.MethodPost, nil, nil, nil)
+	response, err := comp.RequestArray(nil, "sandboxnew/pay/getsignkey", http.MethodPost, &object.HashMap{}, nil, nil)
 	if err != nil {
 		return "", err
 	}

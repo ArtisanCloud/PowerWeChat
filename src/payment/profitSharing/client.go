@@ -55,7 +55,7 @@ func (comp *Client) Query(ctx context.Context, transactionID string, outOrderNO 
 	}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/orders/%s", outOrderNO))
-	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }
@@ -97,7 +97,7 @@ func (comp *Client) QueryReturn(ctx context.Context, outOrderNO string, outRetur
 	}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/return-orders/%s", outReturnNO))
-	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }
@@ -129,7 +129,7 @@ func (comp *Client) QueryTransactions(ctx context.Context, transactionID string)
 	result := &response.ResponseProfitSharingTransaction{}
 
 	endpoint := comp.Wrap(fmt.Sprintf("/v3/profitsharing/transactions/%s/amounts", transactionID))
-	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodPost, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }
@@ -191,7 +191,7 @@ func (comp *Client) GetBills(ctx context.Context, subMchID string, billDate stri
 	}
 
 	endpoint := comp.Wrap("/v3/profitsharing/bills")
-	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, params, http.MethodPost, &object.HashMap{}, false, nil, result)
 
 	return result, err
 }
