@@ -63,9 +63,9 @@ func (comp *BatchClient) QueryBatch(ctx context.Context, batchID string, needQue
 
 // 微信明细单号查询明细单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_3.shtml
-func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, detailID string) (*response.TransferBatch, error) {
+func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, detailID string) (*response.TransferBatchDetail, error) {
 
-	result := &response.TransferBatch{}
+	result := &response.TransferBatchDetail{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s/details/detail-id/%s", comp.Version, batchID, detailID)
 	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, &object.HashMap{}, false, nil, result)
