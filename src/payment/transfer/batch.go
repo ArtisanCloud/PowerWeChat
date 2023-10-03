@@ -57,18 +57,18 @@ func (comp *BatchClient) QueryBatch(ctx context.Context, batchID string, needQue
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s", comp.Version, batchID)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodGet, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
 // 微信明细单号查询明细单API
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_3.shtml
-func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, detailID string) (*response.TransferBatch, error) {
+func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, detailID string) (*response.ResponseQueryBatchDetail, error) {
 
-	result := &response.TransferBatch{}
+	result := &response.ResponseQueryBatchDetail{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s/details/detail-id/%s", comp.Version, batchID, detailID)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, &object.HashMap{}, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodGet, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
@@ -86,7 +86,7 @@ func (comp *BatchClient) QueryOutBatchNO(ctx context.Context, outBatchNO string,
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/out_batch_no/%s", comp.Version, outBatchNO)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
@@ -157,7 +157,7 @@ func (comp *BatchClient) QueryElectronicReceipts(ctx context.Context, acceptType
 	}
 
 	endpoint := fmt.Sprintf("/%s/transfer-detail/electronic-receipts", comp.Version)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, nil, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), query, http.MethodPost, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
