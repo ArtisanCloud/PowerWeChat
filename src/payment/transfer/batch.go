@@ -68,7 +68,7 @@ func (comp *BatchClient) QueryBatchDetail(ctx context.Context, batchID string, d
 	result := &response.ResponseQueryBatchDetail{}
 
 	endpoint := fmt.Sprintf("/%s/transfer/batches/batch-id/%s/details/detail-id/%s", comp.Version, batchID, detailID)
-	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, &object.HashMap{}, false, nil, result)
+	_, err := comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodGet, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
