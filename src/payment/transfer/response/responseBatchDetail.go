@@ -2,7 +2,7 @@ package response
 
 import "time"
 
-type TransferBatchDetail struct {
+type ResponseQueryBatchDetail struct {
 	MchId          string    `json:"mchid"`
 	OutBatchNo     string    `json:"out_batch_no"`
 	BatchId        string    `json:"batch_id"`
