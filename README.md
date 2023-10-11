@@ -152,6 +152,11 @@ printf(rs.OpenID)
 [![Star History Chart](https://api.star-history.com/svg?repos=ArtisanCloud/PowerWeChat&type=Date)](https://star-history.com/#ArtisanCloud/PowerWeChat&Date)
 
 
+<!-- 相关产品推荐 -->
+## 相关产品推荐
+
+[PowerX 基于PowerWechat的客域系统](https://github.com/ArtisanCloud/PowerX)  
+[WeyUI 一套微信生态前端组件库，适配PowerX非常友好](https://github.com/yaoyaochil/WeyUI)
 
 <!-- CONTRIBUTORS -->
 ## Contributors
