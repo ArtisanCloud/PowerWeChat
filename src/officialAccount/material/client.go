@@ -11,12 +11,117 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"encoding/json"
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"mime/multipart"
+	"net/http"
 )
 
 type Client struct {
 	*kernel.BaseClient
 
 	AllowTypes []string
+}
+
+// 二进制上传素材入参
+type UploadMediaRequest struct {
+	Type         string `json:"type"`
+	Media        []byte `json:"media"`
+	FileName     string `json:"fileName"`
+	Title        string `json:"title"`
+	Introduction string `json:"introduction"`
+}
+
+// 二进制上传素材回参
+type UploadMediaResponse struct {
+	Errcode int         `json:"errcode"`
+	MediaId interface{} `json:"media_id"`
+	Url     interface{} `json:"url"`
+}
+
+
+// UploadNewsMedia 二进制上传永久图文素材
+func (comp *Client) UploadNewsMedia(requests UploadMediaRequest) (data UploadMediaResponse, err error) {
+	token, err := comp.Token.GetToken(true)
+	if err != nil {
+		return nil
+	}
+	url := "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=" + token
+	client := &http.Client{}
+	method := "POST"
+	payload := &bytes.Buffer{}
+	writer := multipart.NewWriter(payload)
+	file, err := writer.CreateFormFile("media", requests.FileName)
+	file.Write(requests.Media)
+	err = writer.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	_ = json.Unmarshal(body, &data)
+	return
+}
+
+// UploadOtherMedia 二进制上传其它类型永久素材
+func (comp *Client) UploadOtherMedia(requests UploadMediaRequest) (data UploadMediaResponse, err error) {
+	token, err := comp.Token.GetToken(true)
+	if err != nil {
+		return nil
+	}
+	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=%s&type=%s",token, requests.Type)
+	client := &http.Client{}
+	method := "POST"
+	payload := &bytes.Buffer{}
+	writer := multipart.NewWriter(payload)
+	file, err := writer.CreateFormFile("media", requests.FileName)
+	file.Write(requests.Media)
+	err = writer.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if requests.Type == "video" {
+		writer.WriteField("description", fmt.Sprintf("{\"title\":\"%s\",\"introduction\":\"%s\"}", requests.Title, requests.Introduction))
+	}
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	_ = json.Unmarshal(body, &data)
+	return
 }
 
 func NewClient(app kernel.ApplicationInterface) (*Client, error) {
