@@ -38,6 +38,14 @@ func (comp *Client) UploadImage(ctx context.Context, path string) (*response.Res
 	return result, err
 }
 
+// 上传永久图片素材
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+func (comp *Client) UploadImageByData(ctx context.Context, data []byte) (*response.ResponseMaterialAddMaterial, error) {
+	result := &response.ResponseMaterialAddMaterial{}
+	_, err := comp.UploadByData(ctx, "image", "image", data, &object.StringMap{}, result)
+	return result, err
+}
+
 // 上传永久语音素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
 func (comp *Client) UploadVoice(ctx context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
@@ -46,11 +54,27 @@ func (comp *Client) UploadVoice(ctx context.Context, path string) (*response.Res
 	return result, err
 }
 
+// 上传永久语音素材
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+func (comp *Client) UploadVoiceByData(ctx context.Context, data []byte) (*response.ResponseMaterialAddMaterial, error) {
+	result := &response.ResponseMaterialAddMaterial{}
+	_, err := comp.UploadByData(ctx, "voice", "voice", data, &object.StringMap{}, result)
+	return result, err
+}
+
 // 上传永久缩略图素材
 // https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
 func (comp *Client) UploadThumb(ctx context.Context, path string) (*response.ResponseMaterialAddMaterial, error) {
 	result := &response.ResponseMaterialAddMaterial{}
 	_, err := comp.Upload(ctx, "thumb", path, &object.StringMap{}, result)
+	return result, err
+}
+
+// 上传永久缩略图素材
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+func (comp *Client) UploadThumbByData(ctx context.Context, data []byte) (*response.ResponseMaterialAddMaterial, error) {
+	result := &response.ResponseMaterialAddMaterial{}
+	_, err := comp.UploadByData(ctx, "thumb", "thumb", data, &object.StringMap{}, result)
 	return result, err
 }
 
@@ -76,6 +100,28 @@ func (comp *Client) UploadVideo(ctx context.Context, path string, title string, 
 	return result, err
 }
 
+// 上传永久视频素材
+// https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html
+func (comp *Client) UploadVideoByData(ctx context.Context, data []byte, title string, description string) (*response.ResponseMaterialAddMaterial, error) {
+
+	result := &response.ResponseMaterialAddMaterial{}
+
+	jsonDescription, err := object.JsonEncode(&object.HashMap{
+		"title":        title,
+		"introduction": description,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	params := &object.StringMap{
+		"Description": jsonDescription,
+	}
+
+	_, err = comp.UploadByData(ctx, "video", "video", data, params, result)
+	return result, err
+}
+
 // 新增永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
 func (comp *Client) UploadArticle(ctx context.Context, articles request2.RequestAddArticles) (*response.ResponseMaterialAddNews, error) {
@@ -92,7 +138,7 @@ func (comp *Client) UploadArticle(ctx context.Context, articles request2.Request
 	return result, err
 }
 
-// 上传永久视频素材
+// 上传永久素材
 // https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html
 func (comp *Client) UpdateArticle(ctx context.Context, mediaID string, articles request2.RequestAddArticles, index int) (response.ResponseMaterialAddNews, error) {
 	result := response.ResponseMaterialAddNews{}
@@ -218,6 +264,20 @@ func (comp *Client) Upload(ctx context.Context, Type string, path string, query 
 	}
 
 	return comp.BaseClient.HttpUpload(ctx, comp.getApiByType(Type), files, form, query, nil, result)
+}
+
+func (comp *Client) UploadByData(ctx context.Context, Type string, name string, data []byte, query *object.StringMap, result interface{}) (interface{}, error) {
+
+	formData := &kernel.UploadForm{
+		Contents: []*kernel.UploadContent{
+			&kernel.UploadContent{
+				Name:  name,
+				Value: data,
+			},
+		},
+	}
+
+	return comp.BaseClient.HttpUpload(ctx, comp.getApiByType(Type), nil, formData, query, nil, result)
 }
 
 func (comp *Client) getApiByType(Type string) string {

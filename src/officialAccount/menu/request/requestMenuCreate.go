@@ -7,6 +7,7 @@ type SubButton struct {
 	AppID      string      `json:"appid,omitempty"`
 	PagePath   string      `json:"pagepath,omitempty"`
 	Key        string      `json:"key,omitempty"`
+	MediaId    string      `json:"media_id,omitempty"`
 	SubButtons []SubButton `json:"sub_button,omitempty"`
 }
 
