@@ -31,7 +31,8 @@ const (
 type EventSubscribe struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	AgentID string `xml:"AgentID"`
+	EventKey string `xml:"EventKey"`
+	AgentID  string `xml:"AgentID"`
 }
 
 type EventUnSubscribe struct {
