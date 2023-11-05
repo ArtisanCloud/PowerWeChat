@@ -232,9 +232,20 @@ printf(rs.OpenID)
 
 ## 联系我们
 
-如果有任何意见，欢迎在Github Issue上提供意见反馈。同时，也欢迎扫描下方二维码加入企业微信讨论群。
+如果有任何意见，欢迎在Github Issue上提供意见反馈。同时，也欢迎扫描下方二维码加入微信讨论群。
 
 
 
+
+## 产品主要维护者
+
+Matrix-X
+
+<img src="https://powerx.artisan-cloud.com/assets/contact-qr-matrix-x.f35142ca.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
+
+North
+
+<img src="https://powerx.artisan-cloud.com/assets/contact_qr_north.d68f0fd0.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
 ![image info](./resource/assets/contact_me_qr.png)
+
 
