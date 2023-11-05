@@ -239,11 +239,11 @@ printf(rs.OpenID)
 
 ## 产品主要维护者
 
-Matrix-X
+Michael Hu
 
 <img src="https://powerx.artisan-cloud.com/assets/contact-qr-matrix-x.f35142ca.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
 
-North
+North Wang
 
 <img src="https://powerx.artisan-cloud.com/assets/contact_qr_north.d68f0fd0.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
 ![image info](./resource/assets/contact_me_qr.png)
