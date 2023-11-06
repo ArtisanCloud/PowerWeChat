@@ -246,6 +246,5 @@ Michael Hu
 North Wang
 
 <img src="https://powerx.artisan-cloud.com/assets/contact_qr_north.d68f0fd0.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
-![image info](./resource/assets/contact_me_qr.png)
 
 
