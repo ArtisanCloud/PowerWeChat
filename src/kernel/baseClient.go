@@ -17,6 +17,7 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type BaseClient struct {
@@ -491,7 +492,7 @@ func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Resp
 
 	// 如何微信返回的是二进制数据流，那么就无须判断返回的err code是否正常
 	if client.QueryRaw {
-		if "application/json" != rs.Header.Get("Content-Type") {
+		if strings.Contains(rs.Header.Get("Content-Type"), "application/json") {
 			return rs, nil
 		}
 	}
