@@ -15,9 +15,9 @@ import (
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type BaseClient struct {
@@ -473,13 +473,11 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 					return response, errors.New(fmt.Sprintf("http response code:%d", response.StatusCode))
 				}
 
-				if !client.QueryRaw {
-					rs, err := client.CheckTokenNeedRefresh(request, response, retry)
-					if err != nil {
-						return rs, err
-					} else if rs != nil {
-						return rs, nil
-					}
+				rs, err := client.CheckTokenNeedRefresh(request, response, retry)
+				if err != nil {
+					return rs, err
+				} else if rs != nil {
+					return rs, nil
 				}
 
 				// 后置中间件
@@ -491,6 +489,13 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 }
 
 func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Response, retry int) (*http.Response, error) {
+
+	// 如何微信返回的是二进制数据流，那么就无须判断返回的err code是否正常
+	if client.QueryRaw {
+		if strings.Contains(rs.Header.Get("Content-Type"), "application/json") {
+			return rs, nil
+		}
+	}
 
 	mapResponse := &object.HashMap{}
 	err := client.HttpHelper.ParseResponseBodyToMap(rs, mapResponse)
@@ -525,14 +530,14 @@ func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Resp
 			req2 := req.Clone(req.Context())
 			if req.Body != nil {
 				// 缓存请求body
-				reqData, err := ioutil.ReadAll(req.Body)
+				reqData, err := io.ReadAll(req.Body)
 				if err != nil {
 					return nil, err
 				}
 
 				// 给两个request复制缓存下来的body数据
-				req.Body = ioutil.NopCloser(bytes.NewBuffer(reqData))
-				req2.Body = ioutil.NopCloser(bytes.NewReader(reqData))
+				req.Body = io.NopCloser(bytes.NewBuffer(reqData))
+				req2.Body = io.NopCloser(bytes.NewReader(reqData))
 			}
 
 			res2, err := client.HttpHelper.GetClient().DoRequest(req2)

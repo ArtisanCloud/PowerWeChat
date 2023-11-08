@@ -41,7 +41,7 @@ func (comp *Client) CreateQRCode(ctx context.Context, path string, width int64) 
 // 获取小程序码，适用于需要的码数量较少的业务场景
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
 func (comp *Client) Get(ctx context.Context, path string, width int64,
-	autoColor bool, lineColor *power.HashMap, isHyaline bool) (*http.Response, error) {
+	autoColor bool, lineColor *power.HashMap, isHyaline bool, envVersion string) (*http.Response, error) {
 
 	var header = &response4.ResponseHeaderMedia{}
 
@@ -51,11 +51,12 @@ func (comp *Client) Get(ctx context.Context, path string, width int64,
 
 	data := &object.HashMap{
 		"form_params": &object.HashMap{
-			"path":       path,
-			"width":      width,
-			"auto_color": autoColor,
-			"line_color": lineColor.ToHashMap(),
-			"is_hyaline": isHyaline,
+			"path":        path,
+			"width":       width,
+			"auto_color":  autoColor,
+			"line_color":  lineColor.ToHashMap(),
+			"is_hyaline":  isHyaline,
+			"env_version": envVersion,
 		},
 	}
 
@@ -68,9 +69,9 @@ func (comp *Client) Get(ctx context.Context, path string, width int64,
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.get.html
 func (comp *Client) SaveAs(ctx context.Context, savedPath string, perm fs.FileMode,
 	path string, width int64,
-	autoColor bool, lineColor *power.HashMap, isHyaline bool) error {
+	autoColor bool, lineColor *power.HashMap, isHyaline bool, envVersion string) error {
 
-	rs, err := comp.Get(ctx, path, width, autoColor, lineColor, isHyaline)
+	rs, err := comp.Get(ctx, path, width, autoColor, lineColor, isHyaline, envVersion)
 	if err != nil {
 		return err
 	}
