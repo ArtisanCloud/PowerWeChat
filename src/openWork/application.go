@@ -1,6 +1,12 @@
 package openWork
 
 import (
+	"context"
+	"crypto/md5"
+	"encoding/hex"
+	"fmt"
+	"time"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -11,6 +17,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/base"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/contact"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/device"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/license"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/media"
@@ -18,6 +25,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/provider"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server"
 	suit "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work"
+	workAuth "github.com/ArtisanCloud/PowerWeChat/v3/src/work/auth"
 	workMiniProgram "github.com/ArtisanCloud/PowerWeChat/v3/src/work/miniProgram"
 )
 
@@ -226,7 +235,7 @@ func (app *OpenWork) GetComponent(name string) interface{} {
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
-	baseURI := "https://api.weixin.qq.com/"
+	baseURI := "https://qyapi.weixin.qq.com/"
 	if userConfig.Http.BaseURI != "" {
 		baseURI = userConfig.Http.BaseURI
 	}
@@ -343,4 +352,76 @@ func (app *OpenWork) convertUserConfigToWorkMiniProgramConfig(config *object.Col
 	}
 
 	return userConfig, err
+}
+
+func (app *OpenWork) CorpClient(ctx context.Context, req *response.GetPermanentCodeResponse, customTokenGetter func(ctx context.Context, appID string, corpID string, refresh bool) object.HashMap) (*work.Work, error) {
+	baseConfig := app.GetConfig()
+	cfg := work.UserConfig{
+		CorpID:       req.AuthCorpInfo.CorpID,
+		Secret:       baseConfig.GetString("secret", ""),
+		Token:        baseConfig.GetString("token", ""),
+		AESKey:       baseConfig.GetString("aes_key", ""),
+		CallbackURL:  baseConfig.GetString("callback_url", ""),
+		ResponseType: baseConfig.GetString("response_type", ""),
+		HttpDebug:    baseConfig.GetBool("http_debug", false),
+		Debug:        baseConfig.GetBool("debug", false),
+		NotifyURL:    baseConfig.GetString("notify_url", ""),
+		Sandbox:      baseConfig.GetBool("sandbox", false),
+	}
+	if req.AuthInfo != nil && len(req.AuthInfo.Agent) > 0 {
+		cfg.AgentID = req.AuthInfo.Agent[0].AgentID
+	}
+	if logConfig := baseConfig.Get("log", nil); logConfig != nil {
+		logCfg := logConfig.(Log)
+		cfg.Log = work.Log{
+			Driver: logCfg.Driver,
+			Level:  logCfg.Level,
+			File:   logCfg.File,
+			Error:  logCfg.Error,
+			ENV:    logCfg.ENV,
+		}
+	}
+	if cache := baseConfig.Get("cache", nil); cache != nil {
+		cfg.Cache = cache.(kernel.CacheInterface)
+	}
+	if h := baseConfig.Get("http", nil); h != nil {
+		ht := h.(Http)
+		cfg.Http = work.Http{
+			Timeout: ht.Timeout,
+			BaseURI: ht.BaseURI,
+		}
+	}
+	clt, err := work.NewWork(&cfg)
+	if err != nil {
+		return nil, err
+	}
+	accessToken, err := workAuth.NewAccessToken(clt)
+	if err != nil {
+		return nil, err
+	}
+	if customTokenGetter != nil {
+		accessToken.GetCustomToken = func(key string, refresh bool) object.HashMap {
+			return customTokenGetter(ctx, baseConfig.GetString("app_id", ""), cfg.CorpID, refresh)
+		}
+	} else {
+		bs := md5.Sum([]byte(fmt.Sprintf(".corp.%s%s", baseConfig.GetString("app_id", ""), cfg.CorpID)))
+		accessToken.CacheTokenKey = accessToken.CachePrefix + hex.EncodeToString(bs[:])
+		cache := accessToken.GetCache()
+		accessToken.GetCustomToken = func(key string, refresh bool) object.HashMap {
+			if value, err := cache.Get(accessToken.CacheTokenKey, nil); err == nil && value != nil {
+				return (object.HashMap)(value.(map[string]interface{}))
+			}
+			return nil
+		}
+		if req.AccessToken != "" {
+			if req.ExpiresIn <= 0 {
+				req.ExpiresIn = 7200
+			}
+			err = cache.Set(accessToken.GetCacheKey(), accessToken.CacheTokenKey, time.Duration(req.ExpiresIn)*time.Second)
+		} else {
+		}
+
+	}
+	clt.AccessToken = accessToken
+	return clt, nil
 }

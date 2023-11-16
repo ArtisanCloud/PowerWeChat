@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"encoding/xml"
 	"errors"
+	"io"
+	"net/http"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/response"
 	openplatform "github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/server/callbacks"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/server/handlers"
-	"io"
-	"io/ioutil"
-	"net/http"
 )
 
 const EVENT_AUTHORIZED int = 12000              // "authorized"
@@ -100,7 +100,7 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *openplat
 
 	httpRS = &http.Response{
 		StatusCode: http.StatusOK,
-		Body:       ioutil.NopCloser(bytes.NewBuffer(buffResult)),
+		Body:       io.NopCloser(bytes.NewBuffer(buffResult)),
 	}
 
 	return httpRS, err
@@ -132,7 +132,7 @@ func (guard *Guard) OverrideResolve() {
 		}
 		httpRS = &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       ioutil.NopCloser(bytes.NewBuffer([]byte(kernel.SUCCESS_EMPTY_RESPONSE))),
+			Body:       io.NopCloser(bytes.NewBuffer([]byte(kernel.SUCCESS_EMPTY_RESPONSE))),
 		}
 
 		return httpRS, nil
@@ -155,7 +155,7 @@ func (guard *Guard) GetMessage(request *http.Request) (verifyTicket *response2.R
 		if err != nil || b == nil {
 			return nil, err
 		}
-		request.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+		request.Body = io.NopCloser(bytes.NewBuffer(b))
 	}
 	verifyTicket = &response2.ResponseVerifyTicket{}
 	err = guard.parseMessage(string(b), verifyTicket)
@@ -169,22 +169,21 @@ func (guard *Guard) GetMessage(request *http.Request) (verifyTicket *response2.R
 
 func (guard *Guard) parseMessage(content string, callback interface{}) (err error) {
 
-	if len(content) > 0 {
-		if content[0:1] == "<" {
-			err = xml.Unmarshal([]byte(content), callback)
-			if err != nil {
-				return err
-			}
-		} else {
-			// Handle JSON format.
-			err = object.JsonDecode([]byte(content), callback)
-			if err != nil {
-				return err
-			}
+	if len(content) == 0 {
+		return errors.New("empty content")
+	}
+	if content[0:1] == "<" {
+		err = xml.Unmarshal([]byte(content), callback)
+		if err != nil {
+			return err
 		}
 	} else {
-		errors.New("empty content")
+		// Handle JSON format.
+		err = object.JsonDecode([]byte(content), callback)
+		if err != nil {
+			return err
+		}
 	}
 
-	return err
+	return nil
 }

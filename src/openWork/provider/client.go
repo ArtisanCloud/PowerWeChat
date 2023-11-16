@@ -19,15 +19,3 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 		baseClient,
 	}, nil
 }
-
-//// 获取代码草稿列表
-//// https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/gettemplatedraftlist.html
-//func (comp *Client) GetPreAuthorizationUrl() (*response.ResponseGetDrafts, error) {
-//
-//	result := &response.ResponseGetDrafts{}
-//
-//	_, err := comp.BaseClient.HttpGet(ctx,"wxa/gettemplatedraftlist", nil, nil, result)
-//
-//	return result, err
-//
-//}
