@@ -156,7 +156,7 @@ printf(rs.OpenID)
 ## 相关产品推荐
 
 [PowerX 基于PowerWechat的客域系统](https://github.com/ArtisanCloud/PowerX)  
-[WeyUI 一套微信生态前端组件库，适配PowerX非常友好](https://github.com/yaoyaochil/WeyUI)
+[WeyUI 一套微信生态前端组件库，适配PowerX非常友好](https://github.com/yaoyaochil/WeyUI)  
 [BaiduTrans 百度翻译Go-SDK，AIGC后台提词翻译神器](https://github.com/ArtisanCloud/BaiduTrans)
 
 <!-- CONTRIBUTORS -->
