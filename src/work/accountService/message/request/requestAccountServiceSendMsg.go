@@ -1,18 +1,18 @@
 package request
 
 type RequestAccountServiceSendMsg struct {
-	ToUser      string                              `json:"touser"`
-	OpenKfid    string                              `json:"open_kfid"`
-	MsgID       string                              `json:"msgid"`
-	MsgType     string                              `json:"msgtype"`
-	Text        RequestAccountServiceMsgText        `json:"text,omitempty"`
-	Image       RequestAccountServiceMsgImage       `json:"image,omitempty"`
-	Voice       RequestAccountServiceMsgVoice       `json:"voice,omitempty"`
-	File        RequestAccountServiceMsgFile        `json:"file,omitempty"`
-	Link        RequestAccountServiceMsgLink        `json:"link,omitempty"`
-	MiniProgram RequestAccountServiceMsgMiniProgram `json:"miniprogram,omitempty"`
-	Menu        RequestAccountServiceMsgMenu        `json:"msgmenu,omitempty"`
-	Location    RequestAccountServiceMsgLocation    `json:"location,omitempty"`
+	ToUser      string                               `json:"touser"`
+	OpenKfid    string                               `json:"open_kfid"`
+	MsgID       string                               `json:"msgid"`
+	MsgType     string                               `json:"msgtype"`
+	Text        *RequestAccountServiceMsgText        `json:"text,omitempty"`
+	Image       *RequestAccountServiceMsgImage       `json:"image,omitempty"`
+	Voice       *RequestAccountServiceMsgVoice       `json:"voice,omitempty"`
+	File        *RequestAccountServiceMsgFile        `json:"file,omitempty"`
+	Link        *RequestAccountServiceMsgLink        `json:"link,omitempty"`
+	MiniProgram *RequestAccountServiceMsgMiniProgram `json:"miniprogram,omitempty"`
+	Menu        *RequestAccountServiceMsgMenu        `json:"msgmenu,omitempty"`
+	Location    *RequestAccountServiceMsgLocation    `json:"location,omitempty"`
 }
 
 type RequestAccountServiceMsgText struct {
