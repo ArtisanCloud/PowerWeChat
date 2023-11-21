@@ -20,8 +20,6 @@ PowerWeChat致力于减少微信开发中的各种上手难度，使用者只需
 
 ## 快速上手
 
-<iframe src="//player.bilibili.com/player.html?aid=493543766&bvid=BV1tN411u7pV&cid=1334895408&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
 ```bash
 go get -u github.com/ArtisanCloud/PowerWeChat/v3
 ```
