@@ -1,12 +1,13 @@
-package auth
+package provider
 
 // #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 
 import (
+	"net/http"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/security"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
-	"net/http"
 )
 
 type AccessToken struct {
@@ -41,7 +42,6 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 	accessToken.GetCredentials = func() *object.StringMap {
 		config := (*accessToken.App).GetContainer().GetConfig()
 
-		//服务商的corpid
 		corpID := (*config)["corp_id"].(string)
 		secret := (*config)["secret"].(string)
 

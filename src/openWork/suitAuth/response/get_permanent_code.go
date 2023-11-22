@@ -35,7 +35,7 @@ type AuthCorpInfo struct {
 	// SubjectType 企业类型，1. 企业; 2. 政府以及事业单位; 3. 其他组织, 4.团队号
 	SubjectType int `json:"subject_type,omitempty"`
 	// VerfiedEndTime 认证到期时间
-	VerfiedEndTime int64 `json:"verfied_end_time,omitempty"`
+	VerifiedEndTime int64 `json:"verified_end_time,omitempty"`
 	// CorpWxqrcode 授权企业在微工作台（原企业号）的二维码，可用于关注微工作台
 	CorpWxqrcode string `json:"corp_wxqrcode,omitempty"`
 	// CorpScale 企业规模。当企业未设置该属性时，值为空

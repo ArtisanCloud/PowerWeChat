@@ -2,6 +2,8 @@ package externalContact
 
 import (
 	"context"
+	"strconv"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerSocialite/v3/src/response/weCom"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
@@ -9,7 +11,6 @@ import (
 	response3 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/groupChat/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/response"
-	"strconv"
 )
 
 type Client struct {
@@ -148,4 +149,36 @@ func (comp *Client) GetResignedTransferResult(ctx context.Context, handoverUserI
 	}, nil, nil, result)
 
 	return result, err
+}
+
+// 企业主体unionid转换为第三方external_userid
+// https://developer.work.weixin.qq.com/document/path/93274
+func (comp *Client) UnionIDToExternalUserID(ctx context.Context, unionID string, openID string) (string, error) {
+
+	var result struct {
+		response2.ResponseWork
+		// ExternalUserID 该企业的外部联系人ID
+		ExternalUserID string `json:"external_userid,omitempty"`
+	}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/resigned/transfer_result?", &object.StringMap{
+		"unionid": unionID,
+		"openid":  openID,
+	}, nil, nil, result)
+
+	return result.ExternalUserID, err
+}
+
+// 转换客户external_userid
+// https://developer.work.weixin.qq.com/document/path/97063#%E8%BD%AC%E6%8D%A2%E5%AE%A2%E6%88%B7external-userid
+func (comp *Client) GetNewExternalUserID(ctx context.Context, externalUserIDList []string) ([]response.NewExternalUserID, error) {
+
+	result := new(response.ResponseGetNewExternalUserID)
+	req := object.HashMap{
+		"external_userid_list": externalUserIDList,
+	}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_new_external_userid", &req, nil, nil, result)
+
+	return result.Items, err
 }

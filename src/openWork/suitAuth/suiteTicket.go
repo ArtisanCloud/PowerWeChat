@@ -1,10 +1,11 @@
-package auth
+package suit
 
 import (
 	"errors"
+	"time"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
-	"time"
 )
 
 type SuiteTicket struct {

@@ -5,6 +5,9 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	contract3 "github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
@@ -13,8 +16,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
-	"net/http"
-	"time"
 )
 
 type AccessToken struct {
@@ -118,6 +119,10 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 		resToken.AccessToken = resToken.AuthorizerAccessToken
 	} else if accessToken.TokenKey == "authorizer_refresh_token" && resToken.AuthorizerRefreshToken != "" {
 		resToken.AccessToken = resToken.AuthorizerRefreshToken
+	} else if accessToken.TokenKey == "suite_access_token" && resToken.SuiteAccessToken != "" {
+		resToken.AccessToken = resToken.SuiteAccessToken
+	} else if accessToken.TokenKey == "provider_access_token" && resToken.ProviderAccessToken != "" {
+		resToken.AccessToken = resToken.ProviderAccessToken
 	}
 
 	return resToken, err
@@ -168,6 +173,13 @@ func (accessToken *AccessToken) getFormatToken(token object.HashMap) (*response2
 		resToken.AccessToken = token[accessToken.TokenKey].(string)
 		resToken.AuthorizerRefreshToken = token[accessToken.TokenKey].(string)
 
+	} else if accessToken.TokenKey == "suite_access_token" && token["suite_access_token"] != nil {
+		resToken.AccessToken = token[accessToken.TokenKey].(string)
+		resToken.SuiteAccessToken = token[accessToken.TokenKey].(string)
+
+	} else if accessToken.TokenKey == "provider_access_token" && token["provider_access_token"] != nil {
+		resToken.AccessToken = token[accessToken.TokenKey].(string)
+		resToken.ProviderAccessToken = token[accessToken.TokenKey].(string)
 	} else {
 		return nil, errors.New("no token found in cache")
 	}

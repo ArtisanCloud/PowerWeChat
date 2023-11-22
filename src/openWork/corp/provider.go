@@ -2,12 +2,12 @@ package corp
 
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 
-func RegisterProvider(app kernel.ApplicationInterface) (*Client, error) {
+func RegisterProvider(app kernel.ApplicationInterface) (*AccessToken, error) {
 
-	clt, err := NewClient(&app)
+	accessToken, err := NewAccessToken(&app)
 	if err != nil {
 		return nil, err
 	}
 
-	return clt, nil
+	return accessToken, nil
 }

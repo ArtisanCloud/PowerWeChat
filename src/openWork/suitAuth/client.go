@@ -1,13 +1,12 @@
-package corp
+package suit
 
 import (
 	"context"
 
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp/request"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp/response"
-	suite "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth/request"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth/response"
 )
 
 type Client struct {
@@ -15,7 +14,7 @@ type Client struct {
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
-	token := (*app).GetComponent("SuiteAccessToken").(*suite.AccessToken)
+	token := (*app).GetComponent("SuiteAccessToken").(*AccessToken)
 	baseClient, err := kernel.NewBaseClient(app, token.AccessToken)
 	if err != nil {
 		return nil, err
@@ -70,16 +69,15 @@ func (comp *Client) GetAuthInfo(ctx context.Context, authCorpID string, permanen
 	return &result, err
 }
 
-// 获取企业access_token
-// https://developer.work.weixin.qq.com/document/10975#%E8%8E%B7%E5%8F%96%E4%BC%81%E4%B8%9Aaccess-token
-func (comp *Client) GetCorpToken(ctx context.Context, authCorpID string, permanentCode string) (*response.GetPermanentCodeResponse, error) {
+// userid的转换
+// https://developer.work.weixin.qq.com/document/path/97062
+func (comp *Client) UserIDToOpenUserID(ctx context.Context, userIDList []string) ([]response.UserIDToOpenUserIDResult, error) {
 
-	var result response.GetPermanentCodeResponse
+	result := new(response.ResponseUserIDToOpenUserID)
 	req := object.HashMap{
-		"auth_corp_id":   authCorpID,
-		"permanent_code": permanentCode,
+		"userid_list": userIDList,
 	}
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/service/get_corp_token", &req, nil, nil, &result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/batch/userid_to_openuserid", &req, nil, nil, result)
 
-	return &result, err
+	return result.OpenUserIDList, err
 }

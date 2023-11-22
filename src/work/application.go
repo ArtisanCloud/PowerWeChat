@@ -8,6 +8,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
 	miniProgram2 "github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/customer"
 	message3 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/message"
@@ -33,6 +34,7 @@ import (
 	tag2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/tag"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/transfer"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/groupRobot"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/idconvert"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/invoice"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/jssdk"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/media"
@@ -68,6 +70,8 @@ type Work struct {
 	Base        *base.Client
 	AccessToken *auth.AccessToken
 	OAuth       *oauth.Manager
+
+	OpenWork *openWork.OpenWork
 
 	Config     *kernel.Config
 	Department *department.Client
@@ -135,6 +139,8 @@ type Work struct {
 	GroupRobot          *groupRobot.Client
 	GroupRobotMessenger *groupRobot.Messager
 
+	Idconvert *idconvert.Client
+
 	Logger *logger.Logger
 }
 
@@ -145,6 +151,8 @@ type UserConfig struct {
 	Token       string
 	AESKey      string
 	CallbackURL string
+
+	OpenWork *openWork.OpenWork
 
 	ResponseType string
 	Log          Log
@@ -199,6 +207,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	// init app
 	app := &Work{
 		ServiceContainer: container,
+		OpenWork:         config.OpenWork,
 	}
 
 	//-------------- global app config --------------
@@ -351,6 +360,12 @@ func NewWork(config *UserConfig) (*Work, error) {
 		return nil, err
 	}
 
+	//-------------- register Idconvert --------------
+	app.Idconvert, err = idconvert.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -359,6 +374,9 @@ func (app *Work) GetContainer() *kernel.ServiceContainer {
 }
 
 func (app *Work) GetAccessToken() *kernel.AccessToken {
+	if app.OpenWork != nil {
+		return app.OpenWork.CorpAccessToken.AccessToken
+	}
 	return app.AccessToken.AccessToken
 }
 
@@ -372,6 +390,9 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "Base":
 		return app.Base
 	case "AccessToken":
+		if app.OpenWork != nil {
+			return app.OpenWork.CorpAccessToken
+		}
 		return app.AccessToken
 	case "OAuth":
 		return app.OAuth
@@ -471,6 +492,9 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.GroupRobot
 	case "GroupRobotMessenger":
 		return app.GroupRobotMessenger
+
+	case "Idonvert":
+		return app.Idconvert
 
 	case "Logger":
 		return app.Logger

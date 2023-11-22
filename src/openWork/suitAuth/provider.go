@@ -1,4 +1,4 @@
-package auth
+package suit
 
 import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
