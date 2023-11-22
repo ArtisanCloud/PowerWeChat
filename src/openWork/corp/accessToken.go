@@ -13,10 +13,12 @@ import (
 
 type AccessToken struct {
 	*kernel.AccessToken
+	corpID        string
+	permanentCode string
 }
 
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/component_access_token.html
-func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
+func NewAccessToken(app *kernel.ApplicationInterface, corpId, permanentCode string) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
@@ -29,6 +31,8 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 	}
 	token := &AccessToken{
 		kernelToken,
+		corpId,
+		permanentCode,
 	}
 
 	// Override fields and functions
@@ -46,18 +50,16 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 		token := app.GetComponent("SuiteAccessToken").(*suit.AccessToken)
 		suiteAccessToken, _ := token.AccessToken.GetToken(false)
 
-		corpID := (*config)["corp_id"].(string)
 		appID := (*config)["app_id"].(string)
-		permanentCode := (*config)["permanent_code"].(string)
 
 		return &object.StringMap{
-			"auth_corpid":        corpID,
-			"permanent_code":     permanentCode,
+			"auth_corpid":        accessToken.corpID,
+			"permanent_code":     accessToken.permanentCode,
 			"suite_access_token": suiteAccessToken.AccessToken,
 
-			"appid":      corpID,
-			"secret":     permanentCode,
-			"neededText": security.HashStringData(corpID + "-" + appID),
+			"appid":      accessToken.corpID,
+			"secret":     accessToken.permanentCode,
+			"neededText": security.HashStringData(accessToken.corpID + "-" + appID),
 		}
 	}
 }

@@ -7,7 +7,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/base"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/externalcontact"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/provider"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server"
@@ -21,8 +20,8 @@ type OpenWork struct {
 	Base                *base.Client
 	Server              *server.Guard
 	User                *user.Client
-	CorpAccessToken     *corp.AccessToken
 	ExternalContact     *externalcontact.Client
+	Suite               *suit.Client
 	Provider            *provider.Client
 	SuiteAccessToken    *suit.AccessToken
 	ProviderAccessToken *provider.AccessToken
@@ -34,13 +33,11 @@ type OpenWork struct {
 }
 
 type UserConfig struct {
-	AppID         string
-	CorpID        string
-	Secret        string
-	PermanentCode string
-	AuthCode      string
-	Token         string
-	AESKey        string
+	AppID    string
+	Secret   string
+	AuthCode string
+	Token    string
+	AESKey   string
 
 	ResponseType string
 	Log          Log
@@ -110,7 +107,7 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 	}
 
 	//-------------- register auth --------------
-	app.SuiteTicket, app.SuiteAccessToken, err = suit.RegisterProvider(app)
+	app.Suite, app.SuiteTicket, app.SuiteAccessToken, err = suit.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -122,12 +119,6 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 
 	//-------------- register Encryptor and Server --------------
 	app.Encryptor, app.Server, err = server.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register Corp --------------
-	app.CorpAccessToken, err = corp.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -168,12 +159,12 @@ func (app *OpenWork) GetComponent(name string) interface{} {
 		return app.ExternalContact
 	case "Provider":
 		return app.Provider
+	case "Suite":
+		return app.Suite
 	case "SuiteAccessToken":
 		return app.SuiteAccessToken
 	case "ProviderAccessToken":
 		return app.ProviderAccessToken
-	case "CorpAccessToken":
-		return app.CorpAccessToken
 	case "SuiteTicket":
 		return app.SuiteTicket
 
@@ -195,13 +186,11 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	}
 	config := &object.HashMap{
 
-		"app_id":         userConfig.AppID,
-		"corp_id":        userConfig.CorpID,
-		"secret":         userConfig.Secret,
-		"permanent_code": userConfig.PermanentCode,
-		"auth_code":      userConfig.AuthCode,
-		"token":          userConfig.Token,
-		"aes_key":        userConfig.AESKey,
+		"app_id":    userConfig.AppID,
+		"secret":    userConfig.Secret,
+		"auth_code": userConfig.AuthCode,
+		"token":     userConfig.Token,
+		"aes_key":   userConfig.AESKey,
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{

@@ -161,7 +161,7 @@ func (comp *Client) UnionIDToExternalUserID(ctx context.Context, unionID string,
 		ExternalUserID string `json:"external_userid,omitempty"`
 	}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/resigned/transfer_result?", &object.StringMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/unionid_to_external_userid?", &object.HashMap{
 		"unionid": unionID,
 		"openid":  openID,
 	}, nil, nil, result)
