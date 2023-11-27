@@ -273,10 +273,6 @@ type EventTemplateCardMenuEvent struct {
 type EventKFMsgOrEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ToUserName string `json:"ToUserName"`
-	CreateTime string `json:"CreateTime"`
-	MsgType    string `json:"MsgType"`
-	Event      string `json:"Event"`
-	Token      string `json:"Token"`
-	OpenKfID   string `json:"OpenKfId"`
+	Token    string `xml:"Token"`
+	OpenKfID string `xml:"OpenKfId"`
 }
