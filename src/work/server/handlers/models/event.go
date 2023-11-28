@@ -269,3 +269,10 @@ type EventTemplateCardMenuEvent struct {
 	ResponseCode string `xml:"ResponseCode"`
 	AgentID      string `xml:"AgentID"`
 }
+
+type EventKFMsgOrEvent struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	Token    string `xml:"Token"`
+	OpenKfID string `xml:"OpenKfId"`
+}
