@@ -3,8 +3,8 @@ package request
 type RequestAccountServiceSendMsg struct {
 	ToUser      string                               `json:"touser"`
 	OpenKfid    string                               `json:"open_kfid"`
-	MsgID       string                               `json:"msgid"`
-	MsgType     string                               `json:"msgtype"`
+	MsgID       string                               `json:"msgid,omitempty"`
+	MsgType     string                               `json:"msgtype,omitempty"`
 	Text        *RequestAccountServiceMsgText        `json:"text,omitempty"`
 	Image       *RequestAccountServiceMsgImage       `json:"image,omitempty"`
 	Voice       *RequestAccountServiceMsgVoice       `json:"voice,omitempty"`
