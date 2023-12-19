@@ -107,7 +107,8 @@ func NewOpenPlatform(config *UserConfig) (*OpenPlatform, error) {
 	app.Config = providers.RegisterConfigProvider(app)
 
 	app.Logger, err = logger.NewLogger(app.Config.Get("log.driver", nil), &object.HashMap{
-		"env":        app.Config.GetString("env", "develop"),
+		"level":      app.Config.GetString("log.level", "info"),
+		"env":        app.Config.GetString("log.env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
 	})
