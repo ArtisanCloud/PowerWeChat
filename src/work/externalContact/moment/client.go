@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/moment/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/moment/response"
 )
@@ -98,6 +99,19 @@ func (comp *Client) GetMomentComments(ctx context.Context, momentID string, user
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_moment_comments", options, nil, nil, result)
+
+	return result, err
+}
+
+// 企业发表内容到客户的朋友圈
+// https://developer.work.weixin.qq.com/document/path/95095
+func (comp *Client) AddMomentTask(ctx context.Context, params *request.RequestAddMomentTask) (*response.ResponseAddMomentTask, error) {
+
+	result := &response.ResponseAddMomentTask{}
+
+	options, _ := power.StructToHashMap(params)
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/add_moment_task", options, nil, nil, result)
 
 	return result, err
 }
