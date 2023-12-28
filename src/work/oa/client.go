@@ -132,6 +132,45 @@ func (comp *Client) AddCheckInUserFace(ctx context.Context, userID string, userF
 	return result, err
 }
 
+// 创建打卡规则
+// https://developer.work.weixin.qq.com/document/path/98041#创建打卡规则
+func (comp *Client) AddCheckinOption(ctx context.Context, data *object.HashMap) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/checkin/add_checkin_option", data, nil, nil, result)
+
+	return result, err
+
+}
+
+// 修改打卡规则
+// https://developer.work.weixin.qq.com/document/path/98041#修改打卡规则
+func (comp *Client) UpdateCheckinOption(ctx context.Context, data *object.HashMap) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/checkin/update_checkin_option", data, nil, nil, result)
+
+	return result, err
+
+}
+
+// 删除打卡规则
+// https://developer.work.weixin.qq.com/document/path/98041#删除打卡规则
+func (comp *Client) DelCheckinOption(ctx context.Context, groupId int, effectiveNow bool) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/checkin/del_checkin_option", &object.HashMap{
+		"groupid":       groupId,
+		"effective_now": effectiveNow,
+	}, nil, nil, result)
+
+	return result, err
+
+}
+
 // 获取审批模板详情
 // https://developer.work.weixin.qq.com/document/path/91982
 func (comp *Client) ApprovalTemplate(ctx context.Context, templateID string) (*response.ResponseApprovalTemplate, error) {
