@@ -138,7 +138,7 @@ func (comp *Client) AddCheckinOption(ctx context.Context, data *object.HashMap) 
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/checkin/add_checkin_option", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/add_checkin_option", data, nil, nil, result)
 
 	return result, err
 
@@ -150,7 +150,7 @@ func (comp *Client) UpdateCheckinOption(ctx context.Context, data *object.HashMa
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/checkin/update_checkin_option", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/update_checkin_option", data, nil, nil, result)
 
 	return result, err
 
@@ -162,7 +162,7 @@ func (comp *Client) DelCheckinOption(ctx context.Context, groupId int, effective
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/checkin/del_checkin_option", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/checkin/del_checkin_option", &object.HashMap{
 		"groupid":       groupId,
 		"effective_now": effectiveNow,
 	}, nil, nil, result)
