@@ -251,7 +251,7 @@ func (comp *Client) GetCorpConfig(ctx context.Context) (*response.ResponseCorpVa
 
 	result := &response.ResponseCorpVacationGetConfig{}
 
-	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/corp/vacation/getcorpconf", nil, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/oa/vacation/getcorpconf", nil, nil, result)
 
 	return result, err
 
@@ -263,7 +263,7 @@ func (comp *Client) GetUserVacationQuota(ctx context.Context, userID string) (*r
 
 	result := &response.ResponseCorpVacationGetQuota{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/vacation/getuservacationquota", &object.HashMap{
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/vacation/getuservacationquota", &object.HashMap{
 		"userid": userID,
 	}, nil, nil, result)
 
@@ -277,7 +277,7 @@ func (comp *Client) SetOneUserQuota(ctx context.Context, data *object.HashMap) (
 
 	result := &response2.ResponseWork{}
 
-	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/corp/vacation/setoneuserquota", data, nil, nil, result)
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/vacation/setoneuserquota", data, nil, nil, result)
 
 	return result, err
 
