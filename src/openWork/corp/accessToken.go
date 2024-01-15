@@ -4,6 +4,7 @@ package corp
 
 import (
 	"net/http"
+	"net/url"
 
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerLibs/v3/security"
@@ -37,8 +38,20 @@ func NewAccessToken(app *kernel.ApplicationInterface, corpId, permanentCode stri
 
 	// Override fields and functions
 	token.OverrideGetCredentials()
+	token.OverrideGetEndpoint()
 
 	return token, nil
+}
+
+func (accessToken *AccessToken) OverrideGetEndpoint() {
+
+	app := (*accessToken.App)
+	accessToken.GetEndpoint = func() (string, error) {
+		token := app.GetComponent("SuiteAccessToken").(*suit.AccessToken)
+		suiteAccessToken, _ := token.AccessToken.GetToken(false)
+		return accessToken.EndpointToGetToken + `?suite_access_token=` + url.QueryEscape(suiteAccessToken.AccessToken), nil
+	}
+
 }
 
 // Override GetCredentials
@@ -47,15 +60,12 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 	app := (*accessToken.App)
 	accessToken.GetCredentials = func() *object.StringMap {
 		config := app.GetContainer().GetConfig()
-		token := app.GetComponent("SuiteAccessToken").(*suit.AccessToken)
-		suiteAccessToken, _ := token.AccessToken.GetToken(false)
 
 		appID := (*config)["app_id"].(string)
 
 		return &object.StringMap{
-			"auth_corpid":        accessToken.corpID,
-			"permanent_code":     accessToken.permanentCode,
-			"suite_access_token": suiteAccessToken.AccessToken,
+			"auth_corpid":    accessToken.corpID,
+			"permanent_code": accessToken.permanentCode,
 
 			"appid":      accessToken.corpID,
 			"secret":     accessToken.permanentCode,

@@ -171,8 +171,9 @@ type UserConfig struct {
 }
 
 type Http struct {
-	Timeout float64
-	BaseURI string
+	Timeout  float64
+	BaseURI  string
+	ProxyURI string
 }
 
 type Log struct {
@@ -230,10 +231,15 @@ func NewWork(config *UserConfig) (*Work, error) {
 	}
 
 	//-------------- register auth --------------
-	app.Auth, app.AccessToken, err = auth.RegisterProvider(app)
+	app.AccessToken, err = auth.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
+	app.Auth, err = auth.NewClient(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
 	if err != nil {
@@ -533,8 +539,9 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
-			"timeout":  timeout,
-			"base_uri": baseURI,
+			"timeout":   timeout,
+			"base_uri":  baseURI,
+			"proxy_uri": userConfig.Http.ProxyURI,
 		},
 		"log": &object.HashMap{
 			"driver": userConfig.Log.Driver,

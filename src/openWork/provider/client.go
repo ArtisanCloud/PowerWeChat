@@ -9,12 +9,15 @@ import (
 )
 
 type Client struct {
-	BaseClient *kernel.BaseClient
+	*kernel.BaseClient
 }
 
-func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
-	token := (*app).GetComponent("ProviderAccessToken").(*AccessToken)
-	baseClient, err := kernel.NewBaseClient(app, token.AccessToken)
+func NewClient(app kernel.ApplicationInterface, corpID string) (*Client, error) {
+	token, err := NewAccessToken(&app, corpID)
+	if err != nil {
+		return nil, err
+	}
+	baseClient, err := kernel.NewBaseClient(&app, token.AccessToken)
 	if err != nil {
 		return nil, err
 	}

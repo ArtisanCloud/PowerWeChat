@@ -182,3 +182,21 @@ func (comp *Client) GetNewExternalUserID(ctx context.Context, externalUserIDList
 
 	return result.Items, err
 }
+
+// external_userid转换
+// https://developer.work.weixin.qq.com/document/path/95884#external-userid%E8%BD%AC%E6%8D%A2
+func (comp *Client) FromServiceExternalUserID(ctx context.Context, agentID int, externalUserID string) (string, error) {
+
+	var result struct {
+		response2.ResponseWork
+		ExternalUserID string `json:"external_userid,omitempty"`
+	}
+	req := object.HashMap{
+		"source_agentid":  agentID,
+		"external_userid": externalUserID,
+	}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/from_service_external_userid", &req, nil, nil, result)
+
+	return result.ExternalUserID, err
+}

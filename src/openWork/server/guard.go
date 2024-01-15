@@ -9,9 +9,11 @@ import (
 
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	kernelModels "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server/handlers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server/models"
+	workModels "github.com/ArtisanCloud/PowerWeChat/v3/src/work/server/handlers/models"
 )
 
 const (
@@ -91,8 +93,9 @@ func NewGuard(app *kernel.ApplicationInterface) *Guard {
 	}
 
 	guard.OverrideResolve()
-	guard.OverrideNotify()
+	// guard.OverrideNotify()
 	guard.OverrideIsSafeMode()
+	guard.OverrideToCallbackType()
 
 	return guard
 
@@ -105,54 +108,80 @@ func (guard *Guard) OverrideIsSafeMode() {
 	}
 }
 
-func (guard *Guard) Notify(request *http.Request, closure func(content *kernelModels.Callback, ev models.IEvent) interface{}) (httpRS *http.Response, err error) {
+func (guard *Guard) Notify(request *http.Request, closure func(content *kernelModels.Callback, ev models.IEvent, callbackMsg interface{}) interface{}) (httpRS *http.Response, err error) {
 	// validate the signature
 	_, err = guard.Validate(request)
 	if err != nil {
 		return nil, err
 	}
 
-	// read body content
-	requestXML, _ := io.ReadAll(request.Body)
-	request.Body = io.NopCloser(bytes.NewBuffer(requestXML))
-	println(string(requestXML))
-
-	var callbackEvent kernelModels.Callback
-	err = xml.Unmarshal(requestXML, &callbackEvent)
-	if err != nil {
-		return nil, err
-	}
-
-	// decrypt event content
-	var bufDecrypted []byte = nil
-	if guard.IsSafeMode(request) && callbackEvent.Encrypt != "" {
-		bufDecrypted, err = guard.DecryptEvent(callbackEvent.Encrypt)
-	}
-
-	// call the closure for handling the event
-	ev, err := models.DecodeEvent(bufDecrypted)
-	if err != nil {
-		return nil, err
-	}
-
-	result := closure(&callbackEvent, ev)
-
-	// convert the result to http response
-	var buffResult []byte
-	// 如果是字符串， "success", "failed"
-	if str, ok := result.(string); ok {
-		buffResult = []byte(str)
-	} else {
-		strResult, err := object.JsonEncode(result)
+	var (
+		buffResult  []byte
+		contentType string
+		echoStr     = request.URL.Query().Get("echostr")
+	)
+	if request.Body == http.NoBody && echoStr != "" {
+		buffResult, err = guard.DecryptEvent(echoStr)
 		if err != nil {
 			return nil, err
 		}
-		buffResult = []byte(strResult)
+		contentType = "html/text"
+	} else if request.Body != http.NoBody {
+		var (
+			callbackEvent kernelModels.Callback
+			ev            models.IEvent
+		)
+		// read body content
+		var buf bytes.Buffer
+		tee := io.TeeReader(request.Body, &buf)
+		// requestXML, _ := io.ReadAll(request.Body)
+		request.Body = io.NopCloser(&buf)
+		// println(string(requestXML))
+
+		// err = xml.Unmarshal(requestXML, &callbackEvent)
+		err = xml.NewDecoder(tee).Decode(&callbackEvent)
+		if err != nil {
+			return nil, err
+		}
+		// decrypt event content
+		var bufDecrypted []byte = nil
+		if guard.IsSafeMode(request) && callbackEvent.Encrypt != "" {
+			bufDecrypted, err = guard.DecryptEvent(callbackEvent.Encrypt)
+		}
+		var callbackMsg interface{}
+		// call the closure for handling the event
+		ev, err = models.DecodeEvent(bufDecrypted)
+		if err != nil {
+			if callbackMsg, err = guard.ToCallbackType(ev, bufDecrypted); err != nil {
+				return nil, err
+			}
+		}
+		result := closure(&callbackEvent, ev, callbackMsg)
+
+		// convert the result to http response
+		// 如果是字符串， "success", "failed"
+		if str, ok := result.(string); ok {
+			buffResult = []byte(str)
+			contentType = "html/text"
+		} else {
+			strResult, err := object.JsonEncode(result)
+			if err != nil {
+				return nil, err
+			}
+			contentType = "application/json"
+			buffResult = []byte(strResult)
+		}
+	} else {
+		return nil, errors.New("missing request body")
 	}
 
 	httpRS = &http.Response{
-		StatusCode: http.StatusOK,
-		Body:       io.NopCloser(bytes.NewBuffer(buffResult)),
+		StatusCode:    http.StatusOK,
+		ContentLength: int64(len(buffResult)),
+		Header: http.Header{
+			"Content-Type": []string{contentType},
+		},
+		Body: io.NopCloser(bytes.NewBuffer(buffResult)),
 	}
 
 	return httpRS, err
@@ -177,10 +206,10 @@ func (guard *Guard) OverrideResolve() {
 	guard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
 		guard.registerHandlers()
 
-		if message, err := guard.GetMessage(request); err != nil {
+		if ev, _, err := guard.GetMessage(request); err != nil {
 			return nil, err
-		} else if infoType := message.GetInfoType(); infoType != "" {
-			_ = guard.Dispatch(request, GetEventType(infoType, message.GetChangeType()), nil, message)
+		} else if infoType := ev.GetInfoType(); infoType != "" {
+			_ = guard.Dispatch(request, GetEventType(infoType, ev.GetChangeType()), nil, ev)
 		}
 		httpRS = &http.Response{
 			StatusCode: http.StatusOK,
@@ -200,27 +229,30 @@ func (guard *Guard) registerHandlers() {
 
 }
 
-func (guard *Guard) GetMessage(request *http.Request) (ev models.IEvent, err error) {
+func (guard *Guard) GetMessage(request *http.Request) (ev models.IEvent, msg interface{}, err error) {
 	var b = []byte("")
 	if request.Body != http.NoBody {
 		b, err = io.ReadAll(request.Body)
 		if err != nil || b == nil {
-			return nil, err
+			return nil, nil, err
 		}
 		request.Body = io.NopCloser(bytes.NewBuffer(b))
 	}
 	baseEv := new(models.BaseEvent)
 	if err = guard.parseMessage(string(b), baseEv); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	if ev, err = baseEv.ToEvent(); err != nil {
-		return nil, err
+		if msg, err = guard.ToCallbackType(baseEv.CallbackMessageHeader, b); err != nil {
+			return nil, nil, err
+		} else {
+			return nil, msg, nil
+		}
 	}
 	if err = guard.parseMessage(string(b), ev); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return ev, err
-
+	return ev, nil, err
 }
 
 func (guard *Guard) parseMessage(content string, callback interface{}) (err error) {
@@ -242,4 +274,237 @@ func (guard *Guard) parseMessage(content string, callback interface{}) (err erro
 	}
 
 	return nil
+}
+
+func (guard *Guard) OverrideToCallbackType() {
+
+	guard.ToCallbackType = func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
+		switch callbackHeader.GetMsgType() {
+
+		// msg type is message
+		case kernelModels.CALLBACK_MSG_TYPE_TEXT:
+			decryptMsg := workModels.MessageText{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
+			break
+
+		case kernelModels.CALLBACK_MSG_TYPE_IMAGE:
+			decryptMsg := workModels.MessageImage{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
+			break
+
+		case kernelModels.CALLBACK_MSG_TYPE_VOICE:
+			decryptMsg := workModels.MessageVoice{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
+			break
+
+		case kernelModels.CALLBACK_MSG_TYPE_VIDEO:
+			decryptMsg := workModels.MessageVideo{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
+			break
+
+		case kernelModels.CALLBACK_MSG_TYPE_LOCATION:
+			decryptMsg := workModels.MessageLocation{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
+			break
+
+		case kernelModels.CALLBACK_MSG_TYPE_LINK:
+			decryptMsg := workModels.MessageLink{}
+			err = xml.Unmarshal(buf, &decryptMsg)
+			decryptMessage = decryptMsg
+			break
+
+		// msg type is event
+		case kernelModels.CALLBACK_MSG_TYPE_EVENT:
+			decryptMessage, err = guard.toCallbackEvent(callbackHeader, buf)
+			return decryptMessage, err
+
+		default:
+			return nil, errors.New("not found wechat msg type")
+		}
+
+		return decryptMessage, err
+	}
+
+}
+
+// switch event
+func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
+
+	switch callbackHeader.GetEvent() {
+
+	// event is change contact
+	case workModels.CALLBACK_EVENT_CHANGE_CONTACT:
+		decryptMessage, err = guard.toCallbackEventChangeType(callbackHeader, buf)
+		break
+
+	// events
+	case workModels.CALLBACK_EVENT_SUBSCRIBE:
+		decryptMsg := &workModels.EventSubscribe{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_ENTER_AGENT:
+		decryptMsg := &workModels.EventEnterAgent{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_LOCATION:
+		decryptMsg := &workModels.EventLocation{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_BATCH_JOB_RESULT:
+		decryptMsg := &workModels.EventBatchJobResult{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_CLICK:
+		decryptMsg := &workModels.EventClick{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_VIEW:
+		decryptMsg := &workModels.EventView{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_SCANCODE_PUSH:
+		decryptMsg := &workModels.EventScanCodePush{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_SCANCODE_WAITMSG:
+		decryptMsg := &workModels.EventScancodeWaitMsg{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_PIC_SYSPHOTO:
+		decryptMsg := &workModels.EventPicSysPhoto{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_PIC_PHOTO_OR_ALBUM:
+		decryptMsg := &workModels.EventPicPhotoOrAlbum{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_PIC_WEIXIN:
+		decryptMsg := &workModels.EventPicWeixin{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_LOCATION_SELECT:
+		decryptMsg := &workModels.EventLocationSelect{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_OPEN_APPROVAL_CHANGE:
+		decryptMsg := &workModels.EventOpenApprovalChange{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_SHARE_AGENT_CHANGE:
+		decryptMsg := &workModels.EventShareAgentChange{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_TEMPLATE_CARD_MENU_EVENT:
+		decryptMsg := &workModels.EventTemplateCardMenuEvent{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_LIVING_STATUS_CHANGE:
+		decryptMsg := &workModels.EventLivingStatusChange{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_MSGAUDIT_NOTIFY:
+		decryptMsg := &workModels.EventMsgAuditNotify{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	default:
+		return nil, errors.New("not found wechat event")
+	}
+
+	return decryptMessage, err
+}
+
+// switch event change type
+func (guard *Guard) toCallbackEventChangeType(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
+
+	switch callbackHeader.GetChangeType() {
+
+	// change type is for user event
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_CREATE_USER:
+		decryptMsg := &workModels.EventUserCreate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_USER:
+		decryptMsg := &workModels.EventUserUpdate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_DELETE_USER:
+		decryptMsg := &workModels.EventUserDelete{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	// change type is for party event
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_CREATE_PARTY:
+		decryptMsg := &workModels.EventPartyCreate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_PARTY:
+		decryptMsg := &workModels.EventPartyUpdate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_DELETE_PARTY:
+		decryptMsg := &workModels.EventPartyDelete{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	// change type is for tag event
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_UPDATE_TAG:
+		decryptMsg := &workModels.EventTagUpdate{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	default:
+		return nil, errors.New("not found wechat event")
+	}
+
+	return decryptMessage, err
 }

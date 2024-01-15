@@ -57,7 +57,7 @@ type AuthInfo struct {
 // Agent 授权的应用信息，注意是一个数组，但仅旧的多应用套件授权时会返回多个agent，对新的单应用授权，永远只返回一个agent
 type Agent struct {
 	// AgentID 授权方应用id
-	AgentID int `json:"agent_id,omitempty"`
+	AgentID int `json:"agentid,omitempty"`
 	// Name 授权方应用名字
 	Name string `json:"name,omitempty"`
 	// SquareLogoURL 授权方应用方形头像

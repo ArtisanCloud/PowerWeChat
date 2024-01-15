@@ -13,9 +13,9 @@ type Client struct {
 	BaseClient *kernel.BaseClient
 }
 
-func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
-	token := (*app).GetComponent("SuiteAccessToken").(*AccessToken)
-	baseClient, err := kernel.NewBaseClient(app, token.AccessToken)
+func NewClient(app kernel.ApplicationInterface) (*Client, error) {
+	token := app.GetComponent("SuiteAccessToken").(*AccessToken)
+	baseClient, err := kernel.NewBaseClient(&app, token.AccessToken)
 	if err != nil {
 		return nil, err
 	}

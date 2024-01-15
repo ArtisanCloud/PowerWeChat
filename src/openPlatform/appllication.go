@@ -3,6 +3,7 @@ package openPlatform
 import (
 	"context"
 	"errors"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
@@ -61,8 +62,9 @@ type UserConfig struct {
 }
 
 type Http struct {
-	Timeout float64
-	BaseURI string
+	Timeout  float64
+	BaseURI  string
+	ProxyURI string
 }
 
 type Log struct {
@@ -210,8 +212,9 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
-			"timeout":  timeout,
-			"base_uri": baseURI,
+			"timeout":   timeout,
+			"base_uri":  baseURI,
+			"proxy_uri": userConfig.Http.ProxyURI,
 		},
 		"log": &object.HashMap{
 			"driver": userConfig.Log.Driver,

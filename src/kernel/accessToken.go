@@ -203,7 +203,9 @@ func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*re
 	if token == nil || (token.AccessToken == "" &&
 		token.ComponentAccessToken == "" &&
 		token.AuthorizerAccessToken == "" &&
-		token.AuthorizerRefreshToken == "") {
+		token.AuthorizerRefreshToken == "" &&
+		token.SuiteAccessToken == "" &&
+		token.ProviderAccessToken == "") {
 		return nil, errors.New(fmt.Sprintf("Request access_token fail: %v", res))
 	}
 

@@ -8,6 +8,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/base"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/externalcontact"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/license"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/provider"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server"
 	suit "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
@@ -17,15 +18,13 @@ import (
 type OpenWork struct {
 	*kernel.ServiceContainer
 
-	Base                *base.Client
-	Server              *server.Guard
-	User                *user.Client
-	ExternalContact     *externalcontact.Client
-	Suite               *suit.Client
-	Provider            *provider.Client
-	SuiteAccessToken    *suit.AccessToken
-	ProviderAccessToken *provider.AccessToken
-	SuiteTicket         *suit.SuiteTicket
+	Base             *base.Client
+	Server           *server.Guard
+	User             *user.Client
+	ExternalContact  *externalcontact.Client
+	Suite            *suit.Client
+	SuiteAccessToken *suit.AccessToken
+	SuiteTicket      *suit.SuiteTicket
 
 	Encryptor *kernel.Encryptor
 	Config    *kernel.Config
@@ -33,11 +32,13 @@ type OpenWork struct {
 }
 
 type UserConfig struct {
-	AppID    string
-	Secret   string
-	AuthCode string
-	Token    string
-	AESKey   string
+	AppID          string
+	Secret         string
+	ProviderCorpID string
+	ProviderSecret string
+	AuthCode       string
+	Token          string
+	AESKey         string
 
 	ResponseType string
 	Log          Log
@@ -53,8 +54,9 @@ type UserConfig struct {
 }
 
 type Http struct {
-	Timeout float64
-	BaseURI string
+	Timeout  float64
+	BaseURI  string
+	ProxyURI string
 }
 
 type Log struct {
@@ -107,10 +109,15 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 	}
 
 	//-------------- register auth --------------
-	app.Suite, app.SuiteTicket, app.SuiteAccessToken, err = suit.RegisterProvider(app)
+	app.SuiteTicket, app.SuiteAccessToken, err = suit.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
+	app.Suite, err = suit.NewClient(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
 	if err != nil {
@@ -125,12 +132,6 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 
 	//-------------- register User --------------
 	app.User, err = user.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register Provider --------------
-	app.Provider, app.ProviderAccessToken, err = provider.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -150,6 +151,14 @@ func (app *OpenWork) GetConfig() *kernel.Config {
 	return app.Config
 }
 
+func (app *OpenWork) Provider(corpID string) (*provider.Client, error) {
+	return provider.NewClient(app, corpID)
+}
+
+func (app *OpenWork) License(corpID string) (*license.Client, error) {
+	return license.NewClient(app, corpID)
+}
+
 func (app *OpenWork) GetComponent(name string) interface{} {
 
 	switch name {
@@ -157,16 +166,18 @@ func (app *OpenWork) GetComponent(name string) interface{} {
 		return app.User
 	case "ExternalContact":
 		return app.ExternalContact
-	case "Provider":
-		return app.Provider
 	case "Suite":
 		return app.Suite
 	case "SuiteAccessToken":
 		return app.SuiteAccessToken
-	case "ProviderAccessToken":
-		return app.ProviderAccessToken
 	case "SuiteTicket":
 		return app.SuiteTicket
+	case "Encryptor":
+		return app.Encryptor
+	case "Server":
+		return app.Server
+	case "Logger":
+		return app.Logger
 
 	default:
 		return nil
@@ -186,16 +197,19 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	}
 	config := &object.HashMap{
 
-		"app_id":    userConfig.AppID,
-		"secret":    userConfig.Secret,
-		"auth_code": userConfig.AuthCode,
-		"token":     userConfig.Token,
-		"aes_key":   userConfig.AESKey,
+		"app_id":          userConfig.AppID,
+		"secret":          userConfig.Secret,
+		"provider_corpid": userConfig.ProviderCorpID,
+		"provider_secret": userConfig.ProviderSecret,
+		"auth_code":       userConfig.AuthCode,
+		"token":           userConfig.Token,
+		"aes_key":         userConfig.AESKey,
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
-			"timeout":  timeout,
-			"base_uri": baseURI,
+			"timeout":   timeout,
+			"base_uri":  baseURI,
+			"proxy_uri": userConfig.Http.ProxyURI,
 		},
 		"log": &object.HashMap{
 			"driver": userConfig.Log.Driver,

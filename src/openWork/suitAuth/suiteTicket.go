@@ -62,6 +62,6 @@ func (verifyTicket *SuiteTicket) GetTicket() (ticket string, err error) {
 
 func (verifyTicket *SuiteTicket) getCacheKey() string {
 	config := (*verifyTicket.App).GetConfig()
-	return "powerwechat.open_work.suite_ticket." + config.GetString("suite_id", "")
+	return "powerwechat.open_work.suite_ticket." + config.GetString("app_id", "")
 
 }

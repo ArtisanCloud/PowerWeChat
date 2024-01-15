@@ -70,6 +70,20 @@ func (comp *Client) UserIDToOpenUserID(ctx context.Context, userIDList []string)
 	return result.OpenUserIDList, err
 }
 
+// userid的转换
+// https://developer.work.weixin.qq.com/document/path/97062
+func (comp *Client) OpenUserIDToUserID(ctx context.Context, sourceAgentID int, openUserIDList []string) (*response.ResponseOpenUserIDToUserID, error) {
+
+	result := new(response.ResponseOpenUserIDToUserID)
+	req := object.HashMap{
+		"source_agentid":   sourceAgentID,
+		"open_userid_list": openUserIDList,
+	}
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/batch/openuserid_to_userid", &req, nil, nil, result)
+
+	return result, err
+}
+
 // 客户标签ID的转换
 // https://developer.work.weixin.qq.com/document/path/96169
 func (comp *Client) ExternalTagIDToOpenExternalTagID(ctx context.Context, externalTagIDList []string) (*response.ResponseExternalTagIDToOpenExternalTagID, error) {

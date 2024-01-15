@@ -3,6 +3,10 @@ package models
 import (
 	"encoding/xml"
 	"errors"
+	"fmt"
+
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	kernelModels "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 )
 
 type InfoType = string
@@ -40,15 +44,16 @@ func DecodeEvent(bs []byte) (IEvent, error) {
 	}
 	ev, err := msg.ToEvent()
 	if err != nil {
-		return nil, err
+		return msg, fmt.Errorf("%w: %s", err, string(bs))
 	}
 	if err := xml.Unmarshal(bs, ev); err != nil {
-		return nil, err
+		return msg, fmt.Errorf("%w: %s", err, string(bs))
 	}
 	return ev, nil
 }
 
 type IEvent interface {
+	contract.EventInterface
 	GetSuiteID() string
 	GetInfoType() InfoType
 	GetTimestamp() int64
@@ -56,6 +61,7 @@ type IEvent interface {
 }
 
 type BaseEvent struct {
+	kernelModels.CallbackMessageHeader
 	XMLName    xml.Name   `xml:"xml"`
 	SuiteID    string     `xml:"SuiteId"`
 	InfoType   InfoType   `xml:"InfoType"`
@@ -80,39 +86,37 @@ func (ev BaseEvent) GetTimestamp() int64 {
 }
 
 func (msg BaseEvent) ToEvent() (IEvent, error) {
-	var ev IEvent
 	switch msg.GetInfoType() {
 	case InfoTypeSuiteTicket:
-		ev = new(EventSuiteTicket)
+		return new(EventSuiteTicket), nil
 	case InfoTypeCreateAuth:
-		ev = new(EventCreateAuth)
+		return new(EventCreateAuth), nil
 	case InfoTypeChangeAuth:
-		ev = new(EventChangeAuth)
+		return new(EventChangeAuth), nil
 	case InfoTypeCancelAuth:
-		ev = new(EventCancelAuth)
+		return new(EventCancelAuth), nil
 	case InfoTypeChangeContact:
 		switch msg.GetChangeType() {
 		case ChangeTypeCreateUser, ChangeTypeUpdateUser, ChangeTypeDeleteUser:
-			ev = new(EventUser)
+			return new(EventUser), nil
 		case ChangeTypeCreateParty, ChangeTypeUpdateParty, ChangeTypeDeleteParty:
-			ev = new(EventParty)
+			return new(EventParty), nil
 		case ChangeTypeUpdateTag:
-			ev = new(EventUpdateTag)
+			return new(EventUpdateTag), nil
 		default:
 			return nil, errors.New("unknown event")
 		}
 	case InfoTypeShareAgentChange, InfoTypeShareChainChange:
-		ev = new(EventShareChange)
+		return new(EventShareChange), nil
 	case InfoTypeResetPermanentCode:
-		ev = new(EventResetPermanentCode)
+		return new(EventResetPermanentCode), nil
 	case InfoTypeCorpArchAuth:
-		ev = new(EventCorpArchAuth)
+		return new(EventCorpArchAuth), nil
 	case InfoTypeApproveSpecialAuth, InfoTypeCancelSpecialAuth:
-		ev = new(EventSpecialAuth)
+		return new(EventSpecialAuth), nil
 	default:
 		return nil, errors.New("unknown event")
 	}
-	return ev, nil
 }
 
 type EventSuiteTicket struct {
