@@ -7,12 +7,6 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
-	"github.com/ArtisanCloud/PowerLibs/v3/object"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/messages"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -20,6 +14,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/messages"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 )
 
 const SUCCESS_EMPTY_RESPONSE = "success"
@@ -147,7 +148,6 @@ func (serverGuard *ServerGuard) validate(request *http.Request) (*ServerGuard, e
 }
 
 func (serverGuard *ServerGuard) GetEvent(request *http.Request) (callback *models.Callback, callbackHeader *models.CallbackMessageHeader, err error) {
-
 	if request == nil {
 		return nil, nil, errors.New("request is invalid")
 	}
