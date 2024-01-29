@@ -27,8 +27,8 @@ func GetOfficialConfig() *officialAccount.UserConfig {
 			File:   "./wechat/info.log",
 			Error:  "./wechat/error.log",
 		},
-		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Addr:     "127.0.0.1:6379",
+		Cache: kernel.NewRedisClient(&kernel.UniversalOptions{
+			Addrs:    []string{"127.0.0.1:6379"},
 			Password: "",
 			//Username: "username",
 			DB: 1,
@@ -60,8 +60,8 @@ func GetWorkConfig() *work.UserConfig {
 			Callback: os.Getenv("app_oauth_callback_url"),
 			Scopes:   []string{},
 		},
-		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Addr:     "127.0.0.1:6379",
+		Cache: kernel.NewRedisClient(&kernel.UniversalOptions{
+			Addrs:    []string{"127.0.0.1:6379"},
 			Password: "",
 			DB:       1,
 		}),
@@ -101,8 +101,8 @@ func GetPaymentConfig() *payment.UserConfig {
 			BaseURI: "https://api.mch.weixin.qq.com",
 		},
 
-		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Addr:     "127.0.0.1:6379",
+		Cache: kernel.NewRedisClient(&kernel.UniversalOptions{
+			Addrs:    []string{"127.0.0.1:6379"},
 			Password: "",
 			DB:       1,
 		}),
@@ -130,8 +130,8 @@ func GetMiniProgramConfig() *miniProgram.UserConfig {
 			File:  "./wechat/info.log",
 			Error: "./wechat/error.log",
 		},
-		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Addr:     "127.0.0.1:6379",
+		Cache: kernel.NewRedisClient(&kernel.UniversalOptions{
+			Addrs:    []string{"127.0.0.1:6379"},
 			Password: "",
 			DB:       1,
 		}),
@@ -155,8 +155,8 @@ func GetOpenPlatformConfig() *openPlatform.UserConfig {
 			File:  "./wechat/info.log",
 			Error: "./wechat/error.log",
 		},
-		Cache: kernel.NewRedisClient(&kernel.RedisOptions{
-			Addr:     "127.0.0.1:6379",
+		Cache: kernel.NewRedisClient(&kernel.UniversalOptions{
+			Addrs:    []string{"127.0.0.1:6379"},
 			Password: "",
 			DB:       1,
 		}),
