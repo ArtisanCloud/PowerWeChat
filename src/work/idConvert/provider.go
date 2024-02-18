@@ -1,4 +1,4 @@
-package idconvert
+package idConvert
 
 import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 

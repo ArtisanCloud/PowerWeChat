@@ -35,7 +35,7 @@ import (
 	tag2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/tag"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/transfer"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/groupRobot"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/idconvert"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/idConvert"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/invoice"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/jssdk"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/media"
@@ -141,7 +141,7 @@ type Work struct {
 	GroupRobot          *groupRobot.Client
 	GroupRobotMessenger *groupRobot.Messager
 
-	Idconvert *idconvert.Client
+	IdConvert *idConvert.Client
 
 	Logger *logger.Logger
 }
@@ -374,7 +374,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	}
 
 	//-------------- register Idconvert --------------
-	app.Idconvert, err = idconvert.RegisterProvider(app)
+	app.IdConvert, err = idConvert.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -508,8 +508,8 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "GroupRobotMessenger":
 		return app.GroupRobotMessenger
 
-	case "Idonvert":
-		return app.Idconvert
+	case "IdConvert":
+		return app.IdConvert
 
 	case "Logger":
 		return app.Logger
