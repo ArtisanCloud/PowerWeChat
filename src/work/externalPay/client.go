@@ -1,6 +1,8 @@
 package externalPay
 
 import (
+	"context"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -24,7 +26,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 新增商户号
 // https://developer.work.weixin.qq.com/document/path/93666
-func (comp *Client) AddMerchant(mchID string, merchantName string) (*response2.ResponseWork, error) {
+func (comp *Client) AddMerchant(ctx context.Context, mchID string, merchantName string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -40,7 +42,7 @@ func (comp *Client) AddMerchant(mchID string, merchantName string) (*response2.R
 
 // 查询商户号详情
 // https://developer.work.weixin.qq.com/document/path/93666
-func (comp *Client) GetMerchant(mchID string) (*response.ResponseExternalPayGetMerchant, error) {
+func (comp *Client) GetMerchant(ctx context.Context, mchID string) (*response.ResponseExternalPayGetMerchant, error) {
 
 	result := &response.ResponseExternalPayGetMerchant{}
 
@@ -55,7 +57,7 @@ func (comp *Client) GetMerchant(mchID string) (*response.ResponseExternalPayGetM
 
 // 删除商户号
 // https://developer.work.weixin.qq.com/document/path/93666
-func (comp *Client) DelMerchant(mchID string) (*response2.ResponseWork, error) {
+func (comp *Client) DelMerchant(ctx context.Context, mchID string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -70,7 +72,7 @@ func (comp *Client) DelMerchant(mchID string) (*response2.ResponseWork, error) {
 
 // 设置商户号使用范围
 // https://developer.work.weixin.qq.com/document/path/93666
-func (comp *Client) SetMchUseScope(options *request.RequestExternalPaySetMchUseScope) (*response2.ResponseWork, error) {
+func (comp *Client) SetMchUseScope(ctx context.Context, options *request.RequestExternalPaySetMchUseScope) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -81,7 +83,7 @@ func (comp *Client) SetMchUseScope(options *request.RequestExternalPaySetMchUseS
 
 // 获取对外收款记录
 // https://developer.work.weixin.qq.com/document/path/93667
-func (comp *Client) GetBillList(options *request.RequestExternalPayGetBillList) (*response.ResponseExternalPayGetBillList, error) {
+func (comp *Client) GetBillList(ctx context.Context, options *request.RequestExternalPayGetBillList) (*response.ResponseExternalPayGetBillList, error) {
 
 	result := &response.ResponseExternalPayGetBillList{}
 

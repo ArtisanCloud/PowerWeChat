@@ -1,17 +1,23 @@
 package provider
 
 import (
+	"context"
+
+	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
-	suite "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
 type Client struct {
-	BaseClient *kernel.BaseClient
+	*kernel.BaseClient
 }
 
-func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
-	token := (*app).GetComponent("ProviderAccessToken").(*suite.AccessToken)
-	baseClient, err := kernel.NewBaseClient(app, token.AccessToken)
+func NewClient(app kernel.ApplicationInterface, corpID string) (*Client, error) {
+	token, err := NewAccessToken(&app, corpID)
+	if err != nil {
+		return nil, err
+	}
+	baseClient, err := kernel.NewBaseClient(&app, token.AccessToken)
 	if err != nil {
 		return nil, err
 	}
@@ -20,14 +26,17 @@ func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
 	}, nil
 }
 
-//// 获取代码草稿列表
-//// https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/code_template/gettemplatedraftlist.html
-//func (comp *Client) GetPreAuthorizationUrl() (*response.ResponseGetDrafts, error) {
-//
-//	result := &response.ResponseGetDrafts{}
-//
-//	_, err := comp.BaseClient.HttpGet(ctx,"wxa/gettemplatedraftlist", nil, nil, result)
-//
-//	return result, err
-//
-//}
+// 明文corpid转换为加密corpid
+// https://developer.work.weixin.qq.com/document/path/95604
+func (comp *Client) CorpIDToOpenCorpID(ctx context.Context, corpID string) (string, error) {
+	var result struct {
+		response.ResponseWork
+		OpenCorpID string `json:"open_corpid,omitempty"`
+	}
+	req := object.HashMap{
+		"corpid": corpID,
+	}
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/service/corpid_to_opencorpid", &req, nil, nil, &result)
+
+	return result.OpenCorpID, err
+}
