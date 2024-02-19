@@ -5,7 +5,7 @@ go 1.17
 replace github.com/ArtisanCloud/PowerLibs/v3 => ../PowerLibs
 
 require (
-	github.com/ArtisanCloud/PowerLibs/v3 v3.0.18
+	github.com/ArtisanCloud/PowerLibs/v3 v3.1.1
 	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.7
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/redis/go-redis/v9 v9.4.0
