@@ -8,6 +8,8 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
 	miniProgram2 "github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/customer"
 	message3 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/message"
@@ -33,6 +35,7 @@ import (
 	tag2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/tag"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/transfer"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/groupRobot"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/idConvert"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/invoice"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/jssdk"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/media"
@@ -67,7 +70,10 @@ type Work struct {
 
 	Base        *base.Client
 	AccessToken *auth.AccessToken
+	Auth        *auth.Client
 	OAuth       *oauth.Manager
+
+	OpenWorkAccessToken *corp.AccessToken
 
 	Config     *kernel.Config
 	Department *department.Client
@@ -135,16 +141,21 @@ type Work struct {
 	GroupRobot          *groupRobot.Client
 	GroupRobotMessenger *groupRobot.Messager
 
+	IdConvert *idConvert.Client
+
 	Logger *logger.Logger
 }
 
 type UserConfig struct {
-	CorpID      string
-	AgentID     int
-	Secret      string
-	Token       string
-	AESKey      string
-	CallbackURL string
+	CorpID        string
+	AgentID       int
+	Secret        string
+	PermanentCode string
+	Token         string
+	AESKey        string
+	CallbackURL   string
+
+	OpenWork *openWork.OpenWork
 
 	ResponseType string
 	Log          Log
@@ -160,8 +171,9 @@ type UserConfig struct {
 }
 
 type Http struct {
-	Timeout float64
-	BaseURI string
+	Timeout  float64
+	BaseURI  string
+	ProxyURI string
 }
 
 type Log struct {
@@ -201,6 +213,10 @@ func NewWork(config *UserConfig) (*Work, error) {
 		ServiceContainer: container,
 	}
 
+	if config.OpenWork != nil {
+		app.OpenWorkAccessToken, err = corp.RegisterProvider(config.OpenWork, config.CorpID, config.PermanentCode)
+	}
+
 	//-------------- global app config --------------
 	// global app config
 	app.Config = providers.RegisterConfigProvider(app)
@@ -220,6 +236,11 @@ func NewWork(config *UserConfig) (*Work, error) {
 	if err != nil {
 		return nil, err
 	}
+	app.Auth, err = auth.NewClient(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
 	if err != nil {
@@ -352,6 +373,12 @@ func NewWork(config *UserConfig) (*Work, error) {
 		return nil, err
 	}
 
+	//-------------- register Idconvert --------------
+	app.IdConvert, err = idConvert.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	return app, err
 }
 
@@ -360,6 +387,9 @@ func (app *Work) GetContainer() *kernel.ServiceContainer {
 }
 
 func (app *Work) GetAccessToken() *kernel.AccessToken {
+	if app.OpenWorkAccessToken != nil {
+		return app.OpenWorkAccessToken.AccessToken
+	}
 	return app.AccessToken.AccessToken
 }
 
@@ -372,7 +402,12 @@ func (app *Work) GetComponent(name string) interface{} {
 	switch name {
 	case "Base":
 		return app.Base
+	case "Auth":
+		return app.Auth
 	case "AccessToken":
+		if app.OpenWorkAccessToken != nil {
+			return app.OpenWorkAccessToken
+		}
 		return app.AccessToken
 	case "OAuth":
 		return app.OAuth
@@ -473,6 +508,9 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "GroupRobotMessenger":
 		return app.GroupRobotMessenger
 
+	case "IdConvert":
+		return app.IdConvert
+
 	case "Logger":
 		return app.Logger
 
@@ -502,8 +540,9 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
-			"timeout":  timeout,
-			"base_uri": baseURI,
+			"timeout":   timeout,
+			"base_uri":  baseURI,
+			"proxy_uri": userConfig.Http.ProxyURI,
 		},
 		"log": &object.HashMap{
 			"driver": userConfig.Log.Driver,

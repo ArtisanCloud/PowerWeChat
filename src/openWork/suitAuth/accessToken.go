@@ -1,8 +1,10 @@
-package auth
+package suit
 
 // #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 
 import (
+	"net/http"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 )
@@ -35,19 +37,21 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-
+	app := (*accessToken.App)
 	accessToken.GetCredentials = func() *object.StringMap {
-		config := (*accessToken.App).GetContainer().GetConfig()
-		suiteTicket := (*accessToken.App).GetComponent("SuiteTicket").(*SuiteTicket)
+		config := app.GetContainer().GetConfig()
+		suiteTicket := app.GetComponent("SuiteTicket").(*SuiteTicket)
 		ticket, _ := suiteTicket.GetTicket()
 
+		appID := (*config)["app_id"].(string)
+		secret := (*config)["secret"].(string)
 		return &object.StringMap{
-			"suite_id":     (*config)["app_id"].(string),
-			"suite_secret": (*config)["secret"].(string),
+			"suite_id":     appID,
+			"suite_secret": secret,
 			"suite_ticket": ticket,
 
-			"appid":      (*config)["app_id"].(string),
-			"secret":     (*config)["secret"].(string),
+			"appid":      appID,
+			"secret":     secret,
 			"neededText": ticket,
 		}
 	}
