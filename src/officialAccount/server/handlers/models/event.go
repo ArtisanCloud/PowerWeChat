@@ -96,6 +96,7 @@ type EventScanCodePush struct {
 		ScanResult string `xml:"ScanResult"`
 	} `xml:"ScanCodeInfo"`
 	AgentID string `xml:"AgentID"`
+	Ticket  string `xml:"Ticket"`
 }
 
 type EventScancodeWaitMsg struct {
@@ -108,6 +109,7 @@ type EventScancodeWaitMsg struct {
 		ScanResult string `xml:"ScanResult"`
 	} `xml:"ScanCodeInfo"`
 	AgentID string `xml:"AgentID"`
+	Ticket  string `xml:"Ticket"`
 }
 
 type EventPicSysPhoto struct {
