@@ -43,6 +43,13 @@ type EventUnSubscribe struct {
 	Ticket  string `xml:"Ticket"`
 }
 
+type EventScan struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	AgentID string `xml:"AgentID"`
+	Ticket  string `xml:"Ticket"`
+}
+
 type EventEnterAgent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
@@ -96,7 +103,6 @@ type EventScanCodePush struct {
 		ScanResult string `xml:"ScanResult"`
 	} `xml:"ScanCodeInfo"`
 	AgentID string `xml:"AgentID"`
-	Ticket  string `xml:"Ticket"`
 }
 
 type EventScancodeWaitMsg struct {
@@ -109,7 +115,6 @@ type EventScancodeWaitMsg struct {
 		ScanResult string `xml:"ScanResult"`
 	} `xml:"ScanCodeInfo"`
 	AgentID string `xml:"AgentID"`
-	Ticket  string `xml:"Ticket"`
 }
 
 type EventPicSysPhoto struct {
