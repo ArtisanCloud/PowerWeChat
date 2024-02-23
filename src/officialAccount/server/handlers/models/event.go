@@ -33,12 +33,14 @@ type EventSubscribe struct {
 	models.CallbackMessageHeader
 	EventKey string `xml:"EventKey"`
 	AgentID  string `xml:"AgentID"`
+	Ticket   string `xml:"Ticket"`
 }
 
 type EventUnSubscribe struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
 	AgentID string `xml:"AgentID"`
+	Ticket  string `xml:"Ticket"`
 }
 
 type EventEnterAgent struct {
