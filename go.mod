@@ -1,6 +1,6 @@
 module github.com/ArtisanCloud/PowerWeChat/v3
 
-go 1.17
+go 1.19
 
 //replace github.com/ArtisanCloud/PowerLibs/v3 => ../PowerLibs
 
