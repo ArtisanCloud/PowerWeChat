@@ -96,7 +96,7 @@ type DramaInfo struct {
 	MediaCount        int64      `json:"media_count"`        // 剧集数目
 	Producer          string     `json:"producer"`           // 制作方 。
 	Playwright        string     `json:"playwright"`         // 编剧
-	Description       int64      `json:"description"`        // 描述
+	Description       string     `json:"description"`        // 描述
 	ProductionLicense string     `json:"production_license"` // 广播电视节目制作经营许可证。
 	MediaList         []struct { // 审核状态。
 		MediaId int64 `json:"media_id"` // 媒资文件id。
