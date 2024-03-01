@@ -61,6 +61,9 @@ printf(rs.OpenID)
 * 接口添加context参数
 * 解决v2的自动refresh token问题
 
+### 如果你觉得这个项目对你有帮助，可以请作者喝杯咖啡
+<img src="https://powerwechat.artisan-cloud.com/assets/receive_code.486e5699.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
+
 # 视频教程
 
 ### [快速上手](https://www.bilibili.com/video/BV1tN411u7pV/)
