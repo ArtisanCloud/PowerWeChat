@@ -35,7 +35,7 @@ func (client *Client) TransactionVirtual(ctx context.Context, in *request.Virtua
 
 	uri := "requestVirtualPayment"
 
-	postBody := fmt.Sprintf(`{"offerId":"%s","buyQuantity":1,"env":0,"currencyType":"CNY","platform":"android","productId":"%d","goodsPrice":%d,"outTradeNo":"%s","attach":"%s"}`, client.offerId, in.ProductId, in.Price, in.OutTradeNo, in.Attach)
+	postBody := fmt.Sprintf(`{"offerId":"%s","buyQuantity":1,"env":0,"currencyType":"CNY","platform":"android","productId":"%s","goodsPrice":%d,"outTradeNo":"%s","attach":"%s"}`, client.offerId, in.ProductId, in.Price, in.OutTradeNo, in.Attach)
 
 	paySign := kernel.CalcPaySig(uri, postBody, client.appKey)
 	signature := kernel.CalcSignature(postBody, in.SessionKey)
