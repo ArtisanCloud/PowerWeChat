@@ -2,7 +2,7 @@ package request
 
 type VirtualPaymentOrderRequest struct {
 	SessionKey string `json:"session_key"`  // 文档已更新，现在允许存session key 过期时间官方写的是三天，配合前端checkSessionKey组件经测试 官方有bug
-	ProductId  int64  `json:"product_id"`   // 商品id
+	ProductId  string `json:"product_id"`   // 商品id
 	Price      int64  `json:"price"`        // 金额 单位分
 	OutTradeNo string `json:"out_trade_no"` // 订单号
 	Attach     string `json:"attach"`       // 附加信息
