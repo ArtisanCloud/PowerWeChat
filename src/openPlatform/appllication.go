@@ -281,6 +281,7 @@ func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessTo
 			return nil, err
 		}
 	}
+	application.AccessToken.AccessToken = accessToken.AccessToken
 	application.Encryptor, err = miniProgram2.NewEncryptor(
 		app.Config.GetString("app_id", ""),
 		app.Config.GetString("token", ""),
