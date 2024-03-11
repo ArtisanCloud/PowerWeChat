@@ -10,8 +10,8 @@ require (
 	github.com/ArtisanCloud/PowerLibs/v3 v3.2.0
 	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.7
 	github.com/go-playground/assert/v2 v2.0.1
-	github.com/redis/go-redis/v9 v9.4.0
-	github.com/stretchr/testify v1.8.1
+	github.com/redis/go-redis/v9 v9.0.3
+	github.com/stretchr/testify v1.8.0
 	github.com/swaggo/swag v1.16.3
 )
 
