@@ -5,6 +5,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
+	"strconv"
+	"strings"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
@@ -14,10 +19,6 @@ import (
 	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
-	"io"
-	"net/http"
-	"strconv"
-	"strings"
 )
 
 type BaseClient struct {
@@ -51,16 +52,23 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 
 	config := (*app).GetConfig()
 	baseURI := config.GetString("http.base_uri", "/")
+	proxyURI := config.GetString("http.proxy_uri", "")
 
 	if token == nil {
 		token = (*app).GetAccessToken()
 	}
 	h, err := helper.NewRequestHelper(&helper.Config{
 		BaseUrl: baseURI,
+		ClientConfig: &contract.ClientConfig{
+			ProxyURI: proxyURI,
+		},
 	})
 
 	if err != nil {
 		return nil, err
+	}
+	if proxyURL := config.GetString("http.proxy", ""); proxyURL != "" {
+		h.GetClient()
 	}
 	client := &BaseClient{
 		HttpHelper: h,
@@ -409,7 +417,8 @@ func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
 			// 前置中间件
 			//fmt.Println("获取access token, 在请求前执行")
 
-			accessToken := (*client.App).GetAccessToken()
+			// accessToken := (*client.App).GetAccessToken()
+			accessToken := client.Token
 
 			if accessToken != nil {
 				config := (*client.App).GetContainer().Config
@@ -523,6 +532,7 @@ func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Resp
 			client.Token.Refresh()
 
 			// clone 一个request
+			fmt.Printf("get token:%+v\n", client.Token)
 			token, err := client.Token.GetToken(false)
 			q := req.URL.Query()
 			q.Set(client.Token.TokenKey, token.AccessToken)
