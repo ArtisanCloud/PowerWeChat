@@ -1,5 +1,7 @@
 package response
 
+import "fmt"
+
 type ResponseBase struct {
 	Code    string `json:"code,omitempty"`
 	Message string `json:"message,omitempty"`
@@ -10,6 +12,14 @@ type ResponseWork struct {
 
 	ErrCode int    `json:"errcode,omitempty"`
 	ErrMsg  string `json:"errmsg,omitempty"`
+}
+
+func (r ResponseWork) IsError() bool {
+	return r.ErrCode != 0
+}
+
+func (r ResponseWork) Error() string {
+	return fmt.Sprintf("errcode:%d, errmsg:%s", r.ErrCode, r.ErrMsg)
 }
 
 type ResponsePayment struct {

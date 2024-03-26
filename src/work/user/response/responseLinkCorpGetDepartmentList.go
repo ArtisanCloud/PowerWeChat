@@ -8,5 +8,5 @@ import (
 type ResponseLinkCorpGetDepartmentList struct {
 	response.ResponseWork
 
-	department_list []*power.HashMap `json:"department_list"`
+	DepartmentList []*power.HashMap `json:"department_list"`
 }

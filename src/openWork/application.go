@@ -6,37 +6,25 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
-	miniProgram2 "github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/auth"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/base"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/contact"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/device"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/externalcontact"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/license"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/media"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/provider"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server"
 	suit "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
-	workMiniProgram "github.com/ArtisanCloud/PowerWeChat/v3/src/work/miniProgram"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/user"
 )
 
 type OpenWork struct {
 	*kernel.ServiceContainer
 
-	Base                *base.Client
-	Server              *server.Guard
-	Corp                *corp.Client
-	Provider            *provider.Client
-	SuiteAccessToken    *suit.AccessToken
-	ProviderAccessToken *auth.AccessToken
-	SuiteTicket         *suit.SuiteTicket
-	MiniProgram         *miniProgram.Client
-	Media               *media.Client
-	Contact             *contact.Client
-	LicenseOrder        *license.Client
-	LicenseAccount      *license.Account
-	Device              *device.Client
+	Base             *base.Client
+	Server           *server.Guard
+	User             *user.Client
+	ExternalContact  *externalcontact.Client
+	Suite            *suit.Client
+	SuiteAccessToken *suit.AccessToken
+	SuiteTicket      *suit.SuiteTicket
 
 	Encryptor *kernel.Encryptor
 	Config    *kernel.Config
@@ -44,11 +32,13 @@ type OpenWork struct {
 }
 
 type UserConfig struct {
-	AppID    string
-	Secret   string
-	AuthCode string
-	Token    string
-	AESKey   string
+	AppID          string
+	Secret         string
+	ProviderCorpID string
+	ProviderSecret string
+	AuthCode       string
+	Token          string
+	AESKey         string
 
 	ResponseType string
 	Log          Log
@@ -64,8 +54,9 @@ type UserConfig struct {
 }
 
 type Http struct {
-	Timeout float64
-	BaseURI string
+	Timeout  float64
+	BaseURI  string
+	ProxyURI string
 }
 
 type Log struct {
@@ -94,8 +85,7 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 		UserConfig: userConfig,
 		DefaultConfig: &object.HashMap{
 			"http": &object.HashMap{
-				"timeout":  5.0,
-				"base_uri": "https://api.weixin.qq.com/",
+				"base_uri": "https://qyapi.weixin.qq.com/",
 			},
 		},
 	}
@@ -124,6 +114,11 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 	if err != nil {
 		return nil, err
 	}
+	app.Suite, err = suit.NewClient(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
 	if err != nil {
@@ -136,44 +131,8 @@ func NewOpenWork(config *UserConfig) (*OpenWork, error) {
 		return nil, err
 	}
 
-	//-------------- register Corp --------------
-	app.Corp, err = corp.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register Provider --------------
-	app.Provider, err = provider.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register ProviderAccessToken --------------
-	app.ProviderAccessToken, err = auth.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register Media --------------
-	app.Media, err = media.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register Contact --------------
-	app.Contact, err = contact.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register License --------------
-	app.LicenseOrder, app.LicenseAccount, err = license.RegisterProvider(app)
-	if err != nil {
-		return nil, err
-	}
-
-	//-------------- register Device --------------
-	app.Device, err = device.RegisterProvider(app)
+	//-------------- register User --------------
+	app.User, err = user.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -186,38 +145,40 @@ func (app *OpenWork) GetContainer() *kernel.ServiceContainer {
 }
 
 func (app *OpenWork) GetAccessToken() *kernel.AccessToken {
-	return app.ProviderAccessToken.AccessToken
+	return app.SuiteAccessToken.AccessToken
 }
 
 func (app *OpenWork) GetConfig() *kernel.Config {
 	return app.Config
 }
 
+func (app *OpenWork) Provider(corpID string) (*provider.Client, error) {
+	return provider.NewClient(app, corpID)
+}
+
+func (app *OpenWork) License(corpID string) (*license.Client, error) {
+	return license.NewClient(app, corpID)
+}
+
 func (app *OpenWork) GetComponent(name string) interface{} {
 
 	switch name {
-	case "Corp":
-		return app.Corp
-	case "Provider":
-		return app.Provider
+	case "User":
+		return app.User
+	case "ExternalContact":
+		return app.ExternalContact
+	case "Suite":
+		return app.Suite
 	case "SuiteAccessToken":
 		return app.SuiteAccessToken
-	case "ProviderAccessToken":
-		return app.ProviderAccessToken
 	case "SuiteTicket":
 		return app.SuiteTicket
-	case "MiniProgram":
-		return app.MiniProgram
-	case "Media":
-		return app.Media
-	case "Contact":
-		return app.Contact
-	case "LicenseOrder":
-		return app.LicenseOrder
-	case "LicenseAccount":
-		return app.LicenseAccount
-	case "Device":
-		return app.Device
+	case "Encryptor":
+		return app.Encryptor
+	case "Server":
+		return app.Server
+	case "Logger":
+		return app.Logger
 
 	default:
 		return nil
@@ -227,7 +188,7 @@ func (app *OpenWork) GetComponent(name string) interface{} {
 
 func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
-	baseURI := "https://api.weixin.qq.com/"
+	baseURI := "https://qyapi.weixin.qq.com/"
 	if userConfig.Http.BaseURI != "" {
 		baseURI = userConfig.Http.BaseURI
 	}
@@ -237,16 +198,19 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	}
 	config := &object.HashMap{
 
-		"app_id":    userConfig.AppID,
-		"secret":    userConfig.Secret,
-		"auth_code": userConfig.AuthCode,
-		"token":     userConfig.Token,
-		"aes_key":   userConfig.AESKey,
+		"app_id":          userConfig.AppID,
+		"secret":          userConfig.Secret,
+		"provider_corpid": userConfig.ProviderCorpID,
+		"provider_secret": userConfig.ProviderSecret,
+		"auth_code":       userConfig.AuthCode,
+		"token":           userConfig.Token,
+		"aes_key":         userConfig.AESKey,
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
-			"timeout":  timeout,
-			"base_uri": baseURI,
+			"timeout":   timeout,
+			"base_uri":  baseURI,
+			"proxy_uri": userConfig.Http.ProxyURI,
 		},
 		"log": &object.HashMap{
 			"driver": userConfig.Log.Driver,
@@ -267,81 +231,4 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 	return config, nil
 
-}
-
-func (app *OpenWork) GetMiniProgram() (application *workMiniProgram.Application, err error) {
-
-	config := app.GetConfig()
-	userConfig, err := app.convertUserConfigToWorkMiniProgramConfig(config.Collection)
-
-	application, err = workMiniProgram.NewApplication(userConfig)
-
-	return application, err
-
-}
-
-func (app *OpenWork) convertUserConfigToWorkMiniProgramConfig(config *object.Collection) (userConfig *workMiniProgram.UserConfig, err error) {
-
-	// log config
-	logConfig := config.Get("log", nil)
-	log := miniProgram2.Log{
-		Level: "",
-		File:  "",
-		ENV:   "",
-	}
-	if logConfig != nil {
-		log = logConfig.(miniProgram2.Log)
-	}
-
-	//// auth config
-	//logConfig := config.Get("log", nil)
-	//log := miniProgram2.Log{
-	//	Level: "",
-	//	File:  "",
-	//	ENV:   "",
-	//}
-	//if logConfig != nil {
-	//	log = logConfig.(miniProgram2.Log)
-	//}
-	//
-	//// cache config
-	//cacheConfig := config.Get("log", nil)
-	//var cache cache.CacheInterface
-	//if cacheConfig != nil {
-	//	cache = cacheConfig.(cache.CacheInterface)
-	//}
-
-	// http config
-	httpConfig := config.Get("http", nil)
-	var mapHttpConfig *object.HashMap
-	if httpConfig != nil {
-		mapHttpConfig = httpConfig.(*object.HashMap)
-	}
-	userConfig = &workMiniProgram.UserConfig{
-
-		MiniProgramUserConfig: &miniProgram2.UserConfig{
-			AppID:             config.GetString("appID", ""),
-			Secret:            config.GetString("secret", ""),
-			RefreshToken:      config.GetString("refreshToken", ""),
-			ComponentAppID:    config.GetString("componentAppID", ""),
-			ComponentAppToken: config.GetString("componentAppToken", ""),
-			ResponseType:      config.GetString("responseType", ""),
-			Log:               log,
-			//OAuth:             config.GetString("oauth", ""),
-			//Cache:             cache,
-			HttpDebug: config.GetBool("httpDebug", false),
-			Debug:     config.GetBool("debug", false),
-			NotifyURL: config.GetString("notifyURL", ""),
-			Sandbox:   config.GetBool("sandbox", false),
-		},
-		CorpID:      config.GetString("corpID", ""),
-		AgentID:     config.GetInt("agentID", 0),
-		Secret:      config.GetString("secret", ""),
-		Token:       config.GetString("token", ""),
-		AESKey:      config.GetString("aESKey", ""),
-		CallbackURL: config.GetString("callbackURL", ""),
-		Http:        mapHttpConfig,
-	}
-
-	return userConfig, err
 }

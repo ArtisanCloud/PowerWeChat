@@ -31,16 +31,18 @@ func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
 	config := (*accessToken.App).GetConfig()
+	corpID := config.GetString("corp_id", "")
+	secret := config.GetString("secret", "")
 	accessToken.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{
 			// this is for the cached key encoded
-			"appid":      config.GetString("corp_id", ""),
-			"secret":     config.GetString("secret", ""),
+			"appid":      corpID,
+			"secret":     secret,
 			"neededText": "",
 
 			// this is for the real credentials
-			"corpid":     config.GetString("corp_id", ""),
-			"corpsecret": config.GetString("secret", ""),
+			"corpid":     corpID,
+			"corpsecret": secret,
 		}
 	}
 }
