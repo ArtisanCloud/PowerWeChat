@@ -417,8 +417,8 @@ func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
 			// 前置中间件
 			//fmt.Println("获取access token, 在请求前执行")
 
-			// accessToken := (*client.App).GetAccessToken()
-			accessToken := client.Token
+			accessToken := (*client.App).GetAccessToken()
+			//accessToken := client.Token
 
 			if accessToken != nil {
 				config := (*client.App).GetContainer().Config
