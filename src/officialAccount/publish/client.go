@@ -122,7 +122,7 @@ func (comp *Client) PublishSubmit(ctx context.Context, mediaID string) (*respons
 
 // 发布状态轮询接口
 // https://developers.weixin.qq.com/doc/offiaccount/Publish/Get_status.html
-func (comp *Client) PublishGet(ctx context.Context, publishID string) (*response.ResponsePublishGet, error) {
+func (comp *Client) PublishGet(ctx context.Context, publishID uint64) (*response.ResponsePublishGet, error) {
 	result := &response.ResponsePublishGet{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/freepublish/get", &object.HashMap{

@@ -143,7 +143,9 @@ func (comp *Client) AddReceiver(
 
 	result := &response.ResponseProfitSharingAddReceiver{}
 
+	config := (*comp.App).GetConfig()
 	options := &object.HashMap{
+		"appid":           config.GetString("app_id", ""),
 		"type":            receiverType,
 		"account":         account,
 		"name":            name,

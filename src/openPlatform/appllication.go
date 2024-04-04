@@ -274,9 +274,16 @@ func (app *OpenPlatform) OfficialAccount(appID string, refreshToken string, acce
 }
 
 func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessToken *auth2.AccessToken) (application *miniProgram3.Application, err error) {
-	userConfig := app.GetMiniProgramAuthorizerConfig(appID, refreshToken)
+	userConfig, err := app.GetMiniProgramAuthorizerConfig(appID, refreshToken)
 	application, err = miniProgram3.NewApplication(userConfig)
 
+	// 重塑一个AccessToken
+	if accessToken == nil {
+		accessToken, err = auth2.NewAccessToken(application.MiniProgram, app)
+		if err != nil {
+			return nil, err
+		}
+	}
 	application.AccessToken.AccessToken = accessToken.AccessToken
 	application.Encryptor, err = miniProgram2.NewEncryptor(
 		app.Config.GetString("app_id", ""),
@@ -329,12 +336,16 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 	return userConfig, err
 }
 
-func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshToken string) (userConfig *miniProgram2.UserConfig) {
+func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshToken string) (userConfig *miniProgram2.UserConfig, err error) {
 
 	token, _ := app.AccessToken.GetToken(false)
 	config := app.GetConfig()
 	cache := config.Get("cache", nil).(cache.CacheInterface)
-	oauth := config.Get("oauth", nil).(miniProgram2.OAuth)
+	var oauth = miniProgram2.OAuth{}
+	err = object.HashMapToStructure(config.Get("oauth", nil).(*object.HashMap), &oauth)
+	if err != nil {
+		return nil, err
+	}
 	log := config.Get("log", nil).(*object.HashMap)
 
 	userConfig = &miniProgram2.UserConfig{
@@ -360,7 +371,7 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 		Sandbox:   config.GetBool("sandbox", false),
 	}
 
-	return userConfig
+	return userConfig, err
 }
 
 // Return the pre-authorization login page url.
