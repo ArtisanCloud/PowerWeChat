@@ -12,11 +12,10 @@ import (
 
 type AccessToken struct {
 	*kernel.AccessToken
-	CorpID string `json:"corpid,omitempty"`
 }
 
 // https://developer.work.weixin.qq.com/document/path/90593
-func NewAccessToken(app *kernel.ApplicationInterface, corpID string) (*AccessToken, error) {
+func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
@@ -29,7 +28,6 @@ func NewAccessToken(app *kernel.ApplicationInterface, corpID string) (*AccessTok
 	}
 	token := &AccessToken{
 		kernelToken,
-		corpID,
 	}
 
 	// Override fields and functions
@@ -41,11 +39,12 @@ func NewAccessToken(app *kernel.ApplicationInterface, corpID string) (*AccessTok
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
 
-	accessToken.GetCredentials = func() *object.StringMap {
-		config := (*accessToken.App).GetContainer().GetConfig()
+	config := (*accessToken.App).GetContainer().GetConfig()
 
-		corpID := (*config)["provider_corpid"].(string)
-		secret := (*config)["provider_secret"].(string)
+	//服务商的corpid
+	corpID := (*config)["provider_corpid"].(string)
+	secret := (*config)["provider_secret"].(string)
+	accessToken.GetCredentials = func() *object.StringMap {
 
 		return &object.StringMap{
 			"corpid":          corpID,

@@ -1,18 +1,20 @@
 package openWork
 
 import (
+	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/base"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/externalcontact"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/license"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/provider"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server"
 	suit "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/user"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work"
 )
 
 type OpenWork struct {
@@ -39,6 +41,7 @@ type UserConfig struct {
 	AuthCode       string
 	Token          string
 	AESKey         string
+	CallbackURL    string
 
 	ResponseType string
 	Log          Log
@@ -152,14 +155,6 @@ func (app *OpenWork) GetConfig() *kernel.Config {
 	return app.Config
 }
 
-func (app *OpenWork) Provider(corpID string) (*provider.Client, error) {
-	return provider.NewClient(app, corpID)
-}
-
-func (app *OpenWork) License(corpID string) (*license.Client, error) {
-	return license.NewClient(app, corpID)
-}
-
 func (app *OpenWork) GetComponent(name string) interface{} {
 
 	switch name {
@@ -200,11 +195,12 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 
 		"app_id":          userConfig.AppID,
 		"secret":          userConfig.Secret,
-		"provider_corpid": userConfig.ProviderCorpID,
-		"provider_secret": userConfig.ProviderSecret,
 		"auth_code":       userConfig.AuthCode,
 		"token":           userConfig.Token,
 		"aes_key":         userConfig.AESKey,
+		"provider_corpid": userConfig.ProviderCorpID,
+		"provider_secret": userConfig.ProviderSecret,
+		"callback_url":    userConfig.CallbackURL,
 
 		"response_type": userConfig.ResponseType,
 		"http": &object.HashMap{
@@ -230,5 +226,141 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 	}
 
 	return config, nil
+}
 
+// ProviderWork 服务商代开发用
+func (app *OpenWork) ProviderClient(corpID string, permanentCode string, externConfig *work.UserConfig) (*work.Work, error) {
+	config := app.GetConfig()
+	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
+	log := config.Get("log", nil).(*object.HashMap)
+	httpCfg := config.Get("http", nil).(*object.HashMap)
+	workHttp := work.Http{
+		ProxyURI: (*httpCfg)["proxy_uri"].(string),
+		Timeout:  (*httpCfg)["timeout"].(float64),
+		BaseURI:  (*httpCfg)["base_uri"].(string),
+	}
+	oauth := work.OAuth{
+		Callback: config.GetString("callback_url", ""),
+	}
+	workLog := work.Log{
+		Level: (*log)["level"].(string),
+		File:  (*log)["file"].(string),
+		ENV:   (*log)["env"].(string),
+	}
+	debug := config.GetBool("debug", false)
+	httpDebug := config.GetBool("http_debug", false)
+	if externConfig != nil {
+		if externConfig.Http.Timeout > 0 {
+			workHttp.Timeout = externConfig.Http.Timeout
+		}
+		if externConfig.Http.BaseURI != "" {
+			workHttp.BaseURI = externConfig.Http.BaseURI
+		}
+		if externConfig.Http.ProxyURI != "" {
+			workHttp.ProxyURI = externConfig.Http.ProxyURI
+		}
+		if externConfig.OAuth.Callback != "" {
+			oauth.Callback = externConfig.OAuth.Callback
+		}
+		if externConfig.Log.File != "" {
+			workLog.File = externConfig.Log.File
+		}
+		if externConfig.Log.ENV != "" {
+			workLog.ENV = externConfig.Log.ENV
+		}
+		if externConfig.Log.Level != "" {
+			workLog.Level = externConfig.Log.Level
+		}
+		if externConfig.Log.Error != "" {
+			workLog.Error = externConfig.Log.Error
+		}
+		debug = externConfig.Debug
+		httpDebug = externConfig.HttpDebug
+	}
+	userConfig := work.UserConfig{
+		CorpID:    corpID,
+		Secret:    permanentCode,
+		Token:     config.GetString("token", ""),
+		AESKey:    config.GetString("aes_key", ""),
+		Cache:     cacheHandle,
+		Http:      workHttp,
+		OAuth:     oauth,
+		Log:       workLog,
+		HttpDebug: httpDebug,
+		Debug:     debug,
+	}
+	return work.NewWork(&userConfig)
+}
+
+// ThirdpartyWork 第三方应用
+func (app *OpenWork) ThirdpartyClient(corpID string, permanentCode string, externConfig *work.UserConfig) (*work.Work, error) {
+	config := app.GetConfig()
+	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
+	log := config.Get("log", nil).(*object.HashMap)
+	httpCfg := config.Get("http", nil).(*object.HashMap)
+	workHttp := work.Http{
+		ProxyURI: (*httpCfg)["proxy_uri"].(string),
+		Timeout:  (*httpCfg)["timeout"].(float64),
+		BaseURI:  (*httpCfg)["base_uri"].(string),
+	}
+	oauth := work.OAuth{
+		Callback: config.GetString("callback_url", ""),
+	}
+	workLog := work.Log{
+		Level: (*log)["level"].(string),
+		File:  (*log)["file"].(string),
+		ENV:   (*log)["env"].(string),
+	}
+	debug := config.GetBool("debug", false)
+	httpDebug := config.GetBool("http_debug", false)
+	if externConfig != nil {
+		if externConfig.Http.Timeout > 0 {
+			workHttp.Timeout = externConfig.Http.Timeout
+		}
+		if externConfig.Http.BaseURI != "" {
+			workHttp.BaseURI = externConfig.Http.BaseURI
+		}
+		if externConfig.Http.ProxyURI != "" {
+			workHttp.ProxyURI = externConfig.Http.ProxyURI
+		}
+		if externConfig.OAuth.Callback != "" {
+			oauth.Callback = externConfig.OAuth.Callback
+		}
+		if externConfig.Log.File != "" {
+			workLog.File = externConfig.Log.File
+		}
+		if externConfig.Log.ENV != "" {
+			workLog.ENV = externConfig.Log.ENV
+		}
+		if externConfig.Log.Level != "" {
+			workLog.Level = externConfig.Log.Level
+		}
+		if externConfig.Log.Error != "" {
+			workLog.Error = externConfig.Log.Error
+		}
+		debug = externConfig.Debug
+		httpDebug = externConfig.HttpDebug
+	}
+	userConfig := work.UserConfig{
+		CorpID:    corpID,
+		Secret:    permanentCode,
+		Token:     config.GetString("token", ""),
+		AESKey:    config.GetString("aes_key", ""),
+		Cache:     cacheHandle,
+		Http:      workHttp,
+		OAuth:     oauth,
+		Log:       workLog,
+		HttpDebug: httpDebug,
+		Debug:     debug,
+	}
+	clt, err := work.NewWork(&userConfig)
+	if err != nil {
+		return nil, err
+	}
+	accessToken, err := corp.RegisterProvider(app, corpID, permanentCode)
+	if err != nil {
+		return nil, err
+	}
+	clt.AccessToken.AccessToken = accessToken.AccessToken
+	return clt, nil
 }
