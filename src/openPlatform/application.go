@@ -305,7 +305,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 	config := app.GetConfig()
 	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
 
-	// 将oatuh的配置对象化
+	// 将oauth的配置对象化
 	var oauth = officialAccount2.OAuth{}
 	err = object.HashMapToStructure(config.Get("oauth", nil).(*object.HashMap), &oauth)
 	if err != nil {
