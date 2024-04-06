@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"sort"
 	"strconv"
@@ -216,7 +215,7 @@ func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func
 			resultRS = (*result)["response"].(string)
 		}
 		rs = &http.Response{
-			Body: ioutil.NopCloser(bytes.NewBufferString(resultRS)),
+			Body: io.NopCloser(bytes.NewBufferString(resultRS)),
 		}
 
 	} else {
@@ -224,7 +223,7 @@ func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func
 		header := http.Header{}
 		header.Set("Content-Type", "application/xml")
 		rs = &http.Response{
-			Body:       ioutil.NopCloser(bytes.NewBufferString(strBuiltResponse)),
+			Body:       io.NopCloser(bytes.NewBufferString(strBuiltResponse)),
 			StatusCode: http.StatusOK,
 			Header:     header,
 		}
@@ -246,7 +245,7 @@ func (serverGuard *ServerGuard) OverrideResolve() {
 				resultRS = (*result)["response"].(string)
 			}
 			rs = &http.Response{
-				Body: ioutil.NopCloser(bytes.NewBufferString(resultRS)),
+				Body: io.NopCloser(bytes.NewBufferString(resultRS)),
 			}
 
 		} else {
@@ -254,7 +253,7 @@ func (serverGuard *ServerGuard) OverrideResolve() {
 			header := http.Header{}
 			header.Set("Content-Type", "application/xml")
 			rs = &http.Response{
-				Body:       ioutil.NopCloser(bytes.NewBufferString(strBuiltResponse)),
+				Body:       io.NopCloser(bytes.NewBufferString(strBuiltResponse)),
 				StatusCode: http.StatusOK,
 				Header:     header,
 			}

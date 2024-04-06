@@ -46,8 +46,8 @@ func NewAccessToken(app *kernel.ApplicationInterface, corpId, permanentCode stri
 func (accessToken *AccessToken) OverrideGetEndpoint() {
 
 	app := (*accessToken.App)
+	token := app.GetComponent("SuiteAccessToken").(*suit.AccessToken)
 	accessToken.GetEndpoint = func() (string, error) {
-		token := app.GetComponent("SuiteAccessToken").(*suit.AccessToken)
 		suiteAccessToken, _ := token.AccessToken.GetToken(false)
 		return accessToken.EndpointToGetToken + `?suite_access_token=` + url.QueryEscape(suiteAccessToken.AccessToken), nil
 	}
@@ -58,17 +58,18 @@ func (accessToken *AccessToken) OverrideGetEndpoint() {
 func (accessToken *AccessToken) OverrideGetCredentials() {
 
 	app := (*accessToken.App)
+	config := app.GetContainer().GetConfig()
+	appID := (*config)["app_id"].(string)
+	corpID := accessToken.corpID
+	permanentCode := accessToken.permanentCode
 	accessToken.GetCredentials = func() *object.StringMap {
-		config := app.GetContainer().GetConfig()
-
-		appID := (*config)["app_id"].(string)
 
 		return &object.StringMap{
-			"auth_corpid":    accessToken.corpID,
-			"permanent_code": accessToken.permanentCode,
+			"auth_corpid":    corpID,
+			"permanent_code": permanentCode,
 
-			"appid":      accessToken.corpID,
-			"secret":     accessToken.permanentCode,
+			"appid":      corpID,
+			"secret":     permanentCode,
 			"neededText": security.HashStringData(accessToken.corpID + "-" + appID),
 		}
 	}

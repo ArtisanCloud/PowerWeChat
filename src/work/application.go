@@ -8,8 +8,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/providers"
 	miniProgram2 "github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork"
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/corp"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/customer"
 	message3 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/message"
@@ -72,8 +70,6 @@ type Work struct {
 	AccessToken *auth.AccessToken
 	Auth        *auth.Client
 	OAuth       *oauth.Manager
-
-	OpenWorkAccessToken *corp.AccessToken
 
 	Config     *kernel.Config
 	Department *department.Client
@@ -147,15 +143,12 @@ type Work struct {
 }
 
 type UserConfig struct {
-	CorpID        string
-	AgentID       int
-	Secret        string
-	PermanentCode string
-	Token         string
-	AESKey        string
-	CallbackURL   string
-
-	OpenWork *openWork.OpenWork
+	CorpID      string
+	AgentID     int
+	Secret      string
+	Token       string
+	AESKey      string
+	CallbackURL string
 
 	ResponseType string
 	Log          Log
@@ -211,10 +204,6 @@ func NewWork(config *UserConfig) (*Work, error) {
 	// init app
 	app := &Work{
 		ServiceContainer: container,
-	}
-
-	if config.OpenWork != nil {
-		app.OpenWorkAccessToken, err = corp.RegisterProvider(config.OpenWork, config.CorpID, config.PermanentCode)
 	}
 
 	//-------------- global app config --------------
@@ -387,9 +376,6 @@ func (app *Work) GetContainer() *kernel.ServiceContainer {
 }
 
 func (app *Work) GetAccessToken() *kernel.AccessToken {
-	if app.OpenWorkAccessToken != nil {
-		return app.OpenWorkAccessToken.AccessToken
-	}
 	return app.AccessToken.AccessToken
 }
 
@@ -405,9 +391,6 @@ func (app *Work) GetComponent(name string) interface{} {
 	case "Auth":
 		return app.Auth
 	case "AccessToken":
-		if app.OpenWorkAccessToken != nil {
-			return app.OpenWorkAccessToken
-		}
 		return app.AccessToken
 	case "OAuth":
 		return app.OAuth
