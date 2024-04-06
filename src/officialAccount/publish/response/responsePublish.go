@@ -5,7 +5,7 @@ import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 type ResponsePublishSubmit struct {
 	response.ResponseOfficialAccount
 
-	PublishId string `json:"publish_id"`
+	PublishId uint64 `json:"publish_id"`
 }
 
 type ArticleItem struct {
@@ -21,7 +21,7 @@ type ArticleDetail struct {
 type ResponsePublishGet struct {
 	response.ResponseOfficialAccount
 
-	PublishId     string         `json:"publish_id"`
+	PublishId     uint64         `json:"publish_id"`
 	PublishStatus int            `json:"publish_status"`
 	ArticleId     interface{}    `json:"article_id"`
 	ArticleDetail *ArticleDetail `json:"article_detail"`

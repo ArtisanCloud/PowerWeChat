@@ -6,7 +6,6 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/externalcontact/response"
-	suite "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
 )
 
 type Client struct {
@@ -14,8 +13,7 @@ type Client struct {
 }
 
 func NewClient(app *kernel.ApplicationInterface) (*Client, error) {
-	token := (*app).GetComponent("SuiteAccessToken").(*suite.AccessToken)
-	baseClient, err := kernel.NewBaseClient(app, token.AccessToken)
+	baseClient, err := kernel.NewBaseClient(app, nil)
 	if err != nil {
 		return nil, err
 	}
