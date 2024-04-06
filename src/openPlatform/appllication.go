@@ -239,6 +239,8 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 }
 
 func (app *OpenPlatform) OfficialAccount(appID string, refreshToken string, accessToken *auth2.AccessToken) (application *officialAccount.Application, err error) {
+
+	// 配置公众号的授权者的配置
 	userConfig, err := app.GetOfficialAuthorizerConfig(appID, refreshToken)
 	if err != nil {
 		return nil, err
@@ -298,9 +300,12 @@ func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessTo
 
 func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken string) (userConfig *officialAccount2.UserConfig, err error) {
 
+	// 先从缓存中获取token，需要在之前的授权流程中，通过ComponentVerifyTicket生成的token。
 	token, _ := app.AccessToken.GetToken(false)
 	config := app.GetConfig()
 	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
+
+	// 将oatuh的配置对象化
 	var oauth = officialAccount2.OAuth{}
 	err = object.HashMapToStructure(config.Get("oauth", nil).(*object.HashMap), &oauth)
 	if err != nil {
@@ -309,6 +314,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 
 	log := config.Get("log", nil).(*object.HashMap)
 
+	// 用户的配置信息重新映射到UserConfig配置对象
 	userConfig = &officialAccount2.UserConfig{
 		ComponentAppID:    config.GetString("app_id", ""),
 		ComponentAppToken: token.ComponentAccessToken,
