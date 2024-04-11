@@ -28,7 +28,7 @@ func NewBatchClient(app *payment.ApplicationPaymentInterface) (*BatchClient, err
 }
 
 // 发起商家转账API
-// https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_1.shtml
+// https://pay.weixin.qq.com/docs/merchant/apis/batch-transfer-to-balance/transfer-batch/initiate-batch-transfer.html
 func (comp *BatchClient) Batch(ctx context.Context, param *request.RequestTransferBatch) (*response.ResponseTrasferBatch, error) {
 
 	config := (*comp.App).GetConfig()
