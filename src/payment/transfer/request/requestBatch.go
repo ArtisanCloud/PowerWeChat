@@ -19,4 +19,12 @@ type RequestTransferBatch struct {
 	TotalNum           int               `json:"total_num"`
 	TransferDetailList []*TransferDetail `json:"transfer_detail_list"`
 	TransferSceneID    string            `json:"transfer_scene_id,omitempty"`
+	NotifyUrl          string            `json:"notify_url,omitempty"`
+}
+
+func (requestTransferBatch *RequestTransferBatch) SetNotifyUrl(url string) {
+	requestTransferBatch.NotifyUrl = url
+}
+func (requestTransferBatch *RequestTransferBatch) GetNotifyUrl() string {
+	return requestTransferBatch.NotifyUrl
 }

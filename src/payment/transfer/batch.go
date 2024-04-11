@@ -31,6 +31,13 @@ func NewBatchClient(app *payment.ApplicationPaymentInterface) (*BatchClient, err
 // https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_1.shtml
 func (comp *BatchClient) Batch(ctx context.Context, param *request.RequestTransferBatch) (*response.ResponseTrasferBatch, error) {
 
+	config := (*comp.App).GetConfig()
+
+	if param.GetNotifyUrl() == "" {
+		url := config.GetString("notify_url", "")
+		param.SetNotifyUrl(url)
+	}
+
 	result := &response.ResponseTrasferBatch{}
 
 	options, err := object.StructToHashMap(param)
