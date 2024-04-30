@@ -1,6 +1,14 @@
 package response
 
-import "time"
+import (
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	"time"
+)
+
+type ResponseMediaUpload struct {
+	response.ResponsePayment
+	MediaId string `json:"media_id"`
+}
 
 type ReturnAddressInfo struct {
 	ReturnAddress string `json:"return_address"`
@@ -35,7 +43,9 @@ type ComplainOrderInfo struct {
 	Amount        int    `json:"amount"`
 }
 
-type Data struct {
+type ResponseQueryComplaint struct {
+	response.ResponsePayment
+
 	ComplaintId           string               `json:"complaint_id"`
 	ComplaintTime         time.Time            `json:"complaint_time"`
 	ComplaintDetail       string               `json:"complaint_detail"`
@@ -55,8 +65,10 @@ type Data struct {
 }
 
 type ResponseComplaints struct {
-	Data       []Data `json:"data"`
-	Limit      int    `json:"limit"`
-	Offset     int    `json:"offset"`
-	TotalCount int    `json:"total_count"`
+	response.ResponsePayment
+
+	Data       []ResponseQueryComplaint `json:"data"`
+	Limit      int                      `json:"limit"`
+	Offset     int                      `json:"offset"`
+	TotalCount int                      `json:"total_count"`
 }
