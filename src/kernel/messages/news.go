@@ -24,21 +24,21 @@ func (msg *News) OverridePropertiesToArray() {
 
 	msg.PropertiesToArray = func(data *object.HashMap, aliases *object.HashMap) (*object.HashMap, error) {
 		arrayItems := msg.Get("items", nil).([]*object.HashMap)
-		title := msg.Get("title", nil).(string)
-		description := msg.Get("description", nil).(string)
-		picUrl := msg.Get("picUrl", nil).(string)
-		url := msg.Get("url", nil).(string)
+		//title := msg.Get("title", nil).(string)
+		//description := msg.Get("description", nil).(string)
+		//picUrl := msg.Get("picUrl", nil).(string)
+		//url := msg.Get("url", nil).(string)
 		arrayMapItems := []*object.HashMap{}
 		for _, item := range arrayItems {
 			arrayMapItems = append(arrayMapItems, item)
 		}
 
 		return &object.HashMap{
-			"articles":    arrayMapItems,
-			"title":       title,
-			"description": description,
-			"picUrl":      picUrl,
-			"url":         url,
+			"articles": arrayMapItems,
+			//"title":       title,
+			//"description": description,
+			//"picUrl":      picUrl,
+			//"url":         url,
 		}, nil
 	}
 
@@ -50,10 +50,10 @@ func (msg *News) OverrideToXmlArray() {
 		items := []*object.HashMap{}
 
 		getItem := msg.Get("items", nil)
-		title := msg.Get("title", nil).(string)
-		description := msg.Get("description", nil).(string)
-		picUrl := msg.Get("picUrl", nil).(string)
-		url := msg.Get("url", nil).(string)
+		//title := msg.Get("title", nil).(string)
+		//description := msg.Get("description", nil).(string)
+		//picUrl := msg.Get("picUrl", nil).(string)
+		//url := msg.Get("url", nil).(string)
 		if getItem != nil {
 			arrayItems := getItem.([]*object.HashMap)
 			for _, item := range arrayItems {
@@ -67,10 +67,10 @@ func (msg *News) OverrideToXmlArray() {
 		return &object.HashMap{
 			"ArticleCount": len(items),
 			"Articles":     items,
-			"Title":        title,
-			"Description":  description,
-			"PicUrl":       picUrl,
-			"Url":          url,
+			//"Title":        title,
+			//"Description":  description,
+			//"PicUrl":       picUrl,
+			//"Url":          url,
 		}
 	}
 }

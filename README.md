@@ -64,7 +64,7 @@ printf(rs.OpenID)
 ### 如果你觉得这个项目对你有帮助，可以请作者喝杯咖啡
 <img src="https://powerwechat.artisan-cloud.com/assets/receive_code.486e5699.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
 
-### 感谢打赏者
+### 感谢打赏者，对该项目的支持
 <a href="https://github.com/qindj">
   <img width="50" src="https://avatars.githubusercontent.com/u/1707762?v=4">
 </a>
