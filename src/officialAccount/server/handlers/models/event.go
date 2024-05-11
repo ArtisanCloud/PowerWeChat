@@ -46,8 +46,9 @@ type EventUnSubscribe struct {
 type EventScan struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	AgentID string `xml:"AgentID"`
-	Ticket  string `xml:"Ticket"`
+	AgentID  string `xml:"AgentID"`
+	Ticket   string `xml:"Ticket"`
+	EventKey string `xml:"EventKey"`
 }
 
 type EventEnterAgent struct {
