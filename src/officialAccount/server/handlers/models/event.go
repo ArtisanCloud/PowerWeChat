@@ -96,7 +96,7 @@ type EventView struct {
 type EventScanCodePush struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	ScanCodeInfo struct {
 		Text       string `xml:",chardata"`
 		ScanType   string `xml:"ScanType"`
@@ -108,7 +108,7 @@ type EventScanCodePush struct {
 type EventScancodeWaitMsg struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	ScanCodeInfo struct {
 		Text       string `xml:",chardata"`
 		ScanType   string `xml:"ScanType"`
@@ -120,7 +120,7 @@ type EventScancodeWaitMsg struct {
 type EventPicSysPhoto struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	SendPicsInfo struct {
 		Text    string `xml:",chardata"`
 		Count   string `xml:"Count"`
@@ -138,7 +138,7 @@ type EventPicSysPhoto struct {
 type EventPicPhotoOrAlbum struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	SendPicsInfo struct {
 		Text    string `xml:",chardata"`
 		Count   string `xml:"Count"`
@@ -156,7 +156,7 @@ type EventPicPhotoOrAlbum struct {
 type EventPicWeixin struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	SendPicsInfo struct {
 		Text    string `xml:",chardata"`
 		Count   string `xml:"Count"`
@@ -266,7 +266,7 @@ type EventTemplateCardEvent struct {
 type EventTemplateCardMenuEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	TaskID       string `xml:"TaskId"`
 	CardType     string `xml:"CardType"`
 	ResponseCode string `xml:"ResponseCode"`

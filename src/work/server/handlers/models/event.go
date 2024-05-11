@@ -263,7 +263,7 @@ type EventTemplateCardEvent struct {
 type EventTemplateCardMenuEvent struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	EventKey     string `xml:"EventKey"`
+	//EventKey     string `xml:"EventKey"`
 	TaskID       string `xml:"TaskId"`
 	CardType     string `xml:"CardType"`
 	ResponseCode string `xml:"ResponseCode"`
