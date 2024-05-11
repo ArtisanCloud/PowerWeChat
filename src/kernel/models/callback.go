@@ -33,6 +33,7 @@ type CallbackMessageHeader struct {
 	MsgType      string   `xml:"MsgType"`
 	Event        string   `xml:"Event"`
 	ChangeType   string   `xml:"ChangeType"`
+	EventKey     string   `xml:"EventKey,omitempty"`
 	Content      []byte
 }
 
