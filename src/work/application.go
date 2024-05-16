@@ -45,6 +45,7 @@ import (
 	miniProgram "github.com/ArtisanCloud/PowerWeChat/v3/src/work/miniProgram"
 	msgaudit "github.com/ArtisanCloud/PowerWeChat/v3/src/work/msgAudit"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/approval"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/calendar"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/dial"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/journal"
@@ -127,6 +128,7 @@ type Work struct {
 	OAPSTNCC      *pstncc.Client
 	OASchedule    *schedule.Client
 	OAWebDrive    *webdrive.Client
+	OAApproval    *approval.Client
 
 	MsgAudit *msgaudit.Client
 
@@ -334,7 +336,9 @@ func NewWork(config *UserConfig) (*Work, error) {
 		app.OAMeetingRoom,
 		app.OAPSTNCC,
 		app.OASchedule,
-		app.OAWebDrive, err = oa.RegisterProvider(app)
+		app.OAWebDrive,
+		app.OAApproval,
+		err = oa.RegisterProvider(app)
 	if err != nil {
 		return nil, err
 	}
@@ -478,6 +482,8 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.OASchedule
 	case "OAWebDrive":
 		return app.OAWebDrive
+	case "OAApproval":
+		return app.OAApproval
 
 	case "MsgAudit":
 		return app.MsgAudit
