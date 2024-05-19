@@ -195,7 +195,7 @@ func (comp *Client) CreateApproval(ctx context.Context, data *power.HashMap) (*r
 
 // 批量获取审批单号
 // https://developer.work.weixin.qq.com/document/path/91816
-func (comp *Client) GetApprovalInfo(ctx context.Context, startTime int, endTime int, nextCursor int, size int, filters *object.HashMap) (*response.ResponseApprovalNoList, error) {
+func (comp *Client) GetApprovalInfo(ctx context.Context, startTime int, endTime int, nextCursor int, size int, filters []*object.HashMap) (*response.ResponseApprovalNoList, error) {
 
 	result := &response.ResponseApprovalNoList{}
 
