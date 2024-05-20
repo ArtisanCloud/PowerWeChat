@@ -6,5 +6,6 @@ import (
 
 type ResponseApprovalNoList struct {
 	response.ResponseWork
-	SpNoList []string `json:"sp_no_list"`
+	SpNoList      []string `json:"sp_no_list"`
+	NewNextCursor string   `json:"new_next_cursor"`
 }
