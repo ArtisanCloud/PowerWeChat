@@ -195,7 +195,7 @@ func (comp *Client) CreateApproval(ctx context.Context, data *power.HashMap) (*r
 
 // 批量获取审批单号
 // https://developer.work.weixin.qq.com/document/path/91816
-func (comp *Client) GetApprovalInfo(ctx context.Context, startTime int, endTime int, nextCursor int, size int, filters []*object.HashMap) (*response.ResponseApprovalNoList, error) {
+func (comp *Client) GetApprovalInfo(ctx context.Context, startTime int, endTime int, nextCursor string, size int, filters []*object.HashMap) (*response.ResponseApprovalNoList, error) {
 
 	result := &response.ResponseApprovalNoList{}
 
@@ -204,11 +204,11 @@ func (comp *Client) GetApprovalInfo(ctx context.Context, startTime int, endTime 
 	}
 
 	options := &object.HashMap{
-		"starttime": fmt.Sprintf("%d", startTime),
-		"endtime":   fmt.Sprintf("%d", endTime),
-		"cursor":    fmt.Sprintf("%d", nextCursor),
-		"size":      size,
-		"filters":   filters,
+		"starttime":  fmt.Sprintf("%d", startTime),
+		"endtime":    fmt.Sprintf("%d", endTime),
+		"new_cursor": nextCursor,
+		"size":       size,
+		"filters":    filters,
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/oa/getapprovalinfo", options, nil, nil, result)
