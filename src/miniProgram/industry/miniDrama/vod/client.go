@@ -208,3 +208,23 @@ func (comp *Client) GetDramaInfo(ctx context.Context, dramaId int64) (result *re
 
 	return
 }
+
+// 修改剧目基本信息
+// 该接口用于修改剧目基本信息。请求成功后，需要经过审核，审核通过后，最终才会修改基本信息。审核完成后，会下发通知。
+// 1.剧目必须已经审核通过。
+// 2.审核完成后会发送[事件通知]
+// https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/industry/mini-drama/mini_drama.html#_3-6-%E4%BF%AE%E6%94%B9%E5%89%A7%E7%9B%AE%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF
+
+func (comp *Client) UpdateDramaInfo(ctx context.Context, in *request.UpdateDramaInfoRequest) (result *response.BaseResponse, err error) {
+
+	params, err := power.StructToHashMap(in)
+
+	if err != nil {
+
+		return nil, err
+	}
+
+	_, err = comp.BaseClient.HttpPostJson(ctx, "wxa/sec/vod/modifydramabasicinfo", params, nil, nil, &result)
+
+	return
+}
