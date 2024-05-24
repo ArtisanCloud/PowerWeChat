@@ -66,6 +66,7 @@ type UpdateDramaInfoRequest struct {
 	QualificationType                  int       `json:"qualification_type,omitempty"`
 	QualificationCertificateMaterialId string    `json:"qualification_certificate_material_id,omitempty"`
 	RegistrationNumber                 string    `json:"registration_number,omitempty"`
+	CostCommitmentLetterMaterialId     string    `json:"cost_commitment_letter_material_id,omitempty"`
 }
 
 type ActorList struct {
