@@ -51,9 +51,10 @@ type RequestAccountServiceMsgMenu struct {
 	List        []RequestAccountServiceMsgMenuList `json:"list,omitempty"`
 }
 type RequestAccountServiceMsgMenuList struct {
-	Click       RequestAccountServiceMsgMenuListClick       `json:"click,omitempty"`
-	View        RequestAccountServiceMsgMenuListView        `json:"view,omitempty"`
-	MiniProgram RequestAccountServiceMsgMenuListMiniProgram `json:"miniprogram,omitempty"`
+	Type        string                                       `json:"type"`
+	Click       *RequestAccountServiceMsgMenuListClick       `json:"click,omitempty"`
+	View        *RequestAccountServiceMsgMenuListView        `json:"view,omitempty"`
+	MiniProgram *RequestAccountServiceMsgMenuListMiniProgram `json:"miniprogram,omitempty"`
 }
 type RequestAccountServiceMsgMenuListClick struct {
 	ID      string `json:"id"`
