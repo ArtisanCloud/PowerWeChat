@@ -56,21 +56,25 @@ type GetDramaListRequest struct {
 
 // 剧目基本信息修改
 type UpdateDramaInfoRequest struct {
-	DramaId                   int    `json:"drama_id"`
-	Description               string `json:"description,omitempty"`
-	CoverMaterialId           string `json:"cover_material_id,omitempty"`
-	Recommendations           string `json:"recommendations,omitempty"`
-	PromotionPosterMaterialId string `json:"promotion_poster_material_id,omitempty"`
-	AlternateName             string `json:"alternate_name,omitempty"`
-	ActorList                 struct {
-		Actor []struct {
-			Name            string `json:"name"`
-			PhotoMaterialId string `json:"photo_material_id"`
-			Role            string `json:"role"`
-			Profile         string `json:"profile"`
-		} `json:"actor"`
-	} `json:"actor_list"`
-	QualificationType                  int    `json:"qualification_type,omitempty"`
-	QualificationCertificateMaterialId string `json:"qualification_certificate_material_id,omitempty"`
-	RegistrationNumber                 string `json:"registration_number,omitempty"`
+	DramaId                            int       `json:"drama_id"`
+	Description                        string    `json:"description,omitempty"`
+	CoverMaterialId                    string    `json:"cover_material_id,omitempty"`
+	Recommendations                    string    `json:"recommendations,omitempty"`
+	PromotionPosterMaterialId          string    `json:"promotion_poster_material_id,omitempty"`
+	AlternateName                      string    `json:"alternate_name,omitempty"`
+	ActorList                          ActorList `json:"actor_list"`
+	QualificationType                  int       `json:"qualification_type,omitempty"`
+	QualificationCertificateMaterialId string    `json:"qualification_certificate_material_id,omitempty"`
+	RegistrationNumber                 string    `json:"registration_number,omitempty"`
+}
+
+type ActorList struct {
+	Actor []Actor `json:"actor"`
+}
+
+type Actor struct {
+	Name            string `json:"name"`
+	PhotoMaterialId string `json:"photo_material_id"`
+	Role            string `json:"role"`
+	Profile         string `json:"profile"`
 }
