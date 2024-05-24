@@ -56,7 +56,7 @@ type GetDramaListRequest struct {
 
 // 剧目基本信息修改
 type UpdateDramaInfoRequest struct {
-	DramaId                            int       `json:"drama_id"`
+	DramaId                            int64     `json:"drama_id"`
 	Description                        string    `json:"description,omitempty"`
 	CoverMaterialId                    string    `json:"cover_material_id,omitempty"`
 	Recommendations                    string    `json:"recommendations,omitempty"`
