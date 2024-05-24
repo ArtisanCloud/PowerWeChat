@@ -56,21 +56,21 @@ type GetDramaListRequest struct {
 
 // 剧目基本信息修改
 type UpdateDramaInfoRequest struct {
-	DramaId                            int64     `json:"drama_id"`
-	Description                        string    `json:"description,omitempty"`
-	CoverMaterialId                    string    `json:"cover_material_id,omitempty"`
-	Recommendations                    string    `json:"recommendations,omitempty"`
-	PromotionPosterMaterialId          string    `json:"promotion_poster_material_id,omitempty"`
-	AlternateName                      string    `json:"alternate_name,omitempty"`
-	ActorList                          ActorList `json:"actor_list"`
-	QualificationType                  int       `json:"qualification_type,omitempty"`
-	QualificationCertificateMaterialId string    `json:"qualification_certificate_material_id,omitempty"`
-	RegistrationNumber                 string    `json:"registration_number,omitempty"`
-	CostCommitmentLetterMaterialId     string    `json:"cost_commitment_letter_material_id,omitempty"`
+	DramaId                            int64      `json:"drama_id"`
+	Description                        string     `json:"description,omitempty"`
+	CoverMaterialId                    string     `json:"cover_material_id,omitempty"`
+	Recommendations                    string     `json:"recommendations,omitempty"`
+	PromotionPosterMaterialId          string     `json:"promotion_poster_material_id,omitempty"`
+	AlternateName                      string     `json:"alternate_name,omitempty"`
+	ActorList                          *ActorList `json:"actor_list,omitempty"`
+	QualificationType                  int        `json:"qualification_type,omitempty"`
+	QualificationCertificateMaterialId string     `json:"qualification_certificate_material_id,omitempty"`
+	RegistrationNumber                 string     `json:"registration_number,omitempty"`
+	CostCommitmentLetterMaterialId     string     `json:"cost_commitment_letter_material_id,omitempty"`
 }
 
 type ActorList struct {
-	Actor []Actor `json:"actor"`
+	Actor []*Actor `json:"actor,omitempty"`
 }
 
 type Actor struct {
