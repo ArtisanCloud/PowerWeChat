@@ -53,3 +53,29 @@ type GetDramaListRequest struct {
 	Limit  int64 `json:"limit,omitempty"`  // 分页拉取的最大返回结果数。默认值：100；最大值：100。
 	Offset int64 `json:"offset,omitempty"` // 分页拉取的起始偏移量。默认值：0。
 }
+
+// 剧目基本信息修改
+type UpdateDramaInfoRequest struct {
+	DramaId                            int64      `json:"drama_id"`
+	Description                        string     `json:"description,omitempty"`
+	CoverMaterialId                    string     `json:"cover_material_id,omitempty"`
+	Recommendations                    string     `json:"recommendations,omitempty"`
+	PromotionPosterMaterialId          string     `json:"promotion_poster_material_id,omitempty"`
+	AlternateName                      string     `json:"alternate_name,omitempty"`
+	ActorList                          *ActorList `json:"actor_list,omitempty"`
+	QualificationType                  int        `json:"qualification_type,omitempty"`
+	QualificationCertificateMaterialId string     `json:"qualification_certificate_material_id,omitempty"`
+	RegistrationNumber                 string     `json:"registration_number,omitempty"`
+	CostCommitmentLetterMaterialId     string     `json:"cost_commitment_letter_material_id,omitempty"`
+}
+
+type ActorList struct {
+	Actor []*Actor `json:"actor,omitempty"`
+}
+
+type Actor struct {
+	Name            string `json:"name"`
+	PhotoMaterialId string `json:"photo_material_id"`
+	Role            string `json:"role"`
+	Profile         string `json:"profile"`
+}
