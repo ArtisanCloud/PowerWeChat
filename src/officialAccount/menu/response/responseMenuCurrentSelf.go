@@ -31,6 +31,7 @@ type SelfButton struct {
 	Type       string     `json:"type"`
 	Name       string     `json:"name"`
 	Key        string     `json:"key"`
+	Value      string     `json:"value,omitempty"`
 	SubButtons *SubButton `json:"sub_button"`
 }
 
