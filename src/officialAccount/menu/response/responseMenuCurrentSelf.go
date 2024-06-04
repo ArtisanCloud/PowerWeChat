@@ -9,6 +9,7 @@ type ButtonItem struct {
 	AppID    string `json:"appid,omitempty"`
 	PagePath string `json:"pagepath,omitempty"`
 	Key      string `json:"key,omitempty"`
+	Value    string `json:"value,omitempty"`
 
 	NewsInfo struct {
 		List []struct {
