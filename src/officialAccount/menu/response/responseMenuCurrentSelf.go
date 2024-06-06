@@ -9,6 +9,7 @@ type ButtonItem struct {
 	AppID    string `json:"appid,omitempty"`
 	PagePath string `json:"pagepath,omitempty"`
 	Key      string `json:"key,omitempty"`
+	Value    string `json:"value,omitempty"`
 
 	NewsInfo struct {
 		List []struct {
@@ -30,6 +31,7 @@ type SelfButton struct {
 	Type       string     `json:"type"`
 	Name       string     `json:"name"`
 	Key        string     `json:"key"`
+	Value      string     `json:"value,omitempty"`
 	SubButtons *SubButton `json:"sub_button"`
 }
 
