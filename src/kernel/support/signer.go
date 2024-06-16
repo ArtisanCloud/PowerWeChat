@@ -3,11 +3,14 @@ package support
 import (
 	"context"
 	"crypto"
+	"crypto/hmac"
 	"crypto/rand"
 	"crypto/rsa"
+	"crypto/sha256"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
+	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"io/ioutil"
@@ -185,4 +188,24 @@ func SignSHA256WithRSA(source string, privateKey *rsa.PrivateKey) (signature str
 		return "", err
 	}
 	return base64.StdEncoding.EncodeToString(signatureByte), nil
+}
+
+func SignSHA256WithHMac(sessionKey []byte, input string) ([]byte, error) {
+	if len(sessionKey) == 0 {
+		return nil, errors.New("session key is empty")
+	}
+
+	// Create a new HMAC SHA256 object
+	hmac := hmac.New(sha256.New, sessionKey)
+
+	// Write the input string to the HMAC object
+	inputBytes := []byte(input)
+	if _, err := hmac.Write(inputBytes); err != nil {
+		return nil, err
+	}
+
+	// Get the HMAC signature
+	signature := hmac.Sum(nil)
+
+	return signature, nil
 }
