@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ArtisanCloud/PowerLibs/v3/http/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/http/helper"
@@ -53,6 +54,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 	config := (*app).GetConfig()
 	baseURI := config.GetString("http.base_uri", "/")
 	proxyURI := config.GetString("http.proxy_uri", "")
+	timeout := config.GetFloat64("http.timeout", 5)
 
 	if token == nil {
 		token = (*app).GetAccessToken()
@@ -60,6 +62,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 	h, err := helper.NewRequestHelper(&helper.Config{
 		BaseUrl: baseURI,
 		ClientConfig: &contract.ClientConfig{
+			Timeout:  time.Duration(timeout * float64(time.Second)),
 			ProxyURI: proxyURI,
 		},
 	})
