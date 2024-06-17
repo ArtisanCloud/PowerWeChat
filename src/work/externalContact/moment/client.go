@@ -115,3 +115,18 @@ func (comp *Client) AddMomentTask(ctx context.Context, params *request.RequestAd
 
 	return result, err
 }
+
+// 获取任务创建结果
+// https://developer.work.weixin.qq.com/document/path/95095
+func (comp *Client) GetMomentTaskResult(ctx context.Context, jobId string) (*response.ResponseGetMomentTaskResult, error) {
+
+	result := &response.ResponseGetMomentTaskResult{}
+
+	params := &object.StringMap{
+		"jobid": jobId,
+	}
+
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/externalcontact/get_moment_task_result", params, nil, result)
+
+	return result, err
+}
