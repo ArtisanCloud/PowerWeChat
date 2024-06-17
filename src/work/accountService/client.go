@@ -2,7 +2,9 @@ package accountService
 
 import (
 	"context"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
+
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/request"
@@ -82,9 +84,17 @@ func (comp *Client) AddContactWay(ctx context.Context, openKFID string, scene st
 
 	result := &response.ResponseAccountServiceAddContactWay{}
 
-	options := &object.HashMap{
-		"open_kfid": openKFID,
-		"scene":     scene,
+	var options *object.HashMap
+
+	if scene == "" {
+		options = &object.HashMap{
+			"open_kfid": openKFID,
+		}
+	} else {
+		options = &object.HashMap{
+			"open_kfid": openKFID,
+			"scene":     scene,
+		}
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/add_contact_way", options, nil, nil, result)
