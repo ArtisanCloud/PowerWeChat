@@ -32,9 +32,17 @@ func (comp *Client) BatchGet(ctx context.Context, externalUserIDList []string, n
 
 	result := &response.ResponseCustomerBatchGet{}
 
+	var need uint32
+
+	if needEnterSessionContext {
+		need = 1
+	} else {
+		need = 0
+	}
+
 	options := &object.HashMap{
 		"external_userid_list":       externalUserIDList,
-		"need_enter_session_context": needEnterSessionContext,
+		"need_enter_session_context": need,
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/customer/batchget", options, nil, nil, result)
