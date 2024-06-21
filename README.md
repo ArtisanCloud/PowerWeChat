@@ -1,7 +1,7 @@
 # PowerWeChat SDK
 
-[![Go Build](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml/badge.svg?branch=release%2F2.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml)
-[![Go Test](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml/badge.svg?branch=release%2F2.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml)
+[![Go Build](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml/badge.svg?branch=release%2F3.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-build.yml)
+[![Go Test](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml/badge.svg?branch=release%2F3.0.0)](https://github.com/ArtisanCloud/PowerWeChat/actions/workflows/go-test.yml)
 
 你的[Star](https://github.com/ArtisanCloud/PowerWeChat/stargazers "Star")，是对我们最好的支持！也是我们坚持的动力！
 
