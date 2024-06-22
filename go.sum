@@ -1,6 +1,5 @@
 github.com/ArtisanCloud/PowerLibs/v3 v3.0.3/go.mod h1:6/cNm8Dv8wdogyB5yPZGTm9KhaXIifiOw8a2IuD07hw=
-github.com/ArtisanCloud/PowerLibs/v3 v3.2.2 h1:tedNqqKM5/xT7w28dOJjF+O5AhxvbajMfdjwJUyYLIQ=
-github.com/ArtisanCloud/PowerLibs/v3 v3.2.2/go.mod h1:XFRnJA+D0b0IoeSk2ceZzBp9qxatMHOGtWdZCa/r/3U=
+github.com/ArtisanCloud/PowerLibs/v3 v3.2.3 h1:B3IMBnn1IskBYte+7IIfKOcxjHVAm3hWvkkE/g3YiQo=
 github.com/ArtisanCloud/PowerLibs/v3 v3.2.3/go.mod h1:XFRnJA+D0b0IoeSk2ceZzBp9qxatMHOGtWdZCa/r/3U=
 github.com/ArtisanCloud/PowerSocialite/v3 v3.0.7 h1:P+erNlErr+X2v7Et+yTWaTfIRhw+HfpAPdvNIEwk9Gw=
 github.com/ArtisanCloud/PowerSocialite/v3 v3.0.7/go.mod h1:VZQNCvcK/rldF3QaExiSl1gJEAkyc5/I8RLOd3WFZq4=
@@ -211,7 +210,6 @@ gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntN
 gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
 gopkg.in/fsnotify.v1 v1.4.7/go.mod h1:Tz8NjZHkW78fSQdbUxIjBTcgA1z1m8ZHf0WmKUhAMys=
-gopkg.in/natefinch/lumberjack.v2 v2.2.1 h1:bBRl1b0OH9s/DuPhuXpNl+VtCaJXFZ5/uEFST95x9zc=
 gopkg.in/natefinch/lumberjack.v2 v2.2.1/go.mod h1:YD8tP3GAjkrDg1eZH7EGmyESg/lsYskCTPBJVb9jqSc=
 gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7/go.mod h1:dt/ZhP58zS4L8KSrWDmTeBkI65Dw0HsyUHuEVlX15mw=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
