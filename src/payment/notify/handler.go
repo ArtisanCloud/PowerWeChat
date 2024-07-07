@@ -10,7 +10,7 @@ import (
 	base2 "github.com/ArtisanCloud/PowerWeChat/v3/src/payment/base"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment/notify/request"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -84,7 +84,7 @@ func (handler *Handler) ToResponse() (response *http.Response, err error) {
 	rs := &http.Response{
 		StatusCode: http.StatusOK,
 	}
-	rs.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBuffer))
+	rs.Body = io.NopCloser(bytes.NewBuffer(bodyBuffer))
 
 	return rs, err
 }
@@ -97,7 +97,7 @@ func (handler *Handler) GetMessage() (notify *request.RequestNotify, err error) 
 
 	externalRequest := handler.ExternalRequest
 
-	requestBody, err := ioutil.ReadAll(externalRequest.Body)
+	requestBody, err := io.ReadAll(externalRequest.Body)
 	if err != nil {
 		return nil, err
 	}

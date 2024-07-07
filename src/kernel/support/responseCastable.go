@@ -8,7 +8,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"go/types"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"reflect"
 )
@@ -25,7 +25,7 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 	switch castType {
 
 	case response2.TYPE_ARRAY:
-		body, err := ioutil.ReadAll(response.Body)
+		body, err := io.ReadAll(response.Body)
 		if err != nil {
 			return nil, err
 		}
@@ -34,7 +34,7 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 
 		return data, err
 	case response2.TYPE_MAP:
-		body, err := ioutil.ReadAll(response.Body)
+		body, err := io.ReadAll(response.Body)
 		if err != nil {
 			return nil, err
 		}
@@ -67,22 +67,22 @@ func (responseCastable *ResponseCastable) DetectAndCastResponseToType(response i
 	case types.Array:
 
 		postBodyBuf, _ := json.Marshal(response.(types.Array))
-		returnResponse.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
+		returnResponse.Body = io.NopCloser(bytes.NewBuffer(postBodyBuf))
 
 		break
 	case object.HashMap:
 		postBodyBuf, _ := json.Marshal(response.(object.HashMap))
-		returnResponse.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
+		returnResponse.Body = io.NopCloser(bytes.NewBuffer(postBodyBuf))
 
 		break
 	case *object.HashMap:
 		postBodyBuf, _ := json.Marshal(response.(*object.HashMap))
-		returnResponse.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
+		returnResponse.Body = io.NopCloser(bytes.NewBuffer(postBodyBuf))
 
 		break
 	case string:
 		postBodyBuf, _ := json.Marshal(response.(string))
-		returnResponse.Body = ioutil.NopCloser(bytes.NewBuffer(postBodyBuf))
+		returnResponse.Body = io.NopCloser(bytes.NewBuffer(postBodyBuf))
 
 		break
 	default:

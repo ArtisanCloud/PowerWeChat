@@ -13,7 +13,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
-	"io/ioutil"
 	"os"
 	"strings"
 	"time"
@@ -133,7 +132,7 @@ func (s *SHA256WithRSASigner) getPrivateKey() (*rsa.PrivateKey, error) {
 
 	if fileInfo, err := os.Stat(s.PrivateKeyPath); err == nil && !fileInfo.IsDir() {
 		// 读取私钥文件
-		keyBytes, err = ioutil.ReadFile(s.PrivateKeyPath)
+		keyBytes, err = os.ReadFile(s.PrivateKeyPath)
 		if err != nil {
 			return nil, err
 		}
