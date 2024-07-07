@@ -6,9 +6,10 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response4 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
+	"io"
 	"io/fs"
-	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 type Client struct {
@@ -76,8 +77,8 @@ func (comp *Client) SaveAs(ctx context.Context, savedPath string, perm fs.FileMo
 		return err
 	}
 
-	body, err := ioutil.ReadAll(rs.Body)
-	err = ioutil.WriteFile(savedPath, body, perm) //保存图片地址
+	body, err := io.ReadAll(rs.Body)
+	err = os.WriteFile(savedPath, body, perm) //保存图片地址
 
 	return err
 }

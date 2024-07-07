@@ -4,7 +4,7 @@ import (
 	"bytes"
 	logger2 "github.com/ArtisanCloud/PowerLibs/v3/logger"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -33,7 +33,7 @@ func (guard *Guard) VerifyURL(request *http.Request) (httpRS *http.Response, err
 		return nil, err
 	}
 
-	bodyData := ioutil.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
+	bodyData := io.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
 	rs := &http.Response{
 		Body:       bodyData,
 		StatusCode: http.StatusOK,

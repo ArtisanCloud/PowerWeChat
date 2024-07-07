@@ -8,7 +8,7 @@ import (
 	"encoding/pem"
 	"fmt"
 	"hash"
-	"io/ioutil"
+	"os"
 )
 
 type RSAOaep struct {
@@ -42,7 +42,7 @@ func (r *RSAOaep) EncryptOAEP(text []byte) ([]byte, error) {
 	return cipherData, nil
 }
 
-func (r *RSAOaep) DecryptOAEP(hash hash.Hash,cipherMsg []byte) ([]byte, error) {
+func (r *RSAOaep) DecryptOAEP(hash hash.Hash, cipherMsg []byte) ([]byte, error) {
 	if r.PrivateKey == nil && r.PrivateKeyPath == "" {
 		return nil, fmt.Errorf("you must set privatekey to use EncryptOAEP")
 	}
@@ -67,7 +67,7 @@ func (r *RSAOaep) DecryptOAEP(hash hash.Hash,cipherMsg []byte) ([]byte, error) {
 }
 
 func (r *RSAOaep) getPublicKey() (*rsa.PublicKey, error) {
-	keyStr, err := ioutil.ReadFile(r.PublicKeyPath)
+	keyStr, err := os.ReadFile(r.PublicKeyPath)
 
 	if err != nil {
 		return nil, err
@@ -90,7 +90,7 @@ func (r *RSAOaep) getPublicKey() (*rsa.PublicKey, error) {
 }
 
 func (r *RSAOaep) getPrivateKey() (*rsa.PrivateKey, error) {
-	keyStr, err := ioutil.ReadFile(r.PrivateKeyPath)
+	keyStr, err := os.ReadFile(r.PrivateKeyPath)
 
 	if err != nil {
 		return nil, err

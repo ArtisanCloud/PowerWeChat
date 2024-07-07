@@ -559,8 +559,8 @@ func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Resp
 			}
 
 			return res2, err
-			//b, err := ioutil.ReadAll(res2.Body)
-			//rs.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			//b, err := io.ReadAll(res2.Body)
+			//rs.Body = io.NopCloser(bytes.NewBuffer(b))
 			//content := string(b)
 			//fmt2.Dump(content)
 		}
