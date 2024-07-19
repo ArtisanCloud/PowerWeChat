@@ -13,6 +13,7 @@ type RequestAccountServiceSendMsg struct {
 	MiniProgram *RequestAccountServiceMsgMiniProgram `json:"miniprogram,omitempty"`
 	Menu        *RequestAccountServiceMsgMenu        `json:"msgmenu,omitempty"`
 	Location    *RequestAccountServiceMsgLocation    `json:"location,omitempty"`
+	CaLink      *RequestAccountServiceMsgCaLink      `json:"ca_link,omitempty"`
 }
 
 type RequestAccountServiceMsgText struct {
@@ -75,4 +76,8 @@ type RequestAccountServiceMsgLocation struct {
 	Address   string `json:"address"`
 	Latitude  int    `json:"latitude"`
 	Longitude int    `json:"longitude"`
+}
+
+type RequestAccountServiceMsgCaLink struct {
+	LinkUrl string `json:"link_url"`
 }
