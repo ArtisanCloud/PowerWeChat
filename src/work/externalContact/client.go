@@ -187,10 +187,10 @@ func (comp *Client) GetNewExternalUserID(ctx context.Context, externalUserIDList
 // https://developer.work.weixin.qq.com/document/path/95884#external-userid%E8%BD%AC%E6%8D%A2
 func (comp *Client) FromServiceExternalUserID(ctx context.Context, agentID int, externalUserID string) (string, error) {
 
-	var result struct {
+	result := new(struct {
 		response2.ResponseWork
 		ExternalUserID string `json:"external_userid,omitempty"`
-	}
+	})
 	req := object.HashMap{
 		"source_agentid":  agentID,
 		"external_userid": externalUserID,
