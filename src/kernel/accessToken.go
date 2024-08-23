@@ -14,7 +14,6 @@ import (
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
-	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
@@ -356,8 +355,12 @@ func (accessToken *AccessToken) OverrideGetMiddlewareOfLog() {
 		return contract3.RequestMiddleware(func(handle contract3.RequestHandle) contract3.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
 
-				// 前置中间件
-				request2.LogRequest(logger, request)
+				//config := (*client.App).GetConfig()
+				//http_debug := config.GetBool("http_debug", false)
+				//// 前置中间件
+				//if http_debug {
+				//	request2.LogRequest(logger, request)
+				//}
 
 				response, err = handle(request)
 				if err != nil {
@@ -365,7 +368,10 @@ func (accessToken *AccessToken) OverrideGetMiddlewareOfLog() {
 				}
 
 				// 后置中间件
-				response2.LogResponse(logger, response)
+				//if http_debug {
+				//response2.LogResponse(logger, response)
+				//}
+
 				return
 			}
 		})
