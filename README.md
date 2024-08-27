@@ -62,7 +62,7 @@ printf(rs.OpenID)
 * 解决v2的自动refresh token问题
 
 ### 如果你觉得这个项目对你有帮助，可以请作者喝杯咖啡
-<img src="https://powerwechat.artisan-cloud.com/assets/contact-qr-matrix-x.CMxSV8Gs.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
+<img src="https://powerwechat.artisan-cloud.com/assets/receive_code.3KAeHaPN.jpg" alt="请扫我" style="display:inline; width: 150px;"/>
 
 ### 感谢打赏者，对该项目的支持
 <a href="https://github.com/qindj">
