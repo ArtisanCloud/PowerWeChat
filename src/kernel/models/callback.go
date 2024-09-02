@@ -27,13 +27,13 @@ type CallbackMessageHeader struct {
 	contract.EventInterface
 	XMLName      xml.Name `xml:"xml"`
 	Text         string   `xml:",chardata"`
-	ToUserName   string   `xml:"ToUserName" json:"ToUserName"`
-	FromUserName string   `xml:"FromUserName" json:"FromUserName"`
-	CreateTime   int      `xml:"CreateTime" json:"CreateTime"`
-	MsgType      string   `xml:"MsgType" json:"MsgType"`
-	Event        string   `xml:"Event" json:"Event"`
-	ChangeType   string   `xml:"ChangeType" json:"ChangeType"`
-	EventKey     string   `xml:"EventKey,omitempty" json:"EventKey,omitempty"`
+	ToUserName   string   `xml:"ToUserName"`
+	FromUserName string   `xml:"FromUserName"`
+	CreateTime   string   `xml:"CreateTime"`
+	MsgType      string   `xml:"MsgType"`
+	Event        string   `xml:"Event"`
+	ChangeType   string   `xml:"ChangeType"`
+	EventKey     string   `xml:"EventKey,omitempty"`
 	Content      []byte
 }
 
@@ -45,7 +45,7 @@ func (header CallbackMessageHeader) GetFromUserName() string {
 	return header.FromUserName
 }
 
-func (header CallbackMessageHeader) GetCreateTime() int {
+func (header CallbackMessageHeader) GetCreateTime() string {
 	return header.CreateTime
 }
 
