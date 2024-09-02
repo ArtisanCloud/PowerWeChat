@@ -50,6 +50,7 @@ type ServerGuard struct {
 	IsSafeMode              func(request *http.Request) bool
 	Validate                func(request *http.Request) (*ServerGuard, error)
 	ShouldReturnRawResponse func(request *http.Request) bool
+	RequestDataType         func(request *http.Request) string
 
 	ToCallbackType func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error)
 
@@ -74,6 +75,9 @@ func NewServerGuard(app *ApplicationInterface) *ServerGuard {
 	}
 	serverGuard.ShouldReturnRawResponse = func(request *http.Request) bool {
 		return serverGuard.shouldReturnRawResponse(request)
+	}
+	serverGuard.RequestDataType = func(request *http.Request) string {
+		return serverGuard.requestDataType(request)
 	}
 
 	serverGuard.OverrideGetToken()
@@ -150,7 +154,7 @@ func (serverGuard *ServerGuard) GetEvent(request *http.Request) (callback *model
 	if request == nil {
 		return nil, nil, errors.New("request is invalid")
 	}
-	var b []byte = []byte("<xml></xml>")
+	var b []byte = []byte("")
 	if request.Body != http.NoBody {
 		b, err = io.ReadAll(request.Body)
 		if err != nil || b == nil {
@@ -158,7 +162,10 @@ func (serverGuard *ServerGuard) GetEvent(request *http.Request) (callback *model
 		}
 	}
 
-	callback, err = serverGuard.ParseMessage(string(b))
+	// 请求数据类型
+	rDataType := serverGuard.RequestDataType(request)
+
+	callback, err = serverGuard.ParseMessage(string(b), rDataType)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -167,7 +174,11 @@ func (serverGuard *ServerGuard) GetEvent(request *http.Request) (callback *model
 		callbackHeader, err = serverGuard.DecryptEvent(request, string(b))
 	} else {
 		callbackHeader = &models.CallbackMessageHeader{}
-		err = xml.Unmarshal(b, callbackHeader)
+		if rDataType == messages.DataTypeXML {
+			err = xml.Unmarshal(b, callbackHeader)
+		} else {
+			err = json.Unmarshal(b, callbackHeader)
+		}
 		callbackHeader.Content = b
 	}
 
@@ -184,7 +195,7 @@ func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *mod
 		}
 	}
 
-	callback, err = serverGuard.ParseMessage(string(b))
+	callback, err = serverGuard.ParseMessage(string(b), serverGuard.RequestDataType(request))
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -196,11 +207,9 @@ func (serverGuard *ServerGuard) GetMessage(request *http.Request) (callback *mod
 			Text:       callback.Text,
 			ToUserName: callback.ToUserName,
 		}
-
 	}
 
 	return callback, callbackHeader, Decrypted, err
-
 }
 
 func (serverGuard *ServerGuard) ResolveEvent(request *http.Request, closure func(event contract.EventInterface) interface{}) (rs *http.Response, err error) {
@@ -405,28 +414,35 @@ func (serverGuard *ServerGuard) isSafeMode(request *http.Request) bool {
 	query := request.URL.Query()
 
 	return query.Get("signature") != "" && "aes" == query.Get("encrypt_type")
-
 }
 
-func (serverGuard *ServerGuard) ParseMessage(content string) (callback *models.Callback, err error) {
+func (serverGuard *ServerGuard) requestDataType(request *http.Request) string {
+	if strings.HasPrefix(request.Header.Get("Content-Type"), "text/xml") {
+		// xml 格式
+		return messages.DataTypeXML
+	} else {
+		// json 格式
+		return messages.DataTypeJSON
+	}
+}
 
+func (serverGuard *ServerGuard) ParseMessage(content string, dataType string) (callback *models.Callback, err error) {
 	callback = &models.Callback{}
 
-	if len(content) > 0 {
-		if content[0:1] == "<" {
-			err = xml.Unmarshal([]byte(content), callback)
-			if err != nil {
-				return nil, err
-			}
-		} else {
-			// Handle JSON format.
-			err = object.JsonDecode([]byte(content), callback)
-			if err != nil {
-				return nil, err
-			}
+	if len(content) <= 0 {
+		return nil, errors.New("request body is empty")
+	}
+
+	if dataType == messages.DataTypeXML {
+		err = xml.Unmarshal([]byte(content), callback)
+		if err != nil {
+			return nil, err
 		}
 	} else {
-
+		err = object.JsonDecode([]byte(content), callback)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return callback, err
