@@ -26,6 +26,18 @@ func (comp *Client) GetPaidUnionID(ctx context.Context, data *request.RequestGet
 	return result, err
 }
 
+
+// 获取小程序基本信息
+func (comp *Client) GetBasicInfo(ctx context.Context) (*response.ResponseGetBasicInfo, error) {
+
+	result := &response.ResponseGetBasicInfo{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/account/getaccountbasicinfo", nil, nil, nil, result)
+
+	return result, err
+
+}
+
 // 检查加密信息是否由微信生成（当前只支持手机号加密数据），只能检测最近3天生成的加密数据
 // https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/user-info/auth.checkEncryptedData.html
 func (comp *Client) CheckEncryptedData(ctx context.Context, encryptedMsgHash string) (*response.ResponseAuthCheckEncryptedData, error) {
