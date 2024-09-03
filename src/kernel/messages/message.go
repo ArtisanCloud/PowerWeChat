@@ -28,6 +28,14 @@ const ALL = TEXT | IMAGE | VOICE | VIDEO |
 	DEVICE_TEXT | FILE | TEXT_CARD | TRANSFER |
 	EVENT | MINIPROGRAM_PAGE | MINIPROGRAM_NOTICE
 
+// 消息推送的数据格式
+const (
+	// DataTypeXML XML 格式数据
+	DataTypeXML = "xml"
+	// DataTypeJSON JSON 格式数据
+	DataTypeJSON = "json"
+)
+
 type Message struct {
 	contract.MessageInterface
 

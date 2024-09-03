@@ -5,7 +5,7 @@ import "net/http"
 type EventInterface interface {
 	GetToUserName() string
 	GetFromUserName() string
-	GetCreateTime() string
+	GetCreateTime() int
 	GetMsgType() string
 	GetEvent() string
 	GetChangeType() string
