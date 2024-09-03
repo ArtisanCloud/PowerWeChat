@@ -415,7 +415,8 @@ func (serverGuard *ServerGuard) isSafeMode(request *http.Request) bool {
 }
 
 func (serverGuard *ServerGuard) requestDataType(request *http.Request) string {
-	if strings.HasPrefix(request.Header.Get("Content-Type"), "text/xml") {
+	if strings.HasPrefix(request.Header.Get("Content-Type"), "text/xml") ||
+		strings.HasPrefix(request.Header.Get("Content-Type"), "application/xml") {
 		// xml 格式
 		return messages.DataTypeXML
 	} else {
