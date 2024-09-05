@@ -25,7 +25,7 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 获取获客链接列表
 // https://developer.work.weixin.qq.com/document/path/97398#%E8%8E%B7%E5%8F%96%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5%E5%88%97%E8%A1%A8
-func (comp *Client) List(ctx context.Context, options *request2.RequestListLink) (*response3.ResponseListLink, error) {
+func (comp *Client) ListLink(ctx context.Context, options *request2.RequestListLink) (*response3.ResponseListLink, error) {
 
 	result := &response3.ResponseListLink{}
 
@@ -60,7 +60,7 @@ func (comp *Client) CreateLink(ctx context.Context, options *request2.RequestCre
 
 // 编辑获客链接
 // https://developer.work.weixin.qq.com/document/path/97398#%E7%BC%96%E8%BE%91%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5
-func (comp *Client) Update(ctx context.Context, config *request2.RequestUpdateLink) (*response2.ResponseWork, error) {
+func (comp *Client) UpdateLink(ctx context.Context, config *request2.RequestUpdateLink) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
@@ -71,7 +71,7 @@ func (comp *Client) Update(ctx context.Context, config *request2.RequestUpdateLi
 
 // 删除获客链接
 // https://developer.work.weixin.qq.com/document/path/97398#%E5%88%A0%E9%99%A4%E8%8E%B7%E5%AE%A2%E9%93%BE%E6%8E%A5
-func (comp *Client) Delete(ctx context.Context, linkId string) (*response2.ResponseWork, error) {
+func (comp *Client) DeleteLink(ctx context.Context, linkId string) (*response2.ResponseWork, error) {
 
 	result := &response2.ResponseWork{}
 
