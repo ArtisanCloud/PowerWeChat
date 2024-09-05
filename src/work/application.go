@@ -22,6 +22,7 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/department"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/contactWay"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/customerAcquisition"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/customerStrategy"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/groupChat"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/groupWelcomeTemplate"
@@ -97,6 +98,7 @@ type Work struct {
 
 	ExternalContact                     *externalContact.Client
 	ExternalContactContactWay           *contactWay.Client
+	ExternalContactCustomerAcquisition  *customerAcquisition.Client
 	ExternalContactCustomerStrategy     *customerStrategy.Client
 	ExternalContactStatistics           *statistics.Client
 	ExternalContactGroupWelcomeTemplate *groupWelcomeTemplate.Client
@@ -289,6 +291,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	//-------------- register external contact --------------
 	app.ExternalContact,
 		app.ExternalContactContactWay,
+		ExternalContactCustomerAcquisition,
 		app.ExternalContactCustomerStrategy,
 		app.ExternalContactGroupChat,
 		app.ExternalContactGroupWelcomeTemplate,
