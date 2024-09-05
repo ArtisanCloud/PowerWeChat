@@ -291,7 +291,7 @@ func NewWork(config *UserConfig) (*Work, error) {
 	//-------------- register external contact --------------
 	app.ExternalContact,
 		app.ExternalContactContactWay,
-		ExternalContactCustomerAcquisition,
+		app.ExternalContactCustomerAcquisition,
 		app.ExternalContactCustomerStrategy,
 		app.ExternalContactGroupChat,
 		app.ExternalContactGroupWelcomeTemplate,
