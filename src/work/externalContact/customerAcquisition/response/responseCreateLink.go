@@ -7,7 +7,7 @@ type Link struct {
 	LinkName   string `json:"link_name"` // 链接名称
 	Url        string `json:"url"`
 	SkipVerify bool   `json:"skip_verify"`
-	CreateTime string `json:"create_time"`
+	CreateTime int    `json:"create_time"`
 }
 
 type ResponseCreateLink struct {
