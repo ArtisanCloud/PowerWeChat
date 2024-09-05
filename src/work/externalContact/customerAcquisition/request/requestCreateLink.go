@@ -1,6 +1,6 @@
 package request
 
-type LinkRange struct {
+type Range struct {
 	UserList       []string `json:"user_list"`
 	DepartmentList []string `json:"department_list"`
 }
@@ -12,7 +12,7 @@ type PriorityOption struct {
 
 type RequestCreateLink struct {
 	LinkName       string          `json:"link_name"`   // 链接名称
-	Range          *LinkRange      `json:"range"`       // 1,
+	Range          *Range          `json:"range"`       // 1,
 	SkipVerify     bool            `json:"skip_verify"` // true,
 	PriorityOption *PriorityOption `json:"priority_option"`
 }
@@ -20,7 +20,7 @@ type RequestCreateLink struct {
 type RequestUpdateLink struct {
 	LinkId         string          `json:"link_id"`     // 链接ID
 	LinkName       string          `json:"link_name"`   // 链接名称
-	Range          *LinkRange      `json:"range"`       // 1,
+	Range          *Range          `json:"range"`       // 1,
 	SkipVerify     bool            `json:"skip_verify"` // true,
 	PriorityOption *PriorityOption `json:"priority_option"`
 }
