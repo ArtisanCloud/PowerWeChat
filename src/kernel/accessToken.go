@@ -1,6 +1,7 @@
 package kernel
 
 import (
+	"context"
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
@@ -14,6 +15,7 @@ import (
 	contract2 "github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
+	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
@@ -79,11 +81,7 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 	return token, nil
 }
 
-func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken, error) {
-	return accessToken.GetToken(true)
-}
-
-func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.ResponseGetToken, err error) {
+func (accessToken *AccessToken) GetToken(ctx context.Context, refresh bool) (resToken *response2.ResponseGetToken, err error) {
 
 	cacheKey := accessToken.GetCacheKey()
 	cache := accessToken.GetCache()
@@ -105,7 +103,7 @@ func (accessToken *AccessToken) GetToken(refresh bool) (resToken *response2.Resp
 	}
 
 	// request token from power
-	resToken, err = accessToken.requestToken(accessToken.GetCredentials())
+	resToken, err = accessToken.requestToken(ctx, accessToken.GetCredentials())
 	if err != nil {
 		return nil, err
 	}
@@ -185,15 +183,19 @@ func (accessToken *AccessToken) getFormatToken(token object.HashMap) (*response2
 	return resToken, nil
 }
 
-func (accessToken *AccessToken) Refresh() contract.AccessTokenInterface {
-	accessToken.GetToken(true)
+func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken, error) {
+	return accessToken.GetToken(context.Background(), true)
+}
+
+func (accessToken *AccessToken) Refresh(ctx context.Context) contract.AccessTokenInterface {
+	accessToken.GetToken(ctx, true)
 
 	return accessToken
 }
 
-func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*response2.ResponseGetToken, error) {
+func (accessToken *AccessToken) requestToken(ctx context.Context, credentials *object.StringMap) (*response2.ResponseGetToken, error) {
 
-	res, err := accessToken.sendRequest(credentials)
+	res, err := accessToken.sendRequest(ctx, credentials)
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +216,7 @@ func (accessToken *AccessToken) requestToken(credentials *object.StringMap) (*re
 func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOptions *object.HashMap) (*http.Request, error) {
 
 	// query Access Token power
-	mapToken, err := accessToken.getQuery()
+	mapToken, err := accessToken.getQuery(request.Context())
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +229,7 @@ func (accessToken *AccessToken) ApplyToRequest(request *http.Request, requestOpt
 	return request, err
 }
 
-func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*response2.ResponseGetToken, error) {
+func (accessToken *AccessToken) sendRequest(ctx context.Context, credential *object.StringMap) (*response2.ResponseGetToken, error) {
 
 	key := "json"
 	if accessToken.RequestMethod == http.MethodGet {
@@ -244,7 +246,7 @@ func (accessToken *AccessToken) sendRequest(credential *object.StringMap) (*resp
 		return nil, err
 	}
 
-	df := accessToken.HttpHelper.Df().Uri(strEndpoint).
+	df := accessToken.HttpHelper.Df().WithContext(ctx).Uri(strEndpoint).
 		Method(accessToken.RequestMethod)
 
 	// 检查是否需要有请求参数配置
@@ -311,7 +313,7 @@ func (accessToken *AccessToken) GetDefaultCacheKey() string {
 	return cacheKey
 }
 
-func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
+func (accessToken *AccessToken) getQuery(ctx context.Context) (*object.StringMap, error) {
 	// set the current token key
 	var key string
 	if accessToken.QueryName != "" {
@@ -321,7 +323,7 @@ func (accessToken *AccessToken) getQuery() (*object.StringMap, error) {
 	}
 
 	// get token string power
-	resToken, err := accessToken.GetToken(false)
+	resToken, err := accessToken.GetToken(ctx, false)
 	if err != nil {
 		return nil, err
 	}
@@ -352,29 +354,24 @@ func (accessToken *AccessToken) OverrideGetMiddlewares() {
 
 func (accessToken *AccessToken) OverrideGetMiddlewareOfLog() {
 	accessToken.GetMiddlewareOfLog = func(logger contract2.LoggerInterface) contract3.RequestMiddleware {
-		return contract3.RequestMiddleware(func(handle contract3.RequestHandle) contract3.RequestHandle {
+		return func(handle contract3.RequestHandle) contract3.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
 
-				//config := (*client.App).GetConfig()
-				//http_debug := config.GetBool("http_debug", false)
-				//// 前置中间件
-				//if http_debug {
-				//	request2.LogRequest(logger, request)
-				//}
+				logger := logger.WithContext(request.Context())
+
+				// 此处请求前后日志根据 log 配置中的 level 判断是否打印
+				request2.LogRequest(logger, request)
 
 				response, err = handle(request)
 				if err != nil {
 					return response, err
 				}
 
-				// 后置中间件
-				//if http_debug {
-				//response2.LogResponse(logger, response)
-				//}
+				response2.LogResponse(logger, response)
 
 				return
 			}
-		})
+		}
 	}
 }
 

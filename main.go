@@ -1,42 +1,43 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	fmt2 "github.com/ArtisanCloud/PowerLibs/v3/fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/officialAccount/templateMessage/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work"
-	"github.com/ArtisanCloud/PowerWeChat/v3/test/testLogDriver"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/sdk/trace"
 	"os"
 	"strconv"
 )
 
 func GetOfficialConfig() *officialAccount.UserConfig {
 	return &officialAccount.UserConfig{
-
 		AppID:  os.Getenv("official_app_id"), // 小程序、公众号或者企业微信的appid
 		Secret: os.Getenv("official_secret"), // 商户号 appID
 
-		ResponseType: os.Getenv("array"),
+		Token:  "",
+		AESKey: "",
 		Log: officialAccount.Log{
-			Driver: &testLogDriver.SimpleLogger{},
 			Level:  "debug",
-			File:   "./wechat/info.log",
-			Error:  "./wechat/error.log",
+			Stdout: false,
 		},
+
+		// ResponseType: os.Getenv("response_type"),
 		Cache: kernel.NewRedisClient(&kernel.UniversalOptions{
 			Addrs:    []string{"127.0.0.1:6379"},
 			Password: "",
-			//Username: "username",
-			DB: 1,
+			DB:       1,
 		}),
-		HttpDebug: true,
-		//Debug: true,
-		//"sandbox": true,
-
+		HttpDebug: false,
+		Debug:     false,
 	}
 
 }
@@ -168,9 +169,23 @@ func GetOpenPlatformConfig() *openPlatform.UserConfig {
 	}
 }
 
+func initTracer() {
+	tp := trace.NewTracerProvider()
+	// Set Global Tracer Provider
+	otel.SetTracerProvider(tp)
+}
+
+func init() {
+	initTracer()
+}
+
 func main() {
 
 	fmt.Printf("hello Wechat! \n")
+
+	tracer := otel.Tracer("example-tracer")
+	ctx, span := tracer.Start(context.Background(), "test")
+	defer span.End()
 
 	// init officialAccount app
 	configOfficialAccount := GetOfficialConfig()
@@ -178,11 +193,33 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	officialAccountApp.Logger.Driver.Info("custom info log")
-	officialAccountApp.Logger.Driver.Error("custom error log")
-	officialAccountApp.Logger.Driver.Warn("custom warn log")
-	fmt2.Dump("officialAccount config:", officialAccountApp.GetConfig().All())
+	//officialAccountApp.Logger.Info("custom info log")
+	//officialAccountApp.Logger.Error("custom error log")
+	//officialAccountApp.Logger.Warn("custom warn log")
 
+	officialAccountApp.TemplateMessage.Send(ctx, &request.RequestTemlateMessage{
+		ToUser:     "",
+		TemplateID: "",
+		MiniProgram: &request.MiniProgram{ // 上线后的小程序才可以使用
+			AppID:    "",
+			PagePath: fmt.Sprintf("pages/order/details?id=%v", 111111),
+		},
+		Data: &power.HashMap{
+			"character_string1": &power.HashMap{
+				"value": "111111111",
+				"color": "#173177",
+			},
+			"thing3": &power.HashMap{
+				"value": "可口可乐大瓶装",
+				"color": "#173177",
+			},
+			"const2": &power.HashMap{
+				"value": "订单超时未支付",
+				"color": "#173177",
+			},
+		},
+	})
+	fmt2.Dump("officialAccount config:", officialAccountApp.GetConfig().All())
 	// init wecom app
 	configWecom := GetWorkConfig()
 	wecomApp, err := work.NewWork(configWecom)
