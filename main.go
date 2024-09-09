@@ -198,10 +198,10 @@ func main() {
 	//officialAccountApp.Logger.Driver.Warn("custom warn log")
 
 	officialAccountApp.TemplateMessage.Send(ctx, &request.RequestTemlateMessage{
-		ToUser:     "oP1B06QFsGXa9D4TSP2YAyJ43U8A",
-		TemplateID: "eI_0uVgfJj8plxsOOLi2EmznH6FqmlIYJhvMtFWV2ew",
+		ToUser:     "",
+		TemplateID: "",
 		MiniProgram: &request.MiniProgram{ // 上线后的小程序才可以使用
-			AppID:    "wxe26ec41fcdd67212",
+			AppID:    "",
 			PagePath: fmt.Sprintf("pages/order/details?id=%v", 111111),
 		},
 		Data: &power.HashMap{
