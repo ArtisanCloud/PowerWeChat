@@ -7,7 +7,7 @@ jobs:
     env:
         API_V3_KEY: ${{ secrets.API_V3_KEY }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
