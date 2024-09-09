@@ -73,6 +73,7 @@ type Log struct {
 	File   string
 	Error  string
 	ENV    string
+	Stdout bool
 }
 
 type OAuth struct {
@@ -113,6 +114,7 @@ func NewOpenPlatform(config *UserConfig) (*OpenPlatform, error) {
 		"env":        app.Config.GetString("log.env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
+		"stdout":     app.Config.GetBool("log.stdout", false),
 	})
 	if err != nil {
 		return nil, err
@@ -223,6 +225,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"file":   userConfig.Log.File,
 			"error":  userConfig.Log.Error,
 			"env":    userConfig.Log.ENV,
+			"stdout": userConfig.Log.Stdout,
 		},
 		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,
@@ -262,7 +265,7 @@ func (app *OpenPlatform) OfficialAccount(appID string, refreshToken string, acce
 	application.Encryptor = app.Encryptor
 	application.Account, err = account.NewClient(application, app)
 
-	token, err := app.AccessToken.GetToken(false)
+	token, err := app.AccessToken.GetToken(context.Background(), false)
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +304,7 @@ func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessTo
 func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken string) (userConfig *officialAccount2.UserConfig, err error) {
 
 	// 先从缓存中获取token，需要在之前的授权流程中，通过ComponentVerifyTicket生成的token。
-	token, _ := app.AccessToken.GetToken(false)
+	token, _ := app.AccessToken.GetToken(context.Background(), false)
 	config := app.GetConfig()
 	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
 
@@ -344,7 +347,7 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 
 func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshToken string) (userConfig *miniProgram2.UserConfig, err error) {
 
-	token, _ := app.AccessToken.GetToken(false)
+	token, _ := app.AccessToken.GetToken(context.Background(), false)
 	config := app.GetConfig()
 	cache := config.Get("cache", nil).(cache.CacheInterface)
 	var oauth = miniProgram2.OAuth{}

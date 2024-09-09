@@ -35,7 +35,7 @@ func (comp *Client) Session(ctx context.Context, code string) (*response.Respons
 	config := (*comp.App).GetConfig()
 	componentConfig := comp.component.GetConfig()
 	token := comp.component.GetComponent("AccessToken").(*auth.AccessToken)
-	componentToken, err := token.GetToken(false)
+	componentToken, err := token.GetToken(ctx, false)
 
 	query := &object.StringMap{
 		"appid":                  config.GetString("app_id", ""),

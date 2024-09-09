@@ -5,6 +5,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	request2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/request"
+	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"io"
 	"net/http"
 	"strconv"
@@ -36,6 +38,7 @@ type BaseClient struct {
 	GetMiddlewareOfAccessToken        contract.RequestMiddleware
 	GetMiddlewareOfLog                func(logger contract2.LoggerInterface) contract.RequestMiddleware
 	GetMiddlewareOfRefreshAccessToken func(retry int) contract.RequestMiddleware
+	Logger                            contract2.LoggerInterface
 }
 
 type UploadForm struct {
@@ -57,6 +60,7 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 	if token == nil {
 		token = (*app).GetAccessToken()
 	}
+
 	h, err := helper.NewRequestHelper(&helper.Config{
 		BaseUrl: baseURI,
 		ClientConfig: &contract.ClientConfig{
@@ -76,6 +80,8 @@ func NewBaseClient(app *ApplicationInterface, token *AccessToken) (*BaseClient, 
 		App:        app,
 		Token:      token,
 	}
+	client.Logger = (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
+
 	// to be setup middleware here
 	client.OverrideGetMiddlewares()
 	client.RegisterHttpMiddlewares()
@@ -395,10 +401,9 @@ func (client *BaseClient) RegisterHttpMiddlewares() {
 	checkAccessTokenMiddleware := client.GetMiddlewareOfRefreshAccessToken
 
 	config := (*client.App).GetConfig()
-	logger := (*client.App).GetComponent("Logger").(contract2.LoggerInterface)
 	client.HttpHelper.WithMiddleware(
 		accessTokenMiddleware,
-		logMiddleware(logger),
+		logMiddleware(client.Logger),
 		checkAccessTokenMiddleware(3),
 		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),
 	)
@@ -445,29 +450,23 @@ func (client *BaseClient) OverrideGetMiddlewareOfAccessToken() {
 
 func (client *BaseClient) OverrideGetMiddlewareOfLog() {
 	client.GetMiddlewareOfLog = func(logger contract2.LoggerInterface) contract.RequestMiddleware {
-		return contract.RequestMiddleware(func(handle contract.RequestHandle) contract.RequestHandle {
+		return func(handle contract.RequestHandle) contract.RequestHandle {
 			return func(request *http.Request) (response *http.Response, err error) {
 
-				//config := (*client.App).GetConfig()
-				//http_debug := config.GetBool("http_debug", false)
-				//// 前置中间件
-				//if http_debug {
-				//	request2.LogRequest(logger, request)
-				//}
+				logger = logger.WithContext(request.Context())
+
+				// 此处请求前后日志根据 log 配置中的 level 判断是否打印
+				request2.LogRequest(logger, request)
 
 				response, err = handle(request)
 				if err != nil {
 					return response, err
 				}
-
-				//// 后置中间件
-				//if http_debug {
-				//	response2.LogResponse(logger, response)
-				//}
+				response2.LogResponse(logger, response)
 
 				return
 			}
-		})
+		}
 	}
 }
 
@@ -506,6 +505,8 @@ func (client *BaseClient) OverrideGetMiddlewareOfRefreshAccessToken() {
 
 func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Response, retry int) (*http.Response, error) {
 
+	ctx := req.Context()
+
 	// 如何微信返回的是二进制数据流，那么就无须判断返回的err code是否正常
 	if client.QueryRaw {
 		if !strings.Contains(rs.Header.Get("Content-Type"), "application/json") {
@@ -536,15 +537,15 @@ func (client *BaseClient) CheckTokenNeedRefresh(req *http.Request, rs *http.Resp
 			"code": errCode,
 		}
 		if retry > 0 && client.RetryDecider(conditions) {
-			client.Token.Refresh()
+			client.Token.Refresh(ctx)
 
 			// clone 一个request
-			fmt.Printf("get token:%+v\n", client.Token)
-			token, err := client.Token.GetToken(false)
+			client.Logger.WithContext(ctx).InfoF("refresh token, retry:%d", retry)
+			token, err := client.Token.GetToken(ctx, false)
 			q := req.URL.Query()
 			q.Set(client.Token.TokenKey, token.AccessToken)
 			req.URL.RawQuery = q.Encode()
-			req2 := req.Clone(req.Context())
+			req2 := req.Clone(ctx)
 			if req.Body != nil {
 				// 缓存请求body
 				reqData, err := io.ReadAll(req.Body)
