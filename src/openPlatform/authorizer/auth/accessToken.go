@@ -3,6 +3,7 @@ package auth
 // #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/auth"
@@ -64,7 +65,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 func (accessToken *AccessToken) OverrideGetEndpoint() {
 	accessToken.GetEndpoint = func() (string, error) {
 		token := accessToken.Component.GetComponent("AccessToken").(*auth.AccessToken)
-		componentToken, err := token.GetToken(false)
+		componentToken, err := token.GetToken(context.Background(), false)
 		if err != nil {
 			return "", err
 		}
