@@ -20,14 +20,14 @@ import (
 
 func GetOfficialConfig() *officialAccount.UserConfig {
 	return &officialAccount.UserConfig{
-		AppID:  "", // 小程序、公众号或者企业微信的appid
-		Secret: "", // 商户号 appID
+		AppID:  os.Getenv("official_app_id"), // 小程序、公众号或者企业微信的appid
+		Secret: os.Getenv("official_secret"), // 商户号 appID
 
 		Token:  "",
 		AESKey: "",
 		Log: officialAccount.Log{
 			Level:  "debug",
-			Stdout: true,
+			Stdout: false,
 		},
 
 		// ResponseType: os.Getenv("response_type"),
@@ -193,9 +193,9 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	//officialAccountApp.Logger.Driver.Info("custom info log")
-	//officialAccountApp.Logger.Driver.Error("custom error log")
-	//officialAccountApp.Logger.Driver.Warn("custom warn log")
+	//officialAccountApp.Logger.Info("custom info log")
+	//officialAccountApp.Logger.Error("custom error log")
+	//officialAccountApp.Logger.Warn("custom warn log")
 
 	officialAccountApp.TemplateMessage.Send(ctx, &request.RequestTemlateMessage{
 		ToUser:     "",

@@ -81,10 +81,6 @@ func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
 	return token, nil
 }
 
-//func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken, error) {
-//	return accessToken.GetToken(context.Background(), true)
-//}
-
 func (accessToken *AccessToken) GetToken(ctx context.Context, refresh bool) (resToken *response2.ResponseGetToken, err error) {
 
 	cacheKey := accessToken.GetCacheKey()
@@ -185,6 +181,10 @@ func (accessToken *AccessToken) getFormatToken(token object.HashMap) (*response2
 		return nil, errors.New("no token found in cache")
 	}
 	return resToken, nil
+}
+
+func (accessToken *AccessToken) GetRefreshedToken() (*response2.ResponseGetToken, error) {
+	return accessToken.GetToken(context.Background(), true)
 }
 
 func (accessToken *AccessToken) Refresh(ctx context.Context) contract.AccessTokenInterface {
