@@ -1,7 +1,9 @@
 package testLogDriver
 
 import (
+	"context"
 	"fmt"
+	"github.com/ArtisanCloud/PowerLibs/v3/logger/contract"
 	"log"
 )
 
@@ -14,7 +16,14 @@ const (
 	FatalLevel   int8 = 5
 )
 
-type SimpleLogger struct{}
+type SimpleLogger struct {
+	ctx context.Context
+}
+
+func (l *SimpleLogger) WithContext(ctx context.Context) contract.LoggerInterface {
+	l.ctx = ctx
+	return l
+}
 
 func (l *SimpleLogger) Debug(msg string, v ...interface{}) {
 	log.Printf("[DEBUG] "+msg, v...)
