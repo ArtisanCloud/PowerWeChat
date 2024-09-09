@@ -47,6 +47,7 @@ type Log struct {
 	File   string
 	Error  string
 	ENV    string
+	Stdout bool
 }
 
 type OAuth struct {
@@ -156,6 +157,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"file":   userConfig.Log.File,
 			"error":  userConfig.Log.Error,
 			"env":    userConfig.Log.ENV,
+			"stdout": userConfig.Log.Stdout,
 		},
 		"cache":      userConfig.Cache,
 		"http_debug": userConfig.HttpDebug,

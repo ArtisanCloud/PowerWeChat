@@ -101,6 +101,7 @@ type Log struct {
 	File   string
 	Error  string
 	ENV    string
+	Stdout bool
 }
 
 type OAuth struct {
@@ -145,6 +146,7 @@ func NewPayment(config *UserConfig) (*Payment, error) {
 		"env":        app.Config.GetString("log.env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
+		"stdout":     app.Config.GetBool("log.stdout", false),
 	})
 
 	if err != nil {
@@ -406,6 +408,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"file":   userConfig.Log.File,
 			"error":  userConfig.Log.Error,
 			"env":    userConfig.Log.ENV,
+			"stdout": userConfig.Log.Stdout,
 		},
 		"http": &object.HashMap{
 			"timeout":  timeout,
