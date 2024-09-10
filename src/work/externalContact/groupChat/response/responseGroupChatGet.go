@@ -25,13 +25,14 @@ type Admin struct {
 }
 
 type GroupChat struct {
-	ChatID     string    `json:"chat_id"`
-	Name       string    `json:"name"`
-	Owner      string    `json:"owner"`
-	CreateTime int       `json:"create_time"`
-	Notice     string    `json:"notice"`
-	MemberList []*Member `json:"member_list"`
-	AdminList  []*Admin  `json:"admin_list"`
+	ChatID        string    `json:"chat_id"`
+	Name          string    `json:"name"`
+	Owner         string    `json:"owner"`
+	CreateTime    int       `json:"create_time"`
+	Notice        string    `json:"notice"`
+	MemberList    []*Member `json:"member_list"`
+	AdminList     []*Admin  `json:"admin_list"`
+	MemberVersion string    `json:"member_version"`
 }
 
 type ResponseGroupChatGet struct {

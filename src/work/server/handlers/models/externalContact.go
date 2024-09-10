@@ -86,11 +86,16 @@ type EventExternalChatCreate struct {
 type EventExternalChatUpdate struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ChatID       string `xml:"ChatId"`
-	UpdateDetail string `xml:"UpdateDetail"`
-	JoinScene    string `xml:"JoinScene"`
-	QuitScene    string `xml:"QuitScene"`
-	MemChangeCnt string `xml:"MemChangeCnt"`
+	ChatID        string `xml:"ChatId"`
+	UpdateDetail  string `xml:"UpdateDetail"`
+	JoinScene     string `xml:"JoinScene"`
+	QuitScene     string `xml:"QuitScene"`
+	MemChangeCnt  string `xml:"MemChangeCnt"`
+	MemChangeList []struct {
+		Item string `xml:"Item"`
+	} `xml:"MemChangeList"`
+	LastMemVer string `xml:"LastMemVer"`
+	CurMemVer  string `xml:"CurMemVer"`
 }
 
 type EventExternalChatDismiss struct {
