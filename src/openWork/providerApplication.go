@@ -57,7 +57,11 @@ func NewOpenWorkProvider(config *UserConfig) (*OpenWorkProvider, error) {
 	if err != nil {
 		return nil, err
 	}
-	app.Client, app.AccessToken, err = provider.RegisterProvider(app)
+	app.AccessToken, err = provider.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+	app.Client, err = provider.NewClient(app)
 	if err != nil {
 		return nil, err
 	}
