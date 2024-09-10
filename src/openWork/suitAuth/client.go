@@ -61,7 +61,7 @@ func (comp *Client) GetAuthInfo(ctx context.Context, authCorpID string, permanen
 
 	var result response.GetPermanentCodeResponse
 	req := object.HashMap{
-		"auth_corp_id":   authCorpID,
+		"auth_corpid":    authCorpID,
 		"permanent_code": permanentCode,
 	}
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/service/get_auth_info", &req, nil, nil, &result)

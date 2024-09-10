@@ -67,6 +67,7 @@ type Agent struct {
 	// AppID 旧的多应用套件中的对应应用id，新开发者请忽略
 	AppID uint64 `json:"appid,omitempty"`
 	// Privilege 应用对应的权限
+	Privilege Privilege `json:"privilege,omitempty"`
 }
 
 // Privilege 应用对应的权限

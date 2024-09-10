@@ -31,6 +31,10 @@ const (
 	CALLBACK_EVENT_CHANGE_TYPE_SHUFFLE = "shuffle"             // 标签重排事件
 	CALLBACK_EVENT_TAG_TYPE            = "tag"                 // 标签事件
 	CALLBACK_EVENT_TAG_TYPE_GROUP      = "tag_group"           // 标签组事件
+
+	CALLBACK_EVENT_CUSTOMER_ACQUISITION       = "customer_acquisition"
+	CALLBACK_EVENT_CHANGE_TYPE_OPEN_PROFILE   = "open_profile"   // 微信客户打开获客链接事件
+	CALLBACK_EVENT_CHANGE_TYPE_FRIEND_REQUEST = "friend_request" // 通过获客链接发起好友请求事件
 )
 
 type EventExternalUserAdd struct {
@@ -82,11 +86,16 @@ type EventExternalChatCreate struct {
 type EventExternalChatUpdate struct {
 	contract.EventInterface
 	models.CallbackMessageHeader
-	ChatID       string `xml:"ChatId"`
-	UpdateDetail string `xml:"UpdateDetail"`
-	JoinScene    string `xml:"JoinScene"`
-	QuitScene    string `xml:"QuitScene"`
-	MemChangeCnt string `xml:"MemChangeCnt"`
+	ChatID        string `xml:"ChatId"`
+	UpdateDetail  string `xml:"UpdateDetail"`
+	JoinScene     string `xml:"JoinScene"`
+	QuitScene     string `xml:"QuitScene"`
+	MemChangeCnt  string `xml:"MemChangeCnt"`
+	MemChangeList []struct {
+		Item string `xml:"Item"`
+	} `xml:"MemChangeList"`
+	LastMemVer string `xml:"LastMemVer"`
+	CurMemVer  string `xml:"CurMemVer"`
 }
 
 type EventExternalChatDismiss struct {
@@ -152,4 +161,18 @@ type EventExternalUserTagShuffle struct {
 	ID         string `xml:"Id"`
 	StrategyID string `xml:"StrategyId"`
 	ChangeType string `xml:"ChangeType"`
+}
+
+type EventCustomerAcquisitionOpenProfile struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	LinkID string `xml:"LinkId"`
+	State  string `xml:"State"`
+}
+
+type EventCustomerAcquisitionFriendRequest struct {
+	contract.EventInterface
+	models.CallbackMessageHeader
+	LinkID string `xml:"LinkId"`
+	State  string `xml:"State"`
 }
