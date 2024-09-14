@@ -11,7 +11,7 @@ type AccessToken struct {
 	*kernel.AccessToken
 }
 
-func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
+func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 	token := &AccessToken{
 		kernelToken,
@@ -26,7 +26,7 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-	config := (*accessToken.App).GetConfig()
+	config := (accessToken.App).GetConfig()
 
 	accessToken.GetCredentials = func() *object.StringMap {
 		return &object.StringMap{

@@ -19,7 +19,7 @@ type AccessToken struct {
 
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
 func NewAccessToken(app kernel.ApplicationInterface, component kernel.ApplicationInterface) (*AccessToken, error) {
-	kernelToken, err := kernel.NewAccessToken(&app)
+	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
 	kernelToken.QueryName = "access_token"
@@ -46,7 +46,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 
 	accessToken.GetCredentials = func() *object.StringMap {
 
-		config := (*accessToken.App).GetContainer().GetConfig()
+		config := (accessToken.App).GetContainer().GetConfig()
 		componentConfig := accessToken.Component.GetContainer().GetConfig()
 		return &object.StringMap{
 			"component_appid":          (*componentConfig)["app_id"].(string),

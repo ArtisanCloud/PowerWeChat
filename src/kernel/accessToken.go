@@ -20,7 +20,7 @@ import (
 )
 
 type AccessToken struct {
-	App *ApplicationInterface
+	App ApplicationInterface
 
 	HttpHelper *helper.RequestHelper
 
@@ -43,8 +43,8 @@ type AccessToken struct {
 	GetMiddlewareOfLog func(logger contract2.LoggerInterface) contract3.RequestMiddleware
 }
 
-func NewAccessToken(app *ApplicationInterface) (*AccessToken, error) {
-	config := (*app).GetConfig()
+func NewAccessToken(app ApplicationInterface) (*AccessToken, error) {
+	config := (app).GetConfig()
 	baseURI := config.GetString("http.base_uri", "/")
 
 	var cacheClient cache.CacheInterface = nil
@@ -340,8 +340,8 @@ func (accessToken *AccessToken) RegisterHttpMiddlewares() {
 	// log
 	logMiddleware := accessToken.GetMiddlewareOfLog
 
-	config := (*accessToken.App).GetConfig()
-	logger := (*accessToken.App).GetComponent("Logger").(contract2.LoggerInterface)
+	config := (accessToken.App).GetConfig()
+	logger := (accessToken.App).GetComponent("Logger").(contract2.LoggerInterface)
 	accessToken.HttpHelper.WithMiddleware(
 		logMiddleware(logger),
 		helper.HttpDebugMiddleware(config.GetBool("http_debug", false)),

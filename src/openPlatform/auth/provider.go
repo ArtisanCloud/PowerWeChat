@@ -7,7 +7,7 @@ import (
 func RegisterProvider(app kernel.ApplicationInterface) (*VerifyTicket, *AccessToken, error) {
 
 	ticket, err := NewVerifyTicket(&app)
-	accessToken, err := NewAccessToken(&app)
+	accessToken, err := NewAccessToken(app)
 
 	return ticket, accessToken, err
 
