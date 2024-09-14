@@ -13,7 +13,7 @@ type AccessToken struct {
 
 // https://developer.work.weixin.qq.com/document/path/91039
 func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
-	kernelToken, err := kernel.NewAccessToken(&app)
+	kernelToken, err := kernel.NewAccessToken(app)
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-	config := (*accessToken.App).GetConfig()
+	config := (accessToken.App).GetConfig()
 	corpID := config.GetString("corp_id", "")
 	secret := config.GetString("secret", "")
 	accessToken.GetCredentials = func() *object.StringMap {
