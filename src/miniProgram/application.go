@@ -212,6 +212,9 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 
 	//-------------- register Encryptor and Server --------------
 	app.Server, err = server2.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
