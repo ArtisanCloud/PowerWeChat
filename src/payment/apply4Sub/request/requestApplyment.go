@@ -14,7 +14,7 @@ type RequestApplyForBusiness struct {
 		ContactPeriodEnd            string `json:"contact_period_end"`
 		ContactType                 string `json:"contact_type"`
 		MobilePhone                 string `json:"mobile_phone"`
-		Openid                      int    `json:"openid"`
+		Openid                      string `json:"openid"`
 	} `json:"contact_info"`
 	SubjectInfo struct {
 		SubjectType         string `json:"subject_type"`
