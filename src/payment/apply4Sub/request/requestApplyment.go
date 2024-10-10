@@ -44,6 +44,15 @@ type RequestApplyForBusiness struct {
 				IdCardNational  string `json:"id_card_national"`
 				IdCardNumber    string `json:"id_card_number"`
 			} `json:"id_card_info"`
+			IdDocInfo struct {
+				IdDocCopy      string `json:"id_doc_copy"`
+				IdDocCopyBack  string `json:"id_doc_copy_back"`
+				IdDocName      string `json:"id_doc_name"`
+				IdDocNumber    string `json:"id_doc_number"`
+				IdDocAddress   string `json:"id_doc_address"`
+				DocPeriodBegin string `json:"doc_period_begin"`
+				DocPeriodEnd   string `json:"doc_period_end"`
+			} `json:"id_doc_info"`
 			IdDocType    string `json:"id_doc_type"`
 			IdHolderType string `json:"id_holder_type"`
 			Owner        bool   `json:"owner"`
