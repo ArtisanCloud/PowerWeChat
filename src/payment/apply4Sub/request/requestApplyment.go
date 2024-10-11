@@ -84,8 +84,9 @@ type RequestApplyForBusiness struct {
 				StoreEntrancePic []string `json:"store_entrance_pic"`
 			} `json:"biz_store_info"`
 			MiniProgramInfo struct {
-				MiniProgramAppid string   `json:"mini_program_appid"`
-				MiniProgramPics  []string `json:"mini_program_pics"`
+				MiniProgramAppid    string   `json:"mini_program_appid"`
+				MiniProgramSubAppid string   `json:"mini_program_sub_appid"`
+				MiniProgramPics     []string `json:"mini_program_pics"`
 			} `json:"mini_program_info"`
 			MpInfo struct {
 				MpAppid string   `json:"mp_appid"`
@@ -121,4 +122,10 @@ type RequestApplyForBusiness struct {
 		BankAddressCode string `json:"bank_address_code"`
 		BankBranchId    string `json:"bank_branch_id"`
 	} `json:"bank_account_info"`
+	AdditionInfo struct {
+		LegalPersonCommitment string   `json:"legal_person_commitment"`
+		LegalPersonVideo      string   `json:"legal_person_video"`
+		BusinessAdditionPics  []string `json:"business_addition_pics"`
+		BusinessAdditionMsg   string   `json:"business_addition_msg"`
+	} `json:"addition_info"`
 }
