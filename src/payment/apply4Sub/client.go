@@ -66,3 +66,25 @@ func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.Reques
 	_, err = comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, options, false, nil, result)
 	return result, err
 }
+
+// 通过业务申请编号查询申请状态
+// https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_2.shtml
+func (comp *Client) GetApplyByBusinessCode(ctx context.Context, businessCode string) (*response.ResponseGetApplyForBusiness, error) {
+
+	result := &response.ResponseGetApplyForBusiness{}
+
+	endpoint := "/v3/applyment4sub/applyment/business_code/" + businessCode
+	_, err := comp.Request(ctx, endpoint, &object.StringMap{}, http.MethodGet, &object.HashMap{}, false, nil, result)
+	return result, err
+}
+
+// 通过申请单号查询申请状态
+// https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_2.shtml
+func (comp *Client) GetApplyByApplymentId(ctx context.Context, applymentId string) (*response.ResponseGetApplyForBusiness, error) {
+
+	result := &response.ResponseGetApplyForBusiness{}
+
+	endpoint := "/v3/applyment4sub/applyment/applyment_id/" + applymentId
+	_, err := comp.Request(ctx, endpoint, &object.StringMap{}, http.MethodGet, &object.HashMap{}, false, nil, result)
+	return result, err
+}
