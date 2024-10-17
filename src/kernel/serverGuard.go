@@ -111,15 +111,15 @@ func (serverGuard *ServerGuard) VerifyURL(request *http.Request) (httpRS *http.R
 	//if err != nil {
 	// return nil, err
 	//}
-	_, Decrypted, err := serverGuard.decryptMessage(request, request.URL.Query().Get("echostr"))
-	fmt.Println(Decrypted)
-	bodyData := io.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
+	strEcho := request.URL.Query().Get("echostr")
+	decryptedMes, err := serverGuard.decryptEchoStr(request, strEcho)
+	bodyData := io.NopCloser(bytes.NewBufferString(decryptedMes))
 	rs := &http.Response{
 		Body:       bodyData,
 		StatusCode: http.StatusOK,
 	}
 
-	logger.Info("Server response created:", "content", request.URL.Query().Get("echostr"))
+	logger.Info("Server response created:", "content", decryptedMes)
 
 	return rs, err
 }
@@ -525,6 +525,24 @@ func (serverGuard *ServerGuard) DecryptEvent(request *http.Request, content stri
 	callbackHeader.Content = buf
 
 	return callbackHeader, err
+
+}
+
+func (serverGuard *ServerGuard) decryptEchoStr(request *http.Request, content string) (decryptMessage string, err error) {
+
+	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
+	query := request.URL.Query()
+	buf, cryptErr := encryptor.VerifyUrl(
+		content,
+		query.Get("msg_signature"),
+		query.Get("nonce"),
+		query.Get("timestamp"),
+	)
+	if cryptErr != nil {
+		return "", errors.New(cryptErr.ErrMsg)
+	}
+
+	return string(buf), err
 
 }
 
