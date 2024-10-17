@@ -103,7 +103,7 @@ func (serverGuard *ServerGuard) OverrideNotify() {
 }
 
 // 回调配置
-
+// https://developer.work.weixin.qq.com/document/path/90930
 func (serverGuard *ServerGuard) VerifyURL(request *http.Request) (httpRS *http.Response, err error) {
 	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
 
