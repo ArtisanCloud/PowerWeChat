@@ -103,6 +103,26 @@ func (serverGuard *ServerGuard) OverrideNotify() {
 }
 
 // 回调配置
+
+func (serverGuard *ServerGuard) VerifyURL(request *http.Request) (httpRS *http.Response, err error) {
+	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
+
+	_, err = serverGuard.Validate(request)
+	if err != nil {
+		return nil, err
+	}
+
+	bodyData := io.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
+	rs := &http.Response{
+		Body:       bodyData,
+		StatusCode: http.StatusOK,
+	}
+
+	logger.Info("Server response created:", "content", request.URL.Query().Get("echostr"))
+
+	return rs, err
+}
+
 // https://developer.work.weixin.qq.com/document/path/90930
 func (serverGuard *ServerGuard) Serve(request *http.Request) (response *http.Response, err error) {
 
