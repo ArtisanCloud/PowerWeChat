@@ -107,11 +107,12 @@ func (serverGuard *ServerGuard) OverrideNotify() {
 func (serverGuard *ServerGuard) VerifyURL(request *http.Request) (httpRS *http.Response, err error) {
 	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
 
-	_, err = serverGuard.Validate(request)
-	if err != nil {
-		return nil, err
-	}
-
+	//_, err = serverGuard.Validate(request)
+	//if err != nil {
+	// return nil, err
+	//}
+	_, Decrypted, err := serverGuard.decryptMessage(request, request.URL.Query().Get("echostr"))
+	fmt.Println(Decrypted)
 	bodyData := io.NopCloser(bytes.NewBufferString(request.URL.Query().Get("echostr")))
 	rs := &http.Response{
 		Body:       bodyData,
