@@ -104,6 +104,27 @@ func (serverGuard *ServerGuard) OverrideNotify() {
 
 // 回调配置
 // https://developer.work.weixin.qq.com/document/path/90930
+func (serverGuard *ServerGuard) VerifyURL(request *http.Request) (httpRS *http.Response, err error) {
+	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
+
+	//_, err = serverGuard.Validate(request)
+	//if err != nil {
+	// return nil, err
+	//}
+	strEcho := request.URL.Query().Get("echostr")
+	decryptedMes, err := serverGuard.decryptEchoStr(request, strEcho)
+	bodyData := io.NopCloser(bytes.NewBufferString(decryptedMes))
+	rs := &http.Response{
+		Body:       bodyData,
+		StatusCode: http.StatusOK,
+	}
+
+	logger.Info("Server response created:", "content", decryptedMes)
+
+	return rs, err
+}
+
+// https://developer.work.weixin.qq.com/document/path/90930
 func (serverGuard *ServerGuard) Serve(request *http.Request) (response *http.Response, err error) {
 
 	logger := (*serverGuard.App).GetComponent("Logger").(*logger2.Logger)
@@ -504,6 +525,24 @@ func (serverGuard *ServerGuard) DecryptEvent(request *http.Request, content stri
 	callbackHeader.Content = buf
 
 	return callbackHeader, err
+
+}
+
+func (serverGuard *ServerGuard) decryptEchoStr(request *http.Request, content string) (decryptMessage string, err error) {
+
+	encryptor := (*serverGuard.App).GetComponent("Encryptor").(*Encryptor)
+	query := request.URL.Query()
+	buf, cryptErr := encryptor.VerifyUrl(
+		content,
+		query.Get("msg_signature"),
+		query.Get("nonce"),
+		query.Get("timestamp"),
+	)
+	if cryptErr != nil {
+		return "", errors.New(cryptErr.ErrMsg)
+	}
+
+	return string(buf), err
 
 }
 
