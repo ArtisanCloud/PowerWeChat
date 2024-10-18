@@ -6,11 +6,11 @@ import (
 
 func RegisterProvider(app kernel.ApplicationInterface) (*SuiteTicket, *AccessToken, error) {
 
-	ticket, err := NewSuiteTicket(&app)
+	ticket, err := NewSuiteTicket(app)
 	if err != nil {
 		return nil, nil, err
 	}
-	accessToken, err := NewAccessToken(&app)
+	accessToken, err := NewAccessToken(app)
 	if err != nil {
 		return nil, nil, err
 	}

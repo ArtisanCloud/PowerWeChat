@@ -7,7 +7,7 @@ func RegisterProvider(app kernel.ApplicationInterface) (*AccessToken, error) {
 	//if err != nil {
 	//	return nil, nil, err
 	//}
-	accessToken, err := NewAccessToken(&app)
+	accessToken, err := NewAccessToken(app)
 	if err != nil {
 		return nil, err
 	}

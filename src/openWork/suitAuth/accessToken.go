@@ -14,8 +14,8 @@ type AccessToken struct {
 }
 
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/component_access_token.html
-func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
-	kernelToken, err := kernel.NewAccessToken(*app)
+func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
+	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
 	kernelToken.TokenKey = "suite_access_token"
