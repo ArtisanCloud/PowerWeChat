@@ -6,4 +6,5 @@ type RequestAddMsgTemplate struct {
 	Sender         string                     `json:"sender"`
 	Text           *TextOfMessage             `json:"text"`
 	Attachments    []MessageTemplateInterface `json:"attachments"`
+	ChatIDList     []string                   `json:"chat_id_list" `
 }

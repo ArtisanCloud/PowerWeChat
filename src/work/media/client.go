@@ -5,8 +5,11 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
+	"github.com/pkg/errors"
 	"net/http"
+	"os"
 )
 
 type Client struct {
@@ -79,6 +82,42 @@ func (comp *Client) UploadImage(ctx context.Context, path string, form *power.Ha
 
 	_, err := comp.BaseClient.HttpUpload(ctx, "cgi-bin/media/uploadimg", files, formData, nil, nil, &result)
 	return result, err
+}
+
+func (comp *Client) UploadTempImageUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := support.DownloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "image", path, form)
+}
+
+func (comp *Client) UploadTempVoiceUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := support.DownloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "voice", path, form)
+}
+
+func (comp *Client) UploadTempVideoUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := support.DownloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "video", path, form)
+}
+
+func (comp *Client) UploadTempFileUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := support.DownloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "file", path, form)
 }
 
 func (comp *Client) UploadTempImage(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
