@@ -102,9 +102,9 @@ func DeepCopy(src interface{}) (interface{}, error) {
 }
 
 // downloadFileFromURL 从URL下载文件并保存到本地临时文件
-func DownloadFileFromURL(url string) (string, error) {
+func downloadFileFromURL(fileURL string) (string, error) {
 	// 发送HTTP请求获取URL内容
-	resp, err := http.Get(url)
+	resp, err := http.Get(fileURL)
 	if err != nil {
 		return "", err
 	}
@@ -115,9 +115,16 @@ func DownloadFileFromURL(url string) (string, error) {
 		return "", fmt.Errorf("failed to download file: %s", resp.Status)
 	}
 
-	// 创建一个临时文件保存下载的内容
+	// 根据URL获取文件名和扩展名
+	fileName := getFileNameFromURL(fileURL, resp)
+	if fileName == "" {
+		return "", fmt.Errorf("failed to determine file name")
+	}
+
+	// 创建一个临时文件路径，但文件名来自URL
 	tempDir := os.TempDir()
-	tempFile, err := os.CreateTemp(tempDir, "tmpdownload-*.tmp")
+	tempFilePath := filepath.Join(tempDir, fileName)
+	tempFile, err := os.Create(tempFilePath)
 	if err != nil {
 		return "", err
 	}
@@ -130,5 +137,50 @@ func DownloadFileFromURL(url string) (string, error) {
 	}
 
 	// 返回临时文件的路径
-	return filepath.Abs(tempFile.Name())
+	return filepath.Abs(tempFilePath)
+}
+
+// getFileNameFromURL 从URL中提取并解码文件名，若无扩展名则根据Content-Type推断
+func getFileNameFromURL(fileURL string, resp *http.Response) string {
+	// 从URL中提取文件名
+	parsedURL, err := url.Parse(fileURL)
+	if err != nil {
+		return ""
+	}
+
+	// 使用 filepath.Base 提取文件名（包括转码字符）
+	encodedFileName := filepath.Base(parsedURL.Path)
+
+	// 使用 QueryUnescape 将文件名中的转码字符还原为原始的中文文件名
+	fileName, err := url.QueryUnescape(encodedFileName)
+	if err != nil {
+		return encodedFileName // 如果解码失败，返回原始转码的文件名
+	}
+
+	// 如果文件名没有扩展名，尝试根据Content-Type添加
+	if !strings.Contains(fileName, ".") {
+		ext := getFileExtensionFromResponse(resp)
+		fileName += ext
+	}
+
+	return fileName
+}
+
+// getFileExtensionFromResponse 根据响应的Content-Type获取文件扩展名
+func getFileExtensionFromResponse(resp *http.Response) string {
+	contentType := resp.Header.Get("Content-Type")
+	switch contentType {
+	case "image/jpeg":
+		return ".jpg"
+	case "image/png":
+		return ".png"
+	case "audio/amr":
+		return ".amr"
+	case "video/mp4":
+		return ".mp4"
+	case "application/octet-stream":
+		return "" // 如果是二进制流，不加扩展名
+	default:
+		return "" // 无法确定扩展名，返回空
+	}
 }
