@@ -15,7 +15,7 @@ type AccessToken struct {
 }
 
 // https://developer.work.weixin.qq.com/document/path/90593
-func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
+func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
@@ -39,7 +39,7 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
 
-	config := (*accessToken.App).GetContainer().GetConfig()
+	config := accessToken.App.GetContainer().GetConfig()
 
 	//服务商的corpid
 	corpID := (*config)["provider_corpid"].(string)

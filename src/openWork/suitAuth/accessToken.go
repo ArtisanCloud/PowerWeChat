@@ -14,7 +14,7 @@ type AccessToken struct {
 }
 
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/component_access_token.html
-func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
+func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
@@ -37,7 +37,7 @@ func NewAccessToken(app *kernel.ApplicationInterface) (*AccessToken, error) {
 
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
-	app := (*accessToken.App)
+	app := accessToken.App
 	accessToken.GetCredentials = func() *object.StringMap {
 		config := app.GetContainer().GetConfig()
 		suiteTicket := app.GetComponent("SuiteTicket").(*SuiteTicket)
