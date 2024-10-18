@@ -48,12 +48,13 @@ func (comp *Client) GetIndustry(ctx context.Context) (*response.ResponseTemplate
 
 // 获得模板ID
 // https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html
-func (comp *Client) AddTemplate(ctx context.Context, industryOne string) (*response.ResponseTemplate, error) {
+func (comp *Client) AddTemplate(ctx context.Context, tplIdShort string, keywordNameList []string) (*response.ResponseTemplate, error) {
 
 	result := &response.ResponseTemplate{}
 
 	params := &object.HashMap{
-		"template_id_short": industryOne,
+		"template_id_short": tplIdShort,
+		"keyword_name_list": keywordNameList,
 	}
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/template/api_add_template", params, nil, nil, result)
 

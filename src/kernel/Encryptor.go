@@ -9,6 +9,7 @@ import (
 	"encoding/base64"
 	"encoding/binary"
 	"encoding/hex"
+	"encoding/json"
 	"encoding/xml"
 	"fmt"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
@@ -41,17 +42,17 @@ type CDATA struct {
 }
 
 type WeComReplyMsg struct {
-	XMLName   xml.Name `xml:"xml"`
-	Encrypt   CDATA    `xml:"Encrypt"`
-	Signature CDATA    `xml:"MsgSignature"`
-	Timestamp string   `xml:"TimeStamp"`
-	Nonce     CDATA    `xml:"Nonce"`
+	XMLName   xml.Name `xml:"xml" json:"-"`
+	Encrypt   CDATA    `xml:"Encrypt" json:"Encrypt"`
+	Signature CDATA    `xml:"MsgSignature" json:"Signature"`
+	Timestamp string   `xml:"TimeStamp" json:"Timestamp"`
+	Nonce     CDATA    `xml:"Nonce" json:"Nonce"`
 }
 
 type WeComRecvMsg struct {
-	ToUserName string `xml:"ToUserName"`
-	Encrypt    string `xml:"Encrypt"`
-	AgentID    string `xml:"AgentID"`
+	ToUserName string `xml:"ToUserName" json:"ToUserName"`
+	Encrypt    string `xml:"Encrypt" json:"Encrypt"`
+	AgentID    string `xml:"AgentID" json:"AgentID"`
 }
 
 type Encryptor struct {
@@ -147,7 +148,13 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 // Decrypt decrypt xml msg and return xml
 func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timestamp string) ([]byte, *support.CryptError) {
 	var msg4Recv WeComRecvMsg
-	err := xml.Unmarshal(content, &msg4Recv)
+	var err error
+	// 根据第一个字符判断是json还是xml
+	if content[0] == '<' {
+		err = xml.Unmarshal(content, &msg4Recv)
+	} else if content[0] == '{' {
+		err = json.Unmarshal(content, &msg4Recv)
+	}
 
 	if err != nil {
 		return nil, support.NewCryptError(ErrorDecryptAes, err.Error())

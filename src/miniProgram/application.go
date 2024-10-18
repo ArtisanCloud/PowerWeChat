@@ -137,6 +137,7 @@ type Log struct {
 	File   string
 	Error  string
 	ENV    string
+	Stdout bool
 }
 
 type OAuth struct {
@@ -178,6 +179,7 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 		"env":        app.Config.GetString("log.env", "develop"),
 		"outputPath": app.Config.GetString("log.file", "./wechat/info.log"),
 		"errorPath":  app.Config.GetString("log.error", "./wechat/error.log"),
+		"stdout":     app.Config.GetBool("log.stdout", false),
 	})
 	if err != nil {
 		return nil, err
@@ -210,6 +212,9 @@ func NewMiniProgram(config *UserConfig, extraInfos ...*kernel.ExtraInfo) (*MiniP
 
 	//-------------- register Encryptor and Server --------------
 	app.Server, err = server2.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
 
 	//-------------- register Base --------------
 	app.Base, err = base.RegisterProvider(app)
@@ -513,6 +518,7 @@ func MapUserConfig(userConfig *UserConfig) (*object.HashMap, error) {
 			"file":   userConfig.Log.File,
 			"error":  userConfig.Log.Error,
 			"env":    userConfig.Log.ENV,
+			"stdout": userConfig.Log.Stdout,
 		},
 		"cache": userConfig.Cache,
 

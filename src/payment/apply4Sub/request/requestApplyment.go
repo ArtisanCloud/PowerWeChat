@@ -14,7 +14,7 @@ type RequestApplyForBusiness struct {
 		ContactPeriodEnd            string `json:"contact_period_end"`
 		ContactType                 string `json:"contact_type"`
 		MobilePhone                 string `json:"mobile_phone"`
-		Openid                      int    `json:"openid"`
+		Openid                      string `json:"openid"`
 	} `json:"contact_info"`
 	SubjectInfo struct {
 		SubjectType         string `json:"subject_type"`
@@ -44,6 +44,15 @@ type RequestApplyForBusiness struct {
 				IdCardNational  string `json:"id_card_national"`
 				IdCardNumber    string `json:"id_card_number"`
 			} `json:"id_card_info"`
+			IdDocInfo struct {
+				IdDocCopy      string `json:"id_doc_copy"`
+				IdDocCopyBack  string `json:"id_doc_copy_back"`
+				IdDocName      string `json:"id_doc_name"`
+				IdDocNumber    string `json:"id_doc_number"`
+				IdDocAddress   string `json:"id_doc_address"`
+				DocPeriodBegin string `json:"doc_period_begin"`
+				DocPeriodEnd   string `json:"doc_period_end"`
+			} `json:"id_doc_info"`
 			IdDocType    string `json:"id_doc_type"`
 			IdHolderType string `json:"id_holder_type"`
 			Owner        bool   `json:"owner"`
@@ -75,8 +84,9 @@ type RequestApplyForBusiness struct {
 				StoreEntrancePic []string `json:"store_entrance_pic"`
 			} `json:"biz_store_info"`
 			MiniProgramInfo struct {
-				MiniProgramAppid string   `json:"mini_program_appid"`
-				MiniProgramPics  []string `json:"mini_program_pics"`
+				MiniProgramAppid    string   `json:"mini_program_appid"`
+				MiniProgramSubAppid string   `json:"mini_program_sub_appid"`
+				MiniProgramPics     []string `json:"mini_program_pics"`
 			} `json:"mini_program_info"`
 			MpInfo struct {
 				MpAppid string   `json:"mp_appid"`
@@ -112,4 +122,10 @@ type RequestApplyForBusiness struct {
 		BankAddressCode string `json:"bank_address_code"`
 		BankBranchId    string `json:"bank_branch_id"`
 	} `json:"bank_account_info"`
+	AdditionInfo struct {
+		LegalPersonCommitment string   `json:"legal_person_commitment"`
+		LegalPersonVideo      string   `json:"legal_person_video"`
+		BusinessAdditionPics  []string `json:"business_addition_pics"`
+		BusinessAdditionMsg   string   `json:"business_addition_msg"`
+	} `json:"addition_info"`
 }

@@ -3,6 +3,7 @@ package auth
 // #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 
 import (
+	"context"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/auth"
@@ -18,7 +19,7 @@ type AccessToken struct {
 
 // https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Get_access_token.html
 func NewAccessToken(app kernel.ApplicationInterface, component kernel.ApplicationInterface) (*AccessToken, error) {
-	kernelToken, err := kernel.NewAccessToken(&app)
+	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
 	kernelToken.QueryName = "access_token"
@@ -45,7 +46,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 
 	accessToken.GetCredentials = func() *object.StringMap {
 
-		config := (*accessToken.App).GetContainer().GetConfig()
+		config := (accessToken.App).GetContainer().GetConfig()
 		componentConfig := accessToken.Component.GetContainer().GetConfig()
 		return &object.StringMap{
 			"component_appid":          (*componentConfig)["app_id"].(string),
@@ -64,7 +65,7 @@ func (accessToken *AccessToken) OverrideGetCredentials() {
 func (accessToken *AccessToken) OverrideGetEndpoint() {
 	accessToken.GetEndpoint = func() (string, error) {
 		token := accessToken.Component.GetComponent("AccessToken").(*auth.AccessToken)
-		componentToken, err := token.GetToken(false)
+		componentToken, err := token.GetToken(context.Background(), false)
 		if err != nil {
 			return "", err
 		}

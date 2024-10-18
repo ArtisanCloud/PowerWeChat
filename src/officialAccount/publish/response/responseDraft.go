@@ -17,6 +17,7 @@ type NewsItem struct {
 	Content            string `json:"content"`
 	ContentSourceUrl   string `json:"content_source_url"`
 	ThumbMediaId       string `json:"thumb_media_id"`
+	ThumbUrl           string `json:"thumb_url"`
 	ShowCoverPic       int    `json:"show_cover_pic"`
 	NeedOpenComment    int    `json:"need_open_comment"`
 	OnlyFansCanComment int    `json:"only_fans_can_comment"`
@@ -27,7 +28,9 @@ type NewsItem struct {
 type ResponseDraftGet struct {
 	response.ResponseOfficialAccount
 
-	NewsItem []*NewsItem `json:"news_item"`
+	NewsItem   []*NewsItem `json:"news_item"`
+	CreateTime int64       `json:"create_time"`
+	UpdateTime int64       `json:"update_time"`
 }
 
 type ResponseDraftCount struct {
@@ -35,7 +38,9 @@ type ResponseDraftCount struct {
 }
 
 type Content struct {
-	NewsItem []*NewsItem `json:"news_item"`
+	NewsItem   []*NewsItem `json:"news_item"`
+	CreateTime int64       `json:"create_time"`
+	UpdateTime int64       `json:"update_time"`
 }
 
 type Item struct {
