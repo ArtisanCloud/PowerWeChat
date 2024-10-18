@@ -486,8 +486,14 @@ func (guard *Guard) toCallbackEventChangeType(callbackHeader contract.EventInter
 		decryptMessage = decryptMsg
 		break
 
-	case workModels.CALLBACK_EVENT_CHANGE_TYPE_DEL_EXTERNAL_CONTACT:
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_EDIT_EXTERNAL_CONTACT:
 		decryptMsg := &workModels.EventExternalUserEdit{}
+		err = xml.Unmarshal(buf, decryptMsg)
+		decryptMessage = decryptMsg
+		break
+
+	case workModels.CALLBACK_EVENT_CHANGE_TYPE_DEL_EXTERNAL_CONTACT:
+		decryptMsg := &workModels.EventExternalUserDel{}
 		err = xml.Unmarshal(buf, decryptMsg)
 		decryptMessage = decryptMsg
 		break

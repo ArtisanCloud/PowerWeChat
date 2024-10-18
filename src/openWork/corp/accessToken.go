@@ -3,6 +3,7 @@ package corp
 // #reference: https://open.work.weixin.qq.com/api/doc/90000/90135/91039
 
 import (
+	"context"
 	"net/http"
 	"net/url"
 
@@ -19,7 +20,7 @@ type AccessToken struct {
 }
 
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/token/component_access_token.html
-func NewAccessToken(app *kernel.ApplicationInterface, corpId, permanentCode string) (*AccessToken, error) {
+func NewAccessToken(app kernel.ApplicationInterface, corpId, permanentCode string) (*AccessToken, error) {
 	kernelToken, err := kernel.NewAccessToken(app)
 
 	kernelToken.RequestMethod = http.MethodPost
@@ -45,10 +46,10 @@ func NewAccessToken(app *kernel.ApplicationInterface, corpId, permanentCode stri
 
 func (accessToken *AccessToken) OverrideGetEndpoint() {
 
-	app := (*accessToken.App)
+	app := accessToken.App
 	token := app.GetComponent("SuiteAccessToken").(*suit.AccessToken)
 	accessToken.GetEndpoint = func() (string, error) {
-		suiteAccessToken, _ := token.AccessToken.GetToken(false)
+		suiteAccessToken, _ := token.AccessToken.GetToken(context.Background(), false)
 		return accessToken.EndpointToGetToken + `?suite_access_token=` + url.QueryEscape(suiteAccessToken.AccessToken), nil
 	}
 
@@ -57,7 +58,7 @@ func (accessToken *AccessToken) OverrideGetEndpoint() {
 // Override GetCredentials
 func (accessToken *AccessToken) OverrideGetCredentials() {
 
-	app := (*accessToken.App)
+	app := accessToken.App
 	config := app.GetContainer().GetConfig()
 	appID := (*config)["app_id"].(string)
 	corpID := accessToken.corpID

@@ -9,13 +9,13 @@ import (
 )
 
 type SuiteTicket struct {
-	App *kernel.ApplicationInterface
+	App kernel.ApplicationInterface
 
 	*kernel.InteractsWithCache
 }
 
-func NewSuiteTicket(app *kernel.ApplicationInterface) (*SuiteTicket, error) {
-	config := (*app).GetContainer().GetConfig()
+func NewSuiteTicket(app kernel.ApplicationInterface) (*SuiteTicket, error) {
+	config := app.GetContainer().GetConfig()
 
 	var cacheClient cache.CacheInterface = nil
 	if (*config)["cache"] != nil {
@@ -61,7 +61,7 @@ func (verifyTicket *SuiteTicket) GetTicket() (ticket string, err error) {
 }
 
 func (verifyTicket *SuiteTicket) getCacheKey() string {
-	config := (*verifyTicket.App).GetConfig()
+	config := verifyTicket.App.GetConfig()
 	return "powerwechat.open_work.suite_ticket." + config.GetString("app_id", "")
 
 }
