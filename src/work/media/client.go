@@ -81,6 +81,42 @@ func (comp *Client) UploadImage(ctx context.Context, path string, form *power.Ha
 	return result, err
 }
 
+func (comp *Client) UploadTempImageUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := downloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "image", path, form)
+}
+
+func (comp *Client) UploadTempVoiceUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := downloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "voice", path, form)
+}
+
+func (comp *Client) UploadTempVideoUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := downloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "video", path, form)
+}
+
+func (comp *Client) UploadTempFileUrl(ctx context.Context, url string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
+	path, err := downloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.Upload(ctx, "file", path, form)
+}
+
 func (comp *Client) UploadTempImage(ctx context.Context, path string, form *power.HashMap) (*response2.ResponseUploadMedia, error) {
 	return comp.Upload(ctx, "image", path, form)
 }
@@ -126,4 +162,37 @@ func (comp *Client) Upload(ctx context.Context, mediaType string, path string, f
 	}, nil, outResponse)
 
 	return outResponse, err
+}
+
+
+// downloadFileFromURL 从URL下载文件并保存到本地临时文件
+func downloadFileFromURL(url string) (string, error) {
+	// 发送HTTP请求获取URL内容
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	// 检查响应状态码
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("failed to download file: %s", resp.Status)
+	}
+
+	// 创建一个临时文件保存下载的内容
+	tempDir := os.TempDir()
+	tempFile, err := os.CreateTemp(tempDir, "tmpdownload-*.tmp")
+	if err != nil {
+		return "", err
+	}
+	defer tempFile.Close()
+
+	// 将响应的Body内容写入临时文件
+	_, err = io.Copy(tempFile, resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	// 返回临时文件的路径
+	return filepath.Abs(tempFile.Name())
 }
