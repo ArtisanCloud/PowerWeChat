@@ -9,12 +9,12 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"reflect"
 	"sort"
 	"strings"
-	"net/url"
 )
 
 func PaymentV2ParamsJoinBackup(params *power.HashMap, key string) string {
@@ -103,7 +103,7 @@ func DeepCopy(src interface{}) (interface{}, error) {
 }
 
 // downloadFileFromURL 从URL下载文件并保存到本地临时文件
-func downloadFileFromURL(fileURL string) (string, error) {
+func DownloadFileFromURL(fileURL string) (string, error) {
 	// 发送HTTP请求获取URL内容
 	resp, err := http.Get(fileURL)
 	if err != nil {
@@ -117,7 +117,7 @@ func downloadFileFromURL(fileURL string) (string, error) {
 	}
 
 	// 根据URL获取文件名和扩展名
-	fileName := getFileNameFromURL(fileURL, resp)
+	fileName := GetFileNameFromURL(fileURL, resp)
 	if fileName == "" {
 		return "", fmt.Errorf("failed to determine file name")
 	}
@@ -142,7 +142,7 @@ func downloadFileFromURL(fileURL string) (string, error) {
 }
 
 // getFileNameFromURL 从URL中提取并解码文件名，若无扩展名则根据Content-Type推断
-func getFileNameFromURL(fileURL string, resp *http.Response) string {
+func GetFileNameFromURL(fileURL string, resp *http.Response) string {
 	// 从URL中提取文件名
 	parsedURL, err := url.Parse(fileURL)
 	if err != nil {
@@ -160,7 +160,7 @@ func getFileNameFromURL(fileURL string, resp *http.Response) string {
 
 	// 如果文件名没有扩展名，尝试根据Content-Type添加
 	if !strings.Contains(fileName, ".") {
-		ext := getFileExtensionFromResponse(resp)
+		ext := GetFileExtensionFromResponse(resp)
 		fileName += ext
 	}
 
@@ -168,7 +168,7 @@ func getFileNameFromURL(fileURL string, resp *http.Response) string {
 }
 
 // getFileExtensionFromResponse 根据响应的Content-Type获取文件扩展名
-func getFileExtensionFromResponse(resp *http.Response) string {
+func GetFileExtensionFromResponse(resp *http.Response) string {
 	contentType := resp.Header.Get("Content-Type")
 	switch contentType {
 	case "image/jpeg":
