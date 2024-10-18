@@ -7,6 +7,10 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
+	"io"
+	"net/http"
+	"os"
+	"path/filepath"
 	"reflect"
 	"sort"
 	"strings"
@@ -95,4 +99,36 @@ func DeepCopy(src interface{}) (interface{}, error) {
 
 	// 返回目标对象的值
 	return vp.Elem().Interface(), nil
+}
+
+// downloadFileFromURL 从URL下载文件并保存到本地临时文件
+func DownloadFileFromURL(url string) (string, error) {
+	// 发送HTTP请求获取URL内容
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	// 检查响应状态码
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("failed to download file: %s", resp.Status)
+	}
+
+	// 创建一个临时文件保存下载的内容
+	tempDir := os.TempDir()
+	tempFile, err := os.CreateTemp(tempDir, "tmpdownload-*.tmp")
+	if err != nil {
+		return "", err
+	}
+	defer tempFile.Close()
+
+	// 将响应的Body内容写入临时文件
+	_, err = io.Copy(tempFile, resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	// 返回临时文件的路径
+	return filepath.Abs(tempFile.Name())
 }
