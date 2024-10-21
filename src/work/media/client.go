@@ -166,3 +166,61 @@ func (comp *Client) Upload(ctx context.Context, mediaType string, path string, f
 
 	return outResponse, err
 }
+
+func (comp *Client) UploadMediaImageUrl(ctx context.Context, attachmentType string, url string, form *power.HashMap) (*response2.ResponseUploadMediaData, error) {
+	path, err := support.DownloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.UploadMedia(ctx, attachmentType, "image", path, form)
+}
+
+func (comp *Client) UploadMediaVideoUrl(ctx context.Context, attachmentType string, url string, form *power.HashMap) (*response2.ResponseUploadMediaData, error) {
+	path, err := support.DownloadFileFromURL(url)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to download file from URL")
+	}
+	defer os.Remove(path)
+	return comp.UploadMedia(ctx, attachmentType, "video", path, form)
+}
+
+func (comp *Client) UploadMediaImage(ctx context.Context, attachmentType string, path string, form *power.HashMap) (*response2.ResponseUploadMediaData, error) {
+	return comp.UploadMedia(ctx, attachmentType, "image", path, form)
+}
+
+func (comp *Client) UploadMediaVideo(ctx context.Context, attachmentType string, path string, form *power.HashMap) (*response2.ResponseUploadMediaData, error) {
+	return comp.UploadMedia(ctx, attachmentType, "video", path, form)
+}
+
+// 上传附件资源
+// https://developer.work.weixin.qq.com/document/path/95178
+func (comp *Client) UploadMedia(ctx context.Context, attachmentType string, mediaType string, path string, form *power.HashMap) (*response2.ResponseUploadMediaData, error) {
+	outResponse := &response2.ResponseUploadMediaData{}
+
+	var files *object.HashMap
+	if path != "" {
+		files = &object.HashMap{
+			"media": path,
+		}
+	}
+
+	var formData *kernel.UploadForm
+	if form != nil {
+		formData = &kernel.UploadForm{
+			Contents: []*kernel.UploadContent{
+				&kernel.UploadContent{
+					Name:  (*form)["name"].(string),
+					Value: (*form)["value"],
+				},
+			},
+		}
+	}
+
+	_, err := comp.BaseClient.HttpUpload(ctx, "cgi-bin/media/upload_attachment", files, formData, &object.StringMap{
+		"media_type":      mediaType,
+		"attachment_type": attachmentType,
+	}, nil, outResponse)
+
+	return outResponse, err
+}
