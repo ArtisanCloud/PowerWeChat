@@ -111,7 +111,7 @@ type RequestApplyForBusiness struct {
 		ActivitiesId        string   `json:"activities_id"`
 		ActivitiesRate      string   `json:"activities_rate"`
 		QualificationType   string   `json:"qualification_type"`
-		Qualifications      string   `json:"qualifications"`
+		Qualifications      []string `json:"qualifications"`
 		SettlementId        string   `json:"settlement_id"`
 	} `json:"settlement_info"`
 	BankAccountInfo struct {
