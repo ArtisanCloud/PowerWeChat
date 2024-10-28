@@ -51,10 +51,63 @@ func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.Reques
 	if err != nil {
 		return nil, err
 	}
-	params.ContactInfo.ContactEmail = string(buffer)
+	params.ContactInfo.ContactEmail = buffer
+
+	// 加密params.ContactInfo.ContactName
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.ContactInfo.ContactName))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
 	if err != nil {
 		return nil, err
 	}
+	params.ContactInfo.ContactName = buffer
+
+	// 加密params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardNumber
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardNumber))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
+	if err != nil {
+		return nil, err
+	}
+	params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardNumber = buffer
+
+	// 加密params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardName
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardName))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
+	if err != nil {
+		return nil, err
+	}
+	params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardName = buffer
+
+	// 加密params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardAddress
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardAddress))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
+	if err != nil {
+		return nil, err
+	}
+	params.SubjectInfo.IdentityInfo.IdCardInfo.IdCardAddress = buffer
+
+	// 加密params.ContactInfo.mobile_phone
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.ContactInfo.MobilePhone))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
+	if err != nil {
+		return nil, err
+	}
+	params.ContactInfo.MobilePhone = buffer
+
+	// 加密params.BankAccountInfo.AccountName
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.BankAccountInfo.AccountName))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
+	if err != nil {
+		return nil, err
+	}
+	params.BankAccountInfo.AccountName = buffer
+
+	// 加密params.BankAccountInfo.AccountNumber
+	cipherData, err = rsaSigner.RSAEncryptor.Encrypt([]byte(params.BankAccountInfo.AccountNumber))
+	buffer = base64.StdEncoding.EncodeToString(cipherData)
+	if err != nil {
+		return nil, err
+	}
+	params.BankAccountInfo.AccountNumber = buffer
 
 	// 结构体转化
 	options, err := object.StructToHashMap(params)
@@ -62,7 +115,7 @@ func (comp *Client) ApplyForBusiness(ctx context.Context, params *request.Reques
 		return nil, err
 	}
 
-	endpoint := "/v3/applyment4sub/applyment"
+	endpoint := "/v3/applyment4sub/applyment/"
 	_, err = comp.Request(ctx, comp.Wrap(endpoint), nil, http.MethodPost, options, false, nil, result)
 	return result, err
 }
@@ -74,7 +127,7 @@ func (comp *Client) GetApplyByBusinessCode(ctx context.Context, businessCode str
 	result := &response.ResponseGetApplyForBusiness{}
 
 	endpoint := "/v3/applyment4sub/applyment/business_code/" + businessCode
-	_, err := comp.Request(ctx, endpoint, &object.StringMap{}, http.MethodGet, &object.HashMap{}, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodGet, &object.HashMap{}, false, nil, result)
 	return result, err
 }
 
@@ -85,6 +138,6 @@ func (comp *Client) GetApplyByApplymentId(ctx context.Context, applymentId strin
 	result := &response.ResponseGetApplyForBusiness{}
 
 	endpoint := "/v3/applyment4sub/applyment/applyment_id/" + applymentId
-	_, err := comp.Request(ctx, endpoint, &object.StringMap{}, http.MethodGet, &object.HashMap{}, false, nil, result)
+	_, err := comp.Request(ctx, endpoint, nil, http.MethodGet,&object.HashMap{}, false, nil, result)
 	return result, err
 }
