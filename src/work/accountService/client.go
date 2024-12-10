@@ -85,16 +85,11 @@ func (comp *Client) AddContactWay(ctx context.Context, openKFID string, scene st
 	result := &response.ResponseAccountServiceAddContactWay{}
 
 	var options *object.HashMap
-
-	if scene == "" {
-		options = &object.HashMap{
-			"open_kfid": openKFID,
-		}
-	} else {
-		options = &object.HashMap{
-			"open_kfid": openKFID,
-			"scene":     scene,
-		}
+	options = &object.HashMap{
+		"open_kfid": openKFID,
+	}
+	if scene != "" {
+		(*options)["scene"] = scene
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/add_contact_way", options, nil, nil, result)
