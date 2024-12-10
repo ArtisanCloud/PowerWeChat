@@ -9,5 +9,5 @@ type ResponseCustomerBatchGet struct {
 	response.ResponseWork
 
 	CustomerList          []*power.HashMap `json:"customer_list"`
-	InvalidExternalUserID []string         `json:"invalid_external_userid,omitempty"`
+	InvalidExternalUserID []*string        `json:"invalid_external_userid"`
 }

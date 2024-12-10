@@ -2,9 +2,7 @@ package customer
 
 import (
 	"context"
-
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
-
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
@@ -28,21 +26,12 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 读取消息
 // https://developer.work.weixin.qq.com/document/path/94670
-func (comp *Client) BatchGet(ctx context.Context, externalUserIDList []string, needEnterSessionContext bool) (*response.ResponseCustomerBatchGet, error) {
+func (comp *Client) BatchGet(ctx context.Context, externalUserIDList []string) (*response.ResponseCustomerBatchGet, error) {
 
 	result := &response.ResponseCustomerBatchGet{}
 
-	var need uint32
-
-	if needEnterSessionContext {
-		need = 1
-	} else {
-		need = 0
-	}
-
 	options := &object.HashMap{
-		"external_userid_list":       externalUserIDList,
-		"need_enter_session_context": need,
+		"external_userid_list": externalUserIDList,
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/customer/batchget", options, nil, nil, result)
