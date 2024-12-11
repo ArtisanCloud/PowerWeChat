@@ -26,12 +26,13 @@ func NewClient(app kernel.ApplicationInterface) (*Client, error) {
 
 // 读取消息
 // https://developer.work.weixin.qq.com/document/path/94670
-func (comp *Client) BatchGet(ctx context.Context, externalUserIDList []string) (*response.ResponseCustomerBatchGet, error) {
+func (comp *Client) BatchGet(ctx context.Context, externalUserIDList []string, needEnterSessionContext int8) (*response.ResponseCustomerBatchGet, error) {
 
 	result := &response.ResponseCustomerBatchGet{}
 
 	options := &object.HashMap{
-		"external_userid_list": externalUserIDList,
+		"external_userid_list":       externalUserIDList,
+		"need_enter_session_context": needEnterSessionContext,
 	}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/kf/customer/batchget", options, nil, nil, result)

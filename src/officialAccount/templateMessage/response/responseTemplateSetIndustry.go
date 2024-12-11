@@ -38,5 +38,5 @@ type ResponseTemplateGetPrivate struct {
 type ResponseTemplateSend struct {
 	response.ResponseOfficialAccount
 
-	MsgID int `json:"msgid"`
+	MsgID int64 `json:"msgid"`
 }
