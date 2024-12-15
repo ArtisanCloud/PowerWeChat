@@ -34,6 +34,7 @@ type CallbackMessageHeader struct {
 	Event        string   `xml:"Event" json:"Event"`
 	ChangeType   string   `xml:"ChangeType" json:"ChangeType"`
 	EventKey     string   `xml:"EventKey,omitempty" json:"EventKey,omitempty"`
+	Ticket       string   `xml:"Ticket,omitempty" json:"Ticket,omitempty"`
 	Content      []byte
 }
 
@@ -55,6 +56,14 @@ func (header CallbackMessageHeader) GetMsgType() string {
 
 func (header CallbackMessageHeader) GetEvent() string {
 	return header.Event
+}
+
+func (header CallbackMessageHeader) GetEventKey() string {
+	return header.EventKey
+}
+
+func (header CallbackMessageHeader) GetTicket() string {
+	return header.Ticket
 }
 
 func (header CallbackMessageHeader) GetChangeType() string {
