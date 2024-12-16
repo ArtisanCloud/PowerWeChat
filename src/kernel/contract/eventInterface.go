@@ -8,6 +8,8 @@ type EventInterface interface {
 	GetCreateTime() int
 	GetMsgType() string
 	GetEvent() string
+	GetEventKey() string
+	GetTicket() string
 	GetChangeType() string
 	ReadMessage(msg interface{}) error
 	GetContent() []byte
