@@ -295,7 +295,7 @@ func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessTo
 		app.Config.GetString("token", ""),
 		app.Config.GetString("aes_key", ""),
 	)
-	application.Auth, err = auth3.NewClient(app, application)
+	application.Auth, err = auth3.NewClient(application, app)
 
 	return application, err
 
