@@ -5,6 +5,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+	response4 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/media/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/miniProgram/code/request"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openPlatform/authorizer/miniProgram/code/response"
 	"net/http"
@@ -44,16 +45,16 @@ func (comp *Client) Commit(ctx context.Context, templateID string, extJson strin
 
 // 获取体验版二维码
 // https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/code/get_qrcode.html
-func (comp *Client) GetQrCode(ctx context.Context, path string) (*response2.ResponseOpenPlatform, error) {
+func (comp *Client) GetQrCode(ctx context.Context, path string) (*http.Response, error) {
 
-	result := &response2.ResponseOpenPlatform{}
+	var header = &response4.ResponseHeaderMedia{}
 
-	_, err := comp.BaseClient.RequestRaw(ctx, "wxa/get_qrcode", http.MethodPost, &object.HashMap{
+	rs, err := comp.BaseClient.RequestRaw(ctx, "wxa/get_qrcode", http.MethodGet, &object.HashMap{
 		"query": &object.StringMap{
 			"path": path,
-		}}, nil, result)
+		}}, &header, nil)
 
-	return result, err
+	return rs, err
 
 }
 
