@@ -42,14 +42,15 @@ type JSAPISettleInfo struct {
 
 type RequestJSAPIPrepay struct {
 	PrepayBase
-	Description string           `json:"description"`           // 商品描述
-	OutTradeNo  string           `json:"out_trade_no"`          // 商户订单号
-	TimeExpire  string           `json:"time_expire,omitempty"` // 交易结束时间
-	Attach      string           `json:"attach,omitempty"`      // 附加数据
-	GoodsTag    string           `json:"goods_tag,omitempty"`   // 订单优惠标记
-	Amount      *JSAPIAmount     `json:"amount"`                // 订单金额
-	Payer       *JSAPIPayer      `json:"payer,omitempty"`       // 支付者
-	Detail      *JSAPIDetail     `json:"detail,omitempty"`      // 优惠功能
-	SceneInfo   *JSAPISceneInfo  `json:"scene_info,omitempty"`  // 场景信息
-	SettleInfo  *JSAPISettleInfo `json:"settle_info,omitempty"` // 结算信息
+	Description   string           `json:"description"`              // 商品描述
+	OutTradeNo    string           `json:"out_trade_no"`             // 商户订单号
+	TimeExpire    string           `json:"time_expire,omitempty"`    // 交易结束时间
+	Attach        string           `json:"attach,omitempty"`         // 附加数据
+	GoodsTag      string           `json:"goods_tag,omitempty"`      // 订单优惠标记
+	SupportFapiao bool             `json:"support_fapiao,omitempty"` // 电子发票入口开放标识
+	Amount        *JSAPIAmount     `json:"amount"`                   // 订单金额
+	Payer         *JSAPIPayer      `json:"payer,omitempty"`          // 支付者
+	Detail        *JSAPIDetail     `json:"detail,omitempty"`         // 优惠功能
+	SceneInfo     *JSAPISceneInfo  `json:"scene_info,omitempty"`     // 场景信息
+	SettleInfo    *JSAPISettleInfo `json:"settle_info,omitempty"`    // 结算信息
 }
