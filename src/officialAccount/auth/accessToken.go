@@ -25,7 +25,9 @@ func NewAccessToken(app kernel.ApplicationInterface) (*AccessToken, error) {
 	cfg := app.GetConfig()
 	useStableToken := cfg.GetBool("stable_token_mode", false)
 	forceRefresh := cfg.GetBool("force_refresh", false)
-	baseUrl := cfg.GetString("http.base_uri", "https://api.weixin.qq.com")
+	// baseUrl := cfg.GetString("http.base_uri", "https://api.weixin.qq.com")
+	// 使用 http.base_uri 拼接url 多一个 '/'，导致 接口请求 404
+	baseUrl := "https://api.weixin.qq.com"
 	if useStableToken {
 		token.EndpointToGetToken = baseUrl + "/cgi-bin/stable_token"
 		token.StableTokenMode = true
