@@ -143,6 +143,39 @@ func (comp *Client) FileDownload(ctx context.Context, options *request.RequestWe
 	return result, err
 }
 
+// 分块上传初始化
+// https://developer.work.weixin.qq.com/document/path/98004#分块上传初始化
+func (comp *Client) FileUploadInit(ctx context.Context, options *request.RequestWeDriveFileUploadInit) (*response.ResponseWeDriveFileUploadInit, error) {
+
+	result := &response.ResponseWeDriveFileUploadInit{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload_init", options, nil, nil, result)
+
+	return result, err
+}
+
+// 分块上传文件
+// https://developer.work.weixin.qq.com/document/path/98004#分块上传文件
+func (comp *Client) FileUploadPart(ctx context.Context, options *request.RequestWeDriveFileUploadPart) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload_part", options, nil, nil, result)
+
+	return result, err
+}
+
+// 分块上传完成
+// https://developer.work.weixin.qq.com/document/path/98004#分块上传完成
+func (comp *Client) FileUploadFinish(ctx context.Context, options *request.RequestWeDriveFileUploadFinish) (*response.ResponseWeDriveFileUploadFinish, error) {
+
+	result := &response.ResponseWeDriveFileUploadFinish{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload_finish", options, nil, nil, result)
+
+	return result, err
+}
+
 // 新建文件/微文档
 // https://developer.work.weixin.qq.com/document/path/93657#新建文件文档
 func (comp *Client) FileCreate(ctx context.Context, options *request.RequestWeDriveFileCreate) (*response.ResponseWeDriveFileCreate, error) {
