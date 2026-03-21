@@ -42,6 +42,6 @@ func (comp *Client) GetUserInfo3rdByUserTicket(ctx context.Context, userTicket s
 	req := object.StringMap{
 		"user_ticket": userTicket,
 	}
-	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/service/auth/getuserdetail3rd", &req, nil, &result)
+	_, err := comp.BaseClient.HttpPost(ctx, "cgi-bin/service/auth/getuserdetail3rd", &req, nil, &result)
 	return &result, err
 }
