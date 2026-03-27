@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-
+	
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	kernelModels "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 )
@@ -26,7 +26,10 @@ const (
 	InfoTypeCancelSpecialAuth  InfoType = "cancel_special_auth"
 )
 
-const EventTypeChangeAppAdmin EventType = "change_app_admin"
+const (
+	EventTypeChangeAppAdmin     EventType = "change_app_admin"
+	EventTypeWedriveSpaceChange EventType = "wedrive_space_change"
+)
 
 type ChangeType = string
 
@@ -91,10 +94,12 @@ func (ev BaseEvent) GetTimestamp() int64 {
 func (msg BaseEvent) ToEvent() (IEvent, error) {
 	infoType := msg.GetInfoType()
 	if infoType == "" {
-		if msg.Event == string(EventTypeChangeAppAdmin) {
+		if msg.Event == EventTypeChangeAppAdmin {
 			return new(EventChangeAppAdmin), nil
+		} else if msg.Event == EventTypeWedriveSpaceChange {
+			return new(EventWedriveSpaceChange), nil
 		}
-		return nil, errors.New(string(msg.Event))
+		return nil, errors.New(msg.Event)
 	}
 	switch infoType {
 	case InfoTypeSuiteTicket:
@@ -229,4 +234,9 @@ type EventSpecialAuth struct {
 type EventChangeAppAdmin struct {
 	BaseEvent
 	AgentID string `xml:"AgentID"`
+}
+
+type EventWedriveSpaceChange struct {
+	BaseEvent
+	SpaceId string `xml:"SpaceId"`
 }
