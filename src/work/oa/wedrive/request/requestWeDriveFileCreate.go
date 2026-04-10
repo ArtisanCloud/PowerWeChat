@@ -1,7 +1,6 @@
 package request
 
 type RequestWeDriveFileCreate struct {
-	UserID   string `json:"userid"`
 	SpaceID  string `json:"spaceid"`
 	FatherID string `json:"fatherid"`
 	FileType string `json:"file_type"`
