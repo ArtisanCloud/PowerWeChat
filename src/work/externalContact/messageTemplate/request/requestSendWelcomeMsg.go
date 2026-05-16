@@ -1,7 +1,7 @@
 package request
 
 type RequestSendWelcomeMsg struct {
-	WelcomeCode string                     `json:"welcome_code"`
-	Text        *TextOfMessage             `json:"text"`
-	Attachments []MessageTemplateInterface `json:"attachments"`
+	WelcomeCode string         `json:"welcome_code"`
+	Text        *TextOfMessage `json:"text"`
+	Attachments []Attachment   `json:"attachments"`
 }
