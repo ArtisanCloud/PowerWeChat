@@ -135,7 +135,7 @@ func (msg BaseEvent) ToEvent() (IEvent, error) {
 		return new(EventSpecialAuth), nil
 	case InfoTypeChangeExternalContact:
 		switch msg.GetChangeType() {
-		case ChangeTypeAddExternalContact:
+		case ChangeTypeAddExternalContact, ChangeTypeEditExternalContact, ChangeTypeDelExternalContact:
 			return new(ChangeExternalContact), nil
 		default:
 			return nil, errors.New("unknown event")
