@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	
+
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	kernelModels "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
 )
@@ -254,6 +254,7 @@ type EventWedriveSpaceChange struct {
 
 type ChangeExternalContact struct {
 	BaseEvent
+	AuthCorpId     string `xml:"AuthCorpId"`
 	UserID         string `xml:"UserID"`
 	ExternalUserID string `xml:"ExternalUserID"`
 	State          string `xml:"State"`
