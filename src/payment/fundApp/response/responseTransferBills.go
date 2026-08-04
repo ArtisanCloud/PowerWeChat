@@ -1,8 +1,9 @@
 package response
 
 import (
-	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"time"
+
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
 // https://work.weixin.qq.com/api/doc/90000/90135/90278
@@ -25,6 +26,7 @@ type ResponseCancelBill struct {
 }
 
 type ResponseQueryOutBill struct {
+	response.ResponsePayment
 	MchId          string `json:"mch_id"`
 	OutBillNo      string `json:"out_bill_no"`
 	TransferBillNo string `json:"transfer_bill_no"`

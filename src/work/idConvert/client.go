@@ -97,3 +97,19 @@ func (comp *Client) ExternalTagIDToOpenExternalTagID(ctx context.Context, extern
 
 	return result, err
 }
+
+// external_userid转换
+// 将代开发应用或第三方应用获取的externaluserid转换成自建应用的externaluserid
+// https://developer.work.weixin.qq.com/document/path/95884
+func (comp *Client) FromServiceExternalUserID(ctx context.Context, externalUserID string, sourceAgentID int) (*response.ResponseFromServiceExternalUserID, error) {
+
+	result := new(response.ResponseFromServiceExternalUserID)
+	req := object.HashMap{
+		"external_userid": externalUserID,
+		"source_agentid":  sourceAgentID,
+	}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/from_service_external_userid", &req, nil, nil, result)
+
+	return result, err
+}

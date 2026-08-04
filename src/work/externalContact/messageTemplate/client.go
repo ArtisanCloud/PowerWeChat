@@ -59,7 +59,7 @@ func (comp *Client) GetGroupMsgTask(ctx context.Context, msgID string, limit int
 	options := &object.HashMap{
 		"msgid":       msgID,
 		"limit":       limit,
-		"msgcursorid": cursor,
+		"cursor":      cursor,
 	}
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/externalcontact/get_groupmsg_task", options, nil, nil, result)
 
