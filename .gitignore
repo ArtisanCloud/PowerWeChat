@@ -10,3 +10,5 @@ temp.go
 
 *.log
 docs/
+.gomodcache/
+.gocache/

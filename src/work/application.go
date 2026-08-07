@@ -16,6 +16,7 @@ import (
 	tag3 "github.com/ArtisanCloud/PowerWeChat/v3/src/work/accountService/tag"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/agent"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/agent/workbench"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/aibot"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/auth"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/base"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/corpgroup"
@@ -143,6 +144,8 @@ type Work struct {
 
 	GroupRobot          *groupRobot.Client
 	GroupRobotMessenger *groupRobot.Messager
+
+	AIBotLongConnection *aibot.Client
 
 	IdConvert *idConvert.Client
 
@@ -380,6 +383,11 @@ func NewWork(config *UserConfig) (*Work, error) {
 		return nil, err
 	}
 
+	app.AIBotLongConnection, err = aibot.RegisterProvider(app)
+	if err != nil {
+		return nil, err
+	}
+
 	//-------------- register Idconvert --------------
 	app.IdConvert, err = idConvert.RegisterProvider(app)
 	if err != nil {
@@ -512,6 +520,9 @@ func (app *Work) GetComponent(name string) interface{} {
 		return app.GroupRobot
 	case "GroupRobotMessenger":
 		return app.GroupRobotMessenger
+
+	case "AIBotLongConnection":
+		return app.AIBotLongConnection
 
 	case "IdConvert":
 		return app.IdConvert

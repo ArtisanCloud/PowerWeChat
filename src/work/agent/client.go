@@ -54,3 +54,13 @@ func (comp *Client) List(ctx context.Context) (*response.ResponseAgentList, erro
 
 	return result, err
 }
+
+// https://developer.work.weixin.qq.com/document/path/90583
+func (comp *Client) SetScope(ctx context.Context, data *request.RequestAgentSetScope) (*response.ResponseAgentSetScope, error) {
+
+	result := &response.ResponseAgentSetScope{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/agent/set_scope", data, nil, nil, result)
+
+	return result, err
+}

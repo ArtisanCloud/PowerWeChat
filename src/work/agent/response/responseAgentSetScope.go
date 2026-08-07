@@ -4,7 +4,6 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 )
 
-type ResponseGroupChatOpenGIDToChatID struct {
+type ResponseAgentSetScope struct {
 	response.ResponseWork
-	ChatID string `json:"chat_id"`
 }
