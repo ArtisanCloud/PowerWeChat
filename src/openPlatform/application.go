@@ -377,6 +377,7 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 		Log: miniProgram2.Log{
 			Level: (*log)["level"].(string),
 			File:  (*log)["file"].(string),
+			Error: (*log)["error"].(string),
 			ENV:   (*log)["env"].(string),
 		},
 		OAuth: oauth,
