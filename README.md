@@ -180,7 +180,7 @@ printf(rs.OpenID)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ArtisanCloud/PowerWeChat&type=Date)](https://star-history.com/#ArtisanCloud/PowerWeChat&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=ArtisanCloud/PowerWeChat&type=Date)](https://star-history.dera.page/#ArtisanCloud/PowerWeChat&Date)
 
 
 <!-- 相关产品推荐 -->
