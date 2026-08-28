@@ -289,6 +289,9 @@ func (app *OpenPlatform) OfficialAccount(appID string, refreshToken string, acce
 func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessToken *auth2.AccessToken) (application *miniProgram3.Application, err error) {
 	userConfig, err := app.GetMiniProgramAuthorizerConfig(appID, refreshToken)
 	application, err = miniProgram3.NewApplication(userConfig)
+	if err != nil {
+		return nil, err
+	}
 
 	// 重塑一个AccessToken
 	if accessToken == nil {
@@ -312,7 +315,10 @@ func (app *OpenPlatform) MiniProgram(appID string, refreshToken string, accessTo
 func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken string) (userConfig *officialAccount2.UserConfig, err error) {
 
 	// 先从缓存中获取token，需要在之前的授权流程中，通过ComponentVerifyTicket生成的token。
-	token, _ := app.AccessToken.GetToken(context.Background(), false)
+	token, err := app.AccessToken.GetToken(context.Background(), false)
+	if err != nil {
+		return nil, err
+	}
 	config := app.GetConfig()
 	cacheHandle := config.Get("cache", nil).(cache.CacheInterface)
 
@@ -377,6 +383,7 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 		Log: miniProgram2.Log{
 			Level: (*log)["level"].(string),
 			File:  (*log)["file"].(string),
+			Error: (*log)["error"].(string),
 			ENV:   (*log)["env"].(string),
 		},
 		OAuth: oauth,
