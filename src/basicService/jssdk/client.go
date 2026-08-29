@@ -5,15 +5,16 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"net/http"
+	"sort"
+	"strings"
+	"time"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/cache"
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/power"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
-	"net/http"
-	"sort"
-	"strings"
-	"time"
 )
 
 type Client struct {
@@ -56,7 +57,10 @@ func (comp *Client) BuildConfig(ctx context.Context, jsApiList []string, debug b
 
 	signature, err := comp.ConfigSignature(ctx, url, "", 0)
 	if err != nil {
-		sign, _ := power.HashMapToPower(signature)
+		sign, err := power.HashMapToPower(signature)
+		if err != nil {
+			return nil, err
+		}
 		return sign, err
 	}
 	config := object.MergeHashMap(&object.HashMap{

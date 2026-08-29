@@ -361,7 +361,10 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 
 func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshToken string) (userConfig *miniProgram2.UserConfig, err error) {
 
-	token, _ := app.AccessToken.GetToken(context.Background(), false)
+	token, err := app.AccessToken.GetToken(context.Background(), false)
+	if err != nil {
+		return nil, err
+	}
 	config := app.GetConfig()
 	cache := config.Get("cache", nil).(cache.CacheInterface)
 	var oauth = miniProgram2.OAuth{}
@@ -381,10 +384,11 @@ func (app *OpenPlatform) GetMiniProgramAuthorizerConfig(appID string, refreshTok
 
 		ResponseType: config.GetString("secret", ""),
 		Log: miniProgram2.Log{
-			Level: (*log)["level"].(string),
-			File:  (*log)["file"].(string),
-			Error: (*log)["error"].(string),
-			ENV:   (*log)["env"].(string),
+			Driver: (*log)["driver"].(contract.LoggerInterface),
+			Level:  (*log)["level"].(string),
+			File:   (*log)["file"].(string),
+			Error:  (*log)["error"].(string),
+			ENV:    (*log)["env"].(string),
 		},
 		OAuth: oauth,
 		Cache: cache,
