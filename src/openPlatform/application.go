@@ -343,9 +343,11 @@ func (app *OpenPlatform) GetOfficialAuthorizerConfig(appID string, refreshToken 
 
 		ResponseType: config.GetString("response_type", ""),
 		Log: officialAccount2.Log{
-			Level: (*log)["level"].(string),
-			File:  (*log)["file"].(string),
-			ENV:   (*log)["env"].(string),
+			Driver: (*log)["driver"].(contract.LoggerInterface),
+			Level:  (*log)["level"].(string),
+			File:   (*log)["file"].(string),
+			Error:  (*log)["error"].(string),
+			ENV:    (*log)["env"].(string),
 		},
 		OAuth: oauth,
 		Cache: cacheHandle,
