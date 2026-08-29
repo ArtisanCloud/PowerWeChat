@@ -53,11 +53,13 @@ func (comp *Client) Delete(ctx context.Context, id int) (*response.ResponseDepar
 func (comp *Client) List(ctx context.Context, id int) (*response.ResponseDepartmentList, error) {
 
 	result := &response.ResponseDepartmentList{}
-	query := &object.StringMap{}
+
+	// 部门id。获取指定部门及其下的子部门（以及子部门的子部门等等，递归）。 如果不填，默认获取全量组织架构
+	query := object.StringMap{}
 	if id > 0 {
-		(*query)["id"] = fmt.Sprintf("%d", id)
+		query["id"] = fmt.Sprintf("%d", id)
 	}
-	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/department/list", query, nil, result)
+	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/department/list", &query, nil, result)
 
 	return result, err
 }
