@@ -30,7 +30,7 @@ func (responseCastable *ResponseCastable) CastResponseToType(response *http.Resp
 			return nil, err
 		}
 		data := []interface{}{}
-		err = json.Unmarshal(body, data)
+		err = json.Unmarshal(body, &data)
 
 		return data, err
 	case response2.TYPE_MAP:
