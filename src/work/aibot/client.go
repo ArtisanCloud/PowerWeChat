@@ -124,6 +124,11 @@ func (comp *Client) Send(ctx context.Context, cmd *request.RequestLongConnection
 	}
 	if dl, ok := ctx.Deadline(); ok {
 		_ = conn.SetWriteDeadline(dl)
+	} else {
+		// Clear any stale write deadline left on the connection by a previous
+		// Send with a deadline (e.g. heartbeat). Otherwise the expired deadline
+		// makes every subsequent write fail with i/o timeout.
+		_ = conn.SetWriteDeadline(time.Time{})
 	}
 	comp.writeMu.Lock()
 	defer comp.writeMu.Unlock()
@@ -137,6 +142,10 @@ func (comp *Client) Read(ctx context.Context) (*response.ResponseLongConnection,
 	}
 	if dl, ok := ctx.Deadline(); ok {
 		_ = conn.SetReadDeadline(dl)
+	} else {
+		// Same as Send: clear a stale read deadline so subsequent reads with a
+		// deadline-less ctx are not killed by an expired deadline.
+		_ = conn.SetReadDeadline(time.Time{})
 	}
 	_, raw, err := conn.ReadMessage()
 	if err != nil {
