@@ -5,6 +5,7 @@
 
 environment.yml
 environment.yaml
+.env.local
 
 temp.go
 
@@ -12,3 +13,6 @@ temp.go
 docs/
 .gomodcache/
 .gocache/
+
+# VS Code Go / Delve temporary binaries
+__debug_bin*
