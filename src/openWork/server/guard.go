@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-
+	
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
@@ -78,7 +78,7 @@ func GetEventType(infoType models.InfoType, changeType models.ChangeType) int {
 	case models.InfoTypeCancelSpecialAuth:
 		return EVENT_CANCEL_SPECIAL_AUTH
 	}
-
+	
 	return -1
 }
 
@@ -88,16 +88,16 @@ type Guard struct {
 
 func NewGuard(app kernel.ApplicationInterface) *Guard {
 	// config := app.GetContainer().GetConfig()
-
+	
 	guard := &Guard{
 		kernel.NewServerGuard(app),
 	}
-
+	
 	guard.OverrideResolve()
 	// guard.OverrideNotify()
 	guard.OverrideIsSafeMode()
 	guard.OverrideToCallbackType()
-
+	
 	return guard
 }
 
@@ -120,7 +120,7 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 	if err != nil {
 		return nil, err
 	}
-
+	
 	var (
 		buffResult  []byte
 		contentType string
@@ -143,7 +143,7 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 		// requestXML, _ := io.ReadAll(request.Body)
 		request.Body = io.NopCloser(&buf)
 		// println(string(requestXML))
-
+		
 		// err = xml.Unmarshal(requestXML, &callbackEvent)
 		err = xml.NewDecoder(tee).Decode(&callbackEvent)
 		if err != nil {
@@ -163,7 +163,7 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 			}
 		}
 		result := closure(&callbackEvent, ev, callbackMsg)
-
+		
 		// convert the result to http response
 		// 如果是字符串， "success", "failed"
 		if str, ok := result.(string); ok {
@@ -180,7 +180,7 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 	} else {
 		return nil, errors.New("missing request body")
 	}
-
+	
 	httpRS = &http.Response{
 		StatusCode:    http.StatusOK,
 		ContentLength: int64(len(buffResult)),
@@ -189,18 +189,18 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 		},
 		Body: io.NopCloser(bytes.NewBuffer(buffResult)),
 	}
-
+	
 	return httpRS, err
 }
 
 func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error) {
 	encryptor := guard.App.GetComponent("Encryptor").(*kernel.Encryptor)
-
+	
 	bufDecrypted, cryptErr := encryptor.DecryptContent(content)
 	if cryptErr != nil {
 		return nil, errors.New(cryptErr.ErrMsg)
 	}
-
+	
 	return bufDecrypted, err
 }
 
@@ -208,7 +208,7 @@ func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error
 func (guard *Guard) OverrideResolve() {
 	guard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
 		guard.registerHandlers()
-
+		
 		if ev, _, err := guard.GetMessage(request); err != nil {
 			return nil, err
 		} else if infoType := ev.GetInfoType(); infoType != "" {
@@ -218,7 +218,7 @@ func (guard *Guard) OverrideResolve() {
 			StatusCode: http.StatusOK,
 			Body:       io.NopCloser(bytes.NewBuffer([]byte(kernel.SUCCESS_EMPTY_RESPONSE))),
 		}
-
+		
 		return httpRS, nil
 	}
 }
@@ -272,7 +272,7 @@ func (guard *Guard) parseMessage(content string, callback interface{}) (err erro
 			return err
 		}
 	}
-
+	
 	return nil
 }
 
@@ -280,7 +280,7 @@ func (guard *Guard) OverrideToCallbackType() {
 	guard.ToCallbackType = func(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
 		msgType := callbackHeader.GetMsgType()
 		switch msgType {
-
+		
 		// msg type is message
 		case kernelModels.CALLBACK_MSG_TYPE_TEXT:
 			decryptMsg := workModels.MessageText{}
@@ -310,11 +310,11 @@ func (guard *Guard) OverrideToCallbackType() {
 		case kernelModels.CALLBACK_MSG_TYPE_EVENT:
 			decryptMessage, err = guard.toCallbackEvent(callbackHeader, buf)
 			return decryptMessage, err
-
+		
 		default:
 			return nil, fmt.Errorf("not found wechat msg type:%s", msgType)
 		}
-
+		
 		return decryptMessage, err
 	}
 }
@@ -322,9 +322,9 @@ func (guard *Guard) OverrideToCallbackType() {
 // switch event
 func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
 	eventType := callbackHeader.GetEvent()
-
+	
 	switch eventType {
-
+	
 	// event is change contact
 	case workModels.CALLBACK_EVENT_CUSTOMER_ACQUISITION,
 		workModels.CALLBACK_EVENT_CHANGE_EXTERNAL_CONTACT,
@@ -346,7 +346,7 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 			err = xml.Unmarshal(buf, decryptMsg)
 			decryptMessage = decryptMsg
 		}
-
+	
 	// event is change external tag
 	case workModels.CALLBACK_EVENT_CHANGE_EXTERNAL_TAG:
 		switch callbackHeader.GetChangeType() {
@@ -367,7 +367,7 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 			err = xml.Unmarshal(buf, decryptMsg)
 			decryptMessage = decryptMsg
 		}
-
+	
 	// events
 	case workModels.CALLBACK_EVENT_SUBSCRIBE:
 		decryptMsg := &workModels.EventSubscribe{}
@@ -444,7 +444,7 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 	default:
 		return nil, fmt.Errorf("not found wecom event: %s", eventType)
 	}
-
+	
 	return decryptMessage, err
 }
 
@@ -452,7 +452,7 @@ func (guard *Guard) toCallbackEvent(callbackHeader contract.EventInterface, buf 
 func (guard *Guard) toCallbackEventChangeType(callbackHeader contract.EventInterface, buf []byte) (decryptMessage interface{}, err error) {
 	changeType := callbackHeader.GetChangeType()
 	switch changeType {
-
+	
 	case workModels.CALLBACK_EVENT_CHANGE_TYPE_OPEN_PROFILE:
 		decryptMsg := &workModels.EventCustomerAcquisitionOpenProfile{}
 		err = xml.Unmarshal(buf, decryptMsg)
@@ -529,7 +529,7 @@ func (guard *Guard) toCallbackEventChangeType(callbackHeader contract.EventInter
 	default:
 		return nil, fmt.Errorf("not found wecom change event: %s, changeType: %s", callbackHeader.GetEvent(), changeType)
 	}
-
+	
 	return decryptMessage, err
 }
 
@@ -551,6 +551,6 @@ func (guard *Guard) toCallbackChatEventChangeType(callbackHeader contract.EventI
 	default:
 		return nil, errors.New("not found wechat event")
 	}
-
+	
 	return decryptMessage, err
 }
