@@ -24,9 +24,28 @@ func (comp *Client) Create(ctx context.Context, params *request.RequestDepartmen
 	return result, err
 }
 
-// 更新部门
+// 更新部门。如需显式清空字段或按字段进行局部更新，请使用 UpdatePartial。
 // https://developer.work.weixin.qq.com/document/path/90206
 func (comp *Client) Update(ctx context.Context, params *request.RequestDepartmentUpdate) (*response.ResponseDepartmentUpdate, error) {
+
+	result := &response.ResponseDepartmentUpdate{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/department/update", params, nil, nil, result)
+
+	return result, err
+}
+
+// UpdatePartial 仅更新显式设置的部门字段，ID 为必填。
+// 可选字段为 nil 时不修改；非 nil 时发送指向的值，包括空字符串和零值。
+// 例如，仅清空部门英文名称：
+//
+//	client.UpdatePartial(ctx, &request.RequestDepartmentUpdatePartial{
+//		ID:     2,
+//		NameEn: object.String(""),
+//	})
+//
+// https://developer.work.weixin.qq.com/document/path/90206
+func (comp *Client) UpdatePartial(ctx context.Context, params *request.RequestDepartmentUpdatePartial) (*response.ResponseDepartmentUpdate, error) {
 
 	result := &response.ResponseDepartmentUpdate{}
 
