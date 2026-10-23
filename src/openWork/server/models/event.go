@@ -13,31 +13,38 @@ type InfoType = string
 type EventType = string
 
 const (
-	InfoTypeSuiteTicket        InfoType = "suite_ticket"
-	InfoTypeCreateAuth         InfoType = "create_auth"
-	InfoTypeChangeAuth         InfoType = "change_auth"
-	InfoTypeCancelAuth         InfoType = "cancel_auth"
-	InfoTypeChangeContact      InfoType = "change_contact"
-	InfoTypeShareAgentChange   InfoType = "share_agent_change"
-	InfoTypeShareChainChange   InfoType = "share_chain_change"
-	InfoTypeResetPermanentCode InfoType = "reset_permanent_code"
-	InfoTypeCorpArchAuth       InfoType = "corp_arch_auth"
-	InfoTypeApproveSpecialAuth InfoType = "approve_special_auth"
-	InfoTypeCancelSpecialAuth  InfoType = "cancel_special_auth"
+	InfoTypeSuiteTicket           InfoType = "suite_ticket"
+	InfoTypeCreateAuth            InfoType = "create_auth"
+	InfoTypeChangeAuth            InfoType = "change_auth"
+	InfoTypeCancelAuth            InfoType = "cancel_auth"
+	InfoTypeChangeContact         InfoType = "change_contact"
+	InfoTypeShareAgentChange      InfoType = "share_agent_change"
+	InfoTypeShareChainChange      InfoType = "share_chain_change"
+	InfoTypeResetPermanentCode    InfoType = "reset_permanent_code"
+	InfoTypeCorpArchAuth          InfoType = "corp_arch_auth"
+	InfoTypeApproveSpecialAuth    InfoType = "approve_special_auth"
+	InfoTypeCancelSpecialAuth     InfoType = "cancel_special_auth"
+	InfoTypeChangeExternalContact InfoType = "change_external_contact"
 )
 
-const EventTypeChangeAppAdmin EventType = "change_app_admin"
+const (
+	EventTypeChangeAppAdmin     EventType = "change_app_admin"
+	EventTypeWedriveSpaceChange EventType = "wedrive_space_change"
+)
 
 type ChangeType = string
 
 const (
-	ChangeTypeCreateUser  ChangeType = "create_user"
-	ChangeTypeUpdateUser  ChangeType = "update_user"
-	ChangeTypeDeleteUser  ChangeType = "delete_user"
-	ChangeTypeCreateParty ChangeType = "create_party"
-	ChangeTypeUpdateParty ChangeType = "update_party"
-	ChangeTypeDeleteParty ChangeType = "delete_party"
-	ChangeTypeUpdateTag   ChangeType = "update_tag"
+	ChangeTypeCreateUser          ChangeType = "create_user"
+	ChangeTypeUpdateUser          ChangeType = "update_user"
+	ChangeTypeDeleteUser          ChangeType = "delete_user"
+	ChangeTypeCreateParty         ChangeType = "create_party"
+	ChangeTypeUpdateParty         ChangeType = "update_party"
+	ChangeTypeDeleteParty         ChangeType = "delete_party"
+	ChangeTypeUpdateTag           ChangeType = "update_tag"
+	ChangeTypeAddExternalContact  ChangeType = "add_external_contact"
+	ChangeTypeEditExternalContact ChangeType = "edit_external_contact"
+	ChangeTypeDelExternalContact  ChangeType = "del_external_contact"
 )
 
 func DecodeEvent(bs []byte) (IEvent, error) {
@@ -91,10 +98,12 @@ func (ev BaseEvent) GetTimestamp() int64 {
 func (msg BaseEvent) ToEvent() (IEvent, error) {
 	infoType := msg.GetInfoType()
 	if infoType == "" {
-		if msg.Event == string(EventTypeChangeAppAdmin) {
+		if msg.Event == EventTypeChangeAppAdmin {
 			return new(EventChangeAppAdmin), nil
+		} else if msg.Event == EventTypeWedriveSpaceChange {
+			return new(EventWedriveSpaceChange), nil
 		}
-		return nil, errors.New(string(msg.Event))
+		return nil, errors.New(msg.Event)
 	}
 	switch infoType {
 	case InfoTypeSuiteTicket:
@@ -124,6 +133,13 @@ func (msg BaseEvent) ToEvent() (IEvent, error) {
 		return new(EventCorpArchAuth), nil
 	case InfoTypeApproveSpecialAuth, InfoTypeCancelSpecialAuth:
 		return new(EventSpecialAuth), nil
+	case InfoTypeChangeExternalContact:
+		switch msg.GetChangeType() {
+		case ChangeTypeAddExternalContact, ChangeTypeEditExternalContact, ChangeTypeDelExternalContact:
+			return new(ChangeExternalContact), nil
+		default:
+			return nil, errors.New("unknown event")
+		}
 	default:
 		return nil, errors.New("unknown event")
 	}
@@ -229,4 +245,18 @@ type EventSpecialAuth struct {
 type EventChangeAppAdmin struct {
 	BaseEvent
 	AgentID string `xml:"AgentID"`
+}
+
+type EventWedriveSpaceChange struct {
+	BaseEvent
+	SpaceId string `xml:"SpaceId"`
+}
+
+type ChangeExternalContact struct {
+	BaseEvent
+	AuthCorpId     string `xml:"AuthCorpId"`
+	UserID         string `xml:"UserID"`
+	ExternalUserID string `xml:"ExternalUserID"`
+	State          string `xml:"State"`
+	WelcomeCode    string `xml:"WelcomeCode"`
 }
