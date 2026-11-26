@@ -7,7 +7,7 @@ go 1.23.0
 // replace github.com/ArtisanCloud/PowerSocialite/v3 => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs/v3 v3.3.2
+	github.com/ArtisanCloud/PowerLibs/v3 v3.3.3-0.20261126083216-167ff3ab7e37
 	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.12
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/gorilla/websocket v1.5.3
