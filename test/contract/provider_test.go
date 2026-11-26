@@ -13,6 +13,7 @@ import (
 	"github.com/ArtisanCloud/PowerLibs/v3/object"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	suite "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth/request"
 	auth "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/suitAuth/response"
 	users "github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/user"
 	templates "github.com/ArtisanCloud/PowerWeChat/v3/src/work/externalContact/messageTemplate"
@@ -44,6 +45,26 @@ func post(t *testing.T, path, request, reply string) *kernel.BaseClient {
 	h, err := helper.NewRequestHelper(&helper.Config{BaseUrl: server.URL + "/", ClientConfig: &contract.ClientConfig{}})
 	require.NoError(t, err)
 	return &kernel.BaseClient{HttpHelper: h, App: testApp{}}
+}
+
+func TestSetSessionInfo(t *testing.T) {
+	const path = "service/set_session_info"
+	const reply = `{"errcode":0,"errmsg":"ok"}`
+
+	t.Run("default authorization", func(t *testing.T) {
+		client := suite.Client{BaseClient: post(t, path, `{"pre_auth_code":"code","session_info":{}}`, reply)}
+		err := client.SetSessionInfo(context.Background(), &request.SetSessionInfoRequest{PreAuthCode: "code"})
+		require.NoError(t, err)
+	})
+
+	t.Run("test authorization for selected apps", func(t *testing.T) {
+		client := suite.Client{BaseClient: post(t, path, `{"pre_auth_code":"code","session_info":{"appid":[1,2,3],"auth_type":1}}`, reply)}
+		err := client.SetSessionInfo(context.Background(), &request.SetSessionInfoRequest{
+			PreAuthCode: "code",
+			SessionInfo: request.SessionInfo{AppID: []uint64{1, 2, 3}, AuthType: 1},
+		})
+		require.NoError(t, err)
+	})
 }
 
 func TestProviderResponses(t *testing.T) {
