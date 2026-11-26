@@ -1,4 +1,7 @@
-test: test-kernel-support
+test: test-kernel-support test-contract
+
+test-contract:
+	go test ./test/contract
 
 test-message:
 	go test -v test/featureUnit/main_test.go test/featureUnit/work_message_test.go

@@ -4,25 +4,29 @@ import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 
 type GetPermanentCodeResponse struct {
 	response.ResponseWork
+	// AccessToken 授权方（企业）access_token,最长为512字节
+	AccessToken string `json:"access_token,omitempty"`
+	// ExpiresIn 授权方（企业）access_token超时时间
+	ExpiresIn int64 `json:"expires_in,omitempty"`
 	// PermanentCode 永久授权码，最长为512字节
 	PermanentCode string `json:"permanent_code,omitempty"`
 	// AuthCorpInfo 授权方企业信息
 	AuthCorpInfo *AuthCorpInfo `json:"auth_corp_info,omitempty"`
+	// AuthInfo 授权信息。如果是通讯录应用，且没开启实体应用，是没有该项的。通讯录应用拥有企业通讯录的全部信息读写权限
+	AuthInfo *AuthInfo `json:"auth_info,omitempty"`
 	// AuthUserInfo 授权管理员的信息
 	AuthUserInfo *AuthUserInfo `json:"auth_user_info,omitempty"`
 	// V2
 	RegisterCodeInfo `json:"register_code_info"`
-	// State 安装应用时，扫码或者授权链接中带的state值。目前会返回state包含以下场景：扫带参二维码授权代开发模版
-	State string `json:"state"`
+	State            string `json:"state"`
+
+	DealerCorpInfo `json:"dealer_corp_info"`
 }
 
 type RegisterCodeInfo struct {
-	// RegisterCode 注册码
 	RegisterCode string `json:"register_code"`
-	// TemplateId 推广包ID
-	TemplateId string `json:"template_id"`
-	// State 仅当获取注册码指定该字段时才返回
-	State string `json:"state"`
+	TemplateId   string `json:"template_id"`
+	State        string `json:"state"`
 }
 type DealerCorpInfo struct {
 	CorpId   string `json:"corpid"`
@@ -35,6 +39,29 @@ type AuthCorpInfo struct {
 	CorpID string `json:"corpid,omitempty"`
 	// CorpName 授权方企业名
 	CorpName string `json:"corp_name,omitempty"`
+	// CorpType 授权方企业微信类型，认证号：verified, 注册号：unverified
+	CorpType string `json:"corp_type,omitempty"`
+	// CorpSquareLogoURL 授权方企业微信方形头像
+	CorpSquareLogoURL string `json:"corp_square_logo_url,omitempty"`
+	// CorpUserMax 授权方企业微信用户规模
+	CorpUserMax int `json:"corp_user_max,omitempty"`
+	// CorpFullName 所绑定的企业微信主体名称(仅认证过的企业有)
+	CorpFullName string `json:"corp_full_name,omitempty"`
+	// SubjectType 企业类型，1. 企业; 2. 政府以及事业单位; 3. 其他组织, 4.团队号
+	SubjectType int `json:"subject_type,omitempty"`
+	// VerfiedEndTime 认证到期时间
+	VerifiedEndTime int64 `json:"verified_end_time,omitempty"`
+	// CorpWxqrcode 授权企业在微工作台（原企业号）的二维码，可用于关注微工作台
+	CorpWxqrcode string `json:"corp_wxqrcode,omitempty"`
+	// CorpScale 企业规模。当企业未设置该属性时，值为空
+	CorpScale string `json:"corp_scale,omitempty"`
+	// CorpIndustry 企业所属行业。当企业未设置该属性时，值为空
+	CorpIndustry string `json:"corp_industry,omitempty"`
+	// CorpSubIndustry 企业所属子行业。当企业未设置该属性时，值为空
+	CorpSubIndustry string `json:"corp_sub_industry,omitempty"`
+	// Location 企业所在地信息, 为空时表示未知
+	Location   string      `json:"location,omitempty"`
+	CorpExName *CorpExName `json:"corp_ex_name,omitempty"`
 }
 
 // AuthInfo 授权信息。如果是通讯录应用，且没开启实体应用，是没有该项的。通讯录应用拥有企业通讯录的全部信息读写权限
@@ -56,7 +83,11 @@ type Agent struct {
 	// AppID 旧的多应用套件中的对应应用id，新开发者请忽略
 	AppID uint64 `json:"appid,omitempty"`
 	// Privilege 应用对应的权限
-	Privilege Privilege `json:"privilege,omitempty"`
+	Privilege        Privilege   `json:"privilege,omitempty"`
+	AuthMode         int         `json:"auth_mode,omitempty"`
+	IsCustomizedApp  bool        `json:"is_customized_app,omitempty"`
+	AuthFromThirdApp bool        `json:"auth_from_thirdapp,omitempty"`
+	SharedFrom       *SharedFrom `json:"shared_from,omitempty"`
 }
 
 // Privilege 应用对应的权限
@@ -84,10 +115,9 @@ type Privilege struct {
 
 // AuthUserInfo 授权管理员的信息
 type AuthUserInfo struct {
+	OpenUserID string `json:"open_userid,omitempty"`
 	// UserID 授权管理员的userid，可能为空（内部管理员一定有，不可更改）
 	UserID string `json:"userid,omitempty"`
-	// open_userid 授权管理员的open_userid，可能为空
-	OpenUserID string `json:"open_userid,omitempty"`
 	// Name 授权管理员的name，可能为空（内部管理员一定有，不可更改）
 	Name string `json:"name,omitempty"`
 	// Avatar 授权管理员的头像url

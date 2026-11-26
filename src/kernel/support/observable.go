@@ -6,49 +6,53 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/messages"
 	"net/http"
 	"reflect"
+	"sync"
 )
 
 type Observable struct {
 	handlers [][]*contract.EventHandlerInterface
+
+	eventMu sync.RWMutex
+	events  map[int][]*contract.EventHandlerInterface
 }
 
 func NewObservable() *Observable {
-	return &Observable{
-		make([][]*contract.EventHandlerInterface, 1),
-	}
+	return &Observable{handlers: make([][]*contract.EventHandlerInterface, 1)}
+}
+
+// NewEventObservable matches handlers by exact event ID and supports a wildcard handler.
+func NewEventObservable() *Observable {
+	return &Observable{events: make(map[int][]*contract.EventHandlerInterface)}
 }
 
 func (observable *Observable) PushMessage(closure contract.EventHandlerInterface, condition int) *Observable {
-
-	if observable.handlers[condition] == nil {
-		observable.handlers[condition] = []*contract.EventHandlerInterface{}
-	}
-
-	observable.handlers[condition] = append(observable.handlers[condition], &closure)
-
-	// tbd
-	// clause
-
-	return observable
+	return observable.Push(closure, condition)
 }
 
 func (observable *Observable) Push(closure contract.EventHandlerInterface, condition int) *Observable {
-
-	if observable.handlers[condition] == nil {
-		observable.handlers[condition] = []*contract.EventHandlerInterface{}
+	if observable.events != nil {
+		observable.eventMu.Lock()
+		defer observable.eventMu.Unlock()
+		observable.events[condition] = append(observable.events[condition], &closure)
+	} else {
+		observable.handlers[condition] = append(observable.handlers[condition], &closure)
 	}
-
-	observable.handlers[condition] = append(observable.handlers[condition], &closure)
-
-	// tbd
-	// clause
-
 	return observable
 }
 
 func (observable *Observable) SetHandlers(handlers [][]*contract.EventHandlerInterface) *Observable {
-	observable.handlers = handlers
-
+	if observable.events != nil {
+		observable.eventMu.Lock()
+		defer observable.eventMu.Unlock()
+		clear(observable.events)
+		for event, group := range handlers {
+			if len(group) > 0 {
+				observable.events[event] = append([]*contract.EventHandlerInterface(nil), group...)
+			}
+		}
+	} else {
+		observable.handlers = handlers
+	}
 	return observable
 }
 
@@ -73,10 +77,19 @@ func (observable *Observable) notify(request *http.Request, event int, header co
 		//err         error
 	)
 
+	groups := observable.handlers
+	if observable.events != nil {
+		observable.eventMu.RLock()
+		groups = [][]*contract.EventHandlerInterface{observable.events[messages.VOID]}
+		if event != messages.VOID {
+			groups = append(groups, observable.events[event])
+		}
+		observable.eventMu.RUnlock()
+	}
 Loop1:
-	for condition, handlers := range observable.handlers {
+	for condition, handlers := range groups {
 
-		if messages.VOID == condition || ((condition & event) == event) {
+		if observable.events != nil || messages.VOID == condition || ((condition & event) == event) {
 		Loop2:
 			for _, handler := range handlers {
 				// tbd
