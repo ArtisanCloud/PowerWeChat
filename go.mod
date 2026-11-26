@@ -7,7 +7,7 @@ go 1.23.0
 // replace github.com/ArtisanCloud/PowerSocialite/v3 => ../PowerSocialite
 
 require (
-	github.com/ArtisanCloud/PowerLibs/v3 v3.3.3-0.20261126083216-167ff3ab7e37
+	github.com/ArtisanCloud/PowerLibs/v3 v3.3.3
 	github.com/ArtisanCloud/PowerSocialite/v3 v3.0.12
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/gorilla/websocket v1.5.3
@@ -27,7 +27,8 @@ require (
 	go.opentelemetry.io/otel/trace v1.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
+	go.yaml.in/yaml/v2 v2.4.5 // indirect
+	go.yaml.in/yaml/v3 v3.0.6 // indirect
 	golang.org/x/crypto v0.35.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
