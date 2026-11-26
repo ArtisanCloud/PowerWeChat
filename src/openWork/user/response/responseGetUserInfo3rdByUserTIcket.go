@@ -1,6 +1,11 @@
 package response
 
-import "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+import (
+	"encoding/json"
+	"strconv"
+
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
+)
 
 type GetUserInfo3rdByUserTicket struct {
 	response.ResponseWork
@@ -20,4 +25,30 @@ type GetUserInfo3rdByUserTicket struct {
 	Avatar string `json:"avatar,omitempty"`
 	// Qrcode 员工个人二维码（扫描可添加为外部联系人），仅在用户同意snsapi_privateinfo授权时返回
 	Qrcode string `json:"qrcode,omitempty"`
+}
+
+// UnmarshalJSON accepts both versions of the member-detail wire format.
+func (member *GetUserInfo3rdByUserTicket) UnmarshalJSON(data []byte) error {
+	type plain GetUserInfo3rdByUserTicket
+	decoded := plain(*member)
+	wire := struct {
+		*plain
+		Gender *json.Number `json:"gender"`
+		QRCode *string      `json:"qr_code"`
+	}{plain: &decoded}
+	if err := json.Unmarshal(data, &wire); err != nil {
+		return err
+	}
+	if wire.Gender != nil {
+		gender, err := strconv.Atoi(wire.Gender.String())
+		if err != nil {
+			return err
+		}
+		decoded.Gender = gender
+	}
+	if wire.QRCode != nil {
+		decoded.Qrcode = *wire.QRCode
+	}
+	*member = GetUserInfo3rdByUserTicket(decoded)
+	return nil
 }
