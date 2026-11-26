@@ -4,6 +4,8 @@ import "strings"
 
 const (
 	CmdSubscribe        = "aibot_subscribe"
+	CmdMessageCallback  = "aibot_msg_callback"
+	CmdEventCallback    = "aibot_event_callback"
 	CmdPing             = "ping"
 	CmdRespondWelcome   = "aibot_respond_welcome_msg"
 	CmdRespondMessage   = "aibot_respond_msg"
