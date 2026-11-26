@@ -109,14 +109,16 @@ func TestEncryptor_GetToken(t *testing.T) {
 	assert.Equal(t, encryptor.GetToken(), token)
 }
 
-func TestEncryptor_randString(t *testing.T) {
-	encryptor, err := NewEncryptor("1000005", token, encodingAesKey)
+func TestEncryptor_EncryptEnvelopeUsesFreshPrefix(t *testing.T) {
+	encryptor, err := NewEncryptor(appID, token, encodingAesKey)
 	if err != nil {
-		log.Fatal(err)
+		t.Fatal(err)
 	}
-	assert.Equal(t, len(encryptor.randString(10)), 10)
-	assert.Equal(t, len(encryptor.randString(16)), 16)
-	assert.Equal(t, len(encryptor.randString(32)), 32)
+	a, firstErr := encryptor.EncryptEnvelope("message", "nonce", "123")
+	b, secondErr := encryptor.EncryptEnvelope("message", "nonce", "123")
+	if firstErr != nil || secondErr != nil || a.Encrypt == b.Encrypt {
+		t.Fatal("encrypting twice must produce distinct ciphertexts")
+	}
 }
 
 func TestEncryptor_Signature(t *testing.T) {

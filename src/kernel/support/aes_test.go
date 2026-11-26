@@ -90,6 +90,18 @@ func TestEncryptor_PKCS7UnPadding(t *testing.T) {
 
 }
 
+func TestPKCS7UnPadding(t *testing.T) {
+	a := NewAES()
+	for _, invalid := range [][]byte{nil, {0}, {2}, {1, 2}} {
+		_, err := a.PKCS7UnPadding(invalid)
+		require.NotNil(t, err)
+	}
+	// The public helper also accepts padding produced for other block sizes.
+	plain, err := a.PKCS7UnPadding(a.PKCS7Padding([]byte("hi"), 64))
+	require.Nil(t, err)
+	require.Equal(t, "hi", string(plain))
+}
+
 const (
 	testAESUtilAPIV3Key       = "testAPIv3Key0000"
 	testAESUtilCiphertext     = "FsdXzxryWfKwvLJKf8LG/ToRPTRh8RN9wROC"

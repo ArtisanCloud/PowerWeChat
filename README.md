@@ -155,6 +155,7 @@ printf(rs.OpenID)
     * [撤销订单](https://powerwechat.artisan-cloud.com/zh/payment/retrieve-order.html)
     * [分账](https://powerwechat.artisan-cloud.com/zh/payment/profit-share.html)
 * 企业微信
+	* [智能机器人 HTTP 回调](src/work/aibot/callback.md)
 	* [服务端](https://powerwechat.artisan-cloud.com/zh/wecom/server.html)
 	* [应用管理](https://powerwechat.artisan-cloud.com/zh/wecom/agent.html)
 	* [消息发送](https://powerwechat.artisan-cloud.com/zh/wecom/message.html)
