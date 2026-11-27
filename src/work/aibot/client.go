@@ -122,6 +122,8 @@ func (comp *Client) Send(ctx context.Context, cmd *request.RequestLongConnection
 	if err != nil {
 		return err
 	}
+	comp.writeMu.Lock()
+	defer comp.writeMu.Unlock()
 	if dl, ok := ctx.Deadline(); ok {
 		_ = conn.SetWriteDeadline(dl)
 	} else {
@@ -130,8 +132,6 @@ func (comp *Client) Send(ctx context.Context, cmd *request.RequestLongConnection
 		// makes every subsequent write fail with i/o timeout.
 		_ = conn.SetWriteDeadline(time.Time{})
 	}
-	comp.writeMu.Lock()
-	defer comp.writeMu.Unlock()
 	return conn.WriteJSON(cmd)
 }
 
@@ -186,7 +186,14 @@ func (comp *Client) Listen(ctx context.Context, handler MessageHandler) error {
 		if strings.EqualFold(strings.TrimSpace(message.Cmd), "pong") {
 			continue
 		}
-		if handleErr := handler(ctx, message); handleErr != nil {
+		handlerCtx := ctx
+		switch message.Cmd {
+		case request.CmdMessageCallback, request.CmdEventCallback:
+			if message.Headers != nil {
+				handlerCtx = WithReplyReqID(ctx, message.Headers.ReqID)
+			}
+		}
+		if handleErr := handler(handlerCtx, message); handleErr != nil {
 			return handleErr
 		}
 	}
@@ -232,22 +239,47 @@ func (comp *Client) SubscribeAndServe(ctx context.Context, botID, secret string,
 	}
 }
 
-func (comp *Client) SendCommand(ctx context.Context, cmd string, body map[string]interface{}) error {
-	command := request.NewCommand(cmd, buildReqID(), body)
-	if strings.TrimSpace(command.Cmd) == "" {
-		return errors.New("command cmd is empty")
-	}
-	return comp.Send(ctx, command)
+type replyReqIDKey struct{}
+
+// WithReplyReqID associates a passive reply with the original WeCom callback.
+// Listen and SubscribeAndServe already supply this context to their handler.
+// When using Read directly, pass the received frame's Headers.ReqID here.
+func WithReplyReqID(ctx context.Context, reqID string) context.Context {
+	return context.WithValue(ctx, replyReqIDKey{}, reqID)
 }
 
+func (comp *Client) SendCommand(ctx context.Context, cmd string, body map[string]interface{}) error {
+	cmd = strings.TrimSpace(cmd)
+	if cmd == "" {
+		return errors.New("command cmd is empty")
+	}
+	var reqID string
+	switch cmd {
+	case request.CmdRespondWelcome, request.CmdRespondMessage, request.CmdRespondUpdateMsg:
+		reqID, _ = ctx.Value(replyReqIDKey{}).(string)
+		if strings.TrimSpace(reqID) == "" {
+			return errors.New("aibot: passive reply requires a callback req_id; use the handler context or WithReplyReqID")
+		}
+	default:
+		reqID = buildReqID()
+	}
+	return comp.Send(ctx, request.NewCommand(cmd, reqID, body))
+}
+
+// RespondWelcomeMessage sends a welcome reply using the event callback context.
+// For frames obtained with Read, attach their ID with WithReplyReqID.
 func (comp *Client) RespondWelcomeMessage(ctx context.Context, body map[string]interface{}) error {
 	return comp.SendCommand(ctx, request.CmdRespondWelcome, body)
 }
 
+// RespondMessage replies using the original message callback context.
+// For frames obtained with Read, attach their ID with WithReplyReqID.
 func (comp *Client) RespondMessage(ctx context.Context, body map[string]interface{}) error {
 	return comp.SendCommand(ctx, request.CmdRespondMessage, body)
 }
 
+// RespondUpdateMessage updates the card using its event callback context.
+// For frames obtained with Read, attach their ID with WithReplyReqID.
 func (comp *Client) RespondUpdateMessage(ctx context.Context, body map[string]interface{}) error {
 	return comp.SendCommand(ctx, request.CmdRespondUpdateMsg, body)
 }
