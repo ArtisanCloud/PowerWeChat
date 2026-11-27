@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/hmac"
+	"crypto/rand"
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/base64"
@@ -12,7 +13,6 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"math/rand"
 	"sort"
 	"strings"
 	"time"
@@ -35,7 +35,6 @@ const (
 	ErrorBase64Decode     = -40010 // base64 解码失败
 	ErrorXmlBuild         = -40011 // 生成xml失败
 	IllegalBuffer         = -41003 // Illegal buffer
-	letterBytes           = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 )
 
 type CDATA struct {
@@ -93,28 +92,36 @@ func (encryptor *Encryptor) GetToken() string {
 	return encryptor.token
 }
 
-func (encryptor *Encryptor) randString(n int) string {
-	b := make([]byte, n)
-	for i := range b {
-		b[i] = letterBytes[rand.Int63()%int64(len(letterBytes))]
+// Encrypt preserves the XML envelope used by application callbacks.
+func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *support.CryptError) {
+	envelope, err := encryptor.EncryptEnvelope(msg, nonce, timestamp)
+	if err != nil {
+		return nil, err
 	}
-	return string(b)
+	data, marshalErr := xml.Marshal(envelope)
+	if marshalErr != nil {
+		return nil, support.NewCryptError(ErrorXmlBuild, marshalErr.Error())
+	}
+	return data, nil
 }
 
-// Encrypt encrypt xml msg and return xml
-func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *support.CryptError) {
-
-	randStr := encryptor.randString(16)
+// EncryptEnvelope returns the signed fields for XML or JSON callback replies.
+func (encryptor *Encryptor) EncryptEnvelope(msg, nonce, timestamp string) (*WeComReplyMsg, *support.CryptError) {
+	if len(encryptor.aesKey) < aes.BlockSize || uint64(len(msg)) > uint64(^uint32(0)) {
+		return nil, support.NewCryptError(ErrorEncryptAes, "invalid key or message length")
+	}
+	// Keep the 16-byte random prefix printable for existing callback consumers.
+	var entropy [12]byte
+	if _, err := rand.Read(entropy[:]); err != nil {
+		return nil, support.NewCryptError(ErrorEncryptAes, err.Error())
+	}
 	var buffer bytes.Buffer
-	buffer.WriteString(randStr)
-
+	buffer.WriteString(base64.RawStdEncoding.EncodeToString(entropy[:]))
 	msgLenBuf := make([]byte, 4)
 	binary.BigEndian.PutUint32(msgLenBuf, uint32(len(msg)))
 	buffer.Write(msgLenBuf)
 	buffer.WriteString(msg)
 
-	// TODO 暂时不知道用途
-	//buffer.WriteString(wxBizMsgCrypt.receiverID)
 	buffer.WriteString(encryptor.appID)
 
 	tmpCiphertext, err := encryptor.aes.Encrypt(buffer.Bytes(), encryptor.aesKey, encryptor.aesKey[:aes.BlockSize])
@@ -131,19 +138,12 @@ func (encryptor *Encryptor) Encrypt(msg, nonce, timestamp string) ([]byte, *supp
 	}
 	signature := encryptor.Signature(encryptor.token, timestamp, nonce, ciphertext)
 
-	msg4Send := &WeComReplyMsg{
+	return &WeComReplyMsg{
 		Encrypt:   CDATA{Value: ciphertext},
 		Signature: CDATA{Value: signature},
 		Timestamp: timestamp,
 		Nonce:     CDATA{Value: nonce},
-	}
-	//msg4Send := NewWXBizMsg4Send(ciphertext, signature, timestamp, nonce)
-	//msg.Marshal()
-	xmlByte, err2 := xml.Marshal(msg4Send)
-	if err2 != nil {
-		return nil, support.NewCryptError(ErrorXmlBuild, err2.Error())
-	}
-	return xmlByte, nil
+	}, nil
 }
 
 // Decrypt decrypt xml msg and return xml
@@ -167,53 +167,42 @@ func (encryptor *Encryptor) Decrypt(content []byte, msgSignature, nonce, timesta
 		return nil, support.NewCryptError(ErrorCalcSignature, "signature not equal")
 	}
 
-	iv := encryptor.aesKey[:aes.BlockSize]
-	plaintext, cryptErr := encryptor.aes.Decrypt(msg4Recv.Encrypt, encryptor.aesKey, iv)
-	//plaintext, cryptErr := wxBizMsgCrypt.cbcDecrypter(msg4Recv.Encrypt)
-	if nil != cryptErr {
-		return nil, cryptErr
-	}
-
-	textLen := uint32(len(plaintext))
-	if textLen < 20 {
-		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 1")
-	}
-	//random := plaintext[:16]
-	msgLen := binary.BigEndian.Uint32(plaintext[16:20])
-	if textLen < (20 + msgLen) {
-		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 2")
-	}
-
-	msg := plaintext[20 : 20+msgLen]
-	//receiverID := plaintext[20+msgLen:]
-
-	return msg, nil
+	return encryptor.DecryptContent(msg4Recv.Encrypt)
 }
 
-// Decrypt decrypt xml msg and return xml
+// OpenCallback authenticates the ciphertext and checks the receiver in the decrypted frame.
+func (encryptor *Encryptor) OpenCallback(ciphertext, signature, nonce, timestamp string) ([]byte, *support.CryptError) {
+	want := encryptor.Signature(encryptor.token, timestamp, nonce, ciphertext)
+	if !hmac.Equal([]byte(want), []byte(signature)) {
+		return nil, support.NewCryptError(ErrorInvalidSignature, "invalid callback signature")
+	}
+	return encryptor.decryptContent(ciphertext, true)
+}
+
 func (encryptor *Encryptor) DecryptContent(content string) ([]byte, *support.CryptError) {
+	return encryptor.decryptContent(content, false)
+}
 
-	iv := encryptor.aesKey[:aes.BlockSize]
-	plaintext, cryptErr := encryptor.aes.Decrypt(content, encryptor.aesKey, iv)
-	//plaintext, cryptErr := wxBizMsgCrypt.cbcDecrypter(msg4Recv.Encrypt)
-	if nil != cryptErr {
-		return nil, cryptErr
+func (encryptor *Encryptor) decryptContent(content string, checkReceiver bool) ([]byte, *support.CryptError) {
+	if len(encryptor.aesKey) < aes.BlockSize {
+		return nil, support.NewCryptError(ErrorInvalidAesKey, "invalid AES key length")
 	}
-
-	textLen := uint32(len(plaintext))
-	if textLen < 20 {
-		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 1")
+	plain, err := encryptor.aes.Decrypt(content, encryptor.aesKey, encryptor.aesKey[:aes.BlockSize])
+	if err != nil {
+		return nil, err
 	}
-	//random := plaintext[:16]
-	msgLen := binary.BigEndian.Uint32(plaintext[16:20])
-	if textLen < (20 + msgLen) {
-		return nil, support.NewCryptError(IllegalBuffer, "plain is to small 2")
+	if len(plain) < 20 {
+		return nil, support.NewCryptError(IllegalBuffer, "invalid callback frame")
 	}
-
-	msg := plaintext[20 : 20+msgLen]
-	//receiverID := plaintext[20+msgLen:]
-
-	return msg, nil
+	size := binary.BigEndian.Uint32(plain[16:20])
+	if uint64(size) > uint64(len(plain)-20) {
+		return nil, support.NewCryptError(IllegalBuffer, "invalid callback message length")
+	}
+	end := 20 + int(size)
+	if checkReceiver && string(plain[end:]) != encryptor.appID {
+		return nil, support.NewCryptError(ErrorInvalidAppID, "invalid callback receiver")
+	}
+	return plain[20:end], nil
 }
 
 // VerifyUrl Parsing the official WeChat callbacks validation.
