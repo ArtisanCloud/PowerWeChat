@@ -35,13 +35,13 @@ func (comp *Client) GetUserInfo3rdByCode(ctx context.Context, code string) (*res
 	return &result, err
 }
 
-// 第三方使用user_ticket获取成员详情
-// https://developer.work.weixin.qq.com/document/10975#%E7%AC%AC%E4%B8%89%E6%96%B9%E4%BD%BF%E7%94%A8user-ticket%E8%8E%B7%E5%8F%96%E6%88%90%E5%91%98%E8%AF%A6%E6%83%85
+// 第三方使用user_ticket获取访问用户敏感信息
+// https://developer.work.weixin.qq.com/document/path/91122
 func (comp *Client) GetUserInfo3rdByUserTicket(ctx context.Context, userTicket string) (*response.GetUserInfo3rdByUserTicket, error) {
 	var result response.GetUserInfo3rdByUserTicket
 	req := object.StringMap{
 		"user_ticket": userTicket,
 	}
-	_, err := comp.BaseClient.HttpGet(ctx, "cgi-bin/service/getuserinfo3rd", &req, nil, &result)
+	_, err := comp.BaseClient.HttpPost(ctx, "cgi-bin/service/auth/getuserdetail3rd", &req, nil, &result)
 	return &result, err
 }

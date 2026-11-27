@@ -12,33 +12,49 @@ import (
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/contract"
 	kernelModels "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/models"
+	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/support"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server/handlers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/openWork/server/models"
 	workModels "github.com/ArtisanCloud/PowerWeChat/v3/src/work/server/handlers/models"
 )
 
 const (
-	EVENT_SUITE_TICKET         int = 52000 // "suite_ticket"
-	EVENT_CREATE_AUTH          int = 52100 // "create_auth"
-	EVENT_CHANGE_AUTH          int = 52101 //  "change_auth"
-	EVENT_CANCEL_AUTH          int = 52102 //  "cancel_auth"
-	EVENT_CREATE_USER          int = 52200 // "change_contact->create_user"
-	EVENT_UPDATE_USER          int = 52201 // "change_contact->update_user"
-	EVENT_DELETE_USER          int = 52202 // "change_contact->delete_user"
-	EVENT_CREATE_PARTY         int = 52210 // "change_contact->create_party"
-	EVENT_UPDATE_PARTY         int = 52211 // "change_contact->update_party"
-	EVENT_DELETE_PARTY         int = 52212 // "change_contact->delete_party"
-	EVENT_UPDATE_TAG           int = 52220 // "change_contact->update_tag"
-	EVENT_SHARE_AGENT_CHANGE   int = 52300 // "share_agent_change"
-	EVENT_SHARE_CHAIN_CHANGE   int = 52310 // "share_chain_change"
-	EVENT_RESET_PERMANENT_CODE int = 52400 // "reset_permanent_code"
-	EVENT_CORP_ARCH_AUTH       int = 52600 // "corp_arch_auth"
-	EVENT_APPROVE_SPECIAL_AUTH int = 52700 // "approve_special_auth"
-	EVENT_CANCEL_SPECIAL_AUTH  int = 52701 // "cancel_special_auth"
+	EVENT_SUITE_TICKET          int = 52000 // "suite_ticket"
+	EVENT_CREATE_AUTH           int = 52100 // "create_auth"
+	EVENT_CHANGE_AUTH           int = 52101 //  "change_auth"
+	EVENT_CANCEL_AUTH           int = 52102 //  "cancel_auth"
+	EVENT_CREATE_USER           int = 52200 // "change_contact->create_user"
+	EVENT_UPDATE_USER           int = 52201 // "change_contact->update_user"
+	EVENT_DELETE_USER           int = 52202 // "change_contact->delete_user"
+	EVENT_CREATE_PARTY          int = 52210 // "change_contact->create_party"
+	EVENT_UPDATE_PARTY          int = 52211 // "change_contact->update_party"
+	EVENT_DELETE_PARTY          int = 52212 // "change_contact->delete_party"
+	EVENT_UPDATE_TAG            int = 52220 // "change_contact->update_tag"
+	EVENT_SHARE_AGENT_CHANGE    int = 52300 // "share_agent_change"
+	EVENT_SHARE_CHAIN_CHANGE    int = 52310 // "share_chain_change"
+	EVENT_RESET_PERMANENT_CODE  int = 52400 // "reset_permanent_code"
+	EVENT_CORP_ARCH_AUTH        int = 52600 // "corp_arch_auth"
+	EVENT_APPROVE_SPECIAL_AUTH  int = 52700 // "approve_special_auth"
+	EVENT_CANCEL_SPECIAL_AUTH   int = 52701 // "cancel_special_auth"
+	EVENT_WEDRIVE_SPACE_CHANGE  int = 52800
+	EVENT_ADD_EXTERNAL_CONTACT  int = 52900
+	EVENT_EDIT_EXTERNAL_CONTACT int = 52901
+	EVENT_DEL_EXTERNAL_CONTACT  int = 52902
 )
 
 func GetEventType(infoType models.InfoType, changeType models.ChangeType) int {
 	switch infoType {
+	case models.EventTypeWedriveSpaceChange:
+		return EVENT_WEDRIVE_SPACE_CHANGE
+	case models.InfoTypeChangeExternalContact:
+		switch changeType {
+		case models.ChangeTypeAddExternalContact:
+			return EVENT_ADD_EXTERNAL_CONTACT
+		case models.ChangeTypeEditExternalContact:
+			return EVENT_EDIT_EXTERNAL_CONTACT
+		case models.ChangeTypeDelExternalContact:
+			return EVENT_DEL_EXTERNAL_CONTACT
+		}
 	case models.InfoTypeSuiteTicket:
 		return EVENT_SUITE_TICKET
 	case models.InfoTypeCreateAuth:
@@ -93,8 +109,9 @@ func NewGuard(app kernel.ApplicationInterface) *Guard {
 		kernel.NewServerGuard(app),
 	}
 
+	guard.Observable = support.NewEventObservable()
+	guard.registerHandlers()
 	guard.OverrideResolve()
-	// guard.OverrideNotify()
 	guard.OverrideIsSafeMode()
 	guard.OverrideToCallbackType()
 
@@ -121,13 +138,17 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 		return nil, err
 	}
 
+	return guard.notify(request, closure)
+}
+
+func (guard *Guard) notify(request *http.Request, closure func(*kernelModels.Callback, models.IEvent, interface{}) interface{}) (httpRS *http.Response, err error) {
 	var (
 		buffResult  []byte
 		contentType string
 		echoStr     = request.URL.Query().Get("echostr")
 	)
 	if request.Body == http.NoBody && echoStr != "" {
-		buffResult, err = guard.DecryptEvent(echoStr)
+		buffResult, err = guard.decryptSignedEvent(request, echoStr)
 		if err != nil {
 			return nil, err
 		}
@@ -137,28 +158,28 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 			callbackEvent kernelModels.Callback
 			ev            models.IEvent
 		)
-		// read body content
-		var buf bytes.Buffer
-		tee := io.TeeReader(request.Body, &buf)
-		// requestXML, _ := io.ReadAll(request.Body)
-		request.Body = io.NopCloser(&buf)
-		// println(string(requestXML))
-
-		// err = xml.Unmarshal(requestXML, &callbackEvent)
-		err = xml.NewDecoder(tee).Decode(&callbackEvent)
+		body, err := io.ReadAll(request.Body)
 		if err != nil {
 			return nil, err
 		}
-		// decrypt event content
-		var bufDecrypted []byte = nil
-		if guard.IsSafeMode(request) && callbackEvent.Encrypt != "" {
-			bufDecrypted, err = guard.DecryptEvent(callbackEvent.Encrypt)
+		request.Body = io.NopCloser(bytes.NewReader(body))
+		if err = xml.Unmarshal(body, &callbackEvent); err != nil {
+			return nil, err
+		}
+		if callbackEvent.Encrypt == "" {
+			return nil, errors.New("missing encrypted callback")
+		}
+		payload, err := guard.decryptSignedEvent(request, callbackEvent.Encrypt)
+		if err != nil {
+			return nil, err
 		}
 		var callbackMsg interface{}
-		// call the closure for handling the event
-		ev, err = models.DecodeEvent(bufDecrypted)
+		ev, err = models.DecodeEvent(payload)
 		if err != nil {
-			if callbackMsg, err = guard.ToCallbackType(ev, bufDecrypted); err != nil {
+			if ev == nil {
+				return nil, err
+			}
+			if callbackMsg, err = guard.ToCallbackType(ev, payload); err != nil {
 				return nil, err
 			}
 		}
@@ -193,6 +214,16 @@ func (guard *Guard) Notify(request *http.Request, closure func(content *kernelMo
 	return httpRS, err
 }
 
+func (guard *Guard) decryptSignedEvent(request *http.Request, ciphertext string) ([]byte, error) {
+	encryptor := guard.App.GetComponent("Encryptor").(*kernel.Encryptor)
+	query := request.URL.Query()
+	data, cryptErr := encryptor.VerifyUrl(ciphertext, query.Get("msg_signature"), query.Get("nonce"), query.Get("timestamp"))
+	if cryptErr != nil {
+		return nil, errors.New(cryptErr.ErrMsg)
+	}
+	return data, nil
+}
+
 func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error) {
 	encryptor := guard.App.GetComponent("Encryptor").(*kernel.Encryptor)
 
@@ -207,19 +238,19 @@ func (guard *Guard) DecryptEvent(content string) (bufDecrypted []byte, err error
 // Override Validate
 func (guard *Guard) OverrideResolve() {
 	guard.Resolve = func(request *http.Request) (httpRS *http.Response, err error) {
-		guard.registerHandlers()
-
-		if ev, _, err := guard.GetMessage(request); err != nil {
-			return nil, err
-		} else if infoType := ev.GetInfoType(); infoType != "" {
-			_ = guard.Dispatch(request, GetEventType(infoType, ev.GetChangeType()), nil, ev)
-		}
-		httpRS = &http.Response{
-			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(bytes.NewBuffer([]byte(kernel.SUCCESS_EMPTY_RESPONSE))),
-		}
-
-		return httpRS, nil
+		return guard.notify(request, func(_ *kernelModels.Callback, ev models.IEvent, message interface{}) interface{} {
+			kind := ev.GetInfoType()
+			if kind == "" {
+				kind = ev.GetEvent()
+			}
+			if event := GetEventType(kind, ev.GetChangeType()); event >= 0 {
+				if message == nil {
+					message = ev
+				}
+				guard.Dispatch(request, event, ev, message)
+			}
+			return kernel.SUCCESS_EMPTY_RESPONSE
+		})
 	}
 }
 

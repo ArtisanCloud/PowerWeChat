@@ -60,7 +60,8 @@ type AuthCorpInfo struct {
 	// CorpSubIndustry 企业所属子行业。当企业未设置该属性时，值为空
 	CorpSubIndustry string `json:"corp_sub_industry,omitempty"`
 	// Location 企业所在地信息, 为空时表示未知
-	Location string `json:"location,omitempty"`
+	Location   string      `json:"location,omitempty"`
+	CorpExName *CorpExName `json:"corp_ex_name,omitempty"`
 }
 
 // AuthInfo 授权信息。如果是通讯录应用，且没开启实体应用，是没有该项的。通讯录应用拥有企业通讯录的全部信息读写权限
@@ -82,7 +83,11 @@ type Agent struct {
 	// AppID 旧的多应用套件中的对应应用id，新开发者请忽略
 	AppID uint64 `json:"appid,omitempty"`
 	// Privilege 应用对应的权限
-	Privilege Privilege `json:"privilege,omitempty"`
+	Privilege        Privilege   `json:"privilege,omitempty"`
+	AuthMode         int         `json:"auth_mode,omitempty"`
+	IsCustomizedApp  bool        `json:"is_customized_app,omitempty"`
+	AuthFromThirdApp bool        `json:"auth_from_thirdapp,omitempty"`
+	SharedFrom       *SharedFrom `json:"shared_from,omitempty"`
 }
 
 // Privilege 应用对应的权限
@@ -110,6 +115,7 @@ type Privilege struct {
 
 // AuthUserInfo 授权管理员的信息
 type AuthUserInfo struct {
+	OpenUserID string `json:"open_userid,omitempty"`
 	// UserID 授权管理员的userid，可能为空（内部管理员一定有，不可更改）
 	UserID string `json:"userid,omitempty"`
 	// Name 授权管理员的name，可能为空（内部管理员一定有，不可更改）

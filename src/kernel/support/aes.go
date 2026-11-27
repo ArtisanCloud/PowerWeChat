@@ -83,7 +83,7 @@ func (a AES) Decrypt(cipherText string, key, iv []byte) ([]byte, *CryptError) {
 	mode.CryptBlocks(encryptMsg, encryptMsg)
 
 	//log.Println("encryptMsg: ", string(encryptMsg))
-	originalMsg, err2 := a.PKCS7UnPadding(encryptMsg)
+	originalMsg, err2 := unpadPKCS7(encryptMsg, 32)
 	if err2 != nil {
 		return nil, err2
 	}
@@ -103,16 +103,20 @@ func (a *AES) PKCS7Padding(text []byte, blockSize int) []byte {
 
 // PKCS7UnPadding KCS#7 unPadding.
 func (a *AES) PKCS7UnPadding(text []byte) ([]byte, *CryptError) {
+	return unpadPKCS7(text, 255)
+}
+
+func unpadPKCS7(text []byte, blockSize int) ([]byte, *CryptError) {
 	plaintextLen := len(text)
 	if text == nil || plaintextLen == 0 {
 		return nil, NewCryptError(ErrorDecryptAes, "pKCS7UnPadding error nil or zero")
 	}
 
-	// TODO： 不清楚微信官方为什么需要这里校验一下
-	//if plaintextLen%encryptor.blockSize != 0 {
-	//	return nil, NewCryptError(ErrorDecryptAes, "pKCS7UnPadding text not a multiple of the block size")
-	//}
 	paddingLen := int(text[plaintextLen-1])
+	if paddingLen == 0 || paddingLen > blockSize || paddingLen > plaintextLen ||
+		!bytes.Equal(text[plaintextLen-paddingLen:], bytes.Repeat([]byte{byte(paddingLen)}, paddingLen)) {
+		return nil, NewCryptError(ErrorDecryptAes, "invalid PKCS#7 padding")
+	}
 	return text[:plaintextLen-paddingLen], nil
 }
 

@@ -2,6 +2,7 @@ package wedrive
 
 import (
 	"context"
+
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	response2 "github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/work/oa/wedrive/request"
@@ -99,6 +100,13 @@ func (comp *Client) SpaceSetting(ctx context.Context, options *request.RequestWe
 	return result, err
 }
 
+// SpaceSettingPatch updates only the supplied space settings.
+func (comp *Client) SpaceSettingPatch(ctx context.Context, options *request.RequestWeDriveSpaceSettingPatch) (*response2.ResponseWork, error) {
+	result := &response2.ResponseWork{}
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/space_setting", options, nil, nil, result)
+	return result, err
+}
+
 // 获取邀请链接
 // https://developer.work.weixin.qq.com/document/path/93656#获取邀请链接
 func (comp *Client) SpaceShare(ctx context.Context, options *request.RequestWeDriveSpaceShare) (*response.ResponseWeDriveSpaceShare, error) {
@@ -126,7 +134,11 @@ func (comp *Client) FileList(ctx context.Context, options *request.RequestWeDriv
 func (comp *Client) FileUpload(ctx context.Context, options *request.RequestWeDriveFileUpload) (*response.ResponseWeDriveFileUpload, error) {
 
 	result := &response.ResponseWeDriveFileUpload{}
-
+	if options != nil && options.SelectedTicket != "" {
+		selected := *options
+		selected.UserID, selected.SpaceID, selected.FatherID = "", "", ""
+		options = &selected
+	}
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload", options, nil, nil, result)
 
 	return result, err
@@ -138,7 +150,50 @@ func (comp *Client) FileDownload(ctx context.Context, options *request.RequestWe
 
 	result := &response.ResponseWeDriveFileDownload{}
 
+	if options != nil && options.SelectedTicket != "" {
+		selected := *options
+		selected.UserID, selected.FileID = "", ""
+		options = &selected
+	}
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_download", options, nil, nil, result)
+
+	return result, err
+}
+
+// 分块上传初始化
+// https://developer.work.weixin.qq.com/document/path/98004#分块上传初始化
+func (comp *Client) FileUploadInit(ctx context.Context, options *request.RequestWeDriveFileUploadInit) (*response.ResponseWeDriveFileUploadInit, error) {
+
+	result := &response.ResponseWeDriveFileUploadInit{}
+
+	if options != nil && options.SelectedTicket != "" {
+		selected := *options
+		selected.SpaceID, selected.FatherID = "", ""
+		options = &selected
+	}
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload_init", options, nil, nil, result)
+
+	return result, err
+}
+
+// 分块上传文件
+// https://developer.work.weixin.qq.com/document/path/98004#分块上传文件
+func (comp *Client) FileUploadPart(ctx context.Context, options *request.RequestWeDriveFileUploadPart) (*response2.ResponseWork, error) {
+
+	result := &response2.ResponseWork{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload_part", options, nil, nil, result)
+
+	return result, err
+}
+
+// 分块上传完成
+// https://developer.work.weixin.qq.com/document/path/98004#分块上传完成
+func (comp *Client) FileUploadFinish(ctx context.Context, options *request.RequestWeDriveFileUploadFinish) (*response.ResponseWeDriveFileUploadFinish, error) {
+
+	result := &response.ResponseWeDriveFileUploadFinish{}
+
+	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_upload_finish", options, nil, nil, result)
 
 	return result, err
 }
@@ -180,6 +235,14 @@ func (comp *Client) FileMove(ctx context.Context, options *request.RequestWeDriv
 // https://developer.work.weixin.qq.com/document/path/93657#删除文件
 func (comp *Client) FileDelete(ctx context.Context, options *request.RequestWeDriveFileDelete) (*response2.ResponseWork, error) {
 
+	if options == nil {
+		return comp.FileDeleteBatch(ctx, nil)
+	}
+	return comp.FileDeleteBatch(ctx, &request.RequestWeDriveFileDeleteBatch{UserID: options.UserID, FileIDs: []string{options.FileID}})
+}
+
+// FileDeleteBatch deletes all listed file IDs using the WeDrive batch endpoint.
+func (comp *Client) FileDeleteBatch(ctx context.Context, options *request.RequestWeDriveFileDeleteBatch) (*response2.ResponseWork, error) {
 	result := &response2.ResponseWork{}
 
 	_, err := comp.BaseClient.HttpPostJson(ctx, "cgi-bin/wedrive/file_delete", options, nil, nil, result)

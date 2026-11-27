@@ -4,6 +4,7 @@ type SetSessionInfoRequest struct {
 	// PreAuthCode 预授权码
 	PreAuthCode string `json:"pre_auth_code,omitempty"`
 	// SessionInfo 本次授权过程中需要用到的会话信息
+	SessionInfo SessionInfo `json:"session_info"`
 }
 
 // SessionInfo 本次授权过程中需要用到的会话信息
